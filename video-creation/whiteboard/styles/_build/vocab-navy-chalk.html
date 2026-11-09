@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>whiteboard drawing-vocabulary sample</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great:wght@400;700;800&family=Kalam:wght@400;700;800&display=block">
+<style>
+  html, body { margin: 0; padding: 0; width: 1920px; height: 1080px; overflow: hidden; }
+  svg { display: block; }
+</style>
+<script src="file:///C:/Users/mnede/Documents/Claude/social-media/video-creation/remotion/node_modules/roughjs/bundled/rough.js"></script>
+</head>
+<body>
+<svg id="scene" xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"></svg>
+<script>
+// The SAME pen as sample.html, applied to a RICHER drawing vocabulary: an illustrated horse (curved
+// body, mane, tail, hooves, ground shadow), three people with hair variants and tapered shirts, hay
+// bales, a tree, grass. Every shape is a hand-authored SVG path drawn through rough.js, so it inherits
+// the style's ink, wobble and fill style. This is the axis the first sampler did not vary.
+const S = {"id": "navy-chalk", "name": "Navy chalk", "blurb": "House palette on a near-black navy board: pale chalk ink, teal + gold hachure fills, rougher stroke. Continuity with the Pixar b-roll backgrounds.", "mode": "rough", "bg": "#0b1220", "floor": null, "ink": "#e8f1f5", "inkWidth": 2.4, "roughness": 1.6, "bowing": 1.2, "fillStyle": "hachure", "fillWeight": 1.2, "hachureGap": 7, "palette": {"blue": "#2dd4bf", "gold": "#f5c542", "red": "#ff6b6b", "green": "#7bdc8a", "brown": "#d9a066", "grey": "#5b6b7a"}, "fontH": "Fredericka the Great", "fontL": "Kalam", "colorH": "#f5c542", "colorL": "#e8f1f5", "caps": true, "glow": false, "paper": true, "grid": false, "status": "option", "status_note": "Mike, 2026-10-30: does not like it"};
+const svg = document.getElementById('scene');
+const NS = 'http://www.w3.org/2000/svg';
+const P = S.palette;
+const isRough = S.mode === 'rough';
+const isMograph = S.mode === 'mograph';
+
+function el(tag, attrs, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) if (attrs[k] !== null && attrs[k] !== undefined) e.setAttribute(k, attrs[k]);
+  (parent || svg).appendChild(e);
+  return e;
+}
+
+// ---------- defs ----------
+const defs = el('defs', {});
+const glow = el('filter', { id: 'glow', x: '-30%', y: '-30%', width: '160%', height: '160%' }, defs);
+el('feGaussianBlur', { stdDeviation: 6, result: 'b' }, glow);
+const gm = el('feMerge', {}, glow);
+el('feMergeNode', { in: 'b' }, gm); el('feMergeNode', { in: 'b' }, gm); el('feMergeNode', { in: 'SourceGraphic' }, gm);
+const noise = el('filter', { id: 'paper' }, defs);
+el('feTurbulence', { type: 'fractalNoise', baseFrequency: '0.9', numOctaves: 2, result: 'n' }, noise);
+el('feColorMatrix', { type: 'saturate', values: 0 }, noise);
+const gridPat = el('pattern', { id: 'grid', width: 48, height: 48, patternUnits: 'userSpaceOnUse' }, defs);
+el('circle', { cx: 2, cy: 2, r: 1.6, fill: S.ink, opacity: 0.35 }, gridPat);
+
+// ---------- background ----------
+el('rect', { x: 0, y: 0, width: 1920, height: 1080, fill: S.bg });
+if (S.floor) el('rect', { x: 0, y: 660, width: 1920, height: 420, fill: S.floor });
+if (S.grid) el('rect', { x: 0, y: 0, width: 1920, height: 1080, fill: 'url(#grid)' });
+if (S.paper) el('rect', { x: 0, y: 0, width: 1920, height: 1080, filter: 'url(#paper)', opacity: S.bg === '#0b1220' ? 0.10 : 0.16, style: 'mix-blend-mode:multiply' });
+
+// ---------- drawing helpers ----------
+const rc = window.rough ? window.rough.svg(svg) : null;
+const strokeLayer = el('g', { id: 'strokes', filter: S.glow ? 'url(#glow)' : null });
+let seedCounter = 11;
+
+function opts(fill, extra) {
+  const o = {
+    roughness: S.roughness, bowing: S.bowing,
+    stroke: S.ink, strokeWidth: S.inkWidth,
+    fillStyle: S.fillStyle === 'none' ? 'solid' : S.fillStyle,
+    fillWeight: S.fillWeight, hachureGap: S.hachureGap, hachureAngle: -41,
+    seed: seedCounter++,
+  };
+  if (fill && S.fillStyle !== 'none') o.fill = fill;
+  return Object.assign(o, extra || {});
+}
+// A shape: filled path with an ink outline. In rough mode rough.js draws both; in flat/mograph mode a
+// clean path with a rounded stroke (mograph gets a soft glow and no outline on filled shapes).
+function shape(d, fill, extra, parent) {
+  extra = extra || {};
+  const g = parent || strokeLayer;
+  if (isRough) { g.appendChild(rc.path(d, opts(fill, extra))); return; }
+  const e = el('path', { d, fill: fill || 'none',
+    stroke: extra.stroke || (isMograph && fill ? 'none' : S.ink),
+    'stroke-width': extra.strokeWidth || (fill ? 5 : 6), 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, g);
+  if (extra['stroke-dasharray']) e.setAttribute('stroke-dasharray', extra['stroke-dasharray']);
+  return e;
+}
+function dot(cx, cy, r, fill, parent) {
+  const g = parent || strokeLayer;
+  if (isRough) { g.appendChild(rc.circle(cx, cy, r * 2, opts(fill, { fill, fillStyle: 'solid', roughness: Math.min(S.roughness, 0.6) }))); return; }
+  el('circle', { cx, cy, r, fill }, g);
+}
+function stroke(d, extra, parent) { shape(d, null, extra, parent); }
+function softShadow(cx, cy, rx, ry) {
+  // ground shadow: a soft ellipse, never outlined (the Shapiro tell under every standing thing)
+  const c = S.bg === '#ffffff' || S.bg === '#f6f3ee' || S.bg === '#d9c3a0' ? S.ink : '#ffffff';
+  el('ellipse', { cx, cy, rx, ry, fill: c, opacity: S.bg === '#d9c3a0' ? 0.10 : 0.08 });
+}
+function text(x, y, str, size, font, color, anchor, weight, maxW) {
+  const t = el('text', {
+    x, y, 'font-family': `'${font}', cursive, sans-serif`, 'font-size': size, fill: color,
+    'text-anchor': anchor || 'middle', 'font-weight': weight || 'normal',
+    filter: S.glow ? 'url(#glow)' : null,
+  });
+  t.textContent = str;
+  if (maxW) t.setAttribute('data-maxw', maxW);
+  return t;
+}
+function fitTexts() {
+  document.querySelectorAll('text[data-maxw]').forEach(t => {
+    const maxW = +t.getAttribute('data-maxw');
+    const len = t.getComputedTextLength();
+    if (len > maxW) t.setAttribute('font-size', (+t.getAttribute('font-size')) * maxW / len);
+  });
+}
+const H = s => S.caps ? s.toUpperCase() : s;
+
+// Palette roles for the vocabulary
+const BROWN = P.brown, DARK = (S.bg === '#000000' || S.bg === '#050507' || S.bg === '#0b1220' || S.bg === '#0f3b7a') ? P.grey : '#3a2414';
+const FACE = isMograph ? '#1a1a1e' : (DARK === P.grey ? S.ink : DARK);
+const HEADFILL = isMograph ? '#e9e9ef' : (S.fillStyle === 'none' ? null : (S.bg === '#ffffff' || S.bg === '#f6f3ee' || S.bg === '#d9c3a0' ? '#ffffff' : S.bg));
+const HAIR = DARK, HOOF = (S.bg === '#ffffff' || S.bg === '#f6f3ee') ? '#f4f4f4' : P.grey;
+
+// ---------- THE HORSE (authored in a 400x300 local box, placed with a transform) ----------
+// Body + neck + head are ONE silhouette path so there is no seam at the chest or throat; mane, tail,
+// ear, legs and hooves are separate shapes layered on top (far legs behind, near legs in front).
+function horse(x, y, scale) {
+  const g = el('g', { transform: `translate(${x} ${y}) scale(${scale})` }, strokeLayer);
+  const o = (fill) => ({ fill, roughness: S.roughness / scale, strokeWidth: S.inkWidth / scale * 1.1 });
+  // far legs (behind the body)
+  shape('M 112 184 L 132 184 L 128 262 L 114 262 Z', BROWN, o(BROWN), g);
+  shape('M 236 184 L 256 184 L 254 262 L 240 262 Z', BROWN, o(BROWN), g);
+  // tail (hangs from the top of the rump)
+  shape('M 108 112 C 80 124, 62 172, 74 224 C 82 228, 88 224, 90 218 C 84 188, 88 156, 112 132 Z', DARK, o(DARK), g);
+  // silhouette: rump -> back -> neck -> head -> muzzle -> throat -> chest -> belly -> rump
+  shape('M 120 104 C 160 90, 200 92, 236 98 C 262 74, 292 54, 318 44 C 334 30, 362 34, 378 50 C 390 62, 398 74, 392 86 C 388 94, 374 96, 362 90 C 352 86, 344 82, 338 76 C 320 92, 302 112, 290 136 C 292 158, 286 178, 272 190 C 230 198, 170 198, 130 194 C 104 190, 94 170, 96 146 C 98 124, 106 108, 120 104 Z', BROWN, o(BROWN), g);
+  // ear
+  shape('M 326 42 L 322 22 L 342 36 Z', BROWN, o(BROWN), g);
+  // mane: a band standing up from the back edge of the neck, plus a forelock
+  shape('M 318 44 C 292 54, 262 74, 236 98 L 226 86 C 252 60, 284 40, 312 30 Z', DARK, o(DARK), g);
+  shape('M 316 42 C 304 38, 296 46, 302 58 C 310 54, 316 48, 316 42 Z', DARK, o(DARK), g);
+  // near legs
+  shape('M 136 188 L 160 188 L 154 262 L 138 262 Z', BROWN, o(BROWN), g);
+  shape('M 256 186 L 278 186 L 276 262 L 260 262 Z', BROWN, o(BROWN), g);
+  // hooves
+  for (const [a, b] of [[112, 128], [136, 154], [238, 254], [258, 276]]) shape(`M ${a} 258 L ${b} 258 L ${b} 272 L ${a} 272 Z`, HOOF, o(HOOF), g);
+  // eye, nostril, mouth
+  dot(350, 56, 4, FACE, g);
+  dot(384, 80, 2.5, FACE, g);
+  stroke('M 388 90 L 378 92', { strokeWidth: S.inkWidth / scale, stroke: FACE }, g);
+}
+
+// ---------- A PERSON with hair (x = center, gy = ground) ----------
+function person(x, gy, { hair, shirt, tie, facing }) {
+  const ty = gy - 215, by = gy - 112, hy = ty - 42;
+  const f = facing || 1;             // 1 = looks right, -1 = looks left
+  softShadow(x, gy + 4, 44, 8);
+  // legs + feet
+  stroke(`M ${x - 10} ${by} L ${x - 14} ${gy - 4}`); stroke(`M ${x + 10} ${by} L ${x + 14} ${gy - 4}`);
+  stroke(`M ${x - 22} ${gy - 4} L ${x - 6} ${gy - 4}`); stroke(`M ${x + 6} ${gy - 4} L ${x + 24} ${gy - 4}`);
+  // torso: rounded shoulders, tapered to the hips (not a box)
+  shape(`M ${x - 30} ${ty + 10} C ${x - 32} ${ty + 2}, ${x - 24} ${ty - 2}, ${x - 16} ${ty} L ${x + 16} ${ty} C ${x + 24} ${ty - 2}, ${x + 32} ${ty + 2}, ${x + 30} ${ty + 10} L ${x + 23} ${by} L ${x - 23} ${by} Z`, shirt);
+  // arms (hang beside the body) + hands
+  stroke(`M ${x - 29} ${ty + 14} L ${x - 36} ${ty + 96}`); stroke(`M ${x + 29} ${ty + 14} L ${x + 36} ${ty + 96}`);
+  dot(x - 37, ty + 102, 6, S.fillStyle === 'none' ? null : (S.bg === '#ffffff' || S.bg === '#f6f3ee' ? '#ffffff' : S.bg));
+  dot(x + 37, ty + 102, 6, S.fillStyle === 'none' ? null : (S.bg === '#ffffff' || S.bg === '#f6f3ee' ? '#ffffff' : S.bg));
+  if (tie) shape(`M ${x - 5} ${ty + 2} L ${x + 5} ${ty + 2} L ${x + 3} ${ty + 46} L ${x} ${ty + 54} L ${x - 3} ${ty + 46} Z`, P.green);
+  // head
+  shape(`M ${x} ${hy - 34} C ${x + 19} ${hy - 34}, ${x + 34} ${hy - 19}, ${x + 34} ${hy} C ${x + 34} ${hy + 19}, ${x + 19} ${hy + 34}, ${x} ${hy + 34} C ${x - 19} ${hy + 34}, ${x - 34} ${hy + 19}, ${x - 34} ${hy} C ${x - 34} ${hy - 19}, ${x - 19} ${hy - 34}, ${x} ${hy - 34} Z`,
+    HEADFILL);
+  // face (slight three-quarter: eyes offset toward the facing side)
+  dot(x + f * 6, hy - 4, 3.2, FACE); dot(x + f * 20, hy - 4, 3.2, FACE);
+  stroke(`M ${x + f * 8} ${hy + 14} L ${x + f * 18} ${hy + 13}`, { strokeWidth: S.inkWidth, stroke: FACE });
+  // hair variants
+  if (hair === 'cap') {
+    shape(`M ${x - 34} ${hy - 4} C ${x - 32} ${hy - 44}, ${x + 32} ${hy - 44}, ${x + 34} ${hy - 4} C ${x + 22} ${hy - 18}, ${x - 2} ${hy - 24}, ${x - 34} ${hy - 4} Z`, HAIR === P.grey ? S.ink : HAIR);
+  } else if (hair === 'curly') {
+    for (let i = 0; i < 7; i++) {
+      const a = Math.PI * (1.08 + i * 0.14);
+      dot(x + Math.cos(a) * 32, hy + Math.sin(a) * 32, 11, HAIR === P.grey ? S.ink : HAIR);
+    }
+  } else if (hair === 'bob') {
+    shape(`M ${x - 37} ${hy + 22} L ${x - 37} ${hy - 4} C ${x - 34} ${hy - 44}, ${x + 34} ${hy - 44}, ${x + 37} ${hy - 4} L ${x + 37} ${hy + 16} C ${x + 31} ${hy + 6}, ${x + 27} ${hy - 10}, ${x + 22} ${hy - 20} C ${x + 6} ${hy - 12}, ${x - 14} ${hy - 8}, ${x - 28} ${hy + 4} Z`, HAIR === P.grey ? S.ink : HAIR);
+  } else if (hair === 'bun') {
+    shape(`M ${x - 34} ${hy - 4} C ${x - 32} ${hy - 44}, ${x + 32} ${hy - 44}, ${x + 34} ${hy - 4} C ${x + 20} ${hy - 20}, ${x - 10} ${hy - 22}, ${x - 34} ${hy - 4} Z`, HAIR === P.grey ? S.ink : HAIR);
+    dot(x - 26, hy - 36, 11, HAIR === P.grey ? S.ink : HAIR);
+  }
+}
+
+// ---------- hay bale, tree, grass ----------
+function bale(x, y) { shape(`M ${x} ${y + 6} Q ${x} ${y}, ${x + 6} ${y} L ${x + 84} ${y} Q ${x + 90} ${y}, ${x + 90} ${y + 6} L ${x + 90} ${y + 52} Q ${x + 90} ${y + 58}, ${x + 84} ${y + 58} L ${x + 6} ${y + 58} Q ${x} ${y + 58}, ${x} ${y + 52} Z`, P.gold); stroke(`M ${x + 30} ${y} L ${x + 30} ${y + 58}`, { strokeWidth: S.inkWidth * 0.8 }); stroke(`M ${x + 60} ${y} L ${x + 60} ${y + 58}`, { strokeWidth: S.inkWidth * 0.8 }); }
+function tree(x, gy) { softShadow(x, gy + 4, 50, 8); shape(`M ${x - 10} ${gy} L ${x - 8} ${gy - 90} L ${x + 8} ${gy - 90} L ${x + 10} ${gy} Z`, BROWN); shape(`M ${x} ${gy - 230} C ${x + 60} ${gy - 230}, ${x + 90} ${gy - 180}, ${x + 70} ${gy - 130} C ${x + 60} ${gy - 95}, ${x - 60} ${gy - 95}, ${x - 70} ${gy - 130} C ${x - 90} ${gy - 180}, ${x - 60} ${gy - 230}, ${x} ${gy - 230} Z`, P.green); }
+function grass(x, gy) { stroke(`M ${x} ${gy} L ${x - 8} ${gy - 18} M ${x} ${gy} L ${x + 2} ${gy - 22} M ${x} ${gy} L ${x + 10} ${gy - 16}`, { strokeWidth: S.inkWidth }); }
+
+// ---------- compose ----------
+text(960, 150, H('the horse lost its job'), 96, S.fontH, S.colorH, 'middle', '700', 1700);
+text(960, 215, 'same pen as the first row, richer drawings: a horse, three people with hair, hay, a tree', 38, S.fontL, S.colorL, 'middle', 'normal', 1600);
+
+const GY = 900;
+// ground line
+stroke(`M 120 ${GY} L 1800 ${GY}`, { strokeWidth: S.inkWidth * 0.9 });
+softShadow(560, GY + 4, 250, 12);
+horse(300, GY - 544, 2.0);
+text(560, GY + 70, '6.6 million', 56, S.fontH, S.colorH, 'middle', '700', 400);
+text(560, GY + 118, 'horses in America today', 36, S.fontL, S.colorL);
+
+bale(1010, GY - 58); bale(1105, GY - 58); bale(1058, GY - 116);
+tree(1760, GY);
+person(1290, GY, { hair: 'cap', shirt: P.blue, tie: true, facing: -1 });
+person(1420, GY, { hair: 'curly', shirt: P.green, facing: -1 });
+person(1550, GY, { hair: 'bob', shirt: P.red, facing: -1 });
+text(1420, GY + 70, 'they kept theirs', 44, S.fontL, S.colorL, 'middle', 'normal', 380);
+for (const gx of [180, 240, 900, 960, 1680, 1840]) grass(gx, GY);
+
+const ready = () => { fitTexts(); document.body.setAttribute('data-ready', '1'); };
+document.fonts.ready.then(ready);
+setTimeout(ready, 8000);
+</script>
+</body>
+</html>

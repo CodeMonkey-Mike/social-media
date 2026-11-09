@@ -14,7 +14,7 @@ resolved spec's `timeline.middle_frames`. After: durations (EDIT + pauses), A/V 
 side of both seams and one in the middle of every chapter pause written to <project>/_qa/ for a look.
 
 Usage:
-  python stitch.py --edit "<project> EDIT.mp4" --project "<media/<project>>" --out "<project> FINAL-v1.mp4" [--crf 18]
+  python stitch.py --edit "<project> EDIT.mp4" --project "<media/deck-lecture/<project>>" --out "<project> FINAL-v1.mp4" [--crf 18]
   (parts are picked up from <project>/_previews/<project>-middle-part*.mp4; --parts overrides)
 """
 import argparse, glob, json, os, subprocess, sys
@@ -76,13 +76,18 @@ def main():
     sr, layout = audio_format(args.edit)
     # the EDIT's video is trimmed by FRAME NUMBER (a boundary like 1176.7667 s written as seconds lands on either side
     # of the frame at 1176.76667 depending on rounding; frames are the exact unit), its audio by sample-exact seconds
-    fc = [f"[0:v]trim=start_frame=0:end_frame={round(head * fps)},setpts=PTS-STARTPTS[hv];",
+    # The EDIT's video can be VFR: the desilencer's batched render leaves a one-frame timestamp GAP at some joins
+    # (Crypto vs. The Traditional Financial System, 2026-11-08: 32 gaps = +1.05 s, so frame N sat at N/30 + 1 s by the
+    # tail and the FINAL's tail ran 1 s ahead of its audio). fps={fps}:start_time=0 re-times it CFR first (a gap
+    # becomes a held frame), so a frame number IS its time again; the head and tail are split off that one stream.
+    fc = [f"[0:v]fps={fps}:start_time=0,split=2[ev0][ev1];",
+          f"[ev0]trim=start_frame=0:end_frame={round(head * fps)},setpts=PTS-STARTPTS[hv];",
           f"[0:a]atrim=start=0:end={head:.6f},asetpts=PTS-STARTPTS[ha];"]
     for i in range(n):
         fc.append(f"[{i+1}:v]setpts=PTS-STARTPTS[p{i}];")
     fc.append("".join(f"[p{i}]" for i in range(n)) + f"concat=n={n}:v=1:a=0[mv];")
     fc.extend(middle_audio_graph(tl, sr, layout))
-    fc.append(f"[0:v]trim=start_frame={round(tail * fps)},setpts=PTS-STARTPTS[tv];")
+    fc.append(f"[ev1]trim=start_frame={round(tail * fps)},setpts=PTS-STARTPTS[tv];")
     fc.append(f"[0:a]atrim=start={tail:.6f},asetpts=PTS-STARTPTS[ta];")
     fc.append("[hv][ha][mv][ma][tv][ta]concat=n=3:v=1:a=1[outv][outa]")
     fc_path = args.out + ".filter.txt"

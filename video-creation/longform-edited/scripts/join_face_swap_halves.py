@@ -14,8 +14,8 @@ from pathlib import Path
 
 FPS = 30
 P = Path(sys.argv[1]).resolve(); name = sys.argv[2]; halves = sys.argv[3:]
-if len(halves) < 2:
-    print("SWAP-JOIN FAIL need at least two halves"); sys.exit(1)
+if len(halves) < 1:   # ONE piece is valid (lets-get-rich 2026-10-31): an unsplit window still needs the sidecar
+    print("SWAP-JOIN FAIL need at least one re-timed clip"); sys.exit(1)
 D = P / "assets/face-swap"
 parts, inputs, chain = [], [], []
 for i, h in enumerate(halves):
@@ -37,11 +37,17 @@ for i, h in enumerate(halves):
     chain.append(f"[{i}:v]fps={FPS},trim=start_frame={start_f}:end_frame={end_f},setpts=PTS-STARTPTS,format=yuv420p[v{i}]")
 fc = ";".join(chain) + ";" + "".join(f"[v{i}]" for i in range(len(halves))) + f"concat=n={len(halves)}:v=1:a=0[v]"
 out = D / f"{name}-higgsfield-bg-swap.mp4"
+final_out = out
+if any(str(out) == pp["clip"] for pp in parts):   # a one-piece join reads and writes the same file: go via a temp
+    out = D / f"{name}-higgsfield-bg-swap.joining.mp4"
 r = subprocess.run(["ffmpeg", "-y", "-v", "error", *inputs, "-filter_complex", fc, "-map", "[v]", "-an",
                     "-c:v", "libx264", "-preset", "slow", "-crf", "16", "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(out)],
                    capture_output=True, text=True)
 if r.returncode != 0:
     print("SWAP-JOIN FAIL ffmpeg:", r.stderr[-400:]); sys.exit(1)
+if out != final_out:
+    import os
+    os.replace(out, final_out); out = final_out
 probe = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=nb_frames,duration",
                         "-of", "csv=p=0", str(out)], capture_output=True, text=True).stdout.strip().split(",")
 first = json.loads((D / f"{halves[0]}-raw-for-higgsfield.json").read_text(encoding="utf-8"))
@@ -50,7 +56,7 @@ side = {"name": name, "clip": str(out), "clip_frames": int(probe[1]) if len(prob
         "clip_s": round(float(probe[0]) if probe[0] not in ("", "N/A") else 0.0, 3), "fps": FPS,
         "window_s": [w0, w1], "window_frames": [round(w0 * FPS), round(w1 * FPS)],
         "window_starts_at_clip_s": at, "window_starts_at_clip_frame": round(at * FPS),
-        "built_from": f"{len(halves)} re-timed halves joined at their shared spine time(s) {[p['window_s'][0] for p in parts[1:]]} (desilencer joins in the footage)",
+        "built_from": (f"{len(halves)} re-timed halves joined at their shared spine time(s) {[p['window_s'][0] for p in parts[1:]]} (desilencer joins in the footage)" if len(halves) > 1 else "one re-timed clip (the window has no join inside; no split)"),
         "halves": parts}
 (D / f"{name}-higgsfield-bg-swap.json").write_text(json.dumps(side, indent=2), encoding="utf-8")
 print(f"SWAP-JOIN ok name={name} clip={side['clip_s']} window={w0}-{w1} window_starts_at_clip_s={at} frames={side['clip_frames']}")

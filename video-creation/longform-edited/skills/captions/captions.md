@@ -34,6 +34,10 @@ canonical caption skill `video-creation/skills/captions/captions.md`; THIS file 
   with these rules (windows = FACE holds > 5 s from AS-RECORDED, montserrat 2/4, the project's mishear list applied)
   and writes `remotion/src/<Project>Captions.ts` + `assets/captions.json`. `--caption-windows a-b` on the invocation
   adds the cold-open exception. The comp gates rendering by `CAPTION_WINDOWS` and routes every `t` through `sh()`.
+- **NO captions at all, a per-video Mike call (2026-11-04, quant: screen-share face mode, "this time, there will be no
+  captions"):** `run.py longform --project <p> --caption-scope none`. The `captions` node then writes an EMPTY
+  `remotion/src/<Project>Captions.ts` (ZCAPTIONS = [], CAPTION_WINDOWS = []) + a sidecar `captions_none: true`, the comp mounts
+  no caption layer, and the CUE-SHEET carries `CAPTIONS: OFF (Mike, <date>)` as the record (comp-build.md section 8).
 - **Wider caption scope, a per-video Mike call (2026-10-19, evals):** `run.py longform --project <p> --caption-scope
   all-faces,envato` (persisted in GRAPH-PROGRESS.json `settings.caption_scope`; `--caption-scope default` clears it).
   `all-faces` captions EVERY face hold, the < 5 s ones too; `envato` also captions every `envato-video` beat of

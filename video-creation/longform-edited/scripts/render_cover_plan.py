@@ -11,7 +11,9 @@ Usage: python video-creation/longform-edited/scripts/render_cover_plan.py <media
 Reads:  <project>/COVER-PLAN.json (+ AS-RECORDED.md for the chapter titles when present)
 Writes: <project>/BROLL-PLAN.md · <project>/EDIT-PLAN-prep.md   (refuses to overwrite unless --force,
         so hand edits after GATE 3 survive a re-run)
-Machine lines: COVER-PLAN beats=N cover_s=X envato=a/b chatgpt=c/d receipts=N containers=N clip_inserts=N · RENDERED <file>
+Machine lines: COVER-PLAN beats=N cover_s=X envato=a/b chatgpt=c/d receipts=N containers=N clip_inserts=N whiteboards=N · RENDERED <file>
+The WHITEBOARD worklist (2026-11-01) renders on every video: the plan's `whiteboards[]` rows (the whiteboard-builder's beats,
+video-creation/skills/whiteboard-beat/whiteboard-beat.md), or a "(none this video)" row.
 The CLIP INSERTS worklist (skills/clip-inserts, 2026-10-09) renders on every video: the plan's `clip_inserts[]` rows, or a
 "(none this video)" row carrying `clip_inserts_note`, so the consideration is visible at GATE 3 either way.
 """
@@ -52,6 +54,17 @@ def render_broll(plan: dict, proj: Path) -> str:
     L.append(f"**Budget:** Envato video {b.get('envato_used', 0)}/{b.get('envato_max', b.get('envato_video_max', 10))} · "
              f"ChatGPT images {b.get('chatgpt_used', 0)}/{b.get('chatgpt_max', b.get('chatgpt_image_max', 5))}. "
              f"{plan.get('budget_check', '')}")
+    L.append("")
+    # The CONTAINER THEME is printed at the top so Mike can catch it at GATE plan, before any slide / chart is built
+    # (Mike 2026-11-02, left-behind: "is there a place where I could have caught that before you generated them?").
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "graph"))
+        import common as _C
+        _theme = _C.container_theme(proj)
+    except Exception:
+        _theme = "dark"
+    L.append(f"**Container theme: {_theme.upper()}** (title slides, card slides, system-design diagrams and animated charts; "
+             "set per video with `run.py --container-theme dark|light`; receipts, b-roll and images are unaffected).")
     L.append("")
     themes = plan.get("chapter_themes") or {}
     def ch_of(beat):
@@ -160,6 +173,44 @@ def render_broll(plan: dict, proj: Path) -> str:
     if not charts:
         L.append("| (none) | | | | | | |")
     L.append("")
+    # Whiteboard beats (video-creation/skills/whiteboard-beat/whiteboard-beat.md; Mike 2026-11-01, left-behind): a 15 to 30 s
+    # hand-drawn scene per row, built + still-QA'd + rendered by the assets node's whiteboard lane, one beat at a time
+    wbs = plan.get("whiteboards") or []
+    wb_s = sum(float(b["tOut"]) - float(b["tIn"]) for b in plan.get("cover_beats") or []
+               if str(b.get("cover_type", "")).lower() == "whiteboard")
+    L.append(f"## WHITEBOARD build worklist ({len(wbs)}, {wb_s:.1f}s on screen) - hand-drawn rough.js scenes, one Remotion comp each, "
+             "rendered silent to `assets/whiteboard/<id>.mp4` (agent: whiteboard-builder, then visual-qa on its stills, then "
+             "chunked-render; contract `video-creation/skills/whiteboard-beat/whiteboard-beat.md`)")
+    L.append("")
+    if plan.get("whiteboard_check"):
+        L.append(f"**Whiteboard share:** {plan['whiteboard_check']}")
+        L.append("")
+    L.append("| id | Beat (final spine) | Length | Scene (what is drawn, the payoff) | Numbers drawn | Pen / canvas | Comp | Output | Status |")
+    L.append("|---|---|---|---|---|---|---|---|---|")
+    for w in wbs:
+        a, z = float(w.get("tIn") or 0), float(w.get("tOut") or 0)
+        nums = ", ".join(str(n) for n in w.get("numbers") or []) or "none"
+        scene = " ".join(str(w.get("scene", "")).split()).replace("|", "/")
+        L.append(f"| {w.get('id')} | {w.get('chapter', '')}@{mmss(a)}-{mmss(z)} | {z - a:.1f}s | {scene} | {nums} | "
+                 f"{w.get('pen', '')} / {w.get('canvas', '')} | {w.get('comp', '')} | {w.get('out', '')} | ☐ pending |")
+    if not wbs:
+        L.append("| (none this video) | | | | | | | | |")
+    L.append("")
+    # Screen-share face mode (longform-edited.md house rule #1b, 2026-11-04 quant): the deck-area content of every FACE window
+    fbs = plan.get("face_body") or []
+    if fbs:
+        L.append(f"## SCREEN-SHARE bodies ({len(fbs)}) - what the deck area of each FACE window shows (FACE MODE = screenshare; the assets are "
+                 "the rows above, scaled into the 1464x1080 deck area by the comp, comp-build.md section 4c; nothing extra is built)")
+        L.append("")
+        L.append("| id | FACE window | Time (final spine) | Body (type · asset · state) | Spoken | Notes | Status |")
+        L.append("|---|---|---|---|---|---|---|")
+        for r in fbs:
+            a, z = float(r.get("tIn") or 0), float(r.get("tOut") or 0)
+            body = f"{str(r.get('cover_type', '')).upper()} · {r.get('asset', '')}" + (f" · {r.get('state')}" if r.get("state") else "") \
+                   + (f" · from {r.get('from')}s" if str(r.get("cover_type")) == "whiteboard" else "")
+            L.append(f"| {r.get('id')} | F{r.get('face', '')} | {mmss(a)}-{mmss(z)} | {body} | \"{str(r.get('spoken', ''))[:80]}\" | "
+                     f"{str(r.get('notes', '')).replace('|', '/')[:120]} | ☐ pending |")
+        L.append("")
     L.append(f"## SLIDES build worklist ({len(slides)}) - TITLE SLIDES (no box) and CARD SLIDES (rounded card), locked stylesheet `skills/container-reference/container-canonical.css` (agent: slide-builder)")
     L.append("")
     L.append("| id | Slide type | Eyebrow / headline / content | Placement (beats) | Chapter accent | Status |")
@@ -193,6 +244,12 @@ def render_prep(plan: dict, proj: Path) -> str:
     if fw:
         L.append("**FACE windows (from the spine picture, not covered):** " + ", ".join(f"{mmss(a)}-{mmss(b)}" for a, b in fw))
         L.append("")
+    fbs = plan.get("face_body") or []
+    if fbs:   # screen-share face mode (house rule #1b): the deck area of each FACE window
+        L.append("**SCREEN-SHARE bodies (the deck area of each FACE window, painted by the comp):** "
+                 + "; ".join(f"{r.get('id')} {mmss(float(r.get('tIn') or 0))}-{mmss(float(r.get('tOut') or 0))} "
+                             f"{str(r.get('cover_type', '')).upper()} {r.get('asset', '')}" for r in fbs))
+        L.append("")
     beats = sorted(plan.get("cover_beats") or [], key=lambda x: float(x["tIn"]))
     by_ch = {}
     for b in beats:
@@ -205,6 +262,8 @@ def render_prep(plan: dict, proj: Path) -> str:
         L.append("|---|---|---|---|---|---|")
         for i, b in enumerate(rows, 1):
             layer = f"{str(b.get('cover_type', '')).upper()} {b.get('what', '')}"
+            if str(b.get("cover_type", "")).lower() == "whiteboard":   # name the beat + its clip
+                layer = f"WHITEBOARD {b.get('asset', '')} (assets/whiteboard/{b.get('asset', '')}.mp4) {b.get('what', '')}"
             L.append(f"| B{i} | {mmss(b['tIn'])}-{mmss(b['tOut'])} | \"{str(b.get('spoken', ''))[:90]}\" | {layer} | "
                      f"{b.get('priority', '')}{' · VERIFY' if b.get('verify') else ''} | per TRANSITIONS.md |")
         L.append("")
@@ -227,7 +286,8 @@ def main():
     b = plan.get("budget") or {}
     print(f"COVER-PLAN beats={len(beats)} cover_s={cover_s:.1f} envato={b.get('envato_used', 0)}/{b.get('envato_video_max', 10)} "
           f"chatgpt={b.get('chatgpt_used', 0)}/{b.get('chatgpt_image_max', 5)} receipts={len(plan.get('receipts') or [])} "
-          f"containers={len(plan.get('containers') or [])} clip_inserts={len(plan.get('clip_inserts') or [])}")
+          f"containers={len(plan.get('containers') or [])} clip_inserts={len(plan.get('clip_inserts') or [])} "
+          f"whiteboards={len(plan.get('whiteboards') or [])} face_body={len(plan.get('face_body') or [])}")
     for name, text in (("BROLL-PLAN.md", render_broll(plan, proj)), ("EDIT-PLAN-prep.md", render_prep(plan, proj))):
         dest = proj / name
         if dest.is_file() and not a.force:

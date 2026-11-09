@@ -1,0 +1,32 @@
+{
+  "verdict": "FAIL",
+  "defects": [
+    {
+      "t": 18.2,
+      "what": "Caption 'programmable.' sits right under the big PROGRAMMABLE pop, same word twice on screen. Short-only: the short's own caption track adds it. Frames 546-580 (18.2-19.37 s).",
+      "fix": "Hide this caption group while the pop is up (frames 546-580): the pop carries the word. longform-to-short.md already calls for captions off under a pop."
+    },
+    {
+      "t": 15.93,
+      "what": "White caption on the white band under the receipt reads hollow; the stroke clogs the letters. Short-only: the comp's caption slot puts it there. Frames 478-580 (15.93-19.37 s). 'hard fork.' and '1 became' are still readable, but visibly weaker at phone size than the same captions on dark shots.",
+      "fix": "Put a dark plate behind the caption slot for this window (y 1745-1920), faded in with the receipt, so the house stroke reads. Splice only these frames."
+    },
+    {
+      "t": 18.13,
+      "what": "Baked LAYER 1 IS PROGRAMMABLE pop covers the receipt's last paragraph; body text shows between its letters ('will conn', 'new P2P', 'updated to maintain' sliced). Frames 544-580 (18.13-19.33 s). Inherited: baked into the vertical source. The highlighted June 30 sentence stays clear.",
+      "fix": "Mike's call. To fix it in the short: an opaque white plate over the paragraph (y about 1465-1745) from frame 544, with the pop redrawn natively on top. The plate hides the baked pop too, so no span re-render."
+    },
+    {
+      "t": 22.0,
+      "what": "Side panels clip Mike's face for 4.4 s of the kicker. Worst at 21.57-22.2 s: cheek, temple and hair off the right edge, right eye about 40 px from it. At 20.0 s the face runs into the panel edge. Frames 583-715. Inherited: same picture in the vertical at 462.33 s. Mike kept that render on 2026-11-05 but has not ruled on it for the short.",
+      "fix": "Mike's call: keep as on the vertical, or replace the panels with the full-frame face and put the panel words in the caption slot. The panels are baked, so the replacement needs F7 re-rendered without them for this window."
+    },
+    {
+      "t": 25.5,
+      "what": "Burned caption line crosses Mike's mouth at 25.5 s, and the mouth drops behind it on and off from 24.0 to 27.0 s. Eye line is about 58 percent down with empty wall above. Inherited: same picture in the vertical at 465.9 s.",
+      "fix": "Low priority, no cheap fix: caption and face are baked together, so moving either means re-rendering F7 for this window. Accept unless Mike asks."
+    }
+  ],
+  "short": "bullish-on-kaspa-SHORT-30s-v3.mp4:34610374",
+  "mike_ruling": "Mike approved SHORT-30s-v3 in session 2026-11-06 as rendered; s_qa_final's 5 defects known and not fixed, QA verdict stays FAIL on record; delivered by hand"
+}

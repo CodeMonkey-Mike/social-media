@@ -8,6 +8,8 @@ clip was first captured muted and had to be re-muxed after the draft, which is t
 
 Usage:
   python capture_clip_insert.py --url <URL> --start 33:04.6 --end 33:14.6 --out <project>/assets/clip-inserts/CLIP-1-<slug>.mp4
+  python capture_clip_insert.py --file "<local clip>" --start 0:00.0 --end 0:03.8 --no-caption --out ...CLIP-7-<slug>.mp4
+      (a REACTION clip / meme from Mike's own library: no pull, no context band; clip-inserts.md rule 6, lets-get-rich 2026-10-31)
          --caption "Jensen Huang, June 2026, repeating a warning made about 10 years earlier"
          [--expect "nobody goes into this field"] [--whisper-model small.en] [--font <ttf/otf>] [--keep-src] [--no-whisper]
 
@@ -192,19 +194,24 @@ def fit_caption_size(caption: str, font: Path) -> int:
 
 def normalise(video: Path, out: Path, dur: float, caption: str, font: Path, tmp: Path,
               audio: Path = None, video_offset: float = 0.0, audio_offset: float = 0.0, fps: int = 30,
-              caption_pos: str = "bottom"):
+              caption_pos: str = "bottom", band_h: int = 96, band_opaque: bool = False):
     """One ffmpeg pass: trim to the window, letterbox to 1920x1080 @fps, burn the caption, AAC 48k stereo.
     caption_pos 'top' puts the band at the top of the frame: use it whenever the source carries its own lower-third
     (a news chyron, a network bug), so the two never stack (retire-early visual-qa, 2026-10-10)."""
-    textfile = tmp / "caption.txt"
-    textfile.write_text(caption, encoding="utf-8")
-    band_y, text_y = ("0", "26") if caption_pos == "top" else ("ih-96", "h-70")
-    fsize = fit_caption_size(caption, font)
     vf = ("scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,"
-          f"fps={fps},format=yuv420p,"
-          f"drawbox=x=0:y={band_y}:w=iw:h=96:color=black@0.55:t=fill,"
-          f"drawtext=fontfile='{ff_escape_path(font)}':textfile='{ff_escape_path(textfile)}':expansion=none:fontcolor=white:fontsize={fsize}:"
-          f"x=(w-text_w)/2:y={text_y}:shadowcolor=black@0.6:shadowx=2:shadowy=2")
+          f"fps={fps},format=yuv420p")
+    if caption:   # a reaction clip (--no-caption) carries no band: nothing to name (clip-inserts.md rule 6)
+        textfile = tmp / "caption.txt"
+        textfile.write_text(caption, encoding="utf-8")
+        band_y, text_y = ("0", "26") if caption_pos == "top" else ("ih-96", "h-70")
+        if band_h != 96:   # a taller band (to cover a source lower-third / bug): centre the text in it
+            band_y = "0" if caption_pos == "top" else f"ih-{band_h}"
+            text_y = f"({band_h}-text_h)/2" if caption_pos == "top" else f"h-{band_h}+({band_h}-text_h)/2"
+        fsize = fit_caption_size(caption, font)
+        band_color = "black@1.0" if band_opaque else "black@0.55"   # opaque = nothing of the source shows through
+        vf += (f",drawbox=x=0:y={band_y}:w=iw:h={band_h}:color={band_color}:t=fill,"
+               f"drawtext=fontfile='{ff_escape_path(font)}':textfile='{ff_escape_path(textfile)}':expansion=none:fontcolor=white:fontsize={fsize}:"
+               f"x=(w-text_w)/2:y={text_y}:shadowcolor=black@0.6:shadowx=2:shadowy=2")
     cmd = ["ffmpeg", "-y", "-loglevel", "error"]
     cmd += ["-ss", f"{video_offset:.3f}", "-i", str(video)]
     if audio is not None:
@@ -251,11 +258,14 @@ def phrase_heard(expect: str, heard: str) -> bool:
 def main():
     global SECTION_TIMEOUT
     ap = argparse.ArgumentParser()
-    ap.add_argument("--url", required=True)
+    src = ap.add_mutually_exclusive_group(required=True)
+    src.add_argument("--url", help="the page / video URL (pulled with yt-dlp)")
+    src.add_argument("--file", help="a LOCAL source file (a reaction clip / meme from Mike's library): no pull, the window is cut from it")
     ap.add_argument("--start", required=True, help="window start in the source, M:SS.s or H:MM:SS.s or seconds")
     ap.add_argument("--end", required=True, help="window end (exclusive)")
     ap.add_argument("--out", required=True, help="<project>/assets/clip-inserts/CLIP-<n>-<slug>.mp4")
-    ap.add_argument("--caption", required=True, help="the context caption burned on every frame: who, where, when")
+    ap.add_argument("--caption", default=None, help="the context caption burned on every frame: who, where, when (required unless --no-caption)")
+    ap.add_argument("--no-caption", action="store_true", help="burn NO context band: a reaction clip / meme that makes no claim (clip-inserts.md rule 6)")
     ap.add_argument("--expect", default=None, help="a phrase Whisper must hear in the clip (FAIL otherwise)")
     ap.add_argument("--whisper-model", default="small.en")
     ap.add_argument("--no-whisper", action="store_true")
@@ -264,9 +274,16 @@ def main():
                     help="where the context band sits; 'top' when the source has its own lower-third / chyron")
     ap.add_argument("--fps", type=int, default=30)
     ap.add_argument("--keep-src", action="store_true", help="keep the raw pulls beside the project's _previews/")
+    ap.add_argument("--band-height", type=int, default=96, help="context band height px (default 96); raise it to cover a source lower-third (e.g. 140)")
+    ap.add_argument("--band-opaque", action="store_true", help="fully opaque band (default 55%% black): use when a source lower-third / bug would ghost through (bullish-on-kaspa CLIP-1 visual-qa, 2026-11-04)")
     ap.add_argument("--section-timeout", type=int, default=SECTION_TIMEOUT, help="seconds before a section pull is abandoned for the next method")
     a = ap.parse_args()
     SECTION_TIMEOUT = a.section_timeout
+    if a.no_caption:
+        a.caption = ""
+    elif not a.caption:
+        print("usage: --caption is required (who, where, when), or pass --no-caption for a reaction clip", file=sys.stderr)
+        sys.exit(2)
 
     start, end = tc(a.start), tc(a.end)
     dur = round(end - start, 3)
@@ -279,7 +296,7 @@ def main():
         sys.exit(2)
     out.parent.mkdir(parents=True, exist_ok=True)
     font = Path(a.font) if a.font else next((f for f in DEFAULT_FONTS if f.is_file()), None)
-    if not font or not font.is_file():
+    if a.caption and (not font or not font.is_file()):
         print(f"FAIL no caption font found (pass --font); looked for {[str(f) for f in DEFAULT_FONTS]}")
         sys.exit(1)
     # raw pulls live under the project's _previews/ when the out path is inside a project, else a temp dir
@@ -289,39 +306,52 @@ def main():
         shutil.rmtree(tmp, ignore_errors=True)
     tmp.mkdir(parents=True, exist_ok=True)
 
-    print(f"CLIP-INSERT window {start:.3f}-{end:.3f} ({dur:.3f}s) from {a.url}")
+    print(f"CLIP-INSERT window {start:.3f}-{end:.3f} ({dur:.3f}s) from {a.file or a.url}")
     method, video, audio, v_off, a_off = None, None, None, 0.0, 0.0
     def usable(p):
         return p is not None and has_audio(p) and mean_volume_db(p) > -45.0 and duration(p) >= dur - 0.5
-    sec = pull_section(a.url, start, end, tmp, "bv*[height<=1080]+ba/b[height<=1080]/bv*+ba/b", "section")
-    print("PROGRESS 20%", flush=True)
-    if not usable(sec):
-        # a single progressive (muxed) stream seeks reliably where DASH stalls; 720p or whatever exists
-        prog = pull_section(a.url, start, end, tmp, "b[height<=720][acodec!=none]/b[acodec!=none]/b", "section-prog")
-        if usable(prog):
-            sec = prog
-    print("PROGRESS 30%", flush=True)
-    if usable(sec):
-        method, video = "section", sec
+    if a.file:
+        local = Path(a.file)
+        if not local.is_file():
+            print(f"FAIL local source not found: {local}")
+            sys.exit(1)
+        if not has_audio(local):
+            print(f"FAIL local source has no audio stream: {local} (a clip insert carries its own sound)")
+            sys.exit(1)
+        if duration(local) < end - 0.05:
+            print(f"FAIL local source runs {duration(local):.2f}s, the window ends at {end:.2f}s")
+            sys.exit(1)
+        method, video, v_off = "file", local, start
     else:
-        if sec is not None:
-            print(f"  section file {sec.name}: audio={'yes' if has_audio(sec) else 'NO'} dur={duration(sec):.2f}s; muxing the full audio onto it")
-        full_audio = pull_audio(a.url, tmp)
-        print("PROGRESS 50%")
-        if sec is not None and full_audio is not None and duration(sec) >= dur - 0.5:
-            method, video, audio, a_off = "audio-mux", sec, full_audio, start
+        sec = pull_section(a.url, start, end, tmp, "bv*[height<=1080]+ba/b[height<=1080]/bv*+ba/b", "section")
+        print("PROGRESS 20%", flush=True)
+        if not usable(sec):
+            # a single progressive (muxed) stream seeks reliably where DASH stalls; 720p or whatever exists
+            prog = pull_section(a.url, start, end, tmp, "b[height<=720][acodec!=none]/b[acodec!=none]/b", "section-prog")
+            if usable(prog):
+                sec = prog
+        print("PROGRESS 30%", flush=True)
+        if usable(sec):
+            method, video = "section", sec
         else:
-            full = pull_full(a.url, tmp)
-            print("PROGRESS 60%")
-            if full is None:
-                print("FAIL could not pull the source in any way (section, audio, full); check the URL and yt-dlp (memory: --js-runtimes node)")
-                sys.exit(1)
-            method, video, v_off = "full", full, start
-            if not has_audio(full) and full_audio is not None:
-                audio, a_off = full_audio, start
+            if sec is not None:
+                print(f"  section file {sec.name}: audio={'yes' if has_audio(sec) else 'NO'} dur={duration(sec):.2f}s; muxing the full audio onto it")
+            full_audio = pull_audio(a.url, tmp)
+            print("PROGRESS 50%")
+            if sec is not None and full_audio is not None and duration(sec) >= dur - 0.5:
+                method, video, audio, a_off = "audio-mux", sec, full_audio, start
+            else:
+                full = pull_full(a.url, tmp)
+                print("PROGRESS 60%")
+                if full is None:
+                    print("FAIL could not pull the source in any way (section, audio, full); check the URL and yt-dlp (memory: --js-runtimes node)")
+                    sys.exit(1)
+                method, video, v_off = "full", full, start
+                if not has_audio(full) and full_audio is not None:
+                    audio, a_off = full_audio, start
     print(f"CLIP-INSERT-PULLED method={method} src={video}")
     if not normalise(video, out, dur, a.caption, font, tmp, audio=audio, video_offset=v_off, audio_offset=a_off, fps=a.fps,
-                     caption_pos=a.caption_pos):
+                     caption_pos=a.caption_pos, band_h=a.band_height, band_opaque=a.band_opaque):
         sys.exit(1)
     print("PROGRESS 80%")
 

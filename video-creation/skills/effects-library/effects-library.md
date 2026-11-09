@@ -35,9 +35,18 @@ they are just effects, regardless of sound or not."_
   the EDIT-PLAN and a `## KINETIC TEXT` CUE-SHEET section; `[HW-*]` rows for halloween-2022). Shorts reuse the same
   devices through their own comp.
 
-## 2. The tool
+## 2. The tools
 
 ```
+python video-creation/skills/effects-library/scripts/effects_gallery.py [--force] [--theme <id>]   # the BROWSE dashboard (Mike, 2026-10-31):
+                                                                                   # assets/effects/browse/gallery.html -> one card per theme
+                                                                                   # (by its `label`: Energetic, Halloween horror) ->
+                                                                                   # browse/<label>/gallery.html = one card per device and
+                                                                                   # per sub-variant, each with PLAY buttons: the engine's
+                                                                                   # demo render (approved) AND the source-video excerpt at
+                                                                                   # its `browse_cues`, both with sound; excerpts are cut
+                                                                                   # once from the theme's `sources` videos (gitignored
+                                                                                   # mp4s, tracked html), mirrors assets/transitions/browse/
 python video-creation/skills/effects-library/scripts/effects_catalog.py check      # EFFECTS-CATALOG PASS|FAIL: every device's
                                                                                    # sound ids exist in the SFX index, every asset
                                                                                    # path and engine file exists, every device has
@@ -48,7 +57,15 @@ python video-creation/skills/effects-library/scripts/effects_catalog.py report [
 python video-creation/skills/effects-library/scripts/effects_catalog.py engines    # which devices have a shared engine
 ```
 
-Run `check` after editing the library, adding a sound a device names, moving a texture, or landing an engine.
+Run `check` after editing the library, adding a sound a device names, moving a texture, or landing an engine; run the gallery after
+adding a device, a `browse_cues` window or a demo render (it skips excerpts already cut; `--force` re-cuts them).
+
+- **A theme has a `label`** = the name Mike thinks of the look by ("Energetic" = `kinetic-text-2023`, "Halloween horror" =
+  `halloween-2022`); the id is the stable key every engine, doc and screenplay names, the label is what the dashboard, the reports and
+  new screenplays say. A theme's `sources` are its source videos keyed by a short name (`main`, `skills`, `hw`) with the video path, the
+  duration and the project; a device's `browse_cues` are `[{src, t0, t1, label}]` windows of those videos = what the dashboard plays
+  as "source". A theme can have MORE THAN ONE source video (Energetic has 004 and 007): the later source adds devices and variants to
+  the same theme, it never starts a second theme (Mike, 2026-10-31: "it's all the same theme").
 
 ## 3. Picking (the screenplay step)
 
@@ -76,7 +93,27 @@ Run `check` after editing the library, adding a sound a device names, moving a t
 3. A NEW ENGINE: `remotion/src/effects/<theme>/<Device>.tsx`, parametric (every number from the row is a prop with the
    row's value as default), plus a row in the theme's demo comp; set `engine` on the device row; `check` must PASS.
 
-## 5. State (2026-10-25)
+## 5. State (2026-10-31)
+
+- **Second source of `kinetic-text-2023` ("Energetic") captured 2026-10-31: Mike's 2023 "Skills of a Growth Engineer" (GrowthMarketingMike
+  007, 1:13), decoded from `Delivery2/Skills GM_1_1.prproj` (9 video + 5 audio tracks, 13 nested sequences; the AE templates measured on
+  the render as the halloween ones were). SEVEN new devices, all keyframe-read, NO ENGINE YET (the comp-builder builds them to the row):
+  `kt-caption-highlight` (the running caption line, hard cuts, lime key word, `open_stretch` on the first), `kt-typewriter-card` (paper
+  card, lines wiped in left to right under `typing`, the key phrase pops blue on cash-register), `kt-stacked-list-over-broll` (headline +
+  sub-line + skew-pop items on fast-reverse-5), `kt-statement-over-broll` (5 hovering lines over a 55 percent white matte),
+  `kt-text-wall` (the Monument Extended MOGRT + the red punch word), `kt-keyword-sparkle` (a cartoon star burst on a caption word, ting),
+  `kt-push-slide` (the 3-frame push cut, bucket 3). FOUR variants on existing rows: `kt-keyword-pop.chip` (a boxed label rising from
+  below on cartoon-accent), `kt-headline-over-broll.zoom_drop` (250 -> 100 in 3 frames), `kt-icon-pop.image_sticker` (a picture on the
+  chest / an animated sticker; the Wikimedia brain GIF is CC BY-SA, attribution required), `kt-subscribe-close.bar` (the keyed like /
+  SUBSCRIBE / bell bar with its own click track + `mouse-click` on the playlist line). New theme assets: `textures/chevron-gray.webp`,
+  `graphics/subscribe-bar-fill|key.mp4`, `graphics/thinking-brain-sticker.gif`, `graphics/_source/` (the AE templates, reference only).
+  New sounds in `assets/sfx/kinetic-text/`: `typing`, `mouse-click`, `subscribe-bar-clicks`. Time map: the second section of
+  `themes/kinetic-text-2023/CUE-SHEET.md`. The 007 bed was `get-it` (Raw Lew) at -20 / -25 dB, in the music library.
+- **The browse dashboard** (`effects_gallery.py`, section 2) built the same day: `assets/effects/browse/gallery.html`, every device of both
+  themes with its demo render and its source excerpt playable in place.
+- First video to pick from the widened theme: `longform-edited/media/lets-get-rich` (crypto channel, 2026-10-31).
+
+## 5a. State (2026-10-25)
 
 - Theme `kinetic-text-2023`: 10 devices catalogued (`kt-signature-open` is a composite written as its parts, overlays.md
   section 2), ALL with keyframe-read numbers: the six read 2026-10-21 (side panel, keyword pop, headline over b-roll,

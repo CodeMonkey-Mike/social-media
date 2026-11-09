@@ -1,0 +1,222 @@
+bullish-on-kaspa: FINAL spine transcript breakdown
+Source: spine/ALL.d.desilenced.mp4 (the file the comp loads, Adobe Enhance audio swapped in). Whisper medium, GPU, word-level. Re-transcribed 2026-11-04 after the swap.
+Cue source: ALL.d.desilenced.medium-words.json, NEVER hand-edited. Text below is corrected for STT mishears only; every timecode is exact from the JSON.
+Duration: 528.367 s (8:48.37, 30 fps, audio 528.366 s). Segments: 79. Words: 1360. Last spoken word ends 527.98.
+Tag key: FACE = whole segment on a face window. face+ = segment crosses a face boundary (use word times). cover = black spine.
+
+CHAPTER OPENERS
+  CH1 THE HOOK                0.00  (0:00.00)
+  CH2 WHAT IT IS             37.84  (0:37.84)
+  CH3 WHAT JUST LAUNCHED    104.28  (1:44.28)
+  CH4 WHAT IS COMING        238.12  (3:58.12)
+  CH5 WHERE IT STANDS       337.30  (5:37.30)
+  CH6 THE CLOSE             455.74  (7:35.74)
+  Note: 'But let's get on with this.' (336.12, cover) closes the plug; CH5's scripted opener 'Now look at these numbers' is 337.30.
+
+FACE WINDOWS (blackdetect on this file)
+  1.   0.000-  3.367 ( 3.367 s) CH1 B1    the locked hook: I am more bullish ... ever been.
+  2.  19.433- 26.633 ( 7.200 s) CH1 B2    inspiring line 1: Nobody was just handed Kaspa ... who did.
+  3.  31.433- 35.700 ( 4.267 s) CH1 B3    the title pop line: 2026 is the year it came all online.
+  4.  97.300-104.200 ( 6.900 s) CH2 B3    inspiring line 2: That's nearly 8 years ... ever even mined.
+  5. 233.233-237.900 ( 4.667 s) CH3 B6    inspiring line 3: Nobody owns a network ... yet it all ships.
+  6. 302.133-335.933 (33.800 s) CH4 B4-B5 the resume + the plug, one hold: That's research ... description below.
+  7. 447.900-455.667 ( 7.767 s) CH5 B6    inspiring line 4, the turn: The tools came first ... want to be standing.
+  8. 490.967-500.033 ( 9.066 s) CH6 B1    inspiring line 5: Kaspa didn't need a bull market ... waiting for it.
+  9. 511.033-528.367 (17.334 s) CH6 B3    the CTA, to the last frame: So if you want ... And subscribe!
+  CLIP-1 splice: after 'next.' (word 301.90-302.18), at the start of window 6 (302.133). 'next.' runs 47 ms past the window start, so snap the splice to the silence trough.
+
+SEGMENTS
+
+## CH1 THE HOOK
+[   0.00-   5.74] CH1 B1 face+ | I am more bullish on Kaspa now than I've ever been and it has nothing to do with the price.
+[   6.00-  13.14] CH1 B2 cover | This network launched in November of 2021 with no pre-mine, no pre-sale, no insider allocation.
+[  13.36-  19.44] CH1 B2 face+ | Every single coin in circulation was mined, in the open, from the first day of mainnet onward.
+[  19.68-  26.66] CH1 B2 face+ | Nobody was just handed Kaspa. You earned it from a machine or you bought it from somebody who did.
+[  26.66-  31.44] CH1 B3 face+ | And for 5 years, through the run up and through the crash, builders never stopped.
+[  32.10-  37.64] CH1 B3 face+ | 2026 is the year it came all online. So let's take this from the top.
+
+## CH2 WHAT IT IS
+[  37.84-  43.52] CH2 B1 cover | Now here's what Kaspa actually is. Bitcoin runs one block at a time and when two miners
+[  43.52-  48.64] CH2 B1 cover | find a block at the same moment, one of them gets thrown away. Kaspa keeps every block.
+[  48.78-  52.98] CH2 B1 cover | They land in parallel, in a graph, and GhostDAG puts them all in order.
+[  52.98-  59.24] CH2 B1 cover | Kaspa is a fully implemented GhostDAG, running proof of work at 10 blocks a second,
+[  59.38-  67.16] CH2 B1 cover | since the Crescendo hard fork on May 5th, 2025. El Cinco de Mayo! The block reward does not halve
+    >> CH2 B2 the emission opens mid-segment at 65.54
+[  67.16-  73.10] CH2 B2 cover | every 4 years. It shrinks a little every single month, a smooth halving, toward the hard cap of
+[  73.10-  79.94] CH2 B2 cover | around 28.7 billion. And the research behind it is older than most of crypto. The GHOST protocol,
+    >> CH2 B3 the lineage opens mid-segment at 75.10
+[  79.94-  87.02] CH2 B3 cover | 2013. Yonatan Sompolinsky and Aviv Zohar, credited by name in the Ethereum whitepaper.
+[  87.18-  95.02] CH2 B3 cover | GhostDAG, the paper, 2018. DAGKnight, 2022. And the founder is a research associate at Harvard,
+[  95.46- 102.32] CH2 B3 face+ | still publishing in 2026. That's nearly 8 years of published research before the first block on
+[ 102.32- 109.00] CH2 B3 face+ | mainnet was ever even mined. Now we get to what ship. June 30th, 2026. The Toccata hard fork.
+    >> CH3 B1 Toccata opens mid-segment at 104.28
+
+## CH3 WHAT JUST LAUNCHED
+[ 109.00- 115.26] CH3 B1 cover | The Layer 1 became programmable. Covenant, transaction introspection, and zero knowledge
+[ 115.26- 122.50] CH3 B1 cover | verification. Native, on the base layer. 2 days later, July 2nd, the first smart coins went live
+    >> CH3 B2 the tools opens mid-segment at 118.44
+[ 122.50- 129.56] CH3 B2 cover | on mainnet. September 9th, Silverscript version 1.0. A token that took thousands of lines of raw
+[ 129.56- 136.38] CH3 B2 cover | opcodes, now around 60 readable lines. Bam. Doesn't that make it easy? September 20th,
+    >> CH3 B3 the indexer + KCC-20 opens mid-segment at 135.14
+[ 136.38- 141.36] CH3 B3 cover | an outside indexer for the old KRC-20 tokens got exploited. But here's the thing,
+[ 141.62- 146.62] CH3 B3 cover | Kaspa's Layer 1 was never touched. The flaw was in the bookkeeping outside of the chain.
+[ 146.88- 153.98] CH3 B3 cover | And the fix was already being built. KCC-20, tokens on the Layer 1 itself. Written in August.
+[ 154.26- 161.34] CH3 B3 cover | October 21st, 2026. It was declared final. Token rules enforced by Kaspa's own consensus.
+[ 161.34- 167.44] CH3 B3 cover | The rules every node and every miner validates, not an outside indexer. As of early November,
+    >> CH3 B4 the tokens + Nacho opens mid-segment at 166.28
+[ 167.78- 174.46] CH3 B4 cover | around 460 tokens are live on the Layer 1, with markets and live trades tracked right on the
+[ 174.46- 181.40] CH3 B4 cover | explorer. And Nacho, the biggest meme token on Kaspa, opened its one-way migration to KCC-20
+[ 181.40- 189.24] CH3 B4 cover | on October 30th, closing on January 31st, 2027. Then, the L2 stack. Igra opened its public
+    >> CH3 B5 the L2 stack opens mid-segment at 186.32
+[ 189.24- 195.32] CH3 B5 cover | mainnet on March 19th, 2026, after six months of testing the Sigma Prime audit. And on Igra
+[ 195.36- 201.16] CH3 B5 cover | there's a lending protocol called Kaskad, live since May, double audited, with staking for
+[ 201.16- 208.00] CH3 B5 cover | governance. The second L2 is Kasplex, a full EVM Layer 2, so Ethereum apps can move over with
+[ 208.00- 213.66] CH3 B5 cover | minimal changes. Kaspa itself orders its transactions, and KAS is the only gas token.
+[ 214.78- 220.28] CH3 B5 cover | ZealousSwap, KrokoSwap, and KaspaCom are all running on it, and since April 2026,
+[ 220.74- 226.26] CH3 B5 cover | Gate lets you move KAS onto it directly from the exchange. And the network itself is closing in on
+    >> CH3 B6 network milestones opens mid-segment at 224.02
+[ 226.26- 234.08] CH3 B6 face+ | 2.5 billion transactions, with more than 565,000 addresses holding at least one KAS. Nobody owns
+[ 234.08- 241.54] CH3 B6 face+ | a network, and nobody asks for permission, yet it all ships. Now, what's coming? vProgs. Apps that
+    >> CH4 B1 vProgs opens mid-segment at 238.12
+
+## CH4 WHAT IS COMING
+[ 241.54- 247.66] CH4 B1 cover | live on Kaspa's own Layer 1, and talk to each other directly. No rollup in between. It's still under
+[ 247.66- 252.18] CH4 B1 cover | construction, the runtime is still evolving, and there's no public ship date. And then,
+    >> CH4 B2 DAGKnight opens mid-segment at 251.92
+[ 253.10- 260.34] CH4 B2 cover | DAGKnight. The consensus upgrade that follows Toccata. Block times targeted at 25 to 40 milliseconds.
+[ 260.66- 268.66] CH4 B2 cover | That's 25 to 40 blocks a second. And 100 blocks a second is targeted for a 2027 hard fork. And then,
+    >> CH4 B3 the stablecoin opens mid-segment at 267.90
+[ 268.66- 275.50] CH4 B3 cover | a stablecoin, issued against KAS and settled on the base layer. Community funded, led by a core
+[ 275.50- 283.84] CH4 B3 cover | developer, Alexander Safstrom, the author of the KIP-16. The goal is 5 million KAS. A fundraiser
+[ 283.84- 292.30] CH4 B3 cover | closes January 1st, 2027, refunds if it misses. And if it hits, the roadmap targets mainnet for that
+[ 292.30- 299.92] CH4 B3 cover | September. And the founder himself, Yonatan Sompolinsky, stood on a stage at Mid-Chain 2026 on October 26,
+    >> CH4 B4 the founder + CLIP-1 set-up opens mid-segment at 293.14
+[ 300.18- 305.96] CH4 B4 face+ | and described where his research goes next. That's research, not a ship feature. And that's the
+[ 305.96- 312.98] CH4 B4 FACE  | founder of this network, 13 years after GHOST, and he's still pushing the frontiers. And before we
+    >> CH4 B5 the plug opens mid-segment at 312.22
+[ 312.98- 318.10] CH4 B5 FACE  | take a look at those numbers, I have a very wonderful group of like-minded investors in my
+[ 318.10- 323.56] CH4 B5 FACE  | Discord. And we have tons of software, and our software and our reach is hooked into everything.
+[ 323.86- 330.20] CH4 B5 FACE  | Like we just did 114x on PerpsPad. We get in on all these plays early. Plus, we have tons of
+[ 330.20- 335.30] CH4 B5 FACE  | information and tons of software, swing trading software, you name it. Click the link in the
+[ 335.30- 340.66] CH4 B5 face+ | description below. But let's get on with this. Now look at these numbers as they are. KAS trades
+    >> CH5 B1 the price opens mid-segment at 337.30
+
+## CH5 WHERE IT STANDS
+[ 340.66- 348.04] CH5 B1 cover | around 3 cents, a market cap of around $860 million, around 85% below its all-time high
+[ 348.04- 356.14] CH5 B1 cover | of July 2024, and around $20 million a day in spot volume. Around 96.8% of all KAS is already mined,
+    >> CH5 B2 supply + the November cut opens mid-segment at 352.68
+[ 356.26- 364.52] CH5 B2 cover | around 912 million left to go. The November cut took the block reward from 2.06 to 1.94 KAS.
+[ 364.52- 371.30] CH5 B2 cover | That's around 1.68 million KAS a day of new supply, and at these prices, well under 1% of
+[ 371.30- 380.38] CH5 B2 cover | what trades in a day. Hash rate around 368 petahash. It fell around 70% from May of 2025 to July of
+    >> CH5 B3 the hash rate opens mid-segment at 372.50
+[ 380.38- 388.64] CH5 B3 cover | 2026, and then it rose 3 months in a row through 3 reward cuts and up 14%. User transactions flat,
+    >> CH5 B4 user transactions opens mid-segment at 386.74
+[ 388.64- 395.96] CH5 B4 cover | around 70,000 to 80,000 a day since July. And of those 460 tokens, the typical one has two holders,
+    >> CH5 B5 holders + TVL opens mid-segment at 392.14
+[ 396.22- 403.40] CH5 B5 cover | 9 of them have more than 100. The new Nacho, 355, and total value locked on the 2 L2s,
+[ 403.42- 409.80] CH5 B5 cover | around $770,000, so under a million. Yeah, so are we late or are we early?
+    >> CH5 B6 the Solana parallel opens mid-segment at 407.06
+[ 409.80- 422.40] CH5 B6 cover | Look at Solana, July of 2021, $1.51. November of 2021, $259.90, around 172x in 10 months. Then it
+[ 422.40- 430.38] CH5 B6 cover | fell around 97% to $8 by December of 2022, and everybody wrote it off. And from that low,
+[ 430.52- 438.90] CH5 B6 cover | around 37x to around $295 in January of 2025. Solana sits around a $55 billion market cap
+[ 438.90- 444.22] CH5 B6 cover | as I'm recording this. I'm not saying that Kaspa does that, at least not anytime soon anyway.
+[ 444.34- 451.60] CH5 B6 face+ | I'm just saying what a written off network can do. The tools came first, the crowd has not arrived
+[ 451.60- 458.18] CH5 B6 face+ | yet. And that's exactly the gap where I want to be standing. Here's where I stand, sound money,
+    >> CH6 B1 the hinge + conviction opens mid-segment at 455.74
+
+## CH6 THE CLOSE
+[ 458.58- 465.78] CH6 B1 cover | mined by anyone, owned by no one, and a base layer that just learned how to run app. And my long-term
+[ 465.78- 470.64] CH6 B1 cover | theory is that I think Ethereum eventually takes the number one spot from Bitcoin.
+[ 470.98- 476.20] CH6 B1 cover | And when it does, a lot of Bitcoin maxis are going to be looking for a proof of work home.
+[ 476.36- 483.38] CH6 B1 cover | I think they find Kaspa, not all at once, sort of like a cascade over time. Some move over,
+[ 483.50- 489.54] CH6 B1 cover | and a year later, some more move over, and so on. And some of them could already be stacking it
+[ 489.54- 495.64] CH6 B1 face+ | quietly. You never know. Kaspa didn't need a bull market to become real. It became real in the
+[ 495.64- 502.00] CH6 B1 face+ | bear. And whatever comes next, this network is waiting for it. The Kaspa community itself
+    >> CH6 B2 the community line opens mid-segment at 500.28
+[ 502.00- 508.70] CH6 B2 cover | is as dedicated as the XRP army. And I mean that in the highest compliment in this space. Hardcore,
+[ 509.10- 514.26] CH6 B2 face+ | patient, and still here. So if you want to be around people who stack with real conviction,
+    >> CH6 B3 the CTA opens mid-segment at 511.12
+[ 514.78- 519.52] CH6 B3 FACE  | click the link in the description below. And not only that, drop a comment in the comment section,
+[ 519.64- 523.74] CH6 B3 FACE  | tell me what you think about Kaspa, give me your price targets for next year, and so on.
+[ 523.74- 527.98] CH6 B3 FACE  | Make sure you click that like button. My God, dude. And subscribe!
+
+CORRECTIONS APPLIED (text only, from -> to x count)
+  Caspa -> Kaspa x5
+  Ghostag -> GhostDAG x3
+  does not have (every 4 years) -> does not halve x1
+  crescendo -> Crescendo x1
+  Ghost Protocol -> GHOST protocol x1
+  $28.7 billion (KAS, not dollars) -> 28.7 billion x1
+  Sampolinsky -> Sompolinsky x2
+  write paper -> whitepaper x1
+  Dagnyte -> DAGKnight x2
+  Takata -> Toccata x1
+  layer 1 -> Layer 1 x5
+  SilverScript -> Silverscript x1
+  Casper's -> Kaspa's x3
+  Casper -> Kaspa x7
+  Yggdras open -> Igra opened x1
+  In Onigra, -> And on Igra x1
+  CASCAD -> Kaskad x1
+  Casplex -> Kasplex x1
+  layer 2 -> Layer 2 x1
+  CAS -> KAS x6
+  CasperCom -> KaspaCom x1
+  Procoswap -> KrokoSwap x1
+  GATE -> Gate x1
+  Vprogs -> vProgs x1
+  Tokata -> Toccata x1
+  January 1, 2027 -> January 1st, 2027 x1
+  Midchain -> Mid-Chain x1
+  after Ghost -> after GHOST x1
+  discord -> Discord x1
+  reaches hooked -> reach is hooked x1
+  Perp's pad -> PerpsPad x1
+  $0.03 -> 3 cents x1
+  CASP -> KAS x3
+  $912 million (KAS, not dollars) -> 912 million x1
+  $2.06 to $1.94 (KAS, not dollars) -> 2.06 to 1.94 x1
+  $1.68 million (KAS, not dollars) -> 1.68 million x1
+  last year. (after 'in the') -> bear. x1
+  comments section -> comment section x1
+  (dropped by Whisper, restored) -> September x1, start of segment 292.30
+  (dropped by Whisper, restored) -> live x1, between 'Apps that' and 'on', 241.54
+
+FLAGS FOR REVIEW
+Evidence for every flag: the JSON decode plus Whisper medium re-decodes of this file and of the pre-Enhance audio, whole-file and clipped, some with a glossary prompt. No flag was checked by ear.
+
+CUE JSON DEFECTS (the JSON is left as decoded; cue and caption from the audio at these spots)
+  1. HIGH, 'bear' is 'last year' in the JSON at 495.64-496.42 (FACE window 8; 'last' has probability 0.00). Every other decode, both audio versions, says 'It became real in the bear.' Text corrected. The BEAR caption accent has no word to cue on.
+  2. HIGH, 'September' is missing from the JSON. 'And' at 292.30-293.14 (probability 0.03) has swallowed it. Other decodes hear 'for that September. And the founder himself'. Text restored. Do not cue CH4 B4 on that 'And'; 'the' at 293.14 is the first reliable word.
+  3. MED, 'live' is missing from the JSON between 'that' (241.26) and 'on' (241.54). Both whole-file re-decodes hear 'Apps that live on'. Text restored.
+  4. LOW, garbled in the JSON, corrected in text: 'Yggdras open' (188.06), 'In Onigra,' (194.80), 'reaches hooked' (321.92). Only the glossary-prompted decodes give Igra and 'reach is'; the unprompted ones say Yggdrasil and 'reaches'. Confirm by ear.
+
+ON-AIR QUESTIONS
+  5. HIGH, still open with Mike (PROJECT-LOG): Solana 'July of 2021, $1.51' at 411.08. Source and script say JANUARY 2021. Every decode agrees, so it is what he said, and it is kept. July to November also contradicts '10 months' in the same line.
+
+KEPT AS DECODED, DECODES DISAGREE (confirm by ear)
+  6. MED, 'Nobody owns a network' at 234.08 (FACE window 5, captioned): the clipped decodes say 'a', the whole-file re-decodes say 'the'.
+  7. LOW, 'on a stage' at 296.48: the Enhance audio says 'a', the pre-Enhance audio has no 'a'.
+  8. LOW, 'flaw' at 144.02: the re-decodes say 'floor'; the script says 'flaw'.
+  9. LOW, 'the number one spot' at 468.92: the re-decodes say 'a number one spot'.
+  10. LOW, 'get in on all these plays' at 327.74: the re-decodes have no 'on'.
+  11. LOW, 'Covenant' at 111.70: the pre-Enhance decode says 'covenants'.
+  12. LOW, 'it all ships' at 237.78: one decode says 'shipped'. 'hard fork' at 108.40: the re-decodes say 'hot fork'; the script says 'hard'.
+
+KEPT VERBATIM, MAY BE ELISION
+  13. LOW, 'what ship' (105.34), 'not a ship feature' (304.12), 'run app' (464.30), 'testing the Sigma Prime audit' (193.40).
+
+MIKE ALREADY RULED (PROJECT-LOG, SPINE REVIEW, not reopened)
+  - 'waiting for it' stays (499.28): captions follow the words, so READY has no word.
+  - The file ends on 'And subscribe!' (527.98): no sign-off, the bed's hard stop lands there.
+  - 114x on PerpsPad stays (324.60), with the showcase receipt C25.
+  - Ad-libs stay: 'El Cinco de Mayo!', 'Bam. Doesn't that make it easy?', 'But let's get on with this.', 'You never know.', 'My God, dude.'
+
+AS-RECORDED DIFFERENCES THE PLAN MUST BUILD TO
+  - FACE: 9 windows for the screenplay's 10 FACE lines; the resume and the plug are one hold (window 6).
+  - Inspiring line 3 changed: 'Nobody owns a network, and nobody asks for permission, yet it all ships.'
+  - The stablecoin is never named 'Kaspa Dollar', and the '9.5 percent ... on us' line is not in the take.
+  - The plug is rewritten (312.24-335.94): Discord, 114x, software, swing trading.
+  - The CTA asks for price targets instead of 'how bullish are you', and drops 'best community ever'.
+  - The Solana parallel adds 'at least not anytime soon anyway' (442.48).
+  - Spoken numbers differ from the script: 'around 3 cents' (3.1), 'around $860 million' (862). On-screen figures should match what is said.

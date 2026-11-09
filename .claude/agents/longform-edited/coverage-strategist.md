@@ -4,7 +4,7 @@ description: >
   Reads a longform-edited video's FINAL-spine transcript + AS-RECORDED and proposes
   the whole COVER-LAYER plan: for every cover beat, what is on screen (receipt / real
   chart screenshot / our own animated chart / deck container / system-design diagram /
-  timeline / Envato video b-roll / ChatGPT image b-roll), decided as ONE holistic pass
+  timeline / Envato video b-roll / ChatGPT image b-roll / hand-drawn whiteboard beat), decided as ONE holistic pass
   so the shared budget (the caller's numbers; the graph sizes the default to the runtime, 3 Envato + 1 ChatGPT a minute, floors 10 + 5) and the zero-orphans rule hold.
   Receipts + real charts are prioritized. Also carries the video's CLIP INSERTS (a third-party clip that
   plays with its OWN voice while the spine pauses; considered on every video) as `clip_inserts[]` with the
@@ -80,6 +80,42 @@ You operate inside the `social-media` repo (working directory is the repo root).
   clip's own frames are never a muted cover under narration. A DROPPED insert is not planned. When the video has
   none, `clip_inserts` is `[]` and `clip_inserts_note` says why in one line (from the screenplay's NONE).
 
+## Whiteboard beats (Mike, 2026-11-01; contract `video-creation/skills/whiteboard-beat/whiteboard-beat.md`)
+A WHITEBOARD beat is a 15 to 30 s hand-drawn rough.js scene that draws itself on under Mike's words, full frame (1920x1080),
+in place of b-roll or a card. Read the contract and `video-creation/whiteboard/whiteboard.md` before planning one.
+- **When:** a span where Mike explains a MECHANISM or a FLOW (who gets cut and why, where the money goes, a loop), self-
+  contained, 15 to 30 s. Every screenplay `WHITEBOARD WBn` 🎬 `[SHOW]` line that AS-RECORDED shows he actually said becomes
+  a row (keep its id); you may move its window to the words he recorded, never invent numbers for it. A beat he dropped is
+  not planned.
+- **The row** (`whiteboards[]`): `id` WB<n> · `chapter` · `tIn` / `tOut` on the FINAL spine from the word JSON (the first
+  and last word of the span; 15 to 30 s) · `words` (verbatim, the window) · `scene` (3 to 6 lines: what is drawn, in what
+  order, what moves, the payoff) · `cues` (`[{"t": <spine s>, "word": "...", "draws": "..."}]`, a draw-on event per named
+  thing; the builder re-derives the exact times) · `numbers` (every number drawn + its DATA.md row; `[]` when the labels are
+  words only) · `do_not_draw` · `pen` (the screenplay's, e.g. `paper-pastel`) · `canvas` `"1920x1080"` · `comp`
+  `<ProjectPascal>WB<n>` · `out` `assets/whiteboard/WB<n>.mp4` · `screenplay` (the SHOW line it realises).
+- **The cover rows:** `cover_type: "whiteboard"`, `asset: "WB<n>"`, over the beat's window. A FACE line INSIDE the window
+  splits it into two rows with the same asset (the clip keeps running under the face); otherwise ONE row. No other cover
+  overlaps a whiteboard window, and no title-card or clip-insert pause falls inside one (the drawing is cued to the spine).
+- **Budget:** whiteboard seconds are NOT Envato or ChatGPT items; they never count against those caps. When the caller states a
+  WHITEBOARD TARGET (a share of the delivered runtime = the spine + every clip insert's length + the title pauses), the
+  graph holds the on-screen whiteboard seconds to it IN CODE: plan to the middle of the range and report it in
+  `whiteboard_check` ("5 beats, 92.4 s on screen = 25.6% of ~361 s; target 22 to 28%").
+
+## Screen-share face mode (Mike, 2026-11-04; longform-edited.md house rule #1b; only when the caller says FACE MODE = SCREEN SHARE)
+In this mode a FACE window is Mike SHARING HIS SCREEN (webcam bottom-right, CTA box top-right, as recorded) and the comp paints the
+DECK AREA (x 0 to 1464 of 1920) with content WE choose, cued to his words: a deck card, a system-design diagram, an animated chart, a
+receipt, or a whiteboard beat continuing under the face. The screenplay's `BODY:` line on each `[FACE]` beat says what Mike planned.
+- **`face_body[]`**: one row per FACE window (more only as consecutive, non-overlapping rows when the body changes mid-window):
+  `id` FB<n> · `face` (the window's ordinal, 1-based) · `tIn` / `tOut` INSIDE the window (final-spine seconds from the word JSON) ·
+  `cover_type` one of container | card | diagram | timeline | animated-chart | real-chart | receipt | whiteboard (never envato-video,
+  never chatgpt-image) · `asset` = the id of a `receipts[]` / `containers[]` / `whiteboards[]` row (declare it there like any other
+  asset; it is built once and the comp scales the normal 1920x1080 stage into the deck area, nothing extra is built) · `state` when a
+  container state applies · `from` (whiteboard only: tIn minus the beat's tIn, the clip's clock runs with the spine) · `canvas`
+  `"1464x1080"` · `spoken` · `what` · `notes`.
+- A FACE window is never a `cover_beats` row and never a gap. EVERY FACE window needs a face_body row (the graph checks).
+- A whiteboard beat may run under a screen share: its `whiteboards[]` window includes the FACE window, its cover rows stop at the
+  window's edge, and the face_body row carries the continuation (`from`). Its seconds still count as whiteboard on screen.
+
 ## You cannot capture or verify live pages
 You propose the receipt/chart and its SOURCE (URL + which view/timeframe), but you do not open or screenshot
 it. Mark any receipt whose exact URL/availability you are unsure of `"verify": true` with your best-guess
@@ -97,7 +133,7 @@ source, so the orchestrator confirms at capture time. Same for a live number tha
       "chapter": "CH1",
       "tIn": 0.0, "tOut": 21.4,
       "spoken": "<the line(s) this beat covers>",
-      "cover_type": "receipt | real-chart | animated-chart | container | diagram | timeline | envato-video | chatgpt-image | clip-insert (zero-length, at splice_at)",
+      "cover_type": "receipt | real-chart | animated-chart | container | diagram | timeline | envato-video | chatgpt-image | whiteboard (+ \"asset\": \"WB<n>\") | clip-insert (zero-length, at splice_at)",
       "what": "<exactly what is on screen>",
       "source": "<receipt/chart: URL + view | envato: search query | chatgpt: image prompt concept | container/chart: the data source>",
       "priority": "high | med | low",
@@ -107,14 +143,21 @@ source, so the orchestrator confirms at capture time. Same for a live number tha
     }
   ],
   "receipts": [ { "id": "R1", "claim": "<what it proves>", "capture": "<URL + exact view/timeframe>", "beats": ["CH1@0-21"], "verify": true } ],
-  "clip_inserts": [ { "id": "CLIP-1", "who": "<name, role>", "says": "<verbatim words>", "source": "<video URL>", "start": "33:04.6", "end": "33:14.6", "seconds": 10.0,
-                      "splice_at": 616.10, "after_words": "<the set-up line's last words on the final spine>", "caption": "<who, where, when (burned)>",
+  "clip_inserts": [ { "id": "CLIP-1", "who": "<name, role>", "says": "<verbatim words>", "source": "<video URL, or the LOCAL file path of a reaction clip (clip-inserts.md rule 6)>", "start": "33:04.6", "end": "33:14.6", "seconds": 10.0,
+                      "splice_at": 616.10, "after_words": "<the set-up line's last words on the final spine>", "caption": "<who, where, when (burned); empty for a reaction clip, which carries no band>",
                       "expect": "<a phrase Whisper must hear>", "verify": true, "beats": ["CH4@616.10"] } ],
   "clip_inserts_note": "<REQUIRED when clip_inserts is empty: why no clip earns its seconds this video>",
   "chapter_themes": { "CH1": { "accent": "#ffd700", "accent_name": "gold", "image_style": "<the chapter's ChatGPT image look, or 'house'>", "note": "<why>" } },
   "envato_list":  [ { "n": 1, "query": "<search terms>", "beat": "CH2@96-101", "seconds": 3, "why": "..." } ],
   "chatgpt_list": [ { "n": 1, "prompt_concept": "<image concept, persona house style>", "beat": "...", "why": "..." } ],
   "containers": [ { "id": "traction-scoreboard", "kind": "animated-chart | card | diagram | timeline", "shows": "<pixel-accurate content + data source>", "beats": ["CH3@151-182"] } ],
+  "whiteboards": [ { "id": "WB1", "chapter": "CH1", "tIn": 41.2, "tOut": 61.0, "words": "<verbatim words in the window>",
+                     "scene": "<what is drawn, in what order, the payoff>", "cues": [ { "t": 43.1, "word": "come in", "draws": "AI TOOLS box slides in" } ],
+                     "numbers": [ "170K (DATA.md T3)" ], "do_not_draw": "<a number / claim never drawn>", "pen": "paper-pastel",
+                     "canvas": "1920x1080", "comp": "<ProjectPascal>WB1", "out": "assets/whiteboard/WB1.mp4", "screenplay": "WHITEBOARD WB1" } ],
+  "whiteboard_check": "<n beats, on-screen seconds, share of the delivered runtime, the caller's target; omit when the video has none>",
+  "face_body": [ { "id": "FB1", "face": 1, "tIn": 0.0, "tOut": 23.4, "cover_type": "receipt", "asset": "R1", "state": "", "canvas": "1464x1080",
+                   "spoken": "<the screen-share sentence>", "what": "<what the deck area shows>", "notes": "<the screenplay BODY line it realises>" } ],
   "budget_check": "<envato_used/max, chatgpt_used/max, and a statement that every cover second is assigned (zero orphans)>",
   "open_questions": [ "<anything Mike must decide, e.g. a receipt whose page may have changed>" ]
 }

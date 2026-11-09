@@ -1,0 +1,880 @@
+{
+  "session": "2026-11-05-midterm-fade",
+  "researched": "2026-11-05",
+  "note": "Market numbers are Nov 5 closes. Bitcoin's Nov 5 close was a partial UTC day when read. Live numbers move, so read them off your own tab on camera. Topics are in my suggested running order: 1 to 4 flow as one macro story.",
+  "order": [],
+  "topics": [
+    {
+      "id": 1,
+      "title": "The 2018 midterm script just replayed, in one day",
+      "status": "PROPOSED",
+      "why_now": "Stocks rallied the day after the midterms, then Nov 5 erased all of it: S&P -4.36%, its worst day since April 2025. Cowen's video on the 2018 parallel hit 78K views the same day.",
+      "angle": "Show the 2018 chart and what it looks like. Then your read on the cause: a hiking Fed and an AI crash did this, not the calendar. Then the number that matters: M2 is growing at nearly double the 2018 pace, and the S&P was higher 12 months later after all 19 midterms since 1950.",
+      "tabs": [
+        {
+          "kind": "chart",
+          "label": "S&P 500 daily on TradingView",
+          "url": "https://www.tradingview.com/chart/?symbol=SP%3ASPX&interval=D",
+          "show": "Scroll to Nov 2018, hover Nov 7, come back to this week.",
+          "facts": [
+            {
+              "text": "2018: S&P +2.12% on Nov 7, back under the election close by Nov 12 (4 sessions), low on Dec 24 at -14.67% from the election close",
+              "source": "computed from S&P daily closes",
+              "read": "2026-11-05"
+            },
+            {
+              "text": "2026: S&P +1.58% on Nov 4, -4.36% on Nov 5, now -2.84% from the election close. 1 session instead of 4",
+              "source": "computed from S&P daily closes",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": [
+            "Only 4 of 19 midterms were up the next day and still lower at year end. 2018 is one analogy, not the rule."
+          ]
+        },
+        {
+          "kind": "clip",
+          "id": "CLIP-1",
+          "label": "Cowen: why can't Bitcoin",
+          "url": "https://www.youtube.com/watch?v=aYrDQOrtY3A",
+          "start": "12:55.4",
+          "end": "13:11.5",
+          "words": "If the NASDAQ can test the July low, ask yourself, why can't Bitcoin? Right? Again, if the NASDAQ can test it, why can't Bitcoin?",
+          "caption": "Benjamin Cowen, Into The Cryptoverse, Nov. 5, 2026",
+          "context": "Full transcript read. It is his closing argument, said while the Nasdaq was down around 4% intraday, and he says he does not know how low it goes.",
+          "expect": "test the July low",
+          "facts": [
+            {
+              "text": "Cowen's three parallels: a hawkish Fed, an escalating trade war, severe regulatory scrutiny. The Nov 7 2018 figure and the 2018 hike sequence check out against the data",
+              "source": "https://youtu.be/aYrDQOrtY3A?t=298",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": [
+            "Cowen's 3M and Ford tariff examples were not confirmed. Caterpillar was."
+          ]
+        },
+        {
+          "kind": "local",
+          "label": "Nasdaq 100 year-to-date, 2018 vs 2026",
+          "url": "pending: built after approval from our own data",
+          "show": "Cowen's overlay at 8:40 is on his paid site, so I build ours from our own data if you keep this tab.",
+          "facts": [
+            {
+              "text": "Nasdaq 100 year to date on Nov 5: +8.5% in 2018, +5.5% in 2026. 2018 then reached -7.8% on Dec 24 and finished the year at -1.0%",
+              "source": "computed from NDX daily closes",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": []
+        },
+        {
+          "kind": "chart",
+          "label": "FRED: US M2",
+          "url": "https://fred.stlouisfed.org/series/M2SL",
+          "show": "Set units to percent change from a year ago.",
+          "facts": [
+            {
+              "text": "M2 year over year: 3.17% in Nov 2018, 5.71% in Sept 2026, the latest month",
+              "source": "https://fred.stlouisfed.org/series/M2SL",
+              "read": "2026-11-05"
+            },
+            {
+              "text": "S&P 12 months after a midterm election close, 1950 to 2022: higher 19 of 19, median +14.5%, 2018 itself +11.7%",
+              "source": "computed from S&P daily closes",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": []
+        }
+      ],
+      "circumstances": [
+        "midterm-day-after-fade",
+        "midterm-12-months-later",
+        "tech-reversal-regulation"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Bitcoin is sitting right on the 50-week SMA",
+      "status": "PROPOSED",
+      "why_now": "Bitcoin fell from 80,405 to 75,684 in a day, and the 50-week SMA is 75,729. Sunday's weekly close decides whether the streak above it survives.",
+      "angle": "This is your own line. 7 straight weekly closes above it since Sept 20, and it is being tested now. Then the question everybody is asking: the Nasdaq closed under its July low, but Bitcoin's 2026 low is around 23% below here, because Bitcoin already had its drawdown while stocks went to new highs.",
+      "tabs": [
+        {
+          "kind": "chart",
+          "label": "BTC weekly with the 50-week SMA",
+          "url": "https://www.tradingview.com/chart/?symbol=BITSTAMP%3ABTCUSD&interval=W",
+          "show": "Add the 50-week and 200-week SMA.",
+          "facts": [
+            {
+              "text": "50-week SMA 75,729, 200-week SMA 67,464 as of the Nov 1 weekly close",
+              "source": "computed from BTC daily closes",
+              "read": "2026-11-05"
+            },
+            {
+              "text": "BTC 2026 low close 58,559 on June 30",
+              "source": "computed from BTC daily closes",
+              "read": "2026-11-05"
+            },
+            {
+              "text": "Wintermute's Jasper De Maere named 73,000 and 68,000 as the next levels to watch, and said 'medium term still glass half full'",
+              "source": "https://www.coindesk.com/markets/2026/11/05/bitcoin-crypto-stocks-caught-in-ai-trade-meltdown-but-wintermute-trader-sees-glass-half-full",
+              "read": "2026-11-05"
+            },
+            {
+              "text": "BTC after the 3 prior midterms: lower first, higher 12 months later every time (+24.5%, +44.9%, +92.3%)",
+              "source": "computed from BTC daily closes",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": [
+            "A lane-3 draft from your archie-promo batch says the Sept 20 close was the first above the 50-week SMA in 45 weeks. My data does not reproduce that exact count, so avoid the 45-week line until it is re-checked on your chart."
+          ]
+        },
+        {
+          "kind": "chart",
+          "label": "CoinGlass Liquidation Map",
+          "url": "https://www.coinglass.com/pro/futures/LiquidationMap",
+          "show": "Logged in. BTC, 7 day then 30 day.",
+          "facts": [
+            {
+              "text": "1.09B liquidated in 24 hours across 211,000 traders. In one 4-hour stretch: 818.90M longs against 61.02M shorts",
+              "source": "https://www.theblock.co/news/markets/2026-11-05-bitcoin-erases-post-election-gains-wall-street-selloff-liquidations-435434",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": [
+            "No live CoinGlass reading: the map needs your login. Check it before recording."
+          ]
+        },
+        {
+          "kind": "chart",
+          "label": "Nasdaq 100 daily on TradingView",
+          "url": "https://www.tradingview.com/chart/?symbol=NASDAQ%3ANDX&interval=D",
+          "show": "Draw the July 29 low.",
+          "facts": [
+            {
+              "text": "Nasdaq 100 closed 2.07% under its July 29 low. S&P is 0.51% above its own",
+              "source": "computed from NDX and S&P daily closes",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": []
+        }
+      ],
+      "circumstances": [
+        "btc-50-week-sma",
+        "index-tests-low-btc-next",
+        "coinglass-liquidation-map",
+        "btc-midterm-q4"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Warsh still wants to hike into this. 2018 ended when the Fed blinked",
+      "status": "PROPOSED",
+      "why_now": "Markets still price a December hike at around 70% even after the crash. The next FOMC is Dec 8 to 9.",
+      "angle": "Everyone quotes the 2018 selloff, few quote how it ended. Powell hiked Dec 19, shifted Jan 4, the S&P jumped 3.43% that day, and the Fed never hiked in 2019. So the question is when Warsh blinks. This is your liquidity thesis in real time.",
+      "tabs": [
+        {
+          "kind": "clip",
+          "id": "CLIP-2",
+          "label": "Warsh: conditions have tightened",
+          "url": "https://www.youtube.com/watch?v=0JEkVViEo-E",
+          "start": "4:08.4",
+          "end": "4:20.4",
+          "words": "We have started to see some changes in financial and credit conditions. They have tightened for some businesses and households, much as we would expect.",
+          "caption": "Fed Chair Kevin Warsh, FOMC press conference, Oct. 28, 2026",
+          "context": "Before the Nov 5 crash. He goes on to say he is unwilling to call overall conditions tight, so do not present this as him being worried.",
+          "expect": "tightened for some businesses",
+          "facts": [
+            {
+              "text": "Oct 28: held at 3.75% to 4%, with Cook and Hammack dissenting in favor of a hike",
+              "source": "https://www.cnbc.com/2026/10/28/fed-meeting-today-live-updates.html",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": []
+        },
+        {
+          "kind": "chart",
+          "label": "CME FedWatch",
+          "url": "https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html",
+          "show": "December meeting probabilities.",
+          "facts": [
+            {
+              "text": "FedWatch: 70.1% for a December hike, down from 82.7% on Wednesday and 79.9% a week earlier",
+              "source": "https://www.cnbc.com/2026/11/04/stock-market-today-live-updates.html",
+              "read": "2026-11-05"
+            },
+            {
+              "text": "Brent 98.54, WTI 90.72 on Nov 5",
+              "source": "computed from front-month futures closes",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": []
+        },
+        {
+          "kind": "chart",
+          "label": "FRED: Fed target rate",
+          "url": "https://fred.stlouisfed.org/series/DFEDTARU",
+          "show": "2018 to 2019 steps.",
+          "facts": [
+            {
+              "text": "Dec 2018 projections showed 2 more hikes for 2019. On Jan 4 2019 Powell said the Fed was 'always prepared to shift the stance of policy'",
+              "source": "https://www.euronews.com/2019/02/22/a-fed-pivot-born-of-volatility-missteps-and-new-economic-reality",
+              "read": "2026-11-05"
+            },
+            {
+              "text": "S&P +3.43% on Jan 4 2019. No Fed hike in 2019, 3 cuts instead",
+              "source": "computed from S&P closes and FRED DFEDTARU",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": [
+            "'Patient' is from the January 2019 Fed statement, not the Jan 4 Q&A. Keep those separate.",
+            "Whether Warsh would react the way Powell did is your read, not a fact."
+          ]
+        }
+      ],
+      "circumstances": [
+        "hawkish-fed-into-selloff",
+        "oil-near-100"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "The AI trade cracked. Is this 1992 or 2000?",
+      "status": "PROPOSED",
+      "why_now": "Nasdaq 100 -6.36%, its worst day since March 2020. VIX +69%. AI-pivot miners were already down 35% in October on average.",
+      "angle": "You have said we are at 1992 in the AI buildout. Here is the test. Miners sold Bitcoin to become landlords for AI, one of them just signed a 28B lease, and VanEck says no signed leases were canceled. Then the historical numbers: the prior 10 VIX spikes this size were higher a month later 9 times. If this is the fear moment, TAO is the neutral compute layer nobody can regulate into a corner.",
+      "tabs": [
+        {
+          "kind": "chart",
+          "label": "Nasdaq 100 daily on TradingView",
+          "url": "https://www.tradingview.com/chart/?symbol=NASDAQ%3ANDX&interval=D",
+          "facts": [
+            {
+              "text": "Nasdaq 100 -6.36% on Nov 5, 14.7% off its Oct 6 high. Nasdaq Composite -5.52%, in correction",
+              "source": "computed from NDX and Nasdaq daily closes",
+              "read": "2026-11-05"
+            },
+            {
+              "text": "Stated cause: 'a sharp sell-off in AI stocks', with investors weighing 'what Democrats' sweeping midterm election victories could mean for AI regulation and data center development'",
+              "source": "https://www.foxbusiness.com/markets/stocks-nov-5-2026",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": []
+        },
+        {
+          "kind": "article",
+          "label": "CoinDesk: Bitcoin caught in AI trade meltdown",
+          "url": "https://www.coindesk.com/markets/2026/11/05/bitcoin-crypto-stocks-caught-in-ai-trade-meltdown-but-wintermute-trader-sees-glass-half-full",
+          "facts": [
+            {
+              "text": "GSR's Carlos Guzman: 'The midterms appear to have triggered this sell-off.' A chip index fell more than 10% in early trading, miners fell 15% to 20%",
+              "source": "https://www.coindesk.com/markets/2026/11/05/bitcoin-crypto-stocks-caught-in-ai-trade-meltdown-but-wintermute-trader-sees-glass-half-full",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": []
+        },
+        {
+          "kind": "article",
+          "label": "CoinDesk: VanEck on miners",
+          "url": "https://www.coindesk.com/markets/2026/11/05/bitcoin-miners-are-oversold-following-35-october-rout-says-vaneck",
+          "facts": [
+            {
+              "text": "VanEck: AI-pivot miners dropped an average 35% in October, no signed leases canceled, 'the power these companies control appears to be the binding constraint on AI compute'",
+              "source": "https://www.coindesk.com/markets/2026/11/05/bitcoin-miners-are-oversold-following-35-october-rout-says-vaneck",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": [
+            "VanEck sells funds with exposure to this sector, so 'oversold' comes from an interested party. Say so."
+          ]
+        },
+        {
+          "kind": "article",
+          "label": "CoinDesk: Riot and Anthropic",
+          "url": "https://www.coindesk.com/tech/2026/11/05/bitcoin-miner-riot-could-pay-anthropic-12-interest-under-usd28-billion-ai-deal",
+          "facts": [
+            {
+              "text": "Riot: 28B, 15-year lease with Anthropic for 910 MW in Texas, around 1.8B a year in rent once running. Riot sold 20,264 BTC in the first 9 months of 2026 and held 2,418 at the end of September",
+              "source": "https://www.coindesk.com/tech/2026/11/05/bitcoin-miner-riot-could-pay-anthropic-12-interest-under-usd28-billion-ai-deal",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": []
+        },
+        {
+          "kind": "chart",
+          "label": "VIX daily on TradingView",
+          "url": "https://www.tradingview.com/chart/?symbol=TVC%3AVIX&interval=D",
+          "facts": [
+            {
+              "text": "VIX +50% days since 1990: 10 before this one. S&P a month later higher 9 of 10, median +3.3%; 3 months later higher 7 of 10, median +7.5%",
+              "source": "computed from VIX and S&P daily closes",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": [
+            "The TAO tie-in is your thesis, not a fact from these sources."
+          ]
+        }
+      ],
+      "circumstances": [
+        "tech-reversal-regulation",
+        "vix-one-day-spike"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Crypto bet 170 million on the midterms and lost the biggest race",
+      "status": "PROPOSED",
+      "why_now": "Democrats won Congress. Sherrod Brown won Ohio with crypto money against him, and Elizabeth Warren is the expected Senate Banking chair.",
+      "angle": "The industry tried to buy its way to safety and the biggest check bounced. Warren and Waters in charge is the bear case, but gridlock means nothing passes in either direction. Bitcoin and Kaspa never needed a PAC, which is the whole point of a fair launch.",
+      "tabs": [
+        {
+          "kind": "article",
+          "label": "Fortune: crypto PACs came up nearly dry",
+          "url": "https://fortune.com/2026/11/04/crypto-pacs-170-million-midterms-came-up-dry/",
+          "facts": [
+            {
+              "text": "Crypto PACs spent more than 170M of a roughly 260M war chest, per Tech Influence Watch. Ohio: more than 40M for Husted and 24M against Brown",
+              "source": "https://fortune.com/2026/11/04/crypto-pacs-170-million-midterms-came-up-dry/",
+              "read": "2026-11-05"
+            },
+            {
+              "text": "Stand With Crypto endorsed 45 candidates: 27 wins, 12 losses, 6 still live",
+              "source": "https://decrypt.co/382602/democrats-to-push-broader-crypto-market-structure-bill-after-sweeping-us-midterms-report",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": [
+            "The scorecard depends on who counts. Fairshake's '29 of 34' came from secondary sites I did not open, and Melker's 'two for 11 in competitive races' is his own count. Neither is checked."
+          ]
+        },
+        {
+          "kind": "clip",
+          "id": "CLIP-3",
+          "label": "Melker: 63 million to stop Sherrod Brown",
+          "url": "https://www.youtube.com/watch?v=veSkxbfwHH4",
+          "start": "2:07.3",
+          "end": "2:34.1",
+          "words": "Crypto groups spent 63 million American dollars to stop Sherrod Brown. Ohio voters sent him back to the Senate. Now, in two elections, the crypto lobby spent over 90 million dollars to beat this guy who was the head of Senate Banking. He lost in the last election, of course, being replaced by Bernie Moreno. He ran again, and all the crypto money in the world was unable to stop him.",
+          "caption": "Scott Melker, The Daily Wolf on Yahoo Finance, Nov. 4, 2026",
+          "context": "Transcript read around it. Melker is pro-crypto and is lamenting this. 27 s, so it is on the long side: you may want only the first or last sentence.",
+          "expect": "unable to stop him",
+          "facts": [],
+          "careful": []
+        },
+        {
+          "kind": "article",
+          "label": "The Block: Digital Chamber on Brown",
+          "url": "https://www.theblock.co/news/regulation/2026-11-04-digital-chamber-sherrod-brown-win-434371",
+          "facts": [
+            {
+              "text": "The Digital Chamber called Brown's win the 'most consequential unfavorable result for crypto' and named Warren 'the clear favorite' for Senate Banking chair",
+              "source": "https://www.theblock.co/news/regulation/2026-11-04-digital-chamber-sherrod-brown-win-434371",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": [
+            "Warren and Waters are expected, not appointed."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "CLARITY is dead, and the next bill gets written by the other side",
+      "status": "PROPOSED",
+      "why_now": "Eleanor Terrett reported House Democrats plan a broader bill with more SEC power. Scaramucci blamed Trump's memecoins for CLARITY failing. Polymarket has it at 3% for 2026.",
+      "angle": "Scaramucci says the memecoins killed it, which is a good talking point. Then the part that matters to your audience: what does a bill with more SEC power mean for coins that had a premine, versus a fair-launched PoW coin with nothing to hand the SEC? Near-zero odds are when the contrarian buyers show up, so say where you stand.",
+      "tabs": [
+        {
+          "kind": "clip",
+          "id": "CLIP-4",
+          "label": "Melker: nobody cares about CLARITY",
+          "url": "https://www.youtube.com/watch?v=veSkxbfwHH4",
+          "start": "4:38.4",
+          "end": "4:42.5",
+          "words": "Nobody cares about the Clarity Act anymore. It's dead.",
+          "caption": "Scott Melker, The Daily Wolf on Yahoo Finance, Nov. 4, 2026",
+          "context": "Transcript read around it. He goes on to say that if a bill comes next, 'it will now be written by the anti-crypto army', but that gridlock probably stops it.",
+          "expect": "Clarity Act anymore",
+          "facts": [
+            {
+              "text": "GSR's Carlos Guzman: 'I wouldn't say it's game over for Clarity, but passing it has become tougher'",
+              "source": "https://decrypt.co/382602/democrats-to-push-broader-crypto-market-structure-bill-after-sweeping-us-midterms-report",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": []
+        },
+        {
+          "kind": "article",
+          "label": "Cointelegraph: Scaramucci on the memecoins",
+          "url": "https://cointelegraph.com/news/scaramucci-trump-memecoins-clarity-act-failure",
+          "facts": [
+            {
+              "text": "Senate procedural vote Sept 15: 49 in favor, 50 against, 60 needed",
+              "source": "https://cointelegraph.com/news/scaramucci-trump-memecoins-clarity-act-failure",
+              "read": "2026-11-05"
+            },
+            {
+              "text": "Scaramucci: 'I think it's the business interests, the memecoins', and 'There's culpability on both sides for that deal not going forward'",
+              "source": "https://cointelegraph.com/news/scaramucci-trump-memecoins-clarity-act-failure",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": []
+        },
+        {
+          "kind": "x-post",
+          "label": "Eleanor Terrett's report",
+          "url": "https://x.com/EleanorTerrett/status/2118041922011021418",
+          "facts": [
+            {
+              "text": "House Democrats plan to expand a Maxine Waters-led amendment into a broader market structure bill, giving the SEC more power and limiting the CFTC, per Terrett's sources",
+              "source": "https://decrypt.co/382602/democrats-to-push-broader-crypto-market-structure-bill-after-sweeping-us-midterms-report",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": [
+            "The new bill rests on one journalist's unnamed sources. There is no published text.",
+            "How a future bill would treat fair-launched PoW coins is your argument, not something it says."
+          ]
+        },
+        {
+          "kind": "odds",
+          "label": "Polymarket: CLARITY signed in 2026",
+          "url": "https://polymarket.com/event/clarity-act-signed-into-law-in-2026",
+          "facts": [
+            {
+              "text": "Polymarket: CLARITY signed in 2026 at 3%, market structure law in 2026 at 6%",
+              "source": "video-creation/topic-radar build, Polymarket API",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": []
+        }
+      ],
+      "circumstances": [
+        "prediction-market-odds"
+      ]
+    },
+    {
+      "id": 7,
+      "title": "DTCC went live, and everybody is asking which coins win",
+      "status": "PROPOSED",
+      "why_now": "You flagged this post. DTCC went live Oct 28, Morgan Stanley just tokenized through it, and at the same time 50 companies have objected to tokenized trading of their shares on OKXICE.",
+      "angle": "Show the post, because it is a great hook and you liked it. Then DTCC's own release: live Oct 28, on Canton and a private network, with more networks in 2027. Then the real tension: Wall Street is adopting the rails while 50 big companies are saying not our stock, and Melker asks whether it all becomes their plumbing.",
+      "tabs": [
+        {
+          "kind": "x-post",
+          "label": "@noBScrypto: DTCC 0.1% capture",
+          "url": "https://x.com/noBScrypto/status/2117872313152782722",
+          "facts": [
+            {
+              "text": "@noBScrypto, Nov 4: 'DTCC is tokenizing ~$30T in RWAs at launch', with ONDO 6.16, XLM 0.84, LINK 39.12, CC 0.75, HBAR 0.67 at 0.1% capture",
+              "source": "https://x.com/noBScrypto/status/2117872313152782722",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": [
+            "The post's 30T at launch is not in DTCC's release, so do not repeat that number as fact.",
+            "XLM, LINK and HBAR may have DTCC ties outside these 2 releases. Say 'not in DTCC's press releases', never 'no relationship'."
+          ]
+        },
+        {
+          "kind": "article",
+          "label": "DTCC press release",
+          "url": "https://www.dtcc.com/press-releases/2026/dtcc-tokenization-service-goes-live",
+          "facts": [
+            {
+              "text": "DTCC: launched Oct 28, on the Canton Network and its private Besu network, 'additional blockchain networks to be added in 2027', 20 participants, 'more than $114 trillion in assets under custody'",
+              "source": "https://www.dtcc.com/press-releases/2026/dtcc-tokenization-service-goes-live",
+              "read": "2026-11-05"
+            },
+            {
+              "text": "Morgan Stanley tokenized US equities and Treasurys through DTCC's service and now expects tokenized equities on its trading system in Q1 2027, later than its earlier H2 2026 target",
+              "source": "https://www.theblock.co/news/markets/2026-11-04-morgan-stanley-among-first-banks-to-tokenize-us-equities-treasurys-through-dtccs-service-432633",
+              "read": "2026-11-05"
+            },
+            {
+              "text": "Amundi launched a tokenized share class of its STOXX Europe 600 fund on Ethereum. Tokenized stocks total 4.24B per RWA.xyz",
+              "source": "https://cointelegraph.com/news/amundi-tokenizes-european-equity-index-fund-ethereum",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": [
+            "Melker says 34 securities at launch. DTCC's release gives no count."
+          ]
+        },
+        {
+          "kind": "article",
+          "label": "PrimeXBT: 50 OKXICE objections",
+          "url": "https://primexbt.com/news/okxice-stock-token-objections-reach-50-including-nvidia-nike-and-costco/",
+          "facts": [
+            {
+              "text": "OKXICE objections reached 50 per its Oct 30 notice, up from 38 on Oct 28, including Nvidia, Nike, Costco, Micron and Reddit. A timely written objection means the venue cannot offer that stock token under the exemption",
+              "source": "https://primexbt.com/news/okxice-stock-token-objections-reach-50-including-nvidia-nike-and-costco/",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": [
+            "The objections figure comes from a secondary source citing The Defiant. The primary notice was not read."
+          ]
+        },
+        {
+          "kind": "clip",
+          "id": "CLIP-5",
+          "label": "Melker: Wall Street's plumbing",
+          "url": "https://www.youtube.com/watch?v=gBUS-8A9PeI",
+          "start": "2:04.5",
+          "end": "2:17.3",
+          "words": "The question still remains in my mind whether this is the co-option of our technology by Wall Street in a very boring way where it becomes their plumbing and we don't generally benefit from it.",
+          "caption": "Scott Melker, The Daily Wolf on Yahoo Finance, Oct. 29, 2026",
+          "context": "Transcript read around it. Right after, he says it is still a massive signal and retail will find ways to benefit, so he is not simply bearish.",
+          "expect": "their plumbing",
+          "facts": [],
+          "careful": []
+        }
+      ],
+      "circumstances": [
+        "dtcc-point-one-percent-post"
+      ]
+    },
+    {
+      "id": 8,
+      "title": "The hack wave: how they got into Binance, and why AI makes this worse",
+      "status": "PROPOSED",
+      "why_now": "You covered the heist on Oct 31, so this is only what is new: Binance's account of how it happened, the FBI and analytics attribution, Fed and OCC calls to banks, and Mercado Bitcoin.",
+      "angle": "Skip the recap. Fake recruiters and a coding test got them in, so no code was cracked: people were. CZ says AI makes more of this likely. Then the argument you can make: hold your own keys, because nothing about the chain itself was hacked.",
+      "tabs": [
+        {
+          "kind": "clip",
+          "id": "CLIP-6",
+          "label": "Teng: how they got in",
+          "url": "https://www.youtube.com/watch?v=UFpG7MWbcTc",
+          "start": "1:24.5",
+          "end": "1:52.9",
+          "words": "In June, they set up a fake version of a developer tool, and lured one of our engineers to install that. In September, they posed as recruiters and ran a series of job interviews with another engineer, and that ended up in a coding exercise that contained hidden malware designed to evade security tools. And then from there, they moved laterally throughout internal AI tools and obtained access that reached the system that authorized our wallet transaction.",
+          "caption": "Binance co-CEO Richard Teng, CNBC, Nov. 3, 2026",
+          "context": "Full transcript read. It is Binance's own account of its own breach. 28 s, the long end.",
+          "expect": "posed as recruiters",
+          "facts": [
+            {
+              "text": "Teng: fake developer tool in June, fake recruiters in September, a coding exercise with hidden malware, then movement through internal AI tools to the system that authorized wallet transactions",
+              "source": "https://www.youtube.com/watch?v=UFpG7MWbcTc",
+              "read": "2026-11-05"
+            },
+            {
+              "text": "Fed and OCC officials began contacting banks about unusual activity, per Reuters. Binance's report: around 6.34B affected, 2.85B frozen or intercepted",
+              "source": "https://cointelegraph.com/news/fed-occ-check-us-banks-binance-hack-security-risks",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": []
+        },
+        {
+          "kind": "article",
+          "label": "CoinDesk: what is TraderTraitor",
+          "url": "https://www.coindesk.com/business/2026/11/05/what-is-tradertraitor-the-hacking-squad-behind-the-usd6-3-billion-binance-heist",
+          "facts": [
+            {
+              "text": "FBI attributed it to North Korea. Chainalysis and TRM Labs name TraderTraitor with high confidence. Kim Yo Jong called the finding 'absurd rhetoric'",
+              "source": "https://www.coindesk.com/business/2026/11/05/what-is-tradertraitor-the-hacking-squad-behind-the-usd6-3-billion-binance-heist",
+              "read": "2026-11-05"
+            },
+            {
+              "text": "Mercado Bitcoin: 48.6M traced across 10 chains. The exchange said 'contained' at 12:56 UTC and the drain ran around 4 more hours",
+              "source": "https://www.coindesk.com/business/2026/11/05/mercado-bitcoin-hack-continued-hours-after-exchange-said-attack-was-contained-report-finds",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": []
+        },
+        {
+          "kind": "clip",
+          "id": "CLIP-7",
+          "label": "CZ: AI makes this more likely",
+          "url": "https://www.youtube.com/watch?v=a7hahsdi_p4",
+          "start": "3:16.5",
+          "end": "3:26.6",
+          "words": "Especially now with AI improving so quickly, I think we're going to see a lot more of this. So it's the chance of it happening is actually increasing with the advancement of AI.",
+          "caption": "Changpeng Zhao, Yahoo Finance, Nov. 3, 2026",
+          "context": "Full transcript read. He is speaking generally about every platform and bank, not only Binance, and says he no longer manages the company.",
+          "expect": "lot more of this",
+          "facts": [
+            {
+              "text": "OpenAI says its unreleased model found 948 Linux kernel flaws and wrote a working attack for each, at 1,279 dollars per instance",
+              "source": "https://www.coindesk.com/tech/2026/11/05/openai-says-its-ai-can-break-into-linux-at-scale-here-s-what-it-means-for-crypto",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": [
+            "OpenAI did not mention crypto. The link to crypto is CoinDesk's."
+          ]
+        },
+        {
+          "kind": "clip",
+          "id": "CLIP-8",
+          "label": "Hougan: in a week prices recover",
+          "url": "https://www.youtube.com/watch?v=QykWuUwcKpo",
+          "start": "3:05.9",
+          "end": "3:15.2",
+          "words": "This does not change anything about the long-term direction of Bitcoin. And in fact, I think in a week, you'll see, you know, prices have moved beyond this and recovered from this.",
+          "caption": "Bitwise CIO Matt Hougan, CNBC, Oct. 30, 2026",
+          "context": "Full transcript read. He also blames broader risk-off that day, with the Nasdaq down 3%.",
+          "expect": "long-term direction",
+          "facts": [
+            {
+              "text": "BTC closes: 81,268 on Oct 28, 77,198 on Oct 30, 75,684 on Nov 5",
+              "source": "computed from BTC daily closes",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": [
+            "His week is up Nov 6. Check the price first, and skip this clip if it has not aged well. Hougan also attributed the drop to broader risk-off."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Kaspa people got in the room with CZ. Does it matter?",
+      "status": "PROPOSED",
+      "why_now": "Your Crypto Crew's Nov 5 video connects Wolfie and Juni Ho reaching CZ at the Oxford Union to the years-long Binance listing question. The Kaspa community is already arguing over it.",
+      "angle": "Your thesis says the missing listings ARE the receipt of a fair launch: no premine to pay with. So do you even want this? Yonatan Sompolinsky publicly declined Binance's invitation and called out their listing philosophy. Wolfie says the technical work has been done for years. Say what you think happens to a fair-launched coin if Binance does list it, and be clear that nothing is confirmed.",
+      "tabs": [
+        {
+          "kind": "clip",
+          "id": "CLIP-9",
+          "label": "Wolfie: they never said a peep",
+          "url": "https://www.youtube.com/watch?v=J3N48z-Hq2s",
+          "start": "2:37.4",
+          "end": "2:54.6",
+          "words": "I'm in the integration room and facts. They never mention anything in there about when or like we're we're thinking about it or or we need if you can give us this and this or provide a market maker then we'll turn on trading on this day or in the next six weeks or something. They never said a peep about it.",
+          "caption": "Chris Wolf (Wolfie), via Your Crypto Crew, Nov. 5, 2026",
+          "context": "A clip inside a Kaspa-community video, original date unknown. He goes on to say they keep asking how to make it run well, and that he has no idea of their plan.",
+          "expect": "said a peep",
+          "facts": [
+            {
+              "text": "Your Crypto Crew, on air: 'We don't have any confirmation of an upcoming [KAS] spot listing... or proof that CZ has intervened in the listing process'",
+              "source": "https://www.youtube.com/watch?v=J3N48z-Hq2s&t=569s",
+              "read": "2026-11-05"
+            },
+            {
+              "text": "Wolfie's quoted X post: he helped arrange CZ's Oxford Union appearance and spoke with him and his team at the reception",
+              "source": "https://www.youtube.com/watch?v=J3N48z-Hq2s&t=349s",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": [
+            "That Binance finished the technical work 'two or three Christmases ago' is Wolfie's claim only.",
+            "The date of the Wolfie clip inside the Your Crypto Crew video is unknown.",
+            "Wolfie's original X post was not located. The video shows it, and I have not opened the post itself.",
+            "The whole video is captions-read with no frames watched. Whisper renders Kaspa names badly, so check the spelling of every name."
+          ]
+        },
+        {
+          "kind": "x-post",
+          "label": "@Kaspacryptoking on the CZ question",
+          "url": "https://x.com/Kaspacryptoking/status/2118087669410353186",
+          "facts": [
+            {
+              "text": "Community pushback: an X post calls Juni Ho's 'toughest question' 'a setup for a compliment'",
+              "source": "https://x.com/Kaspacryptoking/status/2118087669410353186",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": []
+        },
+        {
+          "kind": "chart",
+          "label": "KAS daily on TradingView",
+          "url": "https://www.tradingview.com/chart/?symbol=KUCOIN%3AKASUSDT&interval=D",
+          "facts": [
+            {
+              "text": "KAS close 0.0322 on Nov 4, 84% under its all-time high close of 0.2056 on 2024-07-31",
+              "source": "computed from KAS daily closes",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": []
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "TAO subnet revenue doubled in 2 months while the price went nowhere",
+      "status": "PROPOSED",
+      "why_now": "SubConnect estimates subnets at around 70M a year, up from 35M two months ago. Grayscale filed S-1 Amendment No. 2 on Oct 23. Revenue is rising while the coin is flat over the same 2 months and well off its September high.",
+      "angle": "Fundamentals up, price flat. That is the setup you like: it fits TAO as the AI inference layer on the exact day the market panics about centralized AI. Say plainly that it is an annualized estimate from one source, and let the filing carry the institutional part.",
+      "tabs": [
+        {
+          "kind": "x-post",
+          "label": "SubConnect's estimate",
+          "url": "https://x.com/WeAreSubConnect/status/2117915325681574311",
+          "facts": [],
+          "careful": [
+            "The 70M is one account's estimate relayed by one outlet. CoinMarketCap's AI page credits a different source for it.",
+            "The X post itself was not opened. Open it on your tab before quoting it."
+          ]
+        },
+        {
+          "kind": "article",
+          "label": "AMBCrypto: subnet revenue doubled",
+          "url": "https://ambcrypto.com/tao-crypto-on-the-rise-heres-how-bittensor-subnet-revenue-2x-ed-to-70m/",
+          "facts": [
+            {
+              "text": "SubConnect 'recently estimated' subnets bring in around 70M a year, from 35M two months earlier and close to 50M last month. 'Annualized revenue is NOT a guarantee'",
+              "source": "https://ambcrypto.com/tao-crypto-on-the-rise-heres-how-bittensor-subnet-revenue-2x-ed-to-70m/",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": []
+        },
+        {
+          "kind": "chart",
+          "label": "TAO daily on TradingView",
+          "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ATAOUSDT&interval=D",
+          "facts": [
+            {
+              "text": "TAO close: 236 on Sept 5, 234 on Nov 4, so flat over the same 2 months. That is 27% under its Sept 26 high of 321",
+              "source": "computed from TAO daily closes",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": []
+        },
+        {
+          "kind": "article",
+          "label": "SEC: Grayscale S-1/A No. 2",
+          "url": "https://www.sec.gov/Archives/edgar/data/0002029297/000119312526430543/gtao_s-1_amendment_2.htm",
+          "facts": [
+            {
+              "text": "Grayscale S-1/A Amendment No. 2, filed Oct 23 2026: intends to list on NYSE Arca as GTAO upon approval. BitGo primary custodian, Coinbase Custody additional",
+              "source": "https://www.sec.gov/Archives/edgar/data/0002029297/000119312526430543/gtao_s-1_amendment_2.htm",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": [
+            "The ETF still needs SEC approval. KR1's 5,000 TAO staking appeared only in a search summary, so I left it out."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "title": "Trump Media just moved 4,259 BTC. Forced seller?",
+      "status": "PROPOSED",
+      "why_now": "Arkham flagged the move to a Crypto.com-labeled address the same week a filing warned the company 'may have to sell bitcoin', with note holders able to demand around 1B on Nov 30.",
+      "angle": "Named entity, on-chain receipt, hard date. Nobody has confirmed a sale, so the question is what happens on Nov 30. A company that bought Bitcoin as a treasury play may be forced to sell into a falling market. That is the risk in the corporate treasury story, and it is a short, sharp segment.",
+      "tabs": [
+        {
+          "kind": "article",
+          "label": "CoinDesk: Trump Media moves BTC",
+          "url": "https://www.coindesk.com/markets/2026/11/05/trump-media-moves-usd434-million-in-bitcoin-to-crypto-com-blockchain-data-show",
+          "facts": [
+            {
+              "text": "4,259 BTC moved in 2 batches at 02:17 UTC to an address reportedly owned by Crypto.com, from addresses labeled '2028 Convertible Notes Collateral', per Arkham",
+              "source": "https://www.coindesk.com/markets/2026/11/05/trump-media-moves-usd434-million-in-bitcoin-to-crypto-com-blockchain-data-show",
+              "read": "2026-11-05"
+            },
+            {
+              "text": "A Nov 2 filing says note holders can require repayment on Nov 30, potentially around 1B, and that the company 'may have to sell bitcoin or other digital assets' if refinancing falls short",
+              "source": "https://www.coindesk.com/markets/2026/11/05/trump-media-moves-usd434-million-in-bitcoin-to-crypto-com-blockchain-data-show",
+              "read": "2026-11-05"
+            },
+            {
+              "text": "The dollar value: 4,259 BTC at the Nov 4 close of 80,405 is around 342M",
+              "source": "computed from BTC daily closes",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": [
+            "'The transfers do not establish that bitcoin was sold.' Trump Media has described similar moves as trading or custody management.",
+            "CoinDesk's page says both 342M and 434M. 342M is what the coin count supports.",
+            "Trump-linked politics is off-brand if it turns partisan. Keep it about the balance sheet."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "title": "Tether has 50,000 more Bitcoin than its report shows",
+      "status": "PROPOSED",
+      "why_now": "Ardoino said 'give or take 150,000 bitcoin' on stage. The Q3 attestation implies around 100,000.",
+      "angle": "A short hit. The biggest non-ETF holder casually mentions around 3.8B of Bitcoin nobody saw in the attestation. Is it bullish accumulation or a transparency problem? Let the comments fight.",
+      "tabs": [
+        {
+          "kind": "article",
+          "label": "Decrypt: Tether holds 150,000 BTC",
+          "url": "https://decrypt.co/382474/tether-holds-150000-bitcoin-ceo-says",
+          "facts": [
+            {
+              "text": "Ardoino at Plan B Forum: 'We have give or take 150,000 bitcoin ourselves. It's not much, but it's honest work'",
+              "source": "https://decrypt.co/382474/tether-holds-150000-bitcoin-ceo-says",
+              "read": "2026-11-05"
+            },
+            {
+              "text": "Q3 attestation lists 8.37B of Bitcoin at 83,621 a coin, implying around 100,060 BTC. The gap is around 50,000 coins, close to 3.8B",
+              "source": "https://decrypt.co/382474/tether-holds-150000-bitcoin-ceo-says",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": [
+            "Tether says corporate Bitcoin 'sits separately from USDT reserves', which may explain the whole gap. Say that in the segment.",
+            "The keynote has no captions, so no clip window is verified. Tether's video is 50 minutes: if you want the clip I will find the spot with Whisper after you approve."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "title": "Robinhood's CEO says crypto is in a relative winter",
+      "status": "PROPOSED",
+      "why_now": "Vlad Tenev said it on CNBC on Oct 28, right after Robinhood's earnings. In the same breath he touts Robinhood chain: over 100B in volume, over 50M in fees.",
+      "angle": "You called the crypto winter. Now the CEO of the retail on-ramp is saying the word on national TV, while pointing at the exact chain your community has been trading. Winter for the coins everyone holds, not for the chain with the volume. It is a good community-win moment.",
+      "tabs": [
+        {
+          "kind": "clip",
+          "id": "CLIP-10",
+          "label": "Tenev: crypto is in a relative winter",
+          "url": "https://www.youtube.com/watch?v=6trZS0CylDE",
+          "start": "3:10.3",
+          "end": "3:28.7",
+          "words": "crypto is in a relative winter. That said though, you also look at Robinhood chain which we launched on July 1st. That's been a top five chain in in the industry since then with over 100 billion in decentralized trading volume and over 50 million in chain fees.",
+          "caption": "Robinhood CEO Vlad Tenev, CNBC, Oct. 28, 2026",
+          "context": "Full transcript read. He is explaining why crypto revenue dropped after an earnings miss, so he has a reason to pivot to the chain.",
+          "expect": "relative winter",
+          "facts": [
+            {
+              "text": "Tenev: crypto is 'in a relative winter', Robinhood chain launched July 1, 'a top five chain', 'over 100 billion in decentralized trading volume and over 50 million in chain fees'",
+              "source": "https://www.youtube.com/watch?v=6trZS0CylDE&t=190s",
+              "read": "2026-11-05"
+            },
+            {
+              "text": "The anchor framed prediction markets as a bigger share of transaction revenue than crypto. Tenev said he sees no cannibalization",
+              "source": "https://www.youtube.com/watch?v=6trZS0CylDE&t=113s",
+              "read": "2026-11-05"
+            }
+          ],
+          "careful": [
+            "The Robinhood chain figures are the CEO's own, not independently checked.",
+            "This clip is 8 days old by the time you record."
+          ]
+        }
+      ]
+    }
+  ],
+  "docx_sha256": "93f3462e5af61e104cc7ae0b83b241dc582ff873568a4be86e3ec031a76f0d6a",
+  "shape": "menu"
+}

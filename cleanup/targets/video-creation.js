@@ -18,7 +18,7 @@
 //  - Whole-folder, batch-aware (recycle the ENTIRE project folder for a completed/archived
 //    batch, keep an active one, leave an unregistered folder alone):
 //      * shorts/<batch>/                     — matched by the batch's `directories`.
-//      * longform-presentation/media/<proj>/ — matched by the batch's `source_media`.
+//      * longform-presentation/media/<format>/<proj>/ — matched by the batch's `source_media`.
 //      * longform-edited/media/<proj>/       — matched by the batch's `source_media`.
 //      * livestream-repurpose/media/<sub>/   — matched by the batch's `source_media`
 //        (also loose files directly under media/); unmatched entries fall to age-based.
@@ -268,7 +268,16 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
       else recycle.push({ path: full, reason: `${label} project — ${b.status} batch (${b.batch})` });
     }
   };
-  classifyMediaProjects(LFP_MEDIA, 'video-creation/longform-presentation/media', 'longform-presentation');
+  // longform-presentation nests one level deeper: media/<format>/<project>/ (Mike, 2026-10-31; the
+  // format folders are deck-lecture / desilence-only / vscode-coding / standard). A format folder
+  // is never itself a project, so classify the projects inside each one.
+  if (fs.existsSync(LFP_MEDIA)) {
+    for (const fmt of fs.readdirSync(LFP_MEDIA, { withFileTypes: true })) {
+      if (!fmt.isDirectory()) continue;
+      classifyMediaProjects(path.join(LFP_MEDIA, fmt.name),
+        `video-creation/longform-presentation/media/${fmt.name}`, `longform-presentation/${fmt.name}`);
+    }
+  }
   classifyMediaProjects(LFE_MEDIA, 'video-creation/longform-edited/media', 'longform-edited');
   // vertical-ai-persona main-likeness projects ARE batch-tracked (e.g. kaspa-covenants-short).
   classifyMediaProjects(VAP_MEDIA, 'video-creation/vertical-ai-persona/media', 'vertical-ai-persona');
@@ -285,7 +294,11 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
     OUT,
     path.join(ROOT, 'livestream-repurpose', 'media'),
     path.join(ROOT, 'livestream-repurpose', 'transcripts'),
-    LFP_MEDIA,
+    // Each longform-presentation FORMAT folder is its own root (a root is never pruned), so an
+    // emptied standard/ etc. survives for the next project of that format.
+    ...(fs.existsSync(LFP_MEDIA)
+      ? fs.readdirSync(LFP_MEDIA, { withFileTypes: true }).filter(e => e.isDirectory()).map(e => path.join(LFP_MEDIA, e.name))
+      : []),
     LFE_MEDIA,
     VAP_MEDIA,
     YULI_MEDIA,

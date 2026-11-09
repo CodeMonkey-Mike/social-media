@@ -12,16 +12,23 @@ the shared `video-creation/skills/` (defumbler, desilencer, gaze, captions, ...)
 Identify the format FIRST, from the folder contents and Mike's ask; it decides which phases run at all. The track
 exists because these are much less effort than longform-edited, so never run a phase the format does not list.
 
-| Format | Example | Phases | Audio | Goes to |
-|---|---|---|---|---|
-| **1. Slide-deck lecture** (a deck `.html` in the folder, "Section N · Lecture M" eyebrow) | history-of-crypto 2026-10-13, QE 2026-06-06 | 1 defumble -> 2 desilence -> 3 transcribe -> 4 spotlight | the EDIT's own track; Mike runs his own Enhance Speech pass after acceptance | his Whop course (`whop.com/cryptorich`), uploaded by him |
-| **2. Crypto-chart screen share** (TradingView / DexScreener, webcam PiP, no deck) | what-to-buy 2026-10-13 | 1 (only if the take has retakes) -> 2 desilence; the EDIT is the deliverable, crf 18 | the EDIT's own track | his public uploads, by him |
-| **3. VS Code coding screen share** (single take, coding live while talking) | print-function 2026-10-16 | **NO edit at all**: no defumble, no desilence, no transcribe. Music only: `skills/music-bed/` + a series thumbnail `skills/thumbnail/` | intro sting + elevator bed mixed under the untouched voice; no Enhance Speech | the **AI Engineering Simplified** YouTube channel ("Learning Python" series), uploaded by him |
-| **4. Deck screen share with card overlays** (a deck `.html` + talking points in the folder, master in `raw/`, webcam PiP + the Premium Membership box, free talk) | near-vs-tao 2026-10-24 | 1 defumble -> 2 desilence -> **Mike's Enhance Speech pass** (he drops it in `spine/`) -> 3 transcribe it -> a few full-screen deck cards over the A-roll, ONE render, no draft, no Remotion: `skills/card-overlays/` | his enhanced track, stream-copied | YouTube by him + the longform queue (rumble / bitchute / facebook) |
+| Format | Folder | Example | Phases | Audio | Goes to |
+|---|---|---|---|---|---|
+| **1. Slide-deck lecture** (a deck `.html` in the folder, "Section N · Lecture M" eyebrow) | `media/deck-lecture/` | history-of-crypto 2026-10-13, QE 2026-06-06 | 1 defumble -> 2 desilence -> 3 transcribe -> 4 spotlight | the EDIT's own track; Mike runs his own Enhance Speech pass after acceptance | his Whop course (`whop.com/cryptorich`), uploaded by him |
+| **2. Crypto-chart screen share** (TradingView / DexScreener, webcam PiP, no deck) | `media/desilence-only/` | what-to-buy 2026-10-13 | 1 (only if the take has retakes) -> 2 desilence; the EDIT is the deliverable, crf 18 | the EDIT's own track | his public uploads, by him |
+| **3. VS Code coding screen share** (single take, coding live while talking) | `media/vscode-coding/` | print-function 2026-10-16 | **NO edit at all**: no defumble, no desilence, no transcribe. Music only: `skills/music-bed/` + a series thumbnail `skills/thumbnail/` | intro sting + elevator bed mixed under the untouched voice; no Enhance Speech | the **AI Engineering Simplified** YouTube channel ("Learning Python" series), uploaded by him |
+| **4. Standard presentation** (deck screen share with card overlays; a deck `.html` + a notes doc (never redundant with the slides) in the folder, master in `raw/`, webcam PiP + the Premium Membership box, free talk) | `media/standard/` | near-vs-tao 2026-10-24 | 1 defumble (if retakes) -> 2 desilence -> **Mike's Enhance Speech pass** on the EDIT's audio (remuxed in `spine/`) -> 3 transcribe it -> a few overlays INSIDE the deck area (deck cards, a system-design chart, an animated chart, a whiteboard beat; webcam + CTA never covered, 2026-10-31), ONE render, no draft, no video comp: `skills/card-overlays/` | his enhanced track, stream-copied | YouTube by him + the longform queue (rumble / bitchute / facebook) |
 
 Format 3 is expected to be the MOST common (many Python coding videos). Why no edit: it is one deliberate take,
 fumbles are fine, and the silences are content: Mike may be typing code without speaking and the viewer must not
 miss it. The deliverable is the master with music under it, the picture stream-copied (frame count = master's).
+
+**Exception, only when Mike asks: desilence the WAITS first (system-design, 2026-11-04: "cut out some of the silence
+because I was waiting for some of my commands to process").** A take built around waiting on a tool (Claude Code
+thinking) has dead air that is not content. Desilencer agent on the raw master, preset with `--min-sil 1.0` (his value
+for this video; pads stay 200 / 100 ms, no defumble), then `music_bed.py` runs on the `<p> EDIT.mp4` instead of the
+raw. The preset names its output after the input's parent folder, so a master in `raw/` needs an explicit
+`--out "media/vscode-coding/<p>/<p> EDIT.mp4"`.
 
 Either way the deliverable is an absolute path and MIKE uploads it himself: nothing on this track is staged to
 `longs.json` or `batches.json` unless he asks. **Format 4 is the exception he asked for (2026-10-24, near-vs-tao):**
@@ -32,8 +39,12 @@ edited with Node, then `python scripts/persona-lint.py --file schedule-tweets/da
 
 ## Folder convention
 
+Every project lives under its FORMAT folder (Mike, 2026-10-31): `media/<format>/<project>/`, `<format>` =
+`deck-lecture` (1) · `desilence-only` (2) · `vscode-coding` (3) · `standard` (4), so the format is fixed when
+the folder is made. A format folder is never itself a project (cleanup classifies the projects inside it).
+
 ```
-media/<project>/                   the FOLDER name is the project name (OBS names the master by timestamp)
+media/<format>/<project>/          the FOLDER name is the project name (OBS names the master by timestamp)
   <timestamp>.mkv                  master raw (OBS, ~6 Mbps 1080p30) — never edit, never delete
   <deck>.html                      the slide deck used in the recording (deck recordings) + the script (.docx/.txt)
   <project> DEFUMBLED.mp4          Phase 1 (only when the take has retakes), libx264 crf 18
@@ -56,6 +67,9 @@ desilencer) and the one lossy generation is the crf 18 spine, which keeps on-scr
 
 ## Recording notes (what the next recording should get right)
 
+- **Match the OBS scene to the channel.** The Premium Membership panel (x 1400-1920, y 0-400) is the crypto channel's
+  CTA; on an AI Engineering Simplified recording it must be off before recording (artifacts 2026-11-05 shipped with
+  a black box over it: `drawbox=x=1400:y=0:w=520:h=400:color=black:t=fill`).
 - **No noise gate and no noise suppression in the mic chain** (OBS mic filters, NVIDIA Broadcast, Krisp, the
   mic's own DSP). The history-of-crypto master was gated: 47% of it exact digital zero, word-final fricatives
   20 dB under the vowels, so quiet endings ("banks", "age") were chopped in the RAW file and no edit pass could
@@ -66,7 +80,7 @@ desilencer) and the one lossy generation is the crf 18 spine, which keeps on-scr
   crypto: 6 of 8 titles read) costs a transcript check per chapter.
 - **A webcam PiP only when face cutaways are wanted.** A deck-only capture has no face to cut to, and its
   as-filmed head is the title slide.
-- 1080p30 OBS at ~6 Mbps; the deck HTML and the script (.docx + .txt) go into `media/<project>/` next to the
+- 1080p30 OBS at ~6 Mbps; the deck HTML and the script (.docx + .txt) go into `media/<format>/<project>/` next to the
   master, the folder name is the project name.
 
 ## Phase 1 — defumble (only when the take needs it)
@@ -79,19 +93,22 @@ but the METHOD is the defumbler's: never cut from a whole-file Whisper transcrip
 
 Render with **`remove_spans.py ... --crf 18`** (libx264; added 2026-10-13): on this track the defumbled file is the
 master the spotlight takes its head/tail footage from, so the NVENC proxy default is not enough. Output
-`media/<project>/<project> DEFUMBLED.mp4`. A 48-minute 1080p30 deck capture encodes to ~80 MB at crf 18 (static
+`media/<format>/<project>/<project> DEFUMBLED.mp4`. A 48-minute 1080p30 deck capture encodes to ~80 MB at crf 18 (static
 slides), in 10 to 20 minutes: launch it detached with a log and poll, never as a tracked background task.
 
 ## Phase 2 — desilence with the track preset
 
 `skills/desilence/desilence.md`: the standing definition is **800 ms min-silence, 300 ms left between sentences
-(200 ms after the sentence so word-final releases survive, 100 ms before the next), one zone**, pinned in code; it
+(200 ms after the sentence so word-final releases survive, 100 ms before the next), one zone**, pinned in code.
+**Deck lectures (format 1) get more air (Mike, 2026-11-08): 500 ms between sentences (300 after + 200 before) and 900 ms
+at every slide change**, found in the picture; the preset picks these automatically for an input under
+`media/deck-lecture/`. With them the spotlight's `chapter_pause` stacks on the slide pause, so decide it per video. It
 wraps the canonical desilencer (`video-creation/skills/desilencer/`, the -57/-52 dB RMS method, declick,
 frame-locked render; nothing re-implemented). When word endings still sound clipped, check the MASTER first: a
 noise-gated mic chain chops them at the source (history-of-crypto, 2026-10-14).
 ```
-python skills/desilence/desilence_preset.py "media/<project>/<project> DEFUMBLED.mp4" --dry-run   # plan + QA
-python skills/desilence/desilence_preset.py "media/<project>/<project> DEFUMBLED.mp4"             # -> <project> EDIT.mp4 + .map.json
+python skills/desilence/desilence_preset.py "media/<format>/<project>/<project> DEFUMBLED.mp4" --dry-run   # plan + QA
+python skills/desilence/desilence_preset.py "media/<format>/<project>/<project> DEFUMBLED.mp4"             # -> <project> EDIT.mp4 + .map.json
 ```
 Input = the DEFUMBLED file, or the master `.mkv` when Phase 1 was skipped. Defumble and desilence are two
 separate sync-safe passes, in this order, never combined. QA (the preset prints the first two): swallowed-speech
@@ -106,7 +123,7 @@ preserved by construction. **Never the concat-demuxer** method (it re-stamps the
 ## Phase 3 — transcribe the FINAL spine (word-level)
 
 ```
-python scripts/transcribe.py "media/<project>/<project> EDIT.mp4"     # medium model, GPU auto
+python scripts/transcribe.py "media/<format>/<project>/<project> EDIT.mp4"     # medium model, GPU auto
 ```
 Medium, not base (base "cleans up" disfluencies). Writes `<project> EDIT.medium-words.json`: the cue source for
 Phase 4 (and for any captions). Transcribe the file the comp is cued to, never an earlier derivative.
@@ -134,26 +151,47 @@ then a random elevator bed from the library starting right after Mike's cue line
 because this is a cool course" on print-function, ~0:55), -32 dB clip gain, remix-looped on a bar-aligned region,
 end-aligned to the last frame. One command, ~2 min, no video encode:
 ```
-python skills/music-bed/music_bed.py "media/<p>/raw/<timestamp>.mkv" --cue-phrase "<his cue words>" --out "media/<p>/<p> FINAL-v1.mp4"
+python skills/music-bed/music_bed.py "media/vscode-coding/<p>/raw/<timestamp>.mkv" --cue-phrase "<his cue words>" --out "media/vscode-coding/<p>/<p> FINAL-v1.mp4"
 ```
 Mike speaks levels as **Premiere clip gain** (keyframe dB on the clip), never absolute dBFS. Ask for the cue line if
 he has not named it. Thumbnail: **`skills/thumbnail/thumbnail.md`** (edit the previous episode's published
 thumbnail with nano_banana_2, three takes, he picks).
 
-## Format 4 — a few full-screen deck cards over the screen share
+## Format 4 (standard) — deck cards, charts and a whiteboard beat INSIDE the deck area
+
+**The layout changed 2026-10-31 (binance):** an overlay covers ONLY the deck area (the left 1466 px of the
+recording); Mike's webcam and the Premium Membership box keep the right column at their recorded size, visible the
+whole time. Four overlay kinds: a deck card, a system-design chart still (shared `chart-builder` agent), an animated
+chart clip, and a whiteboard beat clip (`video-creation/skills/whiteboard-beat/`, shared `whiteboard-builder`
+agent). Still one ffmpeg final render, no video comp, no draft. Spec + rules: `skills/card-overlays/card-overlays.md`.
+
+**Pre-production (before Mike records): `RESEARCH.md` -> the deck `<p>.html` -> the notes doc `<p>-notes.docx`.**
+`RESEARCH.md` is the only number source (every fact sourced, a timestamped market snapshot, a do-not-air list). The
+deck reuses the previous standard deck's stylesheet + recording helpers verbatim (`media/standard/binance/binance.html`:
+content in `.wrap`, the left 68vw, so the webcam corner stays clear; F = fullscreen, G = webcam guide box, arrows /
+Space = next slide). **The notes doc is NEVER redundant with the slides (Mike, 2026-11-08, for every standard video):**
+it holds ONLY what is NOT on a slide: extra facts and context, caveats and sourcing nuance, numbers that did not fit,
+likely viewer questions, the do-not-air items, recording logistics. No "on screen" recaps, no restating a slide's
+bullets or stats (binance's talking points did both: do not copy that). **And the notes doc stays SHORT (Mike,
+2026-11-08, JCT):** any point worth a few sentences on camera (a contradiction, a timeline, a "what isn't public" list)
+goes ON a slide as its own container; add slides for it (two or three more than planned is fine) rather than leave it in
+the notes. The notes keep only the small stuff: a few bullets per slide at most. Organize it by slide so he can glance at it
+while that slide is up; a slide with nothing to add gets no section. Built as a Word doc (he narrows by hand) from one
+`CONTENT` list in `build_notes.py` in the project folder, `.txt` beside it.
 
 **`skills/card-overlays/card-overlays.md`** (canonical). Mike screen-shares the deck with his webcam PiP and talks
-freely from talking points; the spine is made with the shared agents exactly as on longform-edited, minus the
+freely from the slides + notes doc; the spine is made with the shared agents exactly as on longform-edited, minus the
 blackout (he is on screen the whole time): the **`defumbler` agent** on the master (`--crf 18`, output
-`spine/ALL.a.defumbled.mp4`), then the **`desilencer` agent** with this track's preset (`skills/desilence/`, output
-`spine/ALL.c.desilenced.mp4`). Mike runs Adobe Enhance Speech on that file and drops the result into `spine/`;
-verify it (video stream identical, audio offset), transcribe it, pick the moments, author one card per moment from
-the deck, and render once:
+`spine/ALL.a.defumbled.mp4`) when the take has retakes (binance 2026-10-31: skipped, Mike's call), then the
+**`desilencer`** with this track's preset (`skills/desilence/`, 800 ms; output `spine/<p> EDIT.mp4`). Mike runs
+Adobe Enhance Speech on that spine's AUDIO (hand him `spine/<p> EDIT.wav`) and the enhanced track is remuxed onto the
+EDIT's video; verify the length, transcribe, pick the moments, author one overlay per moment (cards from the deck,
+briefs for the agents), and render once:
 ```
-python skills/card-overlays/card_overlays.py "media/<p>/overlays/cards.json"
+python skills/card-overlays/card_overlays.py "media/standard/<p>/overlays/cards.json"
 ```
-Mike's words for this format (2026-10-24): a single card or a single snippet of information over the entire screen,
-deck + webcam + the call to action all covered, for exactly as long as he talks about it; "no need for a draft
+Mike's words for this format (2026-10-24): a single card or a single snippet of information for exactly as long as
+he talks about it (over the entire screen then; inside the deck area since 2026-10-31); "no need for a draft
 render"; "this long-form presentation folder should be just a very simple version of the long-form editor". Where
 the time goes on a 17-minute master: defumbler agent ~80 min (most of it the agent's own judgment and re-renders,
 not compute), desilence ~6 min, transcribe ~5 min, card render ~3.5 min.
@@ -239,3 +277,15 @@ transcript corpus, never inferred.
   Mike's Enhance Speech v2 (50% / bg 18% / music 10%), five full-screen cards (quote 0:42, Illia 3:54, voting power
   7:19, market cap 8:51, Q1-Q3 12:42), one ffmpeg render, FINAL-v1. The hand-built render became
   `skills/card-overlays/` the same day (its picture verified identical to FINAL-v1).
+- **2026-11-08 "Crypto vs. The Traditional Financial System"** (format 1, Section 2 · Lecture 4, 32:59 deck-only master):
+  defumbler agent 70 drops -> 23:27; first desilence 700 / 300 ms (13:02) was "too fast" -> 800 ms / 500 ms residual +
+  900 ms at each slide change (13:49), which became the DECK-LECTURE DEFAULT the same day; Mike's Enhance Speech v2
+  (75% / bg 10% / music 10%) on the EDIT's WAV, remuxed; no `chapter_pause` (the slide pause already gives the air);
+  45-scene spotlight on the lecture-4 deck kinds (`block`, `flow`, `supply`, accent `statement`), 3 parts in 26.6 min;
+  the stitch's VFR fix. FINAL-v1 13:49.
+- **2026-11-05 "artifacts"** (standard folder, AI Engineering Simplified, Claude artifacts over an HTML deck, 14:49 master,
+  no overlays, no Enhance Speech, Mike's call): defumble scoped to one 80 s window (3 cuts, -19.4 s), canonical
+  `desilence.py --split 120 --sil-pre 99999 --sil-post 1.0 --pad 0.1 --pad-head 0` (first 2:00 untouched, 33 cuts,
+  -51.9 s), 13:38. Share-dialog email boxblurred on the exact frames from a per-frame template scan (ffmpeg `gblur` burned green
+  streaks on the small crop), crypto CTA blacked out. A LinkedIn cut for its 10-minute limit: stop in a pause at 9:50 +
+  an 8 s card naming the channel, 9:58. FINAL-v2 uploaded by Mike to YouTube + LinkedIn, not queued.

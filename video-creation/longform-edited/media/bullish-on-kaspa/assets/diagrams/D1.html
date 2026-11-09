@@ -1,0 +1,85 @@
+<!doctype html><html><head><meta charset="utf-8"><title>D1</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"><style>
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; 
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} 
+b{color:var(--text-primary);font-weight:700}
+
+
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+
+
+:root{
+  --bg-deep:#F6F4EE; --bg-card:#FFFFFF; --bg-card-hover:#F1EFE9;
+  --accent-green:#007A55; --accent-cyan:#006A9E; --accent-gold:#8F6500;
+  --accent-red:#C41E3A; --accent-purple:#7C3AED; --accent-teal:#0E7A6C; 
+  --text-primary:#14161A; --text-secondary:#4A5263; --text-muted:#5E6676;
+  --border:#DDD9CF;
+  
+  --grid:#D6D2C7; --axis:#7A808B; --wire:#8A877E; --ink:#14161A;
+}
+body{background:#E4E1D8}
+
+
+.frame::after{opacity:.05;mix-blend-mode:multiply}
+
+
+.orb{opacity:.18}
+
+
+.card,.col,.panel,.ecard,.nd,.node,.box{
+  background:var(--bg-card);border-color:var(--border);
+  box-shadow:0 1px 2px rgba(20,22,26,.05),0 14px 34px rgba(20,22,26,.08)}
+
+
+.frame{--acc-rgb:0,106,158}
+.lit,.on,.hot,.chip.on,.nd.lit,.node.on,.box.on,.ecard.on{
+  box-shadow:0 0 0 4px rgba(var(--acc-rgb),.12),0 12px 28px rgba(20,22,26,.12)}
+.hot,.nd.hot{box-shadow:0 0 0 6px rgba(var(--acc-rgb),.22),0 16px 34px rgba(20,22,26,.18)}
+.chip.on{background:rgba(var(--acc-rgb),.08)}
+.role,.rl,h1,h2{text-shadow:none}
+
+
+svg .wire,svg line.wire,svg path.wire{stroke:var(--wire)}
+svg .grid{stroke:var(--grid)} svg .axis{stroke:var(--axis)}
+svg .ink{stroke:var(--ink);fill:var(--ink)}
+
+.frame{--acc-rgb:14,122,108;display:block;padding:0;margin:0 0 24px}
+.frame>svg.stage{position:absolute!important;left:0;top:0;width:1920px;height:1080px;z-index:1}
+.head{position:absolute!important;left:140px;top:62px;z-index:2}
+.head .ey{margin-bottom:14px}
+.head h1{font-size:70px;white-space:nowrap}
+.head .divider{margin:22px 0 0;background:linear-gradient(90deg,#0E7A6C,#49EACB)}
+.k{color:#0E7A6C}
+h1 .mono{font-weight:600;letter-spacing:-.03em}
+.src{position:absolute!important;left:140px;bottom:30px;font-family:'JetBrains Mono',monospace;font-size:20px;color:#5E6676;z-index:2}
+.tagp{position:absolute!important;right:136px;top:72px;z-index:2;padding:9px 22px;border:1.5px dashed #8A877E;border-radius:100px;
+  font:700 22px 'DM Sans';letter-spacing:.12em;color:#4A5263;background:#F6F4EE}
+</style></head><body><svg width="0" height="0" style="position:absolute"><defs><filter id="sh" x="-10%" y="-10%" width="120%" height="125%"><feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#14161A" flood-opacity=".09"/></filter><pattern id="hatch" patternUnits="userSpaceOnUse" width="14" height="14" patternTransform="rotate(45)"><rect width="14" height="14" fill="#F6F4EE"/><rect width="5" height="14" fill="#DDD9CF"/></pattern></defs></svg><div class="frame" id="A"><div class="orb" style="width:900px;height:900px;right:-300px;top:-420px;background:#49EACB"></div><svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"><rect x="140.0" y="280.0" width="1640.0" height="680.0" rx="26" fill="rgba(73,234,203,.20)" stroke="#0E7A6C" stroke-width="3.5" /><text x="186.0" y="348.0" font-family="DM Sans" font-size="40" font-weight="700" fill="#0E7A6C" text-anchor="start" letter-spacing="0.1em" >KASPA LAYER 1</text><line x1="671.2" y1="601.4" x2="768.8" y2="548.6" stroke="#8A877E" stroke-width="3.5" stroke-linecap="butt"/><polygon points="782.0,541.4 770.9,558.1 762.0,541.6" fill="#8A877E"/><polygon points="658.0,608.6 669.1,591.9 678.0,608.4" fill="#8A877E"/><line x1="1151.2" y1="548.6" x2="1248.8" y2="601.4" stroke="#8A877E" stroke-width="3.5" stroke-linecap="butt"/><polygon points="1262.0,608.6 1242.0,608.4 1250.9,591.9" fill="#8A877E"/><polygon points="1138.0,541.4 1158.0,541.6 1149.1,558.1" fill="#8A877E"/><line x1="673.0" y1="705.0" x2="1247.0" y2="705.0" stroke="#8A877E" stroke-width="3.5" stroke-linecap="butt"/><polygon points="1262.0,705.0 1244.3,714.4 1244.3,695.6" fill="#8A877E"/><polygon points="658.0,705.0 675.7,695.6 675.7,714.4" fill="#8A877E"/><rect x="330.0" y="630.0" width="300.0" height="150.0" rx="18" fill="#FFFFFF" stroke="#DDD9CF" stroke-width="2" filter="url(#sh)" /><text x="480.0" y="721.0" font-family="DM Sans" font-size="46" font-weight="700" fill="#14161A" text-anchor="middle" letter-spacing="0.1em" >APP</text><rect x="810.0" y="370.0" width="300.0" height="150.0" rx="18" fill="#FFFFFF" stroke="#DDD9CF" stroke-width="2" filter="url(#sh)" /><text x="960.0" y="461.0" font-family="DM Sans" font-size="46" font-weight="700" fill="#14161A" text-anchor="middle" letter-spacing="0.1em" >APP</text><rect x="1290.0" y="630.0" width="300.0" height="150.0" rx="18" fill="#FFFFFF" stroke="#DDD9CF" stroke-width="2" filter="url(#sh)" /><text x="1440.0" y="721.0" font-family="DM Sans" font-size="46" font-weight="700" fill="#14161A" text-anchor="middle" letter-spacing="0.1em" >APP</text></svg><div class="head"><div class="ey">VPROGS</div><h1>Apps on <span class="k">Kaspa's own Layer <span class="mono">1</span>.</span></h1><div class="divider"></div></div><div class="src">Sources: kaspa.org/build, Michael Sutton 2025-09-12</div></div><div class="frame" id="A-lit"><div class="orb" style="width:900px;height:900px;right:-300px;top:-420px;background:#49EACB"></div><svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"><rect x="140.0" y="280.0" width="1640.0" height="680.0" rx="26" fill="rgba(73,234,203,.20)" stroke="#0E7A6C" stroke-width="3.5" /><text x="186.0" y="348.0" font-family="DM Sans" font-size="40" font-weight="700" fill="#0E7A6C" text-anchor="start" letter-spacing="0.1em" >KASPA LAYER 1</text><line x1="677.8" y1="597.9" x2="762.2" y2="552.1" stroke="#0E7A6C" stroke-width="8" stroke-linecap="butt"/><polygon points="782.0,541.4 765.4,566.4 752.0,541.6" fill="#0E7A6C"/><polygon points="658.0,608.6 674.6,583.6 688.0,608.4" fill="#0E7A6C"/><line x1="1157.8" y1="552.1" x2="1242.2" y2="597.9" stroke="#0E7A6C" stroke-width="8" stroke-linecap="butt"/><polygon points="1262.0,608.6 1232.0,608.4 1245.4,583.6" fill="#0E7A6C"/><polygon points="1138.0,541.4 1168.0,541.6 1154.6,566.4" fill="#0E7A6C"/><line x1="680.5" y1="705.0" x2="1239.5" y2="705.0" stroke="#0E7A6C" stroke-width="8" stroke-linecap="butt"/><polygon points="1262.0,705.0 1235.5,719.1 1235.5,690.9" fill="#0E7A6C"/><polygon points="658.0,705.0 684.5,690.9 684.5,719.1" fill="#0E7A6C"/><rect x="330.0" y="630.0" width="300.0" height="150.0" rx="18" fill="#FFFFFF" stroke="#0E7A6C" stroke-width="3.5" filter="url(#sh)" /><text x="480.0" y="721.0" font-family="DM Sans" font-size="46" font-weight="700" fill="#14161A" text-anchor="middle" letter-spacing="0.1em" >APP</text><rect x="810.0" y="370.0" width="300.0" height="150.0" rx="18" fill="#FFFFFF" stroke="#0E7A6C" stroke-width="3.5" filter="url(#sh)" /><text x="960.0" y="461.0" font-family="DM Sans" font-size="46" font-weight="700" fill="#14161A" text-anchor="middle" letter-spacing="0.1em" >APP</text><rect x="1290.0" y="630.0" width="300.0" height="150.0" rx="18" fill="#FFFFFF" stroke="#0E7A6C" stroke-width="3.5" filter="url(#sh)" /><text x="1440.0" y="721.0" font-family="DM Sans" font-size="46" font-weight="700" fill="#14161A" text-anchor="middle" letter-spacing="0.1em" >APP</text><text x="960.0" y="618.0" font-family="DM Sans" font-size="32" font-weight="700" fill="#0E7A6C" text-anchor="middle" letter-spacing="0.1em" >TALK TO EACH OTHER</text></svg><div class="head"><div class="ey">VPROGS</div><h1>Apps on <span class="k">Kaspa's own Layer <span class="mono">1</span>.</span></h1><div class="divider"></div></div><div class="src">Sources: kaspa.org/build, Michael Sutton 2025-09-12</div></div><div class="frame" id="A-norollup"><div class="orb" style="width:900px;height:900px;right:-300px;top:-420px;background:#49EACB"></div><svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"><rect x="140.0" y="280.0" width="1640.0" height="680.0" rx="26" fill="rgba(73,234,203,.20)" stroke="#0E7A6C" stroke-width="3.5" /><text x="186.0" y="348.0" font-family="DM Sans" font-size="40" font-weight="700" fill="#0E7A6C" text-anchor="start" letter-spacing="0.1em" >KASPA LAYER 1</text><line x1="677.8" y1="597.9" x2="762.2" y2="552.1" stroke="#0E7A6C" stroke-width="8" stroke-linecap="butt"/><polygon points="782.0,541.4 765.4,566.4 752.0,541.6" fill="#0E7A6C"/><polygon points="658.0,608.6 674.6,583.6 688.0,608.4" fill="#0E7A6C"/><line x1="1157.8" y1="552.1" x2="1242.2" y2="597.9" stroke="#0E7A6C" stroke-width="8" stroke-linecap="butt"/><polygon points="1262.0,608.6 1232.0,608.4 1245.4,583.6" fill="#0E7A6C"/><polygon points="1138.0,541.4 1168.0,541.6 1154.6,566.4" fill="#0E7A6C"/><line x1="680.5" y1="705.0" x2="1239.5" y2="705.0" stroke="#0E7A6C" stroke-width="8" stroke-linecap="butt"/><polygon points="1262.0,705.0 1235.5,719.1 1235.5,690.9" fill="#0E7A6C"/><polygon points="658.0,705.0 684.5,690.9 684.5,719.1" fill="#0E7A6C"/><rect x="330.0" y="630.0" width="300.0" height="150.0" rx="18" fill="#FFFFFF" stroke="#0E7A6C" stroke-width="3.5" filter="url(#sh)" /><text x="480.0" y="721.0" font-family="DM Sans" font-size="46" font-weight="700" fill="#14161A" text-anchor="middle" letter-spacing="0.1em" >APP</text><rect x="810.0" y="370.0" width="300.0" height="150.0" rx="18" fill="#FFFFFF" stroke="#0E7A6C" stroke-width="3.5" filter="url(#sh)" /><text x="960.0" y="461.0" font-family="DM Sans" font-size="46" font-weight="700" fill="#14161A" text-anchor="middle" letter-spacing="0.1em" >APP</text><rect x="1290.0" y="630.0" width="300.0" height="150.0" rx="18" fill="#FFFFFF" stroke="#0E7A6C" stroke-width="3.5" filter="url(#sh)" /><text x="1440.0" y="721.0" font-family="DM Sans" font-size="46" font-weight="700" fill="#14161A" text-anchor="middle" letter-spacing="0.1em" >APP</text><text x="960.0" y="618.0" font-family="DM Sans" font-size="32" font-weight="700" fill="#0E7A6C" text-anchor="middle" letter-spacing="0.1em" >TALK TO EACH OTHER</text><text x="960.0" y="900.0" font-family="DM Sans" font-size="32" font-weight="700" fill="#14161A" text-anchor="middle" letter-spacing="0.1em" >NO ROLLUP IN BETWEEN</text></svg><div class="head"><div class="ey">VPROGS</div><h1>Apps on <span class="k">Kaspa's own Layer <span class="mono">1</span>.</span></h1><div class="divider"></div></div><div class="src">Sources: kaspa.org/build, Michael Sutton 2025-09-12</div></div><div class="frame" id="B"><div class="orb" style="width:900px;height:900px;right:-300px;top:-420px;background:#49EACB"></div><svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"><rect x="140.0" y="280.0" width="1640.0" height="680.0" rx="26" fill="rgba(73,234,203,.20)" stroke="#0E7A6C" stroke-width="3.5" /><text x="186.0" y="348.0" font-family="DM Sans" font-size="40" font-weight="700" fill="#0E7A6C" text-anchor="start" letter-spacing="0.1em" >KASPA LAYER 1</text><line x1="677.8" y1="597.9" x2="762.2" y2="552.1" stroke="#0E7A6C" stroke-width="8" stroke-linecap="butt"/><polygon points="782.0,541.4 765.4,566.4 752.0,541.6" fill="#0E7A6C"/><polygon points="658.0,608.6 674.6,583.6 688.0,608.4" fill="#0E7A6C"/><line x1="1157.8" y1="552.1" x2="1242.2" y2="597.9" stroke="#0E7A6C" stroke-width="8" stroke-linecap="butt"/><polygon points="1262.0,608.6 1232.0,608.4 1245.4,583.6" fill="#0E7A6C"/><polygon points="1138.0,541.4 1168.0,541.6 1154.6,566.4" fill="#0E7A6C"/><line x1="680.5" y1="705.0" x2="1239.5" y2="705.0" stroke="#0E7A6C" stroke-width="8" stroke-linecap="butt"/><polygon points="1262.0,705.0 1235.5,719.1 1235.5,690.9" fill="#0E7A6C"/><polygon points="658.0,705.0 684.5,690.9 684.5,719.1" fill="#0E7A6C"/><rect x="330.0" y="630.0" width="300.0" height="150.0" rx="18" fill="#FFFFFF" stroke="#0E7A6C" stroke-width="3.5" filter="url(#sh)" /><text x="480.0" y="721.0" font-family="DM Sans" font-size="46" font-weight="700" fill="#14161A" text-anchor="middle" letter-spacing="0.1em" >APP</text><rect x="810.0" y="370.0" width="300.0" height="150.0" rx="18" fill="#FFFFFF" stroke="#0E7A6C" stroke-width="3.5" filter="url(#sh)" /><text x="960.0" y="461.0" font-family="DM Sans" font-size="46" font-weight="700" fill="#14161A" text-anchor="middle" letter-spacing="0.1em" >APP</text><rect x="1290.0" y="630.0" width="300.0" height="150.0" rx="18" fill="#FFFFFF" stroke="#0E7A6C" stroke-width="3.5" filter="url(#sh)" /><text x="1440.0" y="721.0" font-family="DM Sans" font-size="46" font-weight="700" fill="#14161A" text-anchor="middle" letter-spacing="0.1em" >APP</text><text x="960.0" y="618.0" font-family="DM Sans" font-size="32" font-weight="700" fill="#0E7A6C" text-anchor="middle" letter-spacing="0.1em" >TALK TO EACH OTHER</text><text x="960.0" y="900.0" font-family="DM Sans" font-size="32" font-weight="700" fill="#14161A" text-anchor="middle" letter-spacing="0.1em" >NO ROLLUP IN BETWEEN</text><rect x="1364.0" y="300.0" width="392.0" height="66.0" rx="12" fill="url(#hatch)" stroke="#7A808B" stroke-width="2" /><rect x="1390.0" y="314.0" width="340.0" height="38.0" rx="6" fill="#F6F4EE" stroke="none" stroke-width="0" /><text x="1560.0" y="343.0" font-family="DM Sans" font-size="24" font-weight="700" fill="#14161A" text-anchor="middle" letter-spacing="0.1em" >UNDER CONSTRUCTION</text></svg><div class="head"><div class="ey">VPROGS</div><h1>Apps on <span class="k">Kaspa's own Layer <span class="mono">1</span>.</span></h1><div class="divider"></div></div><div class="src">Sources: kaspa.org/build, Michael Sutton 2025-09-12</div></div></body></html>

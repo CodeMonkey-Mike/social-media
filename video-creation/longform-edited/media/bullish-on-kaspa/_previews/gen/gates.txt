@@ -1,0 +1,16 @@
+COMP-IMPORTS-LINT PASS files=5 fails=0
+  warn  GAP: 7.2s uncovered between 19.433s and 26.633s (face beat, or a missing cover?).
+  warn  GAP: 4.27s uncovered between 31.433s and 35.7s (face beat, or a missing cover?).
+  warn  GAP: 6.9s uncovered between 97.3s and 104.2s (face beat, or a missing cover?).
+  warn  GAP: 4.67s uncovered between 233.233s and 237.9s (face beat, or a missing cover?).
+  warn  GAP: 33.8s uncovered between 302.133s and 335.933s (face beat, or a missing cover?).
+  warn  GAP: 7.77s uncovered between 447.9s and 455.667s (face beat, or a missing cover?).
+  warn  GAP: 9.07s uncovered between 490.967s and 500.033s (face beat, or a missing cover?).
+COVERS-LINT PASS covers=119 fails=0 warns=7
+lint-deck-containers: OK — 27 deck refs, all single containers.
+SLIDE-BALANCE-LINT PASS fails=0 warns=0
+ANIMATED-CHARTS-LINT PASS charts=7 missing=0
+TRANSITION-ASSETS-LINT PASS ids=20 fails=0 warns=0
+SPINE-FPS PASS fps=30.000 frames=16312
+FACE-REFRAME-LINT PASS scale=1.398 x=-651.0 y=-415.0 measured_scale=1.398 measured_x=-651 measured_y=-415
+PAUSE-SILENCE PASS inserts=3

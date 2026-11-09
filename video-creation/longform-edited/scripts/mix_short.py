@@ -85,6 +85,12 @@ def main():
     bed_file = REPO / bed["source_file"] if not Path(bed["source_file"]).is_absolute() else Path(bed["source_file"])
     bed_db = a.bed_db if a.bed_db is not None else float(bed.get("remotion_gain_db"))
     bed_in = float(bed.get("source_in") or 0.0)
+    # a bed CUT shorter than its seat + the short runs out early, and the audio ended before the picture (left-behind
+    # 2026-11-03: a 37 s chorus cut seated at 6.6 s ended at 30.44 s under a 31.03 s short). Seat it earlier so the bed
+    # covers the whole short; the apad on the mix below is the last-resort guard (silence, never a short stream).
+    bed_len = duration(bed_file)
+    if bed_len and bed_in + total > bed_len:
+        bed_in = max(0.0, round(bed_len - total, 3))
     print(f"SHORT-MIX spans={len(spans)} cta={CTA.name} bed={bed.get('chapter')} ({bed_file.name} @{bed_in}s, {bed_db} dB)")
 
     inputs, k = ["-i", str(video)], 1
@@ -122,7 +128,7 @@ def main():
             k += 1
     # duration=longest, then trim to the picture: `duration=first` ended the audio with the LAST SPOKEN SPAN and
     # silently dropped the CTA + the bed tail (kaspa-vprogs short, caught by Mike on first watch 2026-09-29)
-    fc = ";".join(chains) + ";" + "".join(mix) + f"amix=inputs={len(mix)}:normalize=0:duration=longest,atrim=end={total:.3f}[ao]"
+    fc = ";".join(chains) + ";" + "".join(mix) + f"amix=inputs={len(mix)}:normalize=0:duration=longest,apad=whole_dur={total:.3f},atrim=end={total:.3f}[ao]"
     cmd = ["ffmpeg", "-y", "-loglevel", "error", *inputs, "-filter_complex", fc, "-map", "0:v", "-c:v", "copy", "-map", "[ao]",
            "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)]
     r = subprocess.run(cmd, capture_output=True, text=True)

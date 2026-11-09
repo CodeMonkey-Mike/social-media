@@ -51,7 +51,7 @@ STAGE_OF = {
     "init_project": 1, "research": 1, "screenplay": 1, "gate_screenplay": 1, "await_recording": 1,
     "compress": 2, "defumble": 2, "cover_blackout": 2, "desilence_coarse": 2,
     "gate_spine_review": 2, "burst_removal": 2, "desilence_final": 2, "transcribe": 2,
-    "verify_spine": 2, "gate_spine": 2,
+    "verify_spine": 2, "enhance_handoff": 2, "gate_spine": 2, "enhance_remux": 2,
     "as_recorded": 3, "coverage": 3, "music_plan": 3, "gate_plan": 3, "assets": 3, "mix_audio": 4,
     "verify_assets": 3, "edit_plan": 3, "transitions": 3, "reconcile_docs": 3,
     "lint_docset": 3, "gate_blueprint": 3,
@@ -75,7 +75,7 @@ DOCS = {
     "music_plan": "MUSIC-PLAN.json",
 }
 # comp-build.md §10 — the merged assets/ layout
-ASSET_DIRS = ("img", "vid", "title-slides", "card-slides", "receipts", "clip-inserts", "charts", "diagrams",
+ASSET_DIRS = ("img", "vid", "title-slides", "card-slides", "receipts", "clip-inserts", "charts", "diagrams", "whiteboard",
               "slide-sources", "transitions")
 
 PROGRESS_RE = re.compile(r"^PROGRESS (\d+)%")
@@ -207,6 +207,12 @@ def setting(proj: Path, key: str, default=None):
     return (prog(proj).get("settings") or {}).get(key, default)
 
 
+def enhance_speech(proj: Path) -> bool:
+    """Per-video (Mike, 2026-11-04, quant): the FINAL spine's audio is handed to Mike as a WAV for Adobe Podcast Studio
+    Enhance Speech at GATE spine, and his enhanced track is remuxed back as the next spine letter (`run.py --enhance-speech on`)."""
+    return bool(setting(proj, "enhance_speech", False))
+
+
 def set_setting(proj: Path, key: str, value):
     p = prog(proj)
     p.setdefault("settings", {})[key] = value
@@ -219,7 +225,12 @@ def set_setting(proj: Path, key: str, value):
 #   glitch = Mike 2026-10-16 (tao-detailed): every cover->face CUT-IN is a random SPLIT Swinging Offset
 #            (lib:split-swinging-offset-*), every face punch-in plays a random GLITCH Offset / GLITCH Blocks
 #            (lib:glitchoffset-* / lib:blocks-*) across the join instead of a light leak; the cut-out keeps the face pick.
-FACE_STYLES = ("leak", "glitch")
+#   optics = Mike 2026-11-03 (bullish-on-kaspa): every cover->face CUT-IN is a ZOOM Optics move, a random pick of the 6
+#            in assets/transitions/browse/ZOOM/Optics (OPTICS_FACE_IDS); the punch-ins keep their light leaks and the
+#            cut-out keeps the face pick, exactly as in leak.
+FACE_STYLES = ("leak", "glitch", "optics")
+OPTICS_FACE_IDS = ("zoom-optics-in", "zoom-optics-in-impact", "zoom-optics-in-out-1",
+                   "zoom-optics-in-out-2", "zoom-optics-in-out-3", "zoom-optics-out")
 
 
 def face_style(proj: Path) -> str:
@@ -232,11 +243,36 @@ def face_style(proj: Path) -> str:
 #   all-faces = every FACE hold, the short ones too
 #   envato    = every envato-video b-roll beat in COVER-PLAN.json (the comp flags those covers `cap: true`)
 # Mike 2026-10-19 (evals): "not only face scenes, but all the face scenes, and ... the B-roll from envato".
-CAPTION_SCOPES = ("all-faces", "envato")
+#   none      = NO captions anywhere (Mike 2026-11-04, quant: the screen-share FACE scenes carry no captions). The captions
+#               node writes an EMPTY <Project>Captions.ts + sidecar (groups 0, windows []) and the comp renders none.
+CAPTION_SCOPES = ("all-faces", "envato", "none")
 
 
 def caption_scope(proj: Path) -> list:
     return [x for x in (setting(proj, "caption_scope") or []) if x in CAPTION_SCOPES]
+
+
+def captions_off(proj: Path) -> bool:
+    """True when the per-video caption scope is `none` (no captions at all)."""
+    return "none" in caption_scope(proj)
+
+
+# FACE MODE (per video, `run.py --face-mode`): how a [FACE] beat is pictured.
+#   gated       = the house default (longform-edited.md house rule #6): the full-screen face, visible only in the FACE windows,
+#                 black (then covered) everywhere else.
+#   screenshare = Mike 2026-11-04 (quant): a FACE beat is a SCREEN SHARE. The recording's OBS layout stays verbatim (his
+#                 webcam PiP bottom-right + the CTA box top-right, the binance standard-format geometry: deck area x 0 to
+#                 1464, right column x 1466+), and the comp paints the DECK AREA with that beat's `face_body` content (a
+#                 deck card, a chart, an animated chart or a whiteboard beat at 1464x1080), cued to his words. COVER beats
+#                 are unchanged (full-frame covers over the blacked spine). No captions on a screen-share beat.
+#                 Build status: the screenplay carries the mode; the plan / build nodes gain `face_body` support when the
+#                 first such video (quant) reaches the plan stage; until then `coverage` HALTS loudly on this mode.
+FACE_MODES = ("gated", "screenshare")
+
+
+def face_mode(proj: Path) -> str:
+    v = setting(proj, "face_mode", "gated")
+    return v if v in FACE_MODES else "gated"
 
 
 # CONTAINER THEME (per video, `run.py --container-theme`): the palette every CSS container / diagram / animated chart is
@@ -248,6 +284,60 @@ CONTAINER_THEMES = ("dark", "light")
 def container_theme(proj: Path) -> str:
     v = setting(proj, "container_theme", "dark")
     return v if v in CONTAINER_THEMES else "dark"
+
+
+# CONTAINER ACCENT (per video, `run.py --container-accent <slug>`): a THIRD stylesheet loaded after the theme file that
+# re-maps only the accent / text / page tokens to a brand palette (Mike 2026-11-04, quant: white page, warm near-black
+# text, Quant orange). Files live in skills/container-reference/accents/<slug>.css; unset = no accent file.
+ACCENTS_DIR = REPO_ROOT / "video-creation" / "longform-edited" / "skills" / "container-reference" / "accents"
+
+
+def container_accent(proj: Path) -> Optional[str]:
+    v = setting(proj, "container_accent")
+    if not v:
+        return None
+    v = str(v).strip()
+    return v if (ACCENTS_DIR / f"{v}.css").is_file() else None
+
+
+def container_accent_css(proj: Path) -> Optional[Path]:
+    v = container_accent(proj)
+    return (ACCENTS_DIR / f"{v}.css") if v else None
+
+
+# WHITEBOARD SHARE (per video, `run.py --whiteboard-share`): the share of the DELIVERED runtime (spine + clip inserts + title
+# pauses) the whiteboard beats must fill, held in code by the coverage node (`_cover_plan_check`). "0.25" (or "25%") = 0.25
+# +/- WHITEBOARD_SHARE_TOL; "0.22-0.28" = an explicit range; unset / "off" = no target (whiteboard rows stay allowed).
+# Mike 2026-11-01, left-behind: "I want 25% of it to use the whiteboard" (his window: 80 to 100 s of a 6:00 video).
+WHITEBOARD_SHARE_TOL = 0.03
+
+
+def parse_whiteboard_share(v) -> Optional[tuple]:
+    """(lo, hi) as fractions of the runtime, or None for no target. Raises ValueError on a malformed value."""
+    if v is None or str(v).strip().lower() in ("", "off", "none", "0"):
+        return None
+    s = str(v).strip()
+    pct = s.endswith("%")
+    s = s.rstrip("%").strip()
+
+    def num(x):
+        f = float(x)
+        return f / 100.0 if (pct or f > 1) else f
+    if "-" in s:
+        lo, hi = (num(x) for x in s.split("-", 1))
+    else:
+        t = num(s)
+        lo, hi = t - WHITEBOARD_SHARE_TOL, t + WHITEBOARD_SHARE_TOL
+    if not 0 < lo <= hi < 1:
+        raise ValueError(f"whiteboard share {v!r} is not a fraction range inside (0, 1)")
+    return round(lo, 4), round(hi, 4)
+
+
+def whiteboard_share(proj: Path) -> Optional[tuple]:
+    try:
+        return parse_whiteboard_share(setting(proj, "whiteboard_share"))
+    except ValueError:
+        return None
 
 
 # DELIVERY (per video, `run.py --delivery`): where stage_longform puts the finished video.
@@ -391,10 +481,11 @@ def _fail(state: dict, node: str, why: str, output: str = "") -> dict:
 
 # ── subprocess nodes (streamed + heartbeat) ──────────────────────────────────
 
-def run_streaming(cmd: List[str], state: dict, node: str):
+def run_streaming(cmd: List[str], state: dict, node: str, env_extra: Optional[dict] = None):
     """Run a wrapped script, tee its output live, publish the heartbeat, return
-    (returncode, output). Scripts print curated `PROGRESS n%` lines. Zero retries."""
-    env = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUNBUFFERED": "1"}
+    (returncode, output). Scripts print curated `PROGRESS n%` lines. Zero retries.
+    `env_extra` adds variables for this child only (e.g. CHUNKED_RENDER_DIR for a whiteboard render)."""
+    env = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUNBUFFERED": "1", **(env_extra or {})}
     p = {
         "lane": STAGE_OF.get(node, 1), "lane_name": STAGES.get(STAGE_OF.get(node, 1)),
         "automation": LANE_NAME, "node": node, "batch": state.get("project"),

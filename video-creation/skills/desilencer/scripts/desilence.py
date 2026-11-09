@@ -162,6 +162,54 @@ def zone_cuts(regs, split, sil_pre, sil_post, pad, pad_head=None, face=None):
     return cuts
 
 
+FACE_PAUSE_MAX = 2.5    # a held silence longer than this inside a face scene is dead air, not delivery
+FACE_PAUSE_KEEP = 0.45  # what is left of it (half after the word before, half before the word after)
+
+
+def face_inner_spans(face, regs, max_pause=FACE_PAUSE_MAX, keep=FACE_PAUSE_KEEP):
+    """--keep-face-pauses (Mike, lets-get-rich 2026-10-31: "the face scenes are intentional"): for every FACE window,
+    the span from its FIRST audio onset to its LAST audio end. Every pause between the first and the last spoken word
+    of a face scene is his delivery (a point at the screen, a beat before the payoff) and is never cut; the dead air
+    BEFORE the first word and AFTER the last word inside the window is the gap between lines and is cut as usual.
+    CAP (Mike, lets-get-rich draft 2026-11-01: "the video is dead for 10 seconds. We need to cut that all out"): a silence
+    longer than `max_pause` inside the span is NOT delivery (a 10.5 s read of the screen survived the protection); it is
+    left out of the protected span except `keep / 2` on each side, so the cut takes it down to `keep`. Measured on
+    lets-get-rich: every intentional face pause was 0.9 s or less. max_pause None/0 = protect everything (the old rule)."""
+    spans = []
+    for fa, fz in face or []:
+        aud = [(s, e) for typ, s, e in regs if typ == 'aud' and e > fa and s < fz]
+        if aud:
+            a, b = max(fa, aud[0][0]), min(fz, aud[-1][1])
+            if b > a:
+                cur = a
+                for typ, s, e in regs:
+                    if max_pause and typ == 'sil' and s >= a and e <= b and e - s > max_pause:
+                        spans.append((cur, s + keep / 2))
+                        cur = e - keep / 2
+                spans.append((cur, b))
+    return spans
+
+
+def protect_cuts(cuts, spans):
+    """Subtract the protected spans from every cut; a remnant under 20 ms is dropped."""
+    out = []
+    for a, b in cuts:
+        pieces = [(a, b)]
+        for pa, pb in spans:
+            nxt = []
+            for x, y in pieces:
+                if pb <= x or pa >= y:
+                    nxt.append((x, y))
+                    continue
+                if pa > x:
+                    nxt.append((x, pa))
+                if pb < y:
+                    nxt.append((pb, y))
+            pieces = nxt
+        out += [(x, y) for x, y in pieces if y - x > 0.02]
+    return out
+
+
 def complement(cuts, total):
     keeps, cur = [], 0.0
     removed = 0.0
@@ -284,6 +332,13 @@ def main():
     ap.add_argument("--pad-cover-only", action="store_true",
                     help="keep --pad/--pad-head only on COVER (black) picture; a cut edge inside a FACE window "
                          "(non-black, blackdetect) gets no pad. For cover-blacked longform-edited spines.")
+    ap.add_argument("--keep-face-pauses", action="store_true",
+                    help="never cut a pause between the first and the last spoken word of a FACE window (non-black, "
+                         "blackdetect); the silence before the first word / after the last word is still cut. "
+                         "For cover-blacked longform-edited spines whose face scenes are paced on purpose.")
+    ap.add_argument("--face-pause-max", type=float, default=FACE_PAUSE_MAX,
+                    help=f"with --keep-face-pauses: a face-scene silence LONGER than this is dead air and is cut down to "
+                         f"{FACE_PAUSE_KEEP} s (default {FACE_PAUSE_MAX}; 0 = protect every pause)")
     ap.add_argument("--no-declick", action="store_true", help="disable 8 ms join fades (NOT advised)")
     ap.add_argument("--nvenc", action="store_true", help="use h264_nvenc --bps instead of libx264 crf18")
     ap.add_argument("--bps", default="2M")
@@ -307,13 +362,22 @@ def main():
     vid = has_video(args.src)
     regs = regions(levels(args.src))
     face = None
-    if args.pad_cover_only and (args.pad or args.pad_head):
+    if (args.pad_cover_only and (args.pad or args.pad_head)) or args.keep_face_pauses:
         if not vid:
-            print("--pad-cover-only needs a video stream (black = cover)"); sys.exit(1)
+            print("--pad-cover-only / --keep-face-pauses need a video stream (black = cover)"); sys.exit(1)
         face = face_windows(args.src, total)
+    if args.pad_cover_only and (args.pad or args.pad_head):
         print(f"pad-cover-only: {len(face)} FACE window(s) get no pad: "
               + ", ".join(f"{a:.2f}-{b:.2f}" for a, b in face))
-    cuts = zone_cuts(regs, split, pre, post, args.pad, args.pad_head, face)
+    cuts = zone_cuts(regs, split, pre, post, args.pad, args.pad_head,
+                     face if args.pad_cover_only and (args.pad or args.pad_head) else None)
+    kept_face = []
+    if args.keep_face_pauses:
+        kept_face = face_inner_spans(face, regs, args.face_pause_max)
+        cuts = protect_cuts(cuts, kept_face)
+        print(f"keep-face-pauses: {len(kept_face)} protected span(s) keep every pause between the first and last word "
+              f"(silences over {args.face_pause_max} s cut to {FACE_PAUSE_KEEP} s): "
+              + ", ".join(f"{a:.2f}-{b:.2f}" for a, b in kept_face))
     keeps, removed = complement(cuts, total)
 
     zinfo = (f"zones: <{split}s>={pre*1000:.0f}ms / >={post*1000:.0f}ms"
@@ -326,7 +390,9 @@ def main():
             json.dump({"src_total": total, "removed": removed, "out_total": total - removed,
                        "cuts": [[round(a, 3), round(b, 3)] for a, b in sorted(cuts)],
                        **({"pad_cover_only": True, "face_windows": [[round(a, 3), round(b, 3)] for a, b in face]}
-                          if face is not None else {}),
+                          if face is not None and args.pad_cover_only else {}),
+                       **({"face_pauses_kept": [[round(a, 3), round(b, 3)] for a, b in kept_face]}
+                          if args.keep_face_pauses else {}),
                        "keeps": [[round(a, 3), round(b, 3)] for a, b in keeps]}, f, indent=1)
         print("map ->", args.map_out)
 

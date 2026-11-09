@@ -155,14 +155,30 @@ def main_longform():
     ap.add_argument("--split", type=float, default=None, help="spine: hook-end second for the two-zone pass")
     ap.add_argument("--bursts", default=None, help="spine: burst spans on the coarse spine, e.g. 262.6-262.8,296.7-296.95")
     ap.add_argument("--card-pause", type=float, default=None, help="build: title-card pause seconds baked per carded chapter (default 1.5)")
+    ap.add_argument("--keep-face-pauses", choices=["on", "off"], default=None,
+                    help="per-video, persisted in GRAPH-PROGRESS.json: on = both desilence passes keep every pause "
+                         "between the first and last word of a FACE scene (Mike, lets-get-rich 2026-10-31)")
     ap.add_argument("--face-style", choices=C.FACE_STYLES, default=None,
                     help="per-video FACE transition style, persisted in GRAPH-PROGRESS.json: leak (default: face pick + "
                          "light leak on every punch-in) | glitch (random split swinging offset cut-in, random glitch "
-                         "offset/blocks on every punch-in; Mike 2026-10-16)")
+                         "offset/blocks on every punch-in; Mike 2026-10-16) | optics (random ZOOM Optics cut-in, the rest as "
+                         "leak; Mike 2026-11-03)")
     ap.add_argument("--caption-scope", default=None,
                     help="per-video caption scope, persisted in GRAPH-PROGRESS.json: a comma list of "
                          f"{'|'.join(C.CAPTION_SCOPES)} added to the default FACE holds over 5 s (all-faces = every "
-                         "face hold, envato = every Envato b-roll beat), or 'default' to clear; Mike 2026-10-19")
+                         "face hold, envato = every Envato b-roll beat, none = NO captions at all; Mike 2026-11-04), "
+                         "or 'default' to clear; Mike 2026-10-19")
+    ap.add_argument("--enhance-speech", choices=["on", "off"], default=None,
+                    help="per-video, persisted in GRAPH-PROGRESS.json: on = the graph drops spine/<project> FINAL.wav for Mike's "
+                         "Adobe Podcast Studio Enhance Speech pass at GATE spine and remuxes the enhanced track back as the next "
+                         "spine letter (<scope>.<x>.enhanced.mp4) after the gate (Mike 2026-11-04, quant)")
+    ap.add_argument("--face-mode", choices=C.FACE_MODES, default=None,
+                    help="per-video FACE picture, persisted in GRAPH-PROGRESS.json: gated (default: the full-screen gated face) | "
+                         "screenshare (a FACE beat is Mike's screen share, webcam PiP bottom-right kept verbatim, the deck area "
+                         "painted with that beat's face_body content; Mike 2026-11-04, quant)")
+    ap.add_argument("--container-accent", default=None,
+                    help="per-video ACCENT stylesheet slug loaded after the theme file (skills/container-reference/accents/<slug>.css), "
+                         "persisted in GRAPH-PROGRESS.json; 'off' clears it (Mike 2026-11-04, quant = Quant orange on white)")
     ap.add_argument("--container-theme", choices=C.CONTAINER_THEMES, default=None,
                     help="per-video palette for every CSS container / diagram / animated chart, persisted in GRAPH-PROGRESS.json: "
                          "dark (default, container-canonical.css) | light (container-canonical-light.css loaded after it; Mike 2026-10-25)")
@@ -172,6 +188,9 @@ def main_longform():
     ap.add_argument("--caption-windows", default=None, help="build: extra caption windows a-b,a-b in source seconds (the cold-open exception)")
     ap.add_argument("--envato-max", type=int, default=None, help="plan: Envato video budget (default: 3 per minute of final spine, floor 10)")
     ap.add_argument("--chatgpt-max", type=int, default=None, help="plan: ChatGPT image budget (default: 1 per minute of final spine, floor 5; raise it per video)")
+    ap.add_argument("--whiteboard-share", default=None,
+                    help="plan: share of the delivered runtime the WHITEBOARD beats fill, gated by the coverage node: 0.25 (= 0.22 to 0.28) "
+                         "or an explicit range 0.22-0.28; 'off' clears it (saved in GRAPH-PROGRESS.json, any invocation)")
     ap.add_argument("--until", choices=["", *C.GATES], default="", help="stop after this gate is approved")
     ap.add_argument("--approve", default="", help="gates to approve: screenplay,spine_review,spine,plan,blueprint,draft")
     ap.add_argument("--done", default="", help="placeholder nodes done by hand, e.g. defumble,transcribe")
@@ -215,6 +234,15 @@ def main_longform():
                 "envato_max": args.envato_max, "chatgpt_max": args.chatgpt_max, "card_pause": args.card_pause, "caption_windows": args.caption_windows,
                 "until": args.until, "approve": approve,
                 "done": done, "redo": redo, "stub": "", "steps": {}, "status": "running"}
+        # Per-video budgets + the sentence residual PERSIST in GRAPH-PROGRESS.json (2026-11-02, left-behind: a fresh
+        # thread for a repair dropped Mike's --envato-max 10 --chatgpt-max 4 and the coverage plan came back at the
+        # runtime defaults, 14 Envato + 7 ChatGPT). A flag given now is saved; a flag omitted falls back to the saved one.
+        for key in ("face_max", "envato_max", "chatgpt_max", "pad_tail", "pad_head"):
+            if init.get(key) is not None:
+                C.set_setting(proj, key, init[key])
+            elif C.setting(proj, key) is not None:
+                init[key] = C.setting(proj, key)
+                print(f"{key} for {project}: {init[key]} (from GRAPH-PROGRESS.json)")
         thread = args.thread or f"longform-{project}"
         init["thread"] = thread
         print(f"Longform graph | {project} | thread {thread}"
@@ -222,15 +250,45 @@ def main_longform():
               + (f" | approve {approve}" if approve else "")
               + (f" | done {done}" if done else ""))
         C.set_current_project(project)
+        if args.keep_face_pauses:
+            C.set_setting(proj, "keep_face_pauses", args.keep_face_pauses == "on")
+            print(f"keep face pauses for {project}: {args.keep_face_pauses} (saved in GRAPH-PROGRESS.json)")
+        if args.enhance_speech:
+            C.set_setting(proj, "enhance_speech", args.enhance_speech == "on")
+            print(f"enhance speech for {project}: {args.enhance_speech} (saved in GRAPH-PROGRESS.json)")
         if args.face_style:
             C.set_setting(proj, "face_style", args.face_style)
             print(f"face style for {project}: {args.face_style} (saved in GRAPH-PROGRESS.json)")
         if args.container_theme:
             C.set_setting(proj, "container_theme", args.container_theme)
             print(f"container theme for {project}: {args.container_theme} (saved in GRAPH-PROGRESS.json)")
+        if args.whiteboard_share:
+            try:
+                rng = C.parse_whiteboard_share(args.whiteboard_share)
+            except ValueError as e:
+                print(f"bad --whiteboard-share: {e}", file=sys.stderr)
+                sys.exit(1)
+            C.set_setting(proj, "whiteboard_share", args.whiteboard_share.strip() if rng else None)
+            print(f"whiteboard share for {project}: "
+                  + (f"{rng[0]:.0%} to {rng[1]:.0%} of the runtime" if rng else "no target")
+                  + " (saved in GRAPH-PROGRESS.json; the coverage node holds COVER-PLAN.json to it)")
         if args.delivery:
             C.set_setting(proj, "delivery", args.delivery)
             print(f"delivery for {project}: {args.delivery} (saved in GRAPH-PROGRESS.json)")
+        if args.face_mode:
+            C.set_setting(proj, "face_mode", args.face_mode)
+            print(f"face mode for {project}: {args.face_mode} (saved in GRAPH-PROGRESS.json)")
+        if args.container_accent:
+            slug = args.container_accent.strip()
+            if slug == "off":
+                C.set_setting(proj, "container_accent", None)
+                print(f"container accent for {project}: none (saved in GRAPH-PROGRESS.json)")
+            elif not (C.ACCENTS_DIR / f"{slug}.css").is_file():
+                print(f"unknown --container-accent {slug!r}: no file {C.ACCENTS_DIR / (slug + '.css')}", file=sys.stderr)
+                sys.exit(1)
+            else:
+                C.set_setting(proj, "container_accent", slug)
+                print(f"container accent for {project}: {slug} ({C.ACCENTS_DIR / (slug + '.css')}, saved in GRAPH-PROGRESS.json)")
         if args.caption_scope:
             scope_items = [] if args.caption_scope.strip() == "default" else _parse_list(args.caption_scope)
             bad = [x for x in scope_items if x not in C.CAPTION_SCOPES]
@@ -238,8 +296,8 @@ def main_longform():
                 print(f"unknown --caption-scope {bad}; choose from {', '.join(C.CAPTION_SCOPES)} or 'default'", file=sys.stderr)
                 sys.exit(1)
             C.set_setting(proj, "caption_scope", scope_items)
-            print(f"caption scope for {project}: FACE holds > 5 s" + "".join(f" + {x}" for x in scope_items)
-                  + " (saved in GRAPH-PROGRESS.json)")
+            print(f"caption scope for {project}: " + ("NONE (no captions at all)" if "none" in scope_items else
+                  "FACE holds > 5 s" + "".join(f" + {x}" for x in scope_items)) + " (saved in GRAPH-PROGRESS.json)")
 
     C.DATA.mkdir(parents=True, exist_ok=True)
     from langgraph.checkpoint.sqlite import SqliteSaver

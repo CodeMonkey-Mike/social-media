@@ -60,6 +60,10 @@ def render(plan: dict, proj: Path) -> str:
           "desilencer join inside a face window gets a ~15-20% punch-in with a random glitch offset / glitch blocks hit across it "
           "(`punch-glitch` rows below). No light leaks on the punches.",
           "- Envato VIDEO b-roll → fade (~0.5 s).   TEXT-container swap → cross-fade + 0.93→1 scale-in (the quiet default)."]
+    optics_rows = [r for r in rows if str(r.get("role")) == "face-cut" and str(r.get("id", "")).startswith("lib:zoom-optics-")]
+    if optics_rows:   # face style optics (Mike 2026-11-03)
+        L.insert(-1, "- FACE STYLE optics (Mike 2026-11-03): the per-video pick above is on the cut-OUTS; every cover→face cut-IN is a random "
+                     "ZOOM Optics move: " + " · ".join(f"{mmss(r['tc'])} {tag(r.get('id'))}" for r in optics_rows))
     ins_rows = [r for r in rows if str(r.get("role")) in ("insert-in", "insert-out")]
     L += ["- CLIP INSERTS (a clip with its OWN voice at a spine pause, bucket `insert`, skills/clip-inserts): "
           + " · ".join(f"{mmss(r['tc'])} {r.get('role')} {tag(r.get('id'))}" for r in ins_rows)] if ins_rows else []

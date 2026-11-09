@@ -145,6 +145,15 @@ blackout, the `.a.defumbled.mp4`).
    `<scope>.d.cleaned.mp4` (`../skills/burst-removal/burst-removal.md`). Skipped when Mike hears none.
 3. **FINAL two-zone tight pass** (below) off the cleaned spine → `<scope>.e.desilenced.mp4` (or `d.desilenced`
    when there was no cleanup). That is the locked spine the transcript and the edit are built on.
+4. **Adobe Podcast Studio Enhance Speech, per video (Mike, 2026-11-04, quant; `run.py --enhance-speech on`,
+   GRAPH-PROGRESS.json `settings.enhance_speech`).** After the transcript is verified, the `enhance_handoff` node drops the
+   FINAL spine's audio as **`spine/<project> FINAL.wav`** and GATE spine names it; Mike enhances it in Adobe Podcast Studio
+   and drops the result into `spine/` with `enhanced` in its name, or under Adobe's own export name (`<name>-esv2-50p-bg-10p-music-10p.wav`, the `-esv<n>` tag is accepted as-is since quant, 2026-11-04) (wav / mp3 / m4a / mp4, the same length; the WAV decodes ~75 ms past the AAC stream's declared length, so the length checks allow 250 ms). On resume the
+   `enhance_remux` node (shared tool `longform-presentation/skills/card-overlays/remux_enhanced.py`: video stream COPIED,
+   refused on a length mismatch, audio offset measured on the full decode) writes **`<scope>.<next letter>.enhanced.mp4`** and
+   copies the transcript sidecars to the new stem, so the enhanced file IS the FINAL spine for every plan and build node (same
+   timeline, same words). The node waits (exit 2) while the file is not there; `--done enhance_remux` skips it for the video.
+   The spine WAV is the transcript's source, never the enhanced one (Whisper runs before the pass).
 The single-pass description that follows is the FINAL pass; the min-silence knobs are Mike's per video.
 
 Silence-only, sync-safe. This is NOT a track-local script — it is the canonical, track-agnostic
@@ -343,6 +352,34 @@ and approved on `banks-own-chain` (2026-06-11, supersedes the looser 06-09 sketc
   one-off `_capture-screenshots.js`; that is history). They pop in centered
   over the content body (scale-back pop, ~0.4s) and obey rule #4 like everything else.
 
+**1b. SCREEN-SHARE face mode, a per-video option (Mike, 2026-11-04, first video `quant`; `run.py --face-mode screenshare`,
+GRAPH-PROGRESS.json `settings.face_mode`).** A third spine architecture between #1 and #6. Mike's words: "I want the face
+scenes to be me sharing my screen with my talking head in the bottom right. You will choose to do something in the body of
+what I'm sharing, such as putting in a deck card, a chart, or a whiteboarding scene." So in this mode:
+- **A `[FACE]` beat is a SCREEN SHARE.** The recording's OBS layout stays VERBATIM for the beat (webcam PiP bottom-right +
+  the CTA box top-right; the `longform-presentation` standard-format geometry, measured there on binance: deck area x 0 to
+  1464 of 1920, right column x 1466+, webcam y 400 to 1080), and the comp PAINTS the deck area with that beat's
+  `face_body` content at 1464x1080: a deck card, a system-design chart, an animated chart, or a whiteboard beat (the
+  whiteboard kit already renders at that canvas, `skills/whiteboard-beat/whiteboard-beat.md`). Cued to his words like any
+  container. The screenplay carries it: every `[FACE]` beat has a `[SHOW]` line starting `BODY:`. **The length of a face beat
+  does NOT change.** Convention 3 holds UNCHANGED in this mode (Mike, 2026-11-04, at the quant screenplay gate: "the duration of each individual face scene shouldn't be much more than the face scenes that we normally have; the only difference is the face scenes are me screen sharing"): a screen-share beat is ONE sentence (a tight pair allowed), the body content lands on that sentence, the next spoken line is an explicit `[COVER]` (usually the same card or chart, full-frame, continuing under the read). The one exception is a locked 🔒 `[SAY-EXACT]` line in Mike's own words. `--face-max` still caps the count. (The first screenplay
+  through this mode wrote multi-sentence screen-share beats under a relaxed rule; Mike rejected that at the gate.)
+- **`[COVER]` beats are unchanged**: cover-blackout paints the whole frame black, full-frame covers go on top (#6's cover
+  layer). Spine prep is the gated chain as usual; the FACE windows are still measured by blackdetect.
+- **Captions:** typically NONE on a screen-share video (`--caption-scope none`); Mike rules per video.
+- **Recording:** Mike records in the binance OBS layout; what his deck area shows during recording does not matter (it is
+  painted over), the webcam column is his.
+- **BUILT 2026-11-04 (quant, before its plan stage):** (a) the coverage prompt + `_cover_plan_check` -> `_face_body_check` carry
+  `face_body[]` rows (one or more per FACE window, inside it, a declared receipts / containers / whiteboards id, a whiteboard's
+  `from`); every FACE window must have one. (b) NO second canvas: the comp scales the normal 1920x1080 stage by 1464/1920 into
+  the deck area, vertically centred on the page colour (comp-build.md section 4c), so slide / chart / receipt / whiteboard
+  builders are unchanged (Mike may rule on native deck-area cards after the first draft). (c) comp-build section 4c: the
+  `FACE_BODY` layer above the spine, the container entrance, no captions; the face reframe is WAIVED (identity + the waiver
+  comment, the node writes the sidecar), and there are NO punch-ins / light leaks (gen_editplan seeds none, the transition
+  strategist is told, `_face_style_check` rejects punch rows). (d) `lint_covers.py` FACE BODY rules (inside a FACE window, clear
+  of covers and of each other, every planned row placed). BROLL-PLAN renders a SCREEN-SHARE bodies table; EDIT-PLAN-prep lists
+  them under the FACE windows.
+
 **2. Full-screen b-roll is sparse punctuation: ~5 video + 5 image per longform, 1-4s each.**
 (Mike, 2026-06-11, on `banks-own-chain`.) The dominant visual layer is the container-overlay
 presentation (rule #1); full-screen b-roll cutaways only punch the biggest beats.
@@ -490,6 +527,13 @@ video on this track with music + SFX.) Follow `assets/sfx/Impacts/WHEN-TO-USE-IM
   we're slowly zooming in to $8 million, because it shows the intensity"): an eased push over exactly the pause frames,
   the figure drifting to frame centre at about 2.4x, held into the cut. EDIT-PLAN: `ZOOM to "<figure>"` on the [BRAAM]
   row; comp: the cover's `bz: {x, y, s}` (comp-build.md section 6).
+  **NO SOUND OVER THE LAST WORD OF THE LINE, and the beat runs in a fixed ORDER (Mike, lets-get-rich FINAL 2026-11-01:
+  a riser timed to hit ON "greedy" "overtakes my own words to the point where you cannot even hear me").** 1. he finishes the
+  line; 2. the impact / riser plays, starting INSIDE the pause; 3. the headline lands WITH its sound (the cash register);
+  4. a breath; 5. the next line. Size the pause for all of it (lets-get-rich: 2.5 s = riser at +0.10, hit +0.58, headline +
+  cash register +1.0 for 1.3 s, 0.2 s air). Sounds inside a pause are placed with `in-pause +<s> s [at <beat source s>]` on
+  the SFX row (mix_music.py; a `file start` cannot name a moment in a pause, source time holds there), and the comp's
+  headline clock is the free-running one, not the held source clock.
 - **PER-CHAPTER VISUAL THEMES (Mike, 2026-10-17).** Keep common themes across videos, and let a theme vary per chapter.
   First one: in a chapter scored with **`lights-out`** (the storytelling bed, its `mike_note`), most RECEIPTS ride a
   **library MOTION move, mainly `motion-shake-3d-*`** (one `motion-3d-pan-*` is fine as the opener), a different

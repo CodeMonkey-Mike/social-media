@@ -24,7 +24,7 @@ cases we cannot show the entire slide like I had on the screen, but you can just
 | `remotion/src/SpotlightPresentation.tsx` | the SHARED renderer (persisting infra like `LivestreamShort.tsx`; never recycled with a batch): scene kinds, entrance, timing |
 | `remotion/src/<Comp>.tsx` + `<Comp>Data.ts` | per project: ~30 lines of theme + fonts, and the GENERATED data file (recycled with the project) |
 
-Project files (all in `media/<project>/`): `<project>.scenes.json` (the spec, authored), `<project>.scenes.resolved.json`
+Project files (all in `media/deck-lecture/<project>/`): `<project>.scenes.json` (the spec, authored), `<project>.scenes.resolved.json`
 (generated), `render-assets/` (the render `--public-dir`: only `middle-audio.m4a`), `_previews/` (parts, probes,
 logs), `_qa/` (seam frames), `<project> FINAL-vN.mp4` (the deliverable).
 
@@ -36,7 +36,7 @@ The spotlight never touches audio; every `t` is an EDIT-timeline second.
 
 ## Procedure
 
-**1. Author the scene spec** `media/<project>/<project>.scenes.json` from the deck HTML (container text + styles) and
+**1. Author the scene spec** `media/deck-lecture/<project>/<project>.scenes.json` from the deck HTML (container text + styles) and
 the script (what he says). Shape:
 ```json
 { "project": "<name>", "comp": "<CompId>", "deck": "<deck>.html", "fps": 30, "chapter_pause": 1.0,
@@ -60,7 +60,11 @@ the script (what he says). Shape:
   `chapter` · `card` (tool-card: optional `icon`, `title`, `sub`) · `bullets` (`label`, `items[{strong, rest, cue?}]`,
   `active`) · `titem` (one timeline item: `date`, `title`) · `accent` (accent-card: `title`) · `cycle` /
   `cyclerow` (`num`, `peak`, `date`, `crash`) · `sma` (`variant` winter|bear, `label`, `title`) · `stat` ·
-  `statement` · `nexttag`.
+  `statement` · `nexttag`. Lecture 4's deck family (Crypto vs. The Traditional Financial System, 2026-11-08) added
+  `block` (bullet-block / compare-card / tradeoff-card: `label?`, `title`, `items`, `variant` trad|crypto, active-item
+  highlight like `bullets`), `flow` (the flow-row: `items` = the nodes, the one the narration is on lit) and `supply`
+  (the supply-bar visual: `label`, `rows[{value, pct, tag}]`, `note`, `variant` fiat|btc); `statement` text takes
+  `[[...]]` for the closing-statement's accent words. `block` and `flow` items resolve their own cues like `bullets`.
 - **`cue` = 5 to 10 words he says when the container should appear**, lifted from the SCRIPT (he reads it, so the
   transcript is close); prefer distinctive words over numbers. A bullet item with its own `cue` becomes the
   highlighted (active) item from that moment; `active: N` pins the highlight for a container shown again.
@@ -75,8 +79,8 @@ the script (what he says). Shape:
 
 **2. Resolve the cues (and plan the pauses)**
 ```
-python video-creation/longform-presentation/skills/spotlight/cue_scenes.py "media/<project>/<project>.scenes.json" \
-    --words "media/<project>/<project> EDIT.medium-words.json" --edit "media/<project>/<project> EDIT.mp4" \
+python video-creation/longform-presentation/skills/spotlight/cue_scenes.py "media/deck-lecture/<project>/<project>.scenes.json" \
+    --words "media/deck-lecture/<project>/<project> EDIT.medium-words.json" --edit "media/deck-lecture/<project>/<project> EDIT.mp4" \
     --emit-ts video-creation/remotion/src/<Comp>Data.ts
 ```
 Read the review table. Every `??` (score under 0.62) and every `!!` gets checked against the transcript text; fix a
@@ -115,10 +119,11 @@ shorts families and protects everything else, the shared renderer included, so n
 
 **4. Probe before the full render.** Two or three cued chunks with sound:
 ```
-python .../render_spotlight.py --project "media/<project>" --comp <Comp> --edit "media/<project>/<project> EDIT.mp4" --prep-audio
-python .../render_spotlight.py --project "media/<project>" --comp <Comp> --frames 0-450 --with-audio
+python .../render_spotlight.py --project "media/deck-lecture/<project>" --comp <Comp> --edit "media/deck-lecture/<project>/<project> EDIT.mp4" --prep-audio
+python .../render_spotlight.py --project "media/deck-lecture/<project>" --comp <Comp> --frames 0-450 --with-audio
 ```
-Contact-sheet the frames and LOOK: fonts loaded (not a fallback serif), emoji icons render, no text cut at the frame
+`--prep-audio` WITHOUT `--frames` goes straight on into the FULL parts render (it does not stop after the audio): run
+`--prep-audio --frames 0-450` together for the probe. Contact-sheet the frames and LOOK: fonts loaded (not a fallback serif), emoji icons render, no text cut at the frame
 edge or overflowing its box, the container changes on the cue word, the active bullet is the one he is on.
 `cue_scenes.py --provisional` (no transcript yet, 6 s per scene) is for a styles-only pass over every container.
 
@@ -130,7 +135,7 @@ re-run and skips every verified part. The middle is the EDIT's span, not the mas
 48-minute master was 19:43 of EDIT after defumble + desilence = 34487 middle frames = 4 parts, 34 min at
 concurrency 8 (8 to 9 min per 9000-frame part on this static deck).
 
-**6. Stitch.** `python .../stitch.py --edit "<project> EDIT.mp4" --project "media/<project>" --out "media/<project>/<project> FINAL-v1.mp4"`.
+**6. Stitch.** `python .../stitch.py --edit "<project> EDIT.mp4" --project "media/deck-lecture/<project>" --out "media/deck-lecture/<project>/<project> FINAL-v1.mp4"`.
 It refuses unless the parts' frames sum to `timeline.middle_frames` exactly; then one libx264 crf 18 pass in
 which the middle's audio is the EDIT's slices with each chapter pause's silence inserted (sample-exact, 8 ms
 fades at the inserted edges). Check the printed duration (== the EDIT's + the pauses), A/V drift (< 50 ms), the
@@ -149,7 +154,7 @@ enhancement pass after acceptance (track doc, "Delivery"). Not queued: the uploa
 resolved spec the delivered FINAL was built from (`<project>.scenes.resolved.vN.json`); fix the spec (a cue, a pinned
 `t`, a `pause_at`), run `cue_scenes.py` again (it rewrites the comp data file), then:
 ```
-python .../splice.py --project "media/<project>" --comp <Comp> --edit "<project> EDIT.mp4" \
+python .../splice.py --project "media/deck-lecture/<project>" --comp <Comp> --edit "<project> EDIT.mp4" \
     --prev-resolved "<project>.scenes.resolved.vN.json" --prev-final "<project> FINAL-vN.mp4" \
     --out "<project> FINAL-vN+1.mp4" [--dry-run]
 ```
@@ -172,6 +177,9 @@ alignment check against the EDIT, and the moved cards on their new cue words.
   (measured 2026-10-02); it never reaches the deliverable.
 - **A chapter gets a breath.** `chapter_pause` silence + the card alone before every chapter's first word (Mike,
   2026-10-14); the card then stays through the chapter's opening line until the next container cues.
+- **The EDIT's video can be VFR** (the desilencer's batched render leaves one-frame timestamp gaps at some joins: 32
+  gaps = +1.05 s on Crypto vs. The Traditional Financial System, 2026-11-08, so the FINAL's tail ran 1 s ahead of its
+  audio). `stitch.py` re-times the EDIT with `fps=30:start_time=0` before its frame trims; keep that in any new cutter.
 - **`filter_complex` trim/concat only, never the concat demuxer** (the track's desync rule). Video is trimmed by
   FRAME NUMBER (`trim=start_frame/end_frame`), audio by sample-exact seconds at full precision: a boundary such as
   260.6667 s written as seconds lands on either side of the frame at 260.66667 depending on rounding, and the concat

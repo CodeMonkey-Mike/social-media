@@ -19,6 +19,8 @@ face hold — the leak goes under the text.
 > A video run with **face style `glitch`** (`run.py --face-style glitch`, Mike 2026-10-16) carries NO light leaks on its
 > punches: each punch gets a random Glitch Offset / Glitch Blocks hit across the join instead, and every face cut-in is a
 > random Split Swinging Offset (comp-build.md section 5). Everything below is the default `leak` style.
+> Face style **`optics`** (`run.py --face-style optics`, Mike 2026-11-03) only changes the cut-in, to a random ZOOM Optics
+> move (comp-build.md section 5); the punches keep the light leaks below.
 > **Light leaks stay the DEFAULT for every video.** `glitch` is a per-video exception Mike chose for TAO because the
 > topic is AI-heavy and glitch hits suit it; only switch it on when Mike asks for it (2026-10-16).
 - **Source: the transition library's LIGHT LEAKS family** (`assets/transitions/library.json`, 34 clips in four looks:
@@ -84,6 +86,16 @@ face hold — the leak goes under the text.
   them on the lines that carry a label or a verdict. `minecraft-damage` at most once per video.
 - **Verify on a CHUNK:** render the 10 s chunk around each device: the sound's attack lands on the frame the table says, the pop smears
   for 2 to 3 frames then holds, the hover is visible but never reads as a jitter, nothing else fires on the same frame.
+- **The 007 devices of the same theme (added 2026-10-31 from Mike's 2023 "Skills of a Growth Engineer"; numbers in the library, time
+  map = the second section of the theme's CUE-SHEET.md; no engines yet, the comp-builder builds them to the row):** the same placement
+  rules. EDIT-PLAN rows: `[KT-CAPTION]` for `kt-caption-highlight` (one row per phrase, ON its first spoken word; it IS the caption, the
+  house caption track is OFF for its span), `[KT-TYPE]` for `kt-typewriter-card` (a COVER beat: card push-in, one sub-row per wiped
+  line with its `typing` slice, the key-phrase pop, the push-out), `[KT-STACK]` for `kt-stacked-list-over-broll` (headline row, then one
+  row per item ON its word with its fast-reverse-5), `[KT-STATEMENT]` for `kt-statement-over-broll` (one row, the hold), `[KT-WALL]` for
+  `kt-text-wall` (a COVER beat, 3 to 4 s, the red word's row inside it), `[KT-SPARK]` for `kt-keyword-sparkle` (ON the key word, with
+  `ting`), `[TRANSITION] hand:kt-push-slide` for the push cuts (bucket 3, like `kt-whip-cut`), and the variants ride on their parent's row
+  tag (`[KT-POP] chip`, `[KT-HEADLINE] zoom_drop`, `[KT-ICON] image_sticker`, `[KT-CTA] bar`). Captions OFF under a chip, a pop and the
+  wall; the statement and the typewriter card carry their own words.
 - **Theme `halloween-2022`** (the 2022 "Bear Markets" horror look, picked for a horror / Halloween register; rows `hw-*` in the
   effects library, engines `remotion/src/effects/halloween-2022/`, time map `assets/effects/themes/halloween-2022/CUE-SHEET.md`):
   the same placement rules. The `[SHOW]` line names the device id and, only if the screenplay pairs one, a catalog sound (the

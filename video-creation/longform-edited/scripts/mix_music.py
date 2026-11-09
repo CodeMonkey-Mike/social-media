@@ -134,8 +134,9 @@ def main():
     ap.add_argument("--sfx-max", type=float, default=1.8)
     # VOICE GAIN (Mike 2026-10-30, reset draft): the Enhance-Speech voice sat BELOW the spliced clip voices, so Mike's voice is
     # raised by default; the clip-insert windows of the VO track (their own voices) keep unity gain. 0 = the old behaviour.
-    ap.add_argument("--voice-db", type=float, default=2.0,
-                    help="gain on Mike's voice in the VO track, clip-insert windows excluded (default +2 dB, Mike 2026-10-30)")
+    ap.add_argument("--voice-db", type=float, default=None,
+                    help="gain on Mike's voice in the VO track, clip-insert windows excluded (default: the project's "
+                         "GRAPH-PROGRESS.json settings.voice_db, else +2 dB, Mike 2026-10-30)")
     # PEAK SAFETY (same note): a brick-wall limiter on the final sum so the mix never peaks above --peak-ceiling dBFS
     ap.add_argument("--peak-ceiling", type=float, default=-1.5,
                     help="final limiter ceiling in dBFS (true peak lands <= -1 dBFS after AAC); 0 disables")
@@ -153,6 +154,13 @@ def main():
                     help="an alternative MUSIC-PLAN json to lay instead of the project's MUSIC-PLAN.json (A/B listening copies at the gate)")
     a = ap.parse_args()
     proj = Path(a.project_dir).resolve()
+    if a.voice_db is None:   # per-video voice level (Mike 2026-11-02, left-behind draft: "raise the volume of my voice by 2 dB")
+        try:
+            a.voice_db = float(((json.loads((proj / "GRAPH-PROGRESS.json").read_text(encoding="utf-8")).get("settings") or {})
+                                .get("voice_db", 2.0)))
+        except Exception:
+            a.voice_db = 2.0
+        print(f"voice gain: {a.voice_db:+.1f} dB")
     video = Path(a.video).resolve()
     mp_p = Path(a.plan).resolve() if a.plan else proj / "MUSIC-PLAN.json"
     if a.plan_preview:
@@ -322,7 +330,9 @@ def main():
             else:
                 # an ID-ONLY row (`[WHOOSH] swoosh-4 (kinetic-text, neutral)`; growth-scale-up 2026-10-28: 84 of 85 kinetic-text
                 # sounds were silently dropped this way): resolve the id against assets/sfx, and never drop a row without saying so
-                idm = re.match(r"\s*([A-Za-z0-9_-]+)", body)
+                # a namespaced id (`kt:swoosh-4`, lets-get-rich 2026-11-01: 72 kinetic-text rows were silently dropped because
+                # the id read as "kt") resolves on the part after the colon
+                idm = re.match(r"\s*(?:[A-Za-z]+:)?([A-Za-z0-9_-]+)", body)
                 sid = SFX_ALIAS.get(idm.group(1), idm.group(1)) if idm else None
                 fname = next((sid + ext for ext in (".wav", ".mp3") if sid and find_sfx(sid + ext)), None)
                 if not fname:
@@ -346,6 +356,19 @@ def main():
             if beat is not None:
                 t_out = beat + sum(d for a2, d, _ in PAUSES if a2 < beat - 1e-6)
                 placed = "beat pause start"
+            # `in-pause +X s [at <source s>]` (lets-get-rich FINAL note 2026-11-01): a sound placed INSIDE a beat pause, X s after
+            # its first frame (source time holds during a pause, so a `file start` cannot name a moment in it). The order Mike
+            # asked for: the line ends, the riser hits (+0.10), THEN the headline + cash register (+1.0), then the next line.
+            ip = re.search(r"in-pause\s*\+\s*(\d+(?:\.\d+)?)\s*s(?:\s+at\s+(\d+(?:\.\d+)?))?", body, re.I)
+            if ip:
+                ref = float(ip.group(2)) if ip.group(2) else t_row
+                # a card pause is a pause too (bullish-on-kaspa 2026-11-05: the text wall's sounds sit inside its card pause)
+                bp = next((b for b in [*BEATS, *CARD_T] if abs(b - ref) < 0.35), None)
+                if bp is None:
+                    print(f"  warn  [{kind}] row at {t_row:.1f}s says in-pause but no beat pause sits at {ref:.2f}, NOT mixed")
+                    continue
+                t_out = bp + sum(d for a2, d, _ in PAUSES if a2 < bp - 1e-6) + float(ip.group(1))
+                placed = f"beat pause +{float(ip.group(1)):.2f}s"
             row = {"kind": kind, "file": str(path), "t": round(t_out, 3), "source_t": t_src, "gain_db": a.sfx_db, "placed": placed}
             # a row-level `MIX GAIN -24 dB` overrides --sfx-db (Mike's draft note: one riser buried the VO)
             mg = re.search(r"MIX GAIN\s*(-?\d+(?:\.\d+)?)\s*dB", body)
@@ -483,9 +506,14 @@ def main():
         lim = 10 ** (a.peak_ceiling / 20)
         fc = fc[:-len("[ao]")] + (f"[apre];[apre]aresample=192000,alimiter=limit={lim:.4f}:attack=1:release=50:level=disabled,"
                                   f"aresample=48000[ao]")
-    cmd = ["ffmpeg", "-y", "-loglevel", "error", *inputs, "-filter_complex", fc, "-map", "0:v", "-c:v", "copy", "-map", "[ao]",
+    # the graph goes through a file: a video with many SFX rows passes Windows' 32 KB command line limit (WinError 206,
+    # bullish-on-kaspa 2026-11-05, 24 beds + 111 sounds). `-/filter_complex` = ffmpeg 7+ "read this option's value from a file".
+    fc_file = out.with_suffix(".filtergraph.txt")
+    fc_file.write_text(fc, encoding="utf-8")
+    cmd = ["ffmpeg", "-y", "-loglevel", "error", *inputs, "-/filter_complex", str(fc_file), "-map", "0:v", "-c:v", "copy", "-map", "[ao]",
            "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)]
     r = subprocess.run(cmd, capture_output=True, text=True)
+    fc_file.unlink(missing_ok=True)
     if r.returncode != 0:
         print("FATAL: ffmpeg failed\n" + r.stderr[-1500:], file=sys.stderr)
         sys.exit(1)

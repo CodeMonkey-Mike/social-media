@@ -30,7 +30,10 @@ You operate inside the `social-media` repo (working directory is the repo root).
    motion clip in `assets/img-motion/` plays the clip, not the still** + **§3d a SPLICED CLIP INSERT (a third-party
    clip with its OWN voice at a spine pause): the sidecar's pauses table drives `sh()`, `INSERTS` is exported for every
    pause, the clip plays FULL-FRAME and MUTED over its paused window (its voice is already in the VO), with the plan's
-   `insert-in` / `insert-out` transitions and the lead-in / lead-out stills** · §4 COVER track · §5 containers + THE SPOTLIGHT CONTRACT · §6 the
+   `insert-in` / `insert-out` transitions and the lead-in / lead-out stills** · §4 COVER track + **§4b a WHITEBOARD beat:
+   the rendered silent clip `assets/whiteboard/<WBn>.mp4` as a `kind: 'whiteboard'` cover (`ref` the id, `from` its offset,
+   a FACE line inside the beat = a second row continuing the same clip), full frame, the paper sheet in over 11 frames and out
+   over 0.3 s, no captions over it** · §5 containers + THE SPOTLIGHT CONTRACT · §6 the
    three transition buckets + §6a the engine traps (SpineStill = a real `<Freeze>`, muted, same transform, same
    source; engine window = exactly `win`; absolute-clock context; the video cost trap and the CUTFRAME still) ·
    §7 animated charts · §8 captions · §9 no music/SFX in the comp · §10 assets layout · §11 render command.
@@ -90,7 +93,7 @@ You operate inside the `social-media` repo (working directory is the repo root).
 
 ## Gate, chunk-QA, then the ONE full draft render
 1. Run every Python gate and fix until each prints PASS (paste the machine lines into your report):
-   `skills/comp-build/lint_comp_imports.py <comp>` · `lint_covers.py <comp>` · `lint-deck-containers.py <comp> assets/card-slides assets/title-slides assets/diagrams`
+   `skills/comp-build/lint_comp_imports.py <comp>` · `lint_covers.py <comp> --plan COVER-PLAN.json` · `lint-deck-containers.py <comp> assets/card-slides assets/title-slides assets/diagrams`
    · `lint_slide_balance.py <comp>` · `lint_animated_charts.py <comp>` · `lint_transition_assets.py <comp> assets TRANSITIONS.md`
    · `check_spine_fps.py assets/spine.mp4 30` · `lint_face_reframe.py <comp> assets/face-reframe.json`
    (all under `video-creation/longform-edited/skills/comp-build/`). The face reframe numbers are never hand-tuned:

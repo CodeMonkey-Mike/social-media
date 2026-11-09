@@ -1,0 +1,39 @@
+{
+  "pauses": [
+    {
+      "at": 65.4,
+      "planned": 65.1,
+      "dur": 1.0,
+      "beat": "BRAAM-1",
+      "sits_in": "trough 65.320-65.400, gate guard -83.6 dB",
+      "dur_exact": 0.98,
+      "frames": 30
+    },
+    {
+      "at": 302.165,
+      "planned": 302.18,
+      "dur": 10.8,
+      "clip": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\bullish-on-kaspa\\assets\\clip-inserts\\CLIP-1-sompolinsky-if-this-then-that.mp4",
+      "label": "CLIP-1",
+      "sits_in": "trough 302.110-302.210, gate guard -71.9 dB",
+      "dur_exact": 10.8,
+      "frames": 324
+    },
+    {
+      "at": 455.705,
+      "planned": 455.74,
+      "dur": 3.5,
+      "card": "TEXT WALL",
+      "sits_in": "trough 455.640-455.750, gate guard -92.9 dB",
+      "dur_exact": 3.5,
+      "frames": 105
+    }
+  ],
+  "pause_s": 3.5,
+  "mixed_durations": true,
+  "source": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\bullish-on-kaspa\\spine\\ALL.d.desilenced.mp4",
+  "output": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\bullish-on-kaspa\\spine\\ALL.f.paused.mp4",
+  "output_duration_s": 543.7,
+  "fps": 30.0,
+  "note": "every comp cue is a SOURCE time; sh(t) adds each pause's `dur` whose `at` <= t (cards = pause_s, clip inserts = the clip length, their audio already in this VO track)"
+}

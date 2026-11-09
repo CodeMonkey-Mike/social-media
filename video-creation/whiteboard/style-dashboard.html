@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Whiteboard style picker</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin:0; background:#111317; color:#e6e6e6; font:15px/1.45 system-ui, Segoe UI, sans-serif; }
+  header { padding:22px 28px 10px; border-bottom:1px solid #2a2d33; display:flex; gap:18px; align-items:baseline; flex-wrap:wrap; }
+  header h1 { margin:0; font-size:22px; }
+  header p { margin:0; color:#9aa0a6; max-width:1200px; }
+  header button { margin-left:auto; background:#2b6cb0; color:#fff; border:0; padding:8px 14px; border-radius:6px; cursor:pointer; font-size:14px; }
+  h1.sec { font-size:20px; margin:26px 28px 0; }
+  p.sec { margin:6px 28px 0; color:#9aa0a6; max-width:1200px; }
+  main { display:grid; grid-template-columns: repeat(auto-fill, minmax(560px, 1fr)); gap:22px; padding:18px 28px 10px; }
+  .card { background:#191c22; border:1px solid #2a2d33; border-radius:12px; overflow:hidden; display:flex; flex-direction:column; }
+  .card.fav { border-color:#f5c542; box-shadow:0 0 0 1px #f5c542 inset; }
+  .card img { width:100%; aspect-ratio:16/9; display:block; background:#000; }
+  .lbl { font-size:12px; color:#7f858c; padding:4px 16px 8px; }
+  .meta { padding:10px 16px 16px; display:flex; flex-direction:column; gap:10px; }
+  .head { display:flex; align-items:center; gap:10px; }
+  h2 { margin:0; font-size:18px; flex:1; }
+  h2 code { font-size:12px; color:#9aa0a6; margin-left:8px; }
+  .fav { background:none; border:1px solid #444; color:#f5c542; font-size:20px; width:38px; height:38px; border-radius:8px; cursor:pointer; }
+  .card.fav .fav { background:#f5c542; color:#111; }
+  .blurb { margin:0; color:#c9cdd2; }
+  .sw { display:flex; gap:6px; }
+  .sw i { width:26px; height:26px; border-radius:6px; display:inline-block; }
+  table { border-collapse:collapse; font-size:13px; color:#b8bcc2; }
+  td { padding:2px 10px 2px 0; }
+  td:nth-child(odd) { color:#7f858c; }
+  textarea { width:100%; min-height:64px; background:#0f1115; color:#e6e6e6; border:1px solid #2a2d33; border-radius:8px; padding:8px; font:14px system-ui; box-sizing:border-box; }
+  .badge { font-size:11px; background:#f5c542; color:#111; border-radius:6px; padding:2px 7px; margin-left:10px; vertical-align:middle; font-weight:600; }
+  .badge.note { background:#2a2d33; color:#9aa0a6; font-weight:400; }
+  p.gone { color:#6f7680; font-size:13px; }
+  pre#export { display:none; margin:0 28px 28px; padding:14px; background:#0f1115; border:1px solid #2a2d33; border-radius:8px; white-space:pre-wrap; }
+</style></head>
+<body>
+<header>
+  <h1>Whiteboard style picker</h1>
+  <p>Two separate decisions. <b>A. Drawing vocabulary</b>: HOW things are drawn (bodies, faces, objects), 7 candidates on one identical scene. <b>B. Pen</b>: ink, wobble, fills and fonts, 14 candidates, each shown on a simple scene and on richer drawings. Every candidate stays as an option (a multi-chapter video may want a dark pen in one chapter and a light one in another); the badge marks the current pick. Star, leave notes, Export, paste the JSON to Claude. Frames: <code>video-creation/whiteboard/samples/</code></p>
+  <button id="exp">Export picks</button>
+</header>
+<h1 class="sec">A. Drawing vocabularies</h1>
+<p class="sec">Same scene every time: a person, a horse, a vault, three coins, a tree. Only the way of drawing changes.</p>
+
+<main>
+  <section class="card" data-id="vocab:stick-hair">
+    <a href="samples/vocabulary-stick-hair.png" target="_blank"><img src="samples/vocabulary-stick-hair.png" alt="Hand-drawn with hair"></a>
+    <div class="meta">
+      <div class="head"><h2>Hand-drawn with hair <code>stick-hair</code><span class="badge">current pick</span></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">Round heads, hair variants, tapered shirts, stick limbs, an illustrated horse with mane and hooves, ground shadows. Wobbly ink, flat pastel fills.</p>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change, what to mix"></textarea>
+    </div>
+  </section>
+  <section class="card" data-id="vocab:bean">
+    <a href="samples/vocabulary-bean.png" target="_blank"><img src="samples/vocabulary-bean.png" alt="Bean characters"></a>
+    <div class="meta">
+      <div class="head"><h2>Bean characters <code>bean</code><span class="badge note">Mike, 2026-10-30: too playful</span></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">No necks: tall pill bodies with the face on the body, stubby arms and legs, a plump horse with tufted mane and tail. Clean thin outline, rounded everything.</p>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change, what to mix"></textarea>
+    </div>
+  </section>
+  <section class="card" data-id="vocab:geo-flat">
+    <a href="samples/vocabulary-geo-flat.png" target="_blank"><img src="samples/vocabulary-geo-flat.png" alt="Geometric flat"></a>
+    <div class="meta">
+      <div class="head"><h2>Geometric flat <code>geo-flat</code><span class="badge note">Mike, 2026-10-30: does not want the other vocabularies</span></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">No outlines, no faces: circle heads, rounded-rectangle torsos, thick rounded limbs; the horse built from rounded blocks. Two tones per object, corporate-flat.</p>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change, what to mix"></textarea>
+    </div>
+  </section>
+  <section class="card" data-id="vocab:pictogram">
+    <a href="samples/vocabulary-pictogram.png" target="_blank"><img src="samples/vocabulary-pictogram.png" alt="Pictogram glyphs"></a>
+    <div class="meta">
+      <div class="head"><h2>Pictogram glyphs <code>pictogram</code><span class="badge note">Mike, 2026-10-30: more serious, but bland</span></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">Everything a solid one-color silhouette like airport signage; one accent color marks the thing that matters. Zero texture, maximum legibility at small size.</p>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change, what to mix"></textarea>
+    </div>
+  </section>
+  <section class="card" data-id="vocab:isometric">
+    <a href="samples/vocabulary-isometric.png" target="_blank"><img src="samples/vocabulary-isometric.png" alt="Isometric blocks"></a>
+    <div class="meta">
+      <div class="head"><h2>Isometric blocks <code>isometric</code><span class="badge note">Mike, 2026-10-30: too playful</span></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">Every object is a three-tone cuboid on an isometric grid: a boxy horse, a cube vault, cylinder coins, a low-poly tree. Reads as a tiny 3D diorama without any 3D package.</p>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change, what to mix"></textarea>
+    </div>
+  </section>
+  <section class="card" data-id="vocab:pixel">
+    <a href="samples/vocabulary-pixel.png" target="_blank"><img src="samples/vocabulary-pixel.png" alt="Pixel art"></a>
+    <div class="meta">
+      <div class="head"><h2>Pixel art <code>pixel</code><span class="badge note">Mike, 2026-10-30: too playful</span></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">Sprites on a 22 px cell grid, hard edges, a small fixed palette, bitmap heading. Instantly recognizable and cheap to author as text maps.</p>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change, what to mix"></textarea>
+    </div>
+  </section>
+  <section class="card" data-id="vocab:line-only">
+    <a href="samples/vocabulary-line-only.png" target="_blank"><img src="samples/vocabulary-line-only.png" alt="Pure line art"></a>
+    <div class="meta">
+      <div class="head"><h2>Pure line art <code>line-only</code><span class="badge note">Mike, 2026-10-30: does not want the other vocabularies</span></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">Ink outlines only, no fills anywhere, a single accent color for emphasis. Elegant and fast to read; everything stays an outline.</p>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change, what to mix"></textarea>
+    </div>
+  </section>
+</main>
+<h1 class="sec">B. Pens</h1>
+<p class="sec">Ink, wobble, fill style, palette and fonts. The first frame is the pen on a simple scene; the second is the same pen on the hand-drawn-with-hair vocabulary.</p>
+
+<main>
+  <section class="card" data-id="pen:paper-pastel">
+    <a href="samples/paper-pastel.png" target="_blank"><img src="samples/paper-pastel.png" alt="Paper & pastel"></a>
+    <div class="lbl">the pen on the simple scene</div>
+    <a href="samples/vocab-paper-pastel.png" target="_blank"><img src="samples/vocab-paper-pastel.png" alt="Paper & pastel on richer drawings"></a><div class="lbl">the same pen on richer drawings (horse, people with hair, hay, tree)</div>
+    <div class="meta">
+      <div class="head"><h2>Paper & pastel <code>paper-pastel</code><span class="badge">current pick</span></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">Closest to the Shapiro reference: white paper, black ink, flat pastel fills, two hand fonts. Included as the baseline to move AWAY from. Label font is Kalam (Shadows Into Light is not in @remotion/google-fonts, so the render and the picker use the same face).</p>
+      <div class="sw"><i title="bg" style="background:#ffffff;outline:1px solid #555"></i><i title="ink" style="background:#222222;outline:1px solid #555"></i><i title="blue" style="background:#9ec5e8"></i><i title="gold" style="background:#f3d27a"></i><i title="red" style="background:#e98b8b"></i><i title="green" style="background:#a7d8a2"></i><i title="brown" style="background:#c9a27e"></i><i title="grey" style="background:#d8d8d8"></i></div>
+      <table>
+        <tr><td>mode</td><td>rough</td><td>fill</td><td>solid</td></tr>
+        <tr><td>roughness</td><td>1.2</td><td>bowing</td><td>1.0</td></tr>
+        <tr><td>ink width</td><td>2.2</td><td>caps</td><td>no</td></tr>
+        <tr><td>heading font</td><td>Gochi Hand</td><td>label font</td><td>Kalam</td></tr>
+      </table>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change"></textarea>
+    </div>
+  </section>
+  <section class="card" data-id="pen:paper-quant">
+    <a href="samples/paper-quant.png" target="_blank"><img src="samples/paper-quant.png" alt="Paper & Quant orange"></a>
+    <div class="lbl">the pen on the simple scene</div>
+    <a href="samples/vocab-paper-quant.png" target="_blank"><img src="samples/vocab-paper-quant.png" alt="Paper & Quant orange on richer drawings"></a><div class="lbl">the same pen on richer drawings (horse, people with hair, hay, tree)</div>
+    <div class="meta">
+      <div class="head"><h2>Paper & Quant orange <code>paper-quant</code><span class="badge">current pick</span></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">Paper & pastel re-inked for the quant video (Mike, 2026-11-04): white paper, quant.network's warm near-black ink (#43403E), and ORANGE as the one accent (the site's #F15A22, a pastel tint of it for fills) instead of the pastel rainbow. The role palette keeps its names: gold = money (pale orange), red = the highlighted / hot thing (solid orange), blue = machines (warm light grey), green = good (the site's green, tinted), brown = people / the animal, grey = ghosted. Headings in the site's orange (#F15A22), like every quant.network headline (Mike, 2026-11-04 after the first sample). Same fonts and wobble as paper-pastel.</p>
+      <div class="sw"><i title="bg" style="background:#ffffff;outline:1px solid #555"></i><i title="ink" style="background:#43403E;outline:1px solid #555"></i><i title="blue" style="background:#DDD9D4"></i><i title="gold" style="background:#F9C2A6"></i><i title="red" style="background:#F15A22"></i><i title="green" style="background:#BFEBDC"></i><i title="brown" style="background:#E7A77F"></i><i title="grey" style="background:#E8E5E1"></i></div>
+      <table>
+        <tr><td>mode</td><td>rough</td><td>fill</td><td>solid</td></tr>
+        <tr><td>roughness</td><td>1.2</td><td>bowing</td><td>1.0</td></tr>
+        <tr><td>ink width</td><td>2.2</td><td>caps</td><td>no</td></tr>
+        <tr><td>heading font</td><td>Gochi Hand</td><td>label font</td><td>Kalam</td></tr>
+      </table>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change"></textarea>
+    </div>
+  </section>
+  <section class="card" data-id="pen:navy-chalk">
+    <a href="samples/navy-chalk.png" target="_blank"><img src="samples/navy-chalk.png" alt="Navy chalk"></a>
+    <div class="lbl">the pen on the simple scene</div>
+    <a href="samples/vocab-navy-chalk.png" target="_blank"><img src="samples/vocab-navy-chalk.png" alt="Navy chalk on richer drawings"></a><div class="lbl">the same pen on richer drawings (horse, people with hair, hay, tree)</div>
+    <div class="meta">
+      <div class="head"><h2>Navy chalk <code>navy-chalk</code><span class="badge note">Mike, 2026-10-30: does not like it</span></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">House palette on a near-black navy board: pale chalk ink, teal + gold hachure fills, rougher stroke. Continuity with the Pixar b-roll backgrounds.</p>
+      <div class="sw"><i title="bg" style="background:#0b1220;outline:1px solid #555"></i><i title="ink" style="background:#e8f1f5;outline:1px solid #555"></i><i title="blue" style="background:#2dd4bf"></i><i title="gold" style="background:#f5c542"></i><i title="red" style="background:#ff6b6b"></i><i title="green" style="background:#7bdc8a"></i><i title="brown" style="background:#d9a066"></i><i title="grey" style="background:#5b6b7a"></i></div>
+      <table>
+        <tr><td>mode</td><td>rough</td><td>fill</td><td>hachure</td></tr>
+        <tr><td>roughness</td><td>1.6</td><td>bowing</td><td>1.2</td></tr>
+        <tr><td>ink width</td><td>2.4</td><td>caps</td><td>yes</td></tr>
+        <tr><td>heading font</td><td>Fredericka the Great</td><td>label font</td><td>Kalam</td></tr>
+      </table>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change"></textarea>
+    </div>
+  </section>
+  <section class="card" data-id="pen:blackboard-marker">
+    <a href="samples/blackboard-marker.png" target="_blank"><img src="samples/blackboard-marker.png" alt="Blackboard marker"></a>
+    <div class="lbl">the pen on the simple scene</div>
+    <a href="samples/vocab-blackboard-marker.png" target="_blank"><img src="samples/vocab-blackboard-marker.png" alt="Blackboard marker on richer drawings"></a><div class="lbl">the same pen on richer drawings (horse, people with hair, hay, tree)</div>
+    <div class="meta">
+      <div class="head"><h2>Blackboard marker <code>blackboard-marker</code></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">Caleb-adjacent: pure black, thin white marker, no fills, a fixed 7-marker palette used semantically (yellow titles, magenta flow, green good, red bad, periwinkle terms).</p>
+      <div class="sw"><i title="bg" style="background:#000000;outline:1px solid #555"></i><i title="ink" style="background:#ffffff;outline:1px solid #555"></i><i title="blue" style="background:#8fa3ff"></i><i title="gold" style="background:#ffd23f"></i><i title="red" style="background:#ff5a5a"></i><i title="green" style="background:#52d273"></i><i title="brown" style="background:#ff4fd8"></i><i title="grey" style="background:#9a9a9a"></i></div>
+      <table>
+        <tr><td>mode</td><td>rough</td><td>fill</td><td>none</td></tr>
+        <tr><td>roughness</td><td>0.8</td><td>bowing</td><td>0.6</td></tr>
+        <tr><td>ink width</td><td>2.6</td><td>caps</td><td>no</td></tr>
+        <tr><td>heading font</td><td>Nanum Pen Script</td><td>label font</td><td>Nanum Pen Script</td></tr>
+      </table>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change"></textarea>
+    </div>
+  </section>
+  <section class="card" data-id="pen:kraft-ink">
+    <a href="samples/kraft-ink.png" target="_blank"><img src="samples/kraft-ink.png" alt="Kraft & ink"></a>
+    <div class="lbl">the pen on the simple scene</div>
+    <a href="samples/vocab-kraft-ink.png" target="_blank"><img src="samples/vocab-kraft-ink.png" alt="Kraft & ink on richer drawings"></a><div class="lbl">the same pen on richer drawings (horse, people with hair, hay, tree)</div>
+    <div class="meta">
+      <div class="head"><h2>Kraft & ink <code>kraft-ink</code><span class="badge note">Mike, 2026-10-30: does not like it</span></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">Warm kraft paper, dark-brown ink, zigzag marker fills in muted blue/mustard/brick/olive. Reads 'field notebook', not 'SaaS explainer'.</p>
+      <div class="sw"><i title="bg" style="background:#d9c3a0;outline:1px solid #555"></i><i title="ink" style="background:#2b1d0e;outline:1px solid #555"></i><i title="blue" style="background:#5b8fb9"></i><i title="gold" style="background:#c99a2e"></i><i title="red" style="background:#b5462e"></i><i title="green" style="background:#5a8f4a"></i><i title="brown" style="background:#7a4a22"></i><i title="grey" style="background:#8a7a65"></i></div>
+      <table>
+        <tr><td>mode</td><td>rough</td><td>fill</td><td>zigzag</td></tr>
+        <tr><td>roughness</td><td>1.4</td><td>bowing</td><td>1.0</td></tr>
+        <tr><td>ink width</td><td>2.6</td><td>caps</td><td>yes</td></tr>
+        <tr><td>heading font</td><td>Permanent Marker</td><td>label font</td><td>Architects Daughter</td></tr>
+      </table>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change"></textarea>
+    </div>
+  </section>
+  <section class="card" data-id="pen:blueprint">
+    <a href="samples/blueprint.png" target="_blank"><img src="samples/blueprint.png" alt="Blueprint"></a>
+    <div class="lbl">the pen on the simple scene</div>
+    <a href="samples/vocab-blueprint.png" target="_blank"><img src="samples/vocab-blueprint.png" alt="Blueprint on richer drawings"></a><div class="lbl">the same pen on richer drawings (horse, people with hair, hay, tree)</div>
+    <div class="meta">
+      <div class="head"><h2>Blueprint <code>blueprint</code><span class="badge note">Mike, 2026-10-30: does not like it</span></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">Engineering blueprint: deep blue ground with a dot grid, white-blue ink, cross-hatch fills, cyan + amber accents. Technical and distinctly un-cartoon.</p>
+      <div class="sw"><i title="bg" style="background:#0f3b7a;outline:1px solid #555"></i><i title="ink" style="background:#dbe9ff;outline:1px solid #555"></i><i title="blue" style="background:#7fd6ff"></i><i title="gold" style="background:#ffc24d"></i><i title="red" style="background:#ff8a7a"></i><i title="green" style="background:#9be7a3"></i><i title="brown" style="background:#e0b58a"></i><i title="grey" style="background:#9fb6d9"></i></div>
+      <table>
+        <tr><td>mode</td><td>rough</td><td>fill</td><td>cross-hatch</td></tr>
+        <tr><td>roughness</td><td>1.0</td><td>bowing</td><td>0.8</td></tr>
+        <tr><td>ink width</td><td>2.0</td><td>caps</td><td>yes</td></tr>
+        <tr><td>heading font</td><td>Cabin Sketch</td><td>label font</td><td>Handlee</td></tr>
+      </table>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change"></textarea>
+    </div>
+  </section>
+  <section class="card" data-id="pen:flat-clean">
+    <a href="samples/flat-clean.png" target="_blank"><img src="samples/flat-clean.png" alt="Flat clean"></a>
+    <div class="lbl">the pen on the simple scene</div>
+    <a href="samples/vocab-flat-clean.png" target="_blank"><img src="samples/vocab-flat-clean.png" alt="Flat clean on richer drawings"></a><div class="lbl">the same pen on richer drawings (horse, people with hair, hay, tree)</div>
+    <div class="meta">
+      <div class="head"><h2>Flat clean <code>flat-clean</code></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">No wobble at all: rounded flat-vector shapes, bold saturated fills, no outlines, rounded sans type. Kurzgesagt-lite. One package fewer (no rough.js).</p>
+      <div class="sw"><i title="bg" style="background:#f6f3ee;outline:1px solid #555"></i><i title="ink" style="background:#2a2a2a;outline:1px solid #555"></i><i title="blue" style="background:#2f6df6"></i><i title="gold" style="background:#f4b63f"></i><i title="red" style="background:#e5484d"></i><i title="green" style="background:#2bb673"></i><i title="brown" style="background:#8b5a2b"></i><i title="grey" style="background:#c8c2b6"></i></div>
+      <table>
+        <tr><td>mode</td><td>flat</td><td>fill</td><td>solid</td></tr>
+        <tr><td>roughness</td><td>0</td><td>bowing</td><td>0</td></tr>
+        <tr><td>ink width</td><td>0</td><td>caps</td><td>no</td></tr>
+        <tr><td>heading font</td><td>Baloo 2</td><td>label font</td><td>Nunito</td></tr>
+      </table>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change"></textarea>
+    </div>
+  </section>
+  <section class="card" data-id="pen:neon-ink">
+    <a href="samples/neon-ink.png" target="_blank"><img src="samples/neon-ink.png" alt="Neon ink"></a>
+    <div class="lbl">the pen on the simple scene</div>
+    <a href="samples/vocab-neon-ink.png" target="_blank"><img src="samples/vocab-neon-ink.png" alt="Neon ink on richer drawings"></a><div class="lbl">the same pen on richer drawings (horse, people with hair, hay, tree)</div>
+    <div class="meta">
+      <div class="head"><h2>Neon ink <code>neon-ink</code></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">Near-black with thin glowing hand strokes and neon accents (cyan, yellow, pink, green). The bridge between a whiteboard and the FireHustle mograph look.</p>
+      <div class="sw"><i title="bg" style="background:#050507;outline:1px solid #555"></i><i title="ink" style="background:#ffffff;outline:1px solid #555"></i><i title="blue" style="background:#00e5ff"></i><i title="gold" style="background:#ffd60a"></i><i title="red" style="background:#ff2e63"></i><i title="green" style="background:#39ff14"></i><i title="brown" style="background:#ff9f1c"></i><i title="grey" style="background:#6e6e7a"></i></div>
+      <table>
+        <tr><td>mode</td><td>rough</td><td>fill</td><td>none</td></tr>
+        <tr><td>roughness</td><td>1.0</td><td>bowing</td><td>0.8</td></tr>
+        <tr><td>ink width</td><td>2.0</td><td>caps</td><td>yes</td></tr>
+        <tr><td>heading font</td><td>Rock Salt</td><td>label font</td><td>Handlee</td></tr>
+      </table>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change"></textarea>
+    </div>
+  </section>
+  <section class="card" data-id="pen:marker-white">
+    <a href="samples/marker-white.png" target="_blank"><img src="samples/marker-white.png" alt="Marker white"></a>
+    <div class="lbl">the pen on the simple scene</div>
+    <a href="samples/vocab-marker-white.png" target="_blank"><img src="samples/vocab-marker-white.png" alt="Marker white on richer drawings"></a><div class="lbl">the same pen on richer drawings (horse, people with hair, hay, tree)</div>
+    <div class="meta">
+      <div class="head"><h2>Marker white <code>marker-white</code></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">Thick black marker on white with heavy wobble and saturated primary fills. The hand-inked doodle look (SimpleProfessor's style), but vector and consistent.</p>
+      <div class="sw"><i title="bg" style="background:#ffffff;outline:1px solid #555"></i><i title="ink" style="background:#111111;outline:1px solid #555"></i><i title="blue" style="background:#1e88e5"></i><i title="gold" style="background:#fbc02d"></i><i title="red" style="background:#e53935"></i><i title="green" style="background:#43a047"></i><i title="brown" style="background:#8d6e63"></i><i title="grey" style="background:#bdbdbd"></i></div>
+      <table>
+        <tr><td>mode</td><td>rough</td><td>fill</td><td>solid</td></tr>
+        <tr><td>roughness</td><td>1.9</td><td>bowing</td><td>1.4</td></tr>
+        <tr><td>ink width</td><td>4.0</td><td>caps</td><td>yes</td></tr>
+        <tr><td>heading font</td><td>Gloria Hallelujah</td><td>label font</td><td>Indie Flower</td></tr>
+      </table>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change"></textarea>
+    </div>
+  </section>
+  <section class="card" data-id="pen:mograph-black">
+    <a href="samples/mograph-black.png" target="_blank"><img src="samples/mograph-black.png" alt="Mograph black"></a>
+    <div class="lbl">the pen on the simple scene</div>
+    <a href="samples/vocab-mograph-black.png" target="_blank"><img src="samples/vocab-mograph-black.png" alt="Mograph black on richer drawings"></a><div class="lbl">the same pen on richer drawings (horse, people with hair, hay, tree)</div>
+    <div class="meta">
+      <div class="head"><h2>Mograph black <code>mograph-black</code></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">The FireHustle direction: black, glossy rounded tiles with outer glow, a ring chart, coin discs, bold caps labels with glow. No hand-drawn strokes anywhere.</p>
+      <div class="sw"><i title="bg" style="background:#000000;outline:1px solid #555"></i><i title="ink" style="background:#ffffff;outline:1px solid #555"></i><i title="blue" style="background:#4f8cff"></i><i title="gold" style="background:#ffd400"></i><i title="red" style="background:#ff3b3b"></i><i title="green" style="background:#76b900"></i><i title="brown" style="background:#c9a24a"></i><i title="grey" style="background:#2a2a2e"></i></div>
+      <table>
+        <tr><td>mode</td><td>mograph</td><td>fill</td><td>solid</td></tr>
+        <tr><td>roughness</td><td>0</td><td>bowing</td><td>0</td></tr>
+        <tr><td>ink width</td><td>0</td><td>caps</td><td>yes</td></tr>
+        <tr><td>heading font</td><td>Poppins</td><td>label font</td><td>Poppins</td></tr>
+      </table>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change"></textarea>
+    </div>
+  </section>
+  <section class="card" data-id="pen:ink-wash">
+    <a href="samples/ink-wash.png" target="_blank"><img src="samples/ink-wash.png" alt="Ink & muted wash"></a>
+    <div class="lbl">the pen on the simple scene</div>
+    <a href="samples/vocab-ink-wash.png" target="_blank"><img src="samples/vocab-ink-wash.png" alt="Ink & muted wash on richer drawings"></a><div class="lbl">the same pen on richer drawings (horse, people with hair, hay, tree)</div>
+    <div class="meta">
+      <div class="head"><h2>Ink & muted wash <code>ink-wash</code></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">Round 2. Warm paper, dark-navy ink with only a light wobble, muted solid fills, a serif heading. Illustrated and warm, but grown-up; the wobble is a whisper, not the signature.</p>
+      <div class="sw"><i title="bg" style="background:#f7f4ee;outline:1px solid #555"></i><i title="ink" style="background:#1f2a3a;outline:1px solid #555"></i><i title="blue" style="background:#7fa7c9"></i><i title="gold" style="background:#d9b45a"></i><i title="red" style="background:#c9736b"></i><i title="green" style="background:#8db58a"></i><i title="brown" style="background:#b08968"></i><i title="grey" style="background:#cfc9bf"></i></div>
+      <table>
+        <tr><td>mode</td><td>rough</td><td>fill</td><td>solid</td></tr>
+        <tr><td>roughness</td><td>0.7</td><td>bowing</td><td>0.6</td></tr>
+        <tr><td>ink width</td><td>2.6</td><td>caps</td><td>no</td></tr>
+        <tr><td>heading font</td><td>Fraunces</td><td>label font</td><td>Nunito</td></tr>
+      </table>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change"></textarea>
+    </div>
+  </section>
+  <section class="card" data-id="pen:editorial-charcoal">
+    <a href="samples/editorial-charcoal.png" target="_blank"><img src="samples/editorial-charcoal.png" alt="Editorial charcoal"></a>
+    <div class="lbl">the pen on the simple scene</div>
+    <a href="samples/vocab-editorial-charcoal.png" target="_blank"><img src="samples/vocab-editorial-charcoal.png" alt="Editorial charcoal on richer drawings"></a><div class="lbl">the same pen on richer drawings (horse, people with hair, hay, tree)</div>
+    <div class="meta">
+      <div class="head"><h2>Editorial charcoal <code>editorial-charcoal</code></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">Round 2. White page, charcoal ink almost without wobble, restrained two-tone fills, a Playfair heading with a plain sans for labels. Reads like a newspaper explainer graphic.</p>
+      <div class="sw"><i title="bg" style="background:#ffffff;outline:1px solid #555"></i><i title="ink" style="background:#2a2a2a;outline:1px solid #555"></i><i title="blue" style="background:#3c6e9f"></i><i title="gold" style="background:#e0a92a"></i><i title="red" style="background:#c0392b"></i><i title="green" style="background:#4f8a5b"></i><i title="brown" style="background:#8c6a4f"></i><i title="grey" style="background:#d5d5d5"></i></div>
+      <table>
+        <tr><td>mode</td><td>rough</td><td>fill</td><td>solid</td></tr>
+        <tr><td>roughness</td><td>0.35</td><td>bowing</td><td>0.4</td></tr>
+        <tr><td>ink width</td><td>3.0</td><td>caps</td><td>no</td></tr>
+        <tr><td>heading font</td><td>Playfair Display</td><td>label font</td><td>Source Sans 3</td></tr>
+      </table>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change"></textarea>
+    </div>
+  </section>
+  <section class="card" data-id="pen:slate-board">
+    <a href="samples/slate-board.png" target="_blank"><img src="samples/slate-board.png" alt="Slate board"></a>
+    <div class="lbl">the pen on the simple scene</div>
+    <a href="samples/vocab-slate-board.png" target="_blank"><img src="samples/vocab-slate-board.png" alt="Slate board on richer drawings"></a><div class="lbl">the same pen on richer drawings (horse, people with hair, hay, tree)</div>
+    <div class="meta">
+      <div class="head"><h2>Slate board <code>slate-board</code></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">Round 2. Dark slate (not black, not navy), off-white ink, SOLID muted-bright fills instead of chalk hatching, rounded sans heading. The dark-room seriousness without the chalkboard cliche.</p>
+      <div class="sw"><i title="bg" style="background:#2b3440;outline:1px solid #555"></i><i title="ink" style="background:#f1f3f5;outline:1px solid #555"></i><i title="blue" style="background:#6fb1e0"></i><i title="gold" style="background:#f0c75e"></i><i title="red" style="background:#ef8a80"></i><i title="green" style="background:#8fd19e"></i><i title="brown" style="background:#c9956b"></i><i title="grey" style="background:#8a94a3"></i></div>
+      <table>
+        <tr><td>mode</td><td>rough</td><td>fill</td><td>solid</td></tr>
+        <tr><td>roughness</td><td>0.8</td><td>bowing</td><td>0.7</td></tr>
+        <tr><td>ink width</td><td>2.6</td><td>caps</td><td>no</td></tr>
+        <tr><td>heading font</td><td>Nunito</td><td>label font</td><td>Kalam</td></tr>
+      </table>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change"></textarea>
+    </div>
+  </section>
+  <section class="card" data-id="pen:newsprint-accent">
+    <a href="samples/newsprint-accent.png" target="_blank"><img src="samples/newsprint-accent.png" alt="Newsprint, one accent"></a>
+    <div class="lbl">the pen on the simple scene</div>
+    <a href="samples/vocab-newsprint-accent.png" target="_blank"><img src="samples/vocab-newsprint-accent.png" alt="Newsprint, one accent on richer drawings"></a><div class="lbl">the same pen on richer drawings (horse, people with hair, hay, tree)</div>
+    <div class="meta">
+      <div class="head"><h2>Newsprint, one accent <code>newsprint-accent</code></h2><button class="fav" title="favorite">☆</button></div>
+      <p class="blurb">Round 2. Cream newsprint, black ink, everything in warm greys except ONE accent (gold) plus red for warnings. Calm, editorial, instantly directs the eye to the thing that matters.</p>
+      <div class="sw"><i title="bg" style="background:#f3efe6;outline:1px solid #555"></i><i title="ink" style="background:#111111;outline:1px solid #555"></i><i title="blue" style="background:#c9c6bd"></i><i title="gold" style="background:#e0a92a"></i><i title="red" style="background:#d94a3d"></i><i title="green" style="background:#b5b2a8"></i><i title="brown" style="background:#9c968a"></i><i title="grey" style="background:#e2ded5"></i></div>
+      <table>
+        <tr><td>mode</td><td>rough</td><td>fill</td><td>solid</td></tr>
+        <tr><td>roughness</td><td>0.9</td><td>bowing</td><td>0.8</td></tr>
+        <tr><td>ink width</td><td>2.4</td><td>caps</td><td>no</td></tr>
+        <tr><td>heading font</td><td>Libre Franklin</td><td>label font</td><td>Nunito</td></tr>
+      </table>
+      <textarea class="notes" placeholder="notes for Claude: what to keep, what to change"></textarea>
+    </div>
+  </section>
+</main>
+<pre id="export"></pre>
+<script>
+const KEY = 'whiteboard-style-picks-v2';
+const state = JSON.parse(localStorage.getItem(KEY) || '{}');
+function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
+document.querySelectorAll('.card').forEach(card => {
+  const id = card.dataset.id;
+  const s = state[id] = state[id] || { fav: false, notes: '' };
+  const btn = card.querySelector('.fav'), ta = card.querySelector('.notes');
+  const paint = () => { card.classList.toggle('fav', s.fav); btn.textContent = s.fav ? '★' : '☆'; };
+  ta.value = s.notes; paint();
+  btn.onclick = () => { s.fav = !s.fav; paint(); save(); };
+  ta.oninput = () => { s.notes = ta.value; save(); };
+});
+document.getElementById('exp').onclick = async () => {
+  const picks = Object.entries(state).filter(([,v]) => v.fav || v.notes.trim()).map(([id, v]) => ({ id, favorite: v.fav, notes: v.notes.trim() }));
+  const txt = JSON.stringify({ picks }, null, 2);
+  const pre = document.getElementById('export'); pre.style.display = 'block'; pre.textContent = txt;
+  try { await navigator.clipboard.writeText(txt); pre.textContent = '(copied to clipboard)\n' + txt; } catch (e) {}
+};
+</script>
+</body></html>

@@ -54,6 +54,10 @@ export type MeltRGBParams = {
    * a radial-gradient mask over the unscaled base (preview-matched structure:
    * locally split, coherent far away). */
   invert?: boolean;
+  /** OPT-IN, for a video whose page is LIGHT (quant, 2026-11-05): the page colour outside each scaled channel copy. Without it the
+   * area a shrunken copy leaves uncovered reads as "this channel is off", which is invisible on a dark page but strobes the whole
+   * frame red / yellow on a white one. Rows and comps that do not pass it render byte-identical to before. */
+  pageFill?: [number, number, number];
 };
 
 const bez = (a: number, b: number, c: number, d: number, s: number) => {
@@ -194,6 +198,9 @@ export const MeltRGB: React.FC<TransitionProps & { params: MeltRGBParams }> = ({
           // additive channel recombination; blend OUTER, channel filter INNER
           // (the headless filter+blend-same-element rule)
           <AbsoluteFill key={c.key} style={{ mixBlendMode: i === 0 ? undefined : 'plus-lighter' }}>
+            {params.pageFill ? (
+              <AbsoluteFill style={{ backgroundColor: `rgb(${params.pageFill.map((v, j) => (j === i ? v : 0)).join(',')})` }} />
+            ) : null}
             {params.invert ? (
               <>
                 {/* inverted falloff: unscaled base + scaled copy through the

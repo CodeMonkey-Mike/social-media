@@ -35,7 +35,7 @@ ROLE_HINTS = [  # (regex on the line, role) checked in order; first hit wins
     (r"AI still|IMG-\d|badsignal|cross-warp", "glitch-still"),
     (r"dissolve|BR-\d|Envato|fade", "broll-fade"),
     (r"punch", "punch-in"),
-    (r"cross-fade|ingress|scale-in|quiet|xfade|\[CONTAINER\]|\[DIAGRAM\]|\[CHART\]|\[RECEIPT\]", "container-xfade"),
+    (r"cross-fade|ingress|scale-in|quiet|xfade|\[CONTAINER\]|\[DIAGRAM\]|\[CHART\]|\[RECEIPT\]|\[WHITEBOARD\]", "container-xfade"),
 ]
 
 
@@ -98,6 +98,20 @@ def apply_edit_plan(text, rows):
                                        and abs(line_time(lines, i) - row["tc"]) <= 0.6
                                        for i, ln in enumerate(lines)):
             continue
+        # the DEVICE named anywhere in the event's block (lets-get-rich 2026-11-01: the four `hand:kt-side-panel` receipt
+        # panels were placed as `[KT-PANEL] kt-side-panel ...` on a continuation line under the event, and the role
+        # "receipt-panel" has no ROLE_HINT, so the event-line match below never found them and the run failed)
+        dev = row["id"].split(":", 1)[-1]
+        if not ("-" in dev or len(dev) >= 6):   # a generic name ("cut", "fade") matches prose ("card cut"): role hints only
+            dev = ""
+        named = [i for i, ln in enumerate(lines) if dev and dev in ln and row["id"] not in ln and "SAY:" not in ln
+                 and line_time(lines, i) is not None and abs(line_time(lines, i) - row["tc"]) <= 0.6]
+        if named:
+            i = min(named, key=lambda k: abs(line_time(lines, k) - row["tc"]))
+            lines[i] = lines[i].replace(dev, f"{dev} → {row['id']} ({row['role']}, {row['dur']:.2f}s)", 1)
+            resolved += 1
+            joined = "\n".join(lines)
+            continue
         best = None
         for i, ln in enumerate(lines):
             m = EVENT_RE.match(ln)
@@ -153,7 +167,9 @@ def cross_check(proj: Path, rows, plan):
     if fails:
         return fails, 0
     e, c, t = (p.read_text(encoding="utf-8") for p in (ep, cs, tr))
-    left = e.count(PLACEHOLDER) + c.count(PLACEHOLDER)
+    # a placeholder QUOTED in backticks is documentation prose, not an unresolved row (lets-get-rich 2026-11-01: the
+    # CUE-SHEET's explanatory line "Every `→TRANSITIONS.md` row ... resolves there" failed the run)
+    left = sum(len(re.findall(r"(?<!`)" + re.escape(PLACEHOLDER) + r"(?!`)", x)) for x in (e, c))
     if left:
         fails.append(f"{left} `{PLACEHOLDER}` placeholder(s) still unresolved (run with --apply, then fix the leftovers by hand)")
     for name, txt in (("EDIT-PLAN.md", e), ("CUE-SHEET.md", c), ("TRANSITIONS.md", t)):

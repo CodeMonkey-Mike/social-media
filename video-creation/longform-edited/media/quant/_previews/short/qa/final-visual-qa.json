@@ -1,0 +1,77 @@
+{
+  "verdict": "PASS",
+  "defects": [],
+  "checked": {
+    "sheets_opened": 3,
+    "sheet_frames_judged": 60,
+    "full_size_frames_opened": [
+      "0",
+      "10",
+      "12",
+      "12.5",
+      "19.5",
+      "26",
+      "29.95"
+    ],
+    "per_frame_seam_strips": [
+      "1.1-1.76",
+      "4.3-4.96",
+      "10.3-10.96",
+      "11.9-12.56",
+      "19.6-20.26",
+      "26.0-26.66"
+    ],
+    "extra_frames_by_index": [
+      52,
+      283,
+      467,
+      523,
+      525,
+      599,
+      600,
+      797
+    ],
+    "black_frames": "blackdetect and blackframe found none; 0 of 900 frames with YAVG below 15",
+    "edge_text_gate": "0 of 796 frames flagged in edge-text.json"
+  },
+  "findings_by_check": {
+    "text_or_captions_cut_at_edge": "none. Tightest margins, measured on full-size frames: receipt 39 px left and right at 19.5 s; chart '273' about 42 px right at 26 s; widest caption 'nationwide, natwest' inside the frame at the 17.43 s frame",
+    "cropped_16x9_asset": "none. Diagram, receipt and chart are all native vertical layouts, shown whole",
+    "leftover_16x9_captions": "none",
+    "caption_on_card_text": "none. Captions sit at y about 1520-1600; card content ends by about y 1400 on all three cards",
+    "face_framing": "face whole in every face frame, caption on the shirt below the chin, never on the nose or mouth. Hair touches the strip edge at 0 s and 12 s, which is how the OBS strip was filmed",
+    "black_or_blank_before_outro": "no black frames. One near-blank white frame in a fade, see notes",
+    "outro_card": "WATCH THE FULL VIDEO intact from about 27 s to the end, with FULL in orange, divider and arrow, all inside the margins"
+  },
+  "notes": [
+    {
+      "t": 19.97,
+      "what": "Single frame (n=599) is white page plus the caption 'and santander.', the bottom of the receipt-to-chart fade. 33 ms, reads as part of the dissolve. Not a defect."
+    },
+    {
+      "t": 26.57,
+      "what": "Outro crossfade: ghosted WATCH THE FULL VIDEO overlaps the chart text for about 0.4 s, up to about 27 s. Transition only. Not a defect."
+    },
+    {
+      "t": 9.32,
+      "what": "Caption 'in the' holds 0.26 s, under the 0.3 s merge floor in longform-to-short.md. It follows a pause, so there is nothing contiguous to merge into. Readable, no visual defect, but it is a literal exception to the rule."
+    },
+    {
+      "t": 20.0,
+      "what": "Chart eyebrow reads 'RATIO 2 OF 3', carried over from the longform; the short never shows ratios 1 or 3. Mike's call whether to reword it."
+    },
+    {
+      "t": 0.0,
+      "what": "Burned-in 'Premium Membership (Link in description)' banner is on every face span. It is part of the strip, kept verbatim per the screen-share rule. Eyes are closed on frame 0, which matters only if a platform uses frame 0 as the cover."
+    },
+    {
+      "t": 4.5,
+      "what": "Right diagram column (ledgers and platforms) is heavily dimmed for the whole 4.5-10.5 s span and never lights up, because the narration does not reach it in this cut. Reads as spotlight, not as a capture fault."
+    },
+    {
+      "t": null,
+      "what": "Sheet labels run about 0.25 s ahead of the picture because of the fps=2 filter: the tile labelled 12.000 shows the receipt, while the frame at 12.0 s is still the face. Times in this file come from frame-exact extracts, except the 4.5-10.5 s span and the outro's end time, which are approximate."
+    }
+  ],
+  "short": "quant-SHORT-30s-v4.mp4:21368709"
+}

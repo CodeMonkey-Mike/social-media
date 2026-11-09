@@ -19,23 +19,25 @@ ap.add_argument("--prompt-file", required=True, help="the prompt text (keep the 
 ap.add_argument("--voice", default=None, help="override the voice reference mp3")
 ap.add_argument("--look-ref", default=None, help="a frame of an APPROVED swap clip, passed as a second image reference so every window gets the same room")
 ap.add_argument("--wait-timeout", default="20m")
+ap.add_argument("--vertical", action="store_true", help="the 9:16 lane (vertical-repurpose.md 1c): sources from assets/vertical/face-swap/, --aspect_ratio 9:16, returned clip in _previews/qa/bg-swap-vertical/")
 a = ap.parse_args()
 
 P = Path(a.project).resolve(); name = a.name
-src = json.loads((P / "assets/face-swap" / f"{name}-raw-for-higgsfield.json").read_text(encoding="utf-8"))
+QA_DIR = P / ("_previews/qa/bg-swap-vertical" if a.vertical else "_previews/qa/bg-swap")
+src = json.loads((P / ("assets/vertical/face-swap" if a.vertical else "assets/face-swap") / f"{name}-raw-for-higgsfield.json").read_text(encoding="utf-8"))
 clip = Path(src["clip"]); dur = float(src["clip_s"])
 if abs(dur - round(dur)) > 1e-6:
     print(f"SWAP-GEN FAIL name={name} clip is not a whole number of seconds ({dur}); rebuild with --whole-seconds"); sys.exit(1)
-voice = Path(a.voice) if a.voice else P / "_previews/qa/bg-swap" / f"{name}-audio.mp3"
+voice = Path(a.voice) if a.voice else QA_DIR / f"{name}-audio.mp3"
 for f in (clip, Path(a.backdrop), voice) + ((Path(a.look_ref),) if a.look_ref else ()):
     if not f.is_file():
         print(f"SWAP-GEN FAIL name={name} missing {f}"); sys.exit(1)
 prompt = Path(a.prompt_file).read_text(encoding="utf-8").strip()
-out_dir = P / "_previews/qa/bg-swap"; out_dir.mkdir(parents=True, exist_ok=True)
+out_dir = QA_DIR; out_dir.mkdir(parents=True, exist_ok=True)
 cmd = ["higgsfield", "generate", "create", "seedance_2_0", "--prompt", prompt,
        "--video-references", str(clip), "--image-references", str(Path(a.backdrop).resolve()),
        *(["--image-references", str(Path(a.look_ref).resolve())] if a.look_ref else []), "--audio-references", str(voice),
-       "--resolution", "480p", "--duration", str(int(round(dur))), "--aspect_ratio", "16:9",
+       "--resolution", "480p", "--duration", str(int(round(dur))), "--aspect_ratio", "9:16" if a.vertical else "16:9",
        "--wait", "--wait-timeout", a.wait_timeout, "--json"]
 (out_dir / f"{name}-gen.cmd.txt").write_text(" ".join(f'"{c}"' if " " in c else c for c in cmd), encoding="utf-8")
 r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", shell=True)

@@ -29,6 +29,14 @@ video" as an explicit, written outcome. Born on every-job (the Jensen Huang radi
    Mike's, said as his, in the resume line.
 5. **Length:** the quoted seconds only, typically 4 to 15 s; longer only on Mike's ruling. The clip's own frame rate
    and size are normalised to 1920x1080 at 30 fps by the capture script; its audio is kept (48 kHz stereo AAC).
+6. **Reaction clips are clip inserts too (born on lets-get-rich, 2026-10-31: the OHHHH crowd meme after "We called a 353x,
+   in a bear market.").** A meme / reaction clip from Mike's own library plays the same way: the spine pauses after the
+   punchline it reacts to (still a sentence boundary), the clip plays with its OWN audio, the bed ducks. What differs:
+   it is Mike's pick, not a research find (DATA.md still gets its row for the trace); the source is a LOCAL file
+   (`--file`, the Source cell carries the path + window and CLIPS-TO-WATCH lists the path instead of a link); it makes
+   no claim, so it carries NO context caption (`--no-caption`; rule 4 has nobody and no date to name); its length is
+   the reaction only (read the loudness curve, cut at the first dip); and it lands on a HARD CUT in and out, never the
+   default fade. Everything else (the `[INSERT]` line, the row, the bake, the duck) is unchanged.
 
 ## Pipeline (what each stage owns; every step is verified from disk by the longform graph)
 
@@ -53,6 +61,8 @@ python video-creation/longform-edited/skills/clip-inserts/capture_clip_insert.py
     --start 33:04.6 --end 33:14.6 --out "<project>/assets/clip-inserts/CLIP-1-huang-radiology.mp4" \
     --caption "Jensen Huang, June 2026, repeating a warning made about 10 years earlier" \
     [--expect "nobody goes into this field"] [--whisper-model small.en] [--font <ttf/otf>] [--keep-src]
+python video-creation/longform-edited/skills/clip-inserts/capture_clip_insert.py --file "<local clip>" \n    --start 0:00.0 --end 0:03.8 --no-caption --out "<project>/assets/clip-inserts/CLIP-7-ohhh-meme.mp4"
+    (a reaction clip, rule 6: no pull, the window is cut from the file; no context band)
 ```
 What it does, in order (machine lines `CLIP-INSERT-PULLED`, `CLIP-INSERT-OK` / `FAIL`, `PROGRESS 100%`):
 1. **Pulls the section with audio** via yt-dlp (`--download-sections "*start-end" --force-keyframes-at-cuts`, best
@@ -65,7 +75,8 @@ What it does, in order (machine lines `CLIP-INSERT-PULLED`, `CLIP-INSERT-OK` / `
    every-job), centred, over a translucent black band along the bottom edge. Never a corner badge, never a tier pill.
    **When the source carries its own lower-third (a news chyron, a network bug), pass `--caption-pos top`** so the band
    sits at the top of the frame and the two never stack (retire-early, 2026-10-10: the bottom band covered CNBC's
-   lower-third on both clips and visual-qa failed them).
+   lower-third on both clips and visual-qa failed them). `--no-caption` burns no band at all: ONLY for a reaction clip
+   (rule 6), never for a clip of someone saying something.
 4. **Verifies**: an audio stream exists and is not silent (mean volume), the duration matches the window, and
    Whisper (local, `small.en` by default, GPU if present) transcribes the clip; with `--expect` the phrase must be heard
    or the script FAILS. The transcript is printed so the capturer can quote the real words back into the plan.

@@ -1,0 +1,30 @@
+/* ============================================================================
+   accents/quant.css: the QUANT ACCENT (Mike, 2026-11-04, the `quant` video). A per-video THIRD stylesheet, loaded after
+   container-canonical.css AND container-canonical-light.css (run.py --container-theme light --container-accent quant;
+   GRAPH-PROGRESS.json settings.container_accent). It re-maps ONLY the page / card / text / accent tokens to quant.network's
+   own look (measured on the live site 2026-11-04: pure white page, warm near-black Heebo headlines #43403E, the brand
+   orange #F15A22 / #FF542A on the highlighted word of every headline, thin orange line-art diagrams, a green #1CC691 used
+   only as a tiny "on" state). Anatomy, type, sizes and every rule of the locked stylesheet stay untouched.
+   Contrast: text >= 4.5:1 on white (#43403E = 9.4:1, #D14A14 = 4.6:1); strokes >= 3:1 (#F15A22 on white = 3.3:1).
+   ============================================================================ */
+:root{
+  --bg-deep:#FFFFFF; --bg-card:#FFFFFF; --bg-card-hover:#F7F9FC;
+  /* the ONE accent: Quant orange. Every "chapter accent" role maps to it; the darkened one is for TEXT on white. */
+  --accent-cyan:#F15A22; --accent-gold:#F15A22; --accent-purple:#F15A22; --accent-teal:#F15A22;
+  --accent-green:#1CC691; --accent-red:#C41E3A;
+  --accent-text:#D14A14;                 /* orange for words (4.6:1 on white); use for highlighted headline words */
+  --text-primary:#43403E; --text-secondary:#5C5855; --text-muted:#737070;
+  --border:#E6E3DF;
+  --grid:#ECE9E5; --axis:#9A9693; --wire:#F15A22; --ink:#43403E;
+}
+body{background:#F7F9FC}
+.frame{--acc-rgb:241,90,34}
+/* a light-grey band is the only second surface the site uses (the "Programmable DvP" strip): cards sit on #F7F9FC */
+.card,.col,.panel,.ecard,.nd,.node,.box{background:#FFFFFF;border-color:var(--border);
+  box-shadow:0 1px 2px rgba(67,64,62,.05),0 14px 34px rgba(67,64,62,.08)}
+/* headline highlight word: orange, like every quant.network heading ("The Infrastructure of" + "Programmable Money") */
+.hl,.accent-word,em.hl{color:var(--accent-text);font-style:normal}
+/* diagrams / charts: ORANGE wires and lit nodes on white, grey resting grid; one series = orange, a second = warm grey */
+svg .wire,svg line.wire,svg path.wire{stroke:var(--wire)}
+svg .wire.rest{stroke:#C9C5C0}
+svg .series-2{stroke:#8A8784;fill:#8A8784}

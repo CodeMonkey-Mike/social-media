@@ -12,7 +12,7 @@ new renders inside. Requires the same head_until, tail_from and total pause time
 length changes: that is a full stitch, not a splice).
 
 Usage:
-  python splice.py --project "media/<project>" --comp <CompId> --edit "<project> EDIT.mp4" \
+  python splice.py --project "media/deck-lecture/<project>" --comp <CompId> --edit "<project> EDIT.mp4" \
       --prev-resolved "<project>.scenes.resolved.v2.json" --prev-final "<project> FINAL-v2.mp4" \
       --out "<project> FINAL-v3.mp4" [--margin 0.25] [--dry-run]
 """

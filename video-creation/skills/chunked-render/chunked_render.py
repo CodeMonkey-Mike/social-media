@@ -126,7 +126,7 @@ def bundle(public_dir: Path, dest: Path, entry="src/index.ts"):
 def comp_frames(bundle_dir: Path, comp: str, props=None):
     """(durationInFrames, fps) of `comp` as the bundle resolves it (input props included)."""
     # no --log=error here: Remotion prints the composition table at INFO level, so --log=error hides the table itself
-    args = ["compositions", str(bundle_dir)] + ([f"--props={props}"] if props else [])
+    args = ["compositions", str(bundle_dir)] + ([f"--props={Path(props).resolve()}"] if props else [])   # Remotion's cwd is not ours
     r = _run(_remotion(args))
     for ln in ((r.stdout or "") + "\n" + (r.stderr or "")).splitlines():
         m = re.match(rf"^\s*{re.escape(comp)}\s+(\d+(?:\.\d+)?)\s+\d+x\d+\s+(\d+)\b", ln)

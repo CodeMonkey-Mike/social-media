@@ -1,0 +1,218 @@
+<!doctype html><html><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet"><style>/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+/* ============================================================================
+   container-canonical-light.css: the LIGHT THEME override (Mike, 2026-10-25, first used on `inference`).
+   A PER-VIDEO option, never the default. Load it AFTER container-canonical.css (same <head>, second <style> /
+   <link>): every token below replaces the dark one, every other rule of the locked stylesheet stays untouched
+   (layout, type, sizes, anatomy, components). Promoted from the 2026-10-25 look test in _light-mode-experiment/
+   (three containers rendered dark and light, Mike: "I like the light mode version").
+   Switch: GRAPH-PROGRESS.json settings.container_theme = "light" (run.py --container-theme light); the graph
+   tells slide-builder / chart-builder / visual-qa, and visual-qa judges palette drift against THIS file.
+   Contrast: every text token >= 4.5:1 on the page (#F6F4EE) and on a white card; strokes >= 3:1.
+   ============================================================================ */
+:root{
+  --bg-deep:#F6F4EE; --bg-card:#FFFFFF; --bg-card-hover:#F1EFE9;
+  --accent-green:#007A55; --accent-cyan:#006A9E; --accent-gold:#8F6500;
+  --accent-red:#C41E3A; --accent-purple:#7C3AED; --accent-teal:#0E7A6C; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#14161A; --text-secondary:#4A5263; --text-muted:#5E6676;
+  --border:#DDD9CF;
+  /* light-only helpers for charts / diagrams (dark has no equivalent: there the wire IS --border) */
+  --grid:#D6D2C7; --axis:#7A808B; --wire:#8A877E; --ink:#14161A;
+}
+body{background:#E4E1D8}
+
+/* the film grain stays, multiplied so it reads as paper tooth instead of lifting the blacks */
+.frame::after{opacity:.05;mix-blend-mode:multiply}
+
+/* accent orbs: same position and blur, a pale tint instead of a saturated bloom */
+.orb{opacity:.18}
+
+/* surfaces: a card is white with a hairline border and a soft lifted shadow (the dark 120 px black drop is gone) */
+.card,.col,.panel,.ecard,.nd,.node,.box{
+  background:var(--bg-card);border-color:var(--border);
+  box-shadow:0 1px 2px rgba(20,22,26,.05),0 14px 34px rgba(20,22,26,.08)}
+
+/* GLOW -> RING. On white a glow reads as a smear, so every "lit / on / hot" state becomes a tinted ring + a lifted
+   shadow in the element's accent (set --acc-rgb per chapter accent, default = cyan). */
+.frame{--acc-rgb:0,106,158}
+.lit,.on,.hot,.chip.on,.nd.lit,.node.on,.box.on,.ecard.on{
+  box-shadow:0 0 0 4px rgba(var(--acc-rgb),.12),0 12px 28px rgba(20,22,26,.12)}
+.hot,.nd.hot{box-shadow:0 0 0 6px rgba(var(--acc-rgb),.22),0 16px 34px rgba(20,22,26,.18)}
+.chip.on{background:rgba(var(--acc-rgb),.08)}
+.role,.rl,h1,h2{text-shadow:none}
+
+/* SVG diagrams / charts: wires and axes on the light ground. Lit wires use the accent token, resting wires --wire;
+   drop the SVG glow filter (filter="url(#g)") in the light build; hollow point centres fill white, the neutral
+   "ink" line is near-black; grid lines --grid; area fills under a line at .13 to .16 alpha of the accent. */
+svg .wire,svg line.wire,svg path.wire{stroke:var(--wire)}
+svg .grid{stroke:var(--grid)} svg .axis{stroke:var(--axis)}
+svg .ink{stroke:var(--ink);fill:var(--ink)}
+
+/* ============================================================================
+   accents/quant.css: the QUANT ACCENT (Mike, 2026-11-04, the `quant` video). A per-video THIRD stylesheet, loaded after
+   container-canonical.css AND container-canonical-light.css (run.py --container-theme light --container-accent quant;
+   GRAPH-PROGRESS.json settings.container_accent). It re-maps ONLY the page / card / text / accent tokens to quant.network's
+   own look (measured on the live site 2026-11-04: pure white page, warm near-black Heebo headlines #43403E, the brand
+   orange #F15A22 / #FF542A on the highlighted word of every headline, thin orange line-art diagrams, a green #1CC691 used
+   only as a tiny "on" state). Anatomy, type, sizes and every rule of the locked stylesheet stay untouched.
+   Contrast: text >= 4.5:1 on white (#43403E = 9.4:1, #D14A14 = 4.6:1); strokes >= 3:1 (#F15A22 on white = 3.3:1).
+   ============================================================================ */
+:root{
+  --bg-deep:#FFFFFF; --bg-card:#FFFFFF; --bg-card-hover:#F7F9FC;
+  /* the ONE accent: Quant orange. Every "chapter accent" role maps to it; the darkened one is for TEXT on white. */
+  --accent-cyan:#F15A22; --accent-gold:#F15A22; --accent-purple:#F15A22; --accent-teal:#F15A22;
+  --accent-green:#1CC691; --accent-red:#C41E3A;
+  --accent-text:#D14A14;                 /* orange for words (4.6:1 on white); use for highlighted headline words */
+  --text-primary:#43403E; --text-secondary:#5C5855; --text-muted:#737070;
+  --border:#E6E3DF;
+  --grid:#ECE9E5; --axis:#9A9693; --wire:#F15A22; --ink:#43403E;
+}
+body{background:#F7F9FC}
+.frame{--acc-rgb:241,90,34}
+/* a light-grey band is the only second surface the site uses (the "Programmable DvP" strip): cards sit on #F7F9FC */
+.card,.col,.panel,.ecard,.nd,.node,.box{background:#FFFFFF;border-color:var(--border);
+  box-shadow:0 1px 2px rgba(67,64,62,.05),0 14px 34px rgba(67,64,62,.08)}
+/* headline highlight word: orange, like every quant.network heading ("The Infrastructure of" + "Programmable Money") */
+.hl,.accent-word,em.hl{color:var(--accent-text);font-style:normal}
+/* diagrams / charts: ORANGE wires and lit nodes on white, grey resting grid; one series = orange, a second = warm grey */
+svg .wire,svg line.wire,svg path.wire{stroke:var(--wire)}
+svg .wire.rest{stroke:#C9C5C0}
+svg .series-2{stroke:#8A8784;fill:#8A8784}
+</style><style>
+/* this build's components, on the locked tokens. Chapter accent = Quant orange (--accent-cyan), words = --accent-text. */
+/* divider: the locked gradient runs green -> cyan, which under quant.css reads green -> orange; the accent file keeps green
+   for a tiny on-state only, so the divider runs the one chapter accent. Same size and margins. */
+.divider{background:linear-gradient(90deg,var(--accent-cyan),rgba(var(--acc-rgb),.25))}
+.orb.a{width:900px;height:900px;right:-280px;top:-400px;background:var(--accent-cyan);opacity:.10}
+.ey .mono{font-weight:600}
+h1.title{font-size:132px;line-height:1.05}
+.card{position:relative;width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:28px;padding:60px 84px 58px;overflow:hidden}
+.card>.top{position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--accent-cyan),var(--accent-cyan) 38%,rgba(var(--acc-rgb),0) 92%)}
+.frame .card h1{max-width:none}
+/* rows: no filled box at rest (a hairline between rows); the lit row takes the tinted ring */
+.rows{display:flex;flex-direction:column;width:100%}
+.row{display:flex;align-items:baseline;gap:40px;padding:21px 30px;border:2px solid transparent;box-shadow:inset 0 -1px 0 var(--border)}
+.row:last-child{box-shadow:none}
+.row .lb{flex:0 0 250px;font:600 27px/1.2 'DM Sans';letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted)}
+.row .v{font:600 50px/1.18 'DM Sans';color:var(--text-secondary)}
+.row .v.mono{font-family:'JetBrains Mono';font-weight:600}
+.row.done .v{color:var(--text-primary)}
+.frame .row.on{border-radius:16px;border-color:var(--accent-cyan);background:rgba(var(--acc-rgb),.07);box-shadow:0 0 0 4px rgba(var(--acc-rgb),.12),0 12px 28px rgba(20,22,26,.12)}
+.row.on .v{color:var(--text-primary);font-weight:700}
+.row.on .lb{color:var(--text-secondary)}
+.row.key.on .v{color:var(--accent-text)}
+.row.key.done .v{color:var(--accent-text)}
+.src{font:500 26px/1.3 'DM Sans';color:var(--text-muted);margin-top:30px;max-width:none}
+.src .mono{font-weight:500}
+/* C4 stats */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);column-gap:0;width:100%}
+.stat{padding:24px 34px 26px;border-radius:16px;border:2px solid transparent}
+.stat .lb{font:600 27px/1.2 'DM Sans';letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px}
+.stat .n{font:600 84px/1.08 'JetBrains Mono';letter-spacing:-.03em;color:var(--text-secondary);min-height:91px}
+.stat.on{border-color:var(--accent-cyan);background:rgba(var(--acc-rgb),.07)}
+.stat.on .n{color:var(--accent-text);font-weight:700}
+.stat.on .lb{color:var(--text-secondary)}
+.stat.done .n{color:var(--text-primary)}
+.stats.small{margin-top:18px;padding-top:18px;border-top:1px solid var(--border)}
+.stats.small .stat{padding:8px 36px}
+.stats.small .n{font-size:46px;font-weight:500;min-height:0;letter-spacing:-.02em;color:var(--text-secondary)}
+.stats.small .lb{font-size:25px;margin-bottom:8px}
+.blank .n{visibility:hidden}
+/* K3 the two actions */
+.acts{display:flex;gap:30px;width:100%}
+.act{flex:1;display:flex;align-items:center;gap:32px;padding:34px 44px;border-radius:20px;border:2px solid var(--border)}
+.act svg{width:88px;height:88px;flex:0 0 88px;stroke:var(--text-secondary);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.act .w{font:700 58px/1.1 'DM Sans';color:var(--text-secondary)}
+.act.on{border-color:var(--accent-cyan);background:rgba(var(--acc-rgb),.07)}
+.act.on svg{stroke:var(--accent-cyan)}
+.act.on .w{color:var(--accent-text)}
+.act.done svg{stroke:var(--text-primary)}
+.act.done .w{color:var(--text-primary)}
+/* K4 the card's lower band */
+.card.hasband{padding-bottom:0}
+.band{display:flex;align-items:center;gap:28px;margin:52px -84px 0;padding:36px 84px;border-top:1px solid var(--border)}
+.band svg{width:60px;height:60px;flex:0 0 60px;stroke:var(--text-secondary);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.band .w{font:700 54px/1.1 'DM Sans';color:var(--text-secondary)}
+.band.on{background:rgba(var(--acc-rgb),.09);border-top:2px solid var(--accent-cyan)}
+.band.on svg{stroke:var(--accent-cyan)}
+.band.on .w{color:var(--accent-text)}
+</style></head><body>
+<div class="frame" id="T2" data-type="title"><div class="orb a"></div><div class="ey">Chapter <span class="mono">02</span></div><h1 class="title"><span class="hl">Islands</span> of Money</h1><div class="divider"></div></div>
+<div class="frame" id="T3" data-type="title"><div class="orb a"></div><div class="ey">Chapter <span class="mono">03</span></div><h1 class="title">Who <span class="hl">Uses</span> It</h1><div class="divider"></div></div>
+<div class="frame" id="T4" data-type="title"><div class="orb a"></div><div class="ey">Chapter <span class="mono">04</span></div><h1 class="title">The <span class="hl">Token</span></h1><div class="divider"></div></div>
+<div class="frame" id="T5" data-type="title"><div class="orb a"></div><div class="ey">Chapter <span class="mono">05</span></div><h1 class="title">Quant vs The <span class="hl">Market</span></h1><div class="divider"></div></div>
+<div class="frame" id="T6" data-type="title"><div class="orb a"></div><div class="ey">Chapter <span class="mono">06</span></div><h1 class="title">What’s <span class="hl">Next</span></h1><div class="divider"></div></div>
+<div class="frame" id="K1" data-type="card"><div class="orb a"></div><div class="card "><div class="top"></div><div class="ey">What is Quant?</div><h1 class="sm">Quant, in one line</h1><div class="divider"></div><div class="rows"><div class="row "><div class="lb">Based in</div><div class="v ">London</div></div><div class="row "><div class="lb">Founded</div><div class="v mono">2015</div></div><div class="row "><div class="lb">Led by</div><div class="v ">Gilbert Verdian, Founder and CEO</div></div><div class="row key "><div class="lb">What it sells</div><div class="v ">Not a new blockchain</div></div></div><div class="src">Companies House no. <span class="mono">09798383</span> · quant.network/about-us</div></div></div>
+<div class="frame" id="K1-s1" data-type="card"><div class="orb a"></div><div class="card "><div class="top"></div><div class="ey">What is Quant?</div><h1 class="sm">Quant, in one line</h1><div class="divider"></div><div class="rows"><div class="row on"><div class="lb">Based in</div><div class="v ">London</div></div><div class="row "><div class="lb">Founded</div><div class="v mono">2015</div></div><div class="row "><div class="lb">Led by</div><div class="v ">Gilbert Verdian, Founder and CEO</div></div><div class="row key "><div class="lb">What it sells</div><div class="v ">Not a new blockchain</div></div></div><div class="src">Companies House no. <span class="mono">09798383</span> · quant.network/about-us</div></div></div>
+<div class="frame" id="K1-s2" data-type="card"><div class="orb a"></div><div class="card "><div class="top"></div><div class="ey">What is Quant?</div><h1 class="sm">Quant, in one line</h1><div class="divider"></div><div class="rows"><div class="row done"><div class="lb">Based in</div><div class="v ">London</div></div><div class="row on"><div class="lb">Founded</div><div class="v mono">2015</div></div><div class="row "><div class="lb">Led by</div><div class="v ">Gilbert Verdian, Founder and CEO</div></div><div class="row key "><div class="lb">What it sells</div><div class="v ">Not a new blockchain</div></div></div><div class="src">Companies House no. <span class="mono">09798383</span> · quant.network/about-us</div></div></div>
+<div class="frame" id="K1-s3" data-type="card"><div class="orb a"></div><div class="card "><div class="top"></div><div class="ey">What is Quant?</div><h1 class="sm">Quant, in one line</h1><div class="divider"></div><div class="rows"><div class="row done"><div class="lb">Based in</div><div class="v ">London</div></div><div class="row done"><div class="lb">Founded</div><div class="v mono">2015</div></div><div class="row on"><div class="lb">Led by</div><div class="v ">Gilbert Verdian, Founder and CEO</div></div><div class="row key "><div class="lb">What it sells</div><div class="v ">Not a new blockchain</div></div></div><div class="src">Companies House no. <span class="mono">09798383</span> · quant.network/about-us</div></div></div>
+<div class="frame" id="K1-s4" data-type="card"><div class="orb a"></div><div class="card "><div class="top"></div><div class="ey">What is Quant?</div><h1 class="sm">Quant, in one line</h1><div class="divider"></div><div class="rows"><div class="row done"><div class="lb">Based in</div><div class="v ">London</div></div><div class="row done"><div class="lb">Founded</div><div class="v mono">2015</div></div><div class="row done"><div class="lb">Led by</div><div class="v ">Gilbert Verdian, Founder and CEO</div></div><div class="row key on"><div class="lb">What it sells</div><div class="v ">Not a new blockchain</div></div></div><div class="src">Companies House no. <span class="mono">09798383</span> · quant.network/about-us</div></div></div>
+<div class="frame" id="K2" data-type="card"><div class="orb a"></div><div class="card "><div class="top"></div><div class="ey">The way the pros do it</div><h1 class="">Three <span class="hl">ratios</span></h1><div class="divider"></div><div class="rows"><div class="row "><div class="v">Share of the total crypto market</div></div><div class="row "><div class="v">Against the peers</div></div><div class="row "><div class="v">Priced in Bitcoin</div></div></div></div></div>
+<div class="frame" id="K2-s1" data-type="card"><div class="orb a"></div><div class="card "><div class="top"></div><div class="ey">The way the pros do it</div><h1 class="">Three <span class="hl">ratios</span></h1><div class="divider"></div><div class="rows"><div class="row on"><div class="v">Share of the total crypto market</div></div><div class="row "><div class="v">Against the peers</div></div><div class="row "><div class="v">Priced in Bitcoin</div></div></div></div></div>
+<div class="frame" id="K2-s2" data-type="card"><div class="orb a"></div><div class="card "><div class="top"></div><div class="ey">The way the pros do it</div><h1 class="">Three <span class="hl">ratios</span></h1><div class="divider"></div><div class="rows"><div class="row done"><div class="v">Share of the total crypto market</div></div><div class="row on"><div class="v">Against the peers</div></div><div class="row "><div class="v">Priced in Bitcoin</div></div></div></div></div>
+<div class="frame" id="K2-s3" data-type="card"><div class="orb a"></div><div class="card "><div class="top"></div><div class="ey">The way the pros do it</div><h1 class="">Three <span class="hl">ratios</span></h1><div class="divider"></div><div class="rows"><div class="row done"><div class="v">Share of the total crypto market</div></div><div class="row done"><div class="v">Against the peers</div></div><div class="row on"><div class="v">Priced in Bitcoin</div></div></div></div></div>
+<div class="frame" id="C4" data-type="card"><div class="orb a"></div><div class="card "><div class="top"></div><div class="ey">At the time of this recording</div><h1 class="sm"><span class="hl">$QNT</span> by the numbers</h1><div class="divider"></div><div class="stats"><div class="stat "><div class="lb">Price</div><div class="n" data-slot="price">$199.08</div></div><div class="stat "><div class="lb">Market cap</div><div class="n" data-slot="cap">$2.90B</div></div><div class="stat "><div class="lb">Rank</div><div class="n" data-slot="rank">#34</div></div></div><div class="stats small"><div class="stat"><div class="lb">FDV</div><div class="n">$2.91B</div></div><div class="stat"><div class="lb">24 h volume</div><div class="n">$57.4M</div></div><div class="stat"><div class="lb">1-year change</div><div class="n">+169.7%</div></div></div><div class="src">CoinGecko, <span class="mono">2026-11-04 12:08</span> UTC</div></div></div>
+<div class="frame" id="C4-s1" data-type="card"><div class="orb a"></div><div class="card "><div class="top"></div><div class="ey">At the time of this recording</div><h1 class="sm"><span class="hl">$QNT</span> by the numbers</h1><div class="divider"></div><div class="stats"><div class="stat on"><div class="lb">Price</div><div class="n" data-slot="price">$199.08</div></div><div class="stat "><div class="lb">Market cap</div><div class="n" data-slot="cap">$2.90B</div></div><div class="stat "><div class="lb">Rank</div><div class="n" data-slot="rank">#34</div></div></div><div class="stats small"><div class="stat"><div class="lb">FDV</div><div class="n">$2.91B</div></div><div class="stat"><div class="lb">24 h volume</div><div class="n">$57.4M</div></div><div class="stat"><div class="lb">1-year change</div><div class="n">+169.7%</div></div></div><div class="src">CoinGecko, <span class="mono">2026-11-04 12:08</span> UTC</div></div></div>
+<div class="frame" id="C4-s2" data-type="card"><div class="orb a"></div><div class="card "><div class="top"></div><div class="ey">At the time of this recording</div><h1 class="sm"><span class="hl">$QNT</span> by the numbers</h1><div class="divider"></div><div class="stats"><div class="stat done"><div class="lb">Price</div><div class="n" data-slot="price">$199.08</div></div><div class="stat on"><div class="lb">Market cap</div><div class="n" data-slot="cap">$2.90B</div></div><div class="stat "><div class="lb">Rank</div><div class="n" data-slot="rank">#34</div></div></div><div class="stats small"><div class="stat"><div class="lb">FDV</div><div class="n">$2.91B</div></div><div class="stat"><div class="lb">24 h volume</div><div class="n">$57.4M</div></div><div class="stat"><div class="lb">1-year change</div><div class="n">+169.7%</div></div></div><div class="src">CoinGecko, <span class="mono">2026-11-04 12:08</span> UTC</div></div></div>
+<div class="frame" id="C4-s3" data-type="card"><div class="orb a"></div><div class="card "><div class="top"></div><div class="ey">At the time of this recording</div><h1 class="sm"><span class="hl">$QNT</span> by the numbers</h1><div class="divider"></div><div class="stats"><div class="stat done"><div class="lb">Price</div><div class="n" data-slot="price">$199.08</div></div><div class="stat done"><div class="lb">Market cap</div><div class="n" data-slot="cap">$2.90B</div></div><div class="stat on"><div class="lb">Rank</div><div class="n" data-slot="rank">#34</div></div></div><div class="stats small"><div class="stat"><div class="lb">FDV</div><div class="n">$2.91B</div></div><div class="stat"><div class="lb">24 h volume</div><div class="n">$57.4M</div></div><div class="stat"><div class="lb">1-year change</div><div class="n">+169.7%</div></div></div><div class="src">CoinGecko, <span class="mono">2026-11-04 12:08</span> UTC</div></div></div>
+<div class="frame" id="C4-plate" data-type="card"><div class="orb a"></div><div class="card "><div class="top"></div><div class="ey">At the time of this recording</div><h1 class="sm"><span class="hl">$QNT</span> by the numbers</h1><div class="divider"></div><div class="stats blank"><div class="stat "><div class="lb">Price</div><div class="n" data-slot="price">$199.08</div></div><div class="stat "><div class="lb">Market cap</div><div class="n" data-slot="cap">$2.90B</div></div><div class="stat "><div class="lb">Rank</div><div class="n" data-slot="rank">#34</div></div></div><div class="stats small"><div class="stat"><div class="lb">FDV</div><div class="n">$2.91B</div></div><div class="stat"><div class="lb">24 h volume</div><div class="n">$57.4M</div></div><div class="stat"><div class="lb">1-year change</div><div class="n">+169.7%</div></div></div><div class="src">CoinGecko, <span class="mono">2026-11-04 12:08</span> UTC</div></div></div>
+<div class="frame" id="K3" data-type="card"><div class="orb a"></div><div class="card "><div class="top"></div><div class="ey">If you’re new here</div><h1 class="">Enjoyed this <span class="hl">Quant</span> rundown?</h1><div class="divider"></div><div class="acts"><div class="act "><svg viewBox="0 0 24 24"><path d="M7.5 10.5v10H4a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1z"/><path d="M7.5 10.5 11.6 3a2.6 2.6 0 0 1 2.6 2.9L13.7 9.5h5.6a2 2 0 0 1 2 2.4l-1.4 7a2 2 0 0 1-2 1.6H7.5"/></svg><div class="w">Like</div></div><div class="act "><svg viewBox="0 0 24 24"><path d="M18 9.2a6 6 0 0 0-12 0c0 6.3-2.6 8.1-2.6 8.1h17.2S18 15.5 18 9.2"/><path d="M13.8 20.6a2 2 0 0 1-3.6 0"/></svg><div class="w">Subscribe</div></div></div></div></div>
+<div class="frame" id="K3-s1" data-type="card"><div class="orb a"></div><div class="card "><div class="top"></div><div class="ey">If you’re new here</div><h1 class="">Enjoyed this <span class="hl">Quant</span> rundown?</h1><div class="divider"></div><div class="acts"><div class="act on"><svg viewBox="0 0 24 24"><path d="M7.5 10.5v10H4a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1z"/><path d="M7.5 10.5 11.6 3a2.6 2.6 0 0 1 2.6 2.9L13.7 9.5h5.6a2 2 0 0 1 2 2.4l-1.4 7a2 2 0 0 1-2 1.6H7.5"/></svg><div class="w">Like</div></div><div class="act "><svg viewBox="0 0 24 24"><path d="M18 9.2a6 6 0 0 0-12 0c0 6.3-2.6 8.1-2.6 8.1h17.2S18 15.5 18 9.2"/><path d="M13.8 20.6a2 2 0 0 1-3.6 0"/></svg><div class="w">Subscribe</div></div></div></div></div>
+<div class="frame" id="K3-s2" data-type="card"><div class="orb a"></div><div class="card "><div class="top"></div><div class="ey">If you’re new here</div><h1 class="">Enjoyed this <span class="hl">Quant</span> rundown?</h1><div class="divider"></div><div class="acts"><div class="act done"><svg viewBox="0 0 24 24"><path d="M7.5 10.5v10H4a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1z"/><path d="M7.5 10.5 11.6 3a2.6 2.6 0 0 1 2.6 2.9L13.7 9.5h5.6a2 2 0 0 1 2 2.4l-1.4 7a2 2 0 0 1-2 1.6H7.5"/></svg><div class="w">Like</div></div><div class="act on"><svg viewBox="0 0 24 24"><path d="M18 9.2a6 6 0 0 0-12 0c0 6.3-2.6 8.1-2.6 8.1h17.2S18 15.5 18 9.2"/><path d="M13.8 20.6a2 2 0 0 1-3.6 0"/></svg><div class="w">Subscribe</div></div></div></div></div>
+<div class="frame" id="K4" data-type="card"><div class="orb a"></div><div class="card hasband"><div class="top"></div><div class="ey">Before you go</div><h1 class="">The <span class="hl">community</span></h1><div class="divider"></div><p>A rock star community.</p><div class="band "><svg viewBox="0 0 24 24"><path d="M12 3.5v16"/><path d="m5.5 13 6.5 6.5 6.5-6.5"/></svg><div class="w">Link in the description</div></div></div></div>
+<div class="frame" id="K4-s1" data-type="card"><div class="orb a"></div><div class="card hasband"><div class="top"></div><div class="ey">Before you go</div><h1 class="">The <span class="hl">community</span></h1><div class="divider"></div><p>A rock star community.</p><div class="band on"><svg viewBox="0 0 24 24"><path d="M12 3.5v16"/><path d="m5.5 13 6.5 6.5 6.5-6.5"/></svg><div class="w">Link in the description</div></div></div></div>
+</body></html>

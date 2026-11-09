@@ -1,28 +1,36 @@
 # card_overlays.py: format 4 of the longform-presentation track (card-overlays.md, this folder).
-# A handful of full-screen deck cards laid over a finished screen-share spine, in ONE ffmpeg encode: no Remotion.
+# A handful of overlays (deck cards, chart stills, rendered clips) laid over a finished screen-share spine INSIDE
+# the deck area, in ONE ffmpeg encode: no Remotion comp for the video, no draft.
 #
-#   python card_overlays.py "media/<p>/overlays/cards.json"            # pages -> shoot -> render -> qa
-#   python card_overlays.py "media/<p>/overlays/cards.json" --step shoot   (pages | shoot | render | qa)
+#   python card_overlays.py "media/standard/<p>/overlays/cards.json"            # pages -> shoot -> render -> qa
+#   python card_overlays.py "media/standard/<p>/overlays/cards.json" --step shoot   (pages | shoot | render | qa)
 #
-# The spec (cards.json) lives in media/<p>/overlays/ and every path in it is relative to that folder:
+# The spec (cards.json) lives in media/standard/<p>/overlays/ and every path in it is relative to that folder:
 #   { "deck": "../<deck>.html", "spine": "../spine/<final spine>.mp4", "out": "../<p> FINAL-v1.mp4",
+#     "region": {"x": 0, "y": 0, "w": 1464, "h": 1080},          # the deck area (omit = the whole 1920x1080 frame)
 #     "cards": [ { "id": "ov1-quote", "in": 42.35, "out": 54.0, "say": "<the words it covers>",
-#                  "zoom": 1.9, "orbs": ["var(--accent-gold)", "var(--accent-purple)"] }, ... ] }
-# Each card's markup is overlays/<id>.body.html (deck classes, the deck's text verbatim); this tool wraps it in the
-# deck's own <style> on a 1920x1080 frame, screenshots it to <id>.png, then composites every card over the spine:
-# 11-frame entrance (0.93 -> 1 scale + alpha, ease-out cubic: the spotlight look), hold, 0.3 s alpha fade out.
-# Audio is stream-copied; the picture keeps the spine's own frame timestamps (-fps_mode passthrough).
+#                  "kind": "deck", "zoom": 1.5, "orbs": ["var(--accent-gold)", "var(--accent-purple)"] },
+#                { "id": "ov3-flow", "in": ..., "out": ..., "say": "...", "kind": "image", "src": "../assets/diagrams/flow-1.png" },
+#                { "id": "ov4-wb",   "in": ..., "out": ..., "say": "...", "kind": "clip",  "src": "ov4-wb.mp4" } ] }
+# kind "deck" (default): overlays/<id>.body.html (deck classes, the deck's text verbatim) is wrapped in the deck's own
+#   <style> on a region-sized page and screenshotted to <id>.png. kind "image": a still already rendered at the
+#   region size (a chart-builder diagram). kind "clip": a video already rendered at the region size and the card's
+#   exact length (an animated chart, a whiteboard beat; no audio needed, it is ignored).
+# Every overlay is composited at region x,y: stills get the 11-frame entrance (0.93 -> 1 scale + alpha, ease-out
+# cubic: the spotlight look), clips an 11-frame alpha fade-in (a drawn-on clip starts blank anyway); all hold, then
+# a 0.3 s alpha fade out. Audio is stream-copied; the picture keeps the spine's own frame timestamps.
 import argparse, json, os, subprocess, sys, tempfile
 from pathlib import Path
 
 IN_FRAMES, OUT_S = 11, 0.3
+FULL = {'x': 0, 'y': 0, 'w': 1920, 'h': 1080}
 
 STILL_CSS = r"""
-/* card-overlays: the deck's CSS as a still, 1920x1080 */
-html,body{scroll-snap-type:none;overflow:hidden}
+/* card-overlays: the deck's CSS as a still, region-sized */
+html,body{scroll-snap-type:none;overflow:hidden;margin:0}
 .fade-in{opacity:1!important;transform:none!important}
 .card:hover{transform:none;box-shadow:none}
-.ov{width:1920px;height:1080px;position:relative;overflow:hidden;background:var(--bg-deep,#0a0c10);display:flex;align-items:center;justify-content:center}
+.ov{width:%(w)dpx;height:%(h)dpx;position:relative;overflow:hidden;background:var(--bg-deep,#0a0c10);display:flex;align-items:center;justify-content:center}
 .ov .orb{position:absolute}
 .ov .stage{position:relative;z-index:1}
 .ov .ey{margin-bottom:14px}
@@ -36,6 +44,15 @@ def load(spec_path):
     for k in ('deck', 'spine', 'out'):
         spec[k] = (d / spec[k]).resolve()
     spec['dir'] = d
+    spec['region'] = {**FULL, **(spec.get('region') or {})}
+    for c in spec['cards']:
+        c['kind'] = c.get('kind', 'deck')
+        if c['kind'] not in ('deck', 'image', 'clip'):
+            sys.exit(f"card {c['id']}: kind must be deck | image | clip")
+        if c['kind'] != 'deck':
+            if not c.get('src'):
+                sys.exit(f"card {c['id']}: kind {c['kind']} needs src")
+            c['src'] = (d / c['src']).resolve()
     return spec
 
 
@@ -45,10 +62,16 @@ def ffprobe(path, entries):
     return r.stdout.split()
 
 
-def check(spec):
+def still_path(spec, c):
+    return c['src'] if c['kind'] == 'image' else spec['dir'] / f"{c['id']}.png"
+
+
+def check(spec, strict=True):
+    """strict: every image / clip src must exist and fit (render); pages / shoot only warn (the agents may still be building)."""
     num, den = ffprobe(spec['spine'], 'stream=r_frame_rate')[0].split('/')
     fps = round(int(num) / int(den))
     dur = float(ffprobe(spec['spine'], 'format=duration')[0])
+    R = spec['region']
     prev = 0.0
     for c in spec['cards']:
         if not (prev <= c['in'] < c['out'] <= dur):
@@ -56,19 +79,41 @@ def check(spec):
         if (round(c['out'] * fps) - round(c['in'] * fps)) < IN_FRAMES + round(OUT_S * fps) + fps:
             sys.exit(f"card {c['id']}: shorter than its entrance + exit + 1 s hold")
         prev = c['out']
+        if c['kind'] != 'deck' and not c['src'].exists():
+            if strict:
+                sys.exit(f"card {c['id']}: src missing: {c['src']}")
+            print(f"card {c['id']}: src not built yet: {c['src']}")
+            continue
+        if c['kind'] == 'image':
+            from PIL import Image
+            w, h = Image.open(c['src']).size
+            if (w, h) != (R['w'], R['h']):
+                sys.exit(f"card {c['id']}: image is {w}x{h}, the region is {R['w']}x{R['h']} (render it at the region size)")
+        if c['kind'] == 'clip':
+            w, h = (int(v) for v in ffprobe(c['src'], 'stream=width,height')[:2])
+            n = int(ffprobe(c['src'], 'stream=nb_frames')[0])
+            want = round(c['out'] * fps) - round(c['in'] * fps)
+            if (w, h) != (R['w'], R['h']):
+                sys.exit(f"card {c['id']}: clip is {w}x{h}, the region is {R['w']}x{R['h']} (render it at the region size)")
+            if abs(n - want) > 2:
+                print(f"card {c['id']}: clip has {n} frames, the window is {want}; "
+                      f"{'the last frame is held' if n < want else 'it is trimmed'} to the window")
     return fps
 
 
 def pages(spec):
     h = spec['deck'].read_text(encoding='utf-8')
     head, css = h[:h.find('<style>')], h[h.find('<style>') + 7:h.find('</style>')]
+    R = spec['region']
     for c in spec['cards']:
+        if c['kind'] != 'deck':
+            continue
         body = (spec['dir'] / f"{c['id']}.body.html").read_text(encoding='utf-8')
         a, b = (c.get('orbs') or ['var(--accent-green)', 'var(--accent-cyan)'])[:2]
         orbs = (f'<div class="orb" style="width:760px;height:760px;background:{a};top:-300px;left:-240px;opacity:.28"></div>'
                 f'<div class="orb" style="width:680px;height:680px;background:{b};bottom:-320px;right:-220px;opacity:.22"></div>')
-        page = (head + '<style>' + css + STILL_CSS + '</style>\n</head>\n<body>\n'
-                f'<div class="ov">{orbs}<div class="stage" style="zoom:{c.get("zoom", 1.8)}">\n{body}\n</div></div>\n'
+        page = (head + '<style>' + css + STILL_CSS % R + '</style>\n</head>\n<body>\n'
+                f'<div class="ov">{orbs}<div class="stage" style="zoom:{c.get("zoom", 1.5)}">\n{body}\n</div></div>\n'
                 '</body>\n</html>\n')
         (spec['dir'] / f"{c['id']}.html").write_text(page, encoding='utf-8')
         print('page', c['id'] + '.html')
@@ -76,19 +121,22 @@ def pages(spec):
 
 def shoot(spec):
     from playwright.sync_api import sync_playwright
+    R = spec['region']
     with sync_playwright() as p:
         b = p.chromium.launch()
-        pg = b.new_page(viewport={'width': 1920, 'height': 1080})
+        pg = b.new_page(viewport={'width': R['w'], 'height': R['h']})
         for c in spec['cards']:
+            if c['kind'] != 'deck':
+                continue
             f = spec['dir'] / f"{c['id']}.html"
             pg.goto(f.as_uri())
             pg.wait_for_load_state('networkidle')
             pg.evaluate('document.fonts.ready')
             fonts = sorted(set(pg.evaluate("[...document.fonts].filter(f=>f.status==='loaded').map(f=>f.family)")))
-            over = pg.evaluate("(()=>{const r=document.querySelector('.stage').getBoundingClientRect();"
-                               "return r.left<0||r.top<0||r.right>1920||r.bottom>1080})()")
+            over = pg.evaluate("((w,h)=>{const r=document.querySelector('.stage').getBoundingClientRect();"
+                               f"return r.left<0||r.top<0||r.right>{R['w']}||r.bottom>{R['h']}}})()")
             pg.screenshot(path=str(spec['dir'] / f"{c['id']}.png"))
-            print('shot', c['id'] + '.png', 'fonts', fonts, 'OVERFLOWS THE FRAME' if over else '')
+            print('shot', c['id'] + '.png', 'fonts', fonts, 'OVERFLOWS THE REGION' if over else '')
         b.close()
 
 
@@ -96,7 +144,7 @@ def entrance(spec, c):
     from PIL import Image
     d = spec['dir'] / '_frames' / c['id']
     d.mkdir(parents=True, exist_ok=True)
-    card = Image.open(spec['dir'] / f"{c['id']}.png").convert('RGBA')
+    card = Image.open(still_path(spec, c)).convert('RGBA')
     W, H = card.size
     for i in range(IN_FRAMES):
         e = 1 - (1 - (i + 1) / IN_FRAMES) ** 3
@@ -111,18 +159,27 @@ def entrance(spec, c):
 
 
 def render(spec, fps):
+    R = spec['region']
     args = ['ffmpeg', '-v', 'error', '-stats', '-y', '-i', str(spec['spine'])]
-    graph, last = [], '0:v'
+    graph, last, n_in = [], '0:v', 1
     for k, c in enumerate(spec['cards']):
         f_in, f_out = round(c['in'] * fps), round(c['out'] * fps)
-        hold = (f_out - f_in - IN_FRAMES) / fps
         dur = (f_out - f_in) / fps
-        args += ['-framerate', str(fps), '-i', entrance(spec, c),
-                 '-loop', '1', '-framerate', str(fps), '-t', f'{hold:.6f}', '-i', str(spec['dir'] / f"{c['id']}.png")]
-        a, b = 1 + 2 * k, 2 + 2 * k
-        graph.append(f'[{a}:v]format=rgba[i{k}];[{b}:v]format=rgba[h{k}];[i{k}][h{k}]concat=n=2:v=1:a=0,'
-                     f'fade=t=out:st={dur - OUT_S:.6f}:d={OUT_S}:alpha=1,setpts=PTS-STARTPTS+{f_in}/({fps}*TB)[c{k}]')
-        graph.append(f'[{last}][c{k}]overlay=eof_action=pass:format=auto[v{k}]')
+        if c['kind'] == 'clip':
+            args += ['-i', str(c['src'])]
+            graph.append(f'[{n_in}:v]format=rgba,tpad=stop_mode=clone:stop_duration={dur:.6f},trim=duration={dur:.6f},'
+                         f'setpts=PTS-STARTPTS,fade=t=in:st=0:d={IN_FRAMES / fps:.6f}:alpha=1,'
+                         f'fade=t=out:st={dur - OUT_S:.6f}:d={OUT_S}:alpha=1,setpts=PTS+{f_in}/({fps}*TB)[c{k}]')
+            n_in += 1
+        else:
+            hold = (f_out - f_in - IN_FRAMES) / fps
+            args += ['-framerate', str(fps), '-i', entrance(spec, c),
+                     '-loop', '1', '-framerate', str(fps), '-t', f'{hold:.6f}', '-i', str(still_path(spec, c))]
+            a, b = n_in, n_in + 1
+            graph.append(f'[{a}:v]format=rgba[i{k}];[{b}:v]format=rgba[h{k}];[i{k}][h{k}]concat=n=2:v=1:a=0,'
+                         f'fade=t=out:st={dur - OUT_S:.6f}:d={OUT_S}:alpha=1,setpts=PTS-STARTPTS+{f_in}/({fps}*TB)[c{k}]')
+            n_in += 2
+        graph.append(f"[{last}][c{k}]overlay=x={R['x']}:y={R['y']}:eof_action=pass:format=auto[v{k}]")
         last = f'v{k}'
     graph.append(f'[{last}]format=yuv420p[vout]')
     # passthrough keeps the spine's own frame timestamps (desilence joins leave small gaps): a forced -r 30
@@ -134,9 +191,9 @@ def render(spec, fps):
     rc = subprocess.run(args).returncode
     if rc:
         sys.exit(rc)
-    n_in = ffprobe(spec['spine'], 'stream=nb_frames')[0]
+    n_spine = ffprobe(spec['spine'], 'stream=nb_frames')[0]
     n_out = ffprobe(spec['out'], 'stream=nb_frames')[0]
-    print(f'frames: spine {n_in}  out {n_out}', 'OK' if n_in == n_out else 'MISMATCH (timing drifted, do not deliver)')
+    print(f'frames: spine {n_spine}  out {n_out}', 'OK' if n_spine == n_out else 'MISMATCH (timing drifted, do not deliver)')
 
 
 def qa(spec):
@@ -163,11 +220,11 @@ def qa(spec):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('spec', help='media/<project>/overlays/cards.json')
+    ap.add_argument('spec', help='media/standard/<project>/overlays/cards.json')
     ap.add_argument('--step', choices=['pages', 'shoot', 'render', 'qa', 'all'], default='all')
     a = ap.parse_args()
     spec = load(a.spec)
-    fps = check(spec)
+    fps = check(spec, strict=a.step in ('render', 'all'))
     if a.step in ('pages', 'all'):
         pages(spec)
     if a.step in ('shoot', 'all'):

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>whiteboard style sample</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great:wght@400;700;800&family=Kalam:wght@400;700;800&display=block">
+<style>
+  html, body { margin: 0; padding: 0; width: 1920px; height: 1080px; overflow: hidden; }
+  svg { display: block; }
+</style>
+<script src="file:///C:/Users/mnede/Documents/Claude/social-media/video-creation/remotion/node_modules/roughjs/bundled/rough.js"></script>
+</head>
+<body>
+<svg id="scene" xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"></svg>
+<script>
+const S = {"id": "navy-chalk", "name": "Navy chalk", "blurb": "House palette on a near-black navy board: pale chalk ink, teal + gold hachure fills, rougher stroke. Continuity with the Pixar b-roll backgrounds.", "mode": "rough", "bg": "#0b1220", "floor": null, "ink": "#e8f1f5", "inkWidth": 2.4, "roughness": 1.6, "bowing": 1.2, "fillStyle": "hachure", "fillWeight": 1.2, "hachureGap": 7, "palette": {"blue": "#2dd4bf", "gold": "#f5c542", "red": "#ff6b6b", "green": "#7bdc8a", "brown": "#d9a066", "grey": "#5b6b7a"}, "fontH": "Fredericka the Great", "fontL": "Kalam", "colorH": "#f5c542", "colorL": "#e8f1f5", "caps": true, "glow": false, "paper": true, "grid": false, "status": "option", "status_note": "Mike, 2026-10-30: does not like it"};
+const svg = document.getElementById('scene');
+const NS = 'http://www.w3.org/2000/svg';
+const P = S.palette;
+const isRough = S.mode === 'rough';
+
+function el(tag, attrs, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  (parent || svg).appendChild(e);
+  return e;
+}
+
+// ---------- defs: glow filter, paper noise, dot grid ----------
+const defs = el('defs', {});
+const glow = el('filter', { id: 'glow', x: '-30%', y: '-30%', width: '160%', height: '160%' }, defs);
+el('feGaussianBlur', { stdDeviation: 6, result: 'b' }, glow);
+const gm = el('feMerge', {}, glow);
+el('feMergeNode', { in: 'b' }, gm); el('feMergeNode', { in: 'b' }, gm); el('feMergeNode', { in: 'SourceGraphic' }, gm);
+const soft = el('filter', { id: 'soft', x: '-40%', y: '-40%', width: '180%', height: '180%' }, defs);
+el('feGaussianBlur', { stdDeviation: 18, result: 'b' }, soft);
+const sm = el('feMerge', {}, soft);
+el('feMergeNode', { in: 'b' }, sm); el('feMergeNode', { in: 'SourceGraphic' }, sm);
+const noise = el('filter', { id: 'paper' }, defs);
+el('feTurbulence', { type: 'fractalNoise', baseFrequency: '0.9', numOctaves: 2, result: 'n' }, noise);
+el('feColorMatrix', { type: 'saturate', values: 0 }, noise);
+const gridPat = el('pattern', { id: 'grid', width: 48, height: 48, patternUnits: 'userSpaceOnUse' }, defs);
+el('circle', { cx: 2, cy: 2, r: 1.6, fill: S.ink, opacity: 0.35 }, gridPat);
+const tileGrad = el('linearGradient', { id: 'tile', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+el('stop', { offset: '0%', 'stop-color': '#ffffff', 'stop-opacity': 0.35 }, tileGrad);
+el('stop', { offset: '55%', 'stop-color': '#ffffff', 'stop-opacity': 0 }, tileGrad);
+
+// ---------- background ----------
+el('rect', { x: 0, y: 0, width: 1920, height: 1080, fill: S.bg });
+if (S.floor) el('rect', { x: 0, y: 660, width: 1920, height: 420, fill: S.floor });
+if (S.grid) el('rect', { x: 0, y: 0, width: 1920, height: 1080, fill: 'url(#grid)' });
+if (S.paper) el('rect', { x: 0, y: 0, width: 1920, height: 1080, filter: 'url(#paper)', opacity: S.bg === '#0b1220' ? 0.10 : 0.16, style: 'mix-blend-mode:multiply' });
+
+// ---------- drawing helpers ----------
+const rc = window.rough ? window.rough.svg(svg) : null;
+const strokeLayer = el('g', { id: 'strokes', filter: S.glow ? 'url(#glow)' : null });
+if (!S.glow) strokeLayer.removeAttribute('filter');
+
+function opts(fill, extra) {
+  const o = {
+    roughness: S.roughness, bowing: S.bowing,
+    stroke: S.ink, strokeWidth: S.inkWidth,
+    fillStyle: S.fillStyle === 'none' ? 'solid' : S.fillStyle,
+    fillWeight: S.fillWeight, hachureGap: S.hachureGap, hachureAngle: -41,
+    seed: 7,
+  };
+  if (fill && S.fillStyle !== 'none') o.fill = fill;
+  return Object.assign(o, extra || {});
+}
+function rect(x, y, w, h, fill, extra) {
+  if (isRough) { strokeLayer.appendChild(rc.rectangle(x, y, w, h, opts(fill, extra))); return; }
+  const e = el('rect', { x, y, width: w, height: h, rx: S.mode === 'flat' ? 14 : 28, fill: fill || 'none' }, strokeLayer);
+  if (extra && extra.stroke) { e.setAttribute('stroke', extra.stroke); e.setAttribute('stroke-width', extra.strokeWidth || 3); }
+  else if (!fill) { e.setAttribute('stroke', S.ink); e.setAttribute('stroke-width', 6); }
+  return e;
+}
+function circle(cx, cy, r, fill, extra) {
+  if (isRough) { strokeLayer.appendChild(rc.circle(cx, cy, r * 2, opts(fill, extra))); return; }
+  const e = el('circle', { cx, cy, r, fill: fill || 'none' }, strokeLayer);
+  if (extra && extra.stroke) { e.setAttribute('stroke', extra.stroke); e.setAttribute('stroke-width', extra.strokeWidth || 3); }
+  else if (!fill) { e.setAttribute('stroke', S.ink); e.setAttribute('stroke-width', 6); }
+  return e;
+}
+function line(x1, y1, x2, y2, extra) {
+  if (isRough) { strokeLayer.appendChild(rc.line(x1, y1, x2, y2, opts(null, extra))); return; }
+  el('line', { x1, y1, x2, y2, stroke: (extra && extra.stroke) || S.ink, 'stroke-width': (extra && extra.strokeWidth) || Math.max(S.inkWidth, 6), 'stroke-linecap': 'round' }, strokeLayer);
+}
+function path(d, fill, extra) {
+  if (isRough) { strokeLayer.appendChild(rc.path(d, opts(fill, extra))); return; }
+  const e = el('path', { d, fill: fill || 'none', stroke: (extra && extra.stroke) || (fill ? 'none' : S.ink), 'stroke-width': (extra && extra.strokeWidth) || 6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, strokeLayer);
+  if (extra && extra['stroke-dasharray']) e.setAttribute('stroke-dasharray', extra['stroke-dasharray']);
+  return e;
+}
+function text(x, y, str, size, font, color, anchor, weight, maxW) {
+  const t = el('text', {
+    x, y, 'font-family': `'${font}', cursive, sans-serif`, 'font-size': size, fill: color,
+    'text-anchor': anchor || 'middle', 'font-weight': weight || 'normal',
+    filter: S.glow ? 'url(#glow)' : null,
+  });
+  if (!S.glow) t.removeAttribute('filter');
+  t.textContent = str;
+  if (maxW) t.setAttribute('data-maxw', maxW);
+  return t;
+}
+function fitTexts() {
+  document.querySelectorAll('text[data-maxw]').forEach(t => {
+    const maxW = +t.getAttribute('data-maxw');
+    const len = t.getComputedTextLength();
+    if (len > maxW) t.setAttribute('font-size', (+t.getAttribute('font-size')) * maxW / len);
+  });
+}
+const H = s => S.caps ? s.toUpperCase() : s;
+
+// ---------- the sample scene (identical content in every style) ----------
+if (S.mode !== 'mograph') {
+  // heading + subhead
+  text(960, 150, H('Where the yield really comes from'), 96, S.fontH, S.colorH, 'middle', '700', 1700);
+  text(960, 215, 'your trade pays a fee, the fee buys the stock, the vault pays you back', 40, S.fontL, S.colorL, 'middle', 'normal', 1600);
+
+  // stick figure "you" holding a phone (left)
+  const fx = 330, fy = 470;
+  circle(fx, fy, 48, null);                                   // head
+  circle(fx - 16, fy - 6, 4, S.ink, { fill: S.ink, fillStyle: 'solid' }); // eyes
+  circle(fx + 16, fy - 6, 4, S.ink, { fill: S.ink, fillStyle: 'solid' });
+  path(`M ${fx - 18} ${fy + 18} Q ${fx} ${fy + 36} ${fx + 18} ${fy + 18}`, null); // smile
+  rect(fx - 54, fy + 50, 108, 170, P.green);                    // shirt
+  line(fx - 54, fy + 60, fx - 120, fy + 150);                   // left arm
+  line(fx + 54, fy + 60, fx + 120, fy + 120);                   // right arm (holding phone)
+  rect(fx + 96, fy + 70, 56, 100, P.blue);                      // phone
+  line(fx - 30, fy + 220, fx - 60, fy + 380);                   // legs
+  line(fx + 30, fy + 220, fx + 60, fy + 380);
+  text(fx, 900, 'you', 44, S.fontL, S.colorL);
+
+  // dashed arc: phone -> vault, with an envelope riding it
+  path('M 470 540 Q 820 300 1180 460', null, { 'stroke-dasharray': '18 16', strokeWidth: S.inkWidth + 1 });
+  // arrow head
+  path('M 1150 420 L 1182 462 L 1130 470', null);
+  // envelope (blue) mid-arc
+  rect(770, 345, 150, 100, P.blue);
+  path('M 770 345 L 845 410 L 920 345', null);
+  text(845, 320, 'the fee', 40, S.fontL, S.colorL);
+
+  // vault (right)
+  rect(1210, 400, 320, 300, P.grey);
+  circle(1370, 550, 72, null);
+  circle(1370, 550, 28, P.gold);
+  line(1370, 478, 1370, 622); line(1298, 550, 1442, 550);
+  rect(1170, 700, 400, 26, P.brown);                            // base plate
+  text(1370, 780, 'the vault', 44, S.fontL, S.colorL);
+
+  // gold coins stacking next to the vault (brown horse / colored object slot)
+  circle(1660, 640, 46, P.gold); text(1660, 656, '₿', 48, S.fontH, S.ink);
+  circle(1700, 560, 46, P.gold); text(1700, 576, '₿', 48, S.fontH, S.ink);
+  circle(1640, 480, 46, P.gold); text(1640, 496, '₿', 48, S.fontH, S.ink);
+  // green check over the coins
+  path('M 1600 380 L 1640 420 L 1720 330', null, { stroke: P.green, strokeWidth: S.inkWidth + 5 });
+
+  // bar chart (bottom center): fees share growing
+  const bx = 760, by = 1000;
+  line(bx - 40, by, bx + 420, by);
+  line(bx - 40, by, bx - 40, by - 260);
+  rect(bx, by - 80, 80, 80, P.blue);
+  rect(bx + 120, by - 150, 80, 150, P.blue);
+  rect(bx + 240, by - 240, 80, 240, P.gold);
+  text(bx + 280, by - 268, '20%', 44, S.fontH, S.colorH, 'middle', '700', 150);
+  text(bx + 190, by + 46, 'fees paid out', 40, S.fontL, S.colorL);
+
+  // red strike-through on "middlemen"
+  text(1370, 930, 'middlemen', 56, S.fontH, S.colorL, 'middle', 'normal', 300);
+  line(1230, 912, 1510, 912, { stroke: P.red, strokeWidth: S.inkWidth + 5 });
+} else {
+  // ---------- mograph variant of the same content ----------
+  text(960, 150, H('Where the yield really comes from'), 86, S.fontH, S.colorH, 'middle', '800', 1700);
+  text(960, 212, 'YOUR TRADE PAYS A FEE  ·  THE FEE BUYS THE STOCK  ·  THE VAULT PAYS YOU BACK', 30, S.fontL, S.colorL, 'middle', '600', 1600);
+
+  // soft spotlight behind the center
+  const spot = el('radialGradient', { id: 'spot' }, defs);
+  el('stop', { offset: '0%', 'stop-color': '#ffffff', 'stop-opacity': 0.08 }, spot);
+  el('stop', { offset: '100%', 'stop-color': '#ffffff', 'stop-opacity': 0 }, spot);
+  el('circle', { cx: 960, cy: 560, r: 520, fill: 'url(#spot)' });
+
+  // user silhouette (left) in a glowing disc
+  el('circle', { cx: 330, cy: 560, r: 150, fill: '#15151a', stroke: P.blue, 'stroke-width': 6, filter: 'url(#soft)' });
+  el('circle', { cx: 330, cy: 500, r: 48, fill: P.blue });
+  el('path', { d: 'M 230 660 Q 330 540 430 660 Z', fill: P.blue });
+  el('rect', { x: 400, y: 505, width: 44, height: 80, rx: 8, fill: '#ffffff' });
+  text(330, 770, 'YOU', 40, S.fontL, S.colorL, 'middle', '800');
+
+  // dashed path with money packets
+  el('path', { d: 'M 480 560 Q 820 330 1180 520', fill: 'none', stroke: P.gold, 'stroke-width': 5, 'stroke-dasharray': '14 18', opacity: 0.8 });
+  for (const [x, y] of [[640, 440], [800, 372], [960, 372], [1110, 460]]) {
+    el('rect', { x: x - 34, y: y - 20, width: 68, height: 40, rx: 8, fill: P.green, filter: 'url(#glow)' });
+    text(x, y + 10, '$', 30, S.fontL, '#0a1a00', 'middle', '800');
+  }
+  text(845, 300, 'THE FEE', 36, S.fontL, S.colorL, 'middle', '800');
+
+  // ring chart with glossy tile in the middle (the 0:04 FireHustle shot)
+  el('circle', { cx: 1370, cy: 560, r: 170, fill: 'none', stroke: P.grey, 'stroke-width': 56 });
+  const C = 2 * Math.PI * 170;
+  el('circle', { cx: 1370, cy: 560, r: 170, fill: 'none', stroke: P.gold, 'stroke-width': 56, 'stroke-dasharray': `${C * 0.2} ${C}`, transform: 'rotate(-90 1370 560)', filter: 'url(#glow)' });
+  el('rect', { x: 1300, y: 490, width: 140, height: 140, rx: 32, fill: P.green, filter: 'url(#soft)' });
+  el('rect', { x: 1300, y: 490, width: 140, height: 140, rx: 32, fill: 'url(#tile)' });
+  // vault glyph on the tile
+  el('circle', { cx: 1370, cy: 560, r: 34, fill: 'none', stroke: '#0a1a00', 'stroke-width': 8 });
+  el('circle', { cx: 1370, cy: 560, r: 10, fill: '#0a1a00' });
+  el('rect', { x: 1540, y: 330, width: 110, height: 60, rx: 30, fill: P.gold, filter: 'url(#glow)' });
+  text(1595, 373, '20%', 40, S.fontH, '#0a0a0a', 'middle', '800');
+  text(1370, 800, 'THE VAULT', 40, S.fontL, S.colorL, 'middle', '800');
+
+  // coin discs stacked right
+  for (const [cx, cy] of [[1720, 740], [1780, 640], [1710, 540]]) {
+    el('circle', { cx, cy, r: 50, fill: '#d9d9de', filter: 'url(#soft)' });
+    el('circle', { cx, cy, r: 40, fill: P.gold });
+    text(cx, cy + 16, '₿', 44, S.fontH, '#1a1200', 'middle', '800');
+  }
+  el('path', { d: 'M 1680 440 L 1725 485 L 1810 395', fill: 'none', stroke: P.green, 'stroke-width': 14, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', filter: 'url(#glow)' });
+
+  // section pill + struck label
+  el('rect', { x: 560, y: 920, width: 520, height: 70, rx: 35, fill: P.blue });
+  text(820, 968, 'Who gets paid either way', 34, S.fontL, '#ffffff', 'middle', '700');
+  text(1420, 950, 'MIDDLEMEN', 52, S.fontH, S.colorL, 'middle', '800');
+  el('rect', { x: 1265, y: 926, width: 310, height: 12, rx: 6, fill: P.red, filter: 'url(#glow)' });
+}
+
+// signal readiness once fonts are loaded
+const ready = () => { fitTexts(); document.body.setAttribute('data-ready', '1'); };
+document.fonts.ready.then(ready);
+setTimeout(ready, 8000);
+</script>
+</body>
+</html>

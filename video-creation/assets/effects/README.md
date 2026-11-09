@@ -25,3 +25,12 @@ Themes:
 
 `_demo/`: one demo clip per device (`kt-*.mp4`, `hw-*.mp4`, with sound) + `gallery.html`; `_demo/pub/` is the minimal
 public dir the demos render with (it mirrors these theme paths, the sfx folders, the shake track data and the demo photos).
+
+**`browse/gallery.html`: the BROWSE dashboard (Mike, 2026-10-31), like `../transitions/browse/`.** One card per theme by its `label`
+(Energetic, Halloween horror) -> one page per theme with every device and sub-variant: the demo render and the SOURCE-VIDEO excerpt
+(`browse/<theme>/src/`, cut once from the theme's `sources`), both playable with sound. Rebuild:
+`python video-creation/skills/effects-library/scripts/effects_gallery.py` (mp4s gitignored, html tracked).
+
+- `kinetic-text-2023` ("Energetic") has TWO sources since 2026-10-31: 004 "Growth Marketer vs Growth Hacker" and 007 "Skills of a Growth
+  Engineer" (its devices: the caption line, the typewriter card, the stacked list, the statement, the text wall, the sparkle, the push
+  slide + variants); `themes/kinetic-text-2023/CUE-SHEET.md` carries both time maps, `graphics/_source/` the AE templates (reference only).

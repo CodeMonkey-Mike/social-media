@@ -94,6 +94,17 @@ def _sh_fn(proj: Path, scope: str):
     return (lambda t: t + sum(d for at, d in pauses if at <= t + 1e-6)), card_t, pause
 
 
+def _sh_end_fn(proj: Path, scope: str):
+    """source -> final seconds for an END time: only the pauses strictly BEFORE it (the comp's shOut). A pause baked AT a word's
+    end (a clip insert spliced in the trough right after the word) plays AFTER the word. Mapping the end with `at <= t` stretched
+    "market." over the 5.6 s CLIP-7 insert on lets-get-rich (2026-11-01): its midpoint fell outside its span and the short lost
+    the word's caption ("in a bear" with no "market.")."""
+    meta, _ = G._paused_meta(proj, scope)
+    pause = float(meta.get("pause_s") or 0)
+    pauses = [(float(p["at"]), float(p.get("dur") or pause)) for p in meta.get("pauses") or []]
+    return lambda t: t + sum(d for at, d in pauses if at < t - 1e-6)
+
+
 FACE_ROW_RE = re.compile(r"^\|\s*\d+\s*\|\s*(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)\s*\|", re.M)
 MISHEAR_RE = re.compile(r'"([^"]+)"\s*->\s*"([^"]+)"')
 
@@ -175,11 +186,12 @@ def s_preflight(state: ShortState) -> ShortState:
     if abs(dv - dp) > 0.2:
         return C._fail(state, node, f"vertical ({dv:.2f}s) and paused spine ({dp:.2f}s) are not on one clock")
     sh, _, _ = _sh_fn(proj, scope)
+    sh_end = _sh_end_fn(proj, scope)   # ENDS through the pauses strictly before them (see _sh_end_fn)
     d = json.loads(wj.read_text(encoding="utf-8"))
     segs, lines = [], []
     for s in d.get("segments", []):
-        seg = {"id": s.get("id"), "start": round(sh(float(s["start"])), 3), "end": round(sh(float(s["end"])), 3), "text": s.get("text", ""),
-               "words": [{"word": w["word"], "start": round(sh(float(w["start"])), 3), "end": round(sh(float(w["end"])), 3), "probability": w.get("probability", 1.0)}
+        seg = {"id": s.get("id"), "start": round(sh(float(s["start"])), 3), "end": round(sh_end(float(s["end"])), 3), "text": s.get("text", ""),
+               "words": [{"word": w["word"], "start": round(sh(float(w["start"])), 3), "end": round(sh_end(float(w["end"])), 3), "probability": w.get("probability", 1.0)}
                          for w in s.get("words", [])]}
         segs.append(seg)
         lines.append(f"{seg['start']:8.2f} - {seg['end']:8.2f}  {seg['text'].strip()}")
@@ -213,7 +225,9 @@ def _plan_check(plan: dict, target: float, total: float, faces):
             return f"span {a}-{b} lacks `sourced: FACE|COVER` (the hook-face check and the caption windows depend on it)"
         sum_s += b - a
     budget = target - OUTRO_S
-    if not (budget - 3.0 <= sum_s <= budget + 1.0):
+    # 0.05 s slack: span ends are 2-decimal floats, so a plan AT the edge sums to 28.019999 (left-behind 2026-11-03:
+    # 18.0 + 10.02 failed "28.0s" against 24-28); s_verify_final still caps the delivered runtime at target + 1.25 s
+    if not (budget - 3.05 <= sum_s <= budget + 1.05):
         return f"spans total {sum_s:.1f}s; the target is {target:.0f}s with a {OUTRO_S:.0f}s outro, so {budget - 3:.0f}-{budget + 1:.0f}s of spans"
     return None
 
@@ -231,6 +245,7 @@ def s_cut_plan(state: ShortState) -> ShortState:
     faces = _faces_final(proj, scope)
     total = G._duration(paused) or 0.0
     sh, card_t, pause = _sh_fn(proj, scope)
+    wb_windows = _whiteboard_windows_final(proj, scope)
     if not (plan_p.is_file() and not _redo(state, node)):
         brief = state.get("brief") or ""
         prompt = (f"Author the cut plan for a {target:.0f}-second short condensed from the DELIVERED vertical of the longform-edited project "
@@ -245,6 +260,9 @@ def s_cut_plan(state: ShortState) -> ShortState:
                   f"Target: {target:.0f} s DELIVERED, with a {OUTRO_S:.0f} s outro INSIDE it, so {target - OUTRO_S:.0f} s of spans (+-1 s). "
                   "Mike's standing rules for this lane: the opening FACE hook is the natural hook (use it unless it does not serve the claim); "
                   "mark every span `sourced`: FACE or COVER; prefer visual variety (name which cover/asset is on screen in `on_screen`).\n"
+                  f"HARD RULE (Mike, 2026-11-06): NO WHITEBOARD BEAT under any span. A hand-drawn whiteboard scene cannot be rebuilt for 9:16 and "
+                  f"a crop slices it, so a span may not overlap any of these whiteboard windows (final time): {wb_windows}. The node FAILS the "
+                  "plan otherwise. Pick FACE spans, cards, charts and receipts instead.\n"
                   + (f"Per-run brief from Mike: {brief}\n" if brief else "")
                   + f"Return the JSON per your definition AND save it to EXACTLY `{plan_p}` with Bash (a quoted heredoc).")
         rc, out = C.spawn_agent(state, node, "short-cut-strategist", prompt, f"agent-short-plan-{proj.name}.log")
@@ -254,6 +272,10 @@ def s_cut_plan(state: ShortState) -> ShortState:
     why = _plan_check(plan, target, total, faces)
     if why:
         return C._fail(state, node, f"SHORT-CUT-PLAN.json failed verification: {why} (fix the plan and re-drive; --redo s_cut_plan re-runs the strategist)")
+    bad = _whiteboard_overlaps(plan, wb_windows)
+    if bad:
+        return C._fail(state, node, "SHORT-CUT-PLAN.json puts a span over a WHITEBOARD beat (NO whiteboard in a short, Mike 2026-11-06): "
+                                    + "; ".join(bad) + " (re-plan with --redo s_cut_plan; longform-to-short.md section 3 rule 8)")
     rc, out = C.run_streaming([sys.executable, "-u", str(LINT_SPANS), str(plan_p), str(paused), "--write-snapped", str(snapped_p)], state, node)
     if rc != 0 or not snapped_p.is_file():
         return C._fail(state, node, "lint-short-spans GATE FAILED: a boundary sits mid-vowel; move that span edge in SHORT-CUT-PLAN.json and re-drive", out)
@@ -290,6 +312,15 @@ def s_paint_16x9(state: ShortState) -> ShortState:
     if marker.is_file() and master.is_file() and not _redo(state, node):
         if json.loads(marker.read_text(encoding="utf-8")).get("plan_sha") == digest:
             return {"steps": C._step(state, node, "skipped", "master already painted from this plan")}
+    # the 16:9 comp must honor {captions: false} BEFORE its spans are painted (left-behind 2026-11-03: the prop was only added
+    # by s_comp 30 min AFTER this node painted, so the burned captions rode into the slices and s_verify_final caught it
+    # after the whole build; the same regex as s_verify_final, run where it can still prevent the bad paint)
+    src16 = G.REMOTION / "src" / f"{G._pascal(proj.name)}.tsx"
+    body = src16.read_text(encoding="utf-8", errors="replace") if src16.is_file() else ""
+    if not (re.search(r"captions\s*\??\s*:\s*boolean", body) and re.search(r"\{\s*captions\s*&&\s*<", body)):
+        return C._fail(state, node, f"{src16.name} does not honor inputProps.captions: declare `captions?: boolean` on the "
+                       "exported comp and render `{captions && <Captions />}`, then re-drive (its burned captions would ride "
+                       "into every 9:16 span)")
     rc, out = C.run_streaming([sys.executable, "-u", str(PAINT_16X9), str(proj), "--plan", str(plan_p), "--scope", scope,
                                "--face-from-render"], state, node)
     m = re.search(r"^MASTER-PAINTED .* spans=(\d+)", out or "", re.M)
@@ -472,6 +503,27 @@ VCARD_ROUNDS = 2
 SLIVER_S = 0.5   # a cover overlap this short at a span edge is a burn sliver: a held face frame, not a rebuilt card
 
 
+def _whiteboard_windows_final(proj: Path, scope: str):
+    """COVER-PLAN whiteboard rows (cover beats AND screen-share bodies) as (a, b) windows in FINAL seconds."""
+    sh, _, _ = _sh_fn(proj, scope)
+    plan = json.loads(C.doc(proj, "cover_plan").read_text(encoding="utf-8"))
+    rows = [r for r in (plan.get("cover_beats") or []) if str(r.get("cover_type", "")) == "whiteboard"]
+    rows += [r for r in (plan.get("face_body") or []) if str(r.get("cover_type", "")) == "whiteboard"]
+    return sorted((round(sh(float(r["tIn"])), 2), round(sh(float(r["tOut"])), 2)) for r in rows)
+
+
+def _whiteboard_overlaps(plan: dict, wbs) -> list:
+    """Plan spans that overlap a whiteboard window by more than a frame: NO WHITEBOARD in a short (Mike, 2026-11-06, quant:
+    the 9:16 crop slices the drawing and there is no native-vertical rebuild for a hand-drawn scene)."""
+    bad = []
+    for s in plan.get("spans") or []:
+        a, b = float(s["start"]), float(s["end"])
+        for wa, wb in wbs:
+            if min(b, wb) - max(a, wa) > 1.5 / 30:
+                bad.append(f"span {a:.2f}-{b:.2f} overlaps whiteboard {wa:.2f}-{wb:.2f}")
+    return bad
+
+
 def _span_cover_hits(proj: Path, scope: str, kinds):
     """COVER-PLAN beats of `kinds` that show inside the approved spans, as [{id, kind, what, a, b, overlay_short, edge}] (final + SHORT
     seconds). `edge` = the overlap touches the span start/end (a burn sliver candidate)."""
@@ -648,6 +700,9 @@ def s_captions(state: ShortState) -> ShortState:
         ws = [w for w in sg.get("words", []) if any(a <= (float(w["start"]) + float(w.get("end", w["start"]))) / 2 < b for a, b in keep_ranges)]
         if ws:
             segs.append({**sg, "words": ws, "text": " ".join(w["word"].strip() for w in ws), "start": ws[0]["start"], "end": ws[-1]["end"]})
+    # every kept word (final time): a group's END is its last word's end, so the comp holds the caption while that word is still
+    # being said (a 2.4 s "353x" cleared mid-word under the comp's flat 1.3 s hold cap, lets-get-rich 2026-11-01)
+    wl = sorted((float(w["start"]), float(w.get("end", w["start"]))) for sg in segs for w in sg["words"])
     span_words = work / "FINAL-TIME-words.spans.json"
     span_words.write_text(json.dumps({**full, "segments": segs}, ensure_ascii=False), encoding="utf-8")
     r = subprocess.run([sys.executable, str(BUILD_CAPTIONS), "--words", str(span_words), "--style", "montserrat",
@@ -656,7 +711,7 @@ def s_captions(state: ShortState) -> ShortState:
         return C._fail(state, node, "build_captions.py failed on the FINAL-TIME words", (r.stderr or r.stdout)[-600:])
     # the captured h is still JS-escaped (they\'re): unescape it, or the re-escape at write time doubles it and the short
     # shows a literal backslash (growth-vs-product 2026-10-23)
-    rows = [(float(t), re.sub(r"\\(.)", r"\1", h)) for t, h in re.findall(r"\{\s*t:\s*([\d.]+)\s*,\s*h:\s*'((?:[^'\\]|\\.)*)'\s*\}", raw.read_text(encoding="utf-8"))]
+    rows = sorted((float(t), re.sub(r"\\(.)", r"\1", h)) for t, h in re.findall(r"\{\s*t:\s*([\d.]+)\s*,\s*h:\s*'((?:[^'\\]|\\.)*)'\s*\}", raw.read_text(encoding="utf-8")))
     ar = C.doc(proj, "as_recorded").read_text(encoding="utf-8")
     fixes = [(w, rr) for w, rr in MISHEAR_RE.findall(ar)]
     kept, windows = [], []
@@ -679,7 +734,8 @@ def s_captions(state: ShortState) -> ShortState:
             segs = nxt
         for x, y in segs:
             windows.append([round(o + (x - a), 3), round(o + (y - a), 3)])
-            for t, h in rows:
+            for i, (t, h) in enumerate(rows):
+                t0, t_next = t, (rows[i + 1][0] if i + 1 < len(rows) else float("inf"))
                 # a group whose first word's onset Whisper stamped just BEFORE the span start (its token absorbed the pause:
                 # reset 2026-10-30, 'Inflation' 26.30 vs span 26.40) still belongs here; it shows from the span's first frame.
                 # Only the words the short keeps are in `rows`, so the lead-in cannot steal another span's words.
@@ -689,15 +745,27 @@ def s_captions(state: ShortState) -> ShortState:
                     for w, rr in fixes:
                         # whole words only: a bare substring turned "accountABle" into "accounta/ble" via "AB" -> "A/B"
                         h = re.sub(r"(?<!\w)" + re.escape(w) + r"(?!\w)", lambda m, rr=rr: rr, h, flags=re.I)
-                    kept.append((round(o + (t - a), 3), h.lower()))
+                    e = min(y, max([we for ws_, we in wl if t0 - 0.05 <= ws_ < t_next] or [t]))
+                    kept.append((round(o + (t - a), 3), h.lower(), round(o + (e - a), 3)))
     kept.sort()
+    # a group on screen under 0.3 s reads as a flash ('group.' for 4 frames, quant 2026-11-06, final visual-qa): when the group before it
+    # runs straight into it, the word joins that group, which then holds until this word ends
+    merged = []
+    for i, (t, h, e) in enumerate(kept):
+        nxt = kept[i + 1][0] if i + 1 < len(kept) else float("inf")
+        if merged and min(nxt, e) - t < 0.3 and t - merged[-1][2] < 0.1:
+            merged[-1] = (merged[-1][0], f"{merged[-1][1]} {h}", max(merged[-1][2], e))
+        else:
+            merged.append((t, h, e))
+    kept = merged
     name = _comp_id(proj) + "Captions.ts"
     dest = G.REMOTION / "src" / name
     body = [f"// {name}: GENERATED by the longform graph's short lane (build_captions.py montserrat 2/4 on FINAL-TIME words, COVER-sourced frames only). NEVER hand-edit.",
             "// Times are SHORT seconds (already remapped through the span table).",
             "export const CAPTION_WINDOWS: [number, number][] = [" + ", ".join(f"[{x:.3f}, {y:.3f}]" for x, y in windows) + "];",
-            "export const ZCAPTIONS: { t: number; h: string }[] = ["]
-    body += [f"  {{ t: {t:7.2f}, h: '{h.replace(chr(92), chr(92) * 2).replace(chr(39), chr(92) + chr(39))}' }}," for t, h in kept]
+            "// e = the group's last word's END (short seconds): the comp holds the group until e (at least 1.3 s, never past the next group)",
+            "export const ZCAPTIONS: { t: number; h: string; e: number }[] = ["]
+    body += [f"  {{ t: {t:7.2f}, h: '{h.replace(chr(92), chr(92) * 2).replace(chr(39), chr(92) + chr(39))}', e: {e:7.2f} }}," for t, h, e in kept]
     body += ["];", ""]
     dest.write_text("\n".join(body), encoding="utf-8", newline="\n")
     (proj / "assets" / "short" / "captions.json").write_text(json.dumps({"file": str(dest), "groups": len(kept), "cover_windows_short": windows,

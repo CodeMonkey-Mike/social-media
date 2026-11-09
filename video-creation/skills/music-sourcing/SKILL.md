@@ -119,6 +119,10 @@ Envato `Elevator Music Gold-Tiger` + Soundstripe Lounge Lover, Yellow Letter, Du
 Tiki Time, Seaside Samba, Sophistikitty). Those entries also pin `roles_pinned: [elevator_bed,
 explainer_bed]` because the measured `roles[]` call them hype (loud + steady). **For a programming video,
 filter `tags` for `elevator` first**, then apply the usage-ledger variety rule within that pool.
+**`explainer` / `chill` / `calm`** (2026-11-03) = beds Mike added by hand for that use; first track `oh-mega`
+("Oh, Mega!", Suiteniss), pinned `roles_pinned: [explainer_bed]`. Its `use_case` names the calm cuts: read it, the
+master's choruses are loud. The 8 tracks of playlist 566873 (§2b) are also explainer beds but do NOT carry the tag.
+**`drone` / `calm`** (2026-11-03) = continuous-tone beds, the sound Mike described as "an organ, or white noise in a hall or church": solstice, constant-741-hz-meditation, emergence, sacral-i-feel-417-hz, tissue-healing-285-hz, theta-rest. To find more, search "drone" / "ambient drone" and look for the Droning characteristic or the Ambient Tones instrument.
 
 **`mike_note`** = Mike's own verdict on a track after hearing it in a video, dated, in plain words (what it
 feels like, what it is for, what it must never be used for). It BINDS every picker (screenplay shortlist,

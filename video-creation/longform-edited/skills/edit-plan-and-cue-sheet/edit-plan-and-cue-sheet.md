@@ -112,6 +112,9 @@ Format (one event per line, time-sorted):
   `TRANSITION` · `LIGHTLEAK` · `FILMBURN`/`GLITCH` · `RISER` · `IMPACT` · `CTA` · `CAPTION` · `CUT` ·
   `INSERT` (a spliced third-party clip with its OWN voice: the spine PAUSES at the row's time for the clip's length;
   one row per COVER-PLAN `clip_inserts` entry, bracketed by a lead-in and a lead-out still row; `../clip-inserts/clip-inserts.md`) ·
+  `WHITEBOARD` (a hand-drawn beat: one row per COVER-PLAN `whiteboards` entry at its tIn carrying the WB id, the clip
+  `assets/whiteboard/<id>.mp4` and its `from`; a FACE line inside the beat = a second row with the continuing `from`; any
+  draw-on tick / pop is an SFX row hung on `assets/whiteboard/<id>.cues.md`; `../comp-build/comp-build.md` §4b) ·
   `KT-PANEL` / `KT-POP` / `KT-BAND` / `KT-CARD` / `KT-ICON` / `KT-CLOSE` (the kinetic-text devices of the EFFECTS library `video-creation/assets/effects/library.json`, placement rules `../overlays/overlays.md` section 2, placed wherever the SCREENPLAY's
   🎬 `[SHOW]` lines name a device id, at the spoken word's onset: side + panel text, or label text + where; each with its
   paired sound row `[WHOOSH]` / `[ACCENT]` naming the SFX catalog id (folder `assets/sfx/kinetic-text/`) and its file start, the
@@ -125,7 +128,8 @@ Format (one event per line, time-sorted):
   card, all on final-spine seconds); the `edit-plan-author` agent refines it (sub-point rows, SFX by measured
   tail, face treatment) and authors CUE-SHEET.md; **`lint_edit_plan.py` is the code gate** for BOTH files
   (format, monotonic timecodes, SAY coverage, zero orphans vs assets/, every MUSIC-PLAN hard hit has its SFX
-  event, every card ON has its impact, the §2 sections, no em dashes). The old `_gen_editplan.example.js`
+  event, every card ON has its impact, every clip insert its [INSERT] and every whiteboard beat its [WHITEBOARD] event
+  + the CUE-SHEET `## WHITEBOARD` section, the §2 sections, no em dashes). The old `_gen_editplan.example.js`
   (as-built from a comp) is retired: its one good idea, the time-sorted interleaved log, lives in the seed.
 - **`reconcile_docs.py`** (2026-09-28, graph node `reconcile_docs`): after TRANSITIONS.md exists, `--apply` fans every
   pick into the EDIT-PLAN / CUE-SHEET rows still marked `→TRANSITIONS.md` (matched by timecode + role), marks the
@@ -173,6 +177,10 @@ CONTAINER / CHART scene changes = cross-fade + 0.93→1 scale-in (see CONTAINER 
 
 ## RECEIPTS / inserts begin
 - 0:00.0  R-WP <what> ;  ~3:56 ⏸ [INSERT] CLIP-1 (10.0 s, the speaker's OWN voice, spine paused, bed ducks, insert-in / insert-out) + LT-x lower-third
+
+## WHITEBOARD beats (hand-drawn clips, full frame)   <N> beats · <S> s   [REQUIRED when COVER-PLAN carries whiteboards]
+- 0:41.2 → 1:01.0  WB1 <what is drawn> (assets/whiteboard/WB1.mp4, paper sheet in 11 f / out 0.3 s) ;  draw-on SFX at <cue times>
+- 3:30.0 → 3:50.0  WB4 split by the FACE line 3:38.4-3:41.1 (second row from: 11.1)
 
 ## VIDEO b-roll begins  (Envato + AI clips)   <N>
 - 0:11.0  BR-x (<beat>) — Envato fade

@@ -1522,6 +1522,7 @@ def main_post():
 #       [--delete N,N] [--lane3-brief "..."] [--clip-brief "..."] [--publish-date D]
 #       [--max-builders 2] [--thread ID] [--resume] [--stub ok|fail]
 #   python run.py batch --batch <b> --resume --approve 4b [--delete 2,5]   (after a gate)
+#   python run.py batch --batch <b> [--resume --approve 2nd] --clips 1 --until build   (build a SUBSET of clips; the rest held for a later --clips run)
 #   python run.py lane3 --batch <b> [--resume] [--stub ok|fail]             (Lane 3 alone)
 #   python run.py status --batch <b>                                        (exit 1 if pending)
 #
@@ -1592,6 +1593,8 @@ def main_batch():
     ap.add_argument("--clip-brief", default=None, help="Mike's clip-selection overrides")
     ap.add_argument("--publish-date", default=None)
     ap.add_argument("--max-builders", type=int, default=2)
+    ap.add_argument("--clips", default="",
+                    help="build ONLY these clip numbers at lane2_build, e.g. 1 or 2,3 (the rest are held, not deleted)")
     ap.add_argument("--thread", default=None)
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--stub", choices=["ok", "fail"], default="")
@@ -1638,6 +1641,7 @@ def main_batch():
             "skip_longform": args.skip_longform, "publish_date": args.publish_date,
             "until": args.until, "approve": approve, "delete_4b": delete_4b,
             "delete_2nd": delete_2nd, "max_builders": args.max_builders,
+            "build_clips": _parse_ints(args.clips),
             "lane3_brief": args.lane3_brief, "clip_brief": args.clip_brief,
             "stub": "", "steps": {}, "status": "running",
         }
@@ -1656,7 +1660,7 @@ def main_batch():
     if args.resume:
         update = {k: v for k, v in init.items()
                   if k in ("approve", "delete_4b", "delete_2nd", "until", "publish_date",
-                           "shorts_min_sil", "max_builders", "lane3_brief", "clip_brief")}
+                           "shorts_min_sil", "max_builders", "build_clips", "lane3_brief", "clip_brief")}
         payload = ({"approve": approve[0], "delete": deletes} if approve else None)
         # A plain resume (no approval) must carry NO state update: the checkpoint's own
         # pending writes + an update to the same key = InvalidUpdateError (caught live

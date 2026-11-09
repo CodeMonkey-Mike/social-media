@@ -11,6 +11,10 @@ THE POLICY (Mike, 2026-10-13; tail pad widened 2026-10-14):
     up to 55 ms past the old 0.1 s tail pad (7 of 273 cuts); 0.2 s covers every measured case with
     margin (Mike heard the endings clipped, 2026-10-14).
   * ONE zone, no intro/body split.
+  * DECK LECTURES (format 1, an input under media/deck-lecture/) get their own defaults (Mike, 2026-11-08, after
+    the 300 ms residual read "too fast" on Crypto vs. The Traditional Financial System): the same 0.8 s
+    min-silence, DECK_PAD_TAIL 0.3 + DECK_PAD_HEAD 0.2 = 0.5 s between sentences, and DECK_SLIDE_PAUSE 0.9 s
+    kept in a cut pause that holds a slide change (found in the picture). Formats 2 and 4 keep 0.2 + 0.1.
 
 This file holds NO detection or cutting logic. Detection (dual-threshold -57/-52 dBFS RMS, 80 ms
 blip-absorb), the 8 ms declick and the frame-locked trim/atrim/concat render are all imported from the
@@ -25,12 +29,15 @@ doc drifts the moment context rolls off: the shorts lane's 0.95 incident, 2026-0
   4. --dry-run previews the cut list + QA without rendering (about a minute on a 10 min file).
 
 Usage (paths are arguments; run from anywhere):
-  python video-creation/longform-presentation/skills/desilence/desilence_preset.py "media/<project>/<master>.mkv"
-      -> media/<project>/<project> EDIT.mp4  (+ <project> EDIT.map.json); <project> = the folder name
-  ... --out "media/<project>/<name>.mp4"   explicit output (the map goes beside it as <name>.map.json)
+  python video-creation/longform-presentation/skills/desilence/desilence_preset.py "media/<format>/<project>/<master>.mkv"
+      -> media/<format>/<project>/<project> EDIT.mp4  (+ <project> EDIT.map.json); <project> = the folder name
+  ... --out "media/<format>/<project>/<name>.mp4"   explicit output (the map goes beside it as <name>.map.json)
   ... --dry-run                            plan + QA only, no render
   ... --min-sil 0.6 --pad-tail 0.15 --pad-head 0.05
                                            an explicit DEVIATION (Mike's call; bannered, never the new default)
+  ... --slide-pause 0.9                   a cut pause holding a slide change keeps 0.9 s of air (detected from the
+                                           picture; a change inside speech is reported only). DEFAULT ON for a
+                                           deck lecture (media/deck-lecture/), --slide-pause 0 turns it off
   ... --nvenc [--bps 2M]                   the canonical tool's NVENC proxy path (capped at 2.5 Mbps) instead
                                            of the default libx264 crf 18; crf 18 is the deliverable quality
                                            for on-screen text, NVENC is for proxies only
@@ -52,6 +59,9 @@ import argparse, json, os, subprocess, sys, time
 MIN_SIL = 0.8        # s: a pause this long or longer is dead air -> cut
 PAD_TAIL = 0.2       # s kept AFTER the sentence that ends a cut pause (word-final releases live here)
 PAD_HEAD = 0.1       # s kept BEFORE the sentence that starts after it -> 0.3 s residual between sentences
+DECK_PAD_TAIL = 0.3     # deck lectures (media/deck-lecture/): 0.5 s residual between sentences
+DECK_PAD_HEAD = 0.2
+DECK_SLIDE_PAUSE = 0.9  # deck lectures: air kept at a slide change
 SPEECH_FLAG = 0.10   # s of > AUD_TH audio inside a planned cut that flags it (desilencer.md QA)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -88,6 +98,55 @@ def qa_swallowed(lv, cuts):
     return flags
 
 
+SLIDE_FPS, SLIDE_W, SLIDE_H = 5, 96, 54   # slide-change scan: tiny grayscale frames, 5 per second
+SLIDE_DIFF = 2.5     # mean abs luma change over 0.4 s that marks a slide transition (fades measure 4-7, a still slide < 0.3)
+
+
+def slide_changes(src):
+    """Times where the deck changes slide (deck screen captures only). The deck fades/slides between slides
+    over ~0.5-1 s, which a frame-to-frame scene score misses; a 0.4 s-apart luma diff on tiny frames catches it.
+    Marks within 2 s are one transition; its time is the fade's start."""
+    import numpy as np
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", src, "-an", "-vf",
+                          f"fps={SLIDE_FPS},scale={SLIDE_W}:{SLIDE_H},format=gray", "-f", "rawvideo", "-"],
+                         capture_output=True, check=True).stdout
+    fr = np.frombuffer(raw, np.uint8).reshape(-1, SLIDE_H, SLIDE_W).astype(np.float32)
+    diff = np.abs(fr[2:] - fr[:-2]).mean(axis=(1, 2))
+    out = []
+    for i in np.nonzero(diff > SLIDE_DIFF)[0]:
+        t = i / SLIDE_FPS
+        if not out or t - out[-1][1] > 2.0:
+            out.append([t, t])
+        else:
+            out[-1][1] = t
+    return [round(a, 2) for a, _ in out]
+
+
+def widen_at_slides(cuts, regs, changes, pad_tail, pad_head, slide_pause):
+    """A cut pause that holds a slide change keeps slide_pause of air instead of pad_tail + pad_head: the extra
+    is split evenly between the end of the old slide's last sentence and the start of the new one's first.
+    Returns (cuts, report rows). A change inside speech or inside an uncut (< min-sil) pause is reported, untouched."""
+    extra = max(0.0, slide_pause - (pad_tail + pad_head)) / 2
+    sils = [(s, e) for typ, s, e in regs if typ == "sil"]
+    out, rows, hit = [], [], set()
+    for a, b in cuts:
+        cs = [c for c in changes if a - pad_tail - 0.05 <= c <= b + pad_head + 0.05]
+        if cs:
+            hit.update(cs)
+            na, nb = a + extra, b - extra
+            rows.append((cs[0], "widened", (b - a) - max(0.0, nb - na)))
+            if nb - na > 0.02:
+                out.append((na, nb))
+        else:
+            out.append((a, b))
+    for c in changes:
+        if c not in hit:
+            sil = next(((s, e) for s, e in sils if s - 0.05 <= c <= e + 0.05), None)
+            rows.append((c, f"uncut pause {(sil[1]-sil[0])*1000:.0f} ms, left as is" if sil
+                         else "during speech, left as is", 0.0))
+    return out, sorted(rows)
+
+
 def main():
     ap = argparse.ArgumentParser(
         description="longform-presentation desilence preset (wraps the canonical desilencer)")
@@ -96,9 +155,12 @@ def main():
     ap.add_argument("--min-sil", type=float, default=None,
                     help=f"DEVIATION only; the preset is {MIN_SIL}s")
     ap.add_argument("--pad-tail", type=float, default=None,
-                    help=f"DEVIATION only; the preset keeps {PAD_TAIL}s after the sentence before a cut")
+                    help=f"DEVIATION only; the preset keeps {PAD_TAIL}s (deck lectures {DECK_PAD_TAIL}s) after the sentence before a cut")
     ap.add_argument("--pad-head", type=float, default=None,
-                    help=f"DEVIATION only; the preset keeps {PAD_HEAD}s before the sentence after a cut")
+                    help=f"DEVIATION only; the preset keeps {PAD_HEAD}s (deck lectures {DECK_PAD_HEAD}s) before the sentence after a cut")
+    ap.add_argument("--slide-pause", type=float, default=None,
+                    help=f"a cut pause that holds a SLIDE CHANGE keeps this much air (s) instead of the pad residual; "
+                         f"deck lectures default to {DECK_SLIDE_PAUSE}, 0 = off")
     ap.add_argument("--dry-run", action="store_true", help="plan + QA, no render")
     ap.add_argument("--nvenc", action="store_true", help="NVENC proxy encode instead of libx264 crf 18")
     ap.add_argument("--bps", default="2M", help="NVENC target bitrate (only with --nvenc)")
@@ -114,20 +176,30 @@ def main():
     if os.path.abspath(out) == src:
         sys.exit("output would overwrite the input")
 
+    deck = "deck-lecture" in os.path.normpath(src).split(os.sep)
+    d_tail, d_head = (DECK_PAD_TAIL, DECK_PAD_HEAD) if deck else (PAD_TAIL, PAD_HEAD)
+    d_slide = DECK_SLIDE_PAUSE if deck else None
+    kind = "deck-lecture preset" if deck else "longform-presentation preset"
     min_sil = MIN_SIL if args.min_sil is None else args.min_sil
-    pad_tail = PAD_TAIL if args.pad_tail is None else args.pad_tail
-    pad_head = PAD_HEAD if args.pad_head is None else args.pad_head
-    deviation = not (args.min_sil is None and args.pad_tail is None and args.pad_head is None)
+    pad_tail = d_tail if args.pad_tail is None else args.pad_tail
+    pad_head = d_head if args.pad_head is None else args.pad_head
+    slide_pause = d_slide if args.slide_pause is None else (args.slide_pause or None)
+    deviation = not (args.min_sil is None and args.pad_tail is None and args.pad_head is None
+                     and args.slide_pause is None)
     if not deviation:
-        print(f"longform-presentation preset: min-silence {min_sil*1000:.0f} ms, residual "
+        print(f"{kind}: min-silence {min_sil*1000:.0f} ms, residual "
               f"{(pad_tail+pad_head)*1000:.0f} ms ({pad_tail*1000:.0f} ms kept after the sentence, "
-              f"{pad_head*1000:.0f} ms before the next), one zone  "
-              f"[longform-presentation/skills/desilence/desilence.md]")
+              f"{pad_head*1000:.0f} ms before the next)"
+              + (f", {slide_pause*1000:.0f} ms at a slide change" if slide_pause else "")
+              + ", one zone  [longform-presentation/skills/desilence/desilence.md]")
     else:
         print("=" * 78)
-        print(f"DEVIATION from the longform-presentation preset ({MIN_SIL*1000:.0f} ms / "
-              f"{PAD_TAIL*1000:.0f}+{PAD_HEAD*1000:.0f} ms pads): running min-silence {min_sil*1000:.0f} ms, "
-              f"tail pad {pad_tail*1000:.0f} ms, head pad {pad_head*1000:.0f} ms.")
+        print(f"DEVIATION from the {kind} ({MIN_SIL*1000:.0f} ms / "
+              f"{d_tail*1000:.0f}+{d_head*1000:.0f} ms pads"
+              + (f" / {d_slide*1000:.0f} ms slide pause" if d_slide else "")
+              + f"): running min-silence {min_sil*1000:.0f} ms, "
+              f"tail pad {pad_tail*1000:.0f} ms, head pad {pad_head*1000:.0f} ms, slide pause "
+              f"{'off' if not slide_pause else f'{slide_pause*1000:.0f} ms'}.")
         print("A deviation is Mike's explicit per-video call; this banner is its record. "
               "It never becomes the default.")
         print("=" * 78)
@@ -143,6 +215,15 @@ def main():
     lv = d.levels(src)
     regs = d.regions(lv)
     cuts = d.zone_cuts(regs, float("inf"), min_sil, min_sil, pad_tail, pad_head)
+    slide_rows = []
+    if slide_pause:
+        if not (pad_tail + pad_head <= slide_pause < min_sil * 4):
+            sys.exit(f"--slide-pause {slide_pause}s must be >= the residual and sane")
+        changes = slide_changes(src)
+        cuts, slide_rows = widen_at_slides(cuts, regs, changes, pad_tail, pad_head, slide_pause)
+        print(f"slide changes: {len(changes)} found; a cut pause holding one keeps {slide_pause*1000:.0f} ms")
+        for c, what, given in slide_rows:
+            print(f"  {tc(c)}  {what}" + (f" (+{given:.2f}s kept)" if given else ""))
     keeps, removed = d.complement(cuts, total)
     n_sil = sum(1 for r in regs if r[0] == "sil")
     print(f"{len(cuts)} of {n_sil} pauses are >= {min_sil*1000:.0f} ms -> {removed:.1f}s removed, "
@@ -154,7 +235,9 @@ def main():
     with open(map_out, "w", encoding="utf-8") as f:
         json.dump({"src": src, "out": out,
                    "preset": {"min_sil": min_sil, "pad_tail": pad_tail, "pad_head": pad_head,
-                              "residual": pad_tail + pad_head, "deviation": deviation},
+                              "residual": pad_tail + pad_head, "deviation": deviation,
+                              "slide_pause": slide_pause, "deck_lecture": deck},
+                   "slide_changes": [[round(c, 2), what] for c, what, _ in slide_rows],
                    "src_total": total, "removed": removed, "out_total": total - removed,
                    "cuts": [[round(a, 3), round(b, 3)] for a, b in sorted(cuts)],
                    "keeps": [[round(a, 3), round(b, 3)] for a, b in keeps]}, f, indent=1)

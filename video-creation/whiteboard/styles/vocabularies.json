@@ -1,0 +1,61 @@
+{
+  "_doc": "Candidate DRAWING VOCABULARIES: genuinely different ways to draw the same scene (a person, a horse, a vault, three coins, a tree). Each is authored in styles/vocabularies.html as its own set of draw functions with its own natural pen. The pen axis (styles.json) can be re-applied later to whichever vocabulary Mike picks. Mike (2026-10-30): keep EVERY candidate as an option (a multi-chapter video may want dark mode in one chapter, light in another); status 'current' marks today's pick, status_note keeps his remarks.",
+  "vocabularies": [
+    {
+      "id": "stick-hair",
+      "name": "Hand-drawn with hair",
+      "blurb": "Round heads, hair variants, tapered shirts, stick limbs, an illustrated horse with mane and hooves, ground shadows. Wobbly ink, flat pastel fills.",
+      "penCompatible": true,
+      "status": "current",
+      "status_note": "Mike, 2026-10-30: the pick for the first demo (with paper-pastel)"
+    },
+    {
+      "id": "bean",
+      "name": "Bean characters",
+      "blurb": "No necks: tall pill bodies with the face on the body, stubby arms and legs, a plump horse with tufted mane and tail. Clean thin outline, rounded everything.",
+      "penCompatible": true,
+      "status": "option",
+      "status_note": "Mike, 2026-10-30: too playful"
+    },
+    {
+      "id": "geo-flat",
+      "name": "Geometric flat",
+      "blurb": "No outlines, no faces: circle heads, rounded-rectangle torsos, thick rounded limbs; the horse built from rounded blocks. Two tones per object, corporate-flat.",
+      "penCompatible": true,
+      "status": "option",
+      "status_note": "Mike, 2026-10-30: does not want the other vocabularies"
+    },
+    {
+      "id": "pictogram",
+      "name": "Pictogram glyphs",
+      "blurb": "Everything a solid one-color silhouette like airport signage; one accent color marks the thing that matters. Zero texture, maximum legibility at small size.",
+      "penCompatible": true,
+      "status": "option",
+      "status_note": "Mike, 2026-10-30: more serious, but bland"
+    },
+    {
+      "id": "isometric",
+      "name": "Isometric blocks",
+      "blurb": "Every object is a three-tone cuboid on an isometric grid: a boxy horse, a cube vault, cylinder coins, a low-poly tree. Reads as a tiny 3D diorama without any 3D package.",
+      "penCompatible": false,
+      "status": "option",
+      "status_note": "Mike, 2026-10-30: too playful"
+    },
+    {
+      "id": "pixel",
+      "name": "Pixel art",
+      "blurb": "Sprites on a 22 px cell grid, hard edges, a small fixed palette, bitmap heading. Instantly recognizable and cheap to author as text maps.",
+      "penCompatible": false,
+      "status": "option",
+      "status_note": "Mike, 2026-10-30: too playful"
+    },
+    {
+      "id": "line-only",
+      "name": "Pure line art",
+      "blurb": "Ink outlines only, no fills anywhere, a single accent color for emphasis. Elegant and fast to read; everything stays an outline.",
+      "penCompatible": true,
+      "status": "option",
+      "status_note": "Mike, 2026-10-30: does not want the other vocabularies"
+    }
+  ]
+}

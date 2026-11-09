@@ -1,0 +1,1010 @@
+{
+ "project": "bullish-on-kaspa",
+ "authored": "2026-11-04 by the music-placement-strategist on the FINAL spine spine/ALL.d.desilenced.mp4 (528.367 s, 30 fps); ONE track, CARVED (music.md section ONE TRACK, CARVED); every time below is a FINAL-spine second, pre-card-pause (the comp routes them through sh())",
+ "spine": "video-creation/longform-edited/media/bullish-on-kaspa/spine/ALL.d.desilenced.mp4",
+ "spine_duration_sec": 528.367,
+ "ruling": "Mike (PROJECT-LOG, launch defaults 2026-11-03): ONE track for the whole video, oh-la-la, no second track, no title cards (every chapter OFF, chapters flow on kt-whip-cut). The master is 218 s against a 528 s spine, so it is carved by its measured energy: the intro build under the hook, the FIRST DROP under the title line, the plateau under the C1 diagram, the PEAK 2 chorus under the receipts with bar-aligned jump-backs, right-aligned so the chorus closes on inspiring line 3, the breakdown under vProgs and DAGKnight, DROP 3 on 100 blocks a second, the master's own outro as the fall under the founder set-up line, the 0_23 cut's quiet groove under CLIP-1, the plug and all of CH5 ending on the cut's own resolve under standing, the peak back on the text wall's cut-out and the 0_31-1 cut's hard stop inside subscribe. Mike's spoken rulings honoured: no sign-off, the hard stop on subscribe; the Cinco de Mayo sting (EDIT-PLAN) sits over the quiet plateau.",
+ "track": {
+  "id": "oh-la-la",
+  "title": "Oh La La",
+  "artist": "AEROPLANES",
+  "file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+  "duration_sec": 217.88,
+  "bpm": 122,
+  "beat_sec": 0.4918,
+  "bar_sec": 1.96721,
+  "section_grid_phase_sec": 0.84,
+  "key": "Bb/A# minor",
+  "mix": "instrumental (the only mix Soundstripe ships for this song; no vocal version exists)",
+  "license_code": "HSJADYTTTVWTEEMG",
+  "files_used": [
+   "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_0_23-4.wav",
+   "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_0_31-1.wav"
+  ],
+  "ledger": "usage_ledger.py report --what music --exclude-project bullish-on-kaspa, run 2026-11-04: BLOCKED (previous video, left-behind) = kitsune, lightheart; avoid (last three) = atmos-rise, deliverance, get-it. oh-la-la is in none of those lists and is fresh (never used on this track): Mike's binding pick passes the variety gate, no waiver needed, the screenplay shortlist needs no replacement. No mike_note on the catalog entry."
+ },
+ "levels": {
+  "vo_lufs_integrated": -22.7,
+  "vo_note": "ffmpeg ebur128 on spine/ALL.d.desilenced.mp4 (the Adobe-enhanced spine). Mike asked for his voice +3 dB in the final mix (PROJECT-LOG 2026-11-04), which mix_music.py applies as --voice-db (GRAPH-PROGRESS settings.voice_db, default +2) to the VO only, so every seat below is computed against the RAISED voice at -19.7 LUFS. If the mix runs at the +2 default the beds sit 1 dB closer to the voice than stated.",
+  "seat_rule": "one seat per MOVEMENT so no gain ramp lands on a drop (the mixer merges sample-continuous rows and ramps a seat change over 0.5 s at the row boundary): CH1 movement -25.6 (the drop's part A at -17.0 under, the intro groove at -20.9); the CH2 plateau through the CH3 chorus, CH4 breakdown, DROP 3 and the thinning bar, and the whole CH6 peak at -29.5 (full chorus -16.9 to -17.2 under, part A -19.2 to -20.7, plateau -23.0, breakdown -27.6: the arrangement's own dip, the lets-get-rich precedent of one seat per movement); the master's outro row -24.5 (-24.8 under, a continuation ramp of +5 dB over 0.5 s at the outro's first bar so the fall reads as -8 dB, not -13); the 0_23-4 groove -25.9 (-22.0 under, the dense CH5 numbers and the plug get the harder duck; its resolve bar -20.4).",
+  "seats": {
+   "master_ch1": {
+    "region_lufs": {
+     "bars 4-11": -15.0,
+     "bars 12-14 part A": -11.1
+    },
+    "remotion_gain_db": -25.6,
+    "db_under_vo": {
+     "intro": -20.9,
+     "drop part A": -17.0
+    }
+   },
+   "master_ch2_to_ch6_peak": {
+    "region_lufs": {
+     "plateau 37-42": -13.2,
+     "rise 43": -9.7,
+     "part A 44-49": -9.4,
+     "full 51-74": -7.1,
+     "breakdown 76-82": -17.8,
+     "part A 84-85": -10.9,
+     "full 86-97": -7.2,
+     "thinning 104": -6.6,
+     "bars 44-64": -7.8
+    },
+    "remotion_gain_db": -29.5,
+    "db_under_vo": {
+     "plateau": -23.0,
+     "rise": -19.5,
+     "part A": -19.2,
+     "full chorus": -16.9,
+     "breakdown": -27.6,
+     "drop 3 bars": -20.7,
+     "ch4 full": -17.0,
+     "ch6 open": -17.6
+    }
+   },
+   "master_outro": {
+    "region_lufs": {
+     "outro 105-108": -20.0
+    },
+    "remotion_gain_db": -24.5,
+    "db_under_vo": -24.8
+   },
+   "cut_0_23-4": {
+    "region_lufs": {
+     "bars 1-11": -16.1,
+     "loop bars 3-10": -15.8,
+     "resolve bar 11": -14.2
+    },
+    "remotion_gain_db": -25.9,
+    "db_under_vo": {
+     "groove": -22.0,
+     "resolve": -20.4
+    }
+   },
+   "cut_0_31-1": {
+    "region_lufs": {
+     "bars 20-35": -7.4
+    },
+    "remotion_gain_db": -29.5,
+    "db_under_vo": -17.2
+   }
+  },
+  "remotion_volume_note": "Remotion volume = 10**(dB/20): -25.6 dB = 0.0525, -29.5 dB = 0.0335, -24.5 dB = 0.0596, -25.9 dB = 0.0507"
+ },
+ "energy_profile": {
+  "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav": {
+   "grid": "bar line k = 0.840 + 1.96721 k s (122 bpm; phase by onset scoring, 2.51 against 2.40 for the half-bar alternative; the level steps sit on it: the plateau at 73.63 = bar 37, the breakdown at 150.35 = bar 76, the outro at 207.40 = bar 105). The drop-2 and drop-3 kicks come in two beats BEFORE their bar line (86.41 and 165.10) as pickups; the drop proper is the bar line.",
+   "per_bar_read": "bars 0-10 INTRO GROOVE 0.84-22.48 (-23 rising to -17 dB RMS, pads then the groove from bar 4 at -18) / bar 11 PRE-DROP RISE 22.48 (-14) / bars 12-17 DROP 1, CHORUS 1 PART A 24.45-36.25 (-10.8 flat) / bar 18 step (-7.9) / bars 19-35 FULL CHORUS 1 38.22-71.66 (-5.5 to -6.6) / bar 36 chorus-thinning fill 71.66 (-7.8) / bars 37-42 PLATEAU 73.63-85.43 (-14.2 to -15.3, the chorus-thinning groove, one steady region) / bar 43 RISE 85.43 (-10.4, the kick-in at 86.41) / bars 44-49 DROP 2, CHORUS 2 PART A 87.40-99.20 (-8.4 to -8.7) / bar 50 rise (-7.2) / bars 51-74 FULL CHORUS 2 101.17-148.38 (-5.4 to -6.8) / bar 75 thinning 148.38 (-8.6) / bars 76-82 BREAKDOWN 150.35-164.12 (-18.3 to -21.3, the quietest material) / bar 83 RISE 164.12 (-12.1, the kick-in at 165.10) / bars 84-85 DROP 3, PART A 166.09-170.02 (-9.5) / bars 86-104 FULL CHORUS 3 170.02-207.40 (-5.5 to -7.7, the last hit on beat 3 of bar 104 at 206.41, beat 4 rests) / bars 105-108 OUTRO 207.40-215.27 (-21 to -23, sparse strokes, the last at 214.28, silence from 214.55) / ending = FADE, no hit, so the ends-big closer is the 0_31-1 cut's hard stop.",
+   "low_energy_regions": [
+    [
+     0.84,
+     22.48
+    ],
+    [
+     73.63,
+     85.43
+    ],
+    [
+     150.35,
+     164.12
+    ],
+    [
+     207.4,
+     214.55
+    ]
+   ],
+   "high_energy_regions": [
+    [
+     24.45,
+     71.66
+    ],
+    [
+     87.4,
+     150.35
+    ],
+    [
+     166.09,
+     207.4
+    ]
+   ],
+   "notes": "catalog env 4455555555567777778999898999999999988666666888888889999999999999998999999985556456777988999999999999998845430, aggression 96, opening build, ending fade; mean -10.6 dB. Regions here refine the catalog segments to the bar."
+  },
+  "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_0_23-4.wav": {
+   "identity": "cross-correlated to the master: it IS the master's first 22.48 s (ncc 1.000, lag 0): bars 0-10 of the intro groove on the same grid (bar line k = 0.840 + 1.96721 k), plus its OWN ENDING bar 11 at 22.479: a stroke on the line (22.51), one at +0.65 s (23.13) and the last at +1.01 s (23.49), the file stops at 23.752 (resolve, no fade). 23.752 s, mean -19.6 dB.",
+   "low_energy_regions": [
+    [
+     0.84,
+     23.75
+    ]
+   ],
+   "high_energy_regions": [],
+   "notes": "bars 3-10 (6.742-22.479) are the steady body (-17.2 to -18.8 dB RMS, one bed region): the remix-loop region. 0_23-5 is the SAME audio from bar 4 on (residual -26 dB) with a fuller first four bars and the identical ending, so the screenplay's two-cut chain is one file; 0_23-4's softer head is the better re-entry after the master's fade."
+  },
+  "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_0_31-1.wav": {
+   "identity": "cross-correlated to the master: master 39.49-70.97 (ncc 1.000) = FULL CHORUS 1, the cut's bar lines at 0.694 + 1.96721 k (bar 0 = master bar 20 at 40.184), 15 full bars then 1.27 s of bar 35 and a HARD STOP at 31.475 (the last transient at 31.38-31.44, no fade, no ring). 31.475 s, mean -8.5 dB, aggression 99, cold_hot.",
+   "low_energy_regions": [],
+   "high_energy_regions": [
+    [
+     0.0,
+     31.475
+    ]
+   ],
+   "notes": "0_31-2 is the same cut (mean -8.4). 0_15-3 and 0_15-6 = master 23.75-39.49 (bars 12-19, part A then two full bars, a truncation at 15.738) and end exactly where 0_31-1 begins; not used, the master's own bar 12 covers the hook drop."
+  }
+ },
+ "placement_math": {
+  "grid_G1": "ONE video grid from frame 0 to the resolve ending under standing (the first ending in the video): video bar line = 0.125 + 1.96721 n (spine seconds). It is fixed by DROP 1 (master bar 12, 24.447) on 31.600, 170 ms after the cut to FACE 3 (31.433) and 0.50 s before the title word 2026 (32.10): the drop on the cut, the BULLISH ON KASPA pop on the drop's first bar. The same grid puts the DROP 2 bar line (master 87.397) on 98.485, inside 8 (97.98-98.54) of nearly 8 years, with its kick-in on 97.50 under That's (97.44); the full chorus 2 on 112.256, 0.56 s after the C5 overview pushes in (111.70); the chorus-2 thinning bar on 238.157 under Now, what's coming? (238.12) with the last two full bars under inspiring line 3 (233.44-237.98); the BREAKDOWN on 240.125 on vProgs (240.20); the DROP 3 bar line (master 166.086) on 263.731, inside 100 (263.38-263.96) with its kick-in on 262.75 under blocks a second; the full chorus 3 on 267.666 on And then, a stablecoin (267.90); the thinning bar 104 on 291.272 under targets mainnet for that September; the OUTRO on 293.239 on the founder set-up line (293.14, the calm lecture hall); the groove re-entry on 301.108 under research goes next (301.18-302.18), before CLIP-1's splice at 302.18; the resolve bar line on 454.551 with its last stroke on 455.562 as standing. ends (455.26-455.62). Every landing is within 0.6 s of its word; none needs the 1.3 s tolerance.",
+  "why_not_2026_exact": "pinning DROP 1 exactly on 2026 (32.10) shifts the whole grid +0.5 s and lands DROP 2 on years (98.98) and DROP 3 on blocks (264.23), 0.85 to 1.0 s after their words; the chosen phase lands two drops inside their words and the first on the face cut. Both are inside the 1.3 s rule; Mike's listening call.",
+  "repeats_G1": "CH1: 16 bars before the drop from 12 of intro material = bars 4-7 twice then 4-11 (jump-backs on 7.993 and 15.862, bar 8's line to bar 4's line, -18.8 to -18.4 dB, inside the one build region). CH2: the plateau (6 bars) heard 5 times under the diagram, Crescendo, the Cinco de Mayo sting, the emission curve and the research receipts (jump-backs on 49.305, 61.108, 72.911, 84.715), the last pass running on into the rise bar and the drop. CH3: 71 bars from the drop to the thinning bar = part A + rise (7) + full chorus 24 + jump back to bar 51 for 16 + jump back for the full 24 (jump-backs on 159.469 and 190.944, bar 75's and bar 67's lines to bar 51's line, all inside the 86-150 peak). CH4: the breakdown's first four bars heard twice (jump-back on 247.993) then bars 80-83, so the rise bar sits under That's 25 to 40 blocks a second. CH5 + the plug: the 0_23-4 groove bars 1-10 on entry, bars 3-10 eight times (jump-backs every 15.738 s from 320.780 to 430.944), bars 7-10 once, then the resolve bar: 79 bars.",
+  "grid_G2": "A fresh grid after the resolve's ring-out and the silent text wall: video bar line = 455.740 + 1.96721 n (spine seconds; the comp's 3.5 s wall pause sits at 455.74 and shifts everything after it by a constant, so the bar math holds in both clocks). Fixed by the CH6 DROP (master bar 44, 87.397) on the wall's cut-out, Here's (455.74), the mixer's hard entry at a card pause's end. Counting forward 21 bars puts the 0_31-1 cut's bar 0 (file 0.694) on 497.051 under next, of whatever comes next, and its HARD STOP (file 31.475) on 527.832, inside subscribe! (527.32-527.98): the last 0.54 s of the spine (the tail after the word) run silent, which is the house rule's end-on-the-last-word.",
+  "clip_insert_window": "CLIP-1 splices at source 302.18 for 10.8 s. No bed change, hit or riser sits inside 302.18-312.98: the master's outro ends and the groove enters on 301.108 (before it), and the groove's first jump-back is 320.780 (after it). mix_music.py ducks the groove -14 dB under the clip automatically."
+ },
+ "automation_note": "No automation rows. The carve moves the level with the content (one seat per movement, a +5 dB continuation step at the outro's first bar written as the row's own seat), the clip insert is ducked automatically by mix_music.py (-14 dB, 0.3 s ramps, from the paused sidecar), and the text wall's silence is the card pause itself (the quiet row fades out 0.4 s into the wall's first frame, the peak enters hard at its last).",
+ "hard_hits": [
+  {
+   "t": 0.0,
+   "beat": "frame 0, Mike on camera, I am more bullish on Kaspa (the kt-caption-highlight stretch-in)",
+   "music_move": "the INTRO GROOVE enters at master 8.584 (the last 0.125 s of bar 3, bar 4's line on 0.125), -18 dB RMS, no fade: present on word one, -21 dB under the voice, the pads and groove under the fair-launch list and inspiring line 1 (FACE 2 on the softest bed)"
+  },
+  {
+   "t": 31.6,
+   "beat": "the cut to FACE 3 (31.433) and 2026 is the year it came all online (32.10) with the BULLISH ON KASPA title pop on wooden-rattle-whoosh",
+   "music_move": "DROP 1 (master bar 12, 24.447, +3.5 dB over the rise bar) on 31.600: the drop on the cut, the pop on its first bar; chorus 1 part A runs three bars under the title line and the handoff"
+  },
+  {
+   "t": 37.502,
+   "beat": "the CH2 whip (swoosh-8 at 37.84) into Now here's what Kaspa actually is and the C1 diagram push-in at 40.12",
+   "music_move": "a bar-line splice to the PLATEAU (master bar 37, 73.627, -4 dB): the explainer's subtle bed under the diagram, the Crescendo receipt, the emission curve and the research receipts (and the Cinco de Mayo sting at 63.60-65.54 over it)"
+  },
+  {
+   "t": 98.485,
+   "beat": "That's nearly 8 years of published research (FACE 4, inspiring line 2, 97.44-104.22)",
+   "music_move": "RISE bar 43 from 96.518 (its kick-in on 97.50 under That's), DROP 2 (master bar 44, 87.397) on 98.485 inside 8: the chapter closes hot; part A under the face line and the Toccata open, the FULL CHORUS 2 on 112.256 under the C5 overview"
+  },
+  {
+   "t": 238.157,
+   "beat": "inspiring line 3 Nobody owns a network ... yet it all ships (FACE 5, 233.44-237.98) and Now, what's coming? (238.12)",
+   "music_move": "the chorus is RIGHT-ALIGNED: its last two full bars (73-74) under the face line, the thinning bar 75 on 238.157 under Now, what's coming?, the BREAKDOWN (bar 76, -12 dB) on 240.125 on vProgs: the arrangement's own breath into CH4"
+  },
+  {
+   "t": 263.731,
+   "beat": "And 100 blocks a second is targeted for a 2027 hard fork; the bps-ladder payoff 100 big in the accent (cash-register-2)",
+   "music_move": "RISE bar 83 from 261.764 (the kick-in on 262.75 under blocks a second), DROP 3 (master bar 84, 166.086) on 263.731 inside 100; the FULL CHORUS 3 (bar 86, +4 dB) on 267.666 as And then, a stablecoin begins"
+  },
+  {
+   "t": 293.239,
+   "beat": "And the founder himself, Yonatan Sompolinsky, stood on a stage (the calm lecture-hall b-roll BR-16, 293.14)",
+   "music_move": "the arrangement's own FALL: the chorus-thinning bar 104 on 291.272 under for that September, the OUTRO (bar 105, 207.397) on 293.239, its last stroke on 300.122, silence from 300.39; the 0_23-4 groove enters soft on 301.108 under research goes next, 1.07 s before CLIP-1 ducks it"
+  },
+  {
+   "t": 455.562,
+   "beat": "And that's exactly the gap where I want to be standing. (FACE 7, inspiring line 4; standing. 455.26-455.62)",
+   "music_move": "the groove's last pass runs into the 0_23-4 cut's own RESOLVE bar (file 22.479 on 454.551): a stroke on the line under want to, one on 455.202 as standing begins, the last on 455.562 as it ends; the file stops at 455.824, 80 ms into the silent text wall (the mixer's 0.4 s card fade takes it)"
+  },
+  {
+   "t": 455.74,
+   "beat": "the text wall's cut-out (swoosh-4) into Here's where I stand (455.74-456.06); EARLY. punched in with the cash-register at wall + 1.9 s",
+   "music_move": "the CH6 DROP: master bar 44 (87.397) enters hard on the wall's cut-out, part A under where I stand and the my-theory b-roll, the rise bar 50 on 467.543, the FULL CHORUS 2 on 469.51 on takes the number one spot (the my-theory statement card)"
+  },
+  {
+   "t": 497.051,
+   "beat": "And whatever comes next, this network is waiting for it (FACE 8, 496.42-500.08)",
+   "music_move": "a chorus-to-chorus bar-line splice: master bar 64 out, the 0_31-1 cut's bar 0 (master bar 20) in on 497.051 under next, (the same full chorus, no level change); 15 bars under the community and the CTA"
+  },
+  {
+   "t": 527.832,
+   "beat": "And subscribe! (527.12-527.98), the last word; the subscribe bar's second click on 527.32",
+   "music_move": "the 0_31-1 HARD STOP (file 31.475) on 527.832, inside subscribe!, its last transient on 527.74-527.80; the spine's 0.54 s tail runs silent to the last frame (528.367)"
+  }
+ ],
+ "beds": [
+  {
+   "chapter": "CH1",
+   "span": [
+    0.0,
+    7.993
+   ],
+   "register": "gear-3-epic",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "source_in": 8.584,
+   "cover": "section",
+   "intensity": "subtle (the intro groove, -21 dB under the voice)",
+   "level_db_under_vo": -21,
+   "measured_db_under_vo": -20.9,
+   "remotion_gain_db": -25.6,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "INTRO GROOVE: the last 0.125 s of bar 3 then bars 4-7 (master 8.709-16.578), bar 4's line on 0.125",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "frame 0 = the locked face line I am more bullish on Kaspa now than I've ever been, then the price-chart whip and the fair-launch list over the mining farm: the groove (bar 4, -18 dB RMS, pads plus kick) is present on word one without fighting the face line; the file's soft pads (bars 0-3) would be too shy for a gear-3 hook"
+  },
+  {
+   "chapter": "CH1",
+   "span": [
+    7.993,
+    15.862
+   ],
+   "register": "gear-3-epic",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "source_in": 8.709,
+   "cover": "section",
+   "intensity": "subtle",
+   "level_db_under_vo": -21,
+   "measured_db_under_vo": -20.9,
+   "remotion_gain_db": -25.6,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "jump back on 7.993 (bar 8's line to bar 4's line): INTRO GROOVE bars 4-7 again (master 8.709-16.578)",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "under NO PRE-SALE, NO INSIDER ALLOCATION, the kaspa.org hero receipt and the pickaxe coin: the hook needs 16 bars of build before the drop and the file has 12, so the 4-bar groove is heard twice (bar 7 -17.2 dB into bar 4 -18.4 dB, one build region)"
+  },
+  {
+   "chapter": "CH1",
+   "span": [
+    15.862,
+    31.6
+   ],
+   "register": "gear-3-epic",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "source_in": 8.709,
+   "cover": "section",
+   "intensity": "subtle, rising from 29.633 into the drop",
+   "level_db_under_vo": -21,
+   "measured_db_under_vo": -20.9,
+   "remotion_gain_db": -25.6,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "jump back on 15.862: INTRO GROOVE bars 4-10 (master 8.709-22.479) then the PRE-DROP RISE bar 11 (22.479-24.447, -14 dB) on 29.633; sample-continuous into the next row (the mixer merges them)",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "the groove under inspiring line 1 on the face (19.43-26.63, the softest bed under the quiet confessional line) and the code-timelapse b-roll; the rise bar sits under builders never stopped (29.6-31.4) so the drop lands on the cut to FACE 3"
+  },
+  {
+   "chapter": "CH1",
+   "span": [
+    31.6,
+    37.502
+   ],
+   "register": "gear-3-epic",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "source_in": 24.447,
+   "cover": "section",
+   "intensity": "aggressive (DROP 1, -17 dB under the voice)",
+   "level_db_under_vo": -17,
+   "measured_db_under_vo": -17.0,
+   "remotion_gain_db": -25.6,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "DROP 1 (master bar 12, 24.447) on 31.600 -> CHORUS 1 PART A bars 12-14 (24.447-30.348, -10.8 dB RMS); sample-continuous with the row before",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "the drop 170 ms after the cut to FACE 3 and 0.50 s before 2026 (32.10): the BULLISH ON KASPA title pop rides the drop's first bar; three bars of chorus under 2026 is the year it came all online and So let's take this from the top, out on the bar line 0.34 s before the CH2 whip"
+  },
+  {
+   "chapter": "CH2",
+   "span": [
+    37.502,
+    49.305
+   ],
+   "register": "gear-2-explainer",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "source_in": 73.627,
+   "cover": "section",
+   "intensity": "subtle (the plateau, -23 dB under the voice)",
+   "level_db_under_vo": -23,
+   "measured_db_under_vo": -23.0,
+   "remotion_gain_db": -29.5,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "splice on the bar line 37.502: PLATEAU bars 37-42 (master 73.627-85.430, -15 dB RMS, the chorus-thinning groove)",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "the step down lands on the CH2 whip (37.84) into Now here's what Kaspa actually is (the coin hero) and the C1 diagram push-in at 40.12 (Bitcoin runs one block at a time, THROWN AWAY): the explainer's teaching lines get the file's own thin groove, never the chorus"
+  },
+  {
+   "chapter": "CH2",
+   "span": [
+    49.305,
+    61.108
+   ],
+   "register": "gear-2-explainer",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "source_in": 73.627,
+   "cover": "section",
+   "intensity": "subtle",
+   "level_db_under_vo": -23,
+   "measured_db_under_vo": -23.0,
+   "remotion_gain_db": -29.5,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "jump back on 49.305 (bar 43's line to bar 37's line): PLATEAU bars 37-42 again",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "under C1 state B (every block, GhostDAG puts them in order, 46.98-52.98), state C (10 blocks a second) and the Crescendo release receipt (59.3): bar 42 -14.5 dB into bar 37 -14.8 dB, one steady region"
+  },
+  {
+   "chapter": "CH2",
+   "span": [
+    61.108,
+    72.911
+   ],
+   "register": "gear-2-explainer",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "source_in": 73.627,
+   "cover": "section",
+   "intensity": "subtle",
+   "level_db_under_vo": -23,
+   "measured_db_under_vo": -23.0,
+   "remotion_gain_db": -29.5,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "jump back on 61.108: PLATEAU bars 37-42, third pass",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "under El Cinco de Mayo! (63.60-65.54, Mike's confetti + sombrero + the 1 to 2 s Mexican sting from the EDIT-PLAN rides over this quiet bed, nothing competes) and the C2 emission curve (65.54-75.1, the smooth halving, 28.7B KAS)"
+  },
+  {
+   "chapter": "CH2",
+   "span": [
+    72.911,
+    84.715
+   ],
+   "register": "gear-2-explainer",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "source_in": 73.627,
+   "cover": "section",
+   "intensity": "subtle",
+   "level_db_under_vo": -23,
+   "measured_db_under_vo": -23.0,
+   "remotion_gain_db": -29.5,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "jump back on 72.911: PLATEAU bars 37-42, fourth pass",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "under the research lines: the old library b-roll (75.1), the Ethereum whitepaper GHOST receipt (78.72, the 2013 pop) and the opening of the research stack"
+  },
+  {
+   "chapter": "CH2",
+   "span": [
+    84.715,
+    98.485
+   ],
+   "register": "gear-2-explainer rising to gear-3",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "source_in": 73.627,
+   "cover": "section",
+   "intensity": "subtle, rising from 96.518 into the next row's drop",
+   "level_db_under_vo": -23,
+   "measured_db_under_vo": -23.0,
+   "remotion_gain_db": -29.5,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "jump back on 84.715: PLATEAU bars 37-42 (fifth pass) running on into the RISE bar 43 (master 85.430-87.397, the kick-in at 86.41 = video 97.50) on 96.518; sample-continuous into the next row",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "the plateau under GhostDAG 2018, DAGKnight 2022 and the Harvard arXiv receipt; the rise bar under still publishing in 2026 and the cut to FACE 4 (97.30), its kick-in on That's (97.44): the riser into inspiring line 2"
+  },
+  {
+   "chapter": "CH3",
+   "span": [
+    98.485,
+    112.256
+   ],
+   "register": "gear-3-epic",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "source_in": 87.397,
+   "cover": "section",
+   "intensity": "aggressive (DROP 2, part A -19 dB under, rising)",
+   "level_db_under_vo": -19,
+   "measured_db_under_vo": -19.2,
+   "remotion_gain_db": -29.5,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "DROP 2 (master bar 44, 87.397) on 98.485 -> CHORUS 2 PART A bars 44-49 (87.397-99.201, -8.5 dB RMS) -> rise bar 50 (99.201-101.168) on 110.289; sample-continuous with the rows before and after (one placement from 37.502 to 238.157)",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "the drop inside 8 of nearly 8 years (97.98-98.54): CH2 closes hot on the face line, and the drop's six bars carry Now we get to what shipped, the container ship and the Toccata release receipt (104.28-111.7) into the receipts chapter; the row enters inside CH2 because the right-alignment of the drop puts it there"
+  },
+  {
+   "chapter": "CH3",
+   "span": [
+    112.256,
+    159.469
+   ],
+   "register": "gear-3-epic",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "source_in": 101.168,
+   "cover": "section",
+   "intensity": "aggressive (the full chorus, -17 dB under the voice)",
+   "level_db_under_vo": -17,
+   "measured_db_under_vo": -16.9,
+   "remotion_gain_db": -29.5,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "FULL CHORUS 2 bars 51-74 (master 101.168-148.381, -6 dB RMS); sample-continuous with the row before",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "the full chorus lands 0.56 s after the C5 timeline overview pushes in (111.70) and runs under the rapid receipts: the smart coins, Silverscript 60 LINES (cash-register-2), Bam, the exploit band, the indexer diagram, KCC-20 and the red FINAL pop (154.26): the pops ride the drums"
+  },
+  {
+   "chapter": "CH3",
+   "span": [
+    159.469,
+    190.944
+   ],
+   "register": "gear-3-epic",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "source_in": 101.168,
+   "cover": "section",
+   "intensity": "aggressive",
+   "level_db_under_vo": -17,
+   "measured_db_under_vo": -16.9,
+   "remotion_gain_db": -29.5,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "jump back on 159.469 (bar 75's line to bar 51's line): FULL CHORUS 2 bars 51-66 (101.168-132.643), 16 bars",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "the recorded chapter is 134 s against the screenplay's 64 s chorus, so the peak is extended by bar-aligned jump-backs inside the 86-150 peak (bar 74 -6.4 dB into bar 51 -5.7 dB): under the consensus-validates diagram, the kascov token scroll, Nacho and the migration receipt (158.48-186.32)"
+  },
+  {
+   "chapter": "CH3",
+   "span": [
+    190.944,
+    238.157
+   ],
+   "register": "gear-3-epic",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "source_in": 101.168,
+   "cover": "section",
+   "intensity": "aggressive, RIGHT-ALIGNED to the chapter's end",
+   "level_db_under_vo": -17,
+   "measured_db_under_vo": -16.9,
+   "remotion_gain_db": -29.5,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "jump back on 190.944 (bar 67's line to bar 51's line): FULL CHORUS 2 bars 51-74 (101.168-148.381), the whole 24 bars, so the chorus's LAST two bars (73-74) sit under inspiring line 3; sample-continuous into the next row",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "under the L2 stack (Igra, Kaskad, Kasplex, the based-rollup diagram, the DEX table, the Gate article) and the explorer counter 2.4 BILLION TRANSACTIONS (224.02, cash-register), closing on FACE 5 Nobody owns a network ... yet it all ships (233.44-237.98): the chapter closes on the intensity, never its first 30 s"
+  },
+  {
+   "chapter": "CH4",
+   "span": [
+    238.157,
+    240.125
+   ],
+   "register": "gear-3-forward",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "source_in": 148.381,
+   "cover": "section",
+   "intensity": "thinning (the chorus's own fill bar, -19 dB under)",
+   "level_db_under_vo": -19,
+   "measured_db_under_vo": -19.0,
+   "remotion_gain_db": -29.5,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "the chorus-THINNING bar 75 (master 148.381-150.348, -8.6 dB RMS) on 238.157; sample-continuous with the rows before and after",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "the arrangement's own breath into CH4 under Now, what's coming? (238.12-239.20) and the road-at-speed b-roll (BR-13); the CH4 whip (swoosh-8 at 238.12) rides the thinning"
+  },
+  {
+   "chapter": "CH4",
+   "span": [
+    240.125,
+    247.993
+   ],
+   "register": "gear-3-forward",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "source_in": 150.348,
+   "cover": "section",
+   "intensity": "dip (the breakdown, the file's quietest material: -27.6 dB under at the movement's seat)",
+   "level_db_under_vo": -24,
+   "measured_db_under_vo": -27.6,
+   "remotion_gain_db": -29.5,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "BREAKDOWN bars 76-79 (master 150.348-158.217, -19 to -21 dB RMS) on 240.125; sample-continuous with the row before",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "the floor drops out on vProgs (240.20) under the D1 system-design diagram (apps that live on Kaspa's own Layer 1, no rollup in between) and the kaspa.org UNDER CONSTRUCTION receipt: a dip into the next chorus, Mike's method; the seat is the movement's (no ramp on the coming drop), so this is the arrangement's own 12 dB dip, like the lets-get-rich breakdown"
+  },
+  {
+   "chapter": "CH4",
+   "span": [
+    247.993,
+    263.731
+   ],
+   "register": "gear-3-forward",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "source_in": 150.348,
+   "cover": "section",
+   "intensity": "dip, rising from 261.764 into the next row's drop",
+   "level_db_under_vo": -24,
+   "measured_db_under_vo": -27.6,
+   "remotion_gain_db": -29.5,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "jump back on 247.993 (bar 80's line to bar 76's line): BREAKDOWN bars 76-79 again, then bars 80-82 and the RISE bar 83 (master 164.119-166.086, -12 dB, the kick-in at 165.10 = video 262.75) on 261.764; sample-continuous into the next row",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "the breakdown's first four bars heard twice (bar 79 -20.2 dB into bar 76 -20.8 dB) so the rise bar lands under That's 25 to 40 blocks a second (260.66-262.98): the DAGKnight receipt, the particle stream and the bps ladder's first two rungs on the dip, the riser's kick-in on blocks a second"
+  },
+  {
+   "chapter": "CH4",
+   "span": [
+    263.731,
+    291.272
+   ],
+   "register": "gear-3-forward",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "source_in": 166.086,
+   "cover": "section",
+   "intensity": "aggressive (DROP 3 at -21 dB under, the full chorus 3 at -17 from 267.666)",
+   "level_db_under_vo": -17,
+   "measured_db_under_vo": -17.0,
+   "remotion_gain_db": -29.5,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "DROP 3 (master bar 84, 166.086) on 263.731 -> PART A bars 84-85 (166.086-170.020, -9.5 dB RMS) -> FULL CHORUS 3 bars 86-97 (170.020-193.627, -6 dB RMS) on 267.666; sample-continuous with the row before",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "the drop inside 100 (263.38-263.96), the ladder's payoff 100 big in the accent on cash-register-2; the full chorus arrives as And then, a stablecoin begins (267.90) and carries the dollar-press b-roll, the stablecoin card's three states, 5 million KAS, the January 1st close, refunds if it misses"
+  },
+  {
+   "chapter": "CH4",
+   "span": [
+    291.272,
+    293.239
+   ],
+   "register": "gear-3-forward",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "source_in": 205.43,
+   "cover": "section",
+   "intensity": "aggressive, the chorus's last bar",
+   "level_db_under_vo": -16,
+   "measured_db_under_vo": -16.4,
+   "remotion_gain_db": -29.5,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "splice on the bar line 291.272 (bar 98's line to bar 104's line, chorus bar into the chorus-thinning bar): the master's LAST CHORUS BAR 104 (205.430-207.397, the last hit on beat 3 at 206.41, beat 4 rests); sample-continuous into the outro row",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "under the roadmap targets mainnet for that September (288.9-293.14, the September rung lighting): the chorus ends the way the arrangement ends it, one bar before the founder line"
+  },
+  {
+   "chapter": "CH4",
+   "span": [
+    293.239,
+    301.108
+   ],
+   "register": "gear-3-forward, calm beat",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "source_in": 207.397,
+   "cover": "section",
+   "intensity": "subtle (the outro, -25 dB under the voice; the fall from the chorus reads -8 dB after the seat step)",
+   "level_db_under_vo": -24,
+   "measured_db_under_vo": -24.8,
+   "remotion_gain_db": -24.5,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "OUTRO bars 105-108 (master 207.397-215.266, -21 to -23 dB RMS, sparse strokes), the last stroke on 300.122, silence from 300.392, the master's FADE ending; sample-continuous with the row before (the mixer merges them and ramps the seat +5 dB over 0.5 s at 293.239)",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "the fall into the founder set-up line And the founder himself, Yonatan Sompolinsky, stood on a stage at Mid-Chain 2026 (293.14-302.18, the calm lecture-hall b-roll and the YouTube watch-page receipt): the arrangement's own fall, placed BEFORE CLIP-1's window (302.18-312.98) so no bed change sits under the founder's own voice; the 0.7 s of the file's silence before the next row is the inter-bed breath"
+  },
+  {
+   "chapter": "CH4",
+   "span": [
+    301.108,
+    320.78
+   ],
+   "register": "gear-3-forward, the clip and the resume face line",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_0_23-4.wav",
+   "source_in": 2.807,
+   "cover": "section",
+   "intensity": "subtle (the quiet groove, -22 dB under the voice, soft entry from bar 1; ducked -14 dB under CLIP-1 automatically)",
+   "level_db_under_vo": -22,
+   "measured_db_under_vo": -22.3,
+   "remotion_gain_db": -25.9,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "the 0_23-4 cut's INTRO GROOVE bars 1-10 (file 2.807-22.479, -21.5 rising to -17.5 dB RMS), bar 1's line on 301.108 (a G1 bar line: the groove continues the running grid after the master's fade)",
+   "breath_before_sec": 0.7,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "enters under research goes next (301.18-302.18), 1.07 s before CLIP-1's splice, so THIS row carries the clip (ducked -14 dB by mix_music.py, no automation row) and the resume That's research, not a ship feature ... still pushing the frontiers (FACE 6) and the plug's first words on the quiet material: the mid-roll plug stays conversational (longform-edited.md section 7), never on the chorus"
+  },
+  {
+   "chapter": "CH4",
+   "span": [
+    320.78,
+    336.518
+   ],
+   "register": "the plug (FACE 6)",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_0_23-4.wav",
+   "source_in": 6.742,
+   "cover": "section",
+   "intensity": "subtle",
+   "level_db_under_vo": -22,
+   "measured_db_under_vo": -22.0,
+   "remotion_gain_db": -25.9,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "jump back on 320.780 (bar 11's line to bar 3's line): GROOVE bars 3-10 (file 6.742-22.479, the steady body -17.2 to -18.8 dB RMS, the remix-loop region), first pass",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "under the Discord plug, the software lines, 114x on PerpsPad with the showcase receipt and Click the link in the description below (312.22-335.94): bar 10 -17.6 dB into bar 3 -18.7 dB, one bed region; the first jump-back sits 7.8 s after CLIP-1's window closes"
+  },
+  {
+   "chapter": "CH5",
+   "span": [
+    336.518,
+    352.256
+   ],
+   "register": "gear-1-to-2-calm",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_0_23-4.wav",
+   "source_in": 6.742,
+   "cover": "section",
+   "intensity": "subtle",
+   "level_db_under_vo": -22,
+   "measured_db_under_vo": -22.0,
+   "remotion_gain_db": -25.9,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "jump back on 336.518: GROOVE bars 3-10, second pass (enters 0.78 s before the CH5 line 337.30)",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "But let's get on with this, the CH5 whip (swoosh-8 at 337.30) into Now look at these numbers as they are, the trader-desk b-roll and the real KAS/USD chart (3 cents, 860 million, 85% below the high): the quiet material, no pops, the numbers said as they are"
+  },
+  {
+   "chapter": "CH5",
+   "span": [
+    352.256,
+    367.993
+   ],
+   "register": "gear-1-to-2-calm",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_0_23-4.wav",
+   "source_in": 6.742,
+   "cover": "section",
+   "intensity": "subtle",
+   "level_db_under_vo": -22,
+   "measured_db_under_vo": -22.0,
+   "remotion_gain_db": -25.9,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "jump back on 352.256: GROOVE bars 3-10, third pass",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "under the C2 donut (96.8% mined), the November reward cut and the 1.68 million KAS a day bar"
+  },
+  {
+   "chapter": "CH5",
+   "span": [
+    367.993,
+    383.731
+   ],
+   "register": "gear-1-to-2-calm",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_0_23-4.wav",
+   "source_in": 6.742,
+   "cover": "section",
+   "intensity": "subtle",
+   "level_db_under_vo": -22,
+   "measured_db_under_vo": -22.0,
+   "remotion_gain_db": -25.9,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "jump back on 367.993: GROOVE bars 3-10, fourth pass",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "under well under 1% of what trades in a day, the hash-rate readout and the C3 monthly hash-rate curve (the 70% fall, the three-month rise)"
+  },
+  {
+   "chapter": "CH5",
+   "span": [
+    383.731,
+    399.469
+   ],
+   "register": "gear-1-to-2-calm",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_0_23-4.wav",
+   "source_in": 6.742,
+   "cover": "section",
+   "intensity": "subtle",
+   "level_db_under_vo": -22,
+   "measured_db_under_vo": -22.0,
+   "remotion_gain_db": -25.9,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "jump back on 383.731: GROOVE bars 3-10, fifth pass",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "under up 14%, the C4 flat user-transactions line and the C17 holder distribution (the typical token has two holders, 9 above 100, Nacho 355)"
+  },
+  {
+   "chapter": "CH5",
+   "span": [
+    399.469,
+    415.207
+   ],
+   "register": "gear-1-to-2-calm",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_0_23-4.wav",
+   "source_in": 6.742,
+   "cover": "section",
+   "intensity": "subtle",
+   "level_db_under_vo": -22,
+   "measured_db_under_vo": -22.0,
+   "remotion_gain_db": -25.9,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "jump back on 399.469: GROOVE bars 3-10, sixth pass",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "under the TVL receipts (770,000, under a million), the ONE question of the video Yeah, so are we late or are we early? over the empty street at dawn (407.06) and the Solana chart's $1.51 hover"
+  },
+  {
+   "chapter": "CH5",
+   "span": [
+    415.207,
+    430.944
+   ],
+   "register": "gear-1-to-2-calm",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_0_23-4.wav",
+   "source_in": 6.742,
+   "cover": "section",
+   "intensity": "subtle",
+   "level_db_under_vo": -22,
+   "measured_db_under_vo": -22.0,
+   "remotion_gain_db": -25.9,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "jump back on 415.207: GROOVE bars 3-10, seventh pass",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "under November of 2021, $259.90, around 172x, the 97% fall to $8 and everybody wrote it off, the 37x from the low (the C22 Solana chart's three hovers)"
+  },
+  {
+   "chapter": "CH5",
+   "span": [
+    430.944,
+    446.682
+   ],
+   "register": "gear-1-to-2-calm",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_0_23-4.wav",
+   "source_in": 6.742,
+   "cover": "section",
+   "intensity": "subtle",
+   "level_db_under_vo": -22,
+   "measured_db_under_vo": -22.0,
+   "remotion_gain_db": -25.9,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "jump back on 430.944: GROOVE bars 3-10, eighth pass",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "under $295 in January of 2025, Solana's $55 billion market cap, the A PARALLEL, NOT A PREDICTION card and what a written-off network can do (444.34)"
+  },
+  {
+   "chapter": "CH5",
+   "span": [
+    446.682,
+    454.551
+   ],
+   "register": "gear-1-to-2-calm, turning up (FACE 7)",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_0_23-4.wav",
+   "source_in": 14.61,
+   "cover": "section",
+   "intensity": "subtle",
+   "level_db_under_vo": -22,
+   "measured_db_under_vo": -22.0,
+   "remotion_gain_db": -25.9,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "jump back on 446.682 (bar 11's line to bar 7's line): GROOVE bars 7-10 (file 14.610-22.479), the 4-bar tail of the body, so the next bar is the cut's own ending; sample-continuous into the resolve row",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "under inspiring line 4 on the face: The tools came first, the crowd has not arrived yet (448.00-451.96, the left then right side panels following his hands) and And that's exactly the gap (452.40): the turn line on the quiet bed, the sparkle's call is the EDIT-PLAN's"
+  },
+  {
+   "chapter": "CH5",
+   "span": [
+    454.551,
+    455.74
+   ],
+   "register": "gear-1-to-2-calm, the ending",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_0_23-4.wav",
+   "source_in": 22.479,
+   "cover": "section",
+   "intensity": "subtle, the cut's RESOLVE ending with its last stroke on standing (-20 dB under)",
+   "level_db_under_vo": -20,
+   "measured_db_under_vo": -20.4,
+   "remotion_gain_db": -25.9,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.4,
+   "carve": "the 0_23-4 cut's ENDING bar 11 (file 22.479-23.752): a stroke on the line (454.582, under want to), one on 455.202 as standing begins, the LAST on 455.562 as standing. ends (455.62); the file stops at 455.824, 80 ms into the text wall, where the mixer's 0.4 s card fade takes it; sample-continuous with the row before (one placement from 446.682)",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "the resolve on the last word of the chapter, where I want to be standing. (454.70-455.62): its ring-out is the breath into the SILENT text wall (the card pause at 455.74, TOO LATE? then EARLY.), and a fresh grid starts after it (G2)"
+  },
+  {
+   "chapter": "CH6",
+   "span": [
+    455.74,
+    497.051
+   ],
+   "register": "gear-3-epic",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_3_37-7.wav",
+   "source_in": 87.397,
+   "cover": "section",
+   "intensity": "aggressive (the DROP back into the peak, part A -19 dB under, the full chorus -17 from 469.51)",
+   "level_db_under_vo": -18,
+   "measured_db_under_vo": -17.6,
+   "remotion_gain_db": -29.5,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "the CH6 DROP: master bar 44 (87.397) hard on the wall's cut-out (455.74, the first word after the card pause) -> CHORUS 2 PART A bars 44-49 (87.397-99.201) -> rise bar 50 on 467.543 -> FULL CHORUS 2 bars 51-64 (101.168-128.709) on 469.51; grid G2 = 455.740 + 1.96721 n",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "the peak returns on Here's where I stand (455.74-456.86) as the text wall cuts out on swoosh-4, 1.6 s after EARLY. (the wall's 3.5 s stay silent: the mixer starts a bed at a card pause's END, see open_questions); part A under the summit coin, MINED BY ANYONE, OWNED BY NO ONE and the where-i-stand card; the full chorus lands on takes the number one spot from Bitcoin (468.5-470) as the MY THEORY statement card opens, and carries the cascade diagram, stacking it quietly and inspiring line 5 on the face (490.97-500.08)"
+  },
+  {
+   "chapter": "CH6",
+   "span": [
+    497.051,
+    527.832
+   ],
+   "register": "gear-3-epic, the close",
+   "source_file": "video-creation/assets/music/Oh La La/AEROPLANES_Oh_La_La_instrumental_0_31-1.wav",
+   "source_in": 0.694,
+   "cover": "section",
+   "intensity": "aggressive (the full chorus, -17 dB under the voice, HARD STOP inside subscribe)",
+   "level_db_under_vo": -17,
+   "measured_db_under_vo": -17.2,
+   "remotion_gain_db": -29.5,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "a chorus-to-chorus splice on the G2 bar line 497.051 (master bar 65's line to the cut's bar 0 line, file 0.694 = master bar 20): the 0_31-1 cut's FULL CHORUS 1 bars 20-34 (15 bars) and 1.27 s of bar 35, the HARD STOP (file 31.475, its last transient at 31.38-31.44) on 527.832. RIGHT-ALIGNED by construction: source_in 0.694 on 497.051 puts the file's end on 527.832; the file's remaining 30.781 s equal the span, so the mixer (which runs the last bed to the video's end) has nothing left to play after the stop",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": true,
+   "why": "under this network is waiting for it, the meetup crowd, THE KASPA COMMUNITY, HARDCORE, PATIENT, STILL HERE, the CTA on the face (511.03 to the end) and My God, dude.; the hard stop lands inside And subscribe! (527.32-527.98), Mike's ruling (no sign-off, the bed's hard stop on subscribe); the spine's last 0.54 s (the tail after the word, within the 1.0 s rule) run silent to the last frame, so the video ends on the last word with no music under black"
+  }
+ ],
+ "notes": [
+  "32 rows, three files of ONE track, cover section everywhere; the rows touch exactly: every join is a bar-line splice with an 80 ms fade on the outgoing row, a sample-continuous continuation the mixer merges into one placement (37.502-238.157 is one placement, 238.157-301.108 another with a +5 dB seat step at the outro, 446.682-455.74 one), or the one real breath (the master's fade ends 300.39, the groove enters 301.108). The only card pause is the text wall at 455.74 (every chapter is card OFF): the resolve row ends on it, the CH6 drop starts on it.",
+  "CLIP-1 (splice at source 302.18, 10.8 s) is carried by the 0_23-4 groove row that enters on 301.108 (file 2.807-22.479 under the founder's own voice), ducked -14 dB automatically by mix_music.py from the paused sidecar; no automation row written. No bed change, hit or riser sits inside 302.18-312.98 (the outro ends and the groove enters BEFORE the splice; the groove's first jump-back is 320.780).",
+  "Row labels: the CH3 drop row enters inside CH2 (98.485) because the drop is pinned to inspiring line 2; the thinning bar and the breakdown rows are CH4's; the plug (312.22-336.12, FACE 6) rides the two groove rows labelled CH4; the third groove row enters 0.78 s before the CH5 line. The graph's verifier checks chapter ids and coverage, not one row per chapter.",
+  "The master's outro fade (file 214.55) ends on 300.392 and the groove enters on 301.108: 0.72 s of the file's own silence is the inter-bed breath (house rule #10 allows 1.0 s). Every other row change is on a bar line with no gap.",
+  "The level seats are computed against the voice RAISED +3 dB (Mike's ask), so GRAPH-PROGRESS settings.voice_db should be 3.0 for this video; the beds then sit 16.9 to 17.6 dB under the voice through the choruses, 19 to 21 under the drops' part A bars, 22 to 23 under the plateau and the groove, 24.8 under the outro, 27.6 under the breakdown (the one arrangement dip; see open_questions).",
+  "Mike's spoken edit ask El Cinco de Mayo! (63.60-65.54, confetti, sombrero, 1 to 2 s of Mexican music): the bed under it is the plateau's third pass at -23 dB under, so the EDIT-PLAN's Mexican sting reads clean; no music row here, it is the event log's.",
+  "Listening copy: python video-creation/longform-edited/scripts/mix_music.py video-creation/longform-edited/media/bullish-on-kaspa --video video-creation/longform-edited/media/bullish-on-kaspa/spine/ALL.d.desilenced.mp4 --plan-preview (beds alone under the spine's voice; no pause sidecar, so the CH6 drop sits directly on Here's at 455.74 and the resolve's file end is not card-faded).",
+  "MIKE RULED (GATE plan 2026-11-04): Cinco de Mayo gets a 0.98361 s (half a bar) beat pause at source 65.10, inside the row 61.108-72.911. mix_music.py plays that placement on through the pause, so it ends 0.98 s further into the file (86.41, just before bar 43's kick-in), then the 72.911 row starts on its own word as planned: nothing after 72.911 moves, every later drop keeps its word. The grid between the pause and 72.911 sits half a bar off; check by ear at the draft, and if the jump on 72.911 reads as a hiccup, the fix is a one-bar pause."
+ ],
+ "open_questions": [
+  "LISTEN FOR (the two landings that matter): DROP 2 at 98.485, the rise bar's kick-in under That's nearly and the downbeat inside 8 years (CH2 closing hot on the face line), and DROP 3 at 263.731 inside 100 (the kick-in under blocks a second, the full chorus arriving on And then, a stablecoin). Also DROP 1 at 31.600: it lands on the cut to FACE 3, 0.50 s BEFORE 2026 (the title pop rides the drop's first bar). Pinning 2026 exactly moves the whole grid +0.5 s and puts DROP 2 on years and DROP 3 on blocks (0.85 to 1.0 s after their words); if you prefer the title word exact, say so and the grid shifts.",
+  "THE TEXT WALL DROP: the screenplay wants the peak cut to DROP on EARLY. at 1.9 s into the 3.5 s wall. mix_music.py starts a bed at a card pause's END (the first word after it), and a fade_in would only swell into it, so as planned the wall's 3.5 s stay SILENT (EARLY. punches in with the cash-register alone) and the peak DROPS HARD on the wall's cut-out, Here's where I stand, 1.6 s after EARLY: the drop on the cut. To put the drop ON EARLY the mixer needs a bed in-pause offset (it has one for SFX rows only). Two mixer conditions for the wall as a card pause: it is the only card in the video, so bake it with pause_s = 3.5 (card_start subtracts the global pause_s, and a 1.0 s default would let the resolve row run 2.5 s into the silent wall); and if Mike picks the cover plan's alternate (the wall OVER the words, no pause), the CH6 rows hold as written (the drop on Here's at 455.74).",
+  "THE HARD STOP lands on 527.832, inside subscribe! (527.32-527.98), and the spine's last 0.54 s (its tail after the word) run silent: Mike's ruling the bed's hard stop lands on subscribe taken literally. If he wants the stop on the LAST FRAME (528.367) instead, the close's grid shifts 0.54 s later and the CH6 drop then lands 0.54 s after the wall's cut-out (on where I stand), because the mixer cannot start a bed inside the pause; his call.",
+  "CH4 to CH5: the screenplay row put the fall (the master's outro) under the resume face line and the quiet cuts' entry on the CH5 whip; that would seat the fall inside CLIP-1's window and leave the plug on the full chorus. The plan moves the fall one line earlier (the outro under the calm founder set-up line and the lecture-hall b-roll, 293.239) and brings the quiet groove in on 301.108, before the clip, so it carries the clip (ducked), the resume and the plug: a conversational plug on the subtle bed. Say if you want the chorus kept under the plug instead.",
+  "THE BREAKDOWN under vProgs and DAGKnight (240.125-261.764) sits 27.6 dB under the voice at the movement's one seat (the arrangement's own 12 dB dip, the lets-get-rich precedent; the groove rows elsewhere sit at -22). If it reads as a hole in the listening copy, lift those two rows' remotion_gain_db to -25.9 (-24.0 under): the mixer then ramps -3.6 dB over 0.5 s at the DROP 3 bar line, which softens the drop's first half second, so the trade is the dip's depth against the drop's edge; Mike's listening call.",
+  "Ledger: oh-la-la is fresh and in none of the BLOCKED or avoid lists, so the screenplay's shortlist needs no replacement and no usage_waivers. The subtle pool is untouched by this video (its quiet material is the track's own 0_23 cut and the master's plateau, breakdown and outro). Note for the catalog: 0_23-4 and 0_23-5 are the same audio from bar 4 on (a fuller first four bars on -5), and 0_15-3 and 0_15-6 end exactly where 0_31-1 begins (master 39.49): the section cuts are excerpts of the master, only the 0_23 resolve and the 0_31 and 0_15 truncations are new endings."
+ ]
+}

@@ -1,0 +1,202 @@
+<!doctype html><html><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700;1,900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600;700&family=Archivo:wdth,wght@125,900&family=Montserrat:ital,wght@1,800&display=swap" rel="stylesheet">
+<style>/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+</style>
+<style>/* ============================================================================
+   container-canonical-light.css: the LIGHT THEME override (Mike, 2026-10-25, first used on `inference`).
+   A PER-VIDEO option, never the default. Load it AFTER container-canonical.css (same <head>, second <style> /
+   <link>): every token below replaces the dark one, every other rule of the locked stylesheet stays untouched
+   (layout, type, sizes, anatomy, components). Promoted from the 2026-10-25 look test in _light-mode-experiment/
+   (three containers rendered dark and light, Mike: "I like the light mode version").
+   Switch: GRAPH-PROGRESS.json settings.container_theme = "light" (run.py --container-theme light); the graph
+   tells slide-builder / chart-builder / visual-qa, and visual-qa judges palette drift against THIS file.
+   Contrast: every text token >= 4.5:1 on the page (#F6F4EE) and on a white card; strokes >= 3:1.
+   ============================================================================ */
+:root{
+  --bg-deep:#F6F4EE; --bg-card:#FFFFFF; --bg-card-hover:#F1EFE9;
+  --accent-green:#007A55; --accent-cyan:#006A9E; --accent-gold:#8F6500;
+  --accent-red:#C41E3A; --accent-purple:#7C3AED; --accent-teal:#0E7A6C; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#14161A; --text-secondary:#4A5263; --text-muted:#5E6676;
+  --border:#DDD9CF;
+  /* light-only helpers for charts / diagrams (dark has no equivalent: there the wire IS --border) */
+  --grid:#D6D2C7; --axis:#7A808B; --wire:#8A877E; --ink:#14161A;
+}
+body{background:#E4E1D8}
+
+/* the film grain stays, multiplied so it reads as paper tooth instead of lifting the blacks */
+.frame::after{opacity:.05;mix-blend-mode:multiply}
+
+/* accent orbs: same position and blur, a pale tint instead of a saturated bloom */
+.orb{opacity:.18}
+
+/* surfaces: a card is white with a hairline border and a soft lifted shadow (the dark 120 px black drop is gone) */
+.card,.col,.panel,.ecard,.nd,.node,.box{
+  background:var(--bg-card);border-color:var(--border);
+  box-shadow:0 1px 2px rgba(20,22,26,.05),0 14px 34px rgba(20,22,26,.08)}
+
+/* GLOW -> RING. On white a glow reads as a smear, so every "lit / on / hot" state becomes a tinted ring + a lifted
+   shadow in the element's accent (set --acc-rgb per chapter accent, default = cyan). */
+.frame{--acc-rgb:0,106,158}
+.lit,.on,.hot,.chip.on,.nd.lit,.node.on,.box.on,.ecard.on{
+  box-shadow:0 0 0 4px rgba(var(--acc-rgb),.12),0 12px 28px rgba(20,22,26,.12)}
+.hot,.nd.hot{box-shadow:0 0 0 6px rgba(var(--acc-rgb),.22),0 16px 34px rgba(20,22,26,.18)}
+.chip.on{background:rgba(var(--acc-rgb),.08)}
+.role,.rl,h1,h2{text-shadow:none}
+
+/* SVG diagrams / charts: wires and axes on the light ground. Lit wires use the accent token, resting wires --wire;
+   drop the SVG glow filter (filter="url(#g)") in the light build; hollow point centres fill white, the neutral
+   "ink" line is near-black; grid lines --grid; area fills under a line at .13 to .16 alpha of the accent. */
+svg .wire,svg line.wire,svg path.wire{stroke:var(--wire)}
+svg .grid{stroke:var(--grid)} svg .axis{stroke:var(--axis)}
+svg .ink{stroke:var(--ink);fill:var(--ink)}
+</style>
+<style>
+/* per-video: the chapter accent (CH1 to CH6 = Kaspa greenish cyan #49EACB). Raw hue on strokes / rings / the orb; on TEXT
+   the light file's own darkened teal #0E7A6C (5.2:1 on white, #49EACB itself is 1.5:1 and unreadable as text). */
+.frame{--kas:#49EACB;--kas-ink:var(--accent-teal);--acc-rgb:73,234,203}
+.k{color:var(--kas-ink)}
+.orb.a{width:900px;height:900px;right:-260px;top:-380px;background:var(--kas);opacity:.26}
+.orb.b{width:700px;height:700px;left:-300px;bottom:-380px;background:#c3cddd;opacity:.30}
+.card{position:relative;width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:28px;padding:62px 88px 66px;overflow:hidden}
+.card>.top{position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--kas-ink),var(--kas) 42%,rgba(73,234,203,0) 92%)}
+.ghost{visibility:hidden}
+.rows{display:flex;flex-direction:column;gap:18px;width:100%}
+.row{display:flex;align-items:center;justify-content:space-between;gap:30px;padding:24px 36px;border-radius:18px;border:1px solid var(--border);background:var(--bg-card-hover);
+  font:600 44px/1.2 'DM Sans';letter-spacing:.03em;color:var(--text-secondary)}
+.row .yr{font-family:'JetBrains Mono';font-weight:600;font-size:52px;letter-spacing:0;color:var(--text-secondary)}
+.row.on{border:2px solid var(--kas-ink);background:rgba(73,234,203,.12);color:var(--kas-ink);padding:23px 35px}
+.row.on .yr{color:var(--kas-ink)}
+.chips{display:flex;gap:22px;flex-wrap:wrap}
+.chip{padding:18px 36px;border-radius:999px;border:2px solid var(--wire);background:var(--bg-card-hover);font:600 34px/1.2 'DM Sans';letter-spacing:.06em;color:var(--text-secondary)}
+.chip.on{border-color:var(--kas-ink);color:var(--kas-ink)}
+.chip.big{font-size:52px;padding:26px 58px}
+.sub{font:600 33px/1.35 'DM Sans';letter-spacing:.05em;color:var(--text-secondary);max-width:none}
+.src{font:500 27px/1.2 'DM Sans';color:var(--text-muted);margin-top:34px}
+/* word-by-word */
+.big60{display:flex;align-items:baseline;gap:34px;margin-top:6px}
+.big60 .ar{font:900 70px/1 'Playfair Display';color:var(--text-primary);letter-spacing:-.01em}
+.big60 .n{font:700 230px/1 'JetBrains Mono';color:var(--kas-ink);letter-spacing:-.04em}
+.big60 .l{font:900 104px/1 'Playfair Display';color:var(--kas-ink)}
+.now{font:600 38px/1 'DM Sans';letter-spacing:.2em;color:var(--text-muted);margin:0 0 20px}
+/* ladder */
+.rung{display:flex;align-items:baseline;gap:40px;padding:14px 0}
+.rung .n{font:600 76px/1.05 'JetBrains Mono';color:var(--text-secondary);min-width:400px}
+.rung .t{font:600 36px/1.2 'DM Sans';letter-spacing:.06em;color:var(--text-secondary)}
+.rung.pay{align-items:center;margin-top:8px}
+.rung.pay .n{font-size:200px;font-weight:700;line-height:1;color:var(--kas-ink);letter-spacing:-.04em}
+.rung.pay .t{font-size:44px;color:var(--kas-ink);max-width:800px}
+/* roadmap strip */
+.strip{display:grid;grid-template-columns:1fr 1fr 1fr 1.25fr;gap:0;position:relative;margin-top:14px}
+.strip:before{content:"";position:absolute;left:12px;right:60px;top:17px;height:4px;background:var(--wire)}
+.st{position:relative;padding:62px 28px 0 0}
+.st:before{content:"";position:absolute;left:0;top:4px;width:30px;height:30px;border-radius:50%;background:var(--bg-card);border:4px solid var(--wire)}
+.st .w{font:600 38px/1.2 'JetBrains Mono';color:var(--text-secondary)}
+.st .a{font:700 56px/1.2 'DM Sans';letter-spacing:.03em;color:var(--text-secondary);margin-top:12px}
+.st .x{font:600 34px/1.2 'DM Sans';letter-spacing:.08em;color:var(--text-secondary);margin-top:10px}
+.frame .st.on{box-shadow:none}
+.st.on:before{background:var(--kas);border-color:var(--kas-ink);box-shadow:0 0 0 8px rgba(73,234,203,.28)}
+.st.on .w,.st.on .a,.st.on .x{color:var(--kas-ink)}
+/* parallel line */
+.line{margin-top:6px;padding:28px 40px;border-radius:18px;border:1px solid var(--border);background:var(--bg-card-hover);font:700 56px/1.2 'DM Sans';letter-spacing:.02em;color:var(--text-secondary)}
+.line.on{border:2px solid var(--kas-ink);background:rgba(73,234,203,.12);color:var(--text-primary);padding:27px 39px}
+/* statement */
+.stmt{font:900 76px/1.2 'Playfair Display';letter-spacing:-.01em;color:var(--text-primary)}
+.stmt .mono{font-size:.92em}
+/* the text wall: the device's own look (black), screenplay CH6 Beat 1 + the container-theme note */
+.frame.wall{background:#000;padding:0}
+.frame.wall::after,.frame.alpha::after{display:none}
+.frame.alpha{background:transparent}
+.frame>.wallbox{position:absolute;left:-200px;right:-200px;top:-110px;bottom:-110px;display:flex;flex-direction:column;justify-content:center;gap:14px;transform:rotate(-7deg)}
+.wr{white-space:nowrap;text-align:center;font-family:'Archivo';font-stretch:125%;font-weight:900;line-height:1.02;letter-spacing:.005em}
+.wr.f{color:#fff}
+.wr.o{color:#000;-webkit-text-stroke:2.5px #fff}
+.frame>.early{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%) rotate(-1deg);text-align:center;font:italic 800 300px/1 'Montserrat';color:#E80001;
+  -webkit-text-stroke:10px #fff;paint-order:stroke fill;text-shadow:0 0 70px rgba(232,0,1,.85),0 0 24px rgba(232,0,1,.6)}
+</style></head><body>
+<div class="frame " id="research-stack-s1"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">Yonatan Sompolinsky</div><h1 class="">THE <span class="k">RESEARCH</span></h1><div class="divider"></div><div class="rows"><div class="row on"><span>GHOST</span><span class="yr">2013</span></div><div class="row ghost"><span>GHOSTDAG</span><span class="yr">2018</span></div><div class="row ghost"><span>DAGKNIGHT</span><span class="yr">2022</span></div></div></div></div>
+<div class="frame " id="research-stack-s2"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">Yonatan Sompolinsky</div><h1 class="">THE <span class="k">RESEARCH</span></h1><div class="divider"></div><div class="rows"><div class="row"><span>GHOST</span><span class="yr">2013</span></div><div class="row on"><span>GHOSTDAG</span><span class="yr">2018</span></div><div class="row ghost"><span>DAGKNIGHT</span><span class="yr">2022</span></div></div></div></div>
+<div class="frame " id="research-stack-s3"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">Yonatan Sompolinsky</div><h1 class="">THE <span class="k">RESEARCH</span></h1><div class="divider"></div><div class="rows"><div class="row"><span>GHOST</span><span class="yr">2013</span></div><div class="row"><span>GHOSTDAG</span><span class="yr">2018</span></div><div class="row on"><span>DAGKNIGHT</span><span class="yr">2022</span></div></div></div></div>
+<div class="frame " id="silverscript-60-lines-s1"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">Silverscript</div><h1 class="">THOUSANDS OF LINES</h1><div class="divider"></div><div class="now ghost">NOW</div><div class="big60 ghost"><span class="ar">AROUND</span><span class="n">60</span><span class="l">LINES</span></div><div class="src">Kaspa Commons, <span class="mono">2026-09-10</span></div></div></div>
+<div class="frame " id="silverscript-60-lines-s2"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">Silverscript</div><h1 class="">THOUSANDS OF LINES</h1><div class="divider"></div><div class="now">NOW</div><div class="big60 ghost"><span class="ar">AROUND</span><span class="n">60</span><span class="l">LINES</span></div><div class="src">Kaspa Commons, <span class="mono">2026-09-10</span></div></div></div>
+<div class="frame " id="silverscript-60-lines-s3"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">Silverscript</div><h1 class="">THOUSANDS OF LINES</h1><div class="divider"></div><div class="now">NOW</div><div class="big60"><span class="ar">AROUND</span><span class="n">60</span><span class="l">LINES</span></div><div class="src">Kaspa Commons, <span class="mono">2026-09-10</span></div></div></div>
+<div class="frame " id="bps-ladder-s1"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">The Path</div><h1 class="sm">BLOCKS A <span class="k">SECOND</span></h1><div class="divider"></div><div class="rung"><span class="n">10</span><span class="t">NOW</span></div><div class="rung ghost"><span class="n">25 TO 40</span><span class="t">TARGETED NEXT</span></div><div class="rung pay ghost"><span class="n">100</span><span class="t">TARGETED FOR A<br><span class="mono">2027</span> HARD FORK</span></div></div></div>
+<div class="frame " id="bps-ladder-s2"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">The Path</div><h1 class="sm">BLOCKS A <span class="k">SECOND</span></h1><div class="divider"></div><div class="rung"><span class="n">10</span><span class="t">NOW</span></div><div class="rung"><span class="n">25 TO 40</span><span class="t">TARGETED NEXT</span></div><div class="rung pay ghost"><span class="n">100</span><span class="t">TARGETED FOR A<br><span class="mono">2027</span> HARD FORK</span></div></div></div>
+<div class="frame " id="bps-ladder-s3"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">The Path</div><h1 class="sm">BLOCKS A <span class="k">SECOND</span></h1><div class="divider"></div><div class="rung"><span class="n">10</span><span class="t">NOW</span></div><div class="rung"><span class="n">25 TO 40</span><span class="t">TARGETED NEXT</span></div><div class="rung pay"><span class="n">100</span><span class="t">TARGETED FOR A<br><span class="mono">2027</span> HARD FORK</span></div></div></div>
+<div class="frame " id="stablecoin-card-A-s1"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">Planned</div><h1 class="">A <span class="k">STABLECOIN</span></h1><div class="divider"></div><div class="chips" style="margin-bottom:30px"><span class="chip on">ISSUED AGAINST <span class="mono">KAS</span></span><span class="chip on">SETTLED ON THE BASE LAYER</span></div><div class="rows"><div class="row ghost"><span>COMMUNITY FUNDED</span></div><div class="row ghost"><span>LED BY A CORE DEVELOPER, ALEXANDER SAFSTROM</span></div><div class="row ghost"><span>AUTHOR OF KIP-<span class="mono">16</span></span></div></div></div></div>
+<div class="frame " id="stablecoin-card-A-s2"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">Planned</div><h1 class="">A <span class="k">STABLECOIN</span></h1><div class="divider"></div><div class="chips" style="margin-bottom:30px"><span class="chip on">ISSUED AGAINST <span class="mono">KAS</span></span><span class="chip on">SETTLED ON THE BASE LAYER</span></div><div class="rows"><div class="row on"><span>COMMUNITY FUNDED</span></div><div class="row ghost"><span>LED BY A CORE DEVELOPER, ALEXANDER SAFSTROM</span></div><div class="row ghost"><span>AUTHOR OF KIP-<span class="mono">16</span></span></div></div></div></div>
+<div class="frame " id="stablecoin-card-A-s3"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">Planned</div><h1 class="">A <span class="k">STABLECOIN</span></h1><div class="divider"></div><div class="chips" style="margin-bottom:30px"><span class="chip on">ISSUED AGAINST <span class="mono">KAS</span></span><span class="chip on">SETTLED ON THE BASE LAYER</span></div><div class="rows"><div class="row"><span>COMMUNITY FUNDED</span></div><div class="row on"><span>LED BY A CORE DEVELOPER, ALEXANDER SAFSTROM</span></div><div class="row ghost"><span>AUTHOR OF KIP-<span class="mono">16</span></span></div></div></div></div>
+<div class="frame " id="stablecoin-card-A-s4"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">Planned</div><h1 class="">A <span class="k">STABLECOIN</span></h1><div class="divider"></div><div class="chips" style="margin-bottom:30px"><span class="chip on">ISSUED AGAINST <span class="mono">KAS</span></span><span class="chip on">SETTLED ON THE BASE LAYER</span></div><div class="rows"><div class="row"><span>COMMUNITY FUNDED</span></div><div class="row"><span>LED BY A CORE DEVELOPER, ALEXANDER SAFSTROM</span></div><div class="row on"><span>AUTHOR OF KIP-<span class="mono">16</span></span></div></div></div></div>
+<div class="frame " id="stablecoin-card-B-s1"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">The Fundraiser</div><h1 class="">A <span class="k">STABLECOIN</span></h1><div class="divider"></div><div class="chips ghost" style="margin-bottom:26px"><span class="chip big"><span class="mono">5M KAS</span> GOAL</span></div><div class="rows"><div class="row ghost"><span>FUNDRAISER CLOSES</span><span class="yr">JAN 1 2027</span></div><div class="row ghost"><span>REFUNDS IF IT MISSES</span></div></div></div></div>
+<div class="frame " id="stablecoin-card-B-s2"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">The Fundraiser</div><h1 class="">A <span class="k">STABLECOIN</span></h1><div class="divider"></div><div class="chips" style="margin-bottom:26px"><span class="chip big on"><span class="mono">5M KAS</span> GOAL</span></div><div class="rows"><div class="row ghost"><span>FUNDRAISER CLOSES</span><span class="yr">JAN 1 2027</span></div><div class="row ghost"><span>REFUNDS IF IT MISSES</span></div></div></div></div>
+<div class="frame " id="stablecoin-card-B-s3"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">The Fundraiser</div><h1 class="">A <span class="k">STABLECOIN</span></h1><div class="divider"></div><div class="chips" style="margin-bottom:26px"><span class="chip big"><span class="mono">5M KAS</span> GOAL</span></div><div class="rows"><div class="row on"><span>FUNDRAISER CLOSES</span><span class="yr">JAN 1 2027</span></div><div class="row ghost"><span>REFUNDS IF IT MISSES</span></div></div></div></div>
+<div class="frame " id="stablecoin-card-B-s4"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">The Fundraiser</div><h1 class="">A <span class="k">STABLECOIN</span></h1><div class="divider"></div><div class="chips" style="margin-bottom:26px"><span class="chip big"><span class="mono">5M KAS</span> GOAL</span></div><div class="rows"><div class="row"><span>FUNDRAISER CLOSES</span><span class="yr">JAN 1 2027</span></div><div class="row on"><span>REFUNDS IF IT MISSES</span></div></div></div></div>
+<div class="frame " id="stablecoin-card-C-s1"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">The Roadmap, If It Hits</div><h1 class="">A <span class="k">STABLECOIN</span></h1><div class="divider"></div><div class="strip"><div class="st"><div class="w">JAN TO APR</div><div class="a">BUILD</div></div><div class="st"><div class="w">MAY</div><div class="a">TESTNET</div></div><div class="st"><div class="w">JUN TO AUG</div><div class="a">AUDIT</div></div><div class="st"><div class="w">SEPTEMBER 2027</div><div class="a">MAINNET</div><div class="x">(TARGETED)</div></div></div></div></div>
+<div class="frame " id="stablecoin-card-C-s2"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">The Roadmap, If It Hits</div><h1 class="">A <span class="k">STABLECOIN</span></h1><div class="divider"></div><div class="strip"><div class="st"><div class="w">JAN TO APR</div><div class="a">BUILD</div></div><div class="st"><div class="w">MAY</div><div class="a">TESTNET</div></div><div class="st"><div class="w">JUN TO AUG</div><div class="a">AUDIT</div></div><div class="st on"><div class="w">SEPTEMBER 2027</div><div class="a">MAINNET</div><div class="x">(TARGETED)</div></div></div></div></div>
+<div class="frame " id="parallel-not-prediction-A"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">Solana did this</div><h1 class="">A <span class="k">PARALLEL</span>, NOT A PREDICTION</h1><div class="divider"></div><div class="line">WHAT A WRITTEN-OFF NETWORK CAN DO</div></div></div>
+<div class="frame " id="parallel-not-prediction-B"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">Solana did this</div><h1 class="">A <span class="k">PARALLEL</span>, NOT A PREDICTION</h1><div class="divider"></div><div class="line on">WHAT A WRITTEN-OFF NETWORK <span class="k">CAN</span> DO</div></div></div>
+<div class="frame " id="where-i-stand-s1"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">The Conviction</div><h1 class="sm">HERE&rsquo;S WHERE I <span class="k">STAND</span></h1><div class="divider"></div><div class="rows"><div class="row"><span>SOUND MONEY</span></div><div class="row on"><span>MINED BY ANYONE</span></div><div class="row ghost"><span>OWNED BY NO ONE</span></div><div class="row ghost"><span>A BASE LAYER THAT JUST LEARNED TO RUN APPS</span></div></div></div></div>
+<div class="frame " id="where-i-stand-s2"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">The Conviction</div><h1 class="sm">HERE&rsquo;S WHERE I <span class="k">STAND</span></h1><div class="divider"></div><div class="rows"><div class="row"><span>SOUND MONEY</span></div><div class="row"><span>MINED BY ANYONE</span></div><div class="row on"><span>OWNED BY NO ONE</span></div><div class="row ghost"><span>A BASE LAYER THAT JUST LEARNED TO RUN APPS</span></div></div></div></div>
+<div class="frame " id="where-i-stand-s3"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">The Conviction</div><h1 class="sm">HERE&rsquo;S WHERE I <span class="k">STAND</span></h1><div class="divider"></div><div class="rows"><div class="row"><span>SOUND MONEY</span></div><div class="row"><span>MINED BY ANYONE</span></div><div class="row"><span>OWNED BY NO ONE</span></div><div class="row on"><span>A BASE LAYER THAT JUST LEARNED TO RUN APPS</span></div></div></div></div>
+<div class="frame " id="my-theory"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">The Long Term</div><h1 class=""><span class="k">MY THEORY:</span></h1><div class="divider"></div><div class="stmt">ETHEREUM TAKES NUMBER <span class="mono">1</span><br>BITCOIN MAXIS GO LOOKING<br>FOR A <span class="k">PROOF OF WORK HOME</span></div></div></div>
+<div class="frame " id="community-stack-s1"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">The People</div><h1 class="">THE <span class="k">KASPA</span> COMMUNITY</h1><div class="divider"></div><div class="sub" style="margin-bottom:40px">AS DEDICATED AS THE <span class="mono">XRP</span> ARMY, THE HIGHEST COMPLIMENT</div><div class="chips"><span class="chip big ghost">HARDCORE</span><span class="chip big ghost">PATIENT</span><span class="chip big ghost">STILL HERE</span></div></div></div>
+<div class="frame " id="community-stack-s2"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">The People</div><h1 class="">THE <span class="k">KASPA</span> COMMUNITY</h1><div class="divider"></div><div class="sub" style="margin-bottom:40px">AS DEDICATED AS THE <span class="mono">XRP</span> ARMY, THE HIGHEST COMPLIMENT</div><div class="chips"><span class="chip big on">HARDCORE</span><span class="chip big ghost">PATIENT</span><span class="chip big ghost">STILL HERE</span></div></div></div>
+<div class="frame " id="community-stack-s3"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">The People</div><h1 class="">THE <span class="k">KASPA</span> COMMUNITY</h1><div class="divider"></div><div class="sub" style="margin-bottom:40px">AS DEDICATED AS THE <span class="mono">XRP</span> ARMY, THE HIGHEST COMPLIMENT</div><div class="chips"><span class="chip big">HARDCORE</span><span class="chip big on">PATIENT</span><span class="chip big ghost">STILL HERE</span></div></div></div>
+<div class="frame " id="community-stack-s4"><div class="orb a"></div><div class="orb b"></div><div class="card"><div class="top"></div><div class="ey">The People</div><h1 class="">THE <span class="k">KASPA</span> COMMUNITY</h1><div class="divider"></div><div class="sub" style="margin-bottom:40px">AS DEDICATED AS THE <span class="mono">XRP</span> ARMY, THE HIGHEST COMPLIMENT</div><div class="chips"><span class="chip big">HARDCORE</span><span class="chip big">PATIENT</span><span class="chip big on">STILL HERE</span></div></div></div>
+<div class="frame wall" id="text-wall-filled"><div class="wallbox"><div class="wr f" style="font-size:60px;margin-left:0px">TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr f" style="font-size:70px;margin-left:-40px">TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr f" style="font-size:82px;margin-left:-80px">TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr f" style="font-size:96px;margin-left:0px">TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr f" style="font-size:112px;margin-left:-40px">TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr f" style="font-size:130px;margin-left:-80px">TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr f" style="font-size:150px;margin-left:0px">TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr f" style="font-size:172px;margin-left:-40px">TOO LATE? TOO LATE? TOO LATE?</div><div class="wr f" style="font-size:196px;margin-left:-80px">TOO LATE? TOO LATE? TOO LATE?</div><div class="wr f" style="font-size:224px;margin-left:0px">TOO LATE? TOO LATE? TOO LATE?</div></div></div>
+<div class="frame wall" id="text-wall-outlined"><div class="wallbox"><div class="wr o" style="font-size:60px;margin-left:0px">TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr o" style="font-size:70px;margin-left:-40px">TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr o" style="font-size:82px;margin-left:-80px">TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr o" style="font-size:96px;margin-left:0px">TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr o" style="font-size:112px;margin-left:-40px">TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr o" style="font-size:130px;margin-left:-80px">TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr o" style="font-size:150px;margin-left:0px">TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr o" style="font-size:172px;margin-left:-40px">TOO LATE? TOO LATE? TOO LATE?</div><div class="wr o" style="font-size:196px;margin-left:-80px">TOO LATE? TOO LATE? TOO LATE?</div><div class="wr o" style="font-size:224px;margin-left:0px">TOO LATE? TOO LATE? TOO LATE?</div></div></div>
+<div class="frame wall" id="text-wall"><div class="wallbox"><div class="wr o" style="font-size:60px;margin-left:0px">TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr o" style="font-size:70px;margin-left:-40px">TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr o" style="font-size:82px;margin-left:-80px">TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr o" style="font-size:96px;margin-left:0px">TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr o" style="font-size:112px;margin-left:-40px">TOO LATE? TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr o" style="font-size:130px;margin-left:-80px">TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr o" style="font-size:150px;margin-left:0px">TOO LATE? TOO LATE? TOO LATE? TOO LATE?</div><div class="wr o" style="font-size:172px;margin-left:-40px">TOO LATE? TOO LATE? TOO LATE?</div><div class="wr o" style="font-size:196px;margin-left:-80px">TOO LATE? TOO LATE? TOO LATE?</div><div class="wr o" style="font-size:224px;margin-left:0px">TOO LATE? TOO LATE? TOO LATE?</div></div><div class="early">EARLY.</div></div>
+<div class="frame alpha" id="text-wall-early-alpha"><div class="early">EARLY.</div></div>
+</body></html>

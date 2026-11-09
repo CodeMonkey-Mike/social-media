@@ -24,7 +24,8 @@ project root, the run notifies, and Mike watches it after; a change is a splice 
 When Mike skips the full vertical ("I only want the short"), the lane still needs its two sources on one clock, so the
 VERTICAL master is an ADAPTER: a full-length 1080x1920 canvas (black) on the paused spine's clock, with the short's spans
 painted in after the cut plan is approved (the `s_paint_16x9` node runs `scripts/short_spans_from_16x9.py --face-from-render`; skipped when the master is already painted from the same plan). The span pictures come from the 16:9 comp rendered WITHOUT its caption track
-(`render_comp.py --frames a-b --props <json with "captions": false>`; the comp exposes `inputProps.captions`), re-framed per
+(`render_comp.py --frames a-b --props <json with "captions": false, "pops": false>`; the comp exposes `inputProps.captions` and
+`inputProps.pops`, the painter passes both since lets-get-rich 2026-11-01), re-framed per
 span: FACE spans crop 608x1080 on the measured face centre (`assets/vertical/face-crop.json`, `measure_face_crop.py`),
 cover spans centre-crop (the variety rule overlays native-vertical alternates on Envato / AI-still spans anyway). The flag
 file `assets/short/from-16x9.json` tells `s_captions` that NOTHING is burned, so every span gets the short's captions.
@@ -54,6 +55,12 @@ rebuild (see the 'not yet in code' note under the edge-text gate).
 captions regardless of the prop, so every face span carried 16:9 captions sliced at both edges ("debt gets pa") under the short's own.
 Every longform comp declares `captions?: boolean` (and `pops?: boolean` when it has kinetic word pops) and renders
 `{captions && <Captions />}`. Check it BEFORE `s_paint_16x9`: one `npx remotion still` of a face frame with `--props {"captions": false}`.
+**A screen-share face strip in a short (quant 2026-11-06, final visual-qa; default until Mike rules otherwise):** a screen-share video's face span is the narrow OBS strip, not a 608 px face crop. It stays verbatim and centred over a blurred, darkened copy of itself, never on white bars (they slice the hair) and never scaled to fill (the caption lands on the nose and mouth). `QuantShort.tsx` `FACE_BAR` is the worked recipe. A caption group on screen under 0.3 s merges into the group before it (`s_captions`).
+**A caption group holds until its LAST WORD ENDS (lets-get-rich 2026-11-01, final visual-qa):** `s_captions` writes each group's
+end as `e` in `ZCAPTIONS` (short seconds, capped at the span end); the short comp hides a group at
+`Math.min(next.t, Math.max(cur.t + 1.3, cur.e))`, never on a flat 1.3 s cap (a 2.4 s spoken "353x" went blank mid-word). Word
+ENDS map to final time through the pauses strictly BEFORE them (`_sh_end_fn`): a clip insert spliced right after a word plays
+after it, and the old `<=` mapping stretched "market." over the insert and dropped its caption.
 **Short captions sit in the SAFE ZONE:** bottom pad ~320 px (block at y ~1420-1600), maxWidth <= 860 px so the 1.12 pop and the
 12 px stroke stay inside 1080; never on card text; in 16:9-sourced mode they run over EVERY span (nothing is burned).
 **Edge-text + coverage gates (in code, `s_verify_final`, 2026-10-30):** (1) in 16:9-sourced mode the 16:9 comp source must
@@ -92,6 +99,12 @@ failed one Envato slot three times and sat FAILED overnight instead of deliverin
 same wall and was waived by hand. **Waiving by hand** is still `{"BR-1": "why"}` in the same file (Mike's call, or the orchestrator's,
 logged in PROJECT-LOG); to retry an auto-waived slot, delete its entry and re-drive `s_variants`. Everything downstream (extract,
 captions, comp, render, mix, verify, gates) is the normal lane.
+**In 16:9-SOURCED mode an AUTO-WAIVED slot cannot ship (lets-get-rich BR-7, 2026-11-01):** the waived beat shows the longform's
+16:9 asset CROPPED, so `s_verify_final`'s coverage gate fails the short (correctly). Re-source the slot by hand, briefed on the
+longform's ACTUAL asset (open `assets/vid/<id>-*`), not only the BROLL-PLAN wording: BR-7's plan said "dark Discord chat on a
+monitor" (no vertical stock exists), the longform had used abstract chat bubbles, and a native-vertical neon bubble loop passed
+first time. Then add the PASS to `assets/short/VISUAL-QA.json` under the clip's `<stem>.mid.png`, drop the waiver, add the overlay
+to the short comp's COVERS, and re-drive with `--redo s_verify_comp,s_render`.
 
 ### Captions never cross a span end (lane rule in code, 2026-10-08)
 `s_captions` builds the short's caption groups from the words the short KEEPS only (a word belongs to a span when its
@@ -187,6 +200,13 @@ Budget the outro INSIDE the target length — a "40 second short" is 40 seconds 
    The lint skips it (no word cut), the extractor writes an `anullsrc` wav, the captions step gives it no words and no window,
    and the span still needs `sourced` + a parenthesized `says`. It adds to the runtime: re-size the target on resume
    (`--resume --seconds N`, which updates the thread's target).
+8. **NO WHITEBOARD BEAT under any span (Mike, 2026-11-06, quant: "don't do any white boarding in the short").** A hand-drawn
+   whiteboard scene is a wide 1920x1080 composition: the 9:16 centre crop slices the drawing and its labels, and there is no
+   native-vertical rebuild for it (whiteboard is not a `VCARD_KINDS` kind, and a fit on a paper page is a letterbox). The quant
+   short's first plan put three spans over WB3, WB6 and WB11 and failed `s_verify_final` on exactly that. So the strategist picks
+   FACE spans, cards, charts and receipts, never a whiteboard window. ⛔ IN CODE: `s_cut_plan` hands the strategist every whiteboard
+   window in final time (`_whiteboard_windows_final`, cover beats + screen-share bodies) and FAILS a plan whose span overlaps one by
+   more than a frame (`_whiteboard_overlaps`); the fix is `--redo s_cut_plan`.
 
 ## 4. The CTA outro (Higgsfield MIKE-CLONE TTS)
 

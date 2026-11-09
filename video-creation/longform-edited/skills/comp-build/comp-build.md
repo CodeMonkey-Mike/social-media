@@ -233,6 +233,80 @@ const CoverEl: React.FC<{ c: Cover }> = ({ c }) => {
   whitespace and reads as broken b-roll — the carry-trade BIS-PDF lesson).
 - `const fill = { width:'100%', height:'100%', objectFit:'cover' } as const;`
 
+### 4b. WHITEBOARD beats (a hand-drawn scene clip as a cover) — 2026-11-01, left-behind first
+Contract: **`video-creation/skills/whiteboard-beat/whiteboard-beat.md`**. COVER-PLAN `whiteboards[]` carries each beat
+(15 to 30 s, its window on the final spine); the graph's `assets` node has `whiteboard-builder` build the scene comp,
+`visual-qa` clear its stills, and `chunked-render` render it SILENT to **`assets/whiteboard/<id>.mp4`** (exactly the
+window's frames at 30 fps). The comp never imports the scene component: it plays the rendered clip.
+```tsx
+// kind 'whiteboard': ref = the WB id, from = seconds into the clip (0 on the beat's first row)
+{ tIn: 41.2, tOut: 61.0, kind: 'whiteboard', ref: 'WB1', from: 0 },
+// a FACE line INSIDE a beat splits it; the second row continues the SAME clip (its clock runs with the spine):
+{ tIn: 210.0, tOut: 218.4, kind: 'whiteboard', ref: 'WB4', from: 0 },
+{ tIn: 221.1, tOut: 230.0, kind: 'whiteboard', ref: 'WB4', from: 11.1 },   // from = 221.1 - 210.0
+case 'whiteboard': return <PaperSheet durFrames={F(c.tOut) - F(c.tIn)} first={!c.from} last={isLastRowOf(c)}>
+  <OffthreadVideo src={staticFile('whiteboard/' + c.ref + '.mp4')} startFrom={Math.round((c.from ?? 0) * 30)} muted style={fill} />
+</PaperSheet>;
+```
+- **The look in a dark video (whiteboard.md "Pen per video", option a, the default until Mike rules on the first
+  stills / draft):** the paper scene IS the full frame, a "paper sheet" that comes in like a container: opacity (plus a
+  small 0.97 → 1 scale) over the beat's FIRST 11 frames, out over its LAST 0.3 s; nothing inside the beat transitions
+  (the drawing does the work). A continuation row after a FACE cut comes back with the face-cut-out move only.
+- **Timing:** the clip's frame 0 is the beat's `tIn` on the source spine and `sh()` maps the row like any cover; the
+  plan check forbids a title / clip-insert pause inside a beat, so the clip never drifts from the words.
+- **Captions:** a whiteboard is a COVER: no captions over it (lint_covers' captions-never-over-cover rule; the drawing's
+  labels carry it). **Sound:** silent clip; any draw-on tick / pop is an EDIT-PLAN SFX row hung on the beat's CUES
+  (`assets/whiteboard/<id>.cues.md`), mixed in post like every SFX (§9).
+- **Gate:** `lint_covers.py <comp> --plan COVER-PLAN.json` (verify_comp runs it): #2's 4 s cap does not apply, #12 holds
+  except the FACE-split continuation above (`from:` must equal the row's offset, the beat spans <= 30 s), and every
+  planned beat is placed at its planned `tIn`.
+
+### 4c. SCREEN-SHARE face mode: the FACE BODY layer (longform-edited.md house rule #1b) — 2026-11-04, quant first
+`run.py --face-mode screenshare` (GRAPH-PROGRESS.json `settings.face_mode`). A FACE window is Mike SHARING HIS SCREEN in the
+binance OBS layout (deck area x 0 to 1464, his webcam + CTA box in the right column), played VERBATIM: **no face reframe**
+(`export const FACE_REFRAME = { scale: 1, x: 0, y: 0 };` + `// FACE_REFRAME_WAIVED: screen-share face mode (Mike, 2026-11-04)`),
+**no punch-ins, no light leaks, no captions**. The comp PAINTS the deck area with COVER-PLAN `face_body[]` (one or more rows per
+FACE window, the graph's `_face_body_check` verified them: inside the window, a declared receipts / containers / whiteboards id).
+The asset is the SAME 1920x1080 stage a cover would use (card PNG, diagram state, the animated chart component, a receipt, the
+whiteboard clip): the layer scales it by 1464/1920 into the deck area, vertically centred on the page colour (no builder renders
+a second canvas; Mike may rule on native deck-area cards later).
+```tsx
+export const DECK_AREA = { x: 0, y: 0, w: 1464, h: 1080 };            // the binance OBS geometry (house rule #1b)
+const DECK_SCALE = DECK_AREA.w / 1920;                                 // 0.7625
+const PAGE_BG = '#F7F9FC';                                             // the container stylesheet's page colour (theme + accent)
+export const FACE_BODY: Cover[] = [                                    // COVER-PLAN face_body[], same kinds as COVERS
+  { tIn: 0.0, tOut: 23.4, kind: 'receipt', ref: 'C9' },
+  { tIn: 262.1, tOut: 268.0, kind: 'whiteboard', ref: 'WB11', from: 20.1 },   // the clip continues under the face, from = tIn - beat tIn
+];
+const FaceBodyEl: React.FC<{ c: Cover }> = ({ c }) => {
+  const f = useCurrentFrame();                                         // the container entrance: 0.35 s fade + 0.97 -> 1 scale-in
+  const a = interpolate(f, [0, 11], [0, 1], { extrapolateRight: 'clamp' });
+  const s = interpolate(f, [0, 11], [0.97, 1], { extrapolateRight: 'clamp' });
+  return (
+    <div style={{ position: 'absolute', left: DECK_AREA.x, top: DECK_AREA.y, width: DECK_AREA.w, height: DECK_AREA.h,
+                  overflow: 'hidden', background: PAGE_BG, opacity: a, transform: `scale(${s})`, transformOrigin: '50% 50%' }}>
+      <div style={{ position: 'absolute', left: 0, top: (DECK_AREA.h - 1080 * DECK_SCALE) / 2, width: 1920, height: 1080,
+                    transformOrigin: '0 0', transform: `scale(${DECK_SCALE})` }}>
+        <CoverEl c={c} />                                              // §4 / §4b: the same element a COVERS row renders
+      </div>
+    </div>
+  );
+};
+// render, ABOVE the spine and BELOW the cover track, transitions and overlays:
+{FACE_BODY.map((c, i) => (
+  <Sequence key={'fb' + i} from={F(c.tIn)} durationInFrames={F(c.tOut) - F(c.tIn)}>
+    <FaceBodyEl c={c} />
+  </Sequence>
+))}
+```
+- Rows are timed on the SOURCE spine like COVERS and route through `sh()`; a row never leaves its FACE window.
+- A row's body change inside one window (card -> chart) is two consecutive rows, each with the entrance; the webcam column
+  is never touched (`overflow: hidden` on the deck box is the whole clip).
+- `lint_covers.py <comp> --plan COVER-PLAN.json` (verify_comp runs it) FAILS a FACE_BODY row outside a plan FACE window,
+  overlapping a COVERS row or another FACE_BODY row, a planned `face_body` row not placed (same ref, same tIn, a whiteboard's
+  `from`), and a plan with rows but no array.
+- COVER beats are unchanged (black spine, full-frame covers); the cover->face / face->cover transition rows apply as usual.
+
 ## 5. Containers / diagrams (deck → code, spotlight one sub-point at a time)
 Deck slides (`assets/deck/<deck>.html`) become **code-rendered React containers** that FILL THE FRAME and
 **spotlight ONE sub-point at a time** off the CUE-SHEET (never the whole slide held; `../broll-and-containers/broll-and-containers.md`,
@@ -263,6 +337,12 @@ scale-in on each container/sub-point swap (hand-rolled `interpolate`, NOT `Trans
   (`lib:glitchoffset-*` = `GlitchOffset`, `lib:blocks-*` = `GlitchBlocks`) centred ON the join, with the continuous spine as
   both A and B (the join is already in it), under the captions, the punch scale stepping on the join frame. No light leak
   on any punch. The face→cover cut-OUTS keep the video's face pick. EDIT-PLAN carries `[GLITCH]` instead of `[LIGHTLEAK]`.
+
+- **FACE STYLE `optics` (per video, `run.py --face-style optics`, Mike 2026-11-03, first on bullish-on-kaspa).** Every cover→face
+  CUT-IN plays its `face-cut` row's **ZOOM Optics** move (`lib:zoom-optics-in`, `-in-impact`, `-in-out-1/2/3`, `-out`, the
+  `PerspectiveEase` engine, baked sound from the row, A = the outgoing cover, B = the reframed spine, the window centred on the
+  face's first frame). Punch-ins keep their light leaks and the cut-OUTS keep the face pick, as in `leak`. A face that opens the
+  video has no cut-in.
 
 ## 6. Transitions — THREE buckets (canonical: `../../assets/transitions/README.md`)
 - **Chapter title cards → pick ONE per video** (this track's set: cube · slide · flip · book-flip · swap). The
@@ -475,6 +555,9 @@ assets/
   diagrams/            Type 2 SYSTEM-DESIGN charts (static stills, CHART(sysdesign)): state PNGs + .html
                        sources (Mike 2026-07-24: the two chart types live in separate folders)
   slide-sources/       containers.html + the screenshot driver (makes title-slides/ + card-slides/)
+  whiteboard/          WHITEBOARD beats: <WBn>.mp4 (the rendered silent clip, the only renderable) + <WBn>.brief.md
+                       (the graph's brief) + <WBn>.cues.md (the builder's draw-on cues); the scene comps live in
+                       remotion/src/whiteboard/beats/, their QA stills in _previews/qa/whiteboard/<WBn>/ (§4b)
   transitions/         glitch library assets for TransitionClip
 ```
 - The whole folder is the render's `--public-dir` and is copied to a temp bundle on EVERY render, so keep it
@@ -586,16 +669,23 @@ the root of the project directory?"*) — so run it unprompted, as the last acti
    On ethereum-rwa that was 2.0 GB + 66 MB for a 208 MB deliverable.
 4. **Confirm the queue copy is intact BEFORE recycling** (`schedule-tweets/longform/<slug>/`), so the deliverable
    always exists in two places at the moment of deletion.
-5. **Hand Mike the YOUTUBE BLOCK at every finalize, unprompted (Mike, 2026-10-20, evals):** the chapters with their
-   timestamps on the FINAL cut, the music Content-ID codes on ONE line delimited by `|` with nothing else on it
-   (e.g. `5WH8X4RII7CDAU05|BPXNBEIFIYKU8G88|...`), and 10 keyword phrases for the YouTube tags field.
+5. **Hand Mike the YOUTUBE METADATA BLOCK at every finalize, unprompted, and whenever he asks for "the metadata" of a
+   finished project (Mike, 2026-10-20, evals; extended 2026-11-01, lets-get-rich):** the TITLE; a two-sentence
+   DESCRIPTION whose FIRST sentence is an OPEN LOOP, then 2-3 HASHTAGS on their own line; the chapters with their
+   timestamps on the FINAL cut; the music Content-ID codes on ONE line delimited by `|` with nothing else on it
+   (e.g. `5WH8X4RII7CDAU05|BPXNBEIFIYKU8G88|...`); and the YouTube tags field: 10 keyword phrases + their COMMON
+   MISSPELLINGS ("warren buffet", "crypto bare market", "bit coin"), inside YouTube's 500-character tag budget.
    `scripts/yt_delivery.py <media/<project>>` computes it (chapter times from the paused-spine sidecar, codes from
    `assets/music/library.json` `yt_license_code`) and writes `YT-DELIVERY.md`; the graph's `definition_of_done` node
    runs it and FAILS without it. The JUDGMENT half is `yt-delivery.json` at the project root, written by the main loop
-   before finalize: `{"chapters": {"CH1": "...", "CH6": "..."}, "keywords": [exactly 10]}`. Name the UNCARDED chapters
-   (the hook and the close) from what Mike actually says there (carded chapters take the card label); keywords are
-   search phrases a viewer would type, no hashtags, no em dashes. Paste the printed block into the finalize report
-   exactly as printed (chapters, then the `|` line, then the keywords comma-separated).
+   before finalize: `{"title", "description": [open loop, second sentence], "hashtags": [2-3], "chapters": {"CH1":
+   "...", "CH6": "..."}, "keywords": [exactly 10], "misspellings": [3+]}` (the field rules and the open-loop example
+   live in the script's docstring; it FAILS on a missing field, a dash, a day-relative word, a link or an over-budget
+   tags field). Name the UNCARDED chapters (the hook and the close) from what Mike actually says there (carded chapters
+   take the card label); keywords are search phrases a viewer would type, no hashtags, no em dashes. Paste the printed
+   block into the finalize report exactly as printed (title, description + hashtags, chapters, the `|` line, then the
+   tags field comma-separated). A project with no MUSIC-PLAN (a longform-presentation format) gives `chapter_stamps`
+   and `music_track_ids` in the same file and runs the same script.
 Note the repo-wide `cleanup/cleanup.js` (still JavaScript, not part of this track's graph) will NOT do this for you: its
 `video-creation` policy is whole-project-folder and keyed to `batches.json`, so a project with no batch (a longform-edited
 build is not a shorts batch) is "left alone" forever. The completion sweep is the graph's `stage_longform` node.

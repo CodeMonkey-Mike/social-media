@@ -147,7 +147,9 @@ def main():
     wins = [(sh(float(w["window"][0])), sh(float(w["window"][1])), float(w["mean_pct"])) for w in fc.get("windows") or []]
 
     work = P / "_previews" / "short-16x9"; work.mkdir(parents=True, exist_ok=True)
-    props = work / "props-nocaptions.json"; props.write_text(json.dumps({"captions": False}), encoding="utf-8")
+    # captions OFF (the short captions every span itself) AND pops OFF (longform-to-short.md: a 1920-wide kinetic word pop is cut
+    # by the 608 px slice; the short draws a pop natively). A comp without a `pops` prop ignores it. (lets-get-rich 2026-11-01)
+    props = work / "props-nocaptions.json"; props.write_text(json.dumps({"captions": False, "pops": False}), encoding="utf-8")
     rendered, face_log = [], []
     for i, s in enumerate(plan["spans"], 1):
         a0, b0 = float(s["start"]), float(s["end"])

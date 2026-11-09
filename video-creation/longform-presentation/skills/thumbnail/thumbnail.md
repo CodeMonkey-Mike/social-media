@@ -11,7 +11,7 @@ one is an EDIT of that image, never a fresh generation: the face stays a likenes
 
 1. **Reference = the previous episode's PUBLISHED thumbnail**, pulled from YouTube (project folders are deleted
    after upload, so the live thumbnail is the only durable copy):
-   `curl.exe -fsSL -o media/<p>/thumbnail/reference-<videoId>.jpg https://i.ytimg.com/vi/<videoId>/maxresdefault.jpg`
+   `curl.exe -fsSL -o media/vscode-coding/<p>/thumbnail/reference-<videoId>.jpg https://i.ytimg.com/vi/<videoId>/maxresdefault.jpg`
    (1280x720). The "Learning Python" chain so far: `lgZNH_F3Iuo` ("Running Python for the first time", play-icon
    tile) -> print-function (printer-icon tile, "10 Uses of the Python print Function").
 2. **Three takes in parallel** with Higgsfield `nano_banana_2` (`video-creation/skills/higgsfield-generate/`),
@@ -33,7 +33,7 @@ one is an EDIT of that image, never a fresh generation: the face stays a likenes
 5. **QA every take** (open it): every word spelled right, icon reads at 640x360, face unchanged.
 6. **Export** each take: `python skills/thumbnail/export_thumb.py <take.png>...` -> centre-crop to exact 16:9,
    1920x1080, JPG q94 4:4:4 (~430 KB; YouTube's cap is 2 MB, the PNG is over it).
-7. Mike picks; the winner is copied to `media/<p>/thumbnail/<p>-thumb.jpg`, the only thumb at that level; takes
+7. Mike picks; the winner is copied to `media/vscode-coding/<p>/thumbnail/<p>-thumb.jpg`, the only thumb at that level; takes
    stay in `thumbnail/takes/`. He uploads it himself with the video.
 
 Cost note: 3 takes of nano_banana_2 at 2k, credits per the Higgsfield balance; a 502 still bills, recover the job

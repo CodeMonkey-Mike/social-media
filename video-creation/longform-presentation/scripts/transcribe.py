@@ -5,7 +5,7 @@ starts), which is exactly what we need to SEE when hunting fumbles. Saves a word
 json next to the source and prints segments with timestamps.
 
 Usage:
-    python transcribe.py "media/<file>.mp4" [--model medium] [--device auto]
+    python transcribe.py "media/<format>/<project>/<file>.mp4" [--model medium] [--device auto]
 """
 import argparse, json, os, sys
 

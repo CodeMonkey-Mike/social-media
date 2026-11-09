@@ -16,6 +16,7 @@ Exit: 0 PASS · 1 FAIL · 2 usage. Machine line: TRANSITIONS-LINT PASS|FAIL rows
 """
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -24,6 +25,16 @@ HERE = Path(__file__).resolve().parent
 LIB = HERE.parents[2] / "assets" / "transitions" / "library.json"   # skills/comp-build/ -> video-creation/
 CH_RE = re.compile(r"^###\s+(CH\s*\d+)\s*[-:]\s*([^(\n]+?)\s*\((\d+(?:\.\d+)?)-(\d+(?:\.\d+)?)\)([^\n]*)", re.M)
 FACE_RE = re.compile(r"^\|\s*\d+\s*\|\s*(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)\s*\|", re.M)
+
+
+def spine_duration(plan):
+    """Length in seconds of the spine TRANSITION-PLAN.json names, or None when it cannot be measured."""
+    try:
+        out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(plan.get("spine"))],
+                             capture_output=True, text=True)
+        return float(out.stdout.strip())
+    except (OSError, ValueError):
+        return None
 
 
 def lib_rows():
@@ -113,10 +124,13 @@ def main():
                 if not any(abs(tc - ta) <= 0.6 and role == "card" for tc, role, _ in tcs):
                     fails.append(f"{m.group(1)} title card at {ta:.2f}s has no `card` row in the plan")
         sec = re.search(r"^##\s+FACE windows.*?(?=^##\s|\Z)", ar, re.M | re.S)
+        spine_end = spine_duration(plan)
         for fm in FACE_RE.finditer(sec.group(0) if sec else ""):
             fa, fz = float(fm.group(1)), float(fm.group(2))
             for edge, label in ((fa, "cut-in"), (fz, "cut-out")):
-                if edge <= 0.05:
+                # a window that opens the video has no cut-in, and one that runs to the video's last frame has no cut-out
+                # (bullish-on-kaspa 2026-11-04, the first video to end on Mike's face)
+                if edge <= 0.05 or (label == "cut-out" and spine_end and edge >= spine_end - 0.1):
                     continue
                 if not any(abs(tc - edge) <= 0.6 and role == "face-cut" for tc, role, _ in tcs):
                     fails.append(f"FACE {label} at {edge:.2f}s has no `face-cut` row in the plan")

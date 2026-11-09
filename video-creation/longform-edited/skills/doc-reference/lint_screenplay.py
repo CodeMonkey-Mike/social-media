@@ -55,6 +55,10 @@ no-cold-open rule; the format owner wins on conflict):
      a bare `CH1` is a FAIL; a title that does not match its heading is a WARN. The bed column (`New bed?` /
      `Bed / carve`) that says only "continues" is a WARN: it names the SECTION of the file that plays and how it
      is extended (remix loop) or right-aligned (music.md section ONE TRACK, CARVED).
+ 17. THE HANDOFF LINE ROTATES (Mike 2026-10-01, in code 2026-11-01 after left-behind scripted "So, let's dive into
+     all this." AGAIN): the CH1 handoff ("So, let's ...") may not repeat any of the last 3 `recent_use` lines of
+     persona.json dive_in_variants (other projects). The graph records the scripted line there when GATE 1 is
+     approved (handoff_rotation.py), so the list can no longer go stale.
 
 Usage:
   python video-creation/longform-edited/skills/doc-reference/lint_screenplay.py <SCREENPLAY.md> [--face-max N] [--fix] [--voice-clone]
@@ -267,6 +271,7 @@ def lint(text: str, face_max=None, voice_clone=False):
 
 
 def main():
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
     ap = argparse.ArgumentParser()
     ap.add_argument("screenplay")
     ap.add_argument("--face-max", type=int, default=None)
@@ -286,6 +291,15 @@ def main():
             print(f"--fix: rewrote {p.name} (tags backticked / locked-line order / em dashes)")
             text = fixed
     fails, warns, faces, inserts = lint(text, args.face_max, args.voice_clone)
+    try:                                                          # 17
+        import handoff_rotation as HR
+        line = HR.find_handoff(text)
+        hit = HR.blocked(p.resolve().parent.name).get(HR.norm(line)) if line else None
+        if hit:
+            fails.append(f"handoff line '{line}' repeats a recent video ({hit}); pick a line from persona.json "
+                         "dive_in_variants that is not in the last 3 of recent_use (screenplay.md, the handoff rotation)")
+    except Exception as e:   # the persona file is the rule's input; a read error is reported, never a silent pass
+        warns.append(f"handoff rotation not checked: {e}")
     for w in warns:
         print(f"WARN  {w}")
     for f in fails:

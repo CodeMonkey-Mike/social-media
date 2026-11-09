@@ -97,6 +97,7 @@ class BatchState(TypedDict, total=False):
     delete_4b: List[int]
     delete_2nd: List[int]
     max_builders: int
+    build_clips: List[int]       # per-run --clips scope for lane2_build (empty = every surviving clip)
     lane3_brief: Optional[str]
     clip_brief: Optional[str]
     stub: str
@@ -834,6 +835,14 @@ def lane2_build(state: BatchState) -> BatchState:
     workers = max(1, workers)
     surviving = [c for c in prog(batch).get("clips", [])
                  if not str(c.get("gate", "")).startswith("deleted")]
+    # --clips scope (Mike, 2026-11-02, batch kaspa-cocktails: "only clip 1 into the queue, the others later",
+    # so the shorts do not hog the run queue while a longform has priority). Held clips are NOT deleted:
+    # a later `run.py batch --batch <b> --clips N,N --until build` builds them.
+    scope = [int(n) for n in (state.get("build_clips") or [])]
+    if scope:
+        held = [c["n"] for c in surviving if c["n"] not in scope]
+        surviving = [c for c in surviving if c["n"] in scope]
+        print(f"[batch] {node}: scoped by --clips to {scope}; held for later: {held}", flush=True)
     todo, external = [], []
     for c in surviving:
         if _built(c):
@@ -847,7 +856,8 @@ def lane2_build(state: BatchState) -> BatchState:
                 m.unlink()          # stale marker from a dead builder
             todo.append(c)
     if not todo and not external:
-        return {"steps": _step(state, node, "skipped", "every surviving clip is 7-built PASS")}
+        return {"steps": _step(state, node, "skipped",
+                               "every " + ("scoped" if scope else "surviving") + " clip is 7-built PASS")}
     print(f"[batch] {node}: {len(todo)} to build ({workers} at a time)"
           + (f"; {len(external)} already building elsewhere: "
              f"{[(c['n'], pid) for c, pid in external]}" if external else ""), flush=True)

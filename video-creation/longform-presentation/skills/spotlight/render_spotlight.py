@@ -18,8 +18,8 @@ The middle window and its frame count come from the resolved spec's `timeline` b
 EDIT window [head_until, tail_from) PLUS the planned chapter pauses.
 
 Usage (from anywhere):
-  python render_spotlight.py --project "<media/<project>>" --comp <CompId> --edit "<project> EDIT.mp4" --prep-audio
-  python render_spotlight.py --project "<media/<project>>" --comp <CompId>                 # all parts (resume-safe)
+  python render_spotlight.py --project "<media/deck-lecture/<project>>" --comp <CompId> --edit "<project> EDIT.mp4" --prep-audio
+  python render_spotlight.py --project "<media/deck-lecture/<project>>" --comp <CompId>                 # all parts (resume-safe)
   python render_spotlight.py --project ... --comp ... --frames 0-300 --with-audio          # one probe chunk, audible
 A full run takes tens of minutes: launch it detached with a log (see the skill doc) and poll; never as a tracked
 background task. Outputs: <project>/_previews/<project>-middle-partNN.mp4 (+ .log each); probes land there too.
@@ -57,7 +57,7 @@ def run_render(comp, out, frames, crf, public_dir, concurrency, muted, log):
 
 def _main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--project", required=True, help="media/<project> folder (holds <project>.scenes.resolved.json)")
+    ap.add_argument("--project", required=True, help="media/deck-lecture/<project> folder (holds <project>.scenes.resolved.json)")
     ap.add_argument("--comp", required=True, help="Remotion composition id")
     ap.add_argument("--edit", help="the EDIT mp4 (only needed with --prep-audio)")
     ap.add_argument("--prep-audio", action="store_true", help="write render-assets/middle-audio.m4a from the EDIT")
