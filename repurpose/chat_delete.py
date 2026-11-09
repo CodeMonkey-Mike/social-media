@@ -88,11 +88,12 @@ def _try_click(page, candidates, timeout=3000):
 RATE_LIMIT_WAITS_MS = (15000, 30000, 45000, 60000)   # HTTP 429 backoff (2026-09-17)
 
 
-def _api_get_chat(page, chat_id):
+def _api_get_chat(page, chat_id, waits=RATE_LIMIT_WAITS_MS):
     """GET the conversation via the backend API. A 429 (burst rate limit — hit after ~14
-    rapid deletes on 2026-09-17) backs off and retries before it is reported."""
+    rapid deletes on 2026-09-17) backs off and retries before it is reported. `waits=()`
+    returns the 429 at once (heal_titles: a backstop that defers instead of waiting)."""
     r = page.evaluate(_GET_CHAT_JS, chat_id)
-    for wait in RATE_LIMIT_WAITS_MS:
+    for wait in waits:
         if not (r and r.get("status") == 429):
             break
         print(f"   backend API 429 (rate limit) — waiting {wait // 1000}s")
@@ -202,7 +203,14 @@ def heal_titles(page, reg_path=None) -> dict:
     """TITLE SELF-REPAIR (2026-07-30 backstop): re-assert the gated title on registry
     entries with VERIFIED-RENAME PROVENANCE only (a recorded `title` that itself passes
     the gate — written only after a read-back-verified rename, so the chat was provably
-    ours). Healed gate-skipped entries requeue for deletion. No provenance = never touch."""
+    ours). Healed gate-skipped entries requeue for deletion. No provenance = never touch.
+
+    429 = STOP, defer the rest (2026-11-09, batch stock-market): this GETs every chat in
+    the registry, and with the per-GET 429 backoff (up to 150 s each) one throttled sweep
+    held the shared chatgpt profile ~half an hour AFTER its images were done, so Lane 3,
+    holding the stage lock, crashed launching the profile. Healing is a backstop: anything
+    not healed now is healed by the next sweep, and delete_chat's own live-title gate (it
+    keeps the full backoff) still stands between a drifted title and a deletion."""
     reg = pool.status(reg_path)
     groups = [
         (reg.get("chats") or [], False, "active"),
@@ -218,9 +226,13 @@ def heal_titles(page, reg_path=None) -> dict:
             if not m:
                 continue
             try:
-                live = _api_get_chat(page, m.group(1))
+                live = _api_get_chat(page, m.group(1), waits=())
             except Exception:
                 continue
+            if live and live.get("status") == 429:
+                print("  [heal] backend API 429: healing deferred to the next sweep "
+                      f"(healed {healed} so far)")
+                return {"healed": healed, "failed": failed, "deferred": True}
             if not live or live.get("status") != 200:
                 continue  # gone or unreachable — the sweep handles it
             if pool.TITLE_GATE_RE.match(live.get("title") or ""):

@@ -37,7 +37,7 @@ REPO_ROOT = HERE.parent
 sys.path.insert(0, str(HERE))
 
 import queue_writer as qw  # noqa: E402
-from gen_images import Generator, subdir_for  # noqa: E402
+from gen_images import Generator, subdir_for, sweep_once  # noqa: E402
 import chat_pool  # noqa: E402
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -124,9 +124,12 @@ def stage_generate(plan, args) -> int:
             print(f"\n── item {k + 1}/{len(ordered)}: {item['purpose']} "
                   f"{item['image_id']} {item['slug']}"
                   f"{' [+ref]' if item.get('ref') else ''} ──")
+            # sweep=False: ONE sweep after the last item (finally below), never one per
+            # item. A per-item sweep GETs every pool chat via the backend API and tripped
+            # ChatGPT's 429 limit mid-batch (2026-11-09, stock-market; gen_images header).
             g = Generator(item["purpose"], images_base=args.images_base,
                           registry=args.registry, batch=plan["batch"],
-                          fake=args.fake_gen)
+                          fake=args.fake_gen, sweep=False)
             res = g.run([item])
             if res["fail"] and not args.fake_gen:
                 # A chat that stops surfacing renders (the capture keeps seeing the
@@ -138,12 +141,16 @@ def stage_generate(plan, args) -> int:
                                     reg_path=Path(args.registry) if args.registry else None)
                 g = Generator(item["purpose"], images_base=args.images_base,
                               registry=args.registry, batch=plan["batch"],
-                              fake=args.fake_gen)
+                              fake=args.fake_gen, sweep=False)
                 res = g.run([item])
             fails += res["fail"]
             print(f"PROGRESS {int((k + 1) * 100 / len(ordered))}% "
                   f"(batch item {k + 1}/{len(ordered)})")
     finally:
+        # The ONE retired-chat sweep of the stage, still under the chatgpt lock and after
+        # every per-item browser closed. In the finally so a crash still sweeps.
+        if not args.fake_gen:
+            sweep_once(Path(args.registry) if args.registry else None)
         if locked:
             _lock("release", owner)
     print(f"STAGE-DONE generate (fails={fails})")

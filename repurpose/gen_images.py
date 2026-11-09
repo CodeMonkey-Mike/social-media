@@ -40,12 +40,23 @@
 #   - End of run, in a `finally` (crash/kill-proof): a chat born this run that holds
 #     zero images is retired; chat_delete.sweep_retired runs (a sweep failure never
 #     blocks the run); the run's journal window closes (reconcile_chats reads it).
+#   - SWEEP ONCE PER BATCH, NOT PER ITEM (2026-11-09, batch stock-market): the sweep's
+#     heal_titles step GETs EVERY pool chat through the backend API (session + conversation
+#     = 2 requests per chat, ~22 with 11 chats). lane3_batch runs one Generator PER ITEM, so
+#     that burst landed after every image, stacked on the capture's own API polling, and the
+#     account went 429: the next item's page loaded with its composer covered and the click
+#     timed out (3 Lane 3 runs died at item 4-5). Callers that loop items pass sweep=False
+#     and call sweep_once() at the end; the default (sweep=True) keeps every other caller as
+#     it was. A composer that will not take a click now gets a screenshot (to %TEMP%, never
+#     the public repo), a 60 s cool-down, a reload and one more try, then a clean item
+#     FAIL instead of an exception that killed the whole stage.
 
 import argparse
 import json
 import random
 import re
 import sys
+import tempfile
 import time
 from pathlib import Path
 
@@ -65,6 +76,10 @@ IMAGE_URL_PATTERN = "estuary/content"
 COMPOSER_SEL = ('#prompt-textarea, div[contenteditable="true"][data-id], '
                 'div.ProseMirror[contenteditable="true"][role="textbox"]')
 FILE_ID_RE = re.compile(r"id=(file_[A-Za-z0-9]+)")
+# Composer-click failure diagnostics live OUTSIDE the repo (it is public on GitHub and a
+# ChatGPT screenshot shows the account): %TEMP%\chatgpt-diag\.
+DIAG_DIR = Path(tempfile.gettempdir()) / "chatgpt-diag"
+COMPOSER_COOLDOWN_MS = 60000   # wait before the one reload + re-click (429 windows are short)
 
 _GET_GEN_IMGS_JS = """
 () => Array.from(document.querySelectorAll('img')).map(i => i.src)
@@ -330,14 +345,74 @@ def dismiss_dialog(page) -> bool:
         return False
 
 
+PROFILE_WAIT_S = 1800      # max wait for another process to let go of the chatgpt profile
+PROFILE_POLL_S = 30
+
+
+def _profile_busy(exc) -> bool:
+    """Chrome hands a second launch on a profile that is already open to the running
+    browser ("Opening in existing browser session") and Playwright reports the target as
+    closed. That is contention, not a broken profile."""
+    s = str(exc)
+    return "existing browser session" in s or "has been closed" in s
+
+
+def launch_profile_waiting(p):
+    """chat_pool.launch_profile, but WAIT (poll 30 s, up to 30 min) while another process
+    still holds the shared chatgpt profile. 2026-11-09: a shorts builder released the
+    `chatgpt` stage lock when its images were done, while its gen run was still sweeping
+    with the profile open; Lane 3 then got the lock and crashed on launch. The lock alone
+    does not cover a holder's tail, so the launch waits. Any other error raises at once.
+    (chat_pool.launch_profile itself stays fail-loud for its other callers.)"""
+    t0 = time.monotonic()
+    while True:
+        try:
+            return pool.launch_profile(p)
+        except Exception as e:
+            waited = time.monotonic() - t0
+            if not _profile_busy(e) or waited >= PROFILE_WAIT_S:
+                raise
+            print(f"   chatgpt profile is open in another process; waiting "
+                  f"{PROFILE_POLL_S}s (waited {int(waited)}s of {PROFILE_WAIT_S}s)")
+            time.sleep(PROFILE_POLL_S)
+
+
+def sweep_once(registry=None) -> dict:
+    """ONE retired-chat sweep (heal_titles + delete, chat_delete's gates intact) in its own
+    browser, for callers that ran their Generators with sweep=False (lane3_batch: one
+    Generator per item). Opens the shared chatgpt profile, so call it only after every
+    Generator has closed its browser. Never raises: anything missed stays queued for
+    repurpose/delete_chats.py (cleanup). Always runs (no early return): heal_titles also
+    re-asserts ACTIVE chats' gated titles, which the per-item sweep used to do."""
+    try:
+        from playwright.sync_api import sync_playwright
+        with sync_playwright() as p:
+            browser = launch_profile_waiting(p)
+            try:
+                page = browser.new_page()
+                page.goto("https://chatgpt.com/", wait_until="domcontentloaded",
+                          timeout=30000)
+                page.wait_for_timeout(2000)
+                print("[chat-delete] end-of-batch sweep (once, after the last item)")
+                return chat_delete.sweep_retired(page, registry)
+            finally:
+                browser.close()
+    except Exception as e:
+        print("  [chat-delete] end-of-batch sweep error: " + str(e).splitlines()[0])
+        return {"deleted": 0, "failed": 0, "gated": 0, "error": str(e).splitlines()[0]}
+
+
 class Generator:
     def __init__(self, prefix, images_base=None, registry=None, batch=None,
-                 fake=False):
+                 fake=False, sweep=True):
         self.prefix = prefix
         self.purpose = prefix                    # purpose == prefix, like the JS
         self.reg = registry                      # None = production registry
         self.batch = batch
         self.fake = fake
+        # sweep=False: the CALLER sweeps once at the end (sweep_once). See the header
+        # note "SWEEP ONCE PER BATCH" for why a per-item sweep tripped the 429 limit.
+        self.sweep = sweep
         base = Path(images_base) if images_base else IMG_BASE_DEFAULT
         self.outdir = base / subdir_for(prefix)
         self.outdir.mkdir(parents=True, exist_ok=True)
@@ -388,6 +463,51 @@ class Generator:
         print(f"  reusing pool chat ({pool.count_for(self.purpose, self.reg)}"
               f"/{pool.cap(self.reg)}): {active}")
 
+    def _diag_shot(self, item, tag) -> None:
+        """Screenshot + the first visible text, so a covered composer can be SEEN next
+        time instead of guessed at. Written to %TEMP% (the repo is public). Never raises."""
+        try:
+            DIAG_DIR.mkdir(parents=True, exist_ok=True)
+            stamp = time.strftime("%Y%m%d-%H%M%S")
+            shot = DIAG_DIR / f"{stamp}-{self.prefix}-{item['slug']}-{tag}.png"
+            self.page.screenshot(path=str(shot))
+            try:
+                txt = " ".join(self.page.locator("body").inner_text(timeout=3000).split())[:300]
+            except Exception:
+                txt = "(body text unreadable)"
+            print(f"   diag screenshot: {shot}")
+            print(f"   diag page text: {txt}")
+        except Exception as e:
+            print("   diag screenshot failed: " + str(e).splitlines()[0][:80])
+
+    def _click_composer(self, item) -> bool:
+        """Click the composer. On a timeout (2026-11-09: a 429-throttled page whose composer
+        is visible but covered), screenshot it, cool down, reload the chat, dismiss any modal
+        and try ONCE more. False = a clean item failure (the caller's retry / rotate paths
+        take over); this never raises, so one bad page can no longer kill a whole batch.
+        Nothing has been sent yet at this point, so the retry cannot duplicate a render."""
+        page = self.page
+        try:
+            page.locator(COMPOSER_SEL).first.click(timeout=30000)
+            return True
+        except Exception as e:
+            print(f"   composer click timed out ({str(e).splitlines()[0][:70]})")
+        self._diag_shot(item, "composer-1")
+        print(f"   cooling down {COMPOSER_COOLDOWN_MS // 1000}s, then reloading the chat once")
+        page.wait_for_timeout(COMPOSER_COOLDOWN_MS)
+        try:
+            target = self.navigated_url if is_real_conv(self.navigated_url) else page.url
+            goto_chat(page, target)
+            dismiss_dialog(page)
+            page.locator(COMPOSER_SEL).first.click(timeout=30000)
+            print("   composer click OK after the cool-down")
+            return True
+        except Exception as e:
+            print(f"   composer still not clickable ({str(e).splitlines()[0][:70]})")
+            self._diag_shot(item, "composer-2")
+            print(f"FAIL (composer not clickable) {item['slug']}: prompt NOT sent")
+            return False
+
     # ── one image (port of genOne, all gates intact) ──────────────────────────
 
     def gen_one(self, item):
@@ -397,8 +517,8 @@ class Generator:
             print(f"SKIP (exists) {item['slug']}")
             return "skip"
         dismiss_dialog(page)
-        composer = page.locator(COMPOSER_SEL).first
-        composer.click()
+        if not self._click_composer(item):
+            return False
         page.wait_for_timeout(600)
         # Upload the ref FIRST, THEN snapshot: the ref must be part of the `before`
         # baseline or it looks like a brand-new file_id and gets captured as the result.
@@ -626,10 +746,11 @@ class Generator:
                                 "zero images: born this run, produced nothing", self.reg)
         except Exception as e:
             print("  [chat-pool] zero-image retire error: " + str(e).splitlines()[0])
-        try:
-            chat_delete.sweep_retired(self.page, self.reg)
-        except Exception as e:
-            print("  [chat-delete] sweep error: " + str(e).splitlines()[0])
+        if self.sweep:
+            try:
+                chat_delete.sweep_retired(self.page, self.reg)
+            except Exception as e:
+                print("  [chat-delete] sweep error: " + str(e).splitlines()[0])
         try:
             pool.journal_end(self.run_id, self.reg, ok=ok, fail=fail, born=self.born_url)
         except Exception as e:
@@ -674,7 +795,7 @@ class Generator:
               f"cap={pool.cap(self.reg)} | current count="
               f"{pool.count_for(self.purpose, self.reg)}")
         with sync_playwright() as p:
-            browser = pool.launch_profile(p)
+            browser = launch_profile_waiting(p)
             self.page = browser.new_page()
             self.run_id = pool.journal_start(self.purpose, self.batch, self.reg)
             try:
