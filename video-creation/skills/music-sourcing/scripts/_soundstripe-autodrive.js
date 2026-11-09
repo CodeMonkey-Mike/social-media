@@ -2,7 +2,7 @@
 // Uses the already-logged-in soundstripe-profile to: load the library, run a
 // keyword search by typing in the search box, and screenshot + dump the DOM so
 // we learn the search endpoint and the result-card/download selectors. Captures
-// all api.soundstripe JSON (with request postData) to music/_recon/.
+// all api.soundstripe JSON (with request postData) to video-creation/cache/music-sourcing/recon/.
 
 const path = require('path');
 const fs   = require('fs');
@@ -10,7 +10,7 @@ const REPO = 'C:\\Users\\mnede\\Documents\\Claude\\social-media';
 const { chromium } = require(path.join(REPO, 'schedule-tweets', 'node_modules', 'playwright'));
 
 const PROFILE   = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\soundstripe-profile';
-const RECON_DIR = path.join(REPO, 'video-creation', 'music', '_recon');
+const RECON_DIR = require('../../cache-path').cacheDir('music-sourcing', 'recon');
 const NET_DIR   = path.join(RECON_DIR, 'net2');
 const SHOT_DIR  = path.join(RECON_DIR, 'shots');
 const DOM_DIR   = path.join(RECON_DIR, 'dom');

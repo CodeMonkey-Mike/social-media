@@ -1,6 +1,7 @@
 // probe-model.js --model "Sync 3"  — select a lip-sync model and report what inputs it expects
 // (file input accept attrs + visible composer labels). Read-only; never generates.
 const { chromium } = require('playwright');
+const { cachePath } = require('../cache-path');  // shared tool cache: video-creation/cache/<tool>/
 const PROFILE_DIR = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\elevenlabs-profile';
 const URL = 'https://elevenlabs.io/app/image-video';
 const MODELS_RE = /Veed Fabric|Creatify Aurora|OmniHuman|Sync \d|Sync Lipsync|HeyGen|Veed Lipsync/;
@@ -29,6 +30,6 @@ const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
   console.log('MODEL:',MODEL);
   console.log('file inputs accept:',JSON.stringify(info.inputs));
   console.log('composer labels:',JSON.stringify(info.labels));
-  await p.screenshot({path:`el-probe-${MODEL.replace(/\W+/g,'-')}.png`});
+  await p.screenshot({path: cachePath('elevenlabs-lipsync', 'shots', `el-probe-${MODEL.replace(/\W+/g,'-')}.png`)});
   await p.waitForTimeout(1500); await b.close();
 })().catch(e=>{console.error('probe failed:',e.message);process.exit(1);});

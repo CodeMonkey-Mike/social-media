@@ -2,6 +2,7 @@
 // so we can transcribe and pick the right one (handles duplicate same-model renders).
 // Usage: node _grab-recent.js [N=5]
 const { chromium } = require('playwright');
+const { cachePath } = require('../cache-path');  // shared tool cache: video-creation/cache/<tool>/
 const fs = require('fs');
 const PROFILE_DIR = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\elevenlabs-profile';
 const N = parseInt(process.argv[2] || '5', 10);
@@ -22,7 +23,7 @@ const N = parseInt(process.argv[2] || '5', 10);
   await page.waitForTimeout(1500);
   // scroll to load
   for (let i = 0; i < 3; i++) { await page.mouse.wheel(0, 1000); await page.waitForTimeout(800); }
-  await page.screenshot({ path: 'el-assets.png' });
+  await page.screenshot({ path: cachePath('elevenlabs-lipsync', 'shots', 'el-assets.png') });
   console.log('after Assets nav URL:', page.url());
   // collect video srcs in DOM order (newest first), dedup
   const srcs = await page.evaluate((n) => {

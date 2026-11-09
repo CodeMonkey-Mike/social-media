@@ -1,6 +1,6 @@
 // _playlist-enum.js — open a private Soundstripe playlist with the authed profile,
 // sniff the app API, and dump the playlist's songs (id + title + artists) to
-// _recon/playlist-<id>.json. Recon helper for bulk-downloading a playlist.
+// cache/music-sourcing/recon/playlist-<id>.json. Recon helper for bulk-downloading a playlist.
 //
 //   node _playlist-enum.js <playlistId>
 //
@@ -9,7 +9,7 @@ const path = require('path');
 const algoliaKey = require('./algolia-key');
 
 const MUSIC_DIR = path.join(__dirname, '..');
-const RECON     = path.join(MUSIC_DIR, '_recon');
+const RECON     = require('../../cache-path').cacheDir('music-sourcing', 'recon');
 const PROFILE   = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\soundstripe-profile';
 
 (async () => {
@@ -125,7 +125,7 @@ const PROFILE   = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\soundstripe
   console.log(`auth token: ${authToken ? 'captured' : 'MISSING'}`);
   console.log(`songs found: ${uniq.length}`);
   for (const s of uniq) console.log(`  [${s.id}] ${s.title} — ${(s.artists||[]).join(', ')}`);
-  console.log(`\nApi hits observed: ${apiHits.length} (see _recon/playlist-${playlistId}-apihits.json)`);
+  console.log(`\nApi hits observed: ${apiHits.length} (see cache/music-sourcing/recon/playlist-${playlistId}-apihits.json)`);
 
   try { await browser.close(); } catch {}
 })();

@@ -33,6 +33,11 @@ What does NOT go in `skills/`: the master `SKILL.md`, the track *pipelines* (`lo
 `yuli-y-ana/`), and infra (`assets/`,
 `remotion/`, `shorts/`, `style-guide/`) — those stay at the `video-creation/` root.
 
+**Skill folders hold code and docs only (Mike, 2026-11-09).** A tool's working files go in the video's project
+folder, or in `cache/<tool>/` when they're shared or throwaway diagnostics (`skills/cache-path.js` /
+`skills/cache_path.py` build the path; `cache/README.md` explains it). Root `CLAUDE.md` "Where files go" is the rule,
+and `scripts/check-file-placement.py` flags anything left in a skill folder.
+
 ## Track folders are split by HOW THE SPINE IS PRODUCED (Mike, 2026-10-17)
 
 A video's folder is decided by how its spoken spine is made, NOT by the channel it is published on

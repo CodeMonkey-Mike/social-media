@@ -25,7 +25,7 @@ persists in the profile. Never use the main Chrome profile, never kill all Chrom
    `media/<project>/BROLL-PLAN.md`): timestamp, the spoken line, and a concrete search query.
 2. **Search:**
    ```
-   python video-creation/skills/envato-broll/search_envato.py "bank vault door closing" --max 12 --out results.json
+   python video-creation/skills/envato-broll/search_envato.py "bank vault door closing" --max 12 --out "<project>/_previews/envato/<slot>.json"
    ```
    Dumps candidate clips as JSON: `{ title, url, duration, resolution, previewImage }`.
    Claude evaluates candidates by title/duration/resolution and by READING the preview images
@@ -40,6 +40,12 @@ persists in the profile. Never use the main Chrome profile, never kill all Chrom
    video, default = assets folder's project). Saves into the project's own `assets/video/`.
 4. **Log it.** Append source URL + slot to the project's b-roll plan so the license trail and
    the edit plan stay in one place.
+
+> **Where files go (Mike, 2026-11-09).** Everything a project's b-roll search produces (search JSON, pick sheets,
+> contact sheets, preview frames, logs) goes in THAT project: `<project>/_previews/envato/`. Downloads go in
+> `<project>/assets/vid/`. This skill folder holds code and docs only. The tools' own debug screenshots go to
+> `video-creation/cache/envato-broll/shots/` automatically. 6 GB of old project searches had piled up here
+> before this rule; `scripts/check-file-placement.py` now flags any file left in a skill folder.
 
 > **Disk rule (Mike, 2026-06-20; threshold lowered 2026-07-06): cap big originals at ~100 MB on save.**
 > If a downloaded Envato clip is **larger than 800,000,000 bytes (800 MB, measured in plain decimal

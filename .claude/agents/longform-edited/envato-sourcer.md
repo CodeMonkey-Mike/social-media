@@ -36,6 +36,9 @@ comp-ready b-roll files. The pick is a taste call (that is why you exist); the m
   flag it, never generate the video unasked.
 
 ## Mechanics (per the skill) + hard rules
+- **Where files go:** search JSON, pick sheets, contact sheets and preview frames go in the project's
+  `_previews/envato/`; downloads go in its `assets/vid/`. NEVER inside `video-creation/skills/envato-broll/` (code and
+  docs only) and never the repo root (file-placement rule, root `CLAUDE.md`).
 - Downloads via the skill's PYTHON tools (`search_envato.py`, `download_envato.py`) with the existing Envato login/session. **Browser flows are
   ONE-ATTEMPT: if a download seems stuck, READ THE LOG — never relaunch blind, never kill main Chrome**
   (per-profile kills only).

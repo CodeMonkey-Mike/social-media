@@ -1,5 +1,6 @@
 // Navigate the Image & Video page to the History tab and screenshot it, so we can locate renders.
 const { chromium } = require('playwright');
+const { cachePath } = require('../cache-path');  // shared tool cache: video-creation/cache/<tool>/
 const PROFILE_DIR = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\elevenlabs-profile';
 (async () => {
   const browser = await chromium.launchPersistentContext(PROFILE_DIR, {
@@ -17,7 +18,7 @@ const PROFILE_DIR = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\elevenlab
     if (await t.isVisible().catch(() => false)) { await t.click().catch(() => {}); await page.waitForTimeout(3000); break; }
   }
   await page.waitForTimeout(2000);
-  await page.screenshot({ path: 'el-history-now.png', fullPage: false });
+  await page.screenshot({ path: cachePath('elevenlabs-lipsync', 'shots', 'el-history-now.png'), fullPage: false });
   console.log('URL:', page.url());
   // dump the tab labels + whether an active "History" tab exists
   const tabs = await page.$$eval('[role="tab"],button,a', els => els.map(e => (e.innerText||'').trim()).filter(t => t && t.length < 18 && /history|explore/i.test(t)));

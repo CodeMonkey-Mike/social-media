@@ -10,6 +10,7 @@
 // Selector notes live in SKILL.md — update BOTH when Envato changes their DOM.
 
 const { chromium } = require('playwright');
+const { cachePath } = require('../cache-path');  // shared tool cache: video-creation/cache/<tool>/
 const fs = require('fs');
 
 const PROFILE_DIR = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\envato-profile';
@@ -76,7 +77,7 @@ function rnd(min, max) { return Math.floor(Math.random() * (max - min + 1)) + mi
     await page.mouse.wheel(0, 1200);
     await page.waitForTimeout(rnd(800, 1500));
   }
-  if (DEBUG) await page.screenshot({ path: 'envato-search-debug.png' });
+  if (DEBUG) await page.screenshot({ path: cachePath('envato-broll', 'shots', 'envato-search-debug.png') });
 
   const items = await page.evaluate(({ max, type }) => {
     const out = [];

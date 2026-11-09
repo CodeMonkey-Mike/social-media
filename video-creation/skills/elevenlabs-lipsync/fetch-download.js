@@ -4,6 +4,7 @@
 //
 //   node fetch-download.js --out "...\result.mp4" [--model "Sync 3"]
 const { chromium } = require('playwright');
+const { cachePath } = require('../cache-path');  // shared tool cache: video-creation/cache/<tool>/
 const fs = require('fs'), path = require('path');
 const PROFILE = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\elevenlabs-profile';
 function arg(n, d) { const i = process.argv.indexOf('--' + n); return i > -1 ? process.argv[i + 1] : d; }
@@ -61,7 +62,7 @@ function findDl(page) {
     if (info2 && info2.dl) { pos = info2.dl; break; }
     await page.waitForTimeout(1500);
   }
-  if (!pos) { console.error('no finished Download button for', MODEL, 'in time'); await page.screenshot({ path: 'el-dl-fail.png' }); await b.close(); process.exit(2); }
+  if (!pos) { console.error('no finished Download button for', MODEL, 'in time'); await page.screenshot({ path: cachePath('elevenlabs-lipsync', 'shots', 'el-dl-fail.png') }); await b.close(); process.exit(2); }
 
   await page.mouse.move(pos.x, pos.y); await page.waitForTimeout(rnd(400, 900));
   let download = null;

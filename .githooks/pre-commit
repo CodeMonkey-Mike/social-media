@@ -1,0 +1,5 @@
+#!/bin/sh
+# Blocks a commit that adds a file where it doesn't belong: the repo root, inside a skills/ folder, or a
+# "Users...AppData..." path-bug folder. Rule: root CLAUDE.md, "Where files go". Enable once per clone with:
+#   git config core.hooksPath .githooks
+exec python scripts/check-file-placement.py --staged

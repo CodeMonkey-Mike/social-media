@@ -2,7 +2,7 @@
 // music library. For each track NOT already present: full-track mp3 (+ license code
 // via the documented `download`) THEN the alternate-versions WAV bundle (instrumentals /
 // section cuts via `download-alt`), unzip into the track's folder, delete the zip.
-// Resumable: tracks progress in _recon/playlist-<id>-progress.json, so re-invoking
+// Resumable: tracks progress in cache/music-sourcing/recon/playlist-<id>-progress.json, so re-invoking
 // continues where it left off. SEQUENTIAL by design (shared soundstripe Chrome profile).
 //
 //   node _playlist-download.js <playlistId> [--limit N] [--skip 9141,11370]
@@ -13,7 +13,7 @@ const { execFileSync } = require('child_process');
 
 const HERE      = __dirname;
 const MUSIC_DIR = path.join(HERE, '..');                       // skills/music-sourcing
-const RECON     = path.join(MUSIC_DIR, '_recon');
+const RECON     = require('../../cache-path').cacheDir('music-sourcing', 'recon');
 const ASSETS    = path.join(MUSIC_DIR, '..', '..', 'assets', 'music'); // video-creation/assets/music
 const SS        = path.join(HERE, 'soundstripe.js');
 

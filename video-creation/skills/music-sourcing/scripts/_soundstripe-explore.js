@@ -2,7 +2,7 @@
 // Opens Soundstripe in a real Chrome with a dedicated persistent profile and
 // passively captures the network (JSON API responses, audio/stream URLs, and
 // download events) while YOU drive: log in once, run a search, preview a track,
-// hit download. Everything useful is dumped to music/_recon/ so we can build the
+// hit download. Everything useful is dumped to video-creation/cache/music-sourcing/recon/ so we can build the
 // real scraper around the actual endpoints instead of guessing DOM selectors.
 //
 // Run (from repo root):
@@ -17,7 +17,7 @@ const REPO     = 'C:\\Users\\mnede\\Documents\\Claude\\social-media';
 const { chromium } = require(path.join(REPO, 'schedule-tweets', 'node_modules', 'playwright'));
 
 const PROFILE   = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\soundstripe-profile';
-const RECON_DIR = path.join(REPO, 'video-creation', 'music', '_recon');
+const RECON_DIR = require('../../cache-path').cacheDir('music-sourcing', 'recon');
 const NET_DIR   = path.join(RECON_DIR, 'net');
 const DL_DIR    = path.join(RECON_DIR, 'downloads');
 const MAX_MS    = 20 * 60 * 1000; // auto-close after 20 min
@@ -105,7 +105,7 @@ function wirePage(page) {
   console.log('   2) Search e.g. "serene ambient" / "calm meditation".');
   console.log('   3) Play a preview, open a track page.');
   console.log('   4) Click DOWNLOAD on ONE track so we capture the download flow.');
-  console.log(' Capturing network -> video-creation/skills/music-sourcing/_recon/  (close window when done)');
+  console.log(' Capturing network -> video-creation/cache/music-sourcing/recon/  (close window when done)');
   console.log('==================================================================\n');
 
   let closed = false;
@@ -115,7 +115,7 @@ function wirePage(page) {
     await page.waitForTimeout(3000).catch(() => { closed = true; });
   }
 
-  console.log(`\nDone. Captured ${n} JSON responses. See video-creation/skills/music-sourcing/_recon/.`);
+  console.log(`\nDone. Captured ${n} JSON responses. See video-creation/cache/music-sourcing/recon/.`);
   try { await browser.close(); } catch {}
   process.exit(0);
 })();

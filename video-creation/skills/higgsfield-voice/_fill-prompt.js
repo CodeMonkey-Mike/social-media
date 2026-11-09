@@ -1,4 +1,5 @@
 const { connect } = require('./_cdp');
+const { cachePath } = require('../cache-path');  // shared tool cache: video-creation/cache/<tool>/
 const fs = require('fs');
 
 (async () => {
@@ -29,7 +30,7 @@ const fs = require('fs');
     return ce ? ce.innerText : '(none)';
   });
   console.log('FIELD NOW:', JSON.stringify(val));
-  await page.screenshot({ path: '_filled.png' });
+  await page.screenshot({ path: cachePath('higgsfield-voice', 'shots', '_filled.png') });
   console.log('saved _filled.png');
   await browser.close();
 })().catch(e => { console.error('ERR', e.message); process.exit(1); });

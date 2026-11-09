@@ -1,5 +1,6 @@
 // Open the Audio page's Model selector and dump the model names + any per-model controls. Read-only.
 const { connect } = require('./_cdp');
+const { cachePath } = require('../cache-path');  // shared tool cache: video-creation/cache/<tool>/
 (async () => {
   const { browser, page } = await connect();
   if (!page.url().includes('/audio')) { await page.goto('https://higgsfield.ai/audio', { waitUntil: 'domcontentloaded' }); await page.waitForTimeout(6000); }
@@ -9,6 +10,6 @@ const { connect } = require('./_cdp');
   await page.waitForTimeout(2000);
   const leafs = await page.evaluate((isVisSrc) => { const isVis = eval(isVisSrc); const out=[]; for (const e of document.querySelectorAll('*')) { const t=(e.innerText||'').trim(); if (t && t.length<60 && e.children.length===0 && isVis(e)) out.push(t);} return [...new Set(out)]; }, isVis);
   console.log('VISIBLE:', leafs.join(' | '));
-  await page.screenshot({ path: '_models.png' });
+  await page.screenshot({ path: cachePath('higgsfield-voice', 'shots', '_models.png') });
   await browser.close();
 })().catch(e => { console.error('ERR', e.message); process.exit(1); });

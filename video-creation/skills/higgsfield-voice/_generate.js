@@ -1,4 +1,5 @@
 const { connect } = require('./_cdp');
+const { cachePath } = require('../cache-path');  // shared tool cache: video-creation/cache/<tool>/
 (async () => {
   const { browser, page } = await connect();
   await page.waitForTimeout(400);
@@ -50,6 +51,6 @@ const { connect } = require('./_cdp');
     if (i%5===0) console.log(`  waiting... ${i}s`);
   }
   console.log('NEW MP3 URL:', found || '(none found in 90s)');
-  await page.screenshot({ path: '_generated.png' });
+  await page.screenshot({ path: cachePath('higgsfield-voice', 'shots', '_generated.png') });
   await browser.close();
 })().catch(e => { console.error('ERR', e.message); process.exit(1); });

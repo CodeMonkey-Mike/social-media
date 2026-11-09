@@ -12,6 +12,7 @@
 //  - Selector notes live in SKILL.md — update BOTH when Envato changes the DOM.
 
 const { chromium } = require('playwright');
+const { cachePath } = require('../cache-path');  // shared tool cache: video-creation/cache/<tool>/
 const fs = require('fs');
 const path = require('path');
 
@@ -55,7 +56,7 @@ function rnd(min, max) { return Math.floor(Math.random() * (max - min + 1)) + mi
 
   const gotIt = page.locator('button:has-text("Okay, got it")');
   if (await gotIt.isVisible().catch(() => false)) await gotIt.click().catch(() => {});
-  if (DEBUG) await page.screenshot({ path: 'envato-item-debug.png' });
+  if (DEBUG) await page.screenshot({ path: cachePath('envato-broll', 'shots', 'envato-item-debug.png') });
 
   // item overlay download button (data-cy on the new app; text fallback). Default resolution download
   // (usually 4K) is fine — we cap size by transcoding below (SKILL disk rule).
@@ -83,7 +84,7 @@ function rnd(min, max) { return Math.floor(Math.random() * (max - min + 1)) + mi
   await dlButton.click();
   await sleep(rnd(1200, 2200));
   if (!dlUrl && !browserGone) {
-    if (DEBUG) await page.screenshot({ path: 'envato-license-debug.png' }).catch(() => {});
+    if (DEBUG) await page.screenshot({ path: cachePath('envato-broll', 'shots', 'envato-license-debug.png') }).catch(() => {});
     // if a license/confirm dialog appears, confirm it (older flow / some item types)
     const confirm = page.locator(
       '[role="dialog"] button:has-text("Add & Download"), [role="dialog"] button:has-text("License & download"), [role="dialog"] button:has-text("Download")'

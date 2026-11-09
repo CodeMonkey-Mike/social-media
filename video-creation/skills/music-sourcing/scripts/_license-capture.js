@@ -4,7 +4,7 @@
 // Claims / the download section) and triggers it. This script captures the EXACT
 // request that produces the code — method, url, request headers (incl. Authorization
 // bearer), request body — plus the response, and dumps it to
-//   _recon/license-capture.json
+//   cache/music-sourcing/recon/license-capture.json
 // so we can wire a programmatic replay into soundstripe.js download.
 //
 //   node _license-capture.js
@@ -16,7 +16,7 @@ const fs   = require('fs');
 const path = require('path');
 
 const MUSIC_DIR = path.join(__dirname, '..');
-const OUT = path.join(MUSIC_DIR, '_recon', 'license-capture.json');
+const OUT = require('../../cache-path').cachePath('music-sourcing', 'recon', 'license-capture.json');
 const PROFILE = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\soundstripe-profile';
 const { chromium } = require(path.join('C:\\Users\\mnede\\Documents\\Claude\\social-media', 'schedule-tweets', 'node_modules', 'playwright'));
 

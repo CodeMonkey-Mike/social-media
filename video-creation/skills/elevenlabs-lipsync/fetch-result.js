@@ -3,6 +3,7 @@
 //
 // Usage: node fetch-result.js --out "...\result.mp4" [--model "Creatify Aurora"] [--minutes 8]
 const { chromium } = require('playwright');
+const { cachePath } = require('../cache-path');  // shared tool cache: video-creation/cache/<tool>/
 const fs = require('fs');
 const path = require('path');
 
@@ -34,7 +35,7 @@ const rnd = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
     const t = mk().first();
     if (await t.isVisible().catch(() => false)) { await t.click().catch(() => {}); await page.waitForTimeout(2500); break; }
   }
-  await page.screenshot({ path: 'el-history2.png' });
+  await page.screenshot({ path: cachePath('elevenlabs-lipsync', 'shots', 'el-history2.png') });
 
   // Poll the FIRST card for MODEL: read its % (rendering) or video src (done).
   const deadline = Date.now() + MINUTES * 60 * 1000;

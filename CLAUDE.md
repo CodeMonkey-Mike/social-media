@@ -86,6 +86,16 @@ Prefix every command with `cd C:\Users\mnede\Documents\Claude\social-media &&` (
 - **Never write anything to D: (Mike, 2026-11-08).** D: is a removable drive he often has unplugged. No scratch,
   renders, bundles, staging, backups or work dirs there; use C: (the project folder or `%TEMP%`) and free space on C:
   instead. Reading his own source assets from `D:\Dropbox\...` is fine only when he says it's plugged in.
+- **Where files go (Mike, 2026-11-09).** (1) A file that belongs to ONE video (search results, picks, previews,
+  downloads, QA stills, logs) goes in that video's project folder. (2) Only what several projects share, or a tool's
+  own throwaway diagnostics (debug screenshots, recon dumps, session cookies), goes in `video-creation/cache/<tool>/`
+  (gitignored; build the path with `video-creation/skills/cache-path.js` / `cache_path.py`). (3) Never the repo root,
+  never inside a `skills/` folder (code and docs only), never D:. A temp file that lives only while one command runs
+  may use `%TEMP%`. A Chrome profile lives only in `%LOCALAPPDATA%\Google\Chrome\<name>-profile`: a folder named
+  `Users...AppData...` in the repo is that path with its backslashes lost in a shell, so quote Windows paths.
+  Enforced by `python scripts/check-file-placement.py`, run by a Stop hook (`.claude/settings.json`) at the end of every
+  turn and by `.githooks/pre-commit` (enable per clone: `git config core.hooksPath .githooks`). Detail:
+  `video-creation/cache/README.md`.
 - **Sequential posting only** — never run two posting scripts in parallel, for any reason. (`schedule-tweets/skills/SKILL.md`)
 - **One attempt per posting script** — if it seems stuck, READ THE LOG; never relaunch (shared Chrome profiles collide and kill the in-flight post).
 - **YouTube Shorts are posted via the API ONLY** (`scripts/post-yt-short-api.js`). There is **NO Playwright/browser fallback** — do NOT use `post-yt-short.js`, do NOT re-encode to dodge an upload-size limit, do NOT improvise. If the API fails (e.g. `invalid_grant` = expired OAuth token, which needs Mike to re-auth), mark it failed and **report it at the end of the run.** A failed step is reported, never worked around. (`schedule-tweets/skills/yt-post-vertical.md`)

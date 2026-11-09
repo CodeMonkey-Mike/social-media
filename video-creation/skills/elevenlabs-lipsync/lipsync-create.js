@@ -16,6 +16,7 @@
 //   Default STAGES everything and STOPS before Generate (paid action). Add --generate to submit.
 
 const { chromium } = require('playwright');
+const { cachePath } = require('../cache-path');  // shared tool cache: video-creation/cache/<tool>/
 const fs = require('fs');
 
 const PROFILE_DIR = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\elevenlabs-profile';
@@ -161,7 +162,7 @@ async function dismissPopovers(page) {
   } catch (e) { console.log('  resolution step skipped (non-fatal):', e.message); }
 
   await page.waitForTimeout(rnd(1800, 2800));
-  await page.screenshot({ path: 'el-staged.png' });
+  await page.screenshot({ path: cachePath('elevenlabs-lipsync', 'shots', 'el-staged.png') });
   console.log('\nSTAGED. Screenshot: el-staged.png');
 
   // The submit control is an icon button (not text "Generate"); discover it robustly below.
@@ -201,7 +202,7 @@ async function dismissPopovers(page) {
       }
       console.log('  submitted. Waiting for render to register...');
       await page.waitForTimeout(10000);
-      await page.screenshot({ path: 'el-generating.png' });
+      await page.screenshot({ path: cachePath('elevenlabs-lipsync', 'shots', 'el-generating.png') });
       const status = await page.evaluate(() => [...document.querySelectorAll('*')].filter(e=>!e.children.length)
         .map(e=>(e.innerText||'').trim()).filter(t=>/Generating|Queued|Processing|In progress|%|remaining/i.test(t)&&t.length<40));
       console.log('  status hints:', JSON.stringify([...new Set(status)].slice(0,8)));

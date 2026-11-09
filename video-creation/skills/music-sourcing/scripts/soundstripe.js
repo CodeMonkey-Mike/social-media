@@ -4,7 +4,7 @@
 //   node soundstripe.js search "<query>" [--limit 24] [--all-partners]
 //   node soundstripe.js download <objectID> [--query "<locate text>"] [--dest <dir>]
 //
-// search  -> writes _recon/.. no; writes <music>/candidates.json + <music>/board.html
+// search  -> writes cache/music-sourcing/recon/.. no; writes video-creation/cache/music-sourcing/candidates.json + board.html
 //            (a self-contained audition board with <audio> preview players). No auth.
 // download-> drives the logged-in soundstripe-profile Chrome, clicks the track's
 //            download button, saves the mp3, captures the content-id license code,
@@ -17,12 +17,13 @@ const fs    = require('fs');
 const path  = require('path');
 const https = require('https');
 const algoliaKey = require('./algolia-key');
+const { cachePath, cacheDir } = require('../../cache-path');  // shared tool cache: video-creation/cache/<tool>/
 
 const MUSIC_DIR = path.join(__dirname, '..');
 const LIBRARY   = path.join(MUSIC_DIR, 'library.json');
-const CANDID    = path.join(MUSIC_DIR, 'candidates.json');
-const BOARD     = path.join(MUSIC_DIR, 'board.html');
-const DEFAULT_DEST = path.join(MUSIC_DIR, 'downloads');
+const CANDID    = cachePath('music-sourcing', 'candidates.json');
+const BOARD     = cachePath('music-sourcing', 'board.html');
+const DEFAULT_DEST = cacheDir('music-sourcing', 'downloads');
 
 const ALGOLIA = {
   app:   'W1S5J3A2XP',
@@ -34,7 +35,7 @@ const PROFILE = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\soundstripe-p
 // Soundstripe's login cookie (_soundstripe_session) became a SESSION cookie (no expiry) in 2026-10,
 // so Chrome drops it every time the automated browser closes and the next run is logged out.
 // `login` saves the cookies once (after Mike signs in); every browser run re-injects them.
-const SESSION = path.join(MUSIC_DIR, '_recon', 'session-cookies.json');
+const SESSION = cachePath('music-sourcing', 'recon', 'session-cookies.json');
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 async function injectSession(ctx) {
@@ -183,7 +184,7 @@ async function cmdDownload() {
   await injectSession(browser);
   const page = browser.pages()[0] || await browser.newPage();
 
-  const SHOT = path.join(MUSIC_DIR, '_recon', 'shots'); fs.mkdirSync(SHOT, { recursive: true });
+  const SHOT = cacheDir('music-sourcing', 'recon', 'shots'); fs.mkdirSync(SHOT, { recursive: true });
   let licenseCode = null, savedFile = null, authToken = null;
   const posts = [];
   page.on('request', (req) => {
@@ -258,7 +259,7 @@ async function cmdDownload() {
     // Fetch the YouTube/Content-ID license code directly (the download modal never
     // fires it). POST /app/content_id_licenses {"song_id":"<objectID>"} with the
     // captured x-soundstripe-auth-token -> {"code":"<16 chars>"}. (Mapped 2026-06-04
-    // via supervised capture; see _recon/license-capture.json.)
+    // via supervised capture; see cache/music-sourcing/recon/license-capture.json.)
     if (!licenseCode && authToken) {
       try {
         const resp = await page.request.post('https://api.soundstripe.com/app/content_id_licenses', {
@@ -316,7 +317,7 @@ async function cmdDownloadAlt() {
   await browser.addInitScript(() => Object.defineProperty(navigator, 'webdriver', { get: () => undefined }));
   await injectSession(browser);
   const page = browser.pages()[0] || await browser.newPage();
-  const SHOT = path.join(MUSIC_DIR, '_recon', 'shots'); fs.mkdirSync(SHOT, { recursive: true });
+  const SHOT = cacheDir('music-sourcing', 'recon', 'shots'); fs.mkdirSync(SHOT, { recursive: true });
   const saved = [];
   const pending = []; // await these BEFORE closing — alternate/stems zips can be 150MB+ and outrun a fixed timer
   page.on('download', (dl) => {
@@ -378,11 +379,11 @@ async function cmdDownloadAlt() {
   try { await browser.close(); } catch {}
 
   if (saved.length) console.log(`\nDONE. ${saved.length} file(s):\n  ` + saved.map((s) => path.basename(s)).join('\n  '));
-  else { console.error('\nNo file downloaded (no alternate versions, or the click flow needs adjustment — see _recon/shots/alt*.png).'); process.exit(2); }
+  else { console.error('\nNo file downloaded (no alternate versions, or the click flow needs adjustment — see cache/music-sourcing/recon/shots/alt*.png).'); process.exit(2); }
 }
 
 // login — open the soundstripe-profile Chrome on the sign-in page, wait (up to --wait minutes,
-// default 10) for Mike to sign in, then persist the cookies to _recon/session-cookies.json so
+// default 10) for Mike to sign in, then persist the cookies to cache/music-sourcing/recon/session-cookies.json so
 // every later download/download-alt run can re-inject them (the login cookie is session-only).
 async function cmdLogin() {
   const waitMin = parseFloat(arg('--wait', '10'));

@@ -13,7 +13,9 @@ This folder is the **TOOL**. It is NOT where music is stored. Two homes, by inte
 - **A reusable go-to bed** (Mike's ~20-30 tracks reused across videos) → **`video-creation/assets/music/`**
   (the permanent reusable LIBRARY) + register it in **`assets/music/library.json`** (the canonical
   catalog: source, artist, soundstripe_id/url, yt_license_code, energy/genre/mood, `used_in[]`).
-- A `downloads/` scratch folder here is **throwaway audition staging only** — promote keepers out of it.
+- `video-creation/cache/music-sourcing/downloads/` is **throwaway audition staging only** — promote keepers out of it. Every working file of
+  this skill (search results, board, staging downloads, recon, session cookies) lives in `video-creation/cache/music-sourcing/`, never in this
+  skill folder (file-placement rule, root `CLAUDE.md`).
 - Flow: search → audition (candidates.json / board.html) → download (to project folder, or assets/music
   if you already know it's a keeper) → if reusable, **promote master into assets/music/ + register in the catalog**.
 - LICENSING IS SOURCE-SPECIFIC: Soundstripe = a bare `yt_license_code` (into the **YouTube description ONLY**
@@ -36,7 +38,7 @@ channel:'chrome' })`.
 **Since 2026-10-14 the login cookie (`_soundstripe_session`) is SESSION-ONLY**, so Chrome drops it every
 time the automated browser closes and the next run is logged out (that is how the 7-track elevator
 batch failed first). Fix in the script: **`node scripts/soundstripe.js login [--wait 10]`** opens the
-profile, waits for Mike to sign in, and saves the cookies to `_recon/session-cookies.json`; every
+profile, waits for Mike to sign in, and saves the cookies to `video-creation/cache/music-sourcing/recon/session-cookies.json`; every
 `download` / `download-alt` run re-injects + re-saves them. A logged-out run now fails fast with
 `NOT SIGNED IN` (the page flag `data-download-handoff-signed-in-value`), never a selector timeout.
 If you see it: run `login`, have Mike sign in, retry. Never open the profile in a hand-launched
@@ -54,7 +56,7 @@ node scripts/soundstripe.js download <objectID> [--query "<title>"] [--dest <dir
 node scripts/soundstripe.js download-alt <objectID> [--query "<title>"] [--dest <dir>] [--stems]
 ```
 - **search** — calls Soundstripe's **Algolia** index directly over HTTP (public search key; NO
-  browser, NO auth, no side effects). Writes `candidates.json` + **`board.html`** — a self-contained
+  browser, NO auth, no side effects). Writes `video-creation/cache/music-sourcing/candidates.json` + **`board.html`** — a self-contained
   audition board (cards with artwork, title/artist, duration, bpm, energy, mood/genre tags, and an
   `<audio>` **preview player** per track). Open `board.html`, audition, note the `objectID` you want.
   - **Algolia AND-matches every word**, so keep queries short/broad ("serene calm", not a 6-word
@@ -63,8 +65,8 @@ node scripts/soundstripe.js download-alt <objectID> [--query "<title>"] [--dest 
 - **download** — drives the logged-in profile: navigates to the track's OWN page
   (`/library/songs/<objectID>`, **objectID-exact** — the first `song-license-btn` there is the target
   track, "Similar Songs" follow below), opens the **Download Song** modal, clicks **MP3** (Full Track),
-  saves the file to `downloads/`, and upserts `library.json`. Resolves the title from the `objectID`
-  via Algolia `getObject`. Leaves diagnostic screenshots in `_recon/shots/d*.png`.
+  saves the file to `video-creation/cache/music-sourcing/downloads/` (or `--dest`), and upserts `library.json`. Resolves the title from the `objectID`
+  via Algolia `getObject`. Leaves diagnostic screenshots in `video-creation/cache/music-sourcing/recon/shots/d*.png`.
   - **Why song-page nav, not title search (fixed 2026-07-16):** the old flow searched `filter[q]=<title>`
     and clicked the first row, which grabbed the WRONG file on title collisions (Diamonds / Like Diamonds
     / Chocolate Diamonds all coexist). Navigating by objectID is exact. `download-alt` uses the same nav.
@@ -92,16 +94,16 @@ node scripts/_playlist-enum.js     <playlistId>              # 1. enumerate the 
 node scripts/_playlist-download.js <playlistId> [--limit N] [--skip a,b]  # 2. batch download (resumable)
 node scripts/_register-playlist.js <playlistId> [--skip a,b] # 3. register all into assets/music/library.json
 ```
-- **enum** — opens the playlist with the authed profile (re-injecting `_recon/session-cookies.json`, same as
+- **enum** — opens the playlist with the authed profile (re-injecting `video-creation/cache/music-sourcing/recon/session-cookies.json`, same as
   `download`), sniffs the app API (`/app/playlists/<id>/songs?page[offset]=&page[limit]=`, offset/limit paged),
-  and writes the song list to `_recon/playlist-<id>.json`. **Since 2026-10 the playlist page is server-rendered
+  and writes the song list to `video-creation/cache/music-sourcing/recon/playlist-<id>.json`. **Since 2026-10 the playlist page is server-rendered
   and makes NO api.soundstripe.com call** (so no token, "auth token: MISSING" is normal): the script then falls
   back to reading the song ids off the rows (song links + `data-download-handoff-media-id-value` anchors, page
   order) and resolves title / artists / duration via Algolia getObject. If it prints `songs found: 0`, run
   `node scripts/soundstripe.js login` first (the saved session may be gone), then retry.
 - **download** — for each not-yet-present track: `download` (full mp3 + license) THEN `download-alt`
   (instrumentals / section cuts), unzips into `assets/music/<Title>/`, deletes the zip. **Resumable** via
-  `_recon/playlist-<id>-progress.json` — re-invoke to continue; SEQUENTIAL (shared Chrome profile), so
+  `video-creation/cache/music-sourcing/recon/playlist-<id>-progress.json` — re-invoke to continue; SEQUENTIAL (shared Chrome profile), so
   run it in bounded chunks (`--limit`) rather than one giant call. `--skip` = objectIDs already in the
   library. First determine which playlist ids already exist by cross-referencing `soundstripe_id` in
   `assets/music/library.json`.
@@ -194,7 +196,7 @@ python scripts/analyze-music.py --file "<path>"   # analyze ANY audio file, prin
 `POST /app/content_id_licenses` with `{"song_id":"<objectID>"}` and stores the returned `code` in
 `library.json`. No navigation to the licenses page or supervised click needed — the song_id is the
 objectID we already pass to `download`. (Mapped via the one-shot supervised capture
-`scripts/_license-capture.js` → `_recon/license-capture.json`.) Because each POST mints a fresh code,
+`scripts/_license-capture.js` → `video-creation/cache/music-sourcing/recon/license-capture.json`.) Because each POST mints a fresh code,
 `download` only fetches it once per track; the persisted `library.json` value is the source of truth.
 
 ## 6. Files
@@ -206,8 +208,6 @@ video-creation/skills/music-sourcing/
     analyze-music.py   <- waveform analyzer (env sparkline / aggression / segments -> library.json, §2c)
     _*.js              <- throwaway recon/discovery (explore, autodrive, grab, inspect)
   library.json         <- downloaded tracks + license codes (SOURCE OF TRUTH)
-  candidates.json      <- last search results
-  board.html           <- audition board (open in browser)
-  downloads/           <- downloaded mp3s
-  _recon/              <- captured network/DOM/screenshots (throwaway)
+  (working files live in video-creation/cache/music-sourcing/: candidates.json = last search results, board.html = audition
+   board, downloads/ = staging mp3s, recon/ = captured network/DOM/screenshots + session cookies; never here)
 ```

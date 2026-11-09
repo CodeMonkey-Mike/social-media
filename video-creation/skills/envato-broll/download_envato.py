@@ -31,6 +31,8 @@ import urllib.request
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # video-creation/skills/
+from cache_path import cache_path  # noqa: E402  shared tool cache: video-creation/cache/<tool>/
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 PROFILE_DIR = r"C:\Users\mnede\AppData\Local\Google\Chrome\envato-profile"
@@ -97,7 +99,7 @@ def main():
         except Exception:
             pass
         if a.debug:
-            page.screenshot(path="envato-item-debug.png")
+            page.screenshot(path=str(cache_path("envato-broll", "shots", "envato-item-debug.png")))
         dl = page.locator('button[data-cy="idp-download-button"], button:has-text("Download"), a[role="button"]:has-text("Download")').first
         dl.wait_for(state="visible", timeout=20000)
         try:
@@ -123,7 +125,7 @@ def main():
         if not state["url"] and not state["gone"]:
             if a.debug:
                 try:
-                    page.screenshot(path="envato-license-debug.png")
+                    page.screenshot(path=str(cache_path("envato-broll", "shots", "envato-license-debug.png")))
                 except Exception:
                     pass
             confirm = page.locator('[role="dialog"] button:has-text("Add & Download"), [role="dialog"] button:has-text("License & download"), [role="dialog"] button:has-text("Download")').first

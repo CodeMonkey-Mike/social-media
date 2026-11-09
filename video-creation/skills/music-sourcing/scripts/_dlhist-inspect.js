@@ -1,7 +1,7 @@
 const fs = require('fs'); const path = require('path');
 const { chromium } = require('C:/Users/mnede/Documents/Claude/social-media/schedule-tweets/node_modules/playwright');
 const PROFILE = 'C:/Users/mnede/AppData/Local/Google/Chrome/soundstripe-profile';
-const OUT = 'C:/Users/mnede/Documents/Claude/social-media/video-creation/skills/music-sourcing/_recon';
+const OUT = require('../../cache-path').cacheDir('music-sourcing', 'recon');
 (async () => {
   const b = await chromium.launchPersistentContext(PROFILE, { channel: 'chrome', headless: false, slowMo: 40, viewport: null });
   const page = b.pages()[0] || await b.newPage();

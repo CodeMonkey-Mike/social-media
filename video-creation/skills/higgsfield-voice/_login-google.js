@@ -1,5 +1,6 @@
 // Continue with Google using the profile's PERSISTED Google session. Stops if a password is asked.
 const { connect } = require('./_cdp');
+const { cachePath } = require('../cache-path');  // shared tool cache: video-creation/cache/<tool>/
 (async () => {
   const { browser, ctx, page } = await connect();
   const popupP = ctx.waitForEvent('page', { timeout: 15000 }).catch(() => null);
@@ -8,7 +9,7 @@ const { connect } = require('./_cdp');
   await page.waitForTimeout(4000);
   const target = pop || page;
   console.log('popup?', !!pop, 'url:', target.url());
-  await target.screenshot({ path: '_login2.png' }).catch(()=>{});
+  await target.screenshot({ path: cachePath('higgsfield-voice', 'shots', '_login2.png') }).catch(()=>{});
   const body = await target.evaluate(() => document.body.innerText.slice(0, 1500)).catch(()=> '');
   console.log('TEXT:', body.replace(/\s+/g, ' ').slice(0, 700));
   // Account chooser: click the row that mentions the gmail account (never type anything).
@@ -17,7 +18,7 @@ const { connect } = require('./_cdp');
     await acct.click({ timeout: 8000 });
     console.log('clicked account row');
     await page.waitForTimeout(8000);
-    await page.screenshot({ path: '_login3.png' });
+    await page.screenshot({ path: cachePath('higgsfield-voice', 'shots', '_login3.png') });
     console.log('MAIN URL:', page.url());
     const t = await page.$$eval('a,button', els => els.map(e => (e.innerText||'').trim()).filter(t => /^(Login|Sign up|Profile|Library)$/.test(t)));
     console.log('nav state:', [...new Set(t)].join(' | '));

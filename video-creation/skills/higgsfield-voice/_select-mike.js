@@ -1,4 +1,5 @@
 const { connect } = require('./_cdp');
+const { cachePath } = require('../cache-path');  // shared tool cache: video-creation/cache/<tool>/
 (async () => {
   const { browser, page } = await connect();
   await page.waitForTimeout(600);
@@ -31,7 +32,7 @@ const { connect } = require('./_cdp');
     return cands;
   });
   console.log('BOTTOM-RIGHT VOICE PRESET LABEL:', JSON.stringify(label));
-  await page.screenshot({ path: '_selected.png' });
+  await page.screenshot({ path: cachePath('higgsfield-voice', 'shots', '_selected.png') });
   console.log('saved _selected.png');
   await browser.close();
 })().catch(e => { console.error('ERR', e.message); process.exit(1); });

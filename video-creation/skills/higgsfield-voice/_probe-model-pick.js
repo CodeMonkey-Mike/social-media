@@ -1,6 +1,7 @@
 // Pick a TTS model in the (already open or reopened) Model selector and dump the composer state: selected voice,
 // visible controls (speed / emotion / stability...). Read-only, no generation. Usage: node _probe-model-pick.js "Seed Audio 1.0"
 const { connect } = require('./_cdp');
+const { cachePath } = require('../cache-path');  // shared tool cache: video-creation/cache/<tool>/
 (async () => {
   const { browser, page } = await connect();
   const name = process.argv[2];
@@ -16,6 +17,6 @@ const { connect } = require('./_cdp');
   const state = await page.evaluate((isVisSrc) => { const isVis = eval(isVisSrc); const out=[]; for (const e of document.querySelectorAll('*')) { const t=(e.innerText||'').trim(); if (t && t.length<40 && e.children.length===0 && isVis(e)) { const r=e.getBoundingClientRect(); if (r.left < 620) out.push(t); } } const sl=[...document.querySelectorAll('input[type=range],[role=slider]')].map(s=>s.getAttribute('aria-label')||s.getAttribute('aria-valuenow')||s.name||'slider'); return {left: [...new Set(out)], sliders: sl}; }, isVis);
   console.log('AFTER picking', name, '-> left panel:', state.left.join(' | '));
   console.log('sliders:', JSON.stringify(state.sliders));
-  await page.screenshot({ path: '_model-' + name.replace(/[^a-z0-9]+/gi,'-') + '.png' });
+  await page.screenshot({ path: cachePath('higgsfield-voice', 'shots', '_model-' + name.replace(/[^a-z0-9]+/gi,'-') + '.png') });
   await browser.close();
 })().catch(e => { console.error('ERR', e.message); process.exit(1); });

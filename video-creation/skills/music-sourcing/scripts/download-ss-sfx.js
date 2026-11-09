@@ -21,7 +21,7 @@ function arg(flag, def) { const i = process.argv.indexOf(flag); return i > -1 ? 
   if (!id || id.startsWith('--')) { console.error('Usage: node download-ss-sfx.js <sfxId> --dest <dir>'); process.exit(1); }
   const dest = arg('--dest', path.join(__dirname, '..', 'downloads'));
   fs.mkdirSync(dest, { recursive: true });
-  const SHOT = path.join(__dirname, '..', '_recon', 'sfx'); fs.mkdirSync(SHOT, { recursive: true });
+  const SHOT = require('../../cache-path').cacheDir('music-sourcing', 'recon', 'sfx'); fs.mkdirSync(SHOT, { recursive: true });
 
   const browser = await chromium.launchPersistentContext(PROFILE, {
     channel: 'chrome', headless: false, slowMo: 60, acceptDownloads: true,
@@ -99,7 +99,7 @@ function arg(flag, def) { const i = process.argv.indexOf(flag); return i > -1 ? 
 
   const meta = { sfx_id: id, source: 'soundstripe', url: `https://www.soundstripe.com/library/sound-effects/${id}`, api: apiMeta, file: savedFile ? path.basename(savedFile) : null, downloaded_at: new Date().toISOString() };
   fs.writeFileSync(path.join(dest, `_ss-${id}-meta.json`), JSON.stringify(meta, null, 2));
-  console.log(savedFile ? `\nDONE. file: ${savedFile}` : '\nNo file downloaded — inspect screenshots in _recon/sfx/.');
+  console.log(savedFile ? `\nDONE. file: ${savedFile}` : '\nNo file downloaded — inspect screenshots in cache/music-sourcing/recon/sfx/.');
   console.log('  api metadata captured?', !!apiMeta);
   if (!savedFile) process.exit(2);
 })().catch(e => { console.error('fatal:', e.message); process.exit(1); });

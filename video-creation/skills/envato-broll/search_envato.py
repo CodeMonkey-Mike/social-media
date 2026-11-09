@@ -20,6 +20,9 @@ import time
 import urllib.parse
 
 from playwright.sync_api import sync_playwright
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # video-creation/skills/
+from cache_path import cache_path  # noqa: E402  shared tool cache: video-creation/cache/<tool>/
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 PROFILE_DIR = r"C:\Users\mnede\AppData\Local\Google\Chrome\envato-profile"
@@ -112,7 +115,7 @@ def main():
             page.mouse.wheel(0, 1200)
             time.sleep(rnd(800, 1500) / 1000)
         if a.debug:
-            page.screenshot(path="envato-search-debug.png")
+            page.screenshot(path=str(cache_path("envato-broll", "shots", "envato-search-debug.png")))
         items = page.evaluate(EXTRACT_JS, {"max": a.max, "type": a.type})
         ctx.close()
     text = json.dumps(items, indent=2, ensure_ascii=False)

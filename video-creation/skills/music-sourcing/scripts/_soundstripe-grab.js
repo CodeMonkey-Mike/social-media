@@ -2,7 +2,7 @@
 // Drives ONE real download via the UI so we capture: the Authorization token the
 // app sends to api.soundstripe.com, the POST body for /app/songs/<id>/download,
 // and the POST body + response for /app/content_id_licenses (the YouTube code).
-// Output -> music/_recon/grab.json (+ screenshots, modal DOM, the mp3).
+// Output -> video-creation/cache/music-sourcing/recon/grab.json (+ screenshots, modal DOM, the mp3).
 
 const path = require('path');
 const fs   = require('fs');
@@ -10,7 +10,7 @@ const REPO = 'C:\\Users\\mnede\\Documents\\Claude\\social-media';
 const { chromium } = require(path.join(REPO, 'schedule-tweets', 'node_modules', 'playwright'));
 
 const PROFILE   = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\soundstripe-profile';
-const RECON_DIR = path.join(REPO, 'video-creation', 'music', '_recon');
+const RECON_DIR = require('../../cache-path').cacheDir('music-sourcing', 'recon');
 const SHOT_DIR  = path.join(RECON_DIR, 'shots');
 fs.mkdirSync(SHOT_DIR, { recursive: true });
 const QUERY = process.argv[2] || 'calm ambient';

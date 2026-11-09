@@ -11,7 +11,7 @@ const path = require('path');
 
 const HERE      = __dirname;
 const MUSIC_DIR = path.join(HERE, '..');
-const RECON     = path.join(MUSIC_DIR, '_recon');
+const RECON     = require('../../cache-path').cacheDir('music-sourcing', 'recon');
 const ASSETS    = path.join(MUSIC_DIR, '..', '..', 'assets', 'music');
 const ASSET_LIB = path.join(ASSETS, 'library.json');
 const SKILL_LIB = path.join(MUSIC_DIR, 'library.json');
