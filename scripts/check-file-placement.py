@@ -36,7 +36,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 # What may sit in the repo root. Add an entry only with Mike's OK.
 ROOT_ALLOWED = {
-    ".claude", ".git", ".githooks", ".gitignore",
+    ".claude", ".git", ".gitattributes", ".githooks", ".gitignore",
     "CLAUDE.md", "README.md", "ORCHESTRATOR-PLAN.md", "claudeisnaughty.md",
     "batches.json", "chatgpt-image-chats.json",
     "cleanup", "persona", "playbooks", "repurpose", "schedule-tweets", "scripts", "video-creation", "x-reply-guy",
@@ -155,7 +155,7 @@ def report(found, header: str, limit: int = 15) -> str:
 
 
 def main() -> int:
-    args = sys.argv[1:]
+    args = [a.strip() for a in sys.argv[1:]]  # a CRLF-checked-out hook passes a trailing CR on --staged
     if args[:2] == ["--hook", "stop"]:
         try:
             raw = sys.stdin.read() if not sys.stdin.isatty() else ""
