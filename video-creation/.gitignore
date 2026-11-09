@@ -38,6 +38,8 @@ todo/demos/
 # ^ private work recordings: never commit anything from here, transcripts and notes included
 skills/music-sourcing/.algolia-key
 # ^ Soundstripe's public search key, read by skills/music-sourcing/scripts/algolia-key.js
+skills/elevenlabs-lipsync/Users*-profile/
+# ^ the ElevenLabs automation's Chrome profile: login data and cookies, never commit (purged 2026-11-09)
 
 # ── Per-clip artifacts (regenerable from source + scripts) ───────────────────
 **/preview.mp4
