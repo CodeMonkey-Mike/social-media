@@ -1,0 +1,85 @@
+<!doctype html><html><head><meta charset="utf-8"><title>C4</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"><style>
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; 
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} 
+b{color:var(--text-primary);font-weight:700}
+
+
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+
+
+:root{
+  --bg-deep:#F6F4EE; --bg-card:#FFFFFF; --bg-card-hover:#F1EFE9;
+  --accent-green:#007A55; --accent-cyan:#006A9E; --accent-gold:#8F6500;
+  --accent-red:#C41E3A; --accent-purple:#7C3AED; --accent-teal:#0E7A6C; 
+  --text-primary:#14161A; --text-secondary:#4A5263; --text-muted:#5E6676;
+  --border:#DDD9CF;
+  
+  --grid:#D6D2C7; --axis:#7A808B; --wire:#8A877E; --ink:#14161A;
+}
+body{background:#E4E1D8}
+
+
+.frame::after{opacity:.05;mix-blend-mode:multiply}
+
+
+.orb{opacity:.18}
+
+
+.card,.col,.panel,.ecard,.nd,.node,.box{
+  background:var(--bg-card);border-color:var(--border);
+  box-shadow:0 1px 2px rgba(20,22,26,.05),0 14px 34px rgba(20,22,26,.08)}
+
+
+.frame{--acc-rgb:0,106,158}
+.lit,.on,.hot,.chip.on,.nd.lit,.node.on,.box.on,.ecard.on{
+  box-shadow:0 0 0 4px rgba(var(--acc-rgb),.12),0 12px 28px rgba(20,22,26,.12)}
+.hot,.nd.hot{box-shadow:0 0 0 6px rgba(var(--acc-rgb),.22),0 16px 34px rgba(20,22,26,.18)}
+.chip.on{background:rgba(var(--acc-rgb),.08)}
+.role,.rl,h1,h2{text-shadow:none}
+
+
+svg .wire,svg line.wire,svg path.wire{stroke:var(--wire)}
+svg .grid{stroke:var(--grid)} svg .axis{stroke:var(--axis)}
+svg .ink{stroke:var(--ink);fill:var(--ink)}
+
+.frame{--acc-rgb:14,122,108;display:block;padding:0;margin:0 0 24px}
+.frame>svg.stage{position:absolute!important;left:0;top:0;width:1920px;height:1080px;z-index:1}
+.head{position:absolute!important;left:140px;top:62px;z-index:2}
+.head .ey{margin-bottom:14px}
+.head h1{font-size:70px;white-space:nowrap}
+.head .divider{margin:22px 0 0;background:linear-gradient(90deg,#0E7A6C,#49EACB)}
+.k{color:#0E7A6C}
+h1 .mono{font-weight:600;letter-spacing:-.03em}
+.src{position:absolute!important;left:140px;bottom:30px;font-family:'JetBrains Mono',monospace;font-size:20px;color:#5E6676;z-index:2}
+.tagp{position:absolute!important;right:136px;top:72px;z-index:2;padding:9px 22px;border:1.5px dashed #8A877E;border-radius:100px;
+  font:700 22px 'DM Sans';letter-spacing:.12em;color:#4A5263;background:#F6F4EE}
+</style></head><body><svg width="0" height="0" style="position:absolute"><defs><filter id="sh" x="-10%" y="-10%" width="120%" height="125%"><feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#14161A" flood-opacity=".09"/></filter><pattern id="hatch" patternUnits="userSpaceOnUse" width="14" height="14" patternTransform="rotate(45)"><rect width="14" height="14" fill="#F6F4EE"/><rect width="5" height="14" fill="#DDD9CF"/></pattern></defs></svg><div class="frame" id="start"><div class="orb" style="width:900px;height:900px;right:-300px;top:-420px;background:#49EACB"></div><svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"><line x1="270.0" y1="685.7" x2="1770.0" y2="685.7" stroke="#D6D2C7" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4 8"/><text x="248.0" y="694.7" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="end" >100K</text><line x1="270.0" y1="471.4" x2="1770.0" y2="471.4" stroke="#D6D2C7" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4 8"/><text x="248.0" y="480.4" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="end" >200K</text><text x="248.0" y="909.0" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="end" >0</text><line x1="270.0" y1="900.0" x2="1770.0" y2="900.0" stroke="#7A808B" stroke-width="2.5" stroke-linecap="round"/><line x1="270.0" y1="900.0" x2="270.0" y2="910.0" stroke="#7A808B" stroke-width="2.5" stroke-linecap="round"/><text x="276.0" y="940.0" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="start" >JUL</text><line x1="642.0" y1="900.0" x2="642.0" y2="910.0" stroke="#7A808B" stroke-width="2.5" stroke-linecap="round"/><text x="648.0" y="940.0" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="start" >AUG</text><line x1="1014.0" y1="900.0" x2="1014.0" y2="910.0" stroke="#7A808B" stroke-width="2.5" stroke-linecap="round"/><text x="1020.0" y="940.0" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="start" >SEP</text><line x1="1374.0" y1="900.0" x2="1374.0" y2="910.0" stroke="#7A808B" stroke-width="2.5" stroke-linecap="round"/><text x="1380.0" y="940.0" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="start" >OCT</text><line x1="1746.0" y1="900.0" x2="1746.0" y2="910.0" stroke="#7A808B" stroke-width="2.5" stroke-linecap="round"/><text x="1752.0" y="940.0" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="start" >NOV</text></svg><div class="head"><div class="ey">USER TRANSACTIONS A DAY · NON-COINBASE</div><h1>User transactions, <span class="k">flat.</span></h1><div class="divider"></div></div><div class="src">Source: api.kaspa.org/transactions/count, regular transactions summed by UTC day, July 1 to November 3, 2026</div></div><div class="frame" id="mid"><div class="orb" style="width:900px;height:900px;right:-300px;top:-420px;background:#49EACB"></div><svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"><line x1="270.0" y1="685.7" x2="1770.0" y2="685.7" stroke="#D6D2C7" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4 8"/><text x="248.0" y="694.7" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="end" >100K</text><line x1="270.0" y1="471.4" x2="1770.0" y2="471.4" stroke="#D6D2C7" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4 8"/><text x="248.0" y="480.4" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="end" >200K</text><text x="248.0" y="909.0" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="end" >0</text><line x1="270.0" y1="900.0" x2="1770.0" y2="900.0" stroke="#7A808B" stroke-width="2.5" stroke-linecap="round"/><line x1="270.0" y1="900.0" x2="270.0" y2="910.0" stroke="#7A808B" stroke-width="2.5" stroke-linecap="round"/><text x="276.0" y="940.0" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="start" >JUL</text><line x1="642.0" y1="900.0" x2="642.0" y2="910.0" stroke="#7A808B" stroke-width="2.5" stroke-linecap="round"/><text x="648.0" y="940.0" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="start" >AUG</text><line x1="1014.0" y1="900.0" x2="1014.0" y2="910.0" stroke="#7A808B" stroke-width="2.5" stroke-linecap="round"/><text x="1020.0" y="940.0" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="start" >SEP</text><line x1="1374.0" y1="900.0" x2="1374.0" y2="910.0" stroke="#7A808B" stroke-width="2.5" stroke-linecap="round"/><text x="1380.0" y="940.0" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="start" >OCT</text><line x1="1746.0" y1="900.0" x2="1746.0" y2="910.0" stroke="#7A808B" stroke-width="2.5" stroke-linecap="round"/><text x="1752.0" y="940.0" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="start" >NOV</text><path d="M270.0,755.5 L282.0,744.9 L294.0,739.0 L306.0,727.4 L318.0,739.9 L330.0,714.7 L342.0,738.3 L354.0,615.2 L366.0,722.1 L378.0,583.7 L390.0,749.3 L402.0,763.3 L414.0,752.9 L426.0,693.7 L438.0,754.4 L450.0,749.0 L462.0,751.9 L474.0,756.4 L486.0,745.0 L498.0,752.7 L510.0,750.0 L522.0,752.6 L534.0,757.4 L546.0,760.9 L558.0,763.9 L570.0,759.7 L582.0,758.2 L594.0,744.2 L606.0,743.6 L618.0,723.1 L630.0,729.3 L642.0,691.3 L654.0,719.4 L666.0,730.3 L678.0,714.0 L690.0,727.5 L702.0,734.6 L714.0,605.4 L726.0,727.2 L738.0,712.7 L750.0,708.0 L762.0,719.7 L774.0,720.0 L786.0,729.1 L798.0,730.5 L810.0,731.4 L822.0,739.3 L834.0,733.7 L846.0,735.2 L858.0,662.6 L870.0,722.0 L882.0,717.2 L894.0,726.3 L906.0,728.0 L918.0,734.3 L930.0,722.7 L942.0,730.1 L954.0,732.3 L966.0,693.3 L978.0,737.0 L990.0,666.1 L1002.0,676.6 L1014.0,617.8" fill="none" stroke="#14161A" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/></svg><div class="head"><div class="ey">USER TRANSACTIONS A DAY · NON-COINBASE</div><h1>User transactions, <span class="k">flat.</span></h1><div class="divider"></div></div><div class="src">Source: api.kaspa.org/transactions/count, regular transactions summed by UTC day, July 1 to November 3, 2026</div></div><div class="frame" id="payoff"><div class="orb" style="width:900px;height:900px;right:-300px;top:-420px;background:#49EACB"></div><svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"><line x1="270.0" y1="685.7" x2="1770.0" y2="685.7" stroke="#D6D2C7" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4 8"/><text x="248.0" y="694.7" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="end" >100K</text><line x1="270.0" y1="471.4" x2="1770.0" y2="471.4" stroke="#D6D2C7" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4 8"/><text x="248.0" y="480.4" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="end" >200K</text><text x="248.0" y="909.0" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="end" >0</text><line x1="270.0" y1="900.0" x2="1770.0" y2="900.0" stroke="#7A808B" stroke-width="2.5" stroke-linecap="round"/><line x1="270.0" y1="900.0" x2="270.0" y2="910.0" stroke="#7A808B" stroke-width="2.5" stroke-linecap="round"/><text x="276.0" y="940.0" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="start" >JUL</text><line x1="642.0" y1="900.0" x2="642.0" y2="910.0" stroke="#7A808B" stroke-width="2.5" stroke-linecap="round"/><text x="648.0" y="940.0" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="start" >AUG</text><line x1="1014.0" y1="900.0" x2="1014.0" y2="910.0" stroke="#7A808B" stroke-width="2.5" stroke-linecap="round"/><text x="1020.0" y="940.0" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="start" >SEP</text><line x1="1374.0" y1="900.0" x2="1374.0" y2="910.0" stroke="#7A808B" stroke-width="2.5" stroke-linecap="round"/><text x="1380.0" y="940.0" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="start" >OCT</text><line x1="1746.0" y1="900.0" x2="1746.0" y2="910.0" stroke="#7A808B" stroke-width="2.5" stroke-linecap="round"/><text x="1752.0" y="940.0" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#5E6676" text-anchor="start" >NOV</text><rect x="270" y="728.6" width="1500" height="21.4" fill="#49EACB" fill-opacity=".55"/><line x1="270.0" y1="728.6" x2="1770.0" y2="728.6" stroke="#0E7A6C" stroke-width="2.5" stroke-linecap="round"/><line x1="270.0" y1="750.0" x2="1770.0" y2="750.0" stroke="#0E7A6C" stroke-width="2.5" stroke-linecap="round"/><path d="M270.0,755.5 L282.0,744.9 L294.0,739.0 L306.0,727.4 L318.0,739.9 L330.0,714.7 L342.0,738.3 L354.0,615.2 L366.0,722.1 L378.0,583.7 L390.0,749.3 L402.0,763.3 L414.0,752.9 L426.0,693.7 L438.0,754.4 L450.0,749.0 L462.0,751.9 L474.0,756.4 L486.0,745.0 L498.0,752.7 L510.0,750.0 L522.0,752.6 L534.0,757.4 L546.0,760.9 L558.0,763.9 L570.0,759.7 L582.0,758.2 L594.0,744.2 L606.0,743.6 L618.0,723.1 L630.0,729.3 L642.0,691.3 L654.0,719.4 L666.0,730.3 L678.0,714.0 L690.0,727.5 L702.0,734.6 L714.0,605.4 L726.0,727.2 L738.0,712.7 L750.0,708.0 L762.0,719.7 L774.0,720.0 L786.0,729.1 L798.0,730.5 L810.0,731.4 L822.0,739.3 L834.0,733.7 L846.0,735.2 L858.0,662.6 L870.0,722.0 L882.0,717.2 L894.0,726.3 L906.0,728.0 L918.0,734.3 L930.0,722.7 L942.0,730.1 L954.0,732.3 L966.0,693.3 L978.0,737.0 L990.0,666.1 L1002.0,676.6 L1014.0,617.8 L1026.0,730.0 L1038.0,642.5 L1050.0,696.3 L1062.0,709.9 L1074.0,659.0 L1086.0,450.8 L1098.0,708.0 L1110.0,545.9 L1122.0,694.0 L1134.0,735.3 L1146.0,715.0 L1158.0,710.2 L1170.0,740.5 L1182.0,346.4 L1194.0,717.7 L1206.0,527.3 L1218.0,668.2 L1230.0,683.3 L1242.0,707.5 L1254.0,736.0 L1266.0,746.6 L1278.0,746.8 L1290.0,688.3 L1302.0,453.3 L1314.0,656.8 L1326.0,719.7 L1338.0,744.0 L1350.0,755.5 L1362.0,746.8 L1374.0,730.0 L1386.0,663.9 L1398.0,721.6 L1410.0,750.1 L1422.0,750.3 L1434.0,761.6 L1446.0,761.8 L1458.0,749.7 L1470.0,761.4 L1482.0,753.8 L1494.0,757.2 L1506.0,747.7 L1518.0,712.4 L1530.0,698.9 L1542.0,740.5 L1554.0,717.6 L1566.0,728.6 L1578.0,732.0 L1590.0,723.0 L1602.0,733.4 L1614.0,719.7 L1626.0,717.4 L1638.0,732.0 L1650.0,741.1 L1662.0,743.8 L1674.0,737.9 L1686.0,727.8 L1698.0,743.6 L1710.0,742.8 L1722.0,734.5 L1734.0,743.7 L1746.0,755.4 L1758.0,748.8 L1770.0,745.0" fill="none" stroke="#14161A" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><rect x="290.0" y="801.3" width="450.0" height="58.0" rx="12" fill="#FFFFFF" stroke="#0E7A6C" stroke-width="2.5" /><text x="515.0" y="841.3" font-family="DM Sans" font-size="32" font-weight="700" fill="#0E7A6C" text-anchor="middle" ><tspan font-family="JetBrains Mono">70K</tspan> TO <tspan font-family="JetBrains Mono">80K</tspan> A DAY</text><text x="1160.0" y="368.4" font-family="DM Sans" font-size="26" font-weight="700" fill="#4A5263" text-anchor="end" letter-spacing="0.1em" >SPIKE DAYS</text><text x="1160.0" y="404.4" font-family="DM Sans" font-size="22" font-weight="700" fill="#5E6676" text-anchor="end" letter-spacing="0.1em" >MOST AUGUST AND SEPTEMBER DAYS RAN ABOVE THE BAND</text></svg><div class="head"><div class="ey">USER TRANSACTIONS A DAY · NON-COINBASE</div><h1>User transactions, <span class="k">flat.</span></h1><div class="divider"></div></div><div class="src">Source: api.kaspa.org/transactions/count, regular transactions summed by UTC day, July 1 to November 3, 2026</div></div></body></html>

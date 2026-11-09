@@ -1,786 +1,5 @@
 [
   {
-    "run_id": "repurpose-wen-moon-20260813-regen@2026-08-13T08:55:44",
-    "lane": 6,
-    "lane_name": "repurpose",
-    "thread": "repurpose-wen-moon-20260813-regen",
-    "started_at": "2026-08-13T08:55:44",
-    "ended_at": "2026-08-13T09:02:37",
-    "duration_s": 412.8,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "wen-moon",
-    "summary": {
-      "batch": "wen-moon",
-      "sandbox": false,
-      "fake_gen": false,
-      "date": "2026-08-13",
-      "images": {
-        "planned": 6,
-        "generated": 2,
-        "skipped": 4,
-        "verified": 6
-      },
-      "entries_added": 0,
-      "entries_skipped": 8,
-      "queues": {
-        "x-tweets.json": {
-          "planned": 6,
-          "queue_total": 336
-        },
-        "yt-text-polls.json": {
-          "planned": 2,
-          "queue_total": 102
-        }
-      },
-      "lint": "clean",
-      "registered": "wen-moon"
-    },
-    "error": null
-  },
-  {
-    "run_id": "repurpose-wen-moon-20260813-regen2@2026-08-13T09:07:31",
-    "lane": 6,
-    "lane_name": "repurpose",
-    "thread": "repurpose-wen-moon-20260813-regen2",
-    "started_at": "2026-08-13T09:07:31",
-    "ended_at": "2026-08-13T09:12:33",
-    "duration_s": 302.7,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "wen-moon",
-    "summary": {
-      "batch": "wen-moon",
-      "sandbox": false,
-      "fake_gen": false,
-      "date": "2026-08-13",
-      "images": {
-        "planned": 6,
-        "generated": 1,
-        "skipped": 5,
-        "verified": 6
-      },
-      "entries_added": 0,
-      "entries_skipped": 8,
-      "queues": {
-        "x-tweets.json": {
-          "planned": 6,
-          "queue_total": 336
-        },
-        "yt-text-polls.json": {
-          "planned": 2,
-          "queue_total": 102
-        }
-      },
-      "lint": "clean",
-      "registered": "wen-moon"
-    },
-    "error": null
-  },
-  {
-    "run_id": "post-lf-20260813-wen-moon-facebook@2026-08-13T13:40:39",
-    "lane": 7,
-    "lane_name": "post",
-    "thread": "post-lf-20260813-wen-moon-facebook",
-    "started_at": "2026-08-13T13:40:39",
-    "ended_at": "2026-08-13T14:07:47",
-    "duration_s": 1628.0,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "lf-20260813-wen-moon:facebook",
-    "summary": {
-      "platform": "facebook",
-      "status": "posted",
-      "url": "https://www.facebook.com/reel/1052601844397820/",
-      "title": "Wen Moon? Not If, When: But We Might Get One More Bottom First",
-      "posted_at": "2026-08-13T18:07:46.130Z"
-    },
-    "error": null
-  },
-  {
-    "run_id": "intake-cooper-50x-20260815@2026-08-15T08:45:18",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-cooper-50x-20260815",
-    "started_at": "2026-08-15T08:45:18",
-    "ended_at": "2026-08-15T09:15:22",
-    "duration_s": 1803.9,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "cooper-50x",
-    "summary": {
-      "slug": "cooper-50x",
-      "sandbox": false,
-      "master_duration_s": 3896.433333,
-      "master_mbps": 0.65,
-      "longform": {
-        "duration_s": 2660.6,
-        "removed_s": 1235.86,
-        "mbps": 0.82,
-        "thumb_staged": false,
-        "queued_id": "lf-20260815-cooper-50x",
-        "already_present": false,
-        "queue_total": 47
-      },
-      "vertical": {
-        "geometry": "1080x1920 SAR 1:1",
-        "duration_s": 3896.5
-      },
-      "words": 8718,
-      "segments": 831,
-      "glossary": "Kaspa:7 TAO:1",
-      "flags": []
-    },
-    "error": null
-  },
-  {
-    "run_id": "cut-cooper-50x-20260815@2026-08-15T09:38:07",
-    "lane": 2,
-    "lane_name": "cut",
-    "thread": "cut-cooper-50x-20260815",
-    "started_at": "2026-08-15T09:38:07",
-    "ended_at": "2026-08-15T09:40:45",
-    "duration_s": 157.4,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "cooper-50x",
-    "summary": {
-      "batch": "cooper-50x",
-      "sandbox": false,
-      "clips": 8,
-      "total_s": 629.7,
-      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\cooper-50x\\dashboard.html",
-      "registered": true,
-      "clip_durations": {
-        "cooper-zero-marketing": 121.471,
-        "cooper-community-refused": 26.247,
-        "tut-rug-to-ath": 152.887,
-        "tut-total-rug-reveal": 25.967,
-        "kaspa-25-cent-low": 77.895,
-        "pmi-expansion-first": 83.575,
-        "pmi-never-before": 19.607,
-        "two-billies": 122.047
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "repurpose-cooper-50x-20260815@2026-08-15T09:11:34",
-    "lane": 6,
-    "lane_name": "repurpose",
-    "thread": "repurpose-cooper-50x-20260815",
-    "started_at": "2026-08-15T09:11:34",
-    "ended_at": "2026-08-15T09:58:43",
-    "duration_s": 2828.7,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "cooper-50x",
-    "summary": {
-      "batch": "cooper-50x",
-      "sandbox": false,
-      "fake_gen": false,
-      "date": "2026-08-15",
-      "images": {
-        "planned": 18,
-        "generated": 18,
-        "skipped": 0,
-        "verified": 18
-      },
-      "entries_added": 15,
-      "entries_skipped": 0,
-      "queues": {
-        "x-tweets.json": {
-          "planned": 6,
-          "queue_total": 342
-        },
-        "x-threads.json": {
-          "planned": 2,
-          "queue_total": 85
-        },
-        "x-polls.json": {
-          "planned": 1,
-          "queue_total": 69
-        },
-        "yt-posts.json": {
-          "planned": 2,
-          "queue_total": 155
-        },
-        "yt-text-polls.json": {
-          "planned": 2,
-          "queue_total": 104
-        },
-        "ig-single-image.json": {
-          "planned": 2,
-          "queue_total": 125
-        }
-      },
-      "lint": "clean",
-      "registered": "cooper-50x"
-    },
-    "error": null
-  },
-  {
-    "run_id": "repurpose-cooper-50x-20260815-fix1@2026-08-15T10:38:39",
-    "lane": 6,
-    "lane_name": "repurpose",
-    "thread": "repurpose-cooper-50x-20260815-fix1",
-    "started_at": "2026-08-15T10:38:39",
-    "ended_at": "2026-08-15T10:46:22",
-    "duration_s": 463.2,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "cooper-50x",
-    "summary": {
-      "batch": "cooper-50x",
-      "sandbox": false,
-      "fake_gen": false,
-      "date": "2026-08-15",
-      "images": {
-        "planned": 18,
-        "generated": 2,
-        "skipped": 16,
-        "verified": 18
-      },
-      "entries_added": 0,
-      "entries_skipped": 15,
-      "queues": {
-        "x-tweets.json": {
-          "planned": 6,
-          "queue_total": 342
-        },
-        "x-threads.json": {
-          "planned": 2,
-          "queue_total": 85
-        },
-        "x-polls.json": {
-          "planned": 1,
-          "queue_total": 69
-        },
-        "yt-posts.json": {
-          "planned": 2,
-          "queue_total": 155
-        },
-        "yt-text-polls.json": {
-          "planned": 2,
-          "queue_total": 104
-        },
-        "ig-single-image.json": {
-          "planned": 2,
-          "queue_total": 125
-        }
-      },
-      "lint": "clean",
-      "registered": "cooper-50x"
-    },
-    "error": null
-  },
-  {
-    "run_id": "repurpose-cooper-50x-20260815-fix2@2026-08-15T11:06:16",
-    "lane": 6,
-    "lane_name": "repurpose",
-    "thread": "repurpose-cooper-50x-20260815-fix2",
-    "started_at": "2026-08-15T11:06:16",
-    "ended_at": "2026-08-15T11:14:41",
-    "duration_s": 505.0,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "cooper-50x",
-    "summary": {
-      "batch": "cooper-50x",
-      "sandbox": false,
-      "fake_gen": false,
-      "date": "2026-08-15",
-      "images": {
-        "planned": 18,
-        "generated": 2,
-        "skipped": 16,
-        "verified": 18
-      },
-      "entries_added": 0,
-      "entries_skipped": 15,
-      "queues": {
-        "x-tweets.json": {
-          "planned": 6,
-          "queue_total": 342
-        },
-        "x-threads.json": {
-          "planned": 2,
-          "queue_total": 85
-        },
-        "x-polls.json": {
-          "planned": 1,
-          "queue_total": 69
-        },
-        "yt-posts.json": {
-          "planned": 2,
-          "queue_total": 155
-        },
-        "yt-text-polls.json": {
-          "planned": 2,
-          "queue_total": 104
-        },
-        "ig-single-image.json": {
-          "planned": 2,
-          "queue_total": 125
-        }
-      },
-      "lint": "clean",
-      "registered": "cooper-50x"
-    },
-    "error": null
-  },
-  {
-    "run_id": "tighten-cooper-50x-20260815@2026-08-15T11:16:16",
-    "lane": 3,
-    "lane_name": "tighten",
-    "thread": "tighten-cooper-50x-20260815",
-    "started_at": "2026-08-15T11:16:16",
-    "ended_at": "2026-08-15T11:19:33",
-    "duration_s": 196.7,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "cooper-50x",
-    "summary": {
-      "batch": "cooper-50x",
-      "sandbox": false,
-      "clips": 5,
-      "total_s": 265.9,
-      "min_sil": 0.25,
-      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\cooper-50x\\dashboard.html",
-      "clip_durations": {
-        "cooper-community-refused": 22.68,
-        "tut-rug-to-ath": 108.44,
-        "pmi-expansion-first": 54.28,
-        "pmi-never-before": 13.12,
-        "two-billies": 67.36
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "repurpose-cooper-50x-20260815-fix3@2026-08-15T11:20:49",
-    "lane": 6,
-    "lane_name": "repurpose",
-    "thread": "repurpose-cooper-50x-20260815-fix3",
-    "started_at": "2026-08-15T11:20:49",
-    "ended_at": "2026-08-15T11:25:18",
-    "duration_s": 269.0,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "cooper-50x",
-    "summary": {
-      "batch": "cooper-50x",
-      "sandbox": false,
-      "fake_gen": false,
-      "date": "2026-08-15",
-      "images": {
-        "planned": 18,
-        "generated": 1,
-        "skipped": 17,
-        "verified": 18
-      },
-      "entries_added": 0,
-      "entries_skipped": 15,
-      "queues": {
-        "x-tweets.json": {
-          "planned": 6,
-          "queue_total": 342
-        },
-        "x-threads.json": {
-          "planned": 2,
-          "queue_total": 85
-        },
-        "x-polls.json": {
-          "planned": 1,
-          "queue_total": 69
-        },
-        "yt-posts.json": {
-          "planned": 2,
-          "queue_total": 155
-        },
-        "yt-text-polls.json": {
-          "planned": 2,
-          "queue_total": 104
-        },
-        "ig-single-image.json": {
-          "planned": 2,
-          "queue_total": 125
-        }
-      },
-      "lint": "clean",
-      "registered": "cooper-50x"
-    },
-    "error": null
-  },
-  {
-    "run_id": "finish-cooper-50x-20260815@2026-08-15T12:20:16",
-    "lane": 4,
-    "lane_name": "finish",
-    "thread": "finish-cooper-50x-20260815",
-    "started_at": "2026-08-15T12:20:16",
-    "ended_at": "2026-08-15T12:24:31",
-    "duration_s": 255.2,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "cooper-50x",
-    "summary": {
-      "batch": "cooper-50x",
-      "sandbox": false,
-      "clips": 5,
-      "total_s": 265.9,
-      "filler_cuts": 0,
-      "words": {
-        "cooper-community-refused": 64,
-        "tut-rug-to-ath": 354,
-        "pmi-expansion-first": 178,
-        "pmi-never-before": 40,
-        "two-billies": 279
-      },
-      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\cooper-50x\\dashboard.html",
-      "clip_durations": {
-        "cooper-community-refused": 22.68,
-        "tut-rug-to-ath": 108.44,
-        "pmi-expansion-first": 54.28,
-        "pmi-never-before": 13.12,
-        "two-billies": 67.36
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "publish-cooper-50x-20260815@2026-08-15T19:13:24",
-    "lane": 5,
-    "lane_name": "publish",
-    "thread": "publish-cooper-50x-20260815",
-    "started_at": "2026-08-15T19:13:24",
-    "ended_at": "2026-08-15T19:13:27",
-    "duration_s": 3.2,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "cooper-50x",
-    "summary": {
-      "batch": "cooper-50x",
-      "sandbox": false,
-      "date": "2026-08-15",
-      "clips": 5,
-      "added": 5,
-      "skipped": 0,
-      "dest_dir": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\shorts\\cooper-50x-2026-08-15",
-      "queue_total": 174,
-      "lint": "clean"
-    },
-    "error": null
-  },
-  {
-    "run_id": "post-c5-20260815-pmi-never-before-bitchute@2026-08-17T08:10:22",
-    "lane": 7,
-    "lane_name": "post",
-    "thread": "post-c5-20260815-pmi-never-before-bitchute",
-    "started_at": "2026-08-17T08:10:22",
-    "ended_at": "2026-08-17T08:15:07",
-    "duration_s": 284.8,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "c5-20260815-pmi-never-before:bitchute",
-    "summary": {
-      "platform": "bitchute",
-      "status": "posted_unverified",
-      "url": "https://www.bitchute.com/video/sZfXzbzJtTji/",
-      "title": "Economic Expansion Before the Bull Run Even Starts",
-      "posted_at": "2026-08-17T12:15:06.454Z"
-    },
-    "error": null
-  },
-  {
-    "run_id": "intake-btc-next-week-20260817@2026-08-17T08:47:57",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-btc-next-week-20260817",
-    "started_at": "2026-08-17T08:47:57",
-    "ended_at": "2026-08-17T08:47:57",
-    "duration_s": 0.1,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "btc-next-week",
-    "summary": null,
-    "error": "whisper exit code 143; output tail:\n to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower median kernel implementation...\n  warnings.warn(\nC:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\whisper\\timing.py:146: UserWarning: Failed to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower DTW implementation...\n  warnings.warn(\n[00:59.380 --> 01:04.900]  what's up everybody what's going on this beautiful sunny day at least it's\n[01:04.900 --> 01:11.700]  beautiful and sunny where I am right now and also stuff up\n[01:16.420 --> 01:24.640]  interesting times ahead right guys I'm gonna go into a couple of these couple\n[01:24.640 --> 01:32.140]  of these tokens I find it kind of nuts with the way that you see this for\n[01:32.140 --> 01:35.700]  those of you don't know we're not familiar with Cooper that's my dog play I\n[01:35.700 --> 01:42.780]  got two dog plays and I think they're the most hopeful dog plays when it comes\n[01:42.780 --> 01:50.240]  to dogs on the Robin Hood chain I got Cooper so I was you know looking into\n[01:50.240 --> 01:55.200]  the cats is like look at this insane pump look at this craziness with this\n[01:55.200 --> 02:05.020]  hmm cat right the thinking cat crazy 36 million man holy crap is like the the\n[02:05.020 --> 02:10.620]  Robin Hood chain is attracted a lot of cat lovers a lot of cat lovers man holy\n[02:10.620 --> 02:17.760]  crap but Cooper is my my favorite dog play I mean there's a lot of dogs or\n"
-  },
-  {
-    "run_id": "intake-btc-next-week-20260817@2026-08-17T08:48:29",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-btc-next-week-20260817",
-    "started_at": "2026-08-17T08:48:29",
-    "ended_at": "2026-08-17T08:48:29",
-    "duration_s": 0.0,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "btc-next-week",
-    "summary": null,
-    "error": "whisper exit code 143; output tail:\n to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower median kernel implementation...\n  warnings.warn(\nC:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\whisper\\timing.py:146: UserWarning: Failed to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower DTW implementation...\n  warnings.warn(\n[00:59.380 --> 01:04.900]  what's up everybody what's going on this beautiful sunny day at least it's\n[01:04.900 --> 01:11.700]  beautiful and sunny where I am right now and also stuff up\n[01:16.420 --> 01:24.640]  interesting times ahead right guys I'm gonna go into a couple of these couple\n[01:24.640 --> 01:32.140]  of these tokens I find it kind of nuts with the way that you see this for\n[01:32.140 --> 01:35.700]  those of you don't know we're not familiar with Cooper that's my dog play I\n[01:35.700 --> 01:42.780]  got two dog plays and I think they're the most hopeful dog plays when it comes\n[01:42.780 --> 01:50.240]  to dogs on the Robin Hood chain I got Cooper so I was you know looking into\n[01:50.240 --> 01:55.200]  the cats is like look at this insane pump look at this craziness with this\n[01:55.200 --> 02:05.020]  hmm cat right the thinking cat crazy 36 million man holy crap is like the the\n[02:05.020 --> 02:10.620]  Robin Hood chain is attracted a lot of cat lovers a lot of cat lovers man holy\n[02:10.620 --> 02:17.760]  crap but Cooper is my my favorite dog play I mean there's a lot of dogs or\n"
-  },
-  {
-    "run_id": "intake-btc-next-week-20260817@2026-08-17T08:49:10",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-btc-next-week-20260817",
-    "started_at": "2026-08-17T08:49:10",
-    "ended_at": "2026-08-17T08:49:10",
-    "duration_s": 0.0,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "btc-next-week",
-    "summary": null,
-    "error": "whisper exit code 143; output tail:\n to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower median kernel implementation...\n  warnings.warn(\nC:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\whisper\\timing.py:146: UserWarning: Failed to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower DTW implementation...\n  warnings.warn(\n[00:59.380 --> 01:04.900]  what's up everybody what's going on this beautiful sunny day at least it's\n[01:04.900 --> 01:11.700]  beautiful and sunny where I am right now and also stuff up\n[01:16.420 --> 01:24.640]  interesting times ahead right guys I'm gonna go into a couple of these couple\n[01:24.640 --> 01:32.140]  of these tokens I find it kind of nuts with the way that you see this for\n[01:32.140 --> 01:35.700]  those of you don't know we're not familiar with Cooper that's my dog play I\n[01:35.700 --> 01:42.780]  got two dog plays and I think they're the most hopeful dog plays when it comes\n[01:42.780 --> 01:50.240]  to dogs on the Robin Hood chain I got Cooper so I was you know looking into\n[01:50.240 --> 01:55.200]  the cats is like look at this insane pump look at this craziness with this\n[01:55.200 --> 02:05.020]  hmm cat right the thinking cat crazy 36 million man holy crap is like the the\n[02:05.020 --> 02:10.620]  Robin Hood chain is attracted a lot of cat lovers a lot of cat lovers man holy\n[02:10.620 --> 02:17.760]  crap but Cooper is my my favorite dog play I mean there's a lot of dogs or\n"
-  },
-  {
-    "run_id": "intake-btc-next-week-20260817@2026-08-17T08:50:16",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-btc-next-week-20260817",
-    "started_at": "2026-08-17T08:50:16",
-    "ended_at": "2026-08-17T08:50:16",
-    "duration_s": 0.0,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "btc-next-week",
-    "summary": null,
-    "error": "whisper exit code 143; output tail:\n to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower median kernel implementation...\n  warnings.warn(\nC:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\whisper\\timing.py:146: UserWarning: Failed to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower DTW implementation...\n  warnings.warn(\n[00:59.380 --> 01:04.900]  what's up everybody what's going on this beautiful sunny day at least it's\n[01:04.900 --> 01:11.700]  beautiful and sunny where I am right now and also stuff up\n[01:16.420 --> 01:24.640]  interesting times ahead right guys I'm gonna go into a couple of these couple\n[01:24.640 --> 01:32.140]  of these tokens I find it kind of nuts with the way that you see this for\n[01:32.140 --> 01:35.700]  those of you don't know we're not familiar with Cooper that's my dog play I\n[01:35.700 --> 01:42.780]  got two dog plays and I think they're the most hopeful dog plays when it comes\n[01:42.780 --> 01:50.240]  to dogs on the Robin Hood chain I got Cooper so I was you know looking into\n[01:50.240 --> 01:55.200]  the cats is like look at this insane pump look at this craziness with this\n[01:55.200 --> 02:05.020]  hmm cat right the thinking cat crazy 36 million man holy crap is like the the\n[02:05.020 --> 02:10.620]  Robin Hood chain is attracted a lot of cat lovers a lot of cat lovers man holy\n[02:10.620 --> 02:17.760]  crap but Cooper is my my favorite dog play I mean there's a lot of dogs or\n"
-  },
-  {
-    "run_id": "intake-btc-next-week-20260817@2026-08-17T08:50:49",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-btc-next-week-20260817",
-    "started_at": "2026-08-17T08:50:49",
-    "ended_at": "2026-08-17T08:50:49",
-    "duration_s": 0.0,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "btc-next-week",
-    "summary": null,
-    "error": "whisper exit code 143; output tail:\n to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower median kernel implementation...\n  warnings.warn(\nC:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\whisper\\timing.py:146: UserWarning: Failed to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower DTW implementation...\n  warnings.warn(\n[00:59.380 --> 01:04.900]  what's up everybody what's going on this beautiful sunny day at least it's\n[01:04.900 --> 01:11.700]  beautiful and sunny where I am right now and also stuff up\n[01:16.420 --> 01:24.640]  interesting times ahead right guys I'm gonna go into a couple of these couple\n[01:24.640 --> 01:32.140]  of these tokens I find it kind of nuts with the way that you see this for\n[01:32.140 --> 01:35.700]  those of you don't know we're not familiar with Cooper that's my dog play I\n[01:35.700 --> 01:42.780]  got two dog plays and I think they're the most hopeful dog plays when it comes\n[01:42.780 --> 01:50.240]  to dogs on the Robin Hood chain I got Cooper so I was you know looking into\n[01:50.240 --> 01:55.200]  the cats is like look at this insane pump look at this craziness with this\n[01:55.200 --> 02:05.020]  hmm cat right the thinking cat crazy 36 million man holy crap is like the the\n[02:05.020 --> 02:10.620]  Robin Hood chain is attracted a lot of cat lovers a lot of cat lovers man holy\n[02:10.620 --> 02:17.760]  crap but Cooper is my my favorite dog play I mean there's a lot of dogs or\n"
-  },
-  {
-    "run_id": "intake-btc-next-week-20260817@2026-08-17T08:51:32",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-btc-next-week-20260817",
-    "started_at": "2026-08-17T08:51:32",
-    "ended_at": "2026-08-17T08:51:32",
-    "duration_s": 0.0,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "btc-next-week",
-    "summary": null,
-    "error": "whisper exit code 143; output tail:\n to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower median kernel implementation...\n  warnings.warn(\nC:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\whisper\\timing.py:146: UserWarning: Failed to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower DTW implementation...\n  warnings.warn(\n[00:59.380 --> 01:04.900]  what's up everybody what's going on this beautiful sunny day at least it's\n[01:04.900 --> 01:11.700]  beautiful and sunny where I am right now and also stuff up\n[01:16.420 --> 01:24.640]  interesting times ahead right guys I'm gonna go into a couple of these couple\n[01:24.640 --> 01:32.140]  of these tokens I find it kind of nuts with the way that you see this for\n[01:32.140 --> 01:35.700]  those of you don't know we're not familiar with Cooper that's my dog play I\n[01:35.700 --> 01:42.780]  got two dog plays and I think they're the most hopeful dog plays when it comes\n[01:42.780 --> 01:50.240]  to dogs on the Robin Hood chain I got Cooper so I was you know looking into\n[01:50.240 --> 01:55.200]  the cats is like look at this insane pump look at this craziness with this\n[01:55.200 --> 02:05.020]  hmm cat right the thinking cat crazy 36 million man holy crap is like the the\n[02:05.020 --> 02:10.620]  Robin Hood chain is attracted a lot of cat lovers a lot of cat lovers man holy\n[02:10.620 --> 02:17.760]  crap but Cooper is my my favorite dog play I mean there's a lot of dogs or\n"
-  },
-  {
-    "run_id": "intake-btc-next-week-20260817@2026-08-17T08:53:14",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-btc-next-week-20260817",
-    "started_at": "2026-08-17T08:53:14",
-    "ended_at": "2026-08-17T08:53:14",
-    "duration_s": 0.0,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "btc-next-week",
-    "summary": null,
-    "error": "whisper exit code 143; output tail:\n to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower median kernel implementation...\n  warnings.warn(\nC:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\whisper\\timing.py:146: UserWarning: Failed to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower DTW implementation...\n  warnings.warn(\n[00:59.380 --> 01:04.900]  what's up everybody what's going on this beautiful sunny day at least it's\n[01:04.900 --> 01:11.700]  beautiful and sunny where I am right now and also stuff up\n[01:16.420 --> 01:24.640]  interesting times ahead right guys I'm gonna go into a couple of these couple\n[01:24.640 --> 01:32.140]  of these tokens I find it kind of nuts with the way that you see this for\n[01:32.140 --> 01:35.700]  those of you don't know we're not familiar with Cooper that's my dog play I\n[01:35.700 --> 01:42.780]  got two dog plays and I think they're the most hopeful dog plays when it comes\n[01:42.780 --> 01:50.240]  to dogs on the Robin Hood chain I got Cooper so I was you know looking into\n[01:50.240 --> 01:55.200]  the cats is like look at this insane pump look at this craziness with this\n[01:55.200 --> 02:05.020]  hmm cat right the thinking cat crazy 36 million man holy crap is like the the\n[02:05.020 --> 02:10.620]  Robin Hood chain is attracted a lot of cat lovers a lot of cat lovers man holy\n[02:10.620 --> 02:17.760]  crap but Cooper is my my favorite dog play I mean there's a lot of dogs or\n"
-  },
-  {
-    "run_id": "intake-btc-next-week-20260817@2026-08-17T08:54:08",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-btc-next-week-20260817",
-    "started_at": "2026-08-17T08:54:08",
-    "ended_at": "2026-08-17T08:54:08",
-    "duration_s": 0.0,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "btc-next-week",
-    "summary": null,
-    "error": "whisper exit code 143; output tail:\n to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower median kernel implementation...\n  warnings.warn(\nC:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\whisper\\timing.py:146: UserWarning: Failed to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower DTW implementation...\n  warnings.warn(\n[00:59.380 --> 01:04.900]  what's up everybody what's going on this beautiful sunny day at least it's\n[01:04.900 --> 01:11.700]  beautiful and sunny where I am right now and also stuff up\n[01:16.420 --> 01:24.640]  interesting times ahead right guys I'm gonna go into a couple of these couple\n[01:24.640 --> 01:32.140]  of these tokens I find it kind of nuts with the way that you see this for\n[01:32.140 --> 01:35.700]  those of you don't know we're not familiar with Cooper that's my dog play I\n[01:35.700 --> 01:42.780]  got two dog plays and I think they're the most hopeful dog plays when it comes\n[01:42.780 --> 01:50.240]  to dogs on the Robin Hood chain I got Cooper so I was you know looking into\n[01:50.240 --> 01:55.200]  the cats is like look at this insane pump look at this craziness with this\n[01:55.200 --> 02:05.020]  hmm cat right the thinking cat crazy 36 million man holy crap is like the the\n[02:05.020 --> 02:10.620]  Robin Hood chain is attracted a lot of cat lovers a lot of cat lovers man holy\n[02:10.620 --> 02:17.760]  crap but Cooper is my my favorite dog play I mean there's a lot of dogs or\n"
-  },
-  {
-    "run_id": "intake-btc-next-week-20260817@2026-08-17T08:55:24",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-btc-next-week-20260817",
-    "started_at": "2026-08-17T08:55:24",
-    "ended_at": "2026-08-17T08:55:24",
-    "duration_s": 0.0,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "btc-next-week",
-    "summary": null,
-    "error": "whisper exit code 143; output tail:\n to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower median kernel implementation...\n  warnings.warn(\nC:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\whisper\\timing.py:146: UserWarning: Failed to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower DTW implementation...\n  warnings.warn(\n[00:59.380 --> 01:04.900]  what's up everybody what's going on this beautiful sunny day at least it's\n[01:04.900 --> 01:11.700]  beautiful and sunny where I am right now and also stuff up\n[01:16.420 --> 01:24.640]  interesting times ahead right guys I'm gonna go into a couple of these couple\n[01:24.640 --> 01:32.140]  of these tokens I find it kind of nuts with the way that you see this for\n[01:32.140 --> 01:35.700]  those of you don't know we're not familiar with Cooper that's my dog play I\n[01:35.700 --> 01:42.780]  got two dog plays and I think they're the most hopeful dog plays when it comes\n[01:42.780 --> 01:50.240]  to dogs on the Robin Hood chain I got Cooper so I was you know looking into\n[01:50.240 --> 01:55.200]  the cats is like look at this insane pump look at this craziness with this\n[01:55.200 --> 02:05.020]  hmm cat right the thinking cat crazy 36 million man holy crap is like the the\n[02:05.020 --> 02:10.620]  Robin Hood chain is attracted a lot of cat lovers a lot of cat lovers man holy\n[02:10.620 --> 02:17.760]  crap but Cooper is my my favorite dog play I mean there's a lot of dogs or\n"
-  },
-  {
-    "run_id": "intake-btc-next-week-20260817@2026-08-17T08:57:01",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-btc-next-week-20260817",
-    "started_at": "2026-08-17T08:57:01",
-    "ended_at": "2026-08-17T08:57:01",
-    "duration_s": 0.0,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "btc-next-week",
-    "summary": null,
-    "error": "whisper exit code 143; output tail:\n to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower median kernel implementation...\n  warnings.warn(\nC:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\whisper\\timing.py:146: UserWarning: Failed to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower DTW implementation...\n  warnings.warn(\n[00:59.380 --> 01:04.900]  what's up everybody what's going on this beautiful sunny day at least it's\n[01:04.900 --> 01:11.700]  beautiful and sunny where I am right now and also stuff up\n[01:16.420 --> 01:24.640]  interesting times ahead right guys I'm gonna go into a couple of these couple\n[01:24.640 --> 01:32.140]  of these tokens I find it kind of nuts with the way that you see this for\n[01:32.140 --> 01:35.700]  those of you don't know we're not familiar with Cooper that's my dog play I\n[01:35.700 --> 01:42.780]  got two dog plays and I think they're the most hopeful dog plays when it comes\n[01:42.780 --> 01:50.240]  to dogs on the Robin Hood chain I got Cooper so I was you know looking into\n[01:50.240 --> 01:55.200]  the cats is like look at this insane pump look at this craziness with this\n[01:55.200 --> 02:05.020]  hmm cat right the thinking cat crazy 36 million man holy crap is like the the\n[02:05.020 --> 02:10.620]  Robin Hood chain is attracted a lot of cat lovers a lot of cat lovers man holy\n[02:10.620 --> 02:17.760]  crap but Cooper is my my favorite dog play I mean there's a lot of dogs or\n"
-  },
-  {
-    "run_id": "intake-btc-next-week-20260817@2026-08-17T08:57:52",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-btc-next-week-20260817",
-    "started_at": "2026-08-17T08:57:52",
-    "ended_at": "2026-08-17T08:57:52",
-    "duration_s": 0.0,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "btc-next-week",
-    "summary": null,
-    "error": "whisper exit code 143; output tail:\n to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower median kernel implementation...\n  warnings.warn(\nC:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\whisper\\timing.py:146: UserWarning: Failed to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower DTW implementation...\n  warnings.warn(\n[00:59.380 --> 01:04.900]  what's up everybody what's going on this beautiful sunny day at least it's\n[01:04.900 --> 01:11.700]  beautiful and sunny where I am right now and also stuff up\n[01:16.420 --> 01:24.640]  interesting times ahead right guys I'm gonna go into a couple of these couple\n[01:24.640 --> 01:32.140]  of these tokens I find it kind of nuts with the way that you see this for\n[01:32.140 --> 01:35.700]  those of you don't know we're not familiar with Cooper that's my dog play I\n[01:35.700 --> 01:42.780]  got two dog plays and I think they're the most hopeful dog plays when it comes\n[01:42.780 --> 01:50.240]  to dogs on the Robin Hood chain I got Cooper so I was you know looking into\n[01:50.240 --> 01:55.200]  the cats is like look at this insane pump look at this craziness with this\n[01:55.200 --> 02:05.020]  hmm cat right the thinking cat crazy 36 million man holy crap is like the the\n[02:05.020 --> 02:10.620]  Robin Hood chain is attracted a lot of cat lovers a lot of cat lovers man holy\n[02:10.620 --> 02:17.760]  crap but Cooper is my my favorite dog play I mean there's a lot of dogs or\n"
-  },
-  {
-    "run_id": "intake-btc-next-week-20260817@2026-08-17T08:58:15",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-btc-next-week-20260817",
-    "started_at": "2026-08-17T08:58:15",
-    "ended_at": "2026-08-17T08:58:15",
-    "duration_s": 0.0,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "btc-next-week",
-    "summary": null,
-    "error": "whisper exit code 143; output tail:\n to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower median kernel implementation...\n  warnings.warn(\nC:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\whisper\\timing.py:146: UserWarning: Failed to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower DTW implementation...\n  warnings.warn(\n[00:59.380 --> 01:04.900]  what's up everybody what's going on this beautiful sunny day at least it's\n[01:04.900 --> 01:11.700]  beautiful and sunny where I am right now and also stuff up\n[01:16.420 --> 01:24.640]  interesting times ahead right guys I'm gonna go into a couple of these couple\n[01:24.640 --> 01:32.140]  of these tokens I find it kind of nuts with the way that you see this for\n[01:32.140 --> 01:35.700]  those of you don't know we're not familiar with Cooper that's my dog play I\n[01:35.700 --> 01:42.780]  got two dog plays and I think they're the most hopeful dog plays when it comes\n[01:42.780 --> 01:50.240]  to dogs on the Robin Hood chain I got Cooper so I was you know looking into\n[01:50.240 --> 01:55.200]  the cats is like look at this insane pump look at this craziness with this\n[01:55.200 --> 02:05.020]  hmm cat right the thinking cat crazy 36 million man holy crap is like the the\n[02:05.020 --> 02:10.620]  Robin Hood chain is attracted a lot of cat lovers a lot of cat lovers man holy\n[02:10.620 --> 02:17.760]  crap but Cooper is my my favorite dog play I mean there's a lot of dogs or\n"
-  },
-  {
-    "run_id": "intake-btc-next-week-20260817@2026-08-17T08:58:54",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-btc-next-week-20260817",
-    "started_at": "2026-08-17T08:58:54",
-    "ended_at": "2026-08-17T08:58:54",
-    "duration_s": 0.0,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "btc-next-week",
-    "summary": null,
-    "error": "whisper exit code 143; output tail:\n to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower median kernel implementation...\n  warnings.warn(\nC:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\whisper\\timing.py:146: UserWarning: Failed to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower DTW implementation...\n  warnings.warn(\n[00:59.380 --> 01:04.900]  what's up everybody what's going on this beautiful sunny day at least it's\n[01:04.900 --> 01:11.700]  beautiful and sunny where I am right now and also stuff up\n[01:16.420 --> 01:24.640]  interesting times ahead right guys I'm gonna go into a couple of these couple\n[01:24.640 --> 01:32.140]  of these tokens I find it kind of nuts with the way that you see this for\n[01:32.140 --> 01:35.700]  those of you don't know we're not familiar with Cooper that's my dog play I\n[01:35.700 --> 01:42.780]  got two dog plays and I think they're the most hopeful dog plays when it comes\n[01:42.780 --> 01:50.240]  to dogs on the Robin Hood chain I got Cooper so I was you know looking into\n[01:50.240 --> 01:55.200]  the cats is like look at this insane pump look at this craziness with this\n[01:55.200 --> 02:05.020]  hmm cat right the thinking cat crazy 36 million man holy crap is like the the\n[02:05.020 --> 02:10.620]  Robin Hood chain is attracted a lot of cat lovers a lot of cat lovers man holy\n[02:10.620 --> 02:17.760]  crap but Cooper is my my favorite dog play I mean there's a lot of dogs or\n"
-  },
-  {
-    "run_id": "post-lf-20260817-btc-next-week-bitchute@2026-08-17T08:53:50",
-    "lane": 7,
-    "lane_name": "post",
-    "thread": "post-lf-20260817-btc-next-week-bitchute",
-    "started_at": "2026-08-17T08:53:50",
-    "ended_at": "2026-08-17T09:04:51",
-    "duration_s": 661.5,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "lf-20260817-btc-next-week:bitchute",
-    "summary": {
-      "platform": "bitchute",
-      "status": "posted",
-      "url": "https://www.bitchute.com/video/tPXLcudFW0Md/",
-      "title": "Bitcoin's 200 Week SMA Comes Down To The Wire While Cooper And What If Go Wild On The Robinhood Chain",
-      "posted_at": "2026-08-17T13:03:50.690Z"
-    },
-    "error": null
-  },
-  {
-    "run_id": "intake-btc-next-week-20260817@2026-08-17T09:13:16",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-btc-next-week-20260817",
-    "started_at": "2026-08-17T09:13:16",
-    "ended_at": "2026-08-17T09:13:16",
-    "duration_s": 0.0,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "btc-next-week",
-    "summary": null,
-    "error": "whisper exit code 143; output tail:\n to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower median kernel implementation...\n  warnings.warn(\nC:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\whisper\\timing.py:146: UserWarning: Failed to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower DTW implementation...\n  warnings.warn(\n[00:59.380 --> 01:04.900]  what's up everybody what's going on this beautiful sunny day at least it's\n[01:04.900 --> 01:11.700]  beautiful and sunny where I am right now and also stuff up\n[01:16.420 --> 01:24.640]  interesting times ahead right guys I'm gonna go into a couple of these couple\n[01:24.640 --> 01:32.140]  of these tokens I find it kind of nuts with the way that you see this for\n[01:32.140 --> 01:35.700]  those of you don't know we're not familiar with Cooper that's my dog play I\n[01:35.700 --> 01:42.780]  got two dog plays and I think they're the most hopeful dog plays when it comes\n[01:42.780 --> 01:50.240]  to dogs on the Robin Hood chain I got Cooper so I was you know looking into\n[01:50.240 --> 01:55.200]  the cats is like look at this insane pump look at this craziness with this\n[01:55.200 --> 02:05.020]  hmm cat right the thinking cat crazy 36 million man holy crap is like the the\n[02:05.020 --> 02:10.620]  Robin Hood chain is attracted a lot of cat lovers a lot of cat lovers man holy\n[02:10.620 --> 02:17.760]  crap but Cooper is my my favorite dog play I mean there's a lot of dogs or\n"
-  },
-  {
-    "run_id": "intake-btc-next-week-20260817@2026-08-17T09:15:02",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-btc-next-week-20260817",
-    "started_at": "2026-08-17T09:15:02",
-    "ended_at": "2026-08-17T09:15:02",
-    "duration_s": 0.0,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "btc-next-week",
-    "summary": null,
-    "error": "whisper exit code 143; output tail:\n to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower median kernel implementation...\n  warnings.warn(\nC:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\whisper\\timing.py:146: UserWarning: Failed to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower DTW implementation...\n  warnings.warn(\n[00:59.380 --> 01:04.900]  what's up everybody what's going on this beautiful sunny day at least it's\n[01:04.900 --> 01:11.700]  beautiful and sunny where I am right now and also stuff up\n[01:16.420 --> 01:24.640]  interesting times ahead right guys I'm gonna go into a couple of these couple\n[01:24.640 --> 01:32.140]  of these tokens I find it kind of nuts with the way that you see this for\n[01:32.140 --> 01:35.700]  those of you don't know we're not familiar with Cooper that's my dog play I\n[01:35.700 --> 01:42.780]  got two dog plays and I think they're the most hopeful dog plays when it comes\n[01:42.780 --> 01:50.240]  to dogs on the Robin Hood chain I got Cooper so I was you know looking into\n[01:50.240 --> 01:55.200]  the cats is like look at this insane pump look at this craziness with this\n[01:55.200 --> 02:05.020]  hmm cat right the thinking cat crazy 36 million man holy crap is like the the\n[02:05.020 --> 02:10.620]  Robin Hood chain is attracted a lot of cat lovers a lot of cat lovers man holy\n[02:10.620 --> 02:17.760]  crap but Cooper is my my favorite dog play I mean there's a lot of dogs or\n"
-  },
-  {
-    "run_id": "intake-btc-next-week-20260817@2026-08-17T09:15:04",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-btc-next-week-20260817",
-    "started_at": "2026-08-17T09:15:04",
-    "ended_at": "2026-08-17T09:15:04",
-    "duration_s": 0.0,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "btc-next-week",
-    "summary": null,
-    "error": "whisper exit code 143; output tail:\n to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower median kernel implementation...\n  warnings.warn(\nC:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\whisper\\timing.py:146: UserWarning: Failed to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower DTW implementation...\n  warnings.warn(\n[00:59.380 --> 01:04.900]  what's up everybody what's going on this beautiful sunny day at least it's\n[01:04.900 --> 01:11.700]  beautiful and sunny where I am right now and also stuff up\n[01:16.420 --> 01:24.640]  interesting times ahead right guys I'm gonna go into a couple of these couple\n[01:24.640 --> 01:32.140]  of these tokens I find it kind of nuts with the way that you see this for\n[01:32.140 --> 01:35.700]  those of you don't know we're not familiar with Cooper that's my dog play I\n[01:35.700 --> 01:42.780]  got two dog plays and I think they're the most hopeful dog plays when it comes\n[01:42.780 --> 01:50.240]  to dogs on the Robin Hood chain I got Cooper so I was you know looking into\n[01:50.240 --> 01:55.200]  the cats is like look at this insane pump look at this craziness with this\n[01:55.200 --> 02:05.020]  hmm cat right the thinking cat crazy 36 million man holy crap is like the the\n[02:05.020 --> 02:10.620]  Robin Hood chain is attracted a lot of cat lovers a lot of cat lovers man holy\n[02:10.620 --> 02:17.760]  crap but Cooper is my my favorite dog play I mean there's a lot of dogs or\n"
-  },
-  {
-    "run_id": "intake-btc-next-week-20260817@2026-08-17T09:15:06",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-btc-next-week-20260817",
-    "started_at": "2026-08-17T09:15:06",
-    "ended_at": "2026-08-17T09:15:06",
-    "duration_s": 0.0,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "btc-next-week",
-    "summary": null,
-    "error": "whisper exit code 143; output tail:\n to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower median kernel implementation...\n  warnings.warn(\nC:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\whisper\\timing.py:146: UserWarning: Failed to launch Triton kernels, likely due to missing CUDA toolkit; falling back to a slower DTW implementation...\n  warnings.warn(\n[00:59.380 --> 01:04.900]  what's up everybody what's going on this beautiful sunny day at least it's\n[01:04.900 --> 01:11.700]  beautiful and sunny where I am right now and also stuff up\n[01:16.420 --> 01:24.640]  interesting times ahead right guys I'm gonna go into a couple of these couple\n[01:24.640 --> 01:32.140]  of these tokens I find it kind of nuts with the way that you see this for\n[01:32.140 --> 01:35.700]  those of you don't know we're not familiar with Cooper that's my dog play I\n[01:35.700 --> 01:42.780]  got two dog plays and I think they're the most hopeful dog plays when it comes\n[01:42.780 --> 01:50.240]  to dogs on the Robin Hood chain I got Cooper so I was you know looking into\n[01:50.240 --> 01:55.200]  the cats is like look at this insane pump look at this craziness with this\n[01:55.200 --> 02:05.020]  hmm cat right the thinking cat crazy 36 million man holy crap is like the the\n[02:05.020 --> 02:10.620]  Robin Hood chain is attracted a lot of cat lovers a lot of cat lovers man holy\n[02:10.620 --> 02:17.760]  crap but Cooper is my my favorite dog play I mean there's a lot of dogs or\n"
-  },
-  {
     "run_id": "intake-btc-next-week-20260817@2026-08-17T09:15:09",
     "lane": 1,
     "lane_name": "intake",
@@ -18534,6 +17753,1208 @@
         },
         "until": ""
       }
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-3t-20261028-hundred-dollars-a-week-to-350x-bitchute@2026-10-31T11:44:50",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-3t-20261028-hundred-dollars-a-week-to-350x-bitchute",
+    "started_at": "2026-10-31T11:44:50",
+    "ended_at": "2026-10-31T11:47:28",
+    "duration_s": 157.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "3t-20261028-hundred-dollars-a-week-to-350x:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/2j4ZB2J4wR3R/",
+      "title": "$100 a Week. I Expected a 20x. Then This Happened.",
+      "posted_at": "2026-10-31T15:47:27.044Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261030-reset-bitchute@2026-10-31T12:23:32",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261030-reset-bitchute",
+    "started_at": "2026-10-31T12:23:32",
+    "ended_at": "2026-10-31T12:28:50",
+    "duration_s": 317.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261030-reset:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/jOPdR9qkGqZQ/",
+      "title": "The Financial Reset Is Coming. Here's What Happens Next",
+      "posted_at": "2026-10-31T16:27:49.501Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261030-reset-rumble@2026-10-31T12:28:57",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261030-reset-rumble",
+    "started_at": "2026-10-31T12:28:57",
+    "ended_at": "2026-10-31T12:34:38",
+    "duration_s": 341.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261030-reset:rumble",
+    "summary": {
+      "platform": "rumble",
+      "status": "posted",
+      "url": "https://rumble.com/v7hnxqg-the-financial-reset-is-coming.-heres-what-happens-next.html",
+      "title": "The Financial Reset Is Coming. Here's What Happens Next",
+      "posted_at": "2026-10-31T16:33:37.878Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "intake-kaspa-cocktails-20261102@2026-11-02T06:59:30",
+    "lane": 1,
+    "lane_name": "intake",
+    "thread": "intake-kaspa-cocktails-20261102",
+    "started_at": "2026-11-02T06:59:30",
+    "ended_at": "2026-11-02T07:46:10",
+    "duration_s": 2800.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kaspa-cocktails",
+    "summary": {
+      "slug": "kaspa-cocktails",
+      "sandbox": false,
+      "master_duration_s": 6009.466667,
+      "master_mbps": 0.64,
+      "longform": {
+        "duration_s": 3745.3,
+        "removed_s": 2264.2,
+        "mbps": 0.8,
+        "thumb_staged": false,
+        "queued_id": "lf-20261102-kaspa-cocktails",
+        "already_present": false,
+        "queue_total": 71
+      },
+      "vertical": {
+        "geometry": "1080x1920 SAR 1:1",
+        "duration_s": 6009.5
+      },
+      "words": 12590,
+      "segments": 962,
+      "glossary": "Kaspa:68",
+      "flags": []
+    },
+    "error": null
+  },
+  {
+    "run_id": "cut-kaspa-cocktails-20261102@2026-11-02T07:58:50",
+    "lane": 2,
+    "lane_name": "cut",
+    "thread": "cut-kaspa-cocktails-20261102",
+    "started_at": "2026-11-02T07:58:50",
+    "ended_at": "2026-11-02T08:00:46",
+    "duration_s": 116.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kaspa-cocktails",
+    "summary": {
+      "batch": "kaspa-cocktails",
+      "sandbox": false,
+      "clips": 8,
+      "total_s": 560.4,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\kaspa-cocktails\\dashboard.html",
+      "registered": true,
+      "clip_durations": {
+        "kaspa-3-dollars-is-bearish": 117.895,
+        "bitcoin-maxis-will-move-to-kaspa": 73.383,
+        "kaspa-first-bear-market-mirrors-bitcoin": 106.647,
+        "kcc20-nacho-migration-is-live": 60.903,
+        "four-year-cycle-zombies-25-hours-left": 101.191,
+        "kaspa-3-dollars-is-bearish-impact": 43.303,
+        "bitcoin-maxis-will-move-to-kaspa-impact": 26.303,
+        "kaspa-first-bear-market-mirrors-bitcoin-impact": 30.767
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-kaspa-cocktails@2026-11-02T06:59:27",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-kaspa-cocktails",
+    "started_at": "2026-11-02T06:59:27",
+    "ended_at": "2026-11-02T08:00:48",
+    "duration_s": 3680.7,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "kaspa-cocktails",
+      "until": "",
+      "approve": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "kaspa-cocktails",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-11-02T07:46:11"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-11-02T07:46:11"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 492",
+          "at": "2026-11-02T07:46:11"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "8 clips planned",
+          "at": "2026-11-02T07:58:47"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "8 clips cut",
+          "at": "2026-11-02T08:00:47"
+        }
+      },
+      "summary": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "tighten-kaspa-cocktails-20261102@2026-11-02T09:02:52",
+    "lane": 3,
+    "lane_name": "tighten",
+    "thread": "tighten-kaspa-cocktails-20261102",
+    "started_at": "2026-11-02T09:02:52",
+    "ended_at": "2026-11-02T09:06:36",
+    "duration_s": 224.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kaspa-cocktails",
+    "summary": {
+      "batch": "kaspa-cocktails",
+      "sandbox": false,
+      "clips": 6,
+      "total_s": 250.1,
+      "min_sil": 0.25,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\kaspa-cocktails\\dashboard.html",
+      "clip_durations": {
+        "kaspa-3-dollars-is-bearish": 62.65,
+        "bitcoin-maxis-will-move-to-kaspa": 45.281,
+        "kaspa-first-bear-market-mirrors-bitcoin": 61.76,
+        "kcc20-nacho-migration-is-live": 36.44,
+        "kaspa-3-dollars-is-bearish-impact": 25.96,
+        "bitcoin-maxis-will-move-to-kaspa-impact": 18.003
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-kaspa-cocktails@2026-11-02T08:52:25",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-kaspa-cocktails",
+    "started_at": "2026-11-02T08:52:25",
+    "ended_at": "2026-11-02T09:06:37",
+    "duration_s": 852.5,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "kaspa-cocktails",
+      "until": "",
+      "approve": [
+        "4b"
+      ],
+      "resume": true
+    },
+    "summary": {
+      "batch": "kaspa-cocktails",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-11-02T07:46:11"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-11-02T07:46:11"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 492",
+          "at": "2026-11-02T07:46:11"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "8 clips planned",
+          "at": "2026-11-02T07:58:47"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "8 clips cut",
+          "at": "2026-11-02T08:00:47"
+        },
+        "gate_4b": {
+          "status": "ran",
+          "detail": "approved via flag; deleted [5, 8]",
+          "at": "2026-11-02T08:52:25"
+        },
+        "lane2_tighten_plan": {
+          "status": "ran",
+          "detail": "6 clips planned from 2 part(s)",
+          "at": "2026-11-02T09:02:48"
+        },
+        "lane2_tighten": {
+          "status": "ran",
+          "detail": "5B-desilenced",
+          "at": "2026-11-02T09:06:36"
+        }
+      },
+      "summary": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "repurpose-kaspa-cocktails-20261102@2026-11-02T08:11:43",
+    "lane": 6,
+    "lane_name": "repurpose",
+    "thread": "repurpose-kaspa-cocktails-20261102",
+    "started_at": "2026-11-02T08:11:43",
+    "ended_at": "2026-11-02T09:33:36",
+    "duration_s": 4912.8,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kaspa-cocktails",
+    "summary": null,
+    "error": "lane3_batch.py --stage generate exit code 1; output tail:\nde\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\sync_api\\_generated.py\", line 15631, in click\n    self._sync(\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_sync_base.py\", line 115, in _sync\n    return task.result()\n           ^^^^^^^^^^^^^\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_locator.py\", line 162, in click\n    return await self._frame._click(self._selector, strict=True, **params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_frame.py\", line 566, in _click\n    await self._channel.send(\"click\", self._timeout, locals_to_params(locals()))\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_connection.py\", line 69, in send\n    return await self._connection.wrap_api_call(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_connection.py\", line 559, in wrap_api_call\n    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\nplaywright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"#prompt-textarea, div[contenteditable=\\\"true\\\"][data-id], div.ProseMirror[contenteditable=\\\"true\\\"][role=\\\"textbox\\\"]\").first\n\n"
+  },
+  {
+    "run_id": "lane3-kaspa-cocktails@2026-11-02T07:46:14",
+    "lane": 8,
+    "lane_name": "lane3",
+    "thread": "lane3-kaspa-cocktails",
+    "started_at": "2026-11-02T07:46:14",
+    "ended_at": "2026-11-02T09:33:36",
+    "duration_s": 6442.7,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "kaspa-cocktails",
+      "resume": true
+    },
+    "summary": {
+      "batch": "kaspa-cocktails",
+      "steps": {
+        "draft": {
+          "status": "ran",
+          "detail": "plan validated",
+          "at": "2026-11-02T08:11:39"
+        },
+        "repurpose": {
+          "status": "failed",
+          "detail": "repurpose graph exit 1; pipelines.repurpose='pending'; tail:\ne\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\sync_api\\_generated.py\", line 15631, in click\n    self._sync(\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_sync_base.py\", line 115, in _sync\n    return task.result()\n           ^^^^^^^^^^^^^\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_locator.py\", line 162, in click\n    return await self._frame._click(self._selector, strict=True, **params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_frame.py\", line 566, in _click\n    await self._channel.send(\"click\", self._timeout, locals_to_params(locals()))\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_connection.py\", line 69, in send\n    return await self._connection.wrap_api_call(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_connection.py\", line 559, in wrap_api_call\n    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\nplaywright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"#prompt-textarea, div[contenteditable=\\\"true\\\"][data-id], div.ProseMirror[contenteditable=\\\"true\\\"][role=\\\"textbox\\\"]\").first\n\n\n",
+          "at": "2026-11-02T09:33:36"
+        }
+      }
+    },
+    "error": "repurpose graph exit 1; pipelines.repurpose='pending'; tail:\ne\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\sync_api\\_generated.py\", line 15631, in click\n    self._sync(\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_sync_base.py\", line 115, in _sync\n    return task.result()\n           ^^^^^^^^^^^^^\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_locator.py\", line 162, in click\n    return await self._frame._click(self._selector, strict=True, **params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_frame.py\", line 566, in _click\n    await self._channel.send(\"click\", self._timeout, locals_to_params(locals()))\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_connection.py\", line 69, in send\n    return await self._connection.wrap_api_call(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_connection.py\", line 559, in wrap_api_call\n    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\nplaywright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"#prompt-textarea, div[contenteditable=\\\"true\\\"][data-id], div.ProseMirror[contenteditable=\\\"true\\\"][role=\\\"textbox\\\"]\").first\n\n\n"
+  },
+  {
+    "run_id": "finish-kaspa-cocktails-20261102@2026-11-02T09:59:55",
+    "lane": 4,
+    "lane_name": "finish",
+    "thread": "finish-kaspa-cocktails-20261102",
+    "started_at": "2026-11-02T09:59:55",
+    "ended_at": "2026-11-02T10:03:45",
+    "duration_s": 229.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kaspa-cocktails",
+    "summary": {
+      "batch": "kaspa-cocktails",
+      "sandbox": false,
+      "clips": 6,
+      "total_s": 250.1,
+      "filler_cuts": 0,
+      "words": {
+        "kaspa-3-dollars-is-bearish": 192,
+        "bitcoin-maxis-will-move-to-kaspa": 185,
+        "kaspa-first-bear-market-mirrors-bitcoin": 213,
+        "kcc20-nacho-migration-is-live": 122,
+        "kaspa-3-dollars-is-bearish-impact": 89,
+        "bitcoin-maxis-will-move-to-kaspa-impact": 80
+      },
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\kaspa-cocktails\\dashboard.html",
+      "clip_durations": {
+        "kaspa-3-dollars-is-bearish": 62.65,
+        "bitcoin-maxis-will-move-to-kaspa": 45.28,
+        "kaspa-first-bear-market-mirrors-bitcoin": 61.76,
+        "kcc20-nacho-migration-is-live": 36.44,
+        "kaspa-3-dollars-is-bearish-impact": 25.96,
+        "bitcoin-maxis-will-move-to-kaspa-impact": 18.0
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "repurpose-kaspa-cocktails-20261102@2026-11-02T10:49:39",
+    "lane": 6,
+    "lane_name": "repurpose",
+    "thread": "repurpose-kaspa-cocktails-20261102",
+    "started_at": "2026-11-02T10:49:39",
+    "ended_at": "2026-11-02T11:03:43",
+    "duration_s": 843.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kaspa-cocktails",
+    "summary": {
+      "batch": "kaspa-cocktails",
+      "sandbox": false,
+      "fake_gen": false,
+      "date": "2026-11-02",
+      "images": {
+        "planned": 21,
+        "generated": 4,
+        "skipped": 17,
+        "verified": 21
+      },
+      "entries_added": 19,
+      "entries_skipped": 0,
+      "queues": {
+        "x-tweets.json": {
+          "planned": 6,
+          "queue_total": 514
+        },
+        "x-threads.json": {
+          "planned": 2,
+          "queue_total": 129
+        },
+        "x-polls.json": {
+          "planned": 2,
+          "queue_total": 98
+        },
+        "yt-posts.json": {
+          "planned": 2,
+          "queue_total": 242
+        },
+        "yt-text-polls.json": {
+          "planned": 2,
+          "queue_total": 154
+        },
+        "ig-single-image.json": {
+          "planned": 5,
+          "queue_total": 173
+        }
+      },
+      "lint": "clean",
+      "registered": "kaspa-cocktails",
+      "partial": false,
+      "held": null
+    },
+    "error": "lane3_batch.py --stage generate exit code 1; output tail:\nde\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\sync_api\\_generated.py\", line 15631, in click\n    self._sync(\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_sync_base.py\", line 115, in _sync\n    return task.result()\n           ^^^^^^^^^^^^^\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_locator.py\", line 162, in click\n    return await self._frame._click(self._selector, strict=True, **params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_frame.py\", line 566, in _click\n    await self._channel.send(\"click\", self._timeout, locals_to_params(locals()))\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_connection.py\", line 69, in send\n    return await self._connection.wrap_api_call(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_connection.py\", line 559, in wrap_api_call\n    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\nplaywright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"#prompt-textarea, div[contenteditable=\\\"true\\\"][data-id], div.ProseMirror[contenteditable=\\\"true\\\"][role=\\\"textbox\\\"]\").first\n\n"
+  },
+  {
+    "run_id": "batch-kaspa-cocktails@2026-11-02T09:33:59",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-kaspa-cocktails",
+    "started_at": "2026-11-02T09:33:59",
+    "ended_at": "2026-11-02T11:03:46",
+    "duration_s": 5386.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "kaspa-cocktails",
+      "until": "build",
+      "approve": [
+        "2nd"
+      ],
+      "resume": true
+    },
+    "summary": {
+      "batch": "kaspa-cocktails",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-11-02T07:46:11"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-11-02T07:46:11"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 492",
+          "at": "2026-11-02T07:46:11"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "8 clips planned",
+          "at": "2026-11-02T07:58:47"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "8 clips cut",
+          "at": "2026-11-02T08:00:47"
+        },
+        "gate_4b": {
+          "status": "ran",
+          "detail": "approved via flag; deleted [5, 8]",
+          "at": "2026-11-02T08:52:25"
+        },
+        "lane2_tighten_plan": {
+          "status": "ran",
+          "detail": "6 clips planned from 2 part(s)",
+          "at": "2026-11-02T09:02:48"
+        },
+        "lane2_tighten": {
+          "status": "ran",
+          "detail": "5B-desilenced",
+          "at": "2026-11-02T09:06:36"
+        },
+        "gate_2nd": {
+          "status": "ran",
+          "detail": "approved via flag; deleted []",
+          "at": "2026-11-02T09:59:52"
+        },
+        "lane2_finish": {
+          "status": "ran",
+          "detail": "6-transcribed, render-assets staged",
+          "at": "2026-11-02T10:03:45"
+        },
+        "lane2_build": {
+          "status": "ran",
+          "detail": "1 built here, 0 awaited; all 1 7-built PASS",
+          "at": "2026-11-02T10:49:32"
+        },
+        "join_lane3": {
+          "status": "ran",
+          "detail": "lane 3 done (waited 14 min)",
+          "at": "2026-11-02T11:03:44"
+        },
+        "verify_batch": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-11-02T11:03:45"
+        }
+      },
+      "summary": {
+        "batch": "kaspa-cocktails",
+        "lane1_longform": "queued",
+        "lane2_shorts": "6-transcribed",
+        "lane2_clips": 6,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 0,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": "build"
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "lane3-kaspa-cocktails@2026-11-02T10:49:36",
+    "lane": 8,
+    "lane_name": "lane3",
+    "thread": "lane3-kaspa-cocktails",
+    "started_at": "2026-11-02T10:49:36",
+    "ended_at": "2026-11-02T11:10:17",
+    "duration_s": 1241.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "kaspa-cocktails",
+      "resume": true
+    },
+    "summary": {
+      "batch": "kaspa-cocktails",
+      "steps": {
+        "draft": {
+          "status": "skipped",
+          "detail": "valid plan on disk",
+          "at": "2026-11-02T10:49:36"
+        },
+        "repurpose": {
+          "status": "ran",
+          "detail": "{\"x-tweets\": 0, \"x-threads\": 0, \"x-polls\": 0, \"yt-posts\": 0, \"yt-text-polls\": 0, \"ig-single-image\": 0}",
+          "at": "2026-11-02T11:03:43"
+        },
+        "visual_qa": {
+          "status": "ran",
+          "detail": "report written",
+          "at": "2026-11-02T11:10:17"
+        }
+      }
+    },
+    "error": "repurpose graph exit 1; pipelines.repurpose='pending'; tail:\ne\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\sync_api\\_generated.py\", line 15631, in click\n    self._sync(\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_sync_base.py\", line 115, in _sync\n    return task.result()\n           ^^^^^^^^^^^^^\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_locator.py\", line 162, in click\n    return await self._frame._click(self._selector, strict=True, **params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_frame.py\", line 566, in _click\n    await self._channel.send(\"click\", self._timeout, locals_to_params(locals()))\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_connection.py\", line 69, in send\n    return await self._connection.wrap_api_call(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\playwright\\_impl\\_connection.py\", line 559, in wrap_api_call\n    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\nplaywright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"#prompt-textarea, div[contenteditable=\\\"true\\\"][data-id], div.ProseMirror[contenteditable=\\\"true\\\"][role=\\\"textbox\\\"]\").first\n\n\n"
+  },
+  {
+    "run_id": "post-lf-20261030-reset-facebook@2026-11-02T11:38:53",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261030-reset-facebook",
+    "started_at": "2026-11-02T11:38:53",
+    "ended_at": "2026-11-02T11:58:34",
+    "duration_s": 1181.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261030-reset:facebook",
+    "summary": {
+      "platform": "facebook",
+      "status": "posted",
+      "url": "https://www.facebook.com/reel/1881166669723884/",
+      "title": "The Financial Reset Is Coming. Here's What Happens Next",
+      "posted_at": "2026-11-02T16:58:33.525Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "publish-kaspa-cocktails-20261102@2026-11-02T12:57:27",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-kaspa-cocktails-20261102",
+    "started_at": "2026-11-02T12:57:27",
+    "ended_at": "2026-11-02T12:57:28",
+    "duration_s": 1.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kaspa-cocktails",
+    "summary": {
+      "batch": "kaspa-cocktails",
+      "sandbox": false,
+      "date": "2026-11-02",
+      "clips": 1,
+      "added": 1,
+      "skipped": 0,
+      "dest_dir": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\shorts\\kaspa-cocktails-2026-11-02",
+      "queue_total": 291,
+      "lint": "clean"
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-kaspa-cocktails@2026-11-02T12:05:11",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-kaspa-cocktails",
+    "started_at": "2026-11-02T12:05:11",
+    "ended_at": "2026-11-02T12:57:29",
+    "duration_s": 3138.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "kaspa-cocktails",
+      "until": "publish",
+      "approve": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "kaspa-cocktails",
+      "steps": {
+        "intake": {
+          "status": "skipped",
+          "detail": "artifacts on disk",
+          "at": "2026-11-02T12:56:34"
+        },
+        "register": {
+          "status": "skipped",
+          "detail": "already registered",
+          "at": "2026-11-02T12:56:34"
+        },
+        "launch_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 already done",
+          "at": "2026-11-02T12:56:34"
+        },
+        "lane2_select": {
+          "status": "skipped",
+          "detail": "clip-plan.json on disk",
+          "at": "2026-11-02T12:56:34"
+        },
+        "lane2_cut": {
+          "status": "skipped",
+          "detail": "progress.json past cut",
+          "at": "2026-11-02T12:56:34"
+        },
+        "gate_4b": {
+          "status": "skipped",
+          "detail": "approved 2026-11-02T08:52:25",
+          "at": "2026-11-02T12:56:34"
+        },
+        "lane2_tighten_plan": {
+          "status": "skipped",
+          "detail": "tighten-plan.json on disk",
+          "at": "2026-11-02T12:56:34"
+        },
+        "lane2_tighten": {
+          "status": "skipped",
+          "detail": "phase 6-transcribed",
+          "at": "2026-11-02T12:56:34"
+        },
+        "gate_2nd": {
+          "status": "skipped",
+          "detail": "approved 2026-11-02T09:59:52",
+          "at": "2026-11-02T12:56:34"
+        },
+        "lane2_finish": {
+          "status": "skipped",
+          "detail": "phase 6-transcribed",
+          "at": "2026-11-02T12:56:34"
+        },
+        "lane2_build": {
+          "status": "skipped",
+          "detail": "every scoped clip is 7-built PASS",
+          "at": "2026-11-02T12:56:34"
+        },
+        "lane2_publish": {
+          "status": "ran",
+          "detail": "staged 1 clip(s) under date 2026-11-02; 1 queued total",
+          "at": "2026-11-02T12:57:28"
+        },
+        "join_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 done (waited 0 min)",
+          "at": "2026-11-02T12:57:28"
+        },
+        "verify_batch": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-11-02T12:57:29"
+        }
+      },
+      "summary": {
+        "batch": "kaspa-cocktails",
+        "lane1_longform": "queued",
+        "lane2_shorts": "partially published (1/6 staged)",
+        "lane2_clips": 6,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 0,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": "publish"
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "publish-kaspa-cocktails-20261102@2026-11-02T14:22:58",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-kaspa-cocktails-20261102",
+    "started_at": "2026-11-02T14:22:58",
+    "ended_at": "2026-11-02T14:23:01",
+    "duration_s": 2.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kaspa-cocktails",
+    "summary": {
+      "batch": "kaspa-cocktails",
+      "sandbox": false,
+      "date": "2026-11-02",
+      "clips": 3,
+      "added": 2,
+      "skipped": 1,
+      "dest_dir": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\shorts\\kaspa-cocktails-2026-11-02",
+      "queue_total": 293,
+      "lint": "clean"
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-kaspa-cocktails@2026-11-02T12:48:09",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-kaspa-cocktails",
+    "started_at": "2026-11-02T12:48:09",
+    "ended_at": "2026-11-02T14:23:02",
+    "duration_s": 5692.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "kaspa-cocktails",
+      "until": "publish",
+      "approve": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "kaspa-cocktails",
+      "steps": {
+        "intake": {
+          "status": "skipped",
+          "detail": "artifacts on disk",
+          "at": "2026-11-02T12:57:32"
+        },
+        "register": {
+          "status": "skipped",
+          "detail": "already registered",
+          "at": "2026-11-02T12:57:32"
+        },
+        "launch_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 already done",
+          "at": "2026-11-02T12:57:32"
+        },
+        "lane2_select": {
+          "status": "skipped",
+          "detail": "clip-plan.json on disk",
+          "at": "2026-11-02T12:57:32"
+        },
+        "lane2_cut": {
+          "status": "skipped",
+          "detail": "progress.json past cut",
+          "at": "2026-11-02T12:57:32"
+        },
+        "gate_4b": {
+          "status": "skipped",
+          "detail": "approved 2026-11-02T08:52:25",
+          "at": "2026-11-02T12:57:32"
+        },
+        "lane2_tighten_plan": {
+          "status": "skipped",
+          "detail": "tighten-plan.json on disk",
+          "at": "2026-11-02T12:57:32"
+        },
+        "lane2_tighten": {
+          "status": "skipped",
+          "detail": "phase 6-transcribed",
+          "at": "2026-11-02T12:57:32"
+        },
+        "gate_2nd": {
+          "status": "skipped",
+          "detail": "approved 2026-11-02T09:59:52",
+          "at": "2026-11-02T12:57:32"
+        },
+        "lane2_finish": {
+          "status": "skipped",
+          "detail": "phase 6-transcribed",
+          "at": "2026-11-02T12:57:32"
+        },
+        "lane2_build": {
+          "status": "ran",
+          "detail": "2 built here, 0 awaited; all 2 7-built PASS",
+          "at": "2026-11-02T14:21:40"
+        },
+        "lane2_publish": {
+          "status": "ran",
+          "detail": "staged 2 clip(s) under date 2026-11-02; 3 queued total",
+          "at": "2026-11-02T14:23:01"
+        },
+        "join_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 done (waited 0 min)",
+          "at": "2026-11-02T14:23:01"
+        },
+        "verify_batch": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-11-02T14:23:01"
+        }
+      },
+      "summary": {
+        "batch": "kaspa-cocktails",
+        "lane1_longform": "queued",
+        "lane2_shorts": "partially published (3/6 staged)",
+        "lane2_clips": 6,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 0,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": "publish"
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "publish-kaspa-cocktails-20261102@2026-11-02T23:07:04",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-kaspa-cocktails-20261102",
+    "started_at": "2026-11-02T23:07:04",
+    "ended_at": "2026-11-02T23:07:08",
+    "duration_s": 3.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kaspa-cocktails",
+    "summary": {
+      "batch": "kaspa-cocktails",
+      "sandbox": false,
+      "date": "2026-11-02",
+      "clips": 6,
+      "added": 3,
+      "skipped": 3,
+      "dest_dir": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\shorts\\kaspa-cocktails-2026-11-02",
+      "queue_total": 296,
+      "lint": "clean"
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-kaspa-cocktails@2026-11-02T21:55:41",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-kaspa-cocktails",
+    "started_at": "2026-11-02T21:55:41",
+    "ended_at": "2026-11-02T23:07:09",
+    "duration_s": 4288.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "kaspa-cocktails",
+      "until": "publish",
+      "approve": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "kaspa-cocktails",
+      "steps": {
+        "intake": {
+          "status": "skipped",
+          "detail": "artifacts on disk",
+          "at": "2026-11-02T21:55:41"
+        },
+        "register": {
+          "status": "skipped",
+          "detail": "already registered",
+          "at": "2026-11-02T21:55:41"
+        },
+        "launch_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 already done",
+          "at": "2026-11-02T21:55:41"
+        },
+        "lane2_select": {
+          "status": "skipped",
+          "detail": "clip-plan.json on disk",
+          "at": "2026-11-02T21:55:41"
+        },
+        "lane2_cut": {
+          "status": "skipped",
+          "detail": "progress.json past cut",
+          "at": "2026-11-02T21:55:41"
+        },
+        "gate_4b": {
+          "status": "skipped",
+          "detail": "approved 2026-11-02T08:52:25",
+          "at": "2026-11-02T21:55:41"
+        },
+        "lane2_tighten_plan": {
+          "status": "skipped",
+          "detail": "tighten-plan.json on disk",
+          "at": "2026-11-02T21:55:41"
+        },
+        "lane2_tighten": {
+          "status": "skipped",
+          "detail": "phase 6-transcribed",
+          "at": "2026-11-02T21:55:41"
+        },
+        "gate_2nd": {
+          "status": "skipped",
+          "detail": "approved 2026-11-02T09:59:52",
+          "at": "2026-11-02T21:55:41"
+        },
+        "lane2_finish": {
+          "status": "skipped",
+          "detail": "phase 6-transcribed",
+          "at": "2026-11-02T21:55:41"
+        },
+        "lane2_build": {
+          "status": "ran",
+          "detail": "3 built here, 0 awaited; all 3 7-built PASS",
+          "at": "2026-11-02T23:06:16"
+        },
+        "lane2_publish": {
+          "status": "ran",
+          "detail": "staged 3 clip(s) under date 2026-11-02; 6 queued total",
+          "at": "2026-11-02T23:07:08"
+        },
+        "join_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 done (waited 0 min)",
+          "at": "2026-11-02T23:07:08"
+        },
+        "verify_batch": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-11-02T23:07:08"
+        }
+      },
+      "summary": {
+        "batch": "kaspa-cocktails",
+        "lane1_longform": "queued",
+        "lane2_shorts": "published",
+        "lane2_clips": 6,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 0,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": "publish"
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-kc-20261102-kaspa-3-dollars-is-bearish-bitchute@2026-11-03T06:49:02",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-kc-20261102-kaspa-3-dollars-is-bearish-bitchute",
+    "started_at": "2026-11-03T06:49:02",
+    "ended_at": "2026-11-03T06:52:01",
+    "duration_s": 178.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kc-20261102-kaspa-3-dollars-is-bearish:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/qkLQtsU4TCpg/",
+      "title": "Everyone Calls a $3 Kaspa a Moonboy Target. I Think It's Bearish.",
+      "posted_at": "2026-11-03T11:52:00.522Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261031-binance-bitchute@2026-11-03T07:41:54",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261031-binance-bitchute",
+    "started_at": "2026-11-03T07:41:54",
+    "ended_at": "2026-11-03T07:47:19",
+    "duration_s": 325.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261031-binance:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/Q55he0LKVCqe/",
+      "title": "The Biggest Heist in History: Here's What Happened",
+      "posted_at": "2026-11-03T12:46:18.617Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261031-binance-rumble@2026-11-03T07:47:35",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261031-binance-rumble",
+    "started_at": "2026-11-03T07:47:35",
+    "ended_at": "2026-11-03T07:53:39",
+    "duration_s": 363.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261031-binance:rumble",
+    "summary": {
+      "platform": "rumble",
+      "status": "posted",
+      "url": "https://rumble.com/v7hsu8e-the-biggest-heist-in-history-heres-what-happened.html",
+      "title": "The Biggest Heist in History: Here's What Happened",
+      "posted_at": "2026-11-03T12:52:38.125Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261031-binance-facebook@2026-11-03T07:54:00",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261031-binance-facebook",
+    "started_at": "2026-11-03T07:54:00",
+    "ended_at": "2026-11-03T08:11:11",
+    "duration_s": 1030.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261031-binance:facebook",
+    "summary": {
+      "platform": "facebook",
+      "status": "posted",
+      "url": "https://www.facebook.com/reel/1645767177044257/",
+      "title": "The Biggest Heist in History: Here's What Happened",
+      "posted_at": "2026-11-03T13:11:10.030Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-kc-20261102-bitcoin-maxis-will-move-to-kaspa-bitchute@2026-11-03T08:15:09",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-kc-20261102-bitcoin-maxis-will-move-to-kaspa-bitchute",
+    "started_at": "2026-11-03T08:15:09",
+    "ended_at": "2026-11-03T08:20:13",
+    "duration_s": 304.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kc-20261102-bitcoin-maxis-will-move-to-kaspa:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted_unverified",
+      "url": "https://www.bitchute.com/video/EbLpwpbBMUTH/",
+      "title": "Are Bitcoin Maxis Quietly Stacking Kaspa? Here's What Flips the Rest.",
+      "posted_at": "2026-11-03T13:20:12.500Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-kc-20261102-kaspa-first-bear-market-mirrors-bitcoin-bitchute@2026-11-04T06:04:42",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-kc-20261102-kaspa-first-bear-market-mirrors-bitcoin-bitchute",
+    "started_at": "2026-11-04T06:04:42",
+    "ended_at": "2026-11-04T06:07:49",
+    "duration_s": 187.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kc-20261102-kaspa-first-bear-market-mirrors-bitcoin:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/EdNcDfPNXNp7/",
+      "title": "Kaspa Is Repeating Bitcoin's First Bear Market, 11 Years Apart. Look at That.",
+      "posted_at": "2026-11-04T11:07:48.925Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261101-lets-get-rich-bitchute@2026-11-04T07:06:36",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261101-lets-get-rich-bitchute",
+    "started_at": "2026-11-04T07:06:36",
+    "ended_at": "2026-11-04T07:11:45",
+    "duration_s": 309.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261101-lets-get-rich:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/bv6s3sim7bGV/",
+      "title": "Buffett Bought EVERY Bottom. Are You Buying This One?",
+      "posted_at": "2026-11-04T12:10:44.755Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261101-lets-get-rich-rumble@2026-11-04T07:11:54",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261101-lets-get-rich-rumble",
+    "started_at": "2026-11-04T07:11:54",
+    "ended_at": "2026-11-04T07:17:43",
+    "duration_s": 349.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261101-lets-get-rich:rumble",
+    "summary": {
+      "platform": "rumble",
+      "status": "posted",
+      "url": "https://rumble.com/v7hulsu-buffett-bought-every-bottom.-are-you-buying-this-one.html",
+      "title": "Buffett Bought EVERY Bottom. Are You Buying This One?",
+      "posted_at": "2026-11-04T12:16:42.241Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261101-lets-get-rich-facebook@2026-11-04T07:17:52",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261101-lets-get-rich-facebook",
+    "started_at": "2026-11-04T07:17:52",
+    "ended_at": "2026-11-04T07:35:09",
+    "duration_s": 1036.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261101-lets-get-rich:facebook",
+    "summary": {
+      "platform": "facebook",
+      "status": "posted",
+      "url": "https://www.facebook.com/reel/1473467598258451/",
+      "title": "Buffett Bought EVERY Bottom. Are You Buying This One?",
+      "posted_at": "2026-11-04T12:35:08.198Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-kc-20261102-kcc20-nacho-migration-is-live-bitchute@2026-11-04T07:38:37",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-kc-20261102-kcc20-nacho-migration-is-live-bitchute",
+    "started_at": "2026-11-04T07:38:37",
+    "ended_at": "2026-11-04T07:43:21",
+    "duration_s": 284.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kc-20261102-kcc20-nacho-migration-is-live:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted_unverified",
+      "url": "https://www.bitchute.com/video/Z5xxHsvsWwDZ/",
+      "title": "Nacho Nation, This Is the Move We've Been Preparing For",
+      "posted_at": "2026-11-04T12:43:21.025Z"
     },
     "error": null
   }

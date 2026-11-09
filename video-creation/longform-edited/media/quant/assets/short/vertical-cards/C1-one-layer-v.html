@@ -1,0 +1,212 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>C1</title><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+/* ============================================================================
+   container-canonical-light.css: the LIGHT THEME override (Mike, 2026-10-25, first used on `inference`).
+   A PER-VIDEO option, never the default. Load it AFTER container-canonical.css (same <head>, second <style> /
+   <link>): every token below replaces the dark one, every other rule of the locked stylesheet stays untouched
+   (layout, type, sizes, anatomy, components). Promoted from the 2026-10-25 look test in _light-mode-experiment/
+   (three containers rendered dark and light, Mike: "I like the light mode version").
+   Switch: GRAPH-PROGRESS.json settings.container_theme = "light" (run.py --container-theme light); the graph
+   tells slide-builder / chart-builder / visual-qa, and visual-qa judges palette drift against THIS file.
+   Contrast: every text token >= 4.5:1 on the page (#F6F4EE) and on a white card; strokes >= 3:1.
+   ============================================================================ */
+:root{
+  --bg-deep:#F6F4EE; --bg-card:#FFFFFF; --bg-card-hover:#F1EFE9;
+  --accent-green:#007A55; --accent-cyan:#006A9E; --accent-gold:#8F6500;
+  --accent-red:#C41E3A; --accent-purple:#7C3AED; --accent-teal:#0E7A6C; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#14161A; --text-secondary:#4A5263; --text-muted:#5E6676;
+  --border:#DDD9CF;
+  /* light-only helpers for charts / diagrams (dark has no equivalent: there the wire IS --border) */
+  --grid:#D6D2C7; --axis:#7A808B; --wire:#8A877E; --ink:#14161A;
+}
+body{background:#E4E1D8}
+
+/* the film grain stays, multiplied so it reads as paper tooth instead of lifting the blacks */
+.frame::after{opacity:.05;mix-blend-mode:multiply}
+
+/* accent orbs: same position and blur, a pale tint instead of a saturated bloom */
+.orb{opacity:.18}
+
+/* surfaces: a card is white with a hairline border and a soft lifted shadow (the dark 120 px black drop is gone) */
+.card,.col,.panel,.ecard,.nd,.node,.box{
+  background:var(--bg-card);border-color:var(--border);
+  box-shadow:0 1px 2px rgba(20,22,26,.05),0 14px 34px rgba(20,22,26,.08)}
+
+/* GLOW -> RING. On white a glow reads as a smear, so every "lit / on / hot" state becomes a tinted ring + a lifted
+   shadow in the element's accent (set --acc-rgb per chapter accent, default = cyan). */
+.frame{--acc-rgb:0,106,158}
+.lit,.on,.hot,.chip.on,.nd.lit,.node.on,.box.on,.ecard.on{
+  box-shadow:0 0 0 4px rgba(var(--acc-rgb),.12),0 12px 28px rgba(20,22,26,.12)}
+.hot,.nd.hot{box-shadow:0 0 0 6px rgba(var(--acc-rgb),.22),0 16px 34px rgba(20,22,26,.18)}
+.chip.on{background:rgba(var(--acc-rgb),.08)}
+.role,.rl,h1,h2{text-shadow:none}
+
+/* SVG diagrams / charts: wires and axes on the light ground. Lit wires use the accent token, resting wires --wire;
+   drop the SVG glow filter (filter="url(#g)") in the light build; hollow point centres fill white, the neutral
+   "ink" line is near-black; grid lines --grid; area fills under a line at .13 to .16 alpha of the accent. */
+svg .wire,svg line.wire,svg path.wire{stroke:var(--wire)}
+svg .grid{stroke:var(--grid)} svg .axis{stroke:var(--axis)}
+svg .ink{stroke:var(--ink);fill:var(--ink)}
+
+/* ============================================================================
+   accents/quant.css: the QUANT ACCENT (Mike, 2026-11-04, the `quant` video). A per-video THIRD stylesheet, loaded after
+   container-canonical.css AND container-canonical-light.css (run.py --container-theme light --container-accent quant;
+   GRAPH-PROGRESS.json settings.container_accent). It re-maps ONLY the page / card / text / accent tokens to quant.network's
+   own look (measured on the live site 2026-11-04: pure white page, warm near-black Heebo headlines #43403E, the brand
+   orange #F15A22 / #FF542A on the highlighted word of every headline, thin orange line-art diagrams, a green #1CC691 used
+   only as a tiny "on" state). Anatomy, type, sizes and every rule of the locked stylesheet stay untouched.
+   Contrast: text >= 4.5:1 on white (#43403E = 9.4:1, #D14A14 = 4.6:1); strokes >= 3:1 (#F15A22 on white = 3.3:1).
+   ============================================================================ */
+:root{
+  --bg-deep:#FFFFFF; --bg-card:#FFFFFF; --bg-card-hover:#F7F9FC;
+  /* the ONE accent: Quant orange. Every "chapter accent" role maps to it; the darkened one is for TEXT on white. */
+  --accent-cyan:#F15A22; --accent-gold:#F15A22; --accent-purple:#F15A22; --accent-teal:#F15A22;
+  --accent-green:#1CC691; --accent-red:#C41E3A;
+  --accent-text:#D14A14;                 /* orange for words (4.6:1 on white); use for highlighted headline words */
+  --text-primary:#43403E; --text-secondary:#5C5855; --text-muted:#737070;
+  --border:#E6E3DF;
+  --grid:#ECE9E5; --axis:#9A9693; --wire:#F15A22; --ink:#43403E;
+}
+body{background:#F7F9FC}
+.frame{--acc-rgb:241,90,34}
+/* a light-grey band is the only second surface the site uses (the "Programmable DvP" strip): cards sit on #F7F9FC */
+.card,.col,.panel,.ecard,.nd,.node,.box{background:#FFFFFF;border-color:var(--border);
+  box-shadow:0 1px 2px rgba(67,64,62,.05),0 14px 34px rgba(67,64,62,.08)}
+/* headline highlight word: orange, like every quant.network heading ("The Infrastructure of" + "Programmable Money") */
+.hl,.accent-word,em.hl{color:var(--accent-text);font-style:normal}
+/* diagrams / charts: ORANGE wires and lit nodes on white, grey resting grid; one series = orange, a second = warm grey */
+svg .wire,svg line.wire,svg path.wire{stroke:var(--wire)}
+svg .wire.rest{stroke:#C9C5C0}
+svg .series-2{stroke:#8A8784;fill:#8A8784}
+
+
+.frame{padding:52px 96px 0;justify-content:flex-start}
+.orb{width:720px;height:720px;top:-330px;right:-230px;background:#F15A22;opacity:.11}
+svg .lab,svg .sub,svg .big,svg .end,svg .cap{paint-order:stroke;stroke:#fff;stroke-width:5px;stroke-linejoin:round}
+.ey{margin-bottom:8px;line-height:36px;height:36px}
+.ey .mono{font-weight:600}
+h1.sm{font-size:66px;line-height:72px}
+/* divider: this video's card rule (slide-sources/build_slides.py): locked size + margins, the one chapter accent */
+.divider{background:linear-gradient(90deg,var(--accent-cyan),rgba(var(--acc-rgb),.25))}
+svg{display:block;overflow:visible}
+svg text{font-family:'DM Sans',sans-serif}
+svg .tk{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:600;fill:var(--text-muted)}
+svg .cap{font-size:26px;font-weight:500;fill:var(--text-secondary)}
+svg .lab{font-family:'JetBrains Mono',monospace;font-size:36px;font-weight:700;fill:var(--ink)}
+svg .lab.o{fill:var(--accent-text)}
+svg .sub{font-size:27px;font-weight:600;fill:var(--text-secondary)}
+svg .big{font-family:'JetBrains Mono',monospace;font-size:92px;font-weight:700;fill:var(--accent-text)}
+svg .leg{font-size:29px;font-weight:600;fill:var(--text-secondary)}
+svg .leg.o{fill:var(--accent-text);font-weight:700}
+svg .end{font-family:'JetBrains Mono',monospace;font-size:29px;font-weight:600;fill:var(--text-secondary)}
+.foot{height:82px;margin-top:6px;display:flex;align-items:center;justify-content:space-between;gap:40px}
+.take{font-family:'DM Sans';font-size:40px;font-weight:700;color:var(--text-primary);white-space:nowrap}
+.src{font-family:'DM Sans';font-size:24px;font-weight:500;color:var(--text-muted);text-align:right;line-height:1.3;white-space:nowrap;margin-left:auto}
+.src .mono{font-weight:500}
+/* C1 */
+.diag{position:relative;width:1728px;height:790px}
+.diag svg.w{position:absolute;left:0;top:0}
+.cl{position:absolute;font-size:23px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);text-align:center;white-space:nowrap}
+.nd{position:absolute;border:2px solid var(--border);border-radius:18px;display:flex;flex-direction:column;justify-content:center;padding:0 28px}
+.nd .n{font-size:38px;font-weight:700;color:var(--text-primary);line-height:1.15}
+.nd .s{font-size:26px;font-weight:500;color:var(--text-secondary);margin-top:4px;white-space:nowrap}
+.nd .row{display:flex;align-items:center;justify-content:space-between}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:600;color:var(--text-secondary);border:2px solid var(--border);border-radius:100px;padding:6px 18px;background:#fff;white-space:nowrap}
+.pill.on{color:#fff;background:var(--accent-text);border-color:var(--accent-text)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.qp{position:absolute;border:3px solid var(--wire);border-radius:24px;background:#fff;box-shadow:0 1px 2px rgba(67,64,62,.05),0 14px 34px rgba(67,64,62,.08)}
+.qt{position:absolute;font-family:'Playfair Display',serif;font-weight:900;font-size:52px;color:var(--accent-text);text-align:center;width:100%;top:12px}
+.nd.lit{border-color:var(--wire);box-shadow:inset 0 0 0 1px var(--wire),0 0 0 4px rgba(241,90,34,.12),0 12px 28px rgba(67,64,62,.12)}
+.nd.lit .n{color:var(--accent-text)}
+.qp.lit{box-shadow:0 0 0 8px rgba(241,90,34,.16),0 14px 34px rgba(67,64,62,.12)}
+.dim{opacity:.26}
+.lbls{position:absolute;left:0;right:0;top:720px;display:flex;justify-content:center;gap:34px}
+.lbl{font-size:33px;font-weight:700;color:var(--accent-text);border:2px solid var(--wire);border-radius:100px;padding:12px 36px;background:#fff;white-space:nowrap}
+
+</style>
+<style>
+/* PORTRAIT REFLOW (short of quant, 1080x1920). Only size, spacing and wrap change; every token above stays. */
+.frame{width:1080px;height:1920px;padding:104px 48px 0}
+.orb{width:620px;height:620px;top:-290px;right:-220px}
+.ey{font-size:29px;line-height:38px;height:38px;margin-bottom:6px}
+.divider{margin:24px 0 26px}
+</style>
+
+<style>
+/* C1 portrait: three real columns, wrapped and stacked inside each one */
+h1.sm{font-size:86px;line-height:92px;max-width:none;white-space:nowrap}
+.diag{width:984px;height:1000px}
+.dim{opacity:.34}
+.cl{font-size:22px;letter-spacing:.08em;line-height:28px;white-space:normal}
+.nd{padding:0 14px}
+.nd .n{font-size:46px;line-height:1.14}
+.nd .s{font-size:29px;line-height:1.26;margin-top:6px;white-space:normal}
+.nd.sub{padding:0 18px}
+.nd.sub .n{font-size:44px}
+.nd .row{flex-direction:column;align-items:flex-start;gap:10px}
+.nd.far{padding:0 10px}
+.nd.far .n{font-size:28px;line-height:1.2}
+.qt{font-size:76px;top:16px}
+.chips{gap:8px;margin-top:16px}
+.pill{padding:6px 10px}
+</style>
+
+</head><body>
+<div class="frame" id="C1-v"><div class="orb"></div><div class="ey">The system, with the real names</div><h1 class="sm"><span class="hl">One layer</span> between<br>the bank and the ledgers</h1><div class="divider"></div><div class="diag"><svg class="w" width="984" height="1000" viewBox="0 0 984 1000"><g><path d="M286 212 C300.0 212,300.0 212,314 212" fill="none" stroke="#F15A22" stroke-width="3.5"/><polygon points="328,212 312,203 312,221" fill="#F15A22"/><polygon points="272,212 288,203 288,221" fill="#F15A22"/></g><g><path d="M286 466 C300.0 466,300.0 466,314 466" fill="none" stroke="#F15A22" stroke-width="3.5"/><polygon points="328,466 312,457 312,475" fill="#F15A22"/><polygon points="272,466 288,457 288,475" fill="#F15A22"/></g><g><path d="M286 744 C300.0 744,300.0 744,314 744" fill="none" stroke="#F15A22" stroke-width="3.5"/><polygon points="328,744 312,735 312,753" fill="#F15A22"/><polygon points="272,744 288,735 288,753" fill="#F15A22"/></g><g opacity=".45"><path d="M726 212 C740.0 212,740.0 212,754 212" fill="none" stroke="#C9C5C0" stroke-width="3.5"/><polygon points="768,212 752,203 752,221" fill="#C9C5C0"/><polygon points="712,212 728,203 728,221" fill="#C9C5C0"/></g><g opacity=".45"><path d="M726 466 C740.0 466,740.0 466,754 466" fill="none" stroke="#C9C5C0" stroke-width="3.5"/><polygon points="768,466 752,457 752,475" fill="#C9C5C0"/><polygon points="712,466 728,457 728,475" fill="#C9C5C0"/></g><g opacity=".45"><path d="M726 744 C740.0 744,740.0 744,754 744" fill="none" stroke="#C9C5C0" stroke-width="3.5"/><polygon points="768,744 752,735 752,753" fill="#C9C5C0"/><polygon points="712,744 728,735 728,753" fill="#C9C5C0"/></g></svg><div class="cl" style="left:0px;width:272px;top:4px">What a bank<br>already runs</div><div class="cl" style="left:328px;width:384px;top:32px">In the middle</div><div class="cl dim" style="left:768px;width:216px;top:4px">The ledgers<br>and platforms</div><div class="nd lit" style="left:0px;top:96px;width:272px;height:232px"><div class="n">Core banking</div></div><div class="nd lit" style="left:0px;top:350px;width:272px;height:232px"><div class="n">Treasury / ERP</div></div><div class="nd lit" style="left:0px;top:604px;width:272px;height:388px"><div class="n">Payment rails</div><div class="chips"><span class="pill">RTGS</span><span class="pill">Faster Payments</span><span class="pill">RTP</span><span class="pill">CHIPS</span></div></div><div class="qp lit" style="left:328px;top:72px;width:384px;height:920px"><div class="qt">Quant</div></div><div class="nd sub" style="left:342px;top:194px;width:356px;height:160px"><div class="n">Overledger</div><div class="s">the API connector</div></div><div class="nd sub" style="left:342px;top:368px;width:356px;height:282px"><div class="row"><div class="n">Quant Flow</div><span class="pill">PayScript</span></div><div class="s">where the bank writes the rules</div></div><div class="nd sub" style="left:342px;top:664px;width:356px;height:160px"><div class="n">QuantNet</div><div class="s">the orchestration layer</div></div><div class="nd sub" style="left:342px;top:838px;width:356px;height:138px"><div class="n">Quant Fusion</div><div class="s">the rollup</div></div><div class="nd far dim" style="left:768px;top:122px;width:216px;height:180px"><div class="n">Public ledgers</div></div><div class="nd far dim" style="left:768px;top:376px;width:216px;height:180px"><div class="n">Permissioned ledgers</div></div><div class="nd far dim" style="left:768px;top:634px;width:216px;height:220px"><div class="n">Tokenised-deposit platforms</div></div></div></div>
+</body></html>

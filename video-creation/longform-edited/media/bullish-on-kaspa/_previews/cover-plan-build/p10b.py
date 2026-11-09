@@ -1,0 +1,18 @@
+ct("C3", "animated-chart", "Hash-rate monthly averages May 2025 to Nov 2026 (PH/s): the fall in grey, the July to October rise in the accent, AUG / SEP / OCT reward-cut ticks, label AROUND +14% (JULY AVG TO OCTOBER AVG)", ["CH5@375.76-386.74"], "api.kaspa.org/info/hashrate/history (DATA.md Pillar 2) [VERIFY]")
+ct("C4", "animated-chart", "Daily user (non-coinbase) transactions July to Nov 2026, the 70K to 80K band shaded, spike days visible", ["CH5@386.74-392.14"], "api.kaspa.org/transactions/count (DATA.md Pillar 4) [VERIFY]")
+ct("C17", "animated-chart", "Holder distribution across the 459 L1 tokens: MEDIAN 2, 276 AT 2 OR FEWER, 9 ABOVE 100, TOP 437, NACHO 355 marked", ["CH5@392.14-400.50"], "kascov tokens.json computed (DATA.md Pillar 2) [VERIFY]")
+ct("parallel-not-prediction", "card", "A = A PARALLEL, NOT A PREDICTION (SOLANA DID THIS small); B = WHAT A WRITTEN-OFF NETWORK CAN DO, CAN in the accent", ["CH5@440.26-444.34", "CH5@444.34-447.90"], "screenplay WARNING 6", ["A", "B"])
+ct("text-wall", "card", "kt-text-wall, ONCE: TOO LATE? in receding rows, pulsing; the red headline EARLY. at 1.9 s on the drop; a 3.5 s spine pause (zero-length row at 455.74)", ["CH6@455.74 (pause)"], "screenplay CH6 Beat 1")
+ct("where-i-stand", "card", "HERE'S WHERE I STAND: SOUND MONEY / MINED BY ANYONE / OWNED BY NO ONE / A BASE LAYER THAT JUST LEARNED TO RUN APPS", ["CH6@459.18-464.70"], "DATA.md T1, T3")
+ct("my-theory", "card", "MY THEORY: / ETHEREUM TAKES NUMBER 1 / BITCOIN MAXIS GO LOOKING / FOR A PROOF OF WORK HOME; MY THEORY held the whole beat", ["CH6@468.50-476.36"], "screenplay CH6 Beat 1 (opinion)")
+ct("cascade", "diagram", "BITCOIN HOLDERS pool -> three stepped arrows -> KASPA pool: SOME MOVE / A YEAR LATER, MORE / AND SO ON, lighting on the words; MY THEORY tag; no names", ["CH6@480.20-487.00"], "screenplay CH6 Beat 1 (opinion)")
+ct("community-stack", "card", "THE KASPA COMMUNITY, sub-line AS DEDICATED AS THE XRP ARMY, THE HIGHEST COMPLIMENT; items HARDCORE / PATIENT / STILL HERE", ["CH6@503.56-511.033"], "screenplay CH6 Beat 2 (opinion)")
+CLIPS = [{"id": "CLIP-1", "who": "Yonatan Sompolinsky, Kaspa founder, Mid-Chain 2026 research talk (Ben-Gurion University, 2026-10-26)",
+  "says": "So assume we implemented this. We have now an if this then that engine on chain. You no longer need smart brokers. You can delegate your portfolio handling to an automatic machine on chain.",
+  "source": "https://www.youtube.com/watch?v=UOOOwTs5woQ", "start": "22:26.3", "end": "22:37.1", "seconds": 10.8,
+  "splice_at": 302.18, "after_words": "and described where his research goes next.",
+  "caption": "Yonatan Sompolinsky, Kaspa founder · Mid-Chain 2026 research talk, October 26, 2026",
+  "expect": "if this then that engine on chain", "verify": True, "beats": ["CH4@302.18"],
+  "caption_pos": "bottom", "transition": "hand:fade 0.5 s in and out",
+  "notes": "AS-RECORDED KEPT · INSERT CLIP-1. The measured trough bottoms at 302.165 (the face picture starts 302.133); the JSON end of 'next.' is 302.18, the snapper lands it. Bed ducks -14 dB automatically. The resume 'That's research, not a ship feature.' is FACE window 6 (lead-out still = the clip's last frame under the face cut-in)."}]
+THEMES = {ch: {"accent": "#49EACB", "accent_name": "Kaspa greenish cyan", "image_style": "clean 3D render, greenish-cyan rim light on deep charcoal; every Kaspa coin shows the backwards-K logo in greenish cyan, never gold", "note": "ONE bed, ONE look (VISUAL-PLAN Chapter themes): chapters differ by device density, not colour; red appears only on FINAL (CH3) and EARLY. (CH6)"} for ch in ["CH1", "CH2", "CH3", "CH4", "CH5", "CH6"]}

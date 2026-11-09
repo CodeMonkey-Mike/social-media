@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Yonatan: Bitcoin's network trap</title>
+<style>html,body{margin:0;height:100%;background:#000}video{width:100%;height:100%;object-fit:contain;display:block;outline:none}</style>
+</head><body><video src="08-CLIP-1-yonatan-bitcoin-s-network-trap.mp4" controls preload="auto"></video>
+<script>
+const v = document.querySelector('video');
+v.focus();
+addEventListener('keydown', e => {
+  if (e.code === 'Space' && e.target !== v) { e.preventDefault(); v.paused ? v.play() : v.pause(); }
+  if (e.key === 'r' || e.key === 'R') { v.currentTime = 0; v.pause(); }
+});
+</script></body></html>

@@ -1,22 +1,27 @@
 {
  "$doc": "THE EFFECTS LIBRARY (Mike, 2026-10-25: 'they are just effects, regardless of sound or not'). An EFFECT = a DEVICE = one MOTION recipe + the SOUND(s) that fire with it + the GRAPHICS it needs (texture, icon, button), grabbed as a unit; never the motion silent, never the sound on a static card, one sound per event. Devices are grouped into THEMES: a theme is the set of devices + palette + textures + sounds that belong to one look, and a VIDEO (or a CHAPTER of a longer video) picks ONE theme and declares which of its devices it uses in the SCREENPLAY [SHOW] lines (device id + sound id). Icons and similar flourishes are a per-video choice inside the theme, never added to every video by default. The SOUND FILES stay in the SFX catalog (video-creation/assets/sfx/, one row per file, picked by id); this library references them by id. The MOTION engines are Remotion code in video-creation/remotion/src/effects/<theme>/ (shared infra, import-whitelisted like ./transitions/*); the longform-edited placement rules (layer order, captions off under a pop, overlay vs transition) are video-creation/longform-edited/skills/overlays/overlays.md section 2. Skill + check tool: video-creation/skills/effects-library/effects-library.md (effects_catalog.py check = every device's sounds exist in the SFX catalog, every graphic exists on disk, every engine file exists). Themes live in themes/<theme>/ (CUE-SHEET.md = the time-ordered map of the source video, textures/, graphics/).",
- "$schema_note": "`devices` keyed by device id (kt-* = the 2023 kinetic-text theme). Row: name - trigger (the on-screen EVENT, the field to pick by) - motion {sub-steps with 1080p px / percent-of-frame / seconds / easing} - text_look_2023 or look_2023 (the SOURCE look; a house video keeps motion + sound and uses the house font + chapter accent) - assets {role: path under this folder} - sound [{id (an SFX catalog id), when (offset to the motion)}] or sound_by_meaning - reference_cues_main_sequence (seconds in the theme's source video) - used_in (frozen history; live usage = the usage ledger). `themes` keyed by theme id: source - look - devices (the ids) - sfx_folder.",
+ "$schema_note": "`devices` keyed by device id (kt-* = the 2023 kinetic-text theme). Row: name - trigger (the on-screen EVENT, the field to pick by) - motion {sub-steps with 1080p px / percent-of-frame / seconds / easing} - text_look_2023 or look_2023 (the SOURCE look; a house video keeps motion + sound and uses the house font + chapter accent) - assets {role: path under this folder} - sound [{id (an SFX catalog id), when (offset to the motion)}] or sound_by_meaning - reference_cues_main_sequence (seconds in the theme's source video) - used_in (frozen history; live usage = the usage ledger). `themes` keyed by theme id: source - look - devices (the ids) - sfx_folder. ADDED 2026-10-31: a theme carries `label` (Mike's name for the look, shown by the browse dashboard and the reports; the id is the stable key) and `sources` (keyed source videos with their duration + project); a device carries `browse_cues` [{src, t0, t1, label}] = the windows of the source video the dashboard cuts as its playable excerpt (sound included), and `reference_cues_skills` for the 007 source; sub-variants (chip, zoom_drop, image_sticker, bar) sit on their parent device row like `punch` and `text_swap`. The browse dashboard: python video-creation/skills/effects-library/scripts/effects_gallery.py -> assets/effects/browse/gallery.html.",
  "themes": {
   "kinetic-text-2023": {
    "name": "The 2023 head-to-head look (GrowthMarketingMike 004, Growth Marketer vs Growth Hacker)",
-   "source": "D:\\Dropbox\\mikeneder.me\\videos\\GrowthMarketingMike\\004 Differences between Growth Marketer and Hacker\\main-sequence.mp4 (2:05) + its Premiere project differences revision_1.prproj",
+   "source": "D:\\Dropbox\\mikeneder.me\\videos\\GrowthMarketingMike\\004 Differences between Growth Marketer and Hacker\\main-sequence.mp4 (2:05) + its Premiere project differences revision_1.prproj · SECOND SOURCE (2026-10-31): D:\\Dropbox\\mikeneder.me\\videos\\GrowthMarketingMike\\007 Skills of a Growth Engineer\\main-sequence.mp4 (1:13) + its Premiere project Delivery2/Skills GM_1_1.prproj",
    "cue_sheet": "themes/kinetic-text-2023/CUE-SHEET.md",
-   "look_2023": "Montserrat ExtraBold Italic, ALL CAPS, key words yellow #FCFE40 over white, accent red #E0151A, payoff green #20F91A, Mike keyed over a turquoise suede texture (textures/suede-turquoise.jpg), dark bands and panels #003C33 textured; bright explainer, every line lands with a device. A house video keeps the MOTION + SOUND pairing and uses the house display font + the chapter accent.",
+   "look_2023": "Montserrat ExtraBold Italic, ALL CAPS, key words yellow #FCFE40 over white, accent red #E0151A, payoff green #20F91A, Mike keyed over a turquoise suede texture (textures/suede-turquoise.jpg), dark bands and panels #003C33 textured; bright explainer, every line lands with a device. A house video keeps the MOTION + SOUND pairing and uses the house display font + the chapter accent. SKILLS (007) LOOK: the same Montserrat ExtraBold Italic ALL CAPS; the key words LIME #BEFF09 over white (the 004 yellow #FCFE40 is kept for the list items and chips as #FEFF3E), the paper card's words blue #0427F5 and dark grey #2A2B29 on the crumpled paper #E5E5E4, the punch word red #E80001; Mike keyed over a GREY 3D-chevron backdrop (textures/chevron-gray.webp, Gaussian blur 48 px at 1080p, avg #545251) instead of the suede; a running caption line on every face shot.",
    "sfx_folder": "video-creation/assets/sfx/kinetic-text/ (23 sounds, every row carries `device`)",
    "textures": {
     "paper-crumpled": "themes/kinetic-text-2023/textures/paper-crumpled.mp4 (1280x720, 32 s loop; the list card and the paper side panel)",
     "suede-turquoise": "themes/kinetic-text-2023/textures/suede-turquoise.jpg (the 2023 backdrop behind the keyed face)",
-    "animated-texture": "themes/kinetic-text-2023/textures/animated-texture.mp4 (the 2023 project's animated texture loop)"
+    "animated-texture": "themes/kinetic-text-2023/textures/animated-texture.mp4 (the 2023 project's animated texture loop)",
+    "chevron-gray": "themes/kinetic-text-2023/textures/chevron-gray.webp (1920x1200 still, the 007 backdrop behind the keyed face: Motion scale 237 percent in the 4K sequence = 118.5 percent at 1080p = 2275x1422 px centred, never moves, Gaussian Blur (Legacy) 97 in 4K units = 48 px at 1080p on every placement; on-screen avg #545251)"
    },
    "graphics": {
     "arrow-red": "themes/kinetic-text-2023/graphics/arrow-red.png",
     "subscribe-button": "themes/kinetic-text-2023/graphics/subscribe-button.mp4",
-    "subscribe-button-alt": "themes/kinetic-text-2023/graphics/subscribe-button-alt.mp4"
+    "subscribe-button-alt": "themes/kinetic-text-2023/graphics/subscribe-button-alt.mp4",
+    "subscribe-bar-fill": "themes/kinetic-text-2023/graphics/subscribe-bar-fill.mp4 (the 007 'LIKE And SUBSCRIBE Green Screen Video.mp4' media 2.0-6.3 s, keyed once with ffmpeg chromakey 0x00FF00 0.28/0.08 and PREMULTIPLIED over black; 1920x1080 29.97 fps; pair with the key)",
+    "subscribe-bar-key": "themes/kinetic-text-2023/graphics/subscribe-bar-key.mp4 (the same clip's alpha as luma: white where the bar is; composite fill + key like the halloween-2022 plates, HwAlphaPlate)",
+    "thinking-brain-sticker": "themes/kinetic-text-2023/graphics/thinking-brain-sticker.gif (600x600, 5 fps, 19 frames, 4.9 s; 'Thinking' by Idil Keysan, Wikimedia Giphy stickers 2019, CC BY-SA 4.0: ATTRIBUTION REQUIRED in the description if it is ever reused; the 007 edit cut it at 3.07 s and restarted it twice)",
+    "_source": "themes/kinetic-text-2023/graphics/_source/ (reference only, not placeable: Flash FX Element 01.aegraphic.zip + mogrt_TEMP.aep = the keyword sparkle; Scene_22 / Scene_23.aegraphic.zip + MOGRT.aep / MOGRT(1).aep = the two Monument Extended text-wall MOGRTs (Scene_23 is the one used); the pngwing speech-bubble PNG was NOT kept: licence unknown, a per-video image)"
    },
    "devices": [
     "kt-side-panel",
@@ -28,14 +33,24 @@
     "kt-list-card",
     "kt-icon-pop",
     "kt-subscribe-close",
-    "kt-scatter-words"
+    "kt-scatter-words",
+    "kt-caption-highlight",
+    "kt-typewriter-card",
+    "kt-stacked-list-over-broll",
+    "kt-statement-over-broll",
+    "kt-text-wall",
+    "kt-keyword-sparkle",
+    "kt-push-slide"
    ],
    "used_in": [
     "GrowthMarketingMike 004 (2023, every device)",
     "growth-vs-product (2026-10-23: kt-signature-open + kt-side-panel dark)",
-    "kcc20 (2026-10: kt-side-panel + kt-keyword-pop)"
+    "kcc20 (2026-10: kt-side-panel + kt-keyword-pop)",
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023) (every device of the video; the second source)",
+    "growth-scale-up (2026-10-28: the full theme)",
+    "inference (2026-10-27: the full theme)"
    ],
-   "rule": "a head-to-head or straight-to-the-point explainer picks this theme whole: the signature open on the hook, pops on the verdict words, bands for the 4 s statements, the list card for enumerations, headline pops over b-roll, the subscribe close. Longer house videos may pick it for ONE chapter.",
+   "rule": "a head-to-head or straight-to-the-point explainer picks this theme whole: the signature open on the hook, pops on the verdict words, bands for the 4 s statements, the list card for enumerations, headline pops over b-roll, the subscribe close. Longer house videos may pick it for ONE chapter. The 007 additions widen the same theme: the running caption line (kt-caption-highlight) on the face lines, the typewriter card for a summary / definition, the stacked list over b-roll for an enumeration that rides on footage, the statement over b-roll for a 4 to 6 s sentence, the text wall for the ONE biggest idea of the video, the sparkle on a caption's key word, and 0.1 s push-slide cuts between cards and b-roll where 004 used whip-zooms. A video picks per line; one theme, two source dialects.",
    "textures_decoded": {
     "name": "2023 TEXTURES (backdrop and dark band / panel)",
     "trigger": "backdrop behind every face shot; the dark band and dark side panel",
@@ -59,7 +74,25 @@
    },
    "decode_doc": "Decoded 2026-10-25 from differences revision_1.prproj (main sequence 'grammar1-greenscreen-audio-color', 3840x2160 @30) + frame reads of main-sequence.mp4. All px are at 1920x1080 (4K / 2), all times are seconds in main-sequence.mp4. Keyframe times = item start + (kf - clip in-point). Easing read from the bezier rows (time, value, interp, ?, inSpeed, inInfluence, outSpeed, outInfluence); speed 0 + influence 100% = full ease. Transform-EFFECT translations are applied before the clip's Motion scale, so their on-screen travel = normalized offset x clip footprint (given here already converted). Sound timing: 'file start' = where sample 0 of the untrimmed library file sits; onset / peak measured on the source files (onset = first sample above 10% of peak).",
    "icons_note": "no 2023 icon artwork survives (the .aegraphic files are AE shape layers only); render flat SVG icons per video",
-   "approved": "2026-10-25 Mike approved the full demo set (assets/effects/_demo/gallery.html, 16 clips): every engine's motion + sound placement is the reference; sound rule = attack (loudest sample) ON the frame"
+   "approved": "2026-10-25 Mike approved the full demo set (assets/effects/_demo/gallery.html, 16 clips): every engine's motion + sound placement is the reference; sound rule = attack (loudest sample) ON the frame",
+   "label": "Energetic",
+   "label_note": "Mike's name for this theme (2026-10-31): 'for me it's more like an energetic video ... different types of videos, different types of themes, and this just could be one of them'. The id stays kinetic-text-2023 (every engine, doc and past screenplay names it); the browse dashboard, reports and new screenplays say Energetic.",
+   "sources": {
+    "main": {
+     "video": "D:\\Dropbox\\mikeneder.me\\videos\\GrowthMarketingMike\\004 Differences between Growth Marketer and Hacker\\main-sequence.mp4",
+     "duration_sec": 125.0,
+     "project": "differences revision_1.prproj (Delivery/Copied_differences revision)",
+     "note": "the first source: every kt-* device catalogued 2026-10-21 / 10-25 was read from this project"
+    },
+    "skills": {
+     "video": "D:\\Dropbox\\mikeneder.me\\videos\\GrowthMarketingMike\\007 Skills of a Growth Engineer\\main-sequence.mp4",
+     "duration_sec": 73.37,
+     "project": "D:\\Dropbox\\mikeneder.me\\videos\\GrowthMarketingMike\\007 Skills of a Growth Engineer\\Delivery2\\Skills GM_1_1.prproj",
+     "note": "the second source (Mike, 2026-10-31): the same look two videos later; its NEW devices are the running caption line, the typewriter paper card, the stacked list over b-roll, the statement over b-roll, the text wall (MOGRT), the keyword sparkle, the push-slide cut, plus variants of the pop, the icon pop and the subscribe close. Its cue sheet is the second section of themes/kinetic-text-2023/CUE-SHEET.md"
+    }
+   },
+   "decode_doc_skills": "Decoded 2026-10-31 from Delivery2/Skills GM_1_1.prproj (main-sequence 3840x2160 @ 29.97, 9 video + 5 audio tracks, 13 nested sequences) + frame reads of main-sequence.mp4. Graphic keyframe times are relative to the Essential Graphics origin (3600 s): kf 3599.963 = 1 frame before the clip's first frame.",
+   "bed_level_2023_skills": "the 007 music bed (Raw Lew, Get It, background-vocals mix, catalog get-it) ran at -20 dB under the open and the typewriter card (0-13.4 s) and ramped to -25 dB by 13.4 s, flat to the end (Premiere Volume Level 0.01778 -> 0.01000, 0 dB = 0.17783); the bed never stops for a pop"
   },
   "halloween-2022": {
    "name": "The 2022 horror explainer look (CodeMonkey 044 'Bear Markets', studied 0:00-1:50 only)",
@@ -117,7 +150,16 @@
     "CodeMonkey 044 Bear Markets (2022), the first 1:50 (every device)"
    ],
    "rule": "pick it for a horror / Halloween register; one theme per video or per chapter (never mixed with kinetic-text-2023 inside one chapter). A whole video picks it for a scary, high-stakes explainer: hw-word-pop on the hook, hw-zoom-slideshow as a chapter opener, hw-camera-shake held on the face after a montage, hw-drop-bounce / hw-zoom-punch on jump cuts, hw-blood-promo as the act break, hw-subscribe-like-bell at the close; the splits and the pumpkin stinger come from the transitions library. A longer house video may pick it for ONE chapter. hw-keyed-presenter is never built (house rule).",
-   "decode_doc": "Decoded 2026-10-25 from Bear markets explained.prproj (main-sequence 3840x2160 @30, linear-light compositing) + the two AE projects (fonts, comps, plates read from the binary .aep) + frame measurements of the AE renders. All px are at 1920x1080 (4K / 2), all times are seconds in main-sequence.mp4. Keyframe times = item start + (kf - clip in-point) / speed, StartKeyframe values (not the stale CurrentValue cache). Premiere audio level dB = 20 log10(level) + 15. The AE templates' keyframes live in the binary .aep, so their MOTION numbers were MEASURED on the renders by feature tracking (marked per row)."
+   "decode_doc": "Decoded 2026-10-25 from Bear markets explained.prproj (main-sequence 3840x2160 @30, linear-light compositing) + the two AE projects (fonts, comps, plates read from the binary .aep) + frame measurements of the AE renders. All px are at 1920x1080 (4K / 2), all times are seconds in main-sequence.mp4. Keyframe times = item start + (kf - clip in-point) / speed, StartKeyframe values (not the stale CurrentValue cache). Premiere audio level dB = 20 log10(level) + 15. The AE templates' keyframes live in the binary .aep, so their MOTION numbers were MEASURED on the renders by feature tracking (marked per row).",
+   "label": "Halloween horror",
+   "sources": {
+    "hw": {
+     "video": "D:\\Dropbox\\mikeneder.me\\videos\\CodeMonkey\\044 Bear Markets\\main-sequence.mp4",
+     "duration_sec": 110.0,
+     "project": "Bear markets explained.prproj",
+     "note": "0:00-1:50 ONLY (Mike's hard rule): no browse excerpt may cross 110 s"
+    }
+   }
   }
  },
  "devices": {
@@ -207,7 +249,21 @@
       "shadow parameters of the black card text (frames only)"
      ]
     }
-   }
+   },
+   "browse_cues": [
+    {
+     "src": "main",
+     "t0": 4.4,
+     "t1": 11.2,
+     "label": "right panel, then left panel (swoosh-1 / swoosh-2)"
+    },
+    {
+     "src": "main",
+     "t0": 74.9,
+     "t1": 80.0,
+     "label": "paper panels with cards + icons (whoosh-4)"
+    }
+   ]
   },
   "kt-keyword-pop": {
    "name": "KEYWORD POP on the face",
@@ -252,7 +308,8 @@
     "68.13 / 80.90 (knock-pop)"
    ],
    "used_in": [
-    "GrowthMarketingMike 004 (2023)"
+    "GrowthMarketingMike 004 (2023)",
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)"
    ],
    "punch": {
     "name": "PUNCH WORD (keyword / headline pop on a punch sound)",
@@ -294,7 +351,69 @@
     "unknowns": [
      "the glow / stroke parameters live in the Essential Graphics text blob (not decoded): radius and colours are frame measurements"
     ]
-   }
+   },
+   "chip": {
+    "name": "CHIP (a boxed label rising from below the frame with a small bounce)",
+    "trigger": "a short label / metric name (KPI, END GOAL) stamped as a yellow box with black text at the caption height, one after another to the right",
+    "motion": "Transform position y 1.528 -> 0.5 of the frame over 0.350 s (ease out-speed 0 / influence 46 percent -> in-speed 0 / influence 59 percent: rises from fully below the frame and settles) while the anchor point dips 0.5 -> 0.523 -> 0.5 over 0.383 s (a 2.3 percent bounce); motion blur; appears at once; stays; chip 1 at x 16.6 percent (box 308 x 139 px, centre y 85.7 percent), chip 2 lands to its right 0.90 s later; both cut with the shot",
+    "text_look_2023": "yellow #FEFF3E box, black Montserrat ExtraBold Italic caps ~70 px inside, no shadow",
+    "sound": [
+     {
+      "id": "cartoon-accent",
+      "when": "file start ON each chip's first frame (14.648 KPI, 15.549 END GOAL), 0.67 s used"
+     }
+    ],
+    "reference_cues_skills": [
+     "14.648 KPI · 15.549 END GOAL"
+    ],
+    "browse_cues": [
+     {
+      "src": "skills",
+      "t0": 14.4,
+      "t1": 16.3,
+      "label": "KPI + END GOAL chips"
+     }
+    ]
+   },
+   "reference_cues_skills": [
+    "4.071 'SKILLS OF A / GROWTH ENGINEER?' (white + lime, wooden-rattle-whoosh)",
+    "26.159 'TECHNICAL' + 26.593 'PRODUCT RELATED SUBJECTS' (punch-red look, knock-pop each)",
+    "45.746 'CHALLENGE' on the text wall (punch-red, cash-register)",
+    "64.231 'COMMENT BELOW' (white, typing)",
+    "71.171 'THE FUNDAMENTALS OF / GROWTH MARKETING' (white + yellow, cash-register at 71.271)"
+   ],
+   "browse_cues": [
+    {
+     "src": "main",
+     "t0": 11.9,
+     "t1": 14.3,
+     "label": "'TACTICS THAT GUARANTEE ATTRIBUTION' on the face (knock-pop)"
+    },
+    {
+     "src": "main",
+     "t0": 24.9,
+     "t1": 26.4,
+     "label": "'POORLY ATTRIBUTABLE' verdict (minecraft-damage)"
+    },
+    {
+     "src": "main",
+     "t0": 53.2,
+     "t1": 54.5,
+     "label": "'CONVERSIONS' punch-red over b-roll (punch-1)"
+    },
+    {
+     "src": "skills",
+     "t0": 3.8,
+     "t1": 5.4,
+     "label": "the 007 title pop (wooden-rattle-whoosh)"
+    },
+    {
+     "src": "skills",
+     "t0": 25.9,
+     "t1": 27.8,
+     "label": "TECHNICAL / PRODUCT RELATED SUBJECTS red pops"
+    }
+   ]
   },
   "kt-headline-over-broll": {
    "name": "HEADLINE over b-roll",
@@ -329,7 +448,62 @@
     "16.97 cut + 18.47 'WHETHER OR NOT AN EXPERIMENT WAS SUCCESSFUL' over the hologram shot (swoosh-3, then twinkle)"
    ],
    "used_in": [
-    "GrowthMarketingMike 004 (2023)"
+    "GrowthMarketingMike 004 (2023)",
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)"
+   ],
+   "zoom_drop": {
+    "name": "ZOOM DROP headline (the 007 entrance: falls from 250 percent in 3 frames)",
+    "trigger": "a headline over b-roll that lands hard on its word, beside a sticker or as a question on the face",
+    "motion": "ZOOM DROP: scale 250 -> 100 percent over 0.100 s (3 frames, linear) while opacity goes 0 -> 100 over 0.067 s; no overshoot, no jiggle; the text seems to fall onto the frame; one line, white caps ~95 px (8.8 percent) on a dark translucent band where the footage is bright; left-aligned x ~4 percent at y ~25 percent (28.228, 29.964) or centred (61.562); held 1.7 to 2.0 s; the sticker beside it exits with a 0.33 s push LEFT",
+    "sound": [
+     {
+      "id": "cash-register",
+      "when": "'PRAGMATIC THINKING': file start 0.13 s BEFORE the drop (28.095 for 28.228) so the bell lands on it"
+     },
+     {
+      "id": "wooden-rattle-whoosh",
+      "when": "'TACTICAL DECISIONS': file start ON the drop (29.963)"
+     },
+     {
+      "id": "fast-reverse-5",
+      "when": "'DO YOU HAVE WHAT IT TAKES TO BE A GROWTH ENGINEER?': file start ON the drop (61.562), with the face push"
+     }
+    ],
+    "reference_cues_skills": [
+     "28.228 PRAGMATIC THINKING · 29.964 TACTICAL DECISIONS · 61.562 DO YOU HAVE WHAT IT TAKES"
+    ],
+    "browse_cues": [
+     {
+      "src": "skills",
+      "t0": 27.6,
+      "t1": 31.9,
+      "label": "two zoom-drop headlines beside the brain sticker"
+     }
+    ]
+   },
+   "reference_cues_skills": [
+    "17.184 'GOOD COMMUNICATION SKILLS' (110 pop, lime, cash-register) over the meeting b-roll",
+    "28.228 / 29.964 / 61.562 zoom_drop"
+   ],
+   "browse_cues": [
+    {
+     "src": "main",
+     "t0": 14.2,
+     "t1": 16.9,
+     "label": "'LEAD' over the data corridor (ea-glitch-21 + cash-register)"
+    },
+    {
+     "src": "main",
+     "t0": 16.9,
+     "t1": 21.2,
+     "label": "'WHETHER OR NOT AN EXPERIMENT WAS SUCCESSFUL' over the hologram (swoosh-3 + twinkle)"
+    },
+    {
+     "src": "skills",
+     "t0": 16.0,
+     "t1": 20.0,
+     "label": "'GOOD COMMUNICATION SKILLS' after a push-in (cash-register)"
+    }
    ]
   },
   "kt-word-by-word": {
@@ -356,6 +530,20 @@
    ],
    "used_in": [
     "GrowthMarketingMike 004 (2023)"
+   ],
+   "browse_cues": [
+    {
+     "src": "main",
+     "t0": 21.0,
+     "t1": 23.7,
+     "label": "'SCRAPED OR / SCALED UP' (cash-register-2 on the payoff)"
+    },
+    {
+     "src": "main",
+     "t0": 42.2,
+     "t1": 48.6,
+     "label": "rapid word-by-word on the face with the icons"
+    }
    ]
   },
   "kt-lower-third-band": {
@@ -429,7 +617,21 @@
     "unknowns": [
      "the exact look of the one-frame drop streak (one frame read)"
     ]
-   }
+   },
+   "browse_cues": [
+    {
+     "src": "main",
+     "t0": 26.2,
+     "t1": 31.6,
+     "label": "band up (swoosh-4), text pop (knock-pop), text swap"
+    },
+    {
+     "src": "main",
+     "t0": 102.6,
+     "t1": 113.5,
+     "label": "the closing run of bands"
+    }
+   ]
   },
   "kt-whip-cut": {
    "name": "WHIP-ZOOM cut (a transition, bucket 3, listed here only because its sounds live in this folder)",
@@ -472,6 +674,20 @@
    ],
    "used_in": [
     "GrowthMarketingMike 004 (2023)"
+   ],
+   "browse_cues": [
+    {
+     "src": "main",
+     "t0": 0.0,
+     "t1": 4.0,
+     "label": "the open: 0.73 s whip + roll, blur-in at 3.27"
+    },
+    {
+     "src": "main",
+     "t0": 10.9,
+     "t1": 15.2,
+     "label": "0.37 s whips into the b-roll"
+    }
    ]
   },
   "kt-list-card": {
@@ -520,7 +736,15 @@
    "assets": {
     "texture": "themes/kinetic-text-2023/textures/paper-crumpled.mp4"
    },
-   "decoded": "2026-10-25 from differences revision_1.prproj keyframes + frame reads (confidence: read from keyframes)"
+   "decoded": "2026-10-25 from differences revision_1.prproj keyframes + frame reads (confidence: read from keyframes)",
+   "browse_cues": [
+    {
+     "src": "main",
+     "t0": 33.0,
+     "t1": 37.0,
+     "label": "paper card in (fast-swoosh), TWEET / PODCAST INTERVIEW (ting)"
+    }
+   ]
   },
   "kt-icon-pop": {
    "name": "ICON POP (flat red-and-white .aegraphic icon slides in beside or on Mike)",
@@ -567,7 +791,8 @@
     "75.267 / 77.433 icons inside the paper cards"
    ],
    "used_in": [
-    "GrowthMarketingMike 004 (2023)"
+    "GrowthMarketingMike 004 (2023)",
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)"
    ],
    "artwork": "the five .aegraphic files are ZIPs holding only mogrt_TEMP.aep (RIFX After Effects project, 390-540 KB) + mogrt_TEMPReport.txt ('Number of collected files: 0'); no PNG / JPG / PSD / SVG / AI / PDF inside, the art is AE shape layers. Nothing extracted; no icon folders created",
    "confidence": "read from keyframes",
@@ -577,7 +802,57 @@
    ],
    "assets": {},
    "decoded": "2026-10-25 from differences revision_1.prproj keyframes + frame reads (confidence: read from keyframes)",
-   "artwork_note": "NONE extractable from 2023: the five .aegraphic templates hold After Effects shape layers only (0 collected files). A house video renders its own flat SVG icons (lucide / own) in the chapter accent, to the sizes + slide recipe in this row."
+   "artwork_note": "NONE extractable from 2023: the five .aegraphic templates hold After Effects shape layers only (0 collected files). A house video renders its own flat SVG icons (lucide / own) in the chapter accent, to the sizes + slide recipe in this row.",
+   "image_sticker": {
+    "name": "IMAGE / STICKER (a picture or an animated GIF sticker cut in beside the head or under a headline)",
+    "trigger": "a concept with a ready picture: a speech-bubble graphic on the chest while the key word is said; a big animated cartoon under a headline over b-roll",
+    "motion": {
+     "image": "the speech-bubble PNG (560 x 645) at Motion position (0.5, 0.673) of the frame, scale 86.4 percent in 4K = 43 percent at 1080p = 242 x 279 px ON the chest, centre (960, 727); a HARD CUT in (no slide, no pop) and out; held 1.13 s (11.645-12.779)",
+     "sticker": "the brain GIF (600 x 600, 5 fps) at Motion scale 388 percent in 4K = 194 percent at 1080p (the art fills a 957 x 629 px box centred (960, 678)); cut in with its footage; the GIF plays 3.07 s then is restarted twice (0.53 s each) so it keeps moving; the whole group (sticker + headline) pushes out LEFT over 0.33 s"
+    },
+    "sound": [
+     {
+      "id": "whoosh-4",
+      "when": "the image: file start ON the cut in (11.645)"
+     },
+     {
+      "id": null,
+      "when": "the sticker itself is silent; its headlines carry the sounds (kt-headline-over-broll zoom_drop)"
+     }
+    ],
+    "licence": "the Wikimedia Giphy sticker is CC BY-SA 4.0 (attribution required); the pngwing bubble's licence is unknown and it was not kept",
+    "reference_cues_skills": [
+     "11.645 speech bubble on the chest (whoosh-4) · 27.728-31.899 brain sticker under PRAGMATIC THINKING / TACTICAL DECISIONS"
+    ],
+    "browse_cues": [
+     {
+      "src": "skills",
+      "t0": 11.4,
+      "t1": 13.0,
+      "label": "the speech-bubble image on the chest"
+     },
+     {
+      "src": "skills",
+      "t0": 27.6,
+      "t1": 31.9,
+      "label": "the animated brain sticker"
+     }
+    ]
+   },
+   "browse_cues": [
+    {
+     "src": "main",
+     "t0": 45.0,
+     "t1": 49.7,
+     "label": "rocket slides in left of the head, gauge right (swoosh-1 / swoosh-2)"
+    },
+    {
+     "src": "main",
+     "t0": 57.4,
+     "t1": 61.2,
+     "label": "growth chart slides up onto the chest (whoosh-4)"
+    }
+   ]
   },
   "kt-subscribe-close": {
    "name": "SUBSCRIBE button on the chest + playlist arrow (end card)",
@@ -614,7 +889,8 @@
     "122.833 button cut, arrow pops"
    ],
    "used_in": [
-    "GrowthMarketingMike 004 (2023)"
+    "GrowthMarketingMike 004 (2023)",
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023) (bar variant)"
    ],
    "confidence": "read from keyframes",
    "unknowns": [
@@ -626,7 +902,46 @@
     "button_anim_alt": "themes/kinetic-text-2023/graphics/subscribe-button-alt.mp4",
     "arrow": "themes/kinetic-text-2023/graphics/arrow-red.png (600x398 RGBA, points right; mirror it to point left)"
    },
-   "decoded": "2026-10-25 from differences revision_1.prproj keyframes + frame reads (confidence: read from keyframes)"
+   "decoded": "2026-10-25 from differences revision_1.prproj keyframes + frame reads (confidence: read from keyframes)",
+   "bar": {
+    "name": "SUBSCRIBE BAR (the like / SUBSCRIBE / bell bar with a cursor that clicks it)",
+    "trigger": "the spoken subscribe CTA: a YouTube-style bar rises onto the chest, the cursor clicks like then SUBSCRIBE (it turns SUBSCRIBED), the bar drops away",
+    "motion": {
+     "plate": "graphics/subscribe-bar-fill.mp4 + subscribe-bar-key.mp4 (the keyed 'LIKE And SUBSCRIBE Green Screen Video.mp4', media 2.0-6.3 s; the 2023 edit keyed the clip with Ultra Key at its defaults and used media 2.419-5.088 s); the clip is placed at Motion position (0.5, 0.579) of the frame, scale 147 percent in 4K = 73.5 percent at 1080p (1411 x 794 px); the bar inside it lands at 699 x 134 px, centre (960, 881) = 50 / 81.6 percent",
+     "in": "Transform position y 1.177 -> 0.5 of the clip over 0.262 s (ease out-speed 2.0 / influence 19 percent -> in-speed 0 / influence 100): the bar rises 538 px from below the frame and settles",
+     "clicks": "the clip's own cursor clicks LIKE at +0.23 s and SUBSCRIBE at +1.91 s after the bar lands (SUBSCRIBE! -> SUBSCRIBED), the bell click at +3.4 s falls after the exit",
+     "out": "Transform position y 0.5 -> 1.503 over 0.200 s (drops below the frame) at the end of the hold (2.67 s)"
+    },
+    "sound": [
+     {
+      "id": "subscribe-bar-clicks",
+      "when": "the plate's own click track, file start = plate start (the like click at 0.64 s, the SUBSCRIBE click at 2.32 s, the bell click at 3.82 s of the file)"
+     },
+     {
+      "id": "mouse-click",
+      "when": "'OR CHECK OUT THIS PLAYLIST': file start 0.6 s after the bar dropped (68.635), the viewer's click on the end screen"
+     }
+    ],
+    "reference_cues_skills": [
+     "65.365 bar rises · 65.59 like click · 67.27 SUBSCRIBE click · 67.835 drops · 68.635 mouse-click under the playlist line"
+    ],
+    "browse_cues": [
+     {
+      "src": "skills",
+      "t0": 64.0,
+      "t1": 69.6,
+      "label": "COMMENT BELOW pop, the subscribe bar, the playlist click"
+     }
+    ]
+   },
+   "browse_cues": [
+    {
+     "src": "main",
+     "t0": 120.3,
+     "t1": 125.0,
+     "label": "button on the chest, then the playlist arrow"
+    }
+   ]
   },
   "kt-scatter-words": {
    "name": "SCATTER WORDS around the head",
@@ -670,7 +985,15 @@
    "unknowns": [
     "shadow offset / blur (frames only)"
    ],
-   "decoded": "2026-10-25 from differences revision_1.prproj keyframes + frame reads (confidence: read from keyframes)"
+   "decoded": "2026-10-25 from differences revision_1.prproj keyframes + frame reads (confidence: read from keyframes)",
+   "browse_cues": [
+    {
+     "src": "main",
+     "t0": 115.1,
+     "t1": 118.7,
+     "label": "three words scatter around the head (pop-1 / knock-pop)"
+    }
+   ]
   },
   "hw-word-pop": {
    "name": "WORD POP: one green Showcard Gothic word at a time",
@@ -706,7 +1029,21 @@
     "the per-word x nudges (centres 913-954 px) are frame measurements",
     "the Essential Graphics text-box alignment is not decoded"
    ],
-   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50"
+   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50",
+   "browse_cues": [
+    {
+     "src": "hw",
+     "t0": 0.5,
+     "t1": 5.2,
+     "label": "one green word at a time over the hook"
+    },
+    {
+     "src": "hw",
+     "t0": 12.6,
+     "t1": 19.0,
+     "label": "'21% BELOW' ... the record close"
+    }
+   ]
   },
   "hw-zoom-slideshow": {
    "name": "ZOOM SLIDESHOW montage (the 'Zooming Dynamic Slideshow' After Effects template)",
@@ -752,7 +1089,15 @@
     "the per-shot title start positions (Text Animator) are frame reads",
     "exact alternative: re-render the AE project with new photos and words (project + plates on Dropbox)"
    ],
-   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50"
+   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50",
+   "browse_cues": [
+    {
+     "src": "hw",
+     "t0": 19.6,
+     "t1": 24.0,
+     "label": "the Dynamic Slideshow montage (shot 1 is a bear: never reused)"
+    }
+   ]
   },
   "hw-blood-promo": {
    "name": "BLOOD PROMO montage (the 'Halloween Party Promo' After Effects template)",
@@ -798,7 +1143,15 @@
     "the title animators (blur-in, echo) are frame reads",
     "exact alternative: re-render the AE project with new photos and words"
    ],
-   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50"
+   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50",
+   "browse_cues": [
+    {
+     "src": "hw",
+     "t0": 85.4,
+     "t1": 104.2,
+     "label": "the Halloween Party Promo montage (scenes 3-4 bears: never reused)"
+    }
+   ]
   },
   "hw-split-panels": {
    "name": "SPLIT PANELS cut by the template's luma mattes (diagonal / vertical)",
@@ -841,7 +1194,21 @@
    "unknowns": [
     "which treatment rides which matte in the template, scene by scene (binary .aep)"
    ],
-   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50"
+   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50",
+   "browse_cues": [
+    {
+     "src": "hw",
+     "t0": 86.0,
+     "t1": 95.5,
+     "label": "diagonal panels (scenes 1-2)"
+    },
+    {
+     "src": "hw",
+     "t0": 95.2,
+     "t1": 103.2,
+     "label": "vertical panels (scenes 3-6)"
+    }
+   ]
   },
   "hw-blood-title": {
    "name": "BLOOD TITLE: red glowing title + growing blood splat",
@@ -878,7 +1245,15 @@
    "unknowns": [
     "the template's text animators and the blood layers' time remap (binary .aep)"
    ],
-   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50"
+   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50",
+   "browse_cues": [
+    {
+     "src": "hw",
+     "t0": 100.6,
+     "t1": 104.2,
+     "label": "S&P 500 / DECLINE 44.67% (scarecrow, burning man)"
+    }
+   ]
   },
   "hw-camera-shake": {
    "name": "CAMERA SHAKE held on the face (Swiftly Motion Shake Optics 2x / 3x)",
@@ -917,7 +1292,21 @@
    "unknowns": [
     "the lens is the transitions engine's calibrated displacement approximation (MotionShake fidelity 'approximate')"
    ],
-   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50"
+   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50",
+   "browse_cues": [
+    {
+     "src": "hw",
+     "t0": 23.6,
+     "t1": 29.4,
+     "label": "2x shake held on the seated face after the slideshow"
+    },
+    {
+     "src": "hw",
+     "t0": 61.2,
+     "t1": 64.8,
+     "label": "3x shake after the clown cut-away"
+    }
+   ]
   },
   "hw-drop-bounce": {
    "name": "DROP BOUNCE on a jump cut (Finzar 'Down')",
@@ -946,7 +1335,15 @@
    "unknowns": [
     "the exact Bezier handles of the preset (the study kept the key values only)"
    ],
-   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50"
+   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50",
+   "browse_cues": [
+    {
+     "src": "hw",
+     "t0": 29.2,
+     "t1": 30.6,
+     "label": "the jump-cut drop bounce"
+    }
+   ]
   },
   "hw-zoom-punch": {
    "name": "ZOOM PUNCH on the face (Finzar '1. Zoom IN')",
@@ -974,7 +1371,15 @@
    ],
    "confidence": "read from keyframes",
    "unknowns": [],
-   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50"
+   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50",
+   "browse_cues": [
+    {
+     "src": "hw",
+     "t0": 103.6,
+     "t1": 105.2,
+     "label": "100 -> 200 zoom punch + the scary-6 stinger"
+    }
+   ]
   },
   "hw-subscribe-like-bell": {
    "name": "SUBSCRIBE / LIKE / BELL button (the Scene_19 MOGRT)",
@@ -1007,7 +1412,15 @@
    "confidence": "placement, colours and the sound offset read from the project; the animation is the template's own (rendered from its project, not re-animated)",
    "unknowns": [],
    "differs_from": "kt-subscribe-close (kinetic-text-2023): a keyed green-screen stock button + a red arrow; this one is an alpha-plate MOGRT with a cursor click and a like / bell burst",
-   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50"
+   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50",
+   "browse_cues": [
+    {
+     "src": "hw",
+     "t0": 108.6,
+     "t1": 110.0,
+     "label": "the Scene_19 MOGRT starts (woosh9); cut at 1:50, the review limit"
+    }
+   ]
   },
   "hw-keyed-presenter": {
    "name": "KEYED PRESENTER over full-frame b-roll (DOCUMENTATION ONLY: never built)",
@@ -1036,6 +1449,374 @@
    "confidence": "read from the project (Ultra Key parameters, Motion placements); documentation only",
    "unknowns": [],
    "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50"
+  },
+  "kt-caption-highlight": {
+   "name": "CAPTION HIGHLIGHT: the running kinetic caption line (007's default caption on every face shot)",
+   "theme_hint": "kinetic-text-2023 (Energetic), second source",
+   "trigger": "every spoken phrase of a face line shown as ONE bottom caption, ALL CAPS, the key word(s) in the accent colour; the phrase is replaced by the next phrase on its first word; it IS the caption (never a second caption under it)",
+   "motion": {
+    "in": "appears at once (a hard cut, no scale, no fade) on the first spoken word of the phrase",
+    "hold": "still, until the next phrase replaces it (0.6 to 2.2 s per phrase in 007; 34 phrases in 73 s)",
+    "exit": "replaced by the next phrase or cut with the shot; never animated out",
+    "open_stretch": "the FIRST caption of the video only: Transform scale-height 300 -> 100 percent + skew 10 -> 0 degrees over 0.483 s (ease, speed 1250 -> 6), so the opening line squashes down into place on the open whoosh",
+    "layout_1080": "one line centred x 960; Essential Graphics position y = 88.75 percent of the frame height (the text block's anchor); measured caps 52 px (4.8 percent of the frame height), the lime key word's glyph box 72 px tall with its shadow, block y 82 to 89 percent; the longest phrase spans 81 percent of the frame width (1556 px); 2-line phrases ('DO YOU HAVE WHAT IT TAKES TO BE A / GROWTH ENGINEER?') stack upward from the same baseline",
+    "two_colour_pop_variant": "a phrase that is itself the headline ('SKILLS OF A GROWTH ENGINEER?' 4.071, 'THE FUNDAMENTALS OF GROWTH MARKETING' 71.171, 'COMMENT BELOW' 64.231) uses the kt-keyword-pop 110 jiggle instead of the hard cut, centred at 75 to 80 percent of the frame height, caps 80 px, two lines, white + lime"
+   },
+   "text_look_2023": "Montserrat ExtraBold Italic, ALL CAPS, white #FFFFFF with a dark drop shadow; the key word(s) LIME #BEFF09 (a house video uses the chapter accent); no band, no box",
+   "assets": {},
+   "sound_by_meaning": [
+    {
+     "id": null,
+     "meaning": "a plain caption phrase is SILENT (34 phrases, the music carries)",
+     "when": "n/a"
+    },
+    {
+     "id": "wooden-rattle-whoosh",
+     "meaning": "the title phrase pop ('SKILLS OF A GROWTH ENGINEER?')",
+     "when": "ON the pop frame (4.071)"
+    },
+    {
+     "id": "typing",
+     "meaning": "'COMMENT BELOW' (the viewer types a comment)",
+     "when": "file start ON the pop (64.231), 1.13 s used"
+    },
+    {
+     "id": "cash-register",
+     "meaning": "a positive / money headline phrase over b-roll",
+     "when": "ON the pop (17.184 'GOOD COMMUNICATION SKILLS', 1.3 s used)"
+    },
+    {
+     "id": "swoosh-4",
+     "meaning": "the open_stretch first caption",
+     "when": "file start at frame 0 (0.000), with the open"
+    },
+    {
+     "id": "ting",
+     "meaning": "a key word that also gets kt-keyword-sparkle",
+     "when": "see kt-keyword-sparkle"
+    }
+   ],
+   "reference_cues_skills": [
+    "0.000 'SO A FEW EPISODES BACK' (open_stretch, swoosh-4) -> 1.435 -> 2.069 -> 3.370 -> 4.071 'SKILLS OF A GROWTH ENGINEER?' (pop, wooden-rattle-whoosh)",
+    "11.011 'AND THEY WOULD NEED TO' -> 11.645 -> 12.779 -> 13.547 -> 14.648 (hard cuts, silent)",
+    "52.219 'AND LAST BUT CERTAINLY NOT LEAST' -> 54.421 'THEY SHOULD BE A SELF-STARTER' (+ sparkle 54.821 / 55.222)",
+    "55.722 -> 56.890 -> 58.025 -> 59.293 -> 60.494 'WITHOUT MUCH GUIDANCE' (2 lines)",
+    "64.231 'COMMENT BELOW' (pop, typing) · 68.035 -> 69.503 -> 70.137 · 71.171 'THE FUNDAMENTALS OF GROWTH MARKETING' (pop, cash-register 71.271)"
+   ],
+   "browse_cues": [
+    {
+     "src": "skills",
+     "t0": 0.0,
+     "t1": 5.37,
+     "label": "the open: stretch-in caption, then the title pop"
+    },
+    {
+     "src": "skills",
+     "t0": 11.0,
+     "t1": 16.2,
+     "label": "running captions on the face (+ icon, + chips)"
+    },
+    {
+     "src": "skills",
+     "t0": 54.4,
+     "t1": 61.5,
+     "label": "captions with the sparkle, a 2-line phrase"
+    }
+   ],
+   "used_in": [
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)"
+   ],
+   "confidence": "read from keyframes (the Text component has none: a hard cut; the open_stretch and the pops are keyframed); sizes measured on the render",
+   "unknowns": [
+    "the exact font size: Essential Graphics stores it in a blob the decoder does not read; 52 px caps measured"
+   ]
+  },
+  "kt-typewriter-card": {
+   "name": "TYPEWRITER CARD on crumpled paper (a summary / definition typed in line by line)",
+   "trigger": "a 2 to 4 line summary or definition that deserves its own full-frame moment: each line is REVEALED left to right under the typing sound as Mike says it, the lines accumulate, the key phrase pops in colour on a cash register",
+   "motion": {
+    "card_in": "FULL-FRAME: the paper video (textures/paper-crumpled.mp4, Motion scale 200 percent in 4K = exactly 1920x1080 at 1080p, plays from 0) pushes in from the LEFT over 0.100 s (in from the LEFT x -0.347 -> 0.5 of the frame (travel 0.85 W), in from the TOP y -0.183 -> 0.5 (travel 0.68 H), out to the RIGHT 0.5 -> 1.462 (0.96 W), out DOWN 0.5 -> 1.503 (1.0 H); kt-push-slide)",
+    "line_reveal": "each text line is a separate graphic with 'Linear Wipe (Legacy)' Transition Completion 100 -> 0 percent (angle default 90 = reveal left to right), linear, no feather: line 1 'IN SUMMARY' 1.10 s, line 2 'THEY WOULD HAVE TO BE SOFTWARE DEVELOPERS' 1.84 s, line 3 'AND THEY WOULD HAVE TO HAVE BOTH' 1.13 s, line 5 'EXPERIENCE' 0.81 s: about 0.045 s per character, i.e. the wipe runs at his speaking pace",
+    "line_timing": "line 1 at 0.000 (card landed), line 2 at 1.101, line 3 at 2.936, the key phrase at 4.137 / 4.538, line 5 at 4.905 (card seconds)",
+    "key_phrase": "the blue words do the the kt-keyword-pop pop: scale 100 -> 110 over 0.233 s (ease, out-speed 29 / influence 4.8 percent -> in-speed 1.6 / influence 100) with the rotation jiggle 0 -> +2 -> -2 -> +1 -> -0.5 -> 0 degrees at 0 / 0.033 / 0.083 / 0.133 / 0.200 / 0.267 s, 360-degree motion blur; word A 'FRONT END' pops at 4.137 (cash-register), word B '& BACK END' pops 0.40 s later (silent); both stay",
+    "layout_1080": "left-aligned small lines at x 110 px (5.7 percent), first line's top y 272 px (25 percent), line pitch ~42 px, caps ~30 px (2.8 percent of the frame height); the key phrase caps 88 px (8.1 percent) centred y 48.7 percent spanning x 8.5 to 88.8 percent; 'EXPERIENCE' caps ~45 px centred under the second blue word (x ~69 percent, y ~55 percent)",
+    "hold": "the card is the whole picture 5.64 s (5.372-11.011); the face is gone under it",
+    "card_out": "pushes out to the RIGHT over 0.100 s (kt-push-slide) on whoosh-4; the face shot is already under it"
+   },
+   "text_look_2023": "Montserrat ExtraBold Italic, ALL CAPS: the typed lines dark grey #2A2B29 (no shadow), the key phrase blue #0427F5, '&' black, on the crumpled paper (avg #E5E5E4); a house video keeps the paper and swaps the blue for its accent",
+   "assets": {
+    "paper": "themes/kinetic-text-2023/textures/paper-crumpled.mp4"
+   },
+   "sound": [
+    {
+     "id": "swoosh-4",
+     "when": "card in: file start 0.100 s BEFORE the push (5.272 for the push at 5.372)"
+    },
+    {
+     "id": "typing",
+     "when": "under every line reveal, a slice as long as the wipe: 5.372-6.139 (line 1), 6.373-8.141 and 8.141-9.243 (line 2 + 3, back to back), 10.177-11.011 (line 5); the 19 s file is sliced from its start each time"
+    },
+    {
+     "id": "cash-register",
+     "when": "the key phrase: file start ON the pop (9.409), 0.60 s used"
+    },
+    {
+     "id": "whoosh-4",
+     "when": "card out: file start ON the push (11.011)"
+    }
+   ],
+   "reference_cues_skills": [
+    "5.372 card in (swoosh-4 5.272) · 5.372 / 6.473 / 8.308 lines wipe (typing) · 9.409 'FRONT END' (cash-register) · 9.810 '& BACK END' · 10.277 'EXPERIENCE' (typing) · 11.011 card out (whoosh-4)"
+   ],
+   "browse_cues": [
+    {
+     "src": "skills",
+     "t0": 5.0,
+     "t1": 11.4,
+     "label": "the whole card: push in, 3 typed lines, the blue pop, push out"
+    }
+   ],
+   "used_in": [
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)"
+   ],
+   "confidence": "read from keyframes (wipes, pops, pushes, timings); text sizes and colours measured on the render",
+   "unknowns": [
+    "the wipe 'angle' and 'feather' params were not time-varying and are the effect defaults (90 degrees, 0)"
+   ]
+  },
+  "kt-stacked-list-over-broll": {
+   "name": "STACKED LIST over b-roll (a headline, a sub-line, then items popping one by one)",
+   "trigger": "an enumeration said over footage: the category headline pops, an optional sub-line slides in, then each item pops under the last one on its spoken word, one sound per item, all staying; no paper, no band: the footage shows through",
+   "motion": {
+    "headline": "the kt-keyword-pop pop: scale 100 -> 110 over 0.233 s (ease, out-speed 29 / influence 4.8 percent -> in-speed 1.6 / influence 100) with the rotation jiggle 0 -> +2 -> -2 -> +1 -> -0.5 -> 0 degrees at 0 / 0.033 / 0.083 / 0.133 / 0.200 / 0.267 s, 360-degree motion blur; appears at once; 2 lines centred x 960, block top y ~21 percent, caps ~90 px (8.3 percent), lime",
+    "sub_line": "slides in from the LEFT: position x -0.347 -> 0.5 over 0.262 s (ease out-speed 2.96 / influence 33 percent -> in-speed 0 / influence 100), motion blur; white caps ~45 px at y ~43 percent",
+    "items": "the 110 pop with a SKEW instead of the rotation jiggle: skew 0 -> 3 -> 0 degrees at 0 / 0.100 / 0.367 s while the skew axis turns 0 -> 200 degrees over the same 0.367 s (the item leans and rights itself), scale 100 -> 110 over 0.233 s, motion blur; each item appears at once under the previous one and stays; yellow caps ~78 px, pitch ~8 percent of the frame height (y 52 / 60 / 68 percent for 3 items; 4 items 32 / 45 / 57 / 69 percent when there is no sub-line)",
+    "item_timing": "list 1: items +2.20 / +2.60 / +3.54 s after the headline; list 2: +0.00 / +0.53 / +1.24 / +1.80 s (each on its spoken word)",
+    "exit": "the whole stack pushes out with its footage (kt-push-slide: RIGHT at 24.091, DOWN at 43.777) over 0.100 s",
+    "footage": "the b-roll under it is static (Motion scale 200 percent in 4K = full frame); the SECOND list's footage pushed in from the TOP 2.5 s before the first item"
+   },
+   "text_look_2023": "Montserrat ExtraBold Italic, ALL CAPS: headline lime #BEFF09, sub-line white, items yellow #FEFF3E, all with a dark drop shadow",
+   "assets": {},
+   "sound": [
+    {
+     "id": "wooden-rattle-whoosh",
+     "when": "the headline: file start ON the pop (20.020), together with the footage's whoosh-4 cut"
+    },
+    {
+     "id": "whoosh-4",
+     "when": "the sub-line: file start 0.23 s AFTER the slide starts (21.255 for 21.021)"
+    },
+    {
+     "id": "fast-reverse-5",
+     "when": "EACH item: file start ON the item's first frame (22.222 / 22.623 / 23.557; 40.674 / 41.308 / 41.909 / 42.476), 0.93 s used"
+    },
+    {
+     "id": null,
+     "when": "the push-out is silent when it lands on a silent card (43.777), whoosh-4 when it lands on the face (24.091)"
+    }
+   ],
+   "reference_cues_skills": [
+    "20.020 'CROSSFUNCTIONAL / TEAM' (wooden-rattle) · 21.021 'WITH SEVERAL FUNCTIONS' slides in · 22.222 DATA · 22.623 COPYWRITING · 23.557 DESIGN (fast-reverse-5 each) · 24.091 out right",
+    "40.674 TESTING · 41.208 ANALYTICS · 41.909 ERROR TOLERANCE · 42.476 OBSERVABILITY (fast-reverse-5 each, no headline) · 43.777 out down"
+   ],
+   "browse_cues": [
+    {
+     "src": "skills",
+     "t0": 19.8,
+     "t1": 24.3,
+     "label": "headline + sub-line + 3 items (CROSSFUNCTIONAL TEAM)"
+    },
+    {
+     "src": "skills",
+     "t0": 38.0,
+     "t1": 43.9,
+     "label": "footage pushes in from the top, 4 items (TESTING ...)"
+    }
+   ],
+   "used_in": [
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)"
+   ],
+   "confidence": "read from keyframes (pops, skew, slide, timings, pushes); sizes and colours measured on the render",
+   "unknowns": []
+  },
+  "kt-statement-over-broll": {
+   "name": "STATEMENT over b-roll (a 3 to 5 line sentence, key phrases in colour, hovering over dimmed footage)",
+   "trigger": "a full sentence that needs 4 to 7 s on screen while footage plays: the whole block appears at once, hovers like the side panel's text, and is cut with the shot; the footage is dimmed by a colour matte so the words read",
+   "motion": {
+    "in": "a hard cut (block and footage together) on the whoosh",
+    "dim": "a Color Matte (white) at 55 percent opacity, Normal blend, over the footage (Motion scale 200 percent in 4K = full frame); the 2023 shot read as a washed-out office",
+    "hover": "the kt-side-panel HOVER: eased position drift inside a +-0.9 percent x / +-0.8 percent y box (new target every ~0.65 s, the 14-key loop repeats every 8.6 s) plus a +-0.5 degree rock on a 3.2 s cycle",
+    "layout_1080": "5 lines centred x 960, block y 32 to 70 percent (centre 51 percent), width up to 94 percent of the frame, caps ~45 px (4.2 percent), line pitch ~80 px",
+    "hold": "6.74 s (31.565-38.305)",
+    "exit": "a hard cut; the next footage pushed in from the TOP (kt-push-slide, silent)"
+   },
+   "text_look_2023": "Montserrat ExtraBold Italic, ALL CAPS, white with a dark drop shadow, the key phrases yellow #FEFF3F",
+   "assets": {},
+   "sound": [
+    {
+     "id": "whoosh-4",
+     "when": "ON the cut in (31.565); the hold and the exit are silent"
+    }
+   ],
+   "reference_cues_skills": [
+    "31.565-38.305 'ALSO THE ABILITY TO KEEP A LONG TERM STRATEGY EXPERIENCE WITH ANALYTICAL SOFTWARE AND METHODOLOGY AS WELL AS DATA VISUALIZATION EXPERIENCE' (whoosh-4 on the cut)"
+   ],
+   "browse_cues": [
+    {
+     "src": "skills",
+     "t0": 31.3,
+     "t1": 38.5,
+     "label": "the 5-line statement hovering over dimmed footage"
+    }
+   ],
+   "used_in": [
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)"
+   ],
+   "confidence": "read from keyframes (the 14-key hover loop and the rotation cycle, the matte opacity); sizes measured on the render",
+   "unknowns": [
+    "the matte colour is not stored as a readable value; white judged from the render"
+   ]
+  },
+  "kt-text-wall": {
+   "name": "TEXT WALL (the Monument Extended MOGRT: a 3D wall of one repeated phrase, a red headline pops on top)",
+   "trigger": "the ONE biggest idea of the video: a black full-frame interlude where a phrase repeats as a receding wall of rows, the letters pulse between filled and outlined, the wall tilts, and the payoff word punches in red; 3 to 4 s, once per video",
+   "motion": {
+    "source": "Scene_23.aegraphic (After Effects MOGRT, comps 23 / Text_1 / Text_anim / Text_2 / T_1 / T_2, effects CC Lens + Offset + Fill + controls, font Monument Extended Ultrabold); placed at Motion scale 202 percent in 4K = full frame; a black Color Matte at 60 percent under it; its keyframes live in the binary .aep, so the motion below is MEASURED ON THE RENDER",
+    "wall": "~9 rows of the phrase ('GROWTH MINDSET'), each row the phrase repeated across the width, rows receding upward in perspective (bottom row caps ~130 px, top row ~45 px at 1080p), the block tilted ~12 degrees and slowly rotating (leaning right at 0.1 s, upright at ~1.6 s, leaning left at ~3.1 s), with a lens bulge (CC Lens) so the rows curve",
+    "pulse": "the letters cycle FILLED white -> OUTLINED (white stroke, black inside) -> FILLED in a wave down the wall: all filled at 0.07 s, all outlined at 1.57 s, filled again at 3.07 s (a ~3 s cycle), measured on frames 43.85 / 44.6 / 45.35 / 46.1 / 46.85 / 47.5",
+    "headline": "'CHALLENGE' pops 1.97 s into the wall with the kt-keyword-pop punch-red look: the kt-keyword-pop pop: scale 100 -> 110 over 0.233 s (ease, out-speed 29 / influence 4.8 percent -> in-speed 1.6 / influence 100) with the rotation jiggle 0 -> +2 -> -2 -> +1 -> -0.5 -> 0 degrees at 0 / 0.033 / 0.083 / 0.133 / 0.200 / 0.267 s, 360-degree motion blur; centred (50, 50) percent, caps ~150 px (14 percent), width 77 percent of the frame; held to the cut",
+    "in_out": "cuts in (silent, the music carries; the previous footage pushed out DOWN); swoosh-4 0.1 s before the whip out",
+    "hold": "3.90 s (43.777-47.681)"
+   },
+   "text_look_2023": "Monument Extended Ultrabold white on black for the wall; the headline Montserrat ExtraBold Italic red #E80001 + white stroke + red glow",
+   "assets": {
+    "source_reference": "themes/kinetic-text-2023/graphics/_source/Scene_23.aegraphic.zip"
+   },
+   "sound": [
+    {
+     "id": null,
+     "when": "the wall cuts in SILENT (43.777); no sound in the project on that frame"
+    },
+    {
+     "id": "cash-register",
+     "when": "the headline: file start ON the pop frame (45.746), 1.30 s used"
+    },
+    {
+     "id": "swoosh-4",
+     "when": "out: file start 47.581, 0.1 s before the cut to the next b-roll (47.681)"
+    }
+   ],
+   "reference_cues_skills": [
+    "43.777 wall in (silent) · 45.746 'CHALLENGE' (cash-register) · 47.581 swoosh-4 · 47.681 cut"
+   ],
+   "browse_cues": [
+    {
+     "src": "skills",
+     "t0": 43.5,
+     "t1": 47.9,
+     "label": "the GROWTH MINDSET wall + CHALLENGE"
+    }
+   ],
+   "used_in": [
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)"
+   ],
+   "build": "RENDER THE TEMPLATE, never cross-fade stills (Mike, 2026-11-05, bullish-on-kaspa draft: two PNGs read as a still graphic). Unzip _source/Scene_23.aegraphic.zip, set the text of comps T_1 and T_2 by ExtendScript, render comp 23 from 0 at 30 fps, composite the red headline in the comp, hard cut in. Worked script: skills/effects-library/scripts/render_text_wall.jsx. Monument Extended is not installed here, so it uses Montserrat-Black widened by layer scale so the whole phrase fits the row.",
+   "confidence": "placement and sounds read from the project; the wall's motion measured on the render (AE template, binary keyframes)",
+   "unknowns": [
+    "the exact row count, tilt rate and lens curvature: an engine reproduces the measured look, not the AE numbers"
+   ]
+  },
+  "kt-keyword-sparkle": {
+   "name": "KEYWORD SPARKLE (a cartoon flash burst on a caption's key word, on a ting)",
+   "trigger": "a positive key word in the running caption (SELF-STARTER) gets a small cartoon star burst at its last letter, once or twice, with a ting each",
+   "motion": {
+    "source": "'Flash FX Element 01' (After Effects .aegraphic, comps FE 01 / Flash FX Element 01, effects Fill + Glow + Mosaic + Drop Shadow + controls; colour white, glow white at 35 percent opacity); placed with Motion position (0.8916, 0.8346) of the frame = (1712, 901) px, scale 19 percent; its own animation measured on the render",
+    "burst": "a 4-point star: a dot at 0.07 s (a 50 x 100 px smear), a point at 0.17 s, then the burst grows to ~100 x 128 px at 0.24 s, ~114 x 150 at 0.31 s, ~127 x 162 at 0.38 s (its peak extent, thinning), ~107 x 140 at 0.45 s, gone by 0.6 s; total 0.70 s",
+    "place": "centred on the top-right corner of the key word's last glyph (here (1750, 895) px); fires twice 0.40 s apart in 007"
+   },
+   "text_look_2023": "white star, soft white glow; no text of its own",
+   "assets": {
+    "source_reference": "themes/kinetic-text-2023/graphics/_source/Flash FX Element 01.aegraphic.zip"
+   },
+   "sound": [
+    {
+     "id": "ting",
+     "when": "file start ON each burst's first frame (54.821 and 55.222), 1.30 s each; its 0.79 s attack rings as the burst fades"
+    }
+   ],
+   "reference_cues_skills": [
+    "54.821 + 55.222 on 'SELF-STARTER' (ting x2)"
+   ],
+   "browse_cues": [
+    {
+     "src": "skills",
+     "t0": 54.3,
+     "t1": 56.2,
+     "label": "two sparkles on SELF-STARTER"
+    }
+   ],
+   "used_in": [
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)"
+   ],
+   "confidence": "placement, scale, timing and sounds read from the project; the burst shape measured on the render",
+   "unknowns": [
+    "the .aegraphic shape layers are not readable: the burst is re-drawn as code to the measured sizes (as the 2023 icons are)"
+   ]
+  },
+  "kt-push-slide": {
+   "name": "PUSH SLIDE cut (a transition, bucket 3: a card or footage pushes in or out in 0.1 s)",
+   "trigger": "007's cut between the face and a card / footage, and between two b-roll shots, where 004 used the whip-zoom: the incoming or outgoing picture slides fully across the frame in 3 frames",
+   "motion": {
+    "slide": "a Transform-effect position slide of 0.100 s (3 frames): in from the LEFT x -0.347 -> 0.5 of the frame (travel 0.85 W), in from the TOP y -0.183 -> 0.5 (travel 0.68 H), out to the RIGHT 0.5 -> 1.462 (0.96 W), out DOWN 0.5 -> 1.503 (1.0 H); easing out-speed 2.96 / influence 33 percent -> in-speed 0 / influence 100 percent (fast start, soft land), 360-degree motion blur",
+    "directions_2023": "in from the LEFT: the typewriter card (5.372), the Communication b-roll (16.116), the stacked list's sub-line; in from the TOP: the data-analyst b-roll (38.205); out to the RIGHT: the card (11.011), the Communication b-roll (20.020), the first stack (24.091); out DOWN: the data-analyst b-roll + second stack (43.777), the subscribe bar (67.835, 0.2 s); out to the LEFT: the sticker + headline (31.565, 0.33 s)",
+    "rule": "the picture under it is already there (a cut hidden by the slide); never on the locked face spine itself (overlays slide, the face stays)"
+   },
+   "sound": [
+    {
+     "id": "swoosh-4",
+     "when": "a card / footage pushing IN: file start 0.100 s before the slide (5.272, 16.116, 47.581)"
+    },
+    {
+     "id": "whoosh-4",
+     "when": "a push that lands on the face (11.011, 20.020, 24.091, 52.219, 68.001)"
+    },
+    {
+     "id": "fast-reverse-5",
+     "when": "a push that lands on a headline drop (61.562)"
+    },
+    {
+     "id": null,
+     "when": "a push between two silent cards is silent (38.205, 43.777)"
+    }
+   ],
+   "reference_cues_skills": [
+    "5.372 in L · 11.011 out R · 16.116 in L · 20.020 out R · 24.091 out R · 38.205 in TOP · 43.777 out DOWN · 61.562 · 68.001"
+   ],
+   "browse_cues": [
+    {
+     "src": "skills",
+     "t0": 4.8,
+     "t1": 6.0,
+     "label": "card pushes in from the left"
+    },
+    {
+     "src": "skills",
+     "t0": 10.6,
+     "t1": 11.6,
+     "label": "card pushes out to the right"
+    },
+    {
+     "src": "skills",
+     "t0": 37.9,
+     "t1": 38.9,
+     "label": "footage pushes in from the top"
+    }
+   ],
+   "used_in": [
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)"
+   ],
+   "confidence": "read from keyframes (every slide is a 3-frame Transform position move with the same bezier)",
+   "unknowns": []
   }
  }
 }

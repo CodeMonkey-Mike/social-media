@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ov2-drain: The Drain (drain-timeline)</title>
+<!--
+  ANIMATED CHART, binance (longform-presentation format 4, card-overlays kind "clip").
+  Canvas 1464 x 1080 (the deck area). The page IS the animation: window.setT(t) sets the whole visual
+  state as a PURE FUNCTION of t (local seconds, 0 to 36.3). No CSS transitions or animations, no rAF,
+  no Date.now. Rendered by skills/card-overlays/html_clip.py (setT(f/30) + screenshot per frame).
+  Open in a browser with #t=12.5 to inspect one moment (default: the final state).
+  Every number on screen is from ../../RESEARCH.md (sections 1.2, 1.3). Spec: drain-timeline.NOTE.md.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* locked tokens: video-creation/longform-edited/skills/container-reference/container-canonical.css (do not change) */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1464px;height:1080px;overflow:hidden;background:#0a0c10}
+body{font-family:'DM Sans',sans-serif}
+/* the canonical .frame, sized to the deck area (1464 x 1080) */
+.frame{width:1464px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
+.head{position:absolute;left:64px;top:44px;z-index:2}
+.ey{font-family:'DM Sans';font-size:24px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted)}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:68px;line-height:1.07;letter-spacing:-.02em;color:var(--text-primary);margin-top:12px}
+.divider{width:66px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin-top:18px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.re{color:var(--accent-red)}
+#plot{position:absolute;left:0;top:0;z-index:1}
+.src{position:absolute;left:64px;top:1036px;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:16px;color:var(--text-muted);z-index:2}
+/* SVG type */
+.t-mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.t-sans{font-family:'DM Sans',sans-serif;font-weight:500}
+.t-ey{font-family:'DM Sans',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.16em}
+</style>
+</head>
+<body>
+<div class="frame" id="drain">
+  <div class="orb" id="orbRed" style="width:620px;height:620px;background:var(--accent-red);left:-260px;top:-300px"></div>
+  <div class="orb" id="orbCyan" style="width:560px;height:560px;background:var(--accent-cyan);left:-200px;top:760px"></div>
+  <div class="head">
+    <div class="ey" id="ey">Thursday night, UTC &middot; <span class="mono">29</span> Oct <span class="mono">2026</span></div>
+    <h1 id="h1">The <span class="re">Drain</span></h1>
+    <div class="divider" id="divider"></div>
+  </div>
+  <svg id="plot" width="1464" height="1080" viewBox="0 0 1464 1080" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div class="src" id="src">Times UTC. Sources: TRM Labs, Elliptic.</div>
+</div>
+
+<script>
+(function(){
+'use strict';
+var NS = 'http://www.w3.org/2000/svg';
+var svg = document.getElementById('plot');
+
+/* ---------- palette (the locked tokens) ---------- */
+var RED = '#ff4060', CYAN = '#00c2ff', GOLD = '#ffd700',
+    PRI = '#e8eaf0', SEC = '#8892a4', MUT = '#505a6e', CARD = '#12151c', BORDER = '#1e2330';
+
+/* ---------- geometry ---------- */
+var BAND_Y = 700, BAND_TOP = 680, BAND_BOT = 720;   /* the time band: thefts rise above, freezes hang below */
+var K = 156;                                         /* px per $1B, one scale for both sides */
+var LBL_GAP = 12;                                    /* value label to bar */
+
+/* ---------- pure helpers ---------- */
+function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
+function lerp(a, b, u){ return a + (b - a) * u; }
+function prog(t, t0, d){ return clamp((t - t0) / d, 0, 1); }
+function eOut(u){ return 1 - Math.pow(1 - u, 3); }
+function eInOut(u){ return u < .5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2; }
+function sstep(u, a, b){ var x = clamp((u - a) / (b - a), 0, 1); return x * x * (3 - 2 * x); }
+function fade(t, t0, d){ return eOut(prog(t, t0, d)); }
+function mix(c1, c2, u){
+  var a = parseInt(c1.slice(1), 16), b = parseInt(c2.slice(1), 16);
+  var r = Math.round(lerp(a >> 16, b >> 16, u)), g = Math.round(lerp((a >> 8) & 255, (b >> 8) & 255, u)),
+      bl = Math.round(lerp(a & 255, b & 255, u));
+  return 'rgb(' + r + ',' + g + ',' + bl + ')';
+}
+
+/* ---------- the time scale: ZOOMED 20:00-20:30, then the pull-back to 20:00-00:00 ----------
+   minutes are counted from 20:00. Both end states are linear scales; the move between them
+   interpolates the visible span geometrically so the pull-back reads as one even camera move. */
+var ZOOM_T0 = 28.43, ZOOM_D = 1.25;
+function zoomAt(t){ return eInOut(prog(t, ZOOM_T0, ZOOM_D)); }
+function scaleAt(z){
+  var x0 = lerp(130, 340, z), x1 = 1334;               /* band = [x0 - 66, x1 + 66]: 64 to 1400 zoomed, 274 to 1400 for the night */
+  var M = Math.exp(lerp(Math.log(30), Math.log(240), z));
+  var s = (x1 - x0) / M;
+  return { x0: x0, x1: x1, s: s, z: z, x: function(m){ return x0 + m * s; },
+           bw: clamp(0.75 * 3 * s, 8, 48) };               /* bar width: 48 px zoomed, ~10 px for the night */
+}
+
+/* ---------- tiny DOM builder ---------- */
+function E(tag, attrs, parent){
+  var n = document.createElementNS(NS, tag);
+  for (var k in attrs) n.setAttribute(k, attrs[k]);
+  (parent || svg).appendChild(n);
+  return n;
+}
+function T(parent, attrs, parts){             /* text with tspans: parts = [[str, cls, fill], ...] */
+  var n = E('text', attrs, parent);
+  parts.forEach(function(p){
+    var s = E('tspan', p[1] ? {'class': p[1]} : {}, n);
+    if (p[2]) s.setAttribute('fill', p[2]);
+    s.textContent = p[0];
+  });
+  return n;
+}
+function set(n, attrs){ for (var k in attrs) n.setAttribute(k, attrs[k]); }
+
+/* ---------- defs ---------- */
+var defs = E('defs', {});
+defs.innerHTML =
+  '<linearGradient id="gRed" x1="0" y1="0" x2="0" y2="1">' +
+    '<stop offset="0" stop-color="#ff4060"/><stop offset="1" stop-color="#ff4060" stop-opacity=".42"/></linearGradient>' +
+  '<linearGradient id="gCyan" x1="0" y1="0" x2="0" y2="1">' +
+    '<stop offset="0" stop-color="#00c2ff" stop-opacity=".42"/><stop offset="1" stop-color="#00c2ff"/></linearGradient>' +
+  '<filter id="glow" x="-200%" y="-30%" width="500%" height="160%">' +
+    '<feGaussianBlur in="SourceGraphic" stdDeviation="7" result="b"/>' +
+    '<feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>' +
+  '<filter id="glowS" x="-50%" y="-50%" width="200%" height="200%">' +
+    '<feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b"/>' +
+    '<feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>' +
+  '<clipPath id="bandClip"><rect id="bandClipRect" x="0" y="0" width="0" height="0" rx="20"/></clipPath>' +
+  '<clipPath id="plotClip"><rect id="plotClipRect" x="0" y="0" width="1464" height="1080"/></clipPath>';
+var bandClipRect = document.getElementById('bandClipRect');
+var plotClipRect = document.getElementById('plotClipRect');
+
+/* ---------- layers (z-order) ---------- */
+var L = {};
+['grid', 'band', 'ticks', 'marks', 'links', 'labels', 'card', 'over'].forEach(function(k){ L[k] = E('g', {}); });
+set(L.marks, {'clip-path': 'url(#plotClip)'});
+set(L.ticks, {'clip-path': 'url(#bandClip)'});
+
+/* gridlines ($1B, $2B above; $1B below) */
+var grid = [
+  { y: BAND_TOP - K,     lbl: '$1B', ly: BAND_TOP - K - 8 },
+  { y: BAND_TOP - 2 * K, lbl: '$2B', ly: BAND_TOP - 2 * K - 8 },
+  { y: BAND_BOT + K,     lbl: '$1B', ly: BAND_BOT + K + 22, below: true }
+];
+grid.forEach(function(gl){
+  gl.line = E('path', {fill: 'none', stroke: '#ffffff', 'stroke-opacity': '.05', 'stroke-width': '1.5'}, L.grid);
+  gl.text = T(L.grid, {'class': 't-mono', 'font-size': '16', fill: MUT, 'text-anchor': 'end'}, [[gl.lbl]]);
+});
+
+/* the band */
+var band = E('rect', {y: BAND_TOP, height: BAND_BOT - BAND_TOP, rx: 20, fill: CARD, stroke: BORDER, 'stroke-width': '1.5'}, L.band);
+
+/* tick labels: 5-minute (zoomed) + hourly (the night) */
+var ticks5 = [];
+[0, 5, 10, 15, 20, 25, 30].forEach(function(m){
+  var lbl = '20:' + (m < 10 ? '0' + m : m);
+  ticks5.push({ m: m, n: T(L.ticks, {'class': 't-mono', 'font-size': '19', 'text-anchor': 'middle', y: BAND_Y + 7}, [[lbl]]) });
+});
+var ticksH = [];
+[[60, '21:00'], [120, '22:00'], [180, '23:00']].forEach(function(h){   /* no 00:00 label: the 23:56 tick would sit on it */
+  ticksH.push({ m: h[0], n: T(L.ticks, {'class': 't-mono', 'font-size': '19', 'text-anchor': 'middle', y: BAND_Y + 7, fill: SEC}, [[h[1]]]) });
+});
+var t2023 = T(L.ticks, {'class': 't-mono', 'font-size': '19', 'text-anchor': 'middle', y: BAND_Y + 7, fill: RED}, [['20:23']]);
+
+/* ---------- the drain: three sized thefts (RESEARCH 1.2 / 1.3) ---------- */
+var thefts = [
+  { m: 5,  v: 0.296, t0: 1.60,  d: 0.45 },   /* 20:05 XRP Ledger: 233.46M XRP, ~$296M */
+  { m: 20, v: 1.47,  t0: 10.28, d: 0.45 },   /* 20:20 18,270 BTC, ~$1.47B (TRM, at the time) */
+  { m: 23, v: 2.53,  t0: 23.28, d: 0.60 }    /* ~20:23 Binance 14 swept in ONE tx: 167,464 ETH + 63 tokens, ~$2.53B */
+];
+thefts.forEach(function(b){
+  b.bar = E('rect', {fill: 'url(#gRed)', rx: 3, filter: 'url(#glow)'}, L.marks);
+});
+
+/* value blocks: they hang to the LEFT of each bar top, right-aligned. Bar heights rise left to right, so a
+   block never sits over a taller bar, zoomed or not. */
+function block(lines){
+  var g = E('g', {}, L.labels);
+  var out = { g: g, lines: [] };
+  lines.forEach(function(ln){
+    var n = T(g, {'text-anchor': 'end', 'class': ln.cls, 'font-size': ln.size, fill: ln.fill || PRI}, ln.parts);
+    out.lines.push({ n: n, dy: ln.dy });
+  });
+  return out;
+}
+thefts[0].blk = block([
+  { dy: 34, cls: 't-mono', size: 38, fill: GOLD, parts: [['~$296M']] },
+  { dy: 62, cls: 't-sans', size: 20, fill: SEC,  parts: [['233.46M', 't-mono'], [' XRP']] }
+]);
+thefts[0].blkH = 70;
+thefts[1].blk = block([
+  { dy: 34, cls: 't-mono', size: 38, fill: GOLD, parts: [['~$1.47B']] },
+  { dy: 62, cls: 't-sans', size: 20, fill: SEC,  parts: [['18,270', 't-mono'], [' BTC leave']] }
+]);
+thefts[1].blkH = 70;
+thefts[2].blk = block([
+  { dy: 34,  cls: 't-mono', size: 38, fill: GOLD, parts: [['~$2.53B']] },
+  { dy: 62,  cls: 't-sans', size: 20, fill: SEC,  parts: [['167,464', 't-mono'], [' ETH + '], ['63', 't-mono'], [' tokens']] },
+  { dy: 98,  cls: 't-sans', size: 23, fill: PRI,  parts: [['In a single transaction:']] },
+  { dy: 127, cls: 't-sans', size: 23, fill: PRI,  parts: [['the wallet sweeps itself']] }
+]);
+thefts[2].blkH = 134;
+
+/* D1: what happened at 20:05 (below the band, zoomed phase only) */
+var d1 = E('g', {}, L.labels);
+var d1line = E('line', {stroke: RED, 'stroke-opacity': '.55', 'stroke-width': '2'}, d1);
+var d1a = T(d1, {'class': 't-sans', 'font-size': '24', fill: PRI}, [['First wallets emptied']]);
+var d1b = T(d1, {'class': 't-sans', 'font-size': '24', fill: PRI}, [['on the '], ['XRP Ledger', null, RED]]);
+
+/* D2: the one Ethereum transaction carrying 50 pre-signed approvals (20:20), and its link to 20:23 */
+var CARD_W = 380, CARD_H = 134, CARD_TOP = 772, CARD_OFF = 70;
+var d2link = E('line', {stroke: RED, 'stroke-opacity': '.55', 'stroke-width': '2'}, L.links);
+var d2 = E('g', {}, L.card);
+var d2rect = E('rect', {x: 0, y: 0, width: CARD_W, height: CARD_H, rx: 14, fill: CARD, stroke: RED, 'stroke-opacity': '.45', 'stroke-width': '1.5'}, d2);
+T(d2, {'class': 't-ey', 'font-size': '15', fill: SEC, x: 26, y: 34}, [['One Ethereum transaction']]);
+var ticks50 = [];
+for (var i = 0; i < 50; i++){
+  ticks50.push(E('rect', {x: 26 + i * 6.56, y: 50, width: 3.2, height: 26, rx: 1.4, fill: RED}, d2));
+}
+T(d2, {'class': 't-sans', 'font-size': '25', fill: PRI, x: 26, y: 114}, [['50', 't-mono', RED], [' pre-signed approvals']]);
+var d2arrow = E('g', {}, L.links);
+var d2arrowLine = E('line', {stroke: RED, 'stroke-width': '2.5', 'stroke-linecap': 'round'}, d2arrow);
+var d2arrowHead = E('path', {fill: RED}, d2arrow);
+
+/* the bracket: most of it in ~20 min (20:05 to 20:25) */
+var BR_Y = 258;
+var brPath = E('path', {fill: 'none', stroke: SEC, 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, L.over);
+var brText = T(L.over, {'class': 't-sans', 'font-size': '27', fill: PRI, 'text-anchor': 'middle', y: BR_Y - 20},
+  [['most of it in '], ['~20 min', 't-mono', RED]]);
+
+/* the night: six more ETH sweeps (unsized), the last one at 23:56 closes the window */
+var sweeps = [
+  { m: 41,  t0: 30.00 }, { m: 59,  t0: 30.25 }, { m: 64,  t0: 30.50 },
+  { m: 104, t0: 30.85 }, { m: 159, t0: 31.25 }, { m: 236, t0: 35.10 }
+];
+sweeps.forEach(function(sw){ sw.n = E('rect', {width: 5, rx: 2.5, fill: RED, filter: 'url(#glowS)'}, L.marks); });
+var swSpan = E('path', {fill: 'none', stroke: SEC, 'stroke-opacity': '.5', 'stroke-width': '1.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, L.labels);
+var swMore = T(L.labels, {'class': 't-sans', 'font-size': '19', fill: SEC, 'text-anchor': 'middle'}, [['more ETH sweeps']]);
+var swLast = T(L.labels, {'class': 't-sans', 'font-size': '19', fill: SEC, 'text-anchor': 'end'}, [['23:56', 't-mono', RED], [' last sweep']]);
+
+/* the defense, below the band (cyan); amounts gold */
+var freezes = [
+  { m: 61, v: 0.9711, t0: 29.00, d: 0.45, side: 'left' },    /* 21:01 Tether freezes 971.1M USDT (first wallet) */
+  { m: 64, v: 0.823,  t0: 31.88, d: 0.45, side: 'right' }    /* 21:04 Circle freezes 823M USDC ("40 minutes later", per the brief) */
+];
+freezes.forEach(function(f){ f.bar = E('rect', {fill: 'url(#gCyan)', rx: 3, filter: 'url(#glow)'}, L.marks); });
+freezes[0].blk = (function(){
+  var g = E('g', {}, L.labels);
+  return { g: g, lines: [
+    { n: T(g, {'text-anchor': 'end', 'class': 't-mono', 'font-size': '21', fill: CYAN}, [['21:01']]), dy: 22 },
+    { n: T(g, {'text-anchor': 'end', 'class': 't-sans', 'font-size': '24', fill: PRI}, [['Tether starts freezing']]), dy: 54 },
+    { n: T(g, {'text-anchor': 'end', 'class': 't-sans', 'font-size': '20', fill: SEC}, [['971.1M USDT', 't-mono', GOLD], [', first wallet']]), dy: 84 }
+  ]};
+})();
+freezes[1].blk = (function(){
+  var g = E('g', {}, L.labels);
+  return { g: g, lines: [
+    { n: T(g, {'class': 't-mono', 'font-size': '21', fill: CYAN}, [['21:04']]), dy: 22 },
+    { n: T(g, {'class': 't-sans', 'font-size': '24', fill: PRI}, [['Circle freezes']]), dy: 54 },
+    { n: T(g, {'class': 't-sans', 'font-size': '20', fill: SEC}, [['823M USDC', 't-mono', GOLD]]), dy: 84 }
+  ]};
+})();
+
+/* withdrawals switched off that night: a status pill, deliberately NOT a timed mark (no time is sourced) */
+var PILL = { x: 896, y: 752, w: 496, h: 60 };
+var pill = E('g', {}, L.over);
+E('rect', {x: PILL.x, y: PILL.y, width: PILL.w, height: PILL.h, rx: 30, fill: 'rgba(0,194,255,.08)', stroke: CYAN, 'stroke-opacity': '.5', 'stroke-width': '1.5'}, pill);
+var lockG = E('g', {transform: 'translate(' + (PILL.x + 24) + ',' + (PILL.y + 15) + ') scale(1.25)', fill: 'none', stroke: CYAN, 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, pill);
+E('rect', {x: 3, y: 11, width: 18, height: 11, rx: 2}, lockG);          /* lucide "lock" (ISC) */
+var shackle = E('path', {d: 'M7 11V7a5 5 0 0 1 10 0v4'}, lockG);
+T(pill, {'class': 't-sans', 'font-size': '24', fill: PRI, x: PILL.x + 70, y: PILL.y + 39}, [['Withdrawals switched off that night']]);
+
+/* HTML parts */
+var ey = document.getElementById('ey'), h1 = document.getElementById('h1'), divider = document.getElementById('divider'),
+    src = document.getElementById('src'), orbRed = document.getElementById('orbRed'), orbCyan = document.getElementById('orbCyan');
+
+/* =====================================================================================================
+   setT(t): the whole frame as a pure function of t (local seconds; the clip's 0 = spine 76.0 s)
+   ===================================================================================================== */
+function setT(t){
+  t = +t || 0;
+  var z = zoomAt(t), S = scaleAt(z), x = S.x, bw = S.bw;
+
+  /* title + atmosphere (0.0 to 1.5) */
+  var a;
+  a = fade(t, 0.00, 0.40); ey.style.opacity = a;
+  a = fade(t, 0.10, 0.50); h1.style.opacity = a; h1.style.transform = 'translateY(' + (14 * (1 - a)).toFixed(2) + 'px)';
+  divider.style.width = (66 * fade(t, 0.35, 0.40)).toFixed(2) + 'px';
+  src.style.opacity = fade(t, 0.80, 0.60);
+  orbRed.style.opacity = (0.22 * fade(t, 0.0, 1.2)).toFixed(4);
+  orbCyan.style.opacity = (0.15 * fade(t, 29.0, 1.0)).toFixed(4);
+
+  /* band: draws left to right (0.15 to 1.2), then follows the scale */
+  var BPAD = 66, bx0 = S.x0 - BPAD, bxEnd = S.x1 + BPAD;   /* first and last tick labels sit well inside the rounded ends */
+  var draw = eOut(prog(t, 0.15, 1.05));
+  var bRight = lerp(bx0 + 40, bxEnd, draw);
+  set(band, {x: bx0, width: Math.max(0, bRight - bx0), opacity: fade(t, 0.15, 0.25)});
+  set(bandClipRect, {x: bx0, y: BAND_TOP, width: Math.max(0, bRight - bx0), height: BAND_BOT - BAND_TOP});
+  set(plotClipRect, {x: 0, y: 0, width: bxEnd, height: 1080});
+
+  /* tick labels */
+  var sp5 = 5 * S.s;                                   /* px between 5-minute ticks */
+  var a5 = sstep(sp5, 70, 120);
+  ticks5.forEach(function(tk){
+    var xm = x(tk.m);
+    var reveal = clamp((bRight - xm) / 60 + 0.5, 0, 1);          /* appears as the band draws past it */
+    var hot = tk.m === 5 ? fade(t, 1.6, 0.3) : tk.m === 20 ? fade(t, 10.28, 0.3) : 0;
+    var op = tk.m === 0 ? reveal : reveal * a5;
+    if (tk.m === 25) op *= 1 - fade(t, 21.30, 0.30);              /* 20:25 makes way when 20:23 lights: one label, not a clump */
+    set(tk.n, {x: xm, opacity: op, fill: hot > 0 ? mix(SEC, RED, hot) : SEC});
+  });
+  ticksH.forEach(function(tk){
+    var xm = x(tk.m);
+    var edge = Math.max(clamp((bxEnd - 22 - xm) / 40, 0, 1), sstep(z, 0.9, 1.0));   /* fade in at the band end, never a clipped sliver */
+    set(tk.n, {x: xm, opacity: sstep(z, 0.05, 0.5) * edge});
+  });
+  set(t2023, {x: x(23), opacity: fade(t, 21.30, 0.30) * (1 - sstep(z, 0.0, 0.25))});
+
+  /* the three sized thefts */
+  thefts.forEach(function(b){
+    var p = eOut(prog(t, b.t0, b.d));
+    var h = b.v * K * p, xc = x(b.m);
+    set(b.bar, {x: xc - bw / 2, y: BAND_TOP - h, width: bw, height: h, opacity: p > 0 ? 1 : 0});
+    var top = Math.min(BAND_TOP - b.v * K, BAND_TOP - 8 - b.blkH);
+    var rx = xc - bw / 2 - LBL_GAP;
+    b.blk.lines.forEach(function(ln){ set(ln.n, {x: rx, y: top + ln.dy}); });
+  });
+  /* label reveals, each hung on its words */
+  var L0 = thefts[0].blk.lines, L1 = thefts[1].blk.lines, L2 = thefts[2].blk.lines;
+  L0[0].n.setAttribute('opacity', fade(t, 1.85, 0.30));             /* "2005" */
+  L0[1].n.setAttribute('opacity', fade(t, 5.46, 0.35));             /* "wallets first emptied on the XRP ledger" */
+  L1[0].n.setAttribute('opacity', fade(t, 10.45, 0.30));            /* "18,270 Bitcoin leave" */
+  L1[1].n.setAttribute('opacity', fade(t, 10.45, 0.30));
+  L2[0].n.setAttribute('opacity', fade(t, 23.50, 0.30));            /* "2.5 billion" */
+  L2[1].n.setAttribute('opacity', fade(t, 26.06, 0.35));            /* "in a single transaction" */
+  L2[2].n.setAttribute('opacity', fade(t, 26.06, 0.35));
+  L2[3].n.setAttribute('opacity', fade(t, 27.62, 0.35));            /* "the wallet sweeps itself" */
+
+  /* the zoomed-phase story below the band fades before the defense takes that space */
+  var story = 1 - sstep(t, 28.50, 28.85);
+
+  /* D1 (5.46: "wallets first emptied on the XRP ledger") */
+  var x5 = x(5), d1p = fade(t, 5.46, 0.35);
+  set(d1line, {x1: x5, x2: x5, y1: BAND_BOT + 4, y2: BAND_BOT + 4 + 82 * eOut(prog(t, 5.46, 0.25))});
+  set(d1a, {x: x5 + 16, y: BAND_BOT + 40});
+  set(d1b, {x: x5 + 16, y: BAND_BOT + 72});
+  d1.setAttribute('opacity', (d1p * story).toFixed(4));
+
+  /* D2 (14.36: "50 pre-signed approvals hit Ethereum in one transaction"; 17.58 the repeat lights them) */
+  var x20 = x(20), cp = eOut(prog(t, 14.36, 0.35));
+  var sc = 0.94 + 0.06 * cp, cx = x20 - CARD_OFF;
+  d2.setAttribute('transform', 'translate(' + (cx + CARD_W * (1 - sc) / 2).toFixed(2) + ',' + (CARD_TOP + CARD_H * (1 - sc) / 2).toFixed(2) + ') scale(' + sc.toFixed(4) + ')');
+  d2.setAttribute('opacity', (cp * story).toFixed(4));
+  set(d2link, {x1: x20, x2: x20, y1: BAND_BOT + 4, y2: BAND_BOT + 4 + (CARD_TOP - BAND_BOT - 4) * eOut(prog(t, 14.36, 0.25)), opacity: (cp > 0 ? 1 : 0) * story});
+  for (var i = 0; i < 50; i++){
+    var pop = prog(t, 14.50 + i * 0.012, 0.08);                         /* the 50 stack into the one tx */
+    var lit = eOut(prog(t, 17.60 + i * 0.016, 0.12));                    /* the repeat lights them */
+    set(ticks50[i], {opacity: (pop * lerp(0.38, 1, lit)).toFixed(4)});
+  }
+  d2rect.setAttribute('stroke-opacity', (0.45 + 0.35 * eOut(prog(t, 18.3, 0.4))).toFixed(4));
+
+  /* 21.14 "three minutes later": the tx points at 20:23 */
+  var x23 = x(23), ap = eOut(prog(t, 21.14, 0.45));
+  var ay0 = CARD_TOP, ay1 = BAND_BOT + 14;
+  set(d2arrowLine, {x1: x23, x2: x23, y1: ay0, y2: lerp(ay0, ay1, ap)});
+  set(d2arrowHead, {d: 'M' + (x23 - 8) + ',' + (BAND_BOT + 16) + ' L' + x23 + ',' + (BAND_BOT + 4) + ' L' + (x23 + 8) + ',' + (BAND_BOT + 16) + ' Z',
+                    opacity: prog(t, 21.45, 0.15)});
+  d2arrow.setAttribute('opacity', ((ap > 0 ? 1 : 0) * story).toFixed(4));
+
+  /* 27.62 the bracket: most of it in ~20 min (20:05 to 20:25) */
+  var b0 = x(5), b1 = x(25), bp = eOut(prog(t, 27.62, 0.50));
+  set(brPath, {d: 'M' + b0 + ',' + (BR_Y + 12) + ' L' + b0 + ',' + BR_Y + ' L' + b1 + ',' + BR_Y + ' L' + b1 + ',' + (BR_Y + 12)});
+  var brLen = (b1 - b0) + 24;
+  set(brPath, {'stroke-dasharray': brLen.toFixed(2) + ' ' + brLen.toFixed(2), 'stroke-dashoffset': (brLen * (1 - bp)).toFixed(2), opacity: bp > 0 ? 1 : 0});
+  set(brText, {x: (b0 + b1) / 2, opacity: fade(t, 27.80, 0.35)});
+
+  /* the night: further ETH sweeps (small, unsized marks) */
+  sweeps.forEach(function(sw){
+    var p = eOut(prog(t, sw.t0, 0.30));
+    set(sw.n, {x: x(sw.m) - 2.5, y: BAND_TOP - 18 * p, height: 18 * p, opacity: p > 0 ? 1 : 0});
+  });
+  var sA = x(41), sB = x(159), sY = BAND_TOP - 26, spp = eOut(prog(t, 31.45, 0.45)), spLen = (sB - sA) + 10;
+  set(swSpan, {d: 'M' + sA + ',' + (sY + 5) + ' L' + sA + ',' + sY + ' L' + sB + ',' + sY + ' L' + sB + ',' + (sY + 5),
+               'stroke-dasharray': spLen.toFixed(2) + ' ' + spLen.toFixed(2), 'stroke-dashoffset': (spLen * (1 - spp)).toFixed(2), opacity: spp > 0 ? 1 : 0});
+  set(swMore, {x: (sA + sB) / 2, y: BAND_TOP - 36, opacity: fade(t, 31.60, 0.35)});   /* over 20:41 to 22:39 */
+  set(swLast, {x: x(236) + 8, y: BAND_TOP - 36, opacity: fade(t, 35.20, 0.35)});
+
+  /* the defense */
+  freezes.forEach(function(f){
+    var p = eOut(prog(t, f.t0, f.d));
+    var h = f.v * K * p, xc = x(f.m);
+    set(f.bar, {x: xc - bw / 2, y: BAND_BOT, width: bw, height: h, opacity: p > 0 ? 1 : 0});
+    var lx = f.side === 'left' ? xc - bw / 2 - LBL_GAP - 2 : xc + bw / 2 + LBL_GAP + 2;
+    var la = fade(t, f.t0 + 0.15, 0.35);
+    f.blk.lines.forEach(function(ln){ set(ln.n, {x: lx, y: BAND_BOT + 14 + ln.dy}); });
+    f.blk.g.setAttribute('opacity', la.toFixed(4));
+  });
+
+  /* 34.24 withdrawals switched off that night */
+  var pp = eOut(prog(t, 34.24, 0.40)), ps = 0.94 + 0.06 * pp;
+  var pcx = PILL.x + PILL.w / 2, pcy = PILL.y + PILL.h / 2;
+  pill.setAttribute('transform', 'translate(' + (pcx * (1 - ps)).toFixed(2) + ',' + (pcy * (1 - ps)).toFixed(2) + ') scale(' + ps.toFixed(4) + ')');
+  pill.setAttribute('opacity', pp.toFixed(4));
+  shackle.setAttribute('transform', 'translate(0,' + (-3.5 * (1 - eOut(prog(t, 34.50, 0.30)))).toFixed(3) + ')');
+
+  /* gridlines LAST: each one stops short of any visible amount block it would run through */
+  var ga = fade(t, 0.6, 0.8), cuts = [];
+  thefts.forEach(function(b){
+    var r = null;
+    b.blk.lines.forEach(function(ln){
+      if (parseFloat(ln.n.getAttribute('opacity') || '0') < 0.01) return;
+      var bb = ln.n.getBBox();
+      r = r ? { x0: Math.min(r.x0, bb.x), y0: Math.min(r.y0, bb.y), x1: Math.max(r.x1, bb.x + bb.width), y1: Math.max(r.y1, bb.y + bb.height) }
+            : { x0: bb.x, y0: bb.y, x1: bb.x + bb.width, y1: bb.y + bb.height };
+    });
+    if (r) cuts.push(r);
+  });
+  grid.forEach(function(gl){
+    var o = gl.below ? fade(t, 29.0, 0.6) : ga;          /* the scale below the band arrives with the first freeze */
+    var gx0 = bx0 + 20, gx1 = bRight - 20, segs = [], cur = gx0;
+    cuts.filter(function(r){ return gl.y >= r.y0 - 8 && gl.y <= r.y1 + 8; })
+        .map(function(r){ return [r.x0 - 12, r.x1 + 12]; })
+        .sort(function(a, c){ return a[0] - c[0]; })
+        .forEach(function(c){ if (c[0] > cur) segs.push([cur, Math.min(c[0], gx1)]); cur = Math.max(cur, c[1]); });
+    if (cur < gx1) segs.push([cur, gx1]);
+    var d = segs.filter(function(sg){ return sg[1] - sg[0] > 1; })
+                .map(function(sg){ return 'M' + sg[0].toFixed(2) + ',' + gl.y + ' H' + sg[1].toFixed(2); }).join(' ');
+    set(gl.line, {d: d || 'M0,0', opacity: o});
+    set(gl.text, {x: bxEnd, y: gl.ly, opacity: o});
+  });
+}
+
+window.setT = setT;
+var m = /t=([0-9.]+)/.exec(location.hash);
+setT(m ? parseFloat(m[1]) : 36.3);
+})();
+</script>
+</body>
+</html>

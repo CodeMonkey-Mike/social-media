@@ -684,6 +684,94 @@
    "device": [
     "end-card CTA (under the button animation)"
    ]
+  },
+  {
+   "id": "typing",
+   "title": "Typing Sound Effect (no copyright)",
+   "source": "2023 GrowthMarketingMike 007 'Skills of a Growth Engineer' Premiere project (Delivery2/Skills GM_1_1.prproj; Mike's own SFX, origin per file unknown, see license)",
+   "source_file": "[YT2mp3.info] - Typing Sound Effect (no copyright) (320kbps).mp3",
+   "file": "typing.mp3",
+   "character": "mechanical keyboard typing, 19 s continuous; slice from the file start for the length of the reveal",
+   "type": "kinetic-text",
+   "mood_class": "neutral",
+   "mood_source": "2023 edit",
+   "trigger": "TYPEWRITER CARD: under each line's left-to-right wipe reveal (kt-typewriter-card); also the 'COMMENT BELOW' pop (the viewer types)",
+   "best_for": "a slice as long as the wipe (0.8 to 1.9 s), back to back for consecutive lines; never the whole file",
+   "reference_cues_main_sequence": [],
+   "reference_cues_skills": [
+    "5.372-6.139 line 1",
+    "6.373-8.141 + 8.141-9.243 lines 2-3",
+    "10.177-11.011 'EXPERIENCE'",
+    "64.231-65.365 'COMMENT BELOW'"
+   ],
+   "license": "from Mike's 2023 project; short SFX, no Content-ID code; confirm origin before a new commercial use outside Mike's channels",
+   "used_in": [
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)"
+   ],
+   "device": [
+    "kt-typewriter-card (line reveal)",
+    "kt-caption-highlight ('COMMENT BELOW' pop)"
+   ],
+   "duration_sec": 19.04,
+   "attack_sec": 8.85,
+   "peak_dbfs": -0.3,
+   "tail_sec": 0.09
+  },
+  {
+   "id": "mouse-click",
+   "title": "Mouse Click - Sound Effect (HD)",
+   "source": "2023 GrowthMarketingMike 007 'Skills of a Growth Engineer' Premiere project (Delivery2/Skills GM_1_1.prproj; Mike's own SFX, origin per file unknown, see license)",
+   "source_file": "[YT2mp3.info] - Mouse Click - Sound Effect (HD) (320kbps).mp3",
+   "file": "mouse-click.mp3",
+   "character": "a dry mouse click, 3.1 s file with the click at its start",
+   "type": "kinetic-text",
+   "mood_class": "neutral",
+   "mood_source": "2023 edit",
+   "trigger": "END CARD: the viewer's click on the end screen ('OR CHECK OUT THIS PLAYLIST'), 0.6 s after the subscribe bar drops",
+   "best_for": "the playlist / end-screen pointer line of a subscribe close; one click, 0.87 s used",
+   "reference_cues_main_sequence": [],
+   "reference_cues_skills": [
+    "68.635 under 'OR CHECK OUT THIS PLAYLIST'"
+   ],
+   "license": "from Mike's 2023 project; short SFX, no Content-ID code; confirm origin before a new commercial use outside Mike's channels",
+   "used_in": [
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)"
+   ],
+   "device": [
+    "kt-subscribe-close bar (the playlist click)"
+   ],
+   "duration_sec": 3.11,
+   "attack_sec": 1.06,
+   "peak_dbfs": -0.6,
+   "tail_sec": 0.11
+  },
+  {
+   "id": "subscribe-bar-clicks",
+   "title": "LIKE And SUBSCRIBE bar: its own click track",
+   "source": "2023 GrowthMarketingMike 007 'Skills of a Growth Engineer' Premiere project (Delivery2/Skills GM_1_1.prproj; Mike's own SFX, origin per file unknown, see license)",
+   "source_file": "LIKE And SUBSCRIBE Green Screen Video.mp4 (audio, media 2.0-6.3 s)",
+   "file": "subscribe-bar-clicks.wav",
+   "character": "three soft UI clicks (like 0.64 s, SUBSCRIBE 2.32 s, bell 3.82 s) in a 4.3 s silent bed, aligned with the subscribe-bar plate",
+   "type": "kinetic-text",
+   "mood_class": "neutral",
+   "mood_source": "2023 edit",
+   "trigger": "SUBSCRIBE BAR: played from the plate's first frame so each click lands on the cursor's click (kt-subscribe-close bar)",
+   "best_for": "only with graphics/subscribe-bar-fill + -key (the clicks are the plate's own)",
+   "reference_cues_main_sequence": [],
+   "reference_cues_skills": [
+    "65.365 plate start -> 65.59 like click, 67.27 SUBSCRIBE click (the bell click falls after the 67.835 drop)"
+   ],
+   "license": "from Mike's 2023 project; short SFX, no Content-ID code; confirm origin before a new commercial use outside Mike's channels",
+   "used_in": [
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)"
+   ],
+   "device": [
+    "kt-subscribe-close bar"
+   ],
+   "duration_sec": 4.3,
+   "attack_sec": 2.35,
+   "peak_dbfs": -1.8,
+   "tail_sec": 1.59
   }
  ],
  "$devices": "moved 2026-10-25 to video-creation/assets/effects/library.json -> devices (theme kinetic-text-2023)"

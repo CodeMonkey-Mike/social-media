@@ -1,5 +1,9 @@
 import React from 'react';
 import { Composition } from 'remotion';
+import { BullishOnKaspa, DUR as BOK_DUR, FPS as BOK_FPS } from './BullishOnKaspa';
+import { BullishOnKaspaVertical, DUR as BOKV_DUR, FPS as BOKV_FPS } from './BullishOnKaspaVertical';
+// longform-edited bullish-on-kaspa SHORT (comp-builder SHORT mode 2026-11-06): 1080x1920 @30, 4 span intermediates + 3 s outro; public dir _previews/short/work.
+import { BullishOnKaspaShort, DUR as BOKS_DUR, FPS as BOKS_FPS } from './BullishOnKaspaShort';
 import { Kaspa40Bps, K40_FPS, K40_DURATION } from './Kaspa40Bps';
 import { C1Preview } from './Kaspa40ChartC1';
 import { ChartsPreview } from './Kaspa40Charts';
@@ -31,6 +35,12 @@ import { GoldenKittyVertical, DUR as GKV_DUR, FPS as GKV_FPS } from './GoldenKit
 import { GoldenKittyShort, DUR as GKS_DUR, FPS as GKS_FPS } from './GoldenKittyShort';
 // longform-edited every-job (2026-10-07): Literally Every Job Is at Risk, 16:9 draft build (comp-builder).
 import { Only18MonthsLeft, DUR as O18_DUR, FPS as O18_FPS } from './Only18MonthsLeft';
+import { LeftBehind, DUR as LB_DUR, FPS as LB_FPS } from './LeftBehind';
+import { LeftBehindShort, DUR as LBS_DUR, FPS as LBS_FPS } from './LeftBehindShort';
+// longform-edited quant (2026-11-05): What Is Quant?, 16:9, screen-share face mode (comp-builder).
+import { Quant, DUR as QNT_DUR, FPS as QNT_FPS } from './Quant';
+// longform-edited quant SHORT (comp-builder SHORT mode 2026-11-06): 1080x1920 @30, 6 span intermediates + 3.467 s outro; public dir _previews/short/work.
+import { QuantShort, DUR as QNTS_DUR, FPS as QNTS_FPS } from './QuantShort';
 import { EveryJob, DUR as EJ_DUR, FPS as EJ_FPS } from './EveryJob';
 import { RetireEarly, DUR as RE_DUR, FPS as RE_FPS } from './RetireEarly';
 import { RetireEarlyShort, DUR as RES_DUR, FPS as RES_FPS } from './RetireEarlyShort';
@@ -42,6 +52,7 @@ import { Inference, DUR as INF_DUR, FPS as INF_FPS } from './Inference';
 import { InferenceShort, DUR as INFS_DUR, FPS as INFS_FPS } from './InferenceShort';
 import { InferenceVertical, DUR as INFV_DUR, FPS as INFV_FPS } from './InferenceVertical';
 import { HistoryOfCryptoSpotlight, HOC_DUR, HOC_FPS } from './HistoryOfCryptoSpotlight';
+import { CryptoVsTradSpotlight, CVT_DUR, CVT_FPS } from './CryptoVsTradSpotlight';
 
 // longform-edited tao-detailed (comp-builder 2026-10-17): 1920x1080 @30, DUR = F(764.68) incl. the K30 end-card hold.
 import { TaoDetailed, DUR as TAOD_DUR, FPS as TAOD_FPS } from './TaoDetailed';
@@ -52,6 +63,8 @@ import { Kcc20, DUR as KCC20_DUR, FPS as KCC20_FPS } from './Kcc20';
 // longform-edited growth-vs-product (comp-builder 2026-10-23): 1920x1080 @30, DUR = the paused spine (6680 f).
 import { GrowthVsProduct, DUR as GVP_DUR, FPS as GVP_FPS } from './GrowthVsProduct';
 import { GrowthScaleUp, DUR as GSU_DUR, FPS as GSU_FPS } from './GrowthScaleUp';
+import { LetsGetRich, DUR as LGR_DUR, FPS as LGR_FPS } from './LetsGetRich';
+import { LetsGetRichShort, DUR as LGRS_DUR, FPS as LGRS_FPS } from './LetsGetRichShort';
 import { GrowthScaleUpVertical, DUR as GSUV_DUR, FPS as GSUV_FPS } from './GrowthScaleUpVertical';
 import { GrowthScaleUpShort, DUR as GSUS_DUR, FPS as GSUS_FPS } from './GrowthScaleUpShort';
 // longform-edited growth-vs-product SHORT (comp-builder SHORT mode 2026-10-23): 1080x1920 @30, 5 span intermediates + 3 s outro; public dir _previews/short/work.
@@ -77,12 +90,69 @@ import { ThirtyXTaoLastChanceImpact, XT7_FPS, XT7_DURATION_FRAMES } from './Thir
 import { ThirtyXTaoLastChanceFull, XT2_FPS, XT2_DURATION_FRAMES } from './ThirtyXTaoLastChanceFull';
 // 30x-tao clip 5 no-2029-top-new-ath-every-year (livestream short, 2026-10-28): 1080x1920 @30, 927 f; public dir shorts/30x-tao/render-assets.
 import { ThirtyXTaoNo2029Top, XT5_FPS, XT5_DURATION_FRAMES } from './ThirtyXTaoNo2029Top';
+// kaspa-cocktails clip 1 kaspa-3-dollars-is-bearish (livestream short, 2026-11-02): 1080x1920 @30, 1875 f; public dir shorts/kaspa-cocktails/render-assets.
+import { KaspaCocktailsKaspa3DollarsBearish, KC1_FPS, KC1_DURATION_FRAMES } from './KaspaCocktailsKaspa3DollarsBearish';
+// kaspa-cocktails clip 2 bitcoin-maxis-will-move-to-kaspa (livestream short, 2026-11-02): 1080x1920 @30, 1358 f; public dir shorts/kaspa-cocktails/render-assets.
+import { KaspaCocktailsBitcoinMaxisToKaspa, KC2_FPS, KC2_DURATION_FRAMES } from './KaspaCocktailsBitcoinMaxisToKaspa';
+import { KaspaCocktailsKaspaFirstBearMarket, KC3_FPS, KC3_DURATION_FRAMES } from './KaspaCocktailsKaspaFirstBearMarket';
+import { KaspaCocktailsKcc20NachoMigration, KC4_FPS, KC4_DURATION_FRAMES } from './KaspaCocktailsKcc20NachoMigration';
+import { KaspaCocktailsKaspa3DollarsBearishImpact, KC6_FPS, KC6_DURATION_FRAMES } from './KaspaCocktailsKaspa3DollarsBearishImpact';
+import { KaspaCocktailsBitcoinMaxisImpact, KC7_FPS, KC7_DURATION_FRAMES } from './KaspaCocktailsBitcoinMaxisImpact';
+// whiteboard track (2026-10-30): the first 15 s demo, hand-drawn vocabulary through the paper-pastel pen; 1920x1080 @30, no audio; public dir ../whiteboard/demo/pub
+import { WhiteboardDemo, DUR as WBD_DUR, FPS as WBD_FPS } from './WhiteboardDemo';
+// whiteboard test 2 (2026-10-30): the beats of 0:15-0:38 of Shapiro's horse video re-drawn in our vocabulary + pen; 23.5 s, no audio
+import { WhiteboardHorseTest, DUR as WBH_DUR, FPS as WBH_FPS } from './WhiteboardHorseTest';
+// whiteboard BEAT (2026-10-31): binance `ov3-wb-signing`, the first beat in a real video (skills/whiteboard-beat); the deck area of the
+// longform-presentation standard format, 1464x1080 @30, 577 f, neon-ink, no audio; public dir ../whiteboard/demo/pub
+import { BinanceSigning, DUR as BSG_DUR, FPS as BSG_FPS } from './whiteboard/beats/BinanceSigning';
+// whiteboard BEAT (2026-11-08): JCT `ov4-wb-split` (longform-presentation standard format, the deck area 1464x1080 @30, 390 f = spine
+// 449.3 to 462.3, neon-ink, no audio; public dir ../whiteboard/demo/pub): Smart Render splits one render across many GPUs, 16.7x claim
+import { JctSmartRender, DUR as JSR_DUR, FPS as JSR_FPS } from './whiteboard/beats/JctSmartRender';
+// whiteboard BEAT (2026-11-02): left-behind WB1 (longform-edited, the full frame 1920x1080 @30, 567 f, paper-pastel, no audio)
+import { LeftBehindWB1, DUR as LBWB1_DUR, FPS as LBWB1_FPS } from './whiteboard/beats/LeftBehindWB1';
+// whiteboard BEAT (2026-11-02): left-behind WB2 (longform-edited, the full frame 1920x1080 @30, 751 f, paper-pastel, no audio)
+import { LeftBehindWB2, DUR as LBWB2_DUR, FPS as LBWB2_FPS } from './whiteboard/beats/LeftBehindWB2';
+// whiteboard BEAT (2026-11-02): left-behind WB3 (longform-edited, the full frame 1920x1080 @30, 674 f, paper-pastel, no audio)
+import { LeftBehindWB3, DUR as LBWB3_DUR, FPS as LBWB3_FPS } from './whiteboard/beats/LeftBehindWB3';
+// whiteboard beat: left-behind WB4 (the UBI loop), paper-pastel, 1920x1080
+import { LeftBehindWB4, DUR as LBWB4_DUR, FPS as LBWB4_FPS } from './whiteboard/beats/LeftBehindWB4';
+// whiteboard beat: left-behind WB5 (two lines + the bridge), paper-pastel, 1920x1080, 616 f
+import { LeftBehindWB5, DUR as LBWB5_DUR, FPS as LBWB5_FPS } from './whiteboard/beats/LeftBehindWB5';
+// whiteboard beat: quant WB12 (the software layer on top of the bank), paper-quant, 1920x1080, 668 f
+import { QuantWB12, DUR as QWB12_DUR, FPS as QWB12_FPS } from './whiteboard/beats/QuantWB12';
+// whiteboard BEAT (2026-11-04): quant WB1 (longform-edited, the full frame 1920x1080 @30, 518 f after the 2026-11-05 tOut move to 71.30, paper-quant, no audio): every bank as an island
+import { QuantWB1, DUR as QWB1_DUR, FPS as QWB1_FPS } from './whiteboard/beats/QuantWB1';
+// whiteboard BEAT (2026-11-04): quant WB2 (longform-edited, the full frame 1920x1080 @30, 728 f, paper-quant, no audio): deposits turn digital, walled gardens
+import { QuantWB2, DUR as QWB2_DUR, FPS as QWB2_FPS } from './whiteboard/beats/QuantWB2';
+// whiteboard BEAT (2026-11-04): quant WB3 (longform-edited, the full frame 1920x1080 @30, 706 f, paper-quant, no audio): the layer above the islands
+import { QuantWB3, DUR as QWB3_DUR, FPS as QWB3_FPS } from './whiteboard/beats/QuantWB3';
+// whiteboard BEAT (2026-11-05): quant WB4 (longform-edited, the full frame 1920x1080 @30, 900 f, paper-quant, no audio): lock, credit, settle (London to Singapore)
+import { QuantWB4, DUR as QWB4_DUR, FPS as QWB4_FPS } from './whiteboard/beats/QuantWB4';
+// whiteboard BEAT (2026-11-05): quant WB5 (longform-edited, the full frame 1920x1080 @30, 775 f, paper-quant, no audio): synchronised settlement, all legs or none
+import { QuantWB5, DUR as QWB5_DUR, FPS as QWB5_FPS } from './whiteboard/beats/QuantWB5';
+// whiteboard BEAT (2026-11-05): quant WB14 (longform-edited, the full frame 1920x1080 @30, 456 f, paper-quant, no audio): the career road to the ISO committee
+import { QuantWB14, DUR as QWB14_DUR, FPS as QWB14_FPS } from './whiteboard/beats/QuantWB14';
+// quant WB13 (the fixed supply: the sealed jar), 2026-11-05
+import { QuantWB13, DUR as QWB13_DUR, FPS as QWB13_FPS } from './whiteboard/beats/QuantWB13';
+// whiteboard BEAT (2026-11-05): quant WB6 (longform-edited, the full frame 1920x1080 @30, 583 f, paper-quant, no audio): the remortgage, the padlock on real money
+import { QuantWB6, DUR as QWB6_DUR, FPS as QWB6_FPS } from './whiteboard/beats/QuantWB6';
+// whiteboard BEAT (2026-11-05): quant WB7 (longform-edited, the full frame 1920x1080 @30, 450 f, paper-quant, no audio): 25 islands, one network, H1 2027
+import { QuantWB7, DUR as QWB7_DUR, FPS as QWB7_FPS } from './whiteboard/beats/QuantWB7';
+// whiteboard BEAT (2026-11-05): quant WB8 (longform-edited, the full frame 1920x1080 @30, 882 f, paper-quant, no audio): the token's two pipes
+import { QuantWB8, DUR as QWB8_DUR, FPS as QWB8_FPS } from './whiteboard/beats/QuantWB8';
+// whiteboard BEAT (2026-11-05): quant WB10 (longform-edited, the full frame 1920x1080 @30, 716 f, paper-quant, no audio): what's next, in each source's own words
+import { QuantWB10, DUR as QWB10_DUR, FPS as QWB10_FPS } from './whiteboard/beats/QuantWB10';
+// whiteboard BEAT (2026-11-05): quant WB11 (longform-edited, the full frame 1920x1080 @30, 772 f, paper-quant, no audio): my read, the islands connected through the layer
+import { QuantWB11, DUR as QWB11_DUR, FPS as QWB11_FPS } from './whiteboard/beats/QuantWB11';
 import { Reset, DUR as RESET_DUR, FPS as RESET_FPS } from './Reset';
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
 
+      <Composition id="BullishOnKaspa" component={BullishOnKaspa} durationInFrames={BOK_DUR} fps={BOK_FPS} width={1920} height={1080} />
+      <Composition id="BullishOnKaspaVertical" component={BullishOnKaspaVertical} durationInFrames={BOKV_DUR} fps={BOKV_FPS} width={1080} height={1920} />
+      <Composition id="BullishOnKaspaShort" component={BullishOnKaspaShort} durationInFrames={BOKS_DUR} fps={BOKS_FPS} width={1080} height={1920} />
       <Composition
         id="TransitionDemo"
         component={TransitionDemo}
@@ -199,6 +269,8 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="RetireEarlyShort" component={RetireEarlyShort} durationInFrames={RES_DUR} fps={RES_FPS} width={1080} height={1920} />
       {/* longform-presentation history-of-crypto SPOTLIGHT: DUR = round((TAIL_FROM - HEAD_UNTIL) x 30) from HistoryOfCryptoSpotlightData.ts */}
       <Composition id="HistoryOfCryptoSpotlight" component={HistoryOfCryptoSpotlight} durationInFrames={HOC_DUR} fps={HOC_FPS} width={1920} height={1080} />
+      {/* longform-presentation Crypto vs. The Traditional Financial System SPOTLIGHT (2026-11-08): DUR = round((TAIL_FROM - HEAD_UNTIL) x 30) from CryptoVsTradSpotlightData.ts */}
+      <Composition id="CryptoVsTradSpotlight" component={CryptoVsTradSpotlight} durationInFrames={CVT_DUR} fps={CVT_FPS} width={1920} height={1080} />
       {/* longform-edited tao-detailed: 1920x1080 @30, paused spine 776.84 s (3 x 1.5 s cards + 13.9 s CLIP-1) + K30 end-card hold to sh(764.68) */}
       <Composition id="TaoDetailed" component={TaoDetailed} durationInFrames={TAOD_DUR} fps={TAOD_FPS} width={1920} height={1080} defaultProps={{ captions: true }} />
       {/* longform-edited tao-detailed SHORT (16:9-sourced mode): 1080x1920 @30, DUR = round((27.300 s spans + 3.000 s outro) x 30) = 909; public dir = _previews/short/work */}
@@ -224,6 +296,8 @@ export const RemotionRoot: React.FC = () => {
       {/* longform-edited reset: 1920x1080 @30, DUR = the paused spine ALL.f.paused.mp4 = 24096 f (803.2 s: card 1.5 s + 4 clip inserts 49.2 s + BRAAM 5.33 s) */}
       <Composition id="Reset" component={Reset} durationInFrames={RESET_DUR} fps={RESET_FPS} width={1920} height={1080} />
       <Composition id="Only18MonthsLeft" component={Only18MonthsLeft} durationInFrames={O18_DUR} fps={O18_FPS} width={1920} height={1080} />
+      <Composition id="LeftBehind" component={LeftBehind} durationInFrames={LB_DUR} fps={LB_FPS} width={1920} height={1080} />
+      <Composition id="LeftBehindShort" component={LeftBehindShort} durationInFrames={LBS_DUR} fps={LBS_FPS} width={1080} height={1920} />
       <Composition id="BestTimeTonBillionUsers" component={BestTimeTonBillionUsers} durationInFrames={BT2_DURATION_FRAMES} fps={BT2_FPS} width={1080} height={1920} />
       <Composition id="BestTimeLastChanceAssets" component={BestTimeLastChanceAssets} durationInFrames={BT3_DURATION_FRAMES} fps={BT3_FPS} width={1080} height={1920} />
       <Composition id="ThirtyXTaoArenaImpact" component={ThirtyXTaoArenaImpact} durationInFrames={XT6_DURATION_FRAMES} fps={XT6_FPS} width={1080} height={1920} />
@@ -232,6 +306,61 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="ThirtyXTaoLastChanceImpact" component={ThirtyXTaoLastChanceImpact} durationInFrames={XT7_DURATION_FRAMES} fps={XT7_FPS} width={1080} height={1920} />
       <Composition id="ThirtyXTaoLastChanceFull" component={ThirtyXTaoLastChanceFull} durationInFrames={XT2_DURATION_FRAMES} fps={XT2_FPS} width={1080} height={1920} />
       <Composition id="ThirtyXTaoNo2029Top" component={ThirtyXTaoNo2029Top} durationInFrames={XT5_DURATION_FRAMES} fps={XT5_FPS} width={1080} height={1920} />
+      <Composition id="KaspaCocktailsKaspa3DollarsBearish" component={KaspaCocktailsKaspa3DollarsBearish} durationInFrames={KC1_DURATION_FRAMES} fps={KC1_FPS} width={1080} height={1920} />
+      <Composition id="KaspaCocktailsBitcoinMaxisToKaspa" component={KaspaCocktailsBitcoinMaxisToKaspa} durationInFrames={KC2_DURATION_FRAMES} fps={KC2_FPS} width={1080} height={1920} />
+      <Composition id="KaspaCocktailsKaspaFirstBearMarket" component={KaspaCocktailsKaspaFirstBearMarket} durationInFrames={KC3_DURATION_FRAMES} fps={KC3_FPS} width={1080} height={1920} />
+      <Composition id="KaspaCocktailsKcc20NachoMigration" component={KaspaCocktailsKcc20NachoMigration} durationInFrames={KC4_DURATION_FRAMES} fps={KC4_FPS} width={1080} height={1920} />
+      <Composition id="KaspaCocktailsKaspa3DollarsBearishImpact" component={KaspaCocktailsKaspa3DollarsBearishImpact} durationInFrames={KC6_DURATION_FRAMES} fps={KC6_FPS} width={1080} height={1920} />
+      <Composition id="KaspaCocktailsBitcoinMaxisImpact" component={KaspaCocktailsBitcoinMaxisImpact} durationInFrames={KC7_DURATION_FRAMES} fps={KC7_FPS} width={1080} height={1920} />
+      <Composition id="WhiteboardDemo" component={WhiteboardDemo} durationInFrames={WBD_DUR} fps={WBD_FPS} width={1920} height={1080} />
+      <Composition id="WhiteboardHorseTest" component={WhiteboardHorseTest} durationInFrames={WBH_DUR} fps={WBH_FPS} width={1920} height={1080} />
+      {/* whiteboard demo in the neon-ink pen (Mike, 2026-10-31, for the Binance video) */}
+      <Composition id="WhiteboardDemoNeon" component={WhiteboardDemo} defaultProps={{ penId: 'neon-ink' }} durationInFrames={WBD_DUR} fps={WBD_FPS} width={1920} height={1080} />
+      {/* whiteboard beat: binance ov3-wb-signing (2026-10-31), the deck area 1464x1080, 577 f, neon-ink */}
+      <Composition id="BinanceSigning" component={BinanceSigning} durationInFrames={BSG_DUR} fps={BSG_FPS} width={1464} height={1080} />
+      {/* whiteboard beat: JCT ov4-wb-split (2026-11-08), the deck area 1464x1080, 390 f, neon-ink */}
+      <Composition id="JctSmartRender" component={JctSmartRender} durationInFrames={JSR_DUR} fps={JSR_FPS} width={1464} height={1080} />
+      {/* whiteboard beat: left-behind WB1 (2026-11-02), the full frame 1920x1080, 567 f, paper-pastel */}
+      <Composition id="LeftBehindWB1" component={LeftBehindWB1} durationInFrames={LBWB1_DUR} fps={LBWB1_FPS} width={1920} height={1080} />
+      {/* whiteboard beat: left-behind WB2 (2026-11-02), the full frame 1920x1080, 751 f, paper-pastel */}
+      <Composition id="LeftBehindWB2" component={LeftBehindWB2} durationInFrames={LBWB2_DUR} fps={LBWB2_FPS} width={1920} height={1080} />
+      {/* whiteboard beat: left-behind WB3 (2026-11-02), the full frame 1920x1080, 674 f, paper-pastel */}
+      <Composition id="LeftBehindWB3" component={LeftBehindWB3} durationInFrames={LBWB3_DUR} fps={LBWB3_FPS} width={1920} height={1080} />
+      {/* whiteboard beat: left-behind WB4 (2026-11-02), the full frame 1920x1080, 547 f, paper-pastel */}
+      <Composition id="LeftBehindWB4" component={LeftBehindWB4} durationInFrames={LBWB4_DUR} fps={LBWB4_FPS} width={1920} height={1080} />
+      {/* whiteboard beat: left-behind WB5 (2026-11-02), the full frame 1920x1080, 616 f, paper-pastel */}
+      <Composition id="LeftBehindWB5" component={LeftBehindWB5} durationInFrames={LBWB5_DUR} fps={LBWB5_FPS} width={1920} height={1080} />
+      {/* whiteboard beat: quant WB12 (2026-11-04), the full frame 1920x1080, 668 f, paper-quant */}
+      <Composition id="QuantWB12" component={QuantWB12} durationInFrames={QWB12_DUR} fps={QWB12_FPS} width={1920} height={1080} />
+      <Composition id="QuantWB1" component={QuantWB1} durationInFrames={QWB1_DUR} fps={QWB1_FPS} width={1920} height={1080} />
+      {/* whiteboard beat: quant WB2 (2026-11-04), the full frame 1920x1080, 728 f, paper-quant */}
+      <Composition id="QuantWB2" component={QuantWB2} durationInFrames={QWB2_DUR} fps={QWB2_FPS} width={1920} height={1080} />
+      {/* whiteboard beat: quant WB3 (2026-11-04), the full frame 1920x1080, 706 f, paper-quant */}
+      <Composition id="QuantWB3" component={QuantWB3} durationInFrames={QWB3_DUR} fps={QWB3_FPS} width={1920} height={1080} />
+      {/* whiteboard beat: quant WB4 (2026-11-05), the full frame 1920x1080, 900 f, paper-quant */}
+      <Composition id="QuantWB4" component={QuantWB4} durationInFrames={QWB4_DUR} fps={QWB4_FPS} width={1920} height={1080} />
+      {/* whiteboard beat: quant WB5 (2026-11-05), the full frame 1920x1080, 775 f, paper-quant */}
+      <Composition id="QuantWB5" component={QuantWB5} durationInFrames={QWB5_DUR} fps={QWB5_FPS} width={1920} height={1080} />
+      {/* whiteboard beat: quant WB14 (2026-11-05), the full frame 1920x1080, 456 f, paper-quant */}
+      <Composition id="QuantWB14" component={QuantWB14} durationInFrames={QWB14_DUR} fps={QWB14_FPS} width={1920} height={1080} />
+      <Composition id="QuantWB13" component={QuantWB13} durationInFrames={QWB13_DUR} fps={QWB13_FPS} width={1920} height={1080} />
+      {/* whiteboard beat: quant WB6 (2026-11-05), the full frame 1920x1080, 583 f, paper-quant */}
+      <Composition id="QuantWB6" component={QuantWB6} durationInFrames={QWB6_DUR} fps={QWB6_FPS} width={1920} height={1080} />
+      {/* whiteboard beat: quant WB7 (2026-11-05), the full frame 1920x1080, 450 f, paper-quant */}
+      <Composition id="QuantWB7" component={QuantWB7} durationInFrames={QWB7_DUR} fps={QWB7_FPS} width={1920} height={1080} />
+      {/* whiteboard beat: quant WB8 (2026-11-05), the full frame 1920x1080, 882 f, paper-quant */}
+      <Composition id="QuantWB8" component={QuantWB8} durationInFrames={QWB8_DUR} fps={QWB8_FPS} width={1920} height={1080} />
+      {/* whiteboard beat: quant WB10 (2026-11-05), the full frame 1920x1080, 716 f, paper-quant */}
+      <Composition id="QuantWB10" component={QuantWB10} durationInFrames={QWB10_DUR} fps={QWB10_FPS} width={1920} height={1080} />
+      {/* whiteboard beat: quant WB11 (2026-11-05), the full frame 1920x1080, 772 f, paper-quant */}
+      <Composition id="QuantWB11" component={QuantWB11} durationInFrames={QWB11_DUR} fps={QWB11_FPS} width={1920} height={1080} />
+      {/* quant (longform-edited, 2026-11-05): the paused spine 581.7 s, 5 cards + CLIP-1, screen-share face mode, light + quant accent */}
+      <Composition id="Quant" component={Quant} durationInFrames={QNT_DUR} fps={QNT_FPS} width={1920} height={1080} />
+      {/* longform-edited quant SHORT (16:9-sourced mode): 1080x1920 @30, DUR = round((26.533 s spans + 3.467 s outro) x 30) = 900; public dir = _previews/short/work */}
+      <Composition id="QuantShort" component={QuantShort} durationInFrames={QNTS_DUR} fps={QNTS_FPS} width={1080} height={1920} />
+      {/* lets-get-rich (longform-edited, 2026-11-01): the paused spine 315.2 s, 4 clip inserts, kinetic-text-2023 */}
+      <Composition id="LetsGetRich" component={LetsGetRich} durationInFrames={LGR_DUR} fps={LGR_FPS} width={1920} height={1080} />
+      <Composition id="LetsGetRichShort" component={LetsGetRichShort} durationInFrames={LGRS_DUR} fps={LGRS_FPS} width={1080} height={1920} />
     </>
   );
 };

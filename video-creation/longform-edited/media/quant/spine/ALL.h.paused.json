@@ -1,0 +1,66 @@
+{
+  "pauses": [
+    {
+      "at": 53.955,
+      "planned": 54.02,
+      "dur": 1.5,
+      "card": "Islands of Money",
+      "sits_in": "trough 53.730-54.060, gate guard -83.3 dB",
+      "dur_exact": 1.5,
+      "frames": 45
+    },
+    {
+      "at": 207.315,
+      "planned": 207.36,
+      "dur": 1.5,
+      "card": "Who Uses It",
+      "sits_in": "trough 207.090-207.430, gate guard -84.0 dB",
+      "dur_exact": 1.5,
+      "frames": 45
+    },
+    {
+      "at": 235.87,
+      "planned": 235.92,
+      "dur": 10.8,
+      "clip": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\quant\\assets\\clip-inserts\\CLIP-1-verdian.mp4",
+      "label": "CLIP-1",
+      "sits_in": "trough 235.860-236.060, gate guard -85.3 dB",
+      "dur_exact": 10.8,
+      "frames": 324
+    },
+    {
+      "at": 333.3,
+      "planned": 333.46,
+      "dur": 1.5,
+      "card": "The Token",
+      "sits_in": "trough 332.970-333.410, gate guard -89.1 dB",
+      "dur_exact": 1.5,
+      "frames": 45
+    },
+    {
+      "at": 394.84,
+      "planned": 394.9,
+      "dur": 1.5,
+      "card": "Quant vs The Market",
+      "sits_in": "trough 394.630-394.970, gate guard -82.9 dB",
+      "dur_exact": 1.5,
+      "frames": 45
+    },
+    {
+      "at": 494.34,
+      "planned": 494.56,
+      "dur": 1.5,
+      "card": "What's Next",
+      "sits_in": "trough 494.140-494.440, gate guard -82.6 dB",
+      "dur_exact": 1.5,
+      "frames": 45
+    }
+  ],
+  "pause_s": 1.5,
+  "mixed_durations": true,
+  "source": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\quant\\spine\\ALL.f.enhanced.mp4",
+  "output": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\quant\\spine\\ALL.h.paused.mp4",
+  "output_duration_s": 581.7,
+  "fps": 30.0,
+  "note": "every comp cue is a SOURCE time; sh(t) adds each pause's `dur` whose `at` <= t (cards = pause_s, clip inserts = the clip length, their audio already in this VO track)"
+}

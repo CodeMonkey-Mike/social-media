@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>whiteboard drawing vocabularies</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700;800&family=Gochi+Hand:wght@400;700;800&family=Nunito:wght@400;700;800&family=Poppins:wght@400;700;800&family=Press+Start+2P:wght@400;700;800&family=Shadows+Into+Light:wght@400;700;800&display=block">
+<style>
+  html, body { margin: 0; padding: 0; width: 1920px; height: 1080px; overflow: hidden; }
+  svg { display: block; }
+</style>
+<script src="file:///C:/Users/mnede/Documents/Claude/social-media/video-creation/remotion/node_modules/roughjs/bundled/rough.js"></script>
+</head>
+<body>
+<svg id="scene" xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"></svg>
+<script>
+// Seven genuinely different ways to DRAW the same scene: a person, a horse, a vault, three coins, a tree.
+// Each vocabulary is its own set of draw functions with its own natural pen. Layout is identical so
+// the drawings are the only variable: person at x=380, horse centered ~900, vault at 1300, coins at
+// 1620, tree at 1800, ground at y=880.
+const V = {"id": "line-only", "name": "Pure line art", "blurb": "Ink outlines only, no fills anywhere, a single accent color for emphasis. Elegant and fast to read; everything stays an outline.", "penCompatible": true, "status": "option", "status_note": "Mike, 2026-10-30: does not want the other vocabularies"};
+const svg = document.getElementById('scene');
+const NS = 'http://www.w3.org/2000/svg';
+const GY = 880;
+
+function el(tag, attrs, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) if (attrs[k] !== null && attrs[k] !== undefined) e.setAttribute(k, attrs[k]);
+  (parent || svg).appendChild(e);
+  return e;
+}
+const defs = el('defs', {});
+function bg(color) { el('rect', { x: 0, y: 0, width: 1920, height: 1080, fill: color }); }
+function rrect(x, y, w, h, rx, fill, stroke, sw, parent, extra) {
+  return el('rect', Object.assign({ x, y, width: w, height: h, rx, fill: fill || 'none', stroke: stroke || null, 'stroke-width': stroke ? (sw || 4) : null, 'stroke-linejoin': 'round' }, extra || {}), parent);
+}
+function circ(cx, cy, r, fill, stroke, sw, parent) {
+  return el('circle', { cx, cy, r, fill: fill || 'none', stroke: stroke || null, 'stroke-width': stroke ? (sw || 4) : null }, parent);
+}
+function ell(cx, cy, rx, ry, fill, stroke, sw, parent, extra) {
+  return el('ellipse', Object.assign({ cx, cy, rx, ry, fill: fill || 'none', stroke: stroke || null, 'stroke-width': stroke ? (sw || 4) : null }, extra || {}), parent);
+}
+function pth(d, fill, stroke, sw, parent, extra) {
+  return el('path', Object.assign({ d, fill: fill || 'none', stroke: stroke || null, 'stroke-width': stroke ? (sw || 4) : null, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, extra || {}), parent);
+}
+function poly(pts, fill, stroke, sw, parent) {
+  return el('polygon', { points: pts.map(p => p.join(',')).join(' '), fill: fill || 'none', stroke: stroke || null, 'stroke-width': stroke ? (sw || 4) : null, 'stroke-linejoin': 'round' }, parent);
+}
+function ln(x1, y1, x2, y2, stroke, sw, parent, extra) {
+  return el('line', Object.assign({ x1, y1, x2, y2, stroke, 'stroke-width': sw || 4, 'stroke-linecap': 'round' }, extra || {}), parent);
+}
+function txt(x, y, str, size, font, color, anchor, weight, maxW) {
+  const t = el('text', { x, y, 'font-family': `'${font}', sans-serif`, 'font-size': size, fill: color, 'text-anchor': anchor || 'middle', 'font-weight': weight || 'normal' });
+  t.textContent = str;
+  if (maxW) t.setAttribute('data-maxw', maxW);
+  return t;
+}
+function fitTexts() {
+  document.querySelectorAll('text[data-maxw]').forEach(t => {
+    const maxW = +t.getAttribute('data-maxw'); const len = t.getComputedTextLength();
+    if (len > maxW) t.setAttribute('font-size', (+t.getAttribute('font-size')) * maxW / len);
+  });
+}
+function shadow(cx, cy, rx, ry, color, op) { ell(cx, cy, rx, ry, color || '#000', null, null, null, { opacity: op || 0.08 }); }
+function heading(fontH, fontL, colorH, colorL, sizeH) {
+  txt(960, 130, V.name, sizeH || 82, fontH, colorH, 'middle', '700', 1700);
+  txt(960, 190, V.blurb, 32, fontL, colorL, 'middle', 'normal', 1700);
+}
+// The horse silhouette authored for vocab.html (400x300 local box), reused by two vocabularies.
+const HORSE_SIL = 'M 120 104 C 160 90, 200 92, 236 98 C 262 74, 292 54, 318 44 C 334 30, 362 34, 378 50 C 390 62, 398 74, 392 86 C 388 94, 374 96, 362 90 C 352 86, 344 82, 338 76 C 320 92, 302 112, 290 136 C 292 158, 286 178, 272 190 C 230 198, 170 198, 130 194 C 104 190, 94 170, 96 146 C 98 124, 106 108, 120 104 Z';
+const HORSE_MANE = 'M 318 44 C 292 54, 262 74, 236 98 L 226 86 C 252 60, 284 40, 312 30 Z';
+const HORSE_TAIL = 'M 108 112 C 80 124, 62 172, 74 224 C 82 228, 88 224, 90 218 C 84 188, 88 156, 112 132 Z';
+const HORSE_EAR = 'M 326 42 L 322 22 L 342 36 Z';
+const HORSE_LEGS = ['M 112 184 L 132 184 L 128 262 L 114 262 Z', 'M 236 184 L 256 184 L 254 262 L 240 262 Z', 'M 136 188 L 160 188 L 154 262 L 138 262 Z', 'M 256 186 L 278 186 L 276 262 L 260 262 Z'];
+const HORSE_HOOVES = [[112, 128], [136, 154], [238, 254], [258, 276]].map(([a, b]) => `M ${a} 258 L ${b} 258 L ${b} 272 L ${a} 272 Z`);
+
+const VOCABS = {};
+
+// =====================================================================================
+// 1. HAND-DRAWN WITH HAIR (rough.js pen, paper, pastel fills) — the vocab.html drawings
+// =====================================================================================
+VOCABS['stick-hair'] = function () {
+  const INK = '#222', BROWN = '#c9a27e', DARK = '#3a2414', P = { blue: '#9ec5e8', gold: '#f3d27a', red: '#e98b8b', green: '#a7d8a2', grey: '#d8d8d8' };
+  bg('#ffffff'); el('rect', { x: 0, y: 660, width: 1920, height: 420, fill: '#f6f1e6' });
+  heading('Gochi Hand', 'Shadows Into Light', INK, '#444');
+  const rc = rough.svg(svg); let seed = 3;
+  const o = (fill, extra) => Object.assign({ roughness: 1.2, bowing: 1, stroke: INK, strokeWidth: 2.4, fillStyle: 'solid', seed: seed++, fill }, extra || {});
+  const sh = (d, fill, extra, parent) => (parent || svg).appendChild(rc.path(d, o(fill, extra)));
+  const dt = (cx, cy, r, fill, parent) => (parent || svg).appendChild(rc.circle(cx, cy, r * 2, o(fill, { fill, roughness: 0.5 })));
+  ln(120, GY, 1900, GY, INK, 2.5);
+  // horse
+  shadow(900, GY + 4, 250, 12);
+  const g = el('g', { transform: `translate(560 ${GY - 544}) scale(2)` });
+  const ho = (fill) => ({ roughness: 0.6, strokeWidth: 1.3 });
+  sh(HORSE_LEGS[0], BROWN, ho(), g); sh(HORSE_LEGS[1], BROWN, ho(), g);
+  sh(HORSE_TAIL, DARK, ho(), g); sh(HORSE_SIL, BROWN, ho(), g); sh(HORSE_EAR, BROWN, ho(), g); sh(HORSE_MANE, DARK, ho(), g);
+  sh('M 316 42 C 304 38, 296 46, 302 58 C 310 54, 316 48, 316 42 Z', DARK, ho(), g);
+  sh(HORSE_LEGS[2], BROWN, ho(), g); sh(HORSE_LEGS[3], BROWN, ho(), g);
+  HORSE_HOOVES.forEach(d => sh(d, '#f4f4f4', ho(), g));
+  dt(350, 56, 4, DARK, g); dt(384, 80, 2.5, DARK, g); sh('M 388 90 L 378 92', null, { strokeWidth: 1.2 }, g);
+  // person
+  const x = 380, ty = GY - 215, by = GY - 112, hy = ty - 42;
+  shadow(x, GY + 4, 44, 8);
+  sh(`M ${x - 10} ${by} L ${x - 14} ${GY - 4}`); sh(`M ${x + 10} ${by} L ${x + 14} ${GY - 4}`);
+  sh(`M ${x - 22} ${GY - 4} L ${x - 6} ${GY - 4}`); sh(`M ${x + 6} ${GY - 4} L ${x + 24} ${GY - 4}`);
+  sh(`M ${x - 30} ${ty + 10} C ${x - 32} ${ty + 2}, ${x - 24} ${ty - 2}, ${x - 16} ${ty} L ${x + 16} ${ty} C ${x + 24} ${ty - 2}, ${x + 32} ${ty + 2}, ${x + 30} ${ty + 10} L ${x + 23} ${by} L ${x - 23} ${by} Z`, P.blue);
+  sh(`M ${x - 29} ${ty + 14} L ${x - 36} ${ty + 96}`); sh(`M ${x + 29} ${ty + 14} L ${x + 36} ${ty + 96}`);
+  dt(x - 37, ty + 102, 6, '#fff'); dt(x + 37, ty + 102, 6, '#fff');
+  sh(`M ${x - 5} ${ty + 2} L ${x + 5} ${ty + 2} L ${x + 3} ${ty + 46} L ${x} ${ty + 54} L ${x - 3} ${ty + 46} Z`, P.green);
+  dt(x, hy, 34, '#fff');
+  dt(x + 6, hy - 4, 3.2, DARK); dt(x + 20, hy - 4, 3.2, DARK); sh(`M ${x + 8} ${hy + 14} L ${x + 18} ${hy + 13}`, null, { strokeWidth: 2 });
+  sh(`M ${x - 34} ${hy - 4} C ${x - 32} ${hy - 44}, ${x + 32} ${hy - 44}, ${x + 34} ${hy - 4} C ${x + 22} ${hy - 18}, ${x - 2} ${hy - 24}, ${x - 34} ${hy - 4} Z`, DARK);
+  // vault
+  shadow(1410, GY + 4, 130, 10);
+  sh(`M 1300 ${GY - 220} L 1520 ${GY - 220} L 1520 ${GY - 10} L 1300 ${GY - 10} Z`, P.grey);
+  dt(1410, GY - 115, 56, '#fff'); dt(1410, GY - 115, 22, P.gold); sh(`M 1410 ${GY - 171} L 1410 ${GY - 59}`); sh(`M 1354 ${GY - 115} L 1466 ${GY - 115}`);
+  // coins
+  shadow(1620, GY + 4, 70, 8);
+  for (const [cx, cy] of [[1590, GY - 46], [1660, GY - 46], [1625, GY - 126]]) { dt(cx, cy, 46, P.gold); txt(cx, cy + 16, '₿', 48, 'Gochi Hand', INK); }
+  // tree
+  shadow(1800, GY + 4, 60, 8);
+  sh(`M 1790 ${GY} L 1792 ${GY - 90} L 1808 ${GY - 90} L 1810 ${GY} Z`, BROWN);
+  sh(`M 1800 ${GY - 230} C 1860 ${GY - 230}, 1890 ${GY - 180}, 1870 ${GY - 130} C 1860 ${GY - 95}, 1740 ${GY - 95}, 1730 ${GY - 130} C 1710 ${GY - 180}, 1740 ${GY - 230}, 1800 ${GY - 230} Z`, P.green);
+};
+
+// =====================================================================================
+// 2. BEAN CHARACTERS (pill bodies, face on the body, stubby limbs, plump horse)
+// =====================================================================================
+VOCABS['bean'] = function () {
+  const INK = '#2b2b2b', SW = 4;
+  const C = { shirt: '#5aa9e6', horse: '#c48a5a', muzzle: '#e6c3a0', dark: '#6b4a2b', gold: '#f2c14e', goldD: '#c9961f', green: '#7cc47f', greenD: '#5aa35d', grey: '#cfd3d8', greyD: '#9aa1aa', pants: '#3d4451', cheek: '#f4a3a3' };
+  bg('#fbf7f0');
+  heading('Baloo 2', 'Nunito', INK, '#555');
+  ln(120, GY, 1900, GY, INK, 4);
+  // horse: plump
+  const cx = 880;
+  shadow(cx + 40, GY + 6, 290, 14);
+  for (const lx of [cx - 150, cx - 86, cx + 70, cx + 134]) { rrect(lx - 24, GY - 150, 48, 150, 24, C.horse, INK, SW); rrect(lx - 24, GY - 28, 48, 28, 12, '#f4f4f4', INK, SW); }
+  // tail tufts
+  for (const [tx, ty, r] of [[cx - 232, GY - 250, 30], [cx - 250, GY - 198, 26], [cx - 244, GY - 150, 22]]) circ(tx, ty, r, C.dark, INK, SW);
+  // neck (thick capsule) BEFORE the body so the body covers the join, then the body, then mane + head
+  ln(cx + 150, GY - 290, cx + 250, GY - 430, INK, 104); ln(cx + 150, GY - 290, cx + 250, GY - 430, C.horse, 96);
+  ell(cx, GY - 230, 220, 130, C.horse, INK, SW);
+  for (const [mx, my] of [[cx + 150, GY - 352], [cx + 192, GY - 412], [cx + 236, GY - 470]]) circ(mx, my, 28, C.dark, INK, SW);
+  ell(cx + 300, GY - 440, 96, 66, C.horse, INK, SW);
+  ell(cx + 352, GY - 428, 44, 36, C.muzzle, INK, SW);
+  circ(cx + 372, GY - 436, 5, INK); pth(`M ${cx + 346} ${GY - 410} Q ${cx + 358} ${GY - 400} ${cx + 370} ${GY - 412}`, null, INK, 4);
+  ell(cx + 262, GY - 502, 16, 30, C.horse, INK, SW, null, { transform: `rotate(-15 ${cx + 262} ${GY - 502})` });
+  ell(cx + 298, GY - 506, 16, 30, C.horse, INK, SW, null, { transform: `rotate(10 ${cx + 298} ${GY - 506})` });
+  circ(cx + 286, GY - 456, 14, '#fff', INK, 3); circ(cx + 290, GY - 454, 7, INK); circ(cx + 293, GY - 458, 2.5, '#fff');
+  // person: tall pill, face on the body
+  const x = 380;
+  shadow(x, GY + 6, 70, 10);
+  rrect(x - 36, GY - 52, 30, 52, 15, C.pants, INK, SW); rrect(x + 6, GY - 52, 30, 52, 15, C.pants, INK, SW);
+  ell(x - 24, GY - 4, 26, 10, INK); ell(x + 24, GY - 4, 26, 10, INK);
+  rrect(x - 62, GY - 300, 124, 262, 62, C.shirt, INK, SW);
+  el('rect', { x: x - 118, y: GY - 196, width: 66, height: 26, rx: 13, fill: C.shirt, stroke: INK, 'stroke-width': SW, transform: `rotate(28 ${x - 85} ${GY - 183})` });
+  el('rect', { x: x + 52, y: GY - 196, width: 66, height: 26, rx: 13, fill: C.shirt, stroke: INK, 'stroke-width': SW, transform: `rotate(-28 ${x + 85} ${GY - 183})` });
+  circ(x + 8, GY - 236, 5.5, INK); circ(x + 34, GY - 236, 5.5, INK);
+  pth(`M ${x + 8} ${GY - 210} Q ${x + 21} ${GY - 198} ${x + 34} ${GY - 210}`, null, INK, 4);
+  circ(x + 48, GY - 220, 8, C.cheek); circ(x - 8, GY - 220, 8, C.cheek);
+  pth(`M ${x - 60} ${GY - 252} C ${x - 58} ${GY - 310}, ${x + 58} ${GY - 310}, ${x + 60} ${GY - 252} C ${x + 30} ${GY - 266}, ${x - 20} ${GY - 272}, ${x - 60} ${GY - 252} Z`, C.dark, INK, SW);
+  // vault: rounded, big dial
+  shadow(1410, GY + 6, 130, 12);
+  rrect(1300, GY - 224, 220, 224, 44, C.grey, INK, SW);
+  rrect(1320, GY - 204, 180, 184, 34, C.greyD, null, null, null, { opacity: 0.35 });
+  circ(1410, GY - 112, 58, '#fff', INK, SW); circ(1410, GY - 112, 24, C.gold, INK, SW);
+  for (let i = 0; i < 4; i++) { const a = i * Math.PI / 2; ln(1410 + Math.cos(a) * 30, GY - 112 + Math.sin(a) * 30, 1410 + Math.cos(a) * 50, GY - 112 + Math.sin(a) * 50, INK, 5); }
+  // coins: fat
+  shadow(1625, GY + 6, 80, 10);
+  for (const [kx, ky] of [[1588, GY - 48], [1662, GY - 48], [1625, GY - 128]]) { circ(kx, ky, 48, C.gold, INK, SW); circ(kx, ky, 34, C.goldD, null); txt(kx, ky + 16, '₿', 46, 'Baloo 2', C.gold, 'middle', '800'); }
+  // tree: cloud canopy
+  shadow(1800, GY + 6, 70, 10);
+  rrect(1786, GY - 110, 28, 110, 12, C.dark, INK, SW);
+  for (const [tx, ty, r] of [[1800, GY - 230, 70], [1748, GY - 170, 52], [1852, GY - 170, 52], [1800, GY - 150, 56]]) circ(tx, ty, r, C.green, INK, SW);
+  circ(1800, GY - 225, 44, C.greenD, null, null, null); circ(1800, GY - 225, 44, 'none', null);
+};
+
+// =====================================================================================
+// 3. GEOMETRIC FLAT (no outlines, no faces, elongated limbs, two tones per object)
+// =====================================================================================
+VOCABS['geo-flat'] = function () {
+  const C = { skin: '#f1c7a8', hair: '#2f2a3a', shirt: '#3b5bdb', pants: '#2b2d42', shoe: '#1b1c28', horse: '#b07a4b', horseD: '#7a4e2a', gold: '#f5b301', goldD: '#c98f00', green: '#40c057', greenD: '#2f9e44', grey: '#adb5bd', greyD: '#868e96', ground: '#dde1e7' };
+  bg('#f4f6fa');
+  heading('Nunito', 'Nunito', '#1f2430', '#5c6370');
+  rrect(100, GY - 6, 1760, 12, 6, C.ground);
+  // horse from rounded blocks
+  const cx = 880;
+  shadow(cx + 30, GY + 10, 280, 12, '#1f2430', 0.06);
+  for (const lx of [cx - 165, cx - 95, cx + 65, cx + 135]) { rrect(lx - 25, GY - 160, 50, 160, 20, C.horse); rrect(lx - 25, GY - 34, 50, 34, 12, C.horseD); }
+  el('rect', { x: cx - 250, y: GY - 300, width: 40, height: 180, rx: 20, fill: C.horseD, transform: `rotate(18 ${cx - 230} ${GY - 300})` });
+  rrect(cx - 210, GY - 310, 420, 210, 90, C.horse);
+  poly([[cx + 110, GY - 300], [cx + 200, GY - 300], [cx + 318, GY - 452], [cx + 236, GY - 490]], C.horse);
+  poly([[cx + 110, GY - 300], [cx + 146, GY - 300], [cx + 262, GY - 480], [cx + 236, GY - 490]], C.horseD);
+  el('rect', { x: cx + 230, y: GY - 520, width: 180, height: 92, rx: 44, fill: C.horse, transform: `rotate(-12 ${cx + 230} ${GY - 474})` });
+  poly([[cx + 250, GY - 512], [cx + 262, GY - 566], [cx + 292, GY - 520]], C.horseD);
+  circ(cx + 376, GY - 494, 7, C.horseD); circ(cx + 300, GY - 512, 12, '#fff'); circ(cx + 303, GY - 510, 6, C.pants);
+  // person: geometric, faceless
+  const x = 380;
+  shadow(x, GY + 10, 60, 8, '#1f2430', 0.06);
+  ln(x - 20, GY - 120, x - 28, GY - 14, C.pants, 30); ln(x + 20, GY - 120, x + 28, GY - 14, C.pants, 30);
+  rrect(x - 50, GY - 22, 40, 22, 8, C.shoe); rrect(x + 12, GY - 22, 44, 22, 8, C.shoe);
+  rrect(x - 46, GY - 270, 92, 160, 34, C.shirt);
+  ln(x - 44, GY - 246, x - 72, GY - 136, C.shirt, 26); ln(x + 44, GY - 246, x + 72, GY - 136, C.shirt, 26);
+  circ(x - 74, GY - 128, 13, C.skin); circ(x + 74, GY - 128, 13, C.skin);
+  rrect(x - 12, GY - 288, 24, 30, 8, C.skin);
+  circ(x, GY - 320, 40, C.skin);
+  pth(`M ${x - 40} ${GY - 326} C ${x - 36} ${GY - 372}, ${x + 36} ${GY - 372}, ${x + 40} ${GY - 326} C ${x + 24} ${GY - 338}, ${x - 4} ${GY - 344}, ${x - 40} ${GY - 326} Z`, C.hair);
+  // vault: two tones, dial cut-out
+  shadow(1410, GY + 10, 130, 10, '#1f2430', 0.06);
+  rrect(1300, GY - 224, 220, 224, 24, C.grey);
+  rrect(1322, GY - 202, 176, 180, 16, C.greyD);
+  circ(1410, GY - 112, 50, '#f4f6fa'); circ(1410, GY - 112, 32, C.shirt); circ(1410, GY - 112, 10, '#f4f6fa');
+  rrect(1312, GY - 8, 40, 8, 4, C.greyD); rrect(1468, GY - 8, 40, 8, 4, C.greyD);
+  // coins: two tones
+  shadow(1625, GY + 10, 80, 8, '#1f2430', 0.06);
+  for (const [kx, ky] of [[1588, GY - 46], [1662, GY - 46], [1625, GY - 126]]) { circ(kx, ky, 46, C.gold); circ(kx, ky, 32, C.goldD); txt(kx, ky + 15, '₿', 42, 'Nunito', C.gold, 'middle', '800'); }
+  // tree: circle + rect, offset highlight
+  shadow(1800, GY + 10, 60, 8, '#1f2430', 0.06);
+  rrect(1788, GY - 110, 24, 110, 8, C.horseD);
+  circ(1800, GY - 220, 108, C.greenD); circ(1780, GY - 236, 86, C.green);
+};
+
+// =====================================================================================
+// 4. PICTOGRAM GLYPHS (solid one-color silhouettes, one accent)
+// =====================================================================================
+VOCABS['pictogram'] = function () {
+  const G = '#1f2937', A = '#f5b301', BG = '#f2f2f2';
+  bg(BG);
+  heading('Poppins', 'Poppins', G, '#555', 78);
+  rrect(100, GY - 5, 1760, 10, 5, G);
+  // horse: the silhouette, solid
+  const g = el('g', { transform: `translate(560 ${GY - 544}) scale(2)` });
+  [HORSE_TAIL, HORSE_SIL, HORSE_EAR, HORSE_MANE, ...HORSE_LEGS, ...HORSE_HOOVES].forEach(d => pth(d, G, G, 1.5, g));
+  // person: signage figure
+  const x = 380;
+  circ(x, GY - 300, 42, G);
+  pth(`M ${x - 52} ${GY - 242} L ${x + 52} ${GY - 242} L ${x + 64} ${GY - 116} L ${x + 32} ${GY - 116} L ${x + 42} ${GY - 8} L ${x + 10} ${GY - 8} L ${x} ${GY - 108} L ${x - 10} ${GY - 8} L ${x - 42} ${GY - 8} L ${x - 32} ${GY - 116} L ${x - 64} ${GY - 116} Z`, G);
+  pth(`M ${x - 50} ${GY - 238} L ${x - 98} ${GY - 118} L ${x - 76} ${GY - 110} L ${x - 34} ${GY - 198} Z`, G);
+  pth(`M ${x + 50} ${GY - 238} L ${x + 98} ${GY - 118} L ${x + 76} ${GY - 110} L ${x + 34} ${GY - 198} Z`, G);
+  // vault
+  rrect(1300, GY - 224, 220, 214, 28, G);
+  circ(1410, GY - 117, 62, BG); circ(1410, GY - 117, 42, G); circ(1410, GY - 117, 14, BG);
+  rrect(1314, GY - 10, 44, 10, 3, G); rrect(1462, GY - 10, 44, 10, 3, G);
+  // coins: the accent
+  for (const [kx, ky] of [[1588, GY - 48], [1662, GY - 48], [1625, GY - 130]]) { circ(kx, ky, 48, A); txt(kx, ky + 17, '₿', 50, 'Poppins', BG, 'middle', '800'); }
+  // tree
+  rrect(1788, GY - 110, 24, 110, 4, G);
+  pth(`M 1800 ${GY - 236} C 1866 ${GY - 236}, 1896 ${GY - 180}, 1872 ${GY - 132} C 1860 ${GY - 98}, 1740 ${GY - 98}, 1728 ${GY - 132} C 1704 ${GY - 180}, 1734 ${GY - 236}, 1800 ${GY - 236} Z`, G);
+};
+
+// =====================================================================================
+// 5. ISOMETRIC BLOCKS (three-tone cuboids on an iso grid)
+// =====================================================================================
+VOCABS['isometric'] = function () {
+  const BG = '#eef1f5';
+  bg(BG);
+  const pat = el('pattern', { id: 'iso', width: 48, height: 28, patternUnits: 'userSpaceOnUse' }, defs);
+  circ(0, 0, 1.4, '#9aa3b2', null, null, pat); circ(24, 14, 1.4, '#9aa3b2', null, null, pat);
+  el('rect', { x: 0, y: 230, width: 1920, height: 850, fill: 'url(#iso)', opacity: 0.8 });
+  heading('Nunito', 'Nunito', '#1f2430', '#5c6370');
+  const R = [0.866, -0.5], L = [-0.866, -0.5];
+  const P = (o, r, l, h) => [o[0] + R[0] * r + L[0] * l, o[1] + R[1] * r + L[1] * l - (h || 0)];
+  // cuboid at bottom-front corner o, extents w (right axis), d (left axis), h (up); tones [top,left,right]
+  function cuboid(o, w, d, h, t) {
+    poly([P(o, 0, 0), P(o, 0, d), P(o, 0, d, h), P(o, 0, 0, h)], t[1]);
+    poly([P(o, 0, 0), P(o, w, 0), P(o, w, 0, h), P(o, 0, 0, h)], t[2]);
+    poly([P(o, 0, 0, h), P(o, w, 0, h), P(o, w, d, h), P(o, 0, d, h)], t[0]);
+  }
+  function floorShadow(o, w, d) { poly([P(o, 0, 0), P(o, w, 0), P(o, w, d), P(o, 0, d)], '#1f2430').setAttribute('opacity', 0.07); }
+  const T = {
+    horse: ['#d29a6a', '#b07a4b', '#8a5a30'], dark: ['#6b4a2b', '#55381e', '#3f2913'], skin: ['#f6d3b6', '#f1c7a8', '#d9a98a'],
+    shirt: ['#5c7cfa', '#3b5bdb', '#2f49b0'], pants: ['#3f4461', '#2b2d42', '#1f2130'], hair: ['#4a4458', '#2f2a3a', '#211d2a'],
+    grey: ['#c5cbd3', '#adb5bd', '#8a929b'], gold: ['#ffd43b', '#f5b301', '#c98f00'], green: ['#69db7c', '#40c057', '#2f9e44'], trunk: ['#9a6a40', '#7a4e2a', '#5a3818'],
+  };
+  // horse: boxy
+  const ho = [700, GY + 10];
+  floorShadow([ho[0] - 20, ho[1] + 10], 420, 150);
+  // back legs (further left/up) first
+  cuboid(P(ho, 30, 90), 30, 30, 120, T.horse); cuboid(P(ho, 300, 90), 30, 30, 120, T.horse);
+  cuboid(P(ho, 30, 0), 30, 30, 120, T.horse); cuboid(P(ho, 300, 0), 30, 30, 120, T.horse);
+  // tail
+  cuboid(P(ho, 0, 60, 60), 14, 14, 100, T.dark);
+  // body
+  cuboid(P(ho, 0, 0, 120), 360, 120, 120, T.horse);
+  // neck + mane + head + ear
+  cuboid(P(ho, 300, 30, 240), 60, 60, 120, T.horse);
+  cuboid(P(ho, 300, 30, 360), 20, 60, 16, T.dark);
+  cuboid(P(ho, 340, 24, 340), 130, 72, 70, T.horse);
+  cuboid(P(ho, 350, 40, 410), 20, 20, 28, T.horse);
+  // eye on the right face of the head
+  poly([P(ho, 430, 24, 390), P(ho, 444, 24, 390), P(ho, 444, 24, 404), P(ho, 430, 24, 404)], '#1f2430');
+  // person
+  const po = [360, GY + 6];
+  floorShadow([po[0] - 10, po[1] + 8], 120, 90);
+  cuboid(P(po, 10, 10), 26, 26, 100, T.pants); cuboid(P(po, 56, 10), 26, 26, 100, T.pants);
+  cuboid(P(po, 0, 0, 100), 92, 56, 130, T.shirt);
+  cuboid(P(po, 92, 8, 110), 18, 18, 110, T.skin); cuboid(P(po, -18, 8, 110), 18, 18, 110, T.skin);
+  cuboid(P(po, 24, 8, 230), 44, 44, 50, T.skin);
+  cuboid(P(po, 20, 4, 280), 52, 52, 14, T.hair);
+  // vault: cube + dial on the right face
+  const vo = [1320, GY + 10];
+  floorShadow([vo[0] - 10, vo[1] + 8], 220, 170);
+  cuboid(vo, 200, 150, 200, T.grey);
+  const face = el('g', { transform: `matrix(0.866 -0.5 0 -1 ${vo[0]} ${vo[1]})` });
+  circ(100, 100, 52, BG, null, null, face); circ(100, 100, 34, T.shirt[1], null, null, face); circ(100, 100, 10, BG, null, null, face);
+  // coins: cylinders
+  const co = [1610, GY + 10];
+  floorShadow([co[0] - 40, co[1] + 8], 150, 90);
+  function cyl(cx, cy, rx, ry, h, t) { ell(cx, cy, rx, ry, t[2]); rrect(cx - rx, cy - h, rx * 2, h, 0, t[1]); ell(cx, cy - h, rx, ry, t[0]); ell(cx, cy - h, rx * 0.66, ry * 0.66, t[1]); }
+  cyl(1590, GY - 20, 46, 24, 16, T.gold); cyl(1680, GY - 40, 46, 24, 16, T.gold); cyl(1634, GY - 76, 46, 24, 16, T.gold);
+  // tree: low-poly
+  const to = [1790, GY + 10];
+  floorShadow([to[0] - 20, to[1] + 8], 130, 120);
+  cuboid(P(to, 40, 40), 30, 30, 80, T.trunk);
+  cuboid(P(to, 0, 0, 80), 120, 120, 110, T.green);
+  cuboid(P(to, 30, 30, 190), 60, 60, 50, T.green);
+};
+
+// =====================================================================================
+// 6. PIXEL ART (text sprite maps on a 22 px grid)
+// =====================================================================================
+VOCABS['pixel'] = function () {
+  const CELL = 22;
+  const PAL = { B: '#a0693a', D: '#5a3a1e', W: '#f4f4f4', K: '#111111', N: '#d9b38c', H: '#3b2a1a', S: '#f1c7a8', T: '#3b7dd8', P: '#2b2d42', E: '#4a4f57', G: '#8a9099', L: '#d0d4d9', Y: '#f5b301', O: '#b8860b', F: '#4f9d4f', f: '#7cc47f', R: '#7a4a22', Z: '#2e7d32' };
+  bg('#e9eef4');
+  heading('Press Start 2P', 'Nunito', '#1f2430', '#5c6370', 54);
+  const g = el('g', { 'shape-rendering': 'crispEdges' });
+  function sprite(map, x, y, cell) {
+    const c = cell || CELL;
+    map.forEach((row, r) => { for (let i = 0; i < row.length; i++) { const k = row[i]; if (k !== '.') el('rect', { x: x + i * c, y: y + r * c, width: c, height: c, fill: PAL[k] }, g); } });
+  }
+  const HORSE = [
+    '...............DD.......', '..............DBB.......', '.............DBBBB......', '............DBBBBBBB....',
+    '...........DBBBBKBBBB...', '..........DBBBBBBBBBBB..', '.........DBBBBBB...BNN..', '..DDBBBBBBBBBBBB....BB..',
+    '.DDBBBBBBBBBBBBB........', '.DBBBBBBBBBBBBBB........', '.DBBBBBBBBBBBBBB........', '..DBBBBBBBBBBBBB........',
+    '...BB..BB..BB.BB........', '...BB..BB..BB.BB........', '...BB..BB..BB.BB........', '...WW..WW..WW.WW........'];
+  const PERSON = ['..HHHH..', '.HHHHHH.', '.HSSSSH.', '.SSSKSK.', '.SSSSSS.', '..SSSS..', '.TTTTTT.', 'TTTTTTTT', 'STTTTTTS', 'STTTTTTS', '.STTTTS.', '..TTTT..', '..PPPP..', '..PP.PP.', '..PP.PP.', '.KK..KK.'];
+  const VAULT = ['EEEEEEEEEE', 'EGGGGGGGGE', 'EGGGEEGGGE', 'EGGELLEGGE', 'EGELYYLEGE', 'EGELYYLEGE', 'EGGELLEGGE', 'EGGGEEGGGE', 'EGGGGGGGGE', 'EEEEEEEEEE', '.EE....EE.'];
+  const COIN = ['.OO.', 'OYYO', 'OYYO', '.OO.'];
+  const TREE = ['...FF...', '..FFFF..', '.FFfFFF.', '.FFFFFF.', 'FFfFFFFF', 'FFFFFfFF', '.FFFFFF.', '..FFFF..', '...RR...', '...RR...', '...RR...', '...RR...'];
+  // ground: dashed cells
+  for (let x = 110; x < 1850; x += CELL * 2) el('rect', { x, y: GY, width: CELL, height: CELL / 2, fill: PAL.Z }, g);
+  sprite(HORSE, 620, GY - 16 * 24, 24);           // 24 px cells -> 576 x 384
+  sprite(PERSON, 380 - 4 * CELL, GY - 16 * CELL);
+  sprite(VAULT, 1300, GY - 10 * CELL);
+  sprite(COIN, 1588, GY - 4 * CELL); sprite(COIN, 1588 + 4 * CELL + 6, GY - 4 * CELL); sprite(COIN, 1588 + 2 * CELL + 3, GY - 8 * CELL - 4);
+  sprite(TREE, 1800 - 4 * CELL, GY - 12 * CELL);
+};
+
+// =====================================================================================
+// 7. PURE LINE ART (outlines only, no fills, one accent)
+// =====================================================================================
+VOCABS['line-only'] = function () {
+  const INK = '#111111', SW = 5, A = '#e63946';
+  bg('#ffffff');
+  heading('Nunito', 'Nunito', INK, '#555');
+  ln(120, GY, 1900, GY, INK, SW);
+  // horse: the silhouette outline + hatch lines for the mane
+  const g = el('g', { transform: `translate(560 ${GY - 544}) scale(2)` });
+  [HORSE_TAIL, HORSE_SIL, HORSE_EAR].forEach(d => pth(d, null, INK, SW / 2, g));
+  ['M 112 190 L 114 262 M 132 190 L 128 262', 'M 236 190 L 240 262 M 256 190 L 254 262', 'M 136 192 L 138 262 M 160 192 L 154 262', 'M 256 190 L 260 262 M 278 190 L 276 262'].forEach(d => pth(d, null, INK, SW / 2, g));
+  pth(HORSE_MANE, null, INK, SW / 2, g);
+  for (let i = 0; i < 6; i++) { const t = i / 5; const x1 = 236 + (318 - 236) * t, y1 = 98 + (44 - 98) * t; pth(`M ${x1} ${y1} L ${x1 - 10} ${y1 - 12}`, null, INK, 1.6, g); }
+  [[112, 128], [136, 154], [238, 254], [258, 276]].forEach(([a, b]) => pth(`M ${a} 258 L ${a} 272 L ${b} 272 L ${b} 258`, null, INK, SW / 2, g));
+  circ(350, 56, 4, INK, null, null, g); circ(384, 80, 2.5, INK, null, null, g); pth('M 388 90 L 378 92', null, INK, 1.4, g);
+  // person outline
+  const x = 380, ty = GY - 215, by = GY - 112, hy = ty - 42;
+  pth(`M ${x - 10} ${by} L ${x - 14} ${GY - 4} M ${x + 10} ${by} L ${x + 14} ${GY - 4} M ${x - 22} ${GY - 4} L ${x - 6} ${GY - 4} M ${x + 6} ${GY - 4} L ${x + 24} ${GY - 4}`, null, INK, SW);
+  pth(`M ${x - 30} ${ty + 10} C ${x - 32} ${ty + 2}, ${x - 24} ${ty - 2}, ${x - 16} ${ty} L ${x + 16} ${ty} C ${x + 24} ${ty - 2}, ${x + 32} ${ty + 2}, ${x + 30} ${ty + 10} L ${x + 23} ${by} L ${x - 23} ${by} Z`, null, INK, SW);
+  pth(`M ${x - 29} ${ty + 14} L ${x - 36} ${ty + 96} M ${x + 29} ${ty + 14} L ${x + 36} ${ty + 96}`, null, INK, SW);
+  circ(x - 37, ty + 102, 6, null, INK, 3); circ(x + 37, ty + 102, 6, null, INK, 3);
+  circ(x, hy, 34, null, INK, SW);
+  circ(x + 6, hy - 4, 3, INK); circ(x + 20, hy - 4, 3, INK); pth(`M ${x + 8} ${hy + 14} L ${x + 18} ${hy + 13}`, null, INK, 3);
+  pth(`M ${x - 34} ${hy - 4} C ${x - 32} ${hy - 44}, ${x + 32} ${hy - 44}, ${x + 34} ${hy - 4} C ${x + 22} ${hy - 18}, ${x - 2} ${hy - 24}, ${x - 34} ${hy - 4} Z`, null, INK, SW);
+  for (let i = 0; i < 5; i++) pth(`M ${x - 26 + i * 12} ${hy - 30} L ${x - 20 + i * 12} ${hy - 12}`, null, INK, 2);
+  // vault outline
+  rrect(1300, GY - 220, 220, 216, 10, null, INK, SW);
+  circ(1410, GY - 115, 56, null, INK, SW); circ(1410, GY - 115, 22, null, INK, SW);
+  ln(1410, GY - 171, 1410, GY - 59, INK, SW); ln(1354, GY - 115, 1466, GY - 115, INK, SW);
+  // coins: the accent lives here
+  for (const [kx, ky] of [[1588, GY - 50], [1662, GY - 50], [1625, GY - 130]]) { circ(kx, ky, 46, null, A, SW); txt(kx, ky + 16, '₿', 48, 'Nunito', A, 'middle', '800'); }
+  // tree outline
+  pth(`M 1790 ${GY} L 1792 ${GY - 90} L 1808 ${GY - 90} L 1810 ${GY} Z`, null, INK, SW);
+  pth(`M 1800 ${GY - 230} C 1860 ${GY - 230}, 1890 ${GY - 180}, 1870 ${GY - 130} C 1860 ${GY - 95}, 1740 ${GY - 95}, 1730 ${GY - 130} C 1710 ${GY - 180}, 1740 ${GY - 230}, 1800 ${GY - 230} Z`, null, INK, SW);
+};
+
+(VOCABS[V.id] || (() => { bg('#fff'); txt(960, 540, 'unknown vocabulary ' + V.id, 60, 'Nunito', '#c00'); }))();
+
+const ready = () => { fitTexts(); document.body.setAttribute('data-ready', '1'); };
+document.fonts.ready.then(ready);
+setTimeout(ready, 8000);
+</script>
+</body>
+</html>

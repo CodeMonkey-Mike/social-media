@@ -101,6 +101,24 @@ window and the head pad on one that ends inside it, so face scenes get the norma
 --pad-head 0` (100 ms kept after the sentence, cover only). In a zone whose min-silence is below the residual, a gap
 shorter than the residual stays whole and a longer one is cut down to it.
 
+**Face scenes paced on purpose: `--keep-face-pauses` (Mike, lets-get-rich 2026-10-31: "I don't want to do that for
+the face scenes. I think the face scenes are intentional").** On a cover-blacked spine it finds the FACE windows the
+same way (blackdetect) and, per window, never cuts a pause between its FIRST audio onset and its LAST audio end: the
+beat before a payoff, a point at the screen, are his delivery. The dead air before the first word and after the last
+word inside the window is the gap between lines and is still cut; cover scenes are desilenced as usual (with the
+cover-only pads). The detector and its thresholds are unchanged: the face spans are subtracted from the cut list, so
+with the flag off the cuts are byte-for-byte the old ones (verified on lets-get-rich, 47 of 47 cuts identical). The
+longform graph passes it to BOTH passes when the per-video setting is on (`run.py longform --keep-face-pauses on`,
+GRAPH-PROGRESS.json); like the pads, it must ride the COARSE pass, because the final pass cannot put a pause back. The
+map JSON lists the protected spans as `face_pauses_kept`.
+
+**The cap: `--face-pause-max` (default 2.5 s; Mike, lets-get-rich draft 2026-11-01: "after I say 'now is the time,'
+there's a pause while I'm reading the computer screen ... the video is dead for 10 seconds. We need to cut that all out").**
+A face-scene silence LONGER than the cap is dead air, not delivery: it is left out of the protected span except 0.225 s
+on each side, so the normal cut takes it down to 0.45 s. Measured on lets-get-rich: every pause Mike meant was 0.9 s or
+less, the dead read was 10.5 s; the capped run reproduces the hand fix (250.885-260.935) with every other cut identical.
+`--face-pause-max 0` restores the uncapped rule. It rides the graph's `--keep-face-pauses on` automatically.
+
 **The map's keep-boundaries double as JUMP-CUT ANCHORS (Mike, 2026-07-06).** Every keep→keep join in the
 output is a cut that sat in silence, i.e. a natural sentence/phrase boundary. For longform-edited comps,
 convert the joins to final-video coords (add any baked card-pause shifts) and save them as

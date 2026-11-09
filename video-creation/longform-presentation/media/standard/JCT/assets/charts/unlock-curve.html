@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ov7-unlock: The Unlock Curve (unlock-curve)</title>
+<!--
+  ANIMATED CHART, JCT (longform-presentation format 4, card-overlays kind "clip").
+  Canvas 1464 x 1080 (the deck area). The page IS the animation: window.setT(t) sets the whole visual
+  state as a PURE FUNCTION of t (local seconds, 0 to 29.55; spine 674.9 to 704.45). No CSS transitions or
+  animations, no rAF, no Date.now. Rendered by skills/card-overlays/html_clip.py (setT(f/30) + screenshot per frame).
+  Open in a browser with #t=12.5 to inspect one moment (default: the final state).
+  Every number on screen is from ../../RESEARCH.md (sections 3.2 to 3.4) or arithmetic on it. Spec: unlock-curve.NOTE.md.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* locked tokens: video-creation/longform-edited/skills/container-reference/container-canonical.css (do not change) */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1464px;height:1080px;overflow:hidden;background:#0a0c10}
+body{font-family:'DM Sans',sans-serif}
+/* the canonical .frame, sized to the deck area (1464 x 1080) */
+.frame{width:1464px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* .orb = the stylesheet's blur(120px) disc, drawn as the same falloff in a radial gradient (built once in JS below):
+   a CSS blur re-rasterizes on the GPU whenever its opacity animates and wobbles a pixel, which breaks same-t-same-pixels */
+.orb{position:absolute;border-radius:50%;pointer-events:none;z-index:0}
+.head{position:absolute;left:64px;top:44px;z-index:2}
+.ey{font-family:'DM Sans';font-size:24px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted)}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:68px;line-height:1.07;letter-spacing:-.02em;color:var(--text-primary);margin-top:12px;white-space:nowrap}
+/* the deck's slide-7 divider pairing (JCT.html #unlock): purple to gold */
+.divider{width:66px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent-purple),var(--accent-gold));margin-top:18px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.pu{color:var(--accent-purple)}
+#plot{position:absolute;left:0;top:0;z-index:1}
+.src{position:absolute;left:64px;top:1036px;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:16px;color:var(--text-muted);z-index:2}
+/* the HTML parts whose opacity / transform setT drives sit on their own layer from frame 0, so their text antialiasing
+   never flips with the compositor's history (a fade to 0 and back changed the source line's pixels) */
+.ey,h1,.divider,.src,.orb{will-change:opacity,transform}
+/* SVG type */
+.t-mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.t-sans{font-family:'DM Sans',sans-serif;font-weight:500}
+.t-bold{font-family:'DM Sans',sans-serif;font-weight:700}
+.t-ey{font-family:'DM Sans',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.16em}
+.t-serif{font-family:'Playfair Display',serif;font-weight:900;letter-spacing:-.01em}
+</style>
+</head>
+<body>
+<div class="frame" id="unlock">
+  <div class="orb" id="orbPurple" style="width:600px;height:600px;background:var(--accent-purple);left:220px;top:-360px"></div>
+  <div class="orb" id="orbGold" style="width:520px;height:520px;background:var(--accent-gold);left:-260px;top:830px"></div>
+  <div class="orb" id="orbRed" style="width:560px;height:560px;background:var(--accent-red);left:1120px;top:260px"></div>
+  <div class="head">
+    <div class="ey" id="ey">Tokenomics &middot; JCT circulating supply</div>
+    <h1 id="h1">The Unlocks Start <span class="pu">Tuesday</span></h1>
+    <div class="divider" id="divider"></div>
+  </div>
+  <svg id="plot" width="1464" height="1080" viewBox="0 0 1464 1080" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div class="src" id="src">Sources: Janction docs, Phemex, CoinGecko, Ethereum on-chain (read 8 Nov 2026).</div>
+</div>
+
+<script>
+(function(){
+'use strict';
+var NS = 'http://www.w3.org/2000/svg';
+var svg = document.getElementById('plot');
+
+/* ---------- palette (the locked tokens) ---------- */
+var PURPLE = '#a855f7', GOLD = '#ffd700', RED = '#ff4060',
+    PRI = '#e8eaf0', SEC = '#8892a4', MUT = '#505a6e', CARD = '#12151c', BORDER = '#1e2330', BG = '#0a0c10';
+function rgba(hex, a){
+  var n = parseInt(hex.slice(1), 16);
+  return 'rgba(' + (n >> 16) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + (+a).toFixed(4) + ')';
+}
+
+/* ---------- geometry ----------
+   x: months since the TGE (10 Nov 2025 = month 0) to May 2030 (month 54). y: circulating supply, 0 to 50B JCT. */
+var X0 = 150, X1_FULL = 1180, X1_SQ = 846, M_END = 54, M_TUE = 12, M_TEAM = 18;
+var Y0 = 940, YCAP = 300, K = (Y0 - YCAP) / 50;     /* 12.8 px per 1B JCT */
+function Y(b){ return Y0 - b * K; }
+
+/* ---------- the schedule (RESEARCH 3.2 allocation + 3.4 unlocks; linear after each cliff) ----------
+   BASE = the TGE float, flat since launch: airdrop 2.85B + liquidity 2B + community 1.5B + 30% of Ecosystem's
+   17,145,625,000 = 11,493,687,500 JCT (22.99%). The five locked baskets stack on top of it, bottom to top. */
+var BASE = 11.4936875;
+var BK = [
+  { id: 'inv',   name: 'Investors',  total: 5,          m0: 12, m1: 30, a: .22, col: PURPLE },   /* 5B, 1y cliff, 18 months */
+  { id: 'found', name: 'Foundation', total: 9,          m0: 12, m1: 36, a: .34, col: PURPLE },   /* 9B, 1y cliff, 24 months */
+  { id: 'eco',   name: 'Ecosystem',  total: 12.0019375, m0: 12, m1: 36, a: .48, col: PURPLE },   /* the 70% left of 17.15B */
+  { id: 'adv',   name: 'Advisors',   total: 1.834375,   m0: 12, m1: 36, a: .66, col: PURPLE },   /* 1.834B, 1y cliff, 24 months */
+  { id: 'team',  name: 'Team',       total: 10.67,      m0: 18, m1: 54, a: .42, col: GOLD }      /* 10.67B, 18-month cliff, 36 months */
+];
+function unl(b, m){ return b.total * clamp((m - b.m0) / (b.m1 - b.m0), 0, 1); }
+function topOf(i, m){ var s = BASE; for (var j = 0; j <= i; j++) s += unl(BK[j], m); return s; }
+function botOf(i, m){ return i ? topOf(i - 1, m) : BASE; }
+
+/* ---------- pure helpers ---------- */
+function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
+function lerp(a, b, u){ return a + (b - a) * u; }
+function prog(t, t0, d){ return clamp((t - t0) / d, 0, 1); }
+function eOut(u){ return 1 - Math.pow(1 - u, 3); }
+function eInOut(u){ return u < .5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2; }
+function fade(t, t0, d){ return eOut(prog(t, t0, d)); }
+function bump(t, t0, d){ return Math.sin(Math.PI * prog(t, t0, d)); }
+function mix(c1, c2, u){
+  var a = parseInt(c1.slice(1), 16), b = parseInt(c2.slice(1), 16);
+  var r = Math.round(lerp(a >> 16, b >> 16, u)), g = Math.round(lerp((a >> 8) & 255, (b >> 8) & 255, u)),
+      bl = Math.round(lerp(a & 255, b & 255, u));
+  return 'rgb(' + r + ',' + g + ',' + bl + ')';
+}
+function f2(v){ return (+v).toFixed(2); }
+
+/* ---------- the growth front: the month the curve has reached at time t ----------
+   2.15: the first month (~1.2B) lands on "about a tenth". 4.00 to 6.78: Dec 2026 to May 2027 one month at a time.
+   7.10 to 12.00: the sweep to May 2030 (sine ease in-out), the Team's step riding on top. */
+function frontAt(t){
+  if (t < 4.0) return M_TUE + eOut(prog(t, 2.15, 0.40));
+  if (t < 7.1){
+    var m = M_TUE + 1;
+    for (var k = 0; k < 5; k++) m += eOut(prog(t, 4.0 + 0.62 * k, 0.30));
+    return m;
+  }
+  var p = prog(t, 7.1, 4.9);
+  return M_TEAM + (M_END - M_TEAM) * (1 - Math.cos(Math.PI * p)) / 2;
+}
+
+/* ---------- tiny DOM builder ---------- */
+function E(tag, attrs, parent){
+  var n = document.createElementNS(NS, tag);
+  for (var k in attrs) n.setAttribute(k, attrs[k]);
+  (parent || svg).appendChild(n);
+  return n;
+}
+function T(parent, attrs, parts){             /* text with tspans: parts = [[str, cls, fill], ...] */
+  var n = E('text', attrs, parent);
+  n.spans = [];
+  parts.forEach(function(p){
+    var s = E('tspan', p[1] ? {'class': p[1]} : {}, n);
+    if (p[2]) s.setAttribute('fill', p[2]);
+    s.textContent = p[0];
+    n.spans.push(s);
+  });
+  return n;
+}
+function set(n, attrs){ for (var k in attrs) n.setAttribute(k, attrs[k]); }
+function op(n, v){ n.setAttribute('opacity', clamp(v, 0, 1).toFixed(4)); }
+
+/* ---------- defs ---------- */
+var defs = E('defs', {});
+defs.innerHTML =
+  '<filter id="glow" x="-20%" y="-50%" width="140%" height="200%">' +
+    '<feGaussianBlur in="SourceGraphic" stdDeviation="5" result="b"/>' +
+    '<feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>' +
+  '<filter id="glowS" x="-100%" y="-100%" width="300%" height="300%">' +
+    '<feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b"/>' +
+    '<feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>' +
+  '<linearGradient id="gTopRed" x1="0" y1="0" x2="1" y2="0">' +
+    '<stop offset="0" stop-color="#ff4060"/><stop offset="1" stop-color="#ff4060" stop-opacity="0"/></linearGradient>' +
+  /* the Team band: brighter where it tops out, so the gold reads as gold and not olive */
+  '<linearGradient id="gTeam" gradientUnits="userSpaceOnUse" x1="0" y1="' + YCAP + '" x2="0" y2="' + f2(Y(topOf(4, M_TEAM))) + '">' +
+    '<stop offset="0" stop-color="#ffd700" stop-opacity=".62"/><stop offset="1" stop-color="#ffd700" stop-opacity=".30"/></linearGradient>';
+
+/* ---------- layers (z-order) ---------- */
+var L = {};
+['grid', 'base', 'bands', 'edges', 'marks', 'labels', 'links', 'nodes', 'over'].forEach(function(k){ L[k] = E('g', {}); });
+
+/* gridlines 10B to 40B, the 50B cap (max supply), y labels */
+var grid = [10, 20, 30, 40].map(function(b){
+  return { y: Y(b),
+    line: E('path', {fill: 'none', stroke: '#ffffff', 'stroke-opacity': '.05', 'stroke-width': '1.5'}, L.grid),
+    text: T(L.grid, {'class': 't-mono', 'font-size': '18', fill: SEC, 'fill-opacity': '.8', 'text-anchor': 'end', x: X0 - 22, y: Y(b) + 6}, [[b + 'B']]) };
+});
+var cap = { y: YCAP,
+  line: E('path', {fill: 'none', stroke: SEC, 'stroke-opacity': '.5', 'stroke-width': '1.5', 'stroke-dasharray': '7 6'}, L.grid),
+  text: T(L.grid, {'class': 't-mono', 'font-size': '18', fill: PRI, 'text-anchor': 'end', x: X0 - 22, y: YCAP + 6}, [['50B']]) };
+var capNote = T(L.grid, {'class': 't-sans', 'font-size': '17', fill: SEC, x: X0 + 2, y: YCAP - 14}, [['max supply']]);
+var zeroLbl = T(L.grid, {'class': 't-mono', 'font-size': '18', fill: SEC, 'fill-opacity': '.8', 'text-anchor': 'end', x: X0 - 22, y: Y0 + 6}, [['0']]);
+
+/* the time axis: a tick per month, a year label at each January */
+var axis = E('path', {fill: 'none', stroke: '#2a3142', 'stroke-width': '2'}, L.grid);
+var mticks = [];
+for (var mm = 0; mm <= M_END; mm++) mticks.push({ m: mm, n: E('path', {fill: 'none', stroke: MUT, 'stroke-width': '1.5'}, L.grid) });
+var years = [[2, '2026'], [14, '2027'], [26, '2028'], [38, '2029'], [50, '2030']].map(function(y){
+  return { m: y[0], text: T(L.grid, {'class': 't-mono', 'font-size': '19', fill: SEC, 'text-anchor': 'middle', y: Y0 + 34}, [[y[1]]]) };
+});
+
+/* the launch float: flat since the TGE, the base of the stack */
+var baseRect = E('rect', {y: Y(BASE), height: Y0 - Y(BASE)}, L.base);
+var baseTop = E('path', {fill: 'none', stroke: SEC, 'stroke-opacity': '.85', 'stroke-width': '2'}, L.base);
+var baseLbl = E('g', {}, L.labels);
+var baseL1 = T(baseLbl, {'class': 't-mono', 'font-size': '32', fill: PRI, x: X0 + 16, y: Y(BASE) + 46}, [['11.49B']]);
+var baseL2 = T(baseLbl, {'class': 't-sans', 'font-size': '20', fill: SEC, x: X0 + 16, y: Y(BASE) + 74}, [['in circulation']]);
+var baseL3 = T(baseLbl, {'class': 't-sans', 'font-size': '19', fill: SEC, x: X0 + 16, y: Y(BASE) + 100}, [['23%', 't-mono', PRI], [' of supply']]);
+
+/* the five locked baskets (stacked areas) + their top edges */
+BK.forEach(function(b){
+  b.area = E('path', {}, L.bands);
+  if (b.id === 'team') b.hi = E('path', {fill: GOLD}, L.bands);      /* the Team's pulse (its gradient fill cannot go brighter) */
+  b.edge = E('path', {fill: 'none', stroke: b.col, 'stroke-opacity': b.id === 'team' ? '.0' : '.55', 'stroke-width': '1.2', 'stroke-linejoin': 'round'}, L.edges);
+});
+var topPurple = E('path', {fill: 'none', stroke: PURPLE, 'stroke-width': '3', 'stroke-linejoin': 'round', 'stroke-linecap': 'round', filter: 'url(#glow)'}, L.edges);
+var topGold = E('path', {fill: 'none', stroke: GOLD, 'stroke-width': '3', 'stroke-linejoin': 'round', 'stroke-linecap': 'round', filter: 'url(#glow)'}, L.edges);
+
+/* the Tuesday marker (10 Nov 2026, the cliffs end) + the 77% bracket on it */
+var mkLine = E('path', {fill: 'none', stroke: PURPLE, 'stroke-opacity': '.85', 'stroke-width': '2'}, L.marks);
+var mkDot = E('circle', {r: 5.5, fill: PURPLE, filter: 'url(#glowS)'}, L.marks);
+var brSeg = E('path', {fill: 'none', stroke: PURPLE, 'stroke-width': '4', 'stroke-linecap': 'round', filter: 'url(#glowS)'}, L.marks);
+var brTickA = E('path', {fill: 'none', stroke: PURPLE, 'stroke-width': '3', 'stroke-linecap': 'round'}, L.marks);
+var brTickB = E('path', {fill: 'none', stroke: PURPLE, 'stroke-width': '3', 'stroke-linecap': 'round'}, L.marks);
+
+/* the growth front + the Team's step dot */
+var frLine = E('path', {fill: 'none', stroke: PURPLE, 'stroke-opacity': '.45', 'stroke-width': '1.5'}, L.marks);
+var frDot = E('circle', {r: 6.5, filter: 'url(#glowS)'}, L.marks);
+var stepDot = E('circle', {r: 6, fill: GOLD, filter: 'url(#glowS)'}, L.marks);
+
+/* the flag on the marker: Tuesday's date, then ~1.2B a month = about a tenth of today's float */
+var flag = { r1: T(L.labels, {'class': 't-bold', 'font-size': '22', fill: PRI}, [['Tuesday, '], ['10 Nov 2026', 't-mono', PURPLE]]),
+             r2: T(L.labels, {'class': 't-mono', 'font-size': '42', fill: PURPLE}, [['~1.2B JCT'], [' a month', 't-sans', PRI]]),
+             r3: T(L.labels, {'class': 't-sans', 'font-size': '22', fill: SEC}, [['about a tenth', 't-bold', PRI], [' of today’s']]),
+             r4: T(L.labels, {'class': 't-sans', 'font-size': '22', fill: SEC}, [['circulating supply, every month']]) };
+flag.r2.spans[1].setAttribute('font-size', '26');
+
+/* 77% still locked (left of the marker, between the float and the cap) */
+var lockLbl = E('g', {}, L.labels);
+var lockL1 = T(lockLbl, {'class': 't-mono', 'font-size': '58', fill: PURPLE, 'text-anchor': 'end'}, [['77%']]);
+var lockL2 = T(lockLbl, {'class': 't-sans', 'font-size': '23', fill: PRI, 'text-anchor': 'end'}, [['still locked']]);
+
+/* the legend at the right end: one label per basket, at its band's centre in May 2030. They become the wallet nodes. */
+var CHIP_H = 40, SW = 13;
+function bandMid(i){ return (Y(topOf(i, M_END)) + Y(botOf(i, M_END))) / 2; }
+BK.forEach(function(b, i){
+  b.ym = bandMid(i);
+  b.chip = E('rect', {height: CHIP_H, rx: CHIP_H / 2, fill: CARD, stroke: b.col, 'stroke-width': '1.5'}, L.nodes);
+  b.sw = E('rect', {width: SW, height: SW, rx: 3.5, fill: rgba(b.col, Math.max(b.a, .45)), stroke: b.col, 'stroke-width': '1.2'}, L.nodes);
+  if (b.id === 'team'){
+    b.lbl = T(L.nodes, {'class': 't-bold', 'font-size': '22', fill: GOLD}, [['Team'], [': 10.67B', 't-mono', GOLD]]);
+    b.lbl2 = T(L.nodes, {'class': 't-sans', 'font-size': '19', fill: SEC}, [['from May '], ['2027', 't-mono', SEC]]);
+  } else {
+    b.lbl = T(L.nodes, {'class': 't-sans', 'font-size': '22', fill: SEC}, [[b.name]]);
+  }
+});
+
+/* ---------- the payoff: no vesting contract; five wallets + the token contract behind one 5-of-7 multisig ---------- */
+var headline = T(L.over, {'class': 't-serif', 'font-size': '48', fill: RED, x: X1_SQ + 16, y: 262}, [['No vesting contract']]);
+var walletsEy = T(L.over, {'class': 't-ey', 'font-size': '15', fill: SEC, x: X1_SQ + 18, y: 322}, [['All five locked wallets']]);
+var tok = E('g', {}, L.nodes);
+var tokRect = E('rect', {x: 0, y: 0, height: CHIP_H, rx: CHIP_H / 2, fill: CARD, stroke: SEC, 'stroke-opacity': '.7', 'stroke-width': '1.5'}, tok);
+var tokRing = E('circle', {cx: 22, cy: CHIP_H / 2, r: 6.5, fill: 'none', stroke: PRI, 'stroke-width': '1.8'}, tok);
+var tokTxt = T(tok, {'class': 't-sans', 'font-size': '22', fill: PRI, x: 38, y: CHIP_H / 2 + 7.5}, [['Token contract']]);
+
+var links = { stubs: BK.map(function(){ return E('path', {fill: 'none', stroke: RED, 'stroke-width': '2', 'stroke-linecap': 'round'}, L.links); }),
+              bus: E('path', {fill: 'none', stroke: RED, 'stroke-width': '2', 'stroke-linecap': 'round'}, L.links),
+              trunk: E('path', {fill: 'none', stroke: RED, 'stroke-width': '2.5', 'stroke-linecap': 'round'}, L.links),
+              trunkHead: E('path', {fill: RED}, L.links),
+              tokStub: E('path', {fill: 'none', stroke: RED, 'stroke-width': '2', 'stroke-linecap': 'round'}, L.links),
+              tokHead: E('path', {fill: RED}, L.links),
+              joins: BK.map(function(){ return E('circle', {r: 3.5, fill: RED}, L.links); }) };
+
+var node = E('g', {}, L.nodes);
+var NODE_H = 218;
+var nodeRect = E('rect', {x: 0, y: 0, height: NODE_H, rx: 18, fill: CARD, stroke: RED, 'stroke-opacity': '.6', 'stroke-width': '1.5'}, node);
+var nodeTop = E('rect', {x: 18, y: 0, height: 2, fill: 'url(#gTopRed)'}, node);
+var lockG = E('g', {transform: 'translate(24,22) scale(1.45)', fill: 'none', stroke: RED, 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, node);
+E('rect', {x: 3, y: 11, width: 18, height: 11, rx: 2}, lockG);          /* lucide "lock" (ISC) */
+var shackle = E('path', {d: 'M7 11V7a5 5 0 0 1 10 0v4'}, lockG);
+var nodeEy = T(node, {'class': 't-ey', 'font-size': '17', fill: SEC, x: 74, y: 50}, [['Safe multisig']]);
+var signers = [];
+for (var si = 0; si < 7; si++){
+  signers.push({ ring: E('circle', {r: 13, fill: 'none', stroke: SEC, 'stroke-opacity': '.7', 'stroke-width': '2'}, node),
+                 fill: E('circle', {r: 13, fill: RED, filter: 'url(#glowS)'}, node) });
+}
+var nodeNum = T(node, {'class': 't-mono', 'font-size': '56', fill: RED, x: 26, y: 186}, [['5'], [' of ', 't-sans', RED], ['7'], [' signers', 't-sans', PRI]]);
+nodeNum.spans[1].setAttribute('font-size', '40');
+nodeNum.spans[3].setAttribute('font-size', '27');
+
+/* HTML parts */
+var ey = document.getElementById('ey'), h1 = document.getElementById('h1'), divider = document.getElementById('divider'),
+    src = document.getElementById('src'), orbPurple = document.getElementById('orbPurple'),
+    orbGold = document.getElementById('orbGold'), orbRed = document.getElementById('orbRed');
+
+/* the orbs, once: a disc of diameter D blurred by sigma 120 px, as a radial gradient on a disc 2 x 260 px wider
+   (stops = that blur's falloff: ~0.96 at the centre, ~0.46 at the disc's edge, ~0 at edge + 2.5 sigma). Same centre. */
+[orbPurple, orbGold, orbRed].forEach(function(o){
+  var D = parseFloat(o.style.width), R = D / 2, W = R + 260, cx = parseFloat(o.style.left) + R, cy = parseFloat(o.style.top) + R;
+  var col = getComputedStyle(o).backgroundColor.match(/\d+/g).slice(0, 3).join(',');
+  var stops = [[0, .956], [Math.max(0, R - 120) / W, .80], [R / W, .46], [(R + 120) / W, .15], [(R + 180) / W, .06], [(R + 240) / W, .015], [1, 0]];
+  o.style.left = (cx - W) + 'px'; o.style.top = (cy - W) + 'px'; o.style.width = o.style.height = (2 * W) + 'px';
+  o.style.background = 'radial-gradient(closest-side, ' + stops.map(function(s){
+    return 'rgba(' + col + ',' + s[1] + ') ' + (100 * Math.min(1, s[0])).toFixed(2) + '%';
+  }).join(', ') + ')';
+});
+
+/* the wallet order top to bottom (the chips draw in this order on "all five wallets") */
+var CHIP_ORDER = ['team', 'adv', 'eco', 'found', 'inv'];
+function byId(id){ for (var i = 0; i < BK.length; i++) if (BK[i].id === id) return BK[i]; }
+
+/* path through a band's boundary from month a to month b */
+function boundary(fn, a, b, X){
+  var ms = [], m;
+  for (m = Math.ceil(a); m < b; m++) if (m > a) ms.push(m);
+  ms.unshift(a); ms.push(b);
+  return ms.map(function(mm){ return [X(mm), Y(fn(mm))]; });
+}
+function pts(p){ return p.map(function(q){ return f2(q[0]) + ',' + f2(q[1]); }).join(' L'); }
+/* dash-draw a straight segment: returns attrs */
+function seg(x1, y1, x2, y2, u){
+  var len = Math.max(0.01, Math.hypot(x2 - x1, y2 - y1));
+  return {d: 'M' + f2(x1) + ',' + f2(y1) + ' L' + f2(x2) + ',' + f2(y2),
+          'stroke-dasharray': f2(len) + ' ' + f2(len + 2), 'stroke-dashoffset': f2(len * (1 - u)), opacity: u > 0 ? 1 : 0};
+}
+
+/* =====================================================================================================
+   setT(t): the whole frame as a pure function of t (local seconds; the clip's 0 = spine 674.9 s)
+   ===================================================================================================== */
+function setT(t){
+  t = +t || 0;
+  var a, i;
+
+  /* the payoff's camera move: the plot's right end slides 1180 -> 846 to make room for the multisig */
+  var sq = eInOut(prog(t, 22.05, 0.80));
+  var X1 = lerp(X1_FULL, X1_SQ, sq), pxm = (X1 - X0) / M_END;
+  function X(m){ return X0 + m * pxm; }
+  var mF = frontAt(t), xT = X(M_TUE);
+
+  /* title + atmosphere (0.0 to 1.2) */
+  a = fade(t, 0.00, 0.40); ey.style.opacity = a;
+  a = fade(t, 0.10, 0.50); h1.style.opacity = a; h1.style.transform = 'translateY(' + f2(14 * (1 - a)) + 'px)';
+  divider.style.width = f2(66 * fade(t, 0.35, 0.40)) + 'px';
+  src.style.opacity = fade(t, 0.80, 0.60);
+  orbPurple.style.opacity = (0.20 * fade(t, 0.0, 1.2) * (1 - 0.35 * fade(t, 22.2, 1.0))).toFixed(4);
+  orbGold.style.opacity = (0.13 * fade(t, 0.0, 1.2)).toFixed(4);
+  orbRed.style.opacity = (0.15 * fade(t, 22.2, 1.0)).toFixed(4);
+
+  /* axes: the time axis draws left to right 0.15 to 1.0, gridlines and y labels fade in */
+  var axEnd = lerp(X0, X1, eOut(prog(t, 0.15, 0.85)));
+  set(axis, {d: 'M' + f2(X0) + ',' + Y0 + ' H' + f2(axEnd), opacity: t > 0.15 ? 1 : 0});
+  mticks.forEach(function(tk){
+    var xm = X(tk.m), major = years.some(function(y){ return y.m === tk.m; });
+    var on = clamp((axEnd - xm) / 30 + 0.5, 0, 1);
+    set(tk.n, {d: 'M' + f2(xm) + ',' + Y0 + ' V' + (Y0 + (major ? 10 : 5)), opacity: (on * (major ? 0.9 : 0.55)).toFixed(4), stroke: major ? SEC : MUT});
+  });
+  years.forEach(function(y){
+    var xm = X(y.m);
+    set(y.text, {x: f2(xm), opacity: clamp((axEnd - xm) / 40 + 0.5, 0, 1).toFixed(4)});
+  });
+  var gA = fade(t, 0.20, 0.70);
+  op(zeroLbl, gA);
+  grid.forEach(function(gl){ op(gl.text, gA); });
+  op(cap.text, fade(t, 0.30, 0.60));
+  op(capNote, fade(t, 0.50, 0.60));
+
+  /* the launch float (11.49B), drawn left to right 0.45 to 1.2; it pulses on "circulating today" */
+  var bx = lerp(X0, X1, eOut(prog(t, 0.45, 0.75)));
+  var baseA = 0.17 + 0.06 * bump(t, 2.95, 1.10);
+  set(baseRect, {x: X0, width: f2(Math.max(0, bx - X0)), fill: rgba(SEC, baseA), opacity: t > 0.45 ? 1 : 0});
+  set(baseTop, {d: 'M' + X0 + ',' + f2(Y(BASE)) + ' H' + f2(bx), opacity: t > 0.45 ? 1 : 0});
+  op(baseLbl, fade(t, 0.90, 0.40));
+
+  /* the five locked baskets, from the Tuesday marker to the growth front */
+  var chipT = {};
+  CHIP_ORDER.forEach(function(id, k){ chipT[id] = 23.45 + 0.17 * k; });
+  BK.forEach(function(b, i){
+    var m0 = Math.max(b.m0, M_TUE);
+    if (mF <= m0 + 1e-4){
+      set(b.area, {d: 'M0,0', opacity: 0}); set(b.edge, {d: 'M0,0', opacity: 0});
+      if (b.hi) set(b.hi, {d: 'M0,0', opacity: 0});
+      return;
+    }
+    var top = boundary(function(m){ return topOf(i, m); }, m0, mF, X);
+    var bot = boundary(function(m){ return botOf(i, m); }, m0, mF, X).reverse();
+    var pulse = bump(t, chipT[b.id], 0.75), d = 'M' + pts(top.concat(bot)) + ' Z';
+    set(b.area, {d: d, fill: b.id === 'team' ? 'url(#gTeam)' : rgba(b.col, b.a + 0.24 * pulse), opacity: 1});
+    if (b.hi) set(b.hi, {d: d, opacity: (0.26 * pulse).toFixed(4)});
+    set(b.edge, {d: 'M' + pts(top), opacity: 1});
+  });
+  /* the curve's top edge: purple until May 2027, gold (the Team on top) after */
+  if (mF > M_TUE + 1e-4){
+    set(topPurple, {d: 'M' + pts(boundary(function(m){ return topOf(4, m); }, M_TUE, Math.min(mF, M_TEAM), X)), opacity: 1});
+  } else set(topPurple, {d: 'M0,0', opacity: 0});
+  if (mF > M_TEAM + 1e-4){
+    set(topGold, {d: 'M' + pts(boundary(function(m){ return topOf(4, m); }, M_TEAM, mF, X)), opacity: 1});
+  } else set(topGold, {d: 'M0,0', opacity: 0});
+
+  /* the growth front (2.15 to 12.4) */
+  var frA = fade(t, 2.15, 0.20) * (1 - fade(t, 12.0, 0.40));
+  var xF = X(mF), yTop = Y(topOf(4, mF));
+  set(frLine, {d: 'M' + f2(xF) + ',' + f2(Y(BASE)) + ' V' + f2(yTop), opacity: frA.toFixed(4)});
+  set(frDot, {cx: f2(xF), cy: f2(yTop), fill: mix(PURPLE, GOLD, clamp(mF - M_TEAM, 0, 1)), opacity: frA.toFixed(4)});
+  set(stepDot, {cx: f2(X(M_TEAM)), cy: f2(Y(topOf(4, M_TEAM))), opacity: fade(t, 7.15, 0.30).toFixed(4)});
+
+  /* the Tuesday marker: draws up from the axis on "unlocks start" (0.6 to 1.1) */
+  var mk = eOut(prog(t, 0.60, 0.50));
+  set(mkLine, {d: 'M' + f2(xT) + ',' + Y0 + ' V' + f2(lerp(Y0, YCAP, mk)), opacity: t > 0.6 ? 1 : 0});
+  set(mkDot, {cx: f2(xT), cy: Y0, opacity: fade(t, 0.60, 0.20).toFixed(4)});
+
+  /* the flag: the date on "Tuesday" (1.35), ~1.2B a month on "about a tenth" (2.10), the tenth (2.40) */
+  var fx = xT + 18, out = 1 - fade(t, 21.70, 0.35);
+  a = fade(t, 1.58, 0.35); set(flag.r1, {x: f2(fx), y: f2(YCAP + 37 + 8 * (1 - a)), opacity: a.toFixed(4)});
+  a = fade(t, 2.10, 0.35); set(flag.r2, {x: f2(fx), y: f2(YCAP + 87 + 10 * (1 - a)), opacity: (a * out).toFixed(4)});
+  a = fade(t, 2.40, 0.35); set(flag.r3, {x: f2(fx), y: f2(YCAP + 118 + 8 * (1 - a)), opacity: (a * out).toFixed(4)});
+  set(flag.r4, {x: f2(fx), y: f2(YCAP + 145 + 8 * (1 - a)), opacity: (a * out).toFixed(4)});
+
+  /* 77% still locked, on "Tokenomics bad" (12.04): the marker's span from the float to the cap becomes a bracket */
+  var bp = eOut(prog(t, 12.04, 0.40)), yB = Y(BASE);
+  set(brSeg, {d: 'M' + f2(xT) + ',' + f2(yB) + ' V' + f2(YCAP), opacity: (0.75 * bp).toFixed(4)});
+  set(brTickA, {d: 'M' + f2(xT - 16 * bp) + ',' + YCAP + ' H' + f2(xT), opacity: bp > 0 ? 1 : 0});
+  set(brTickB, {d: 'M' + f2(xT - 16 * bp) + ',' + f2(yB) + ' H' + f2(xT), opacity: bp > 0 ? 1 : 0});
+  var lmid = (YCAP + yB) / 2;
+  set(lockL1, {x: f2(xT - 26), y: f2(lmid + 6)});
+  set(lockL2, {x: f2(xT - 26), y: f2(lmid + 40)});
+  op(lockLbl, fade(t, 12.25, 0.35));
+
+  /* the legend at the right end; the Team label rides its band at the front from 8.3 and parks at 12 */
+  var LX = X1 + 30;
+  BK.forEach(function(b, i){
+    var lx, ly, la;
+    if (b.id === 'team'){
+      lx = X(mF) + 30;
+      ly = (Y(topOf(4, mF)) + Y(topOf(3, mF))) / 2;
+      la = fade(t, 8.30, 0.35);
+      set(b.sw, {x: f2(lx), y: f2(ly - SW / 2)});
+      set(b.lbl, {x: f2(lx + SW + 9), y: f2(ly + 7.5)});
+      set(b.lbl2, {x: f2(lx + SW + 9), y: f2(ly + 34), opacity: (la * (1 - fade(t, 23.00, 0.30))).toFixed(4)});
+      b.lbl.spans[1].setAttribute('opacity', (1 - fade(t, 23.00, 0.30)).toFixed(4));
+    } else {
+      lx = LX; ly = b.ym;
+      la = fade(t, 11.30 + 0.12 * ['inv', 'found', 'eco', 'adv'].indexOf(b.id), 0.35);
+      set(b.sw, {x: f2(lx), y: f2(ly - SW / 2)});
+      set(b.lbl, {x: f2(lx + SW + 9), y: f2(ly + 7.5)});
+    }
+    op(b.sw, la); op(b.lbl, la);
+    b.lx = lx; b.ly = ly;
+  });
+
+  /* ---------- the payoff ---------- */
+  /* 22.38 "no vested contract" */
+  a = fade(t, 22.38, 0.40);
+  set(headline, {y: f2(262 + 12 * (1 - a)), opacity: a.toFixed(4)});
+
+  /* 23.45 "all five wallets": each legend label becomes a wallet node (top to bottom), its band pulses */
+  op(walletsEy, fade(t, 23.42, 0.35));
+  var nameW = 0;
+  BK.forEach(function(b){ nameW = Math.max(nameW, b.lbl.spans[0].getComputedTextLength()); });
+  var chipX = X1 + 16, chipW = Math.ceil(14 + SW + 9 + nameW + 18);
+  BK.forEach(function(b){
+    var u = eOut(prog(t, chipT[b.id], 0.35)), cy = b.ly;
+    var per = 2 * (chipW + CHIP_H) - (8 - 2 * Math.PI) * (CHIP_H / 2);
+    set(b.chip, {x: f2(chipX), y: f2(cy - CHIP_H / 2), width: chipW, 'fill-opacity': u.toFixed(4),
+                 'stroke-dasharray': f2(per) + ' ' + f2(per), 'stroke-dashoffset': f2(per * (1 - u)), opacity: u > 0 ? 1 : 0});
+    if (b.id !== 'team') b.lbl.spans[0].setAttribute('fill', mix(SEC, PRI, u));
+    b.cy = cy;
+  });
+
+  /* geometry of the multisig side (fixed: it only exists once the plot has moved) */
+  /* the node is centred on the Ecosystem row, so that wire runs straight through the bus into it */
+  var chipXs = X1_SQ + 16, busX = chipXs + chipW + 24, nodeX = busX + 36, nodeW = 1428 - nodeX;
+  var yTopChip = byId('team').ly, yBotChip = byId('inv').ly, nodeMid = byId('eco').ly;
+  var nodeY = nodeMid - NODE_H / 2;
+
+  /* 25.30 "the token is the contract itself" */
+  var tokW = Math.ceil(38 + tokTxt.getComputedTextLength() + 20), tokX = nodeX + (nodeW - tokW) / 2, tokY = yTopChip - CHIP_H / 2;
+  set(tokRect, {width: tokW});
+  var tp = eOut(prog(t, 25.30, 0.35)), ts = 0.94 + 0.06 * tp;
+  tok.setAttribute('transform', 'translate(' + f2(tokX + tokW * (1 - ts) / 2) + ',' + f2(tokY + CHIP_H * (1 - ts) / 2) + ') scale(' + ts.toFixed(4) + ')');
+  op(tok, tp);
+
+  /* 26.78 "sit behind": the multisig node, then the wires into it (26.92 to 27.45) */
+  var np = eOut(prog(t, 26.78, 0.34)), ns = 0.94 + 0.06 * np;
+  node.setAttribute('transform', 'translate(' + f2(nodeX + nodeW * (1 - ns) / 2) + ',' + f2(nodeY + NODE_H * (1 - ns) / 2) + ') scale(' + ns.toFixed(4) + ')');
+  op(node, np);
+  set(nodeRect, {width: f2(nodeW)});
+  set(nodeTop, {width: f2(nodeW * 0.6)});
+  CHIP_ORDER.forEach(function(id, k){
+    var b = byId(id), sIdx = BK.indexOf(b);
+    set(links.stubs[sIdx], seg(chipXs + chipW, b.cy, busX, b.cy, prog(t, 26.92 + 0.03 * k, 0.18)));
+    set(links.joins[sIdx], {cx: f2(busX), cy: f2(b.cy), opacity: fade(t, 27.04, 0.20).toFixed(4)});
+  });
+  set(links.bus, seg(busX, yTopChip, busX, yBotChip, prog(t, 27.02, 0.25)));
+  set(links.trunk, seg(busX, nodeMid, nodeX - 9, nodeMid, prog(t, 27.20, 0.20)));
+  set(links.trunkHead, {d: 'M' + f2(nodeX - 12) + ',' + f2(nodeMid - 7) + ' L' + f2(nodeX - 1) + ',' + f2(nodeMid) + ' L' + f2(nodeX - 12) + ',' + f2(nodeMid + 7) + ' Z',
+                        opacity: prog(t, 27.36, 0.10).toFixed(4)});
+  var tcx = tokX + tokW / 2;
+  set(links.tokStub, seg(tcx, tokY + CHIP_H, tcx, nodeY - 9, prog(t, 27.05, 0.25)));
+  set(links.tokHead, {d: 'M' + f2(tcx - 7) + ',' + f2(nodeY - 12) + ' L' + f2(tcx) + ',' + f2(nodeY - 1) + ' L' + f2(tcx + 7) + ',' + f2(nodeY - 12) + ' Z',
+                      opacity: prog(t, 27.28, 0.10).toFixed(4)});
+
+  /* 27.94 "same five of seven multisig": seven signers appear, five light on "five" (28.22), the lock closes.
+     The node's own label arrives with the node (26.90), so the wires never land on an empty box. */
+  op(nodeEy, fade(t, 26.90, 0.30));
+  var dx0 = 40, dsp = (nodeW - 2 * dx0) / 6;
+  signers.forEach(function(sg, k){
+    var pop = eOut(prog(t, 27.95 + 0.04 * k, 0.20)), r = 13 * (0.6 + 0.4 * pop);
+    set(sg.ring, {cx: f2(dx0 + k * dsp), cy: 104, r: f2(r), opacity: pop.toFixed(4)});
+    var lit = k < 5 ? eOut(prog(t, 28.22 + 0.05 * k, 0.18)) : 0;
+    set(sg.fill, {cx: f2(dx0 + k * dsp), cy: 104, r: f2(r), opacity: lit.toFixed(4)});
+  });
+  op(nodeNum, fade(t, 28.22, 0.30));
+  shackle.setAttribute('transform', 'translate(0,' + f2(-4 * (1 - eOut(prog(t, 28.58, 0.30)))) + ')');
+
+  /* gridlines LAST: each one stops short of any visible text block it would run through */
+  var cuts = [];
+  function cutBox(n){
+    if (parseFloat(n.getAttribute('opacity') || '1') < 0.01) return;
+    var bb = n.getBBox();
+    if (bb.width > 0) cuts.push({ x0: bb.x, y0: bb.y, x1: bb.x + bb.width, y1: bb.y + bb.height });
+  }
+  [flag.r1, flag.r2, flag.r3, flag.r4, lockLbl, baseLbl].forEach(function(n){
+    if (n === lockLbl || n === baseLbl){ if (parseFloat(n.getAttribute('opacity')) < 0.01) return; }
+    cutBox(n);
+  });
+  var tm = byId('team');
+  if (parseFloat(tm.lbl.getAttribute('opacity')) > 0.01){ cutBox(tm.lbl); cutBox(tm.lbl2); cutBox(tm.sw); }
+  var gx0 = X0, gx1 = X1;
+  grid.concat([cap]).forEach(function(gl){
+    var segs = [], cur = gx0;
+    cuts.filter(function(r){ return gl.y >= r.y0 - 8 && gl.y <= r.y1 + 8; })
+        .map(function(r){ return [r.x0 - 12, r.x1 + 12]; })
+        .sort(function(p, q){ return p[0] - q[0]; })
+        .forEach(function(c){ if (c[0] > cur) segs.push([cur, Math.min(c[0], gx1)]); cur = Math.max(cur, c[1]); });
+    if (cur < gx1) segs.push([cur, gx1]);
+    var d = segs.filter(function(s){ return s[1] - s[0] > 1; })
+                .map(function(s){ return 'M' + f2(s[0]) + ',' + gl.y + ' H' + f2(s[1]); }).join(' ');
+    set(gl.line, {d: d || 'M0,0', opacity: gl === cap ? fade(t, 0.30, 0.80).toFixed(4) : gA.toFixed(4)});
+  });
+}
+
+window.setT = setT;
+var m = /t=([0-9.]+)/.exec(location.hash);
+setT(m ? parseFloat(m[1]) : 29.55);
+})();
+</script>
+</body>
+</html>

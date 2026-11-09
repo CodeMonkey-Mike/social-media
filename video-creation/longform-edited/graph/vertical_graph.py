@@ -141,7 +141,16 @@ def _qa_path_exists(proj: Path, raw: str) -> bool:
 
 def _vexpectations(proj: Path):
     plan = json.loads(C.doc(proj, "cover_plan").read_text(encoding="utf-8"))
-    return G._asset_expectations(plan)
+    # WHITEBOARD beats have no vertical path yet (a portrait re-draw of the scene at 1080x1920 + its own render); v_assets
+    # halts on them with that message instead of shipping a letterboxed 16:9 drawing (2026-11-01)
+    return [e for e in G._asset_expectations(plan) if e["kind"] != "whiteboard"]
+
+
+def _whiteboard_ids(proj: Path) -> list:
+    try:
+        return [str(w.get("id")) for w in json.loads(C.doc(proj, "cover_plan").read_text(encoding="utf-8")).get("whiteboards") or []]
+    except Exception:
+        return []
 
 
 def _vfiles(proj: Path, e: dict):
@@ -191,6 +200,11 @@ def v_assets(state: VerticalState) -> VerticalState:
     proj = _proj(state)
     if state.get("stub"):
         return {"steps": C._step(state, node, "stub")}
+    wbs = _whiteboard_ids(proj)
+    if wbs:
+        return C._fail(state, node, f"this video carries whiteboard beats ({', '.join(wbs)}) and the vertical lane has no whiteboard "
+                                    "path yet (each needs a portrait re-draw at 1080x1920 by whiteboard-builder + its own render); "
+                                    "build that before running the vertical, never a letterboxed 16:9 drawing")
     exp = _vexpectations(proj)
     redo = _redo(state, node)
     vd = _vdir(proj)
@@ -477,9 +491,11 @@ def v_verify_final(state: VerticalState) -> VerticalState:
         probs.append(f"loudness {lv} vs 16:9 {l169} LUFS")
     # face centring, every FACE window, on the RENDER (paused-spine times)
     meta, _ = G._paused_meta(proj, scope)
-    card_t = [float(p["at"]) for p in meta.get("pauses") or []]
+    # each pause's own `dur` (the sidecar's note): a clip insert or beat pause is not pause_s long (bullish-on-kaspa, 2026-11-05:
+    # 1.0, 10.8 and 3.5 s, and a flat 3.5 s landed the face frames on covers, up to 4.8 s off)
     pause = float(meta.get("pause_s") or 0)
-    sh = lambda t: t + pause * sum(1 for c in card_t if c <= t + 1e-6)
+    pauses = [(float(p["at"]), float(p.get("dur", pause))) for p in meta.get("pauses") or []]
+    sh = lambda t: t + sum(d for a, d in pauses if a <= t + 1e-6)
     qa = _vprev(proj) / "qa"
     qa.mkdir(parents=True, exist_ok=True)
     sys.path.insert(0, str(C.SCRIPTS))

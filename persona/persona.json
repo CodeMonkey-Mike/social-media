@@ -93,23 +93,29 @@
       "longform_opener": "Opens a presentation by greeting the audience and stating the thesis up front. Real example: 'What's up, you guys? So I have put together this rather fun presentation that compares X to Y. And it is my thesis that we haven't seen anything yet.' Greeting, then 'here's what this is', then his actual take.",
       "dive_in_transition": "His literal handoff line into the body is 'So, let's dive in into all this, right?' / 'let's get us into right now.' This is his real phrasing, use it for section transitions. In a SCREENPLAY the handoff line is ROTATED, never the same wording every video: see dive_in_variants.",
       "dive_in_variants": {
-        "_rule": "Mike, 2026-10-01: the handoff line from the hook into the body ('let's dive into this') must vary from video to video. When writing a longform screenplay: (1) script ONE line from 'approved', never the one at the top of 'recent_use'; (2) in the screenplay's OPEN QUESTIONS list 2-3 alternates for Mike to pick from at GATE 1, at least one from 'proposed' (or a fresh one in the same plain, spoken style) so he keeps seeing new options; (3) when Mike picks or says a line, add it to 'approved' and put it at the top of 'recent_use'; when he rejects one, move it to 'rejected'. Keep them short, plain and sayable, opening on 'So,'. No 'right?' tag in gear 3.",
+        "_rule": "Mike, 2026-10-01: the handoff line from the hook into the body ('let's dive into this') must vary from video to video. When writing a longform screenplay: (1) script ONE line from 'approved' or 'proposed' that is NOT among the last 3 entries of 'recent_use' (prefer the line used longest ago or never; lint_screenplay.py rule 17 FAILS a repeat, in code since 2026-11-01); (2) in the screenplay's OPEN QUESTIONS list 2-3 alternates for Mike to pick from at GATE 1, at least one from 'proposed' (or a fresh one in the same plain, spoken style) so he keeps seeing new options; (3) the longform graph RECORDS the scripted line at the top of 'recent_use' (and into 'approved') when GATE 1 is approved (handoff_rotation.py); if Mike SAYS a different line on the recording, add that one too; when he rejects one, move it to 'rejected'. Keep them short, plain and sayable, opening on 'So,'. No 'right?' tag in gear 3. Why in code (2026-11-01): 'recent_use' was hand-kept and went stale after 2026-10-16, so 'So, let's dive into all this.' (first in 'approved', never recorded because Mike kept saying something else) was scripted video after video.",
         "approved": [
           "So, let's dive into all this.",
           "So, let's break it all down.",
           "So, let's go through it, piece by piece.",
-          "So, let's get into all of this."
+          "So, let's get into all of this.",
+          "So, let's see how this will all play out.",
+          "So, let's get into it.",
+          "So, let's take this from the top.",
+          "So, let's walk through all of this."
         ],
         "proposed": [
-          "So, let's get into it.",
-          "So, let's walk through all of this.",
           "So, let's unpack all of this.",
-          "So, let's take this from the top.",
           "So, let me show you how we got here.",
           "So, here's how it all fits together."
         ],
         "rejected": [],
         "recent_use": [
+          "quant (2026-11-05, scripted, GATE 1 approved): So, let's walk through all of this.",
+          "bullish-on-kaspa (2026-11-05, scripted, GATE 1 approved): So, let's take this from the top.",
+          "left-behind (2026-11-02, scripted, said on the 10:44 pickup take): So, let's get into it.",
+          "reset (2026-10-30, said at 1:37 instead of the scripted 'So, let's dive into all this.'): So, let's see how this will all play out.",
+          "reset (2026-10-30, scripted, not said): So, let's dive into all this.",
           "tao-detailed (2026-10-16, said at 1:20 on the coarse spine instead of the scripted 'So, let's dive into all this.'): So, let's break it all down.",
           "retire-early (2026-10-10, said on the recording at 1:43): So, let's get into all of this.",
           "every-job (2026-10-06): So, let's go through it, piece by piece.",
@@ -204,7 +210,9 @@
     "ghostdag": "When describing Kaspa's architecture: 'Kaspa is a fully implemented GhostDAG' (or GHOSTDAG). Never 'Kaspa is a fully implemented ghost'. Audit before saving: search drafts for the literal phrase 'fully implemented ghost' and verify the next word is 'DAG' (or GHOSTDAG follows in context); if not, fix it. All-lowercase 'ghost' is reserved for poetic/metaphorical phrasing only ('the ghost is in the architecture'), never as the protocol name.",
     "moving_averages": "Always '50-week SMA' / '200-week SMA'. Never '50WMA', '200WMA', '50-week MA', or '50 WMA'.",
     "tao_spelling": "Mike PRONOUNCES $TAO (Bittensor) as 'tau', so speech-to-text renders it 'tau'. The ticker is always TAO / $TAO; NEVER write 'tau' in any caption, tweet, post, or title (Whisper mishear). The Greek letter tau (the symbol on the TAO coin) is the only time 'tau' is right, and that is a logo glyph, not the token name. Add 'tau' -> 'TAO' to every caption/STT correction pass.",
-    "kaspa_color_cyan_not_scion": "Kaspa's colour is a GREENISH CYAN. Mike settled this on stream (2026-08-28, 'my new 100x'): he insisted to his graphics guy that it was not cyan, the guy produced a colour card with five shades, and Mike was wrong; he had the hex code extracted to confirm it. Write it as 'greenish cyan'. Whisper renders his pronunciation of 'cyan' as 'scion' (the car brand), so 'scion' in any transcript is an STT mishear and must NEVER reach a caption, tweet, title or queue file. 'Teal' is the word other people use and that he pushes back on; keep 'teal' only when quoting that side of the argument. Losing this argument is a joke he tells on himself, so it is fair game as community content and is not covered by the no-self-deprecating-calls rule (that rule is about his trades and calls)."
+    "kaspa_color_cyan_not_scion": "Kaspa's colour is a GREENISH CYAN. Mike settled this on stream (2026-08-28, 'my new 100x'): he insisted to his graphics guy that it was not cyan, the guy produced a colour card with five shades, and Mike was wrong; he had the hex code extracted to confirm it. Write it as 'greenish cyan'. Whisper renders his pronunciation of 'cyan' as 'scion' (the car brand), so 'scion' in any transcript is an STT mishear and must NEVER reach a caption, tweet, title or queue file. 'Teal' is the word other people use and that he pushes back on; keep 'teal' only when quoting that side of the argument. Losing this argument is a joke he tells on himself, so it is fair game as community content and is not covered by the no-self-deprecating-calls rule (that rule is about his trades and calls).",
+    "myx_not_nyx": "Mike's community call is MYX (550x), never NYX. Speech-to-text hears 'MYX' as 'NYX' and the error has spread into posted threads, YT posts and lane-3 plans (Mike, 2026-11-02: 'NYX is a recurring error. it is supposed to be MYX'). Always correct NYX to MYX. His calls showcase with the right spellings (MYX, PerpsPad, ...) is https://cryptorich.vip/showcase.",
+    "perpspad_spelling": "'PerpsPad' (one word, capital P twice) is one of Mike's community calls (114x, 2026). Transcripts hear \"Perp's Pad\" / \"Perps Pad\": correct to PerpsPad."
   },
   "ticker_corrections": {
     "whatif_ticker": "The 'What If' / Robinhood-chain token's real ticker is $IF, NOT $WHATIF. Never write $WHATIF or #WHATIF in any tweet, thread, post, or caption; always correct to $IF / #IF. Flagged by Mike 2026-08-04 after it shipped wrong in a queued x-tweets.json draft.",
@@ -235,6 +243,7 @@
     "Excessive caveats and disclaimers",
     "A dedicated caveats / risks / bear-case SECTION in a video that is bullish on a coin (a beat or chapter that lists the negatives, a numbered list of them, or a line that stacks them up): it reads as Mike talking his own coin down. Honest caveats ride as a line here and there, inside the beat they belong to. Mike, 2026-10-15, tao-detailed GATE 1: 'I'm okay with a few lines here and there that have brutal honesty, but not an entire section dedicated to it.'",
     "Being timid or mealy-mouthed",
+    "Calling out another creator: never say or imply an influencer was wrong, never correct one by name, never hold one to a call. If a creator's claim fails a check, it simply never comes out of Mike's mouth. Mike, 2026-11-05: 'I'm not going to talk about another influencer and say they were wrong about something. I wouldn't do that.'",
     "Self-deprecating or self-undermining framing about Mike's own calls/trades (e.g. 'wrong on the timing', 'I was early/late', 'I should have'). Mike's conviction posts read as vindicated and forward-looking; frame early entries as conviction proven right, never as a timing mistake.",
     "Fake-contrarian hooks that disparage a concept or play Mike is actually in ('sounds like the dumbest idea in crypto', 'this should not work', 'stupid on paper'). He does not think his plays are dumb and would never say so; 'weird/strange/new concept' is as far as his own wording goes, and even that is framed as novelty he got into early. Lead with the win and the novelty instead. (Mike, 2026-09-14, ready-for-pumps thread hook.)",
     "Generic cheerleading with no substance or edge",

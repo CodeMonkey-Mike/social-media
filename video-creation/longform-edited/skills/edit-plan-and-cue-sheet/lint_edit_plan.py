@@ -38,7 +38,7 @@ EVENT_RE = re.compile(r"^(\d+):(\d{2}\.\d)\s+(\[([A-Z][A-Z0-9→ /-]*)\]|SAY:)\s
 TAG_RE = re.compile(r"\[([A-Z][A-Z0-9→ /-]*)\]")
 CH_RE = re.compile(r"^###\s+(CH\s*\d+)\s*[-:]\s*([^(\n]+?)\s*\((\d+(?:\.\d+)?)-(\d+(?:\.\d+)?)\)([^\n]*)", re.M)
 FACE_RE = re.compile(r"^\|\s*\d+\s*\|\s*(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)\s*\|", re.M)
-ASSET_DIRS = ("vid", "img", "receipts", "clip-inserts", "charts", "diagrams", "title-slides", "card-slides")
+ASSET_DIRS = ("vid", "img", "receipts", "clip-inserts", "charts", "diagrams", "title-slides", "card-slides", "whiteboard")
 CUE_SECTIONS = ["FACE spans", "TRANSITIONS", "CHAPTER cards", "CONTAINER / DIAGRAM / CHART", "RECEIPTS",
                 "VIDEO b-roll", "IMAGE b-roll", "IMPACTS + RISERS", "MUSIC beds", "CAPTIONS"]
 
@@ -52,7 +52,7 @@ def asset_ids(proj: Path):
         for f in p.iterdir():
             if f.is_file() and f.suffix.lower() in (".png", ".jpg", ".jpeg", ".webp", ".mp4", ".mov", ".webm"):
                 stem = f.stem
-                m = re.match(r"^((?:BR|IMG|R|CLIP)-?\d+[a-z]?)", stem)
+                m = re.match(r"^((?:BR|IMG|R|CLIP|WB)-?\d+[a-z]?)", stem)
                 if m:
                     ids.add(m.group(1))
                 else:
@@ -152,6 +152,24 @@ def lint(proj: Path, duration=None, say_min=0.8):
             if not found:
                 fails.append(f"EDIT-PLAN.md: clip insert {cid} at {t:.2f}s has no [INSERT] event carrying its id "
                              "(the spine pauses there and the clip plays with its own voice; clip-inserts.md)")
+        # whiteboard beats (whiteboard-beat.md, 2026-11-01): one [WHITEBOARD] event per beat at its tIn + a CUE-SHEET section
+        try:
+            wbs = json.loads(cp.read_text(encoding="utf-8")).get("whiteboards") or []
+        except Exception:
+            wbs = []
+        for w in wbs:
+            t, wid = float(w.get("tIn") or 0), str(w.get("id"))
+            found = False
+            for ln in text.splitlines():
+                e = EVENT_RE.match(ln)
+                if e and "[WHITEBOARD]" in ln and re.search(rf"\b{re.escape(wid)}\b", ln) \
+                        and abs(int(e.group(1)) * 60 + float(e.group(2)) - t) <= 0.6:
+                    found = True
+                    break
+            if not found:
+                fails.append(f"EDIT-PLAN.md: whiteboard beat {wid} at {t:.2f}s has no [WHITEBOARD] event carrying its id")
+        if wbs and not re.search(r"^##\s+WHITEBOARD", cue, re.M):
+            fails.append("CUE-SHEET.md: missing section `## WHITEBOARD` (this video carries whiteboard beats)")
     for m in CH_RE.finditer(ar_text):
         if re.search(r'card\s+ON', m.group(5)):
             ta = float(m.group(3))

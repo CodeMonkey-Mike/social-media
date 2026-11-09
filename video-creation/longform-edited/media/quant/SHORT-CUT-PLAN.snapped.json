@@ -1,0 +1,204 @@
+{
+ "source_video": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/quant/quant-VERTICAL.mp4",
+ "source_audio": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/quant/spine/ALL.h.paused.mp4",
+ "clock": "final-video seconds",
+ "mode_note": "16:9-sourced (PROJECT-LOG 2026-11-06: Mike skipped the vertical; quant-VERTICAL.mp4 is the adapter master on the paused spine's clock). Every span is FACE-only or COVER-only and no span overlaps a whiteboard window. in_gap and out_gap are MEASURED on the paused spine (the band below -45 dBFS around the cut, 5 ms windows, the lint's own envelope), because Whisper's word edges run early here; Whisper's number is given where it differs.",
+ "target_seconds": 30.0,
+ "outro_seconds": 3.0,
+ "claim": "Quant is not a new blockchain: it is the layer in the middle of what banks already run, seven named UK banks are already on it, and against its peers it is the one line that left the group.",
+ "why_this_claim": "It is the longform's own thesis (the title's 'the layer the banks let in') told without the whiteboard story, so it needs none of the islands set-up. It holds cold because each piece is something the viewer can see: the diagram shows where Quant sits, the receipt lists the banks, the chart shows one orange line above the rest. It makes no price call and no promise about the future. The only live-drift figure is 273, and the chart prints its index date.",
+ "rule_checks": {
+  "rule_1_troughs": "lint-short-spans.py passes on this plan against the paused spine (exit 0, no boundary moved, every trough -48 dBFS or lower); see risks for the narrow cuts",
+  "rule_2_transitions": "two visible exceptions (spans 2 and 4), two more on the source clock that the native cards hide (spans 3 and 6); each span's transition_note gives the window",
+  "rule_3_self_contained": "stated per span",
+  "rule_4_variety": "five visuals in 26.5 s: Mike's strip, C1 diagram, Mike's strip, C14 receipt, C6 chart. Spans 1, 2 and 4 share the strip's framing but total only 6.13 s and are a talking face, not one static image",
+  "rule_5_order": "chronological, no conclusion before its fact",
+  "rule_6_no_retiming": "every span is a verbatim slice",
+  "rule_7_silent": "no silent spans",
+  "rule_8_no_whiteboard": "no span overlaps a whiteboard window"
+ },
+ "spans": [
+  {
+   "role": "hook",
+   "order": 1,
+   "start": 0.0,
+   "end": 1.35,
+   "seconds": 1.35,
+   "sourced": "FACE",
+   "says": "So what is quant?",
+   "on_screen": "F1 screen share. In the short's FACE crop: the recorded OBS strip, the CTA box 'Premium Membership (Link in description)' over Mike's webcam. The deck area (BODY FB1, the C9 quant.network hero) is outside the strip. Seen on v1's hook-face still.",
+   "why": "The question the short answers, in Mike's own opening words. Only the first sentence of the longform's hook is used, because the next 19 s are the 'my community asked me' set-up and carry no claim.",
+   "self_contained": "A bare question, no referent needed.",
+   "in_gap": 0.0,
+   "in_gap_note": "file start; F1 opens ON the face with no cut-in",
+   "out_gap": 0.5,
+   "clear_of_transitions": true
+  },
+  {
+   "role": "hook",
+   "order": 2,
+   "start": 28.58,
+   "end": 31.73,
+   "seconds": 3.15,
+   "sourced": "FACE",
+   "says": "And what they sell is not a new blockchain.",
+   "on_screen": "F1 screen share, the same OBS strip. BODY FB2 (K1 'Not a new blockchain' lit) is outside the strip. The last 0.34 s carries the F1 cut-out film burn rising over the frame: pulled from quant-FINAL.mp4 at 31.40, 31.50, 31.60 and 31.66, a warm tint with Mike's face fully legible.",
+   "why": "The whole claim in one line, and the one thing a crypto viewer does not expect. It is the only place in the video this is said outside a whiteboard.",
+   "self_contained": "'They' resolves to Quant from the question right before it. The opening 'And' is the one soft spot; see risks.",
+   "in_gap": 0.14,
+   "in_gap_note": "Whisper says 0.00, its 'And' token absorbs the pause. Measured low band 28.48 to 28.62, with a -51 dBFS dip at 28.58; the voiced 'And' starts at 28.62.",
+   "out_gap": 0.08,
+   "out_gap_note": "Whisper says 0.16. Measured: 'blockchain.' fades through 31.71, next word at 31.79.",
+   "clear_of_transitions": false,
+   "transition_note": "RULE 2 EXCEPTION, flagged for Mike. F1's cut-out burn runs 31.387 to 32.147 (peak 31.767) and 'blockchain.' cannot end before 31.71. The picture is not half-melted, and the seam v1 used on FACE edges is the same film burn, so this join reads as that burn starting about 5 frames early. Fallback in risks."
+  },
+  {
+   "role": "body",
+   "order": 3,
+   "start": 181.3,
+   "end": 187.36,
+   "seconds": 6.06,
+   "sourced": "COVER",
+   "says": "On the left, what a bank already runs. Core Banking, Treasury, the payment rails. In the middle, Quant.",
+   "on_screen": "C1, the system-design diagram 'One layer between the bank and the ledgers', as a native 1080x1920 rebuild from s_vertical_cards (chart-builder). In the longform the left column lights node by node, then the Quant block (C1-quant at 186.12). The short shows one still: the bank stack and the Quant block both lit. The rebuild is not built yet, so its look is unverified.",
+   "why": "Says what 'not a blockchain' IS instead: the bank keeps what it runs and Quant sits in the middle. It carries the 'layer' half of the claim in plain words, without the whiteboard's islands.",
+   "self_contained": "'On the left' is read against the diagram on screen, whose headline states the idea. Stops before Overledger and the product names.",
+   "in_gap": 0.12,
+   "in_gap_note": "Whisper says 0.16. Measured trough 181.28 to 181.32 (-81 to -69 dBFS); 'On' voices at 181.34.",
+   "out_gap": 0.22,
+   "out_gap_note": "Whisper says 0.36 ('Overledger' at 187.56). Measured: next word voices at 187.42. Cut at -81 dBFS.",
+   "clear_of_transitions": false,
+   "transition_note": "On the source clock the start sits inside F2's cut-out burn (180.887 to 181.647). The viewer never sees it: the span starts 0.03 s after F2 ends, so the native C1 card covers every frame from the first one."
+  },
+  {
+   "role": "body",
+   "order": 4,
+   "start": 210.33,
+   "end": 211.96,
+   "seconds": 1.63,
+   "sourced": "FACE",
+   "says": "So who's actually using this?",
+   "on_screen": "F3 screen share, the same OBS strip after the T3 card ends (freeze 208.81 to 210.31). The first 0.36 s is the tail of the F3 burn, which peaks at 210.315: pulled from quant-FINAL.mp4 at 210.36, 210.50 and 210.70, strong orange at 210.36, clean by 210.70. BODY FB4 (the C20 Verdian headshot) sits in the sliver left of the strip and must be masked; see risks.",
+   "why": "Turns the explanation into proof and asks the question a skeptic has at this point. It also puts Mike back on screen between the diagram and the receipt.",
+   "self_contained": "'This' resolves to Quant, named in the span before it.",
+   "in_gap": 0.05,
+   "in_gap_note": "Whisper says 1.70, which is mostly the card freeze. The cut sits 0.02 s after the freeze ends, at -81 dBFS.",
+   "out_gap": 0.04,
+   "out_gap_note": "Whisper says 0.18. Measured: the tail of 'this?' reaches -48 dBFS at 211.96, 'Let's' voices at 212.00. Narrow but below the lint floor.",
+   "clear_of_transitions": false,
+   "transition_note": "RULE 2 EXCEPTION, flagged for Mike. The word starts at 210.36, inside the burn (209.935 to 210.695), and there is no clean start for this line. The baked burn peaks 0.015 s before the span starts, so it falls away from the join, where v1's seam burn also peaks. Fallback in risks."
+  },
+  {
+   "role": "body",
+   "order": 5,
+   "start": 258.06,
+   "end": 265.86,
+   "seconds": 7.8,
+   "sourced": "COVER",
+   "says": "Seven banks are on it. Barclays, HSBC, Loy's, Monzo, Nationwide, NatWest and Santander.",
+   "on_screen": "C14, the UK Finance GBTD page, as a native mobile-view rebuild from s_vertical_cards (receipt-capturer). The source page lists Barclays, HSBC UK, Lloyds Banking Group, Monzo, Nationwide, NatWest and Santander in one paragraph and says further down that the platform 'was developed by Quant as a shared UK industry infrastructure'. Both are confirmed on the captures C14-gbtd-b-body and C14-gbtd-c-quant; the rebuild is not built yet.",
+   "why": "The answer, in names every viewer knows. It is the strongest receipt available here, because the longform line naming The Clearing House sits on WB6.",
+   "self_contained": "'It' resolves to Quant from 'In the middle, Quant' and 'using this'. The receipt on screen shows the banks and the source. See risks for the accuracy note on this pronoun.",
+   "in_gap": 0.1,
+   "in_gap_note": "Whisper says 0.08. Measured 258.00 to 258.10, down to -81 dBFS.",
+   "out_gap": 0.18,
+   "clear_of_transitions": true,
+   "transition_note": "No TRANSITIONS row in the span. C14's crop cut at 258.12 and its highlight wipes are inside the receipt and are replaced by the native card."
+  },
+  {
+   "role": "kicker",
+   "order": 6,
+   "start": 472.0,
+   "end": 478.54,
+   "seconds": 6.54,
+   "sourced": "COVER",
+   "says": "And then one line leaves the group. A year later, quant sits at 273. And every other line in this chart is below 100.",
+   "on_screen": "C6, 'Quant against the peers', as a native 1080x1920 rebuild from s_vertical_cards (chart-builder), payoff state: the orange Quant line breaking away to 273, the endpoints BTC 77, LINK 76, CC 73, XLM 60, XRP 58, HBAR 42, the 'indexed to 100' baseline dated 2025-11-05, and 'Every other line ends below 100.' Confirmed on C6-payoff.png. In the short it is a still, so the longform's break-out animation does not play.",
+   "why": "The payoff that makes the claim feel earned, and the pattern break: a whole group moves one way and one line does not. It ends on a hard number just before the CTA, and leaves 'why that line' open for the full video.",
+   "self_contained": "The chart carries it: 'one line' and 'this chart' point at what is on screen, and the card prints the index date behind 'a year later'.",
+   "in_gap": 0.22,
+   "in_gap_note": "Whisper says 0.00. Measured 471.84 to 472.06, down to -81 dBFS; 'And' voices at 472.06.",
+   "out_gap": 0.16,
+   "out_gap_note": "Whisper says 0.20. Measured 478.52 to 478.68.",
+   "clear_of_transitions": false,
+   "transition_note": "On the source clock the end sits inside F8's cut-in burn (478.187 to 478.947). The viewer never sees it: the span ends before F8 opens at 478.567, so the native C6 card covers every frame. The chart animation (472.64 to 475.18) and the payoff stagger are replaced by the same still."
+  }
+ ],
+ "assembled_read": "So what is quant? And what they sell is not a new blockchain. On the left, what a bank already runs. Core Banking, Treasury, the payment rails. In the middle, Quant. So who's actually using this? Seven banks are on it. Barclays, HSBC, Loy's, Monzo, Nationwide, NatWest and Santander. And then one line leaves the group. A year later, quant sits at 273. And every other line in this chart is below 100.",
+ "spans_total_seconds": 26.53,
+ "outro": {
+  "line": "Click below to WATCH the full video.",
+  "card_text": "WATCH THE FULL VIDEO",
+  "note": "The shared take assets/vo/cta-watch-full.mp3 at VO level, never re-voiced (period, no exclamation mark, longform-to-short.md section 4). The native C6 payoff card holds behind the outro card. s_comp sizes the outro as target minus spans, so it runs about 3.47 s and the short lands on 30 s. The bed is the one Solstice seat from MUSIC-PLAN.json at Mike's -29.3 dB."
+ },
+ "rejected": [
+  {
+   "span": "107.50-118.82, 284.26-286.82, 312.34-320.34, 539.46-548.56, 556.42-562.58",
+   "reason": "The layer line, 'And then the big one, the clearing house', the 25 islands, 'a layer the banks are actually letting into the building' and the landing line. The best words in the video, all on whiteboard windows, so rule 8 removes them."
+  },
+  {
+   "span": "287.40-296.58",
+   "reason": "'The US payments company owned by 25 of the largest US banks. It runs RTP and chips and clears more than $2 trillion a day.' The biggest receipt, but its name is spoken on WB6, and 'they picked' (300.98) and 'first half of 2027' (308.98, WB7) cannot come with it. Without those lines the short would imply the 2 trillion dollars already runs on Quant, which the screenplay's WARNING forbids."
+  },
+  {
+   "span": "296.70-303.38",
+   "reason": "The only sentence stating The Clearing House selected Quant carries the 'they picked bank' misspeak (PROJECT-LOG, left as recorded). The longform covers it with TCH's printed text in the deck area, but in the short's FACE crop that text is out of frame."
+  },
+  {
+   "span": "250.26-258.04",
+   "reason": "'GBTD, that's the Great British Tokenized Deposit Platform. Run by UK Finance and Quant built the infrastructure for it.' The precise version of span 5, and my first choice for accuracy. Its first 4 s sit on the CLIP-1 lead-out, a held video frame with a burned caption typed 'container', with no slide source for slide-builder to rebuild. Starting at 'Run by' instead would follow 'In the middle, Quant' and read as Quant being run by UK Finance."
+  },
+  {
+   "span": "238.30-249.72",
+   "reason": "CLIP-1, Verdian's own voice. A strong line, but it is a 16:9 third-party clip with a burned caption, its cover_type is outside VCARD_KINDS so no native rebuild exists, and the coverage gate would fail it."
+  },
+  {
+   "span": "459.20-461.80",
+   "reason": "'For 10 months, quant didn't do anything special.' The ideal set-up for the kicker. It would be a second span on the same C6 beat, and s_vertical_cards records only the first hit per id, so its window would stay uncovered and fail s_verify_final. See risks for how to get it back."
+  },
+  {
+   "span": "468.52-471.92",
+   "reason": "'And this is all the while its peers fell from 40 to 60%.' Would extend the kicker cleanly, but takes the total to about 30 s of spans."
+  },
+  {
+   "span": "451.32-457.70",
+   "reason": "'So Chainlink, Hedera, XRP, Styler, Canton, everything indexed to 100 on November 5th, 2025.' A clean FACE span that names the peers. At 6.38 s it would have to replace span 3, which carries the 'layer' half of the claim, and the chart already prints the names and date. A good swap if Mike prefers a coins-forward short."
+  },
+  {
+   "span": "435.86-446.94",
+   "reason": "C5: 'the clearing house news, and the share goes from 0.028 to around 0.09% in 10 weeks, more than a three X.' 'The share' has no referent cold, it takes 11 s, and a second chart dilutes the one idea."
+  },
+  {
+   "span": "491.08-497.66",
+   "reason": "C7: '3.5 X against Bitcoin in a year.' A live-drift ratio the screenplay only airs with both dates, and a second chart."
+  },
+  {
+   "span": "328.46-340.66",
+   "reason": "Bank of England lab and ECB receipts. A test and a pioneer listing are weaker than seven named banks on a platform Quant built, and 12 s is too long."
+  },
+  {
+   "span": "0.00-9.86",
+   "reason": "The full opening down to 'I should buy some quant.' A real hook, but it holds no claim and costs 8.5 s more, which would force out the diagram or the banks."
+  },
+  {
+   "span": "23.24-28.48",
+   "reason": "'Quant is a London company founded in 2015 by a guy named Gilbert Veridian.' Clean edges, but it is a spec line that adds 5.2 s and moves nothing forward."
+  },
+  {
+   "span": "367.92-376.42",
+   "reason": "F5 price, market cap and rank: live-drift numbers, wrong by the time the short posts, with burns on both edges."
+  }
+ ],
+ "risks": [
+  "RULE 2 EXCEPTIONS (spans 2 and 4), Mike's call. Both FACE spans have a visible film burn at their outer edge because the words themselves sit inside the burn. I pulled frames from quant-FINAL.mp4: the face stays legible and nothing is half-melted, and both burns land on a join where v1 added its own burn hit. Stacked, those two can blow out for a frame or two, so the builder may want to drop the added hit on these two joins. I have not seen this assembled.",
+  "STRICT FALLBACK with no visible burn: 'So what is quant?' (0.00-1.35) + 'Right, so here's the short version.' (20.485-22.60) + span 3 + span 5 + the kicker started at 468.52 ('And this is all the while its peers fell from 40 to 60%...'), about 27.3 s. It stays fully clear of transitions but loses 'not a new blockchain' and 'who's actually using this', which is why it is not the main plan. To drop only span 4's burn, remove it and put 20.485-22.60 before span 2 (about 27.0 s), though that makes three spans from F1 in a row.",
+  "ACCURACY, 'Seven banks are on it.' In the longform 'it' is GBTD. Here it points at Quant. The capture supports the link (the banks are on the GBTD platform 'developed by Quant'), but UK Finance convened it and calls this 'retail live pilots'. The short never says 'live' or 'in production', yet it is a looser claim than Mike's own line, and this is the main thing to overrule. The precise wording is unavailable: see the 250.26-258.04 rejection.",
+  "IMPLIED CAUSE. Banks then a breakout chart suggests the banks caused the move. Nothing spoken says so. The longform ties the move to The Clearing House news, which this short does not name, and that is the open loop into the full video. 273 is a snapshot from 2026-11-04, printed on the chart with its index date.",
+  "NATIVE REBUILDS DO NOT EXIST YET, and a card that fails visual-qa twice fails the node. C1: the VO says 'on the left' and 'in the middle', so the bank stack must stay physically LEFT of the Quant block, not stacked above it, and both must be lit in the one still. C14: the bank list and 'developed by Quant' are far apart on the page, so one screen may not show both; the bank list comes first. C6: must use the payoff state and keep the index date. The builders receive only COVER-PLAN's 'what' text, not this plan, so the orchestrator should pass these three notes on. v1's QA also found native receipts must be shown flat, with no push, to pass the edge-text gate.",
+  "F3 STRIP MASK. v1's QuantShort.tsx masks the deck-area sliver by hand, measured on F1 only. In F3 that sliver shows the C20 headshot (visible in my crop tiles), so the mask needs re-measuring for span 4 or a cropped asset will show beside the strip.",
+  "PIPELINE TRAP FOUND. s_vertical_cards dedupes hits by id and records one overlay_short per id, so two spans on the same cover beat leave the second uncovered. This plan avoids it with one span per beat. If that is fixed, 'For 10 months, quant didn't do anything special.' can replace span 4, placed before the kicker: 459.20-461.80 for 210.33-211.96, about 27.5 s. I read this in the code and did not test it, and I did not change the code.",
+  "COLD READS, from text only. Span 2 opens on 'And', span 6 on 'And then', and span 3 goes straight to 'On the left'. I read them as one breath-run with the pictures carrying them, but I have not heard the seams. Delivery energy is inferred from the screenplay's gear map, not heard.",
+  "NARROW CUTS. This is a desilenced spine, so most measured gaps are under the 0.25 s preference (span 4's out is 0.04 s, span 2's out 0.08 s). Every boundary sits at a measured trough, and the lane's 12 ms crossfade applies. Span 4's out is the one to listen to first.",
+  "CAPTIONS. 'Loy's' must print as 'Lloyds' and 'quant' as 'Quant'. Both are on AS-RECORDED's mishear list, which s_captions applies; check them on the finished short."
+ ]
+}

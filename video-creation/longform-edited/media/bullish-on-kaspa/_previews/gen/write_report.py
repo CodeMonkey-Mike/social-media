@@ -1,0 +1,97 @@
+import json, re
+A = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\longform-edited\media\bullish-on-kaspa"
+P = A + r"\_previews"
+t = json.load(open(A + r"\TRANSITION-PLAN.json", encoding="utf8"))["transitions"]
+src = open(r"C:\Users\mnede\Documents\Claude\social-media\video-creation\remotion\src\BullishOnKaspa.tsx", encoding="utf8").read()
+n = len(re.findall(r"\{ tIn: [\d.]+, tOut: [\d.]+, kind:", src.split("export const COVERS")[1].split("];")[0]))
+r = {
+    "project": "bullish-on-kaspa",
+    "comp_id": "BullishOnKaspa",
+    "comp_file": "video-creation/remotion/src/BullishOnKaspa.tsx",
+    "status": "NOT DONE: the draft exists and every comp gate passes, but BROLL-MOTION FAILS on the draft (BR-8). See broll_motion and needs_review.",
+    "extra_files": [
+        "video-creation/remotion/src/BullishOnKaspaCharts.tsx",
+        "video-creation/remotion/src/BullishOnKaspaData.ts",
+        "video-creation/remotion/src/BullishOnKaspaTransitions.ts",
+        "video-creation/remotion/src/Root.tsx (registration)",
+    ],
+    "card_t": [65.4, 455.705],
+    "pause_s": 3.5,
+    "inserts": [{"at": 65.4, "dur": 1.0}, {"at": 302.165, "dur": 10.8}, {"at": 455.705, "dur": 3.5}],
+    "spine_secs": 528.367,
+    "dur_frames": 16311,
+    "covers": n,
+    "transitions_wired": [{"tc": x["tc"], "id": x["id"]} for x in t],
+    "captions_groups": {"kt_caption_phrases_rendered": 40, "house_groups_generated_not_rendered": 110},
+    "gates": {
+        "COMP-IMPORTS-LINT": "PASS files=5 fails=0",
+        "COVERS-LINT": "PASS covers=119 fails=0 warns=7 (all 7 are GAP warns on planned FACE windows)",
+        "DECK-CONTAINERS": "lint-deck-containers: OK, 27 deck refs, all single containers",
+        "SLIDE-BALANCE-LINT": "PASS fails=0 warns=0",
+        "ANIMATED-CHARTS-LINT": "PASS charts=7 missing=0",
+        "TRANSITION-ASSETS-LINT": "PASS ids=20 fails=0 warns=0",
+        "SPINE-FPS": "PASS fps=30.000 frames=16312",
+        "FACE-REFRAME-LINT": "PASS scale=1.398 x=-651.0 y=-415.0",
+        "PAUSE-SILENCE": "PASS inserts=3",
+        "BROLL-MOTION": "FAIL clips=21 fails=1 (BR-8-cargo-ship-sailing, render frozen 18/36, allowed 3)",
+    },
+    "broll_motion": {
+        "machine_line": "BROLL-MOTION FAIL clips=21 fails=1",
+        "clip": "BR-8-cargo-ship-sailing",
+        "frames": "3156-3266",
+        "measurements_frozen_median_max": {
+            "full draft 200k": [18, 0.058, 0.183],
+            "same frames alone at 200k": [5, 0.106, 0.622],
+            "same frames alone at crf 18": [0, 0.332, 0.408],
+            "source clip at x1.2": [0, 0.406, 0.469],
+        },
+        "reading": "Likely the 200k bitrate flattening a slow, low-detail aerial, not the stale-frame cache bug: the crf 18 render of these frames has no frozen steps, the short 200k render (too short to fill the cache) already shows 5, and the full draft's biggest step (0.183) is smaller than one real frame step (about 0.33), so there is no hold-then-jump pattern. Not proven for the full render: the crf 18 test was a short slice, and the cache only fills on a long render. The proof is check_broll_motion on the FINAL. The gate was not edited or waived and the bitrate was not changed.",
+    },
+    "chunks_qa": [
+        {"frames": "about 120 stills across the whole video, half scale", "what": "every content type, charts, receipts, cards, face windows, wall, subscribe bar", "verdict": "fixed: MINED BY ANYONE headline was dark text on a dark image, now white"},
+        {"frames": "118 stills around all 20 library windows", "what": "a frame before, inside, on the cut, and after each engine window (section 6a)", "verdict": "fixed: F7 still lacked the side-panel shift (pop at window end); CLIP-1 lead-out popped at the swap, now fades inside the optics B side"},
+        {"frames": "9060-9460", "what": "CLIP-1 lead-in, insert, insert-out, F6 cut-in; audio level equals the spine (-19.8 dB mean, -0.5 dB max), so no doubled VO", "verdict": "ok"},
+        {"frames": "540-840", "what": "F2 cut-in, F2 captions, film burn, BR-4 whip", "verdict": "fixed: page hung twice on the BR-4 whip (frames 801, 803); whips on video rows now use a CUTFRAME still for 0.37 s, section 6a"},
+        {"frames": "790-830", "what": "film burn and BR-4 whip after the fix", "verdict": "ok"},
+        {"frames": "13780-14260", "what": "F7 side panels, punch + leak, film burn, cube, wall, EARLY, flag motion clip, headline, card", "verdict": "ok"},
+        {"frames": "15990-16310", "what": "comment pop, subscribe bar, F9 punch + leak, last frame", "verdict": "ok"},
+    ],
+    "draft": {
+        "file": P + r"\bullish-on-kaspa-draft-v1.mp4",
+        "duration_s": 543.7,
+        "spine_duration_s": 543.7,
+        "frames": 16311,
+        "fps": 30,
+        "audio": True,
+        "audio_levels_match_spine": "mean -25.0 dB, max -0.5 dB on both",
+        "blackdetect": "no black stretches of 0.08 s or more",
+        "render_minutes": 98.6,
+        "failed_chunk_attempts": 1,
+        "log": P + r"\bullish-on-kaspa-draft-v1-render.log",
+    },
+    "needs_review": [
+        "BROLL-MOTION FAIL on BR-8 (frames 3156-3266). Watch it in the draft. Re-check on the FINAL before delivery; at that point a FAIL means the render cache, and the skill's fix is back to 4 GB.",
+        "Audio was measured, not listened to: nobody has heard this render. The comp carries no music or SFX, so the TRANSITIONS.md listen items (F3, F7, wall) wait for the mix.",
+        "CUE-SHEET mixer gap is still open: mix_music.py does not resolve the in-pause cash-register and swoosh-4 on the wall's card pause. Outside this build, but it blocks those two sounds.",
+        "Receipt highlight rectangles and push targets were placed by eye from gridded previews, with no OCR on this machine. Most were seen in stills; the C24 row highlights, C32, C15 and the C10 box deserve a look.",
+        "C20-kaskad-hero got a generic gentle push: its hero PNG was not inspected before the camera was set.",
+        "Light leaks wash out to near white for a few frames at their peak (F6 311.567, F8, F9), briefly fading the captions. That is the engine's look at full strength.",
+        "Spin at 123.5 into C8 is the heaviest window (a 3D pan inside a spin): one chunk attempt died there at frame 3737 and the retry passed. Chrome logged tile-memory warnings in that failed attempt. The draft frames there look right.",
+        "On-screen vs spoken figures flagged in the CUE-SHEET still air as captured: C35 shows 374.76 against the spoken 368, C9 shows 376 holders against the spoken 355, C14 shows 568,035 wallet addresses.",
+        "Render ran on quant's shared machine: stills flooded C: with temp bundles (project log 03:30). All later renders used TEMP on D:.",
+    ],
+    "deviations": [
+        "Captions: the brief says to render ZCAPTIONS + CAPTION_WINDOWS; EDIT-PLAN, CUE-SHEET and the project constraints say kt-caption-highlight IS the caption on all 9 FACE windows and the house track is OFF. Built to the blueprint: 40 KT phrases render, the house data is imported behind HOUSE_CAPTION_TRACK = false, never a second caption.",
+        "Card move: the plan id rmn:cube does not exist in @remotion/transitions, so it is wired as hand:cube-3d per comp-build section 6.",
+        "Library window placement: each window is exactly win frames, but the engine's swap fraction sits on the cut instead of the window being centred (section 5 and 6a say centred). This puts leak peaks on their joins and keeps black pre-face spine out of the B side. Actual swap lands within 1 frame of the cut.",
+        "Face cut-in B side is a frozen face frame for the rest of the window (about 15 frames), per the section 6a SpineStill rule, so the lips hold briefly under the zoom.",
+        "Whips on video rows show a CUTFRAME still for 0.37 s (section 6a cost trap). New assets beyond the EDIT-PLAN reconciliation: assets/cutframes/ (11 jpg), assets/effects-kt/ (4 mp4), assets/overlays/kaspa-logo.png, assets/transitions/lib.",
+        "F7 side panels shift the picture 330 px (library row: 80 px), because at 80 px the panel covers his centred face. C26 keeps the row's 549 px.",
+        "Pops over LIGHT covers use accent ink with a white edge (LightPop) instead of the engine's white-with-dark-shadow, which is unreadable on the light page. FINAL and the b-roll headlines use the shared engines.",
+        "IMG-5 and IMG-6 motion clips play at their own 24 fps speed, not frame for frame: at 1.25x the 4.04 s clip would not cover the slot.",
+        "C22 is one continuous COVERS row (states A, B, C are the recording's own hovers); C14 stage 2 is a camera key inside its row.",
+        "Bands exit with a comp-side slide-down per the plan (the shared engine has no exit). The stacked list, wall, chip, sparkle, caption line and subscribe bar have no shared engine and were built in BullishOnKaspaCharts.tsx to their library rows.",
+    ],
+}
+open(P + r"\comp-build-report.json", "w", encoding="utf8").write(json.dumps(r, indent=1, ensure_ascii=False))
+print(n, r["draft"]["file"])

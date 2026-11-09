@@ -1487,7 +1487,7 @@
     {
       "batch": "best-time",
       "track": "livestream-repurpose",
-      "status": "active",
+      "status": "completed",
       "date": "2026-10-27",
       "livestream_title": "best-time LOW BPS VERTICAL",
       "title": null,
@@ -1514,7 +1514,7 @@
     {
       "batch": "30x-tao",
       "track": "livestream-repurpose",
-      "status": "active",
+      "status": "completed",
       "date": "2026-10-28",
       "livestream_title": "30x-tao LOW BPS VERTICAL",
       "title": "These Crypto Plays Could 30x",
@@ -1533,6 +1533,33 @@
         "longform": "done"
       },
       "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-10-28."
+    },
+    {
+      "batch": "kaspa-cocktails",
+      "track": "livestream-repurpose",
+      "status": "active",
+      "date": "2026-11-02",
+      "livestream_title": "kaspa-cocktails LOW BPS VERTICAL",
+      "title": "Kaspa's Chart Looks Just Like Early Bitcoin",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/kaspa-cocktails/kaspa-cocktails LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/kaspa-cocktails LOW BPS VERTICAL/kaspa-cocktails LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/kaspa-cocktails LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/kaspa-cocktails/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/kaspa-cocktails",
+        "video-creation/shorts/kaspa-cocktails"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done",
+        "longform": "done"
+      },
+      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-11-02.",
+      "briefs": {
+        "lane3": "Make this batch Kaspa-centric: there is a lot of Kaspa content in this stream, so the tweets, threads, polls, quizzes and YT/IG posts should lean on the Kaspa topics first (KCC20 / Nacho migration deadline January 31, Kaspa chart vs early Bitcoin, Kaspa's first bear market vs Bitcoin's 50 week MA, the 3.33 dollar target, GHOSTDAG / blockDAG, Bitcoin maxis rotating to Kaspa, the Kaspa conference cruise).",
+        "clips": "Make this batch Kaspa-centric: there is a lot of Kaspa content in this stream (KCC20 / Nacho migration, Kaspa chart vs early Bitcoin, Kaspa's first bear market and the 50 week MA, the 3.33 dollar target and 100 trillion crypto market cap, GHOSTDAG / blockDAG lanes, Bitcoin maxis moving to Kaspa, the Kaspa conference cruise), so favor Kaspa clips over everything else. Prefer longer clips, but if the content cannot support a much longer clip, make the clips shorter instead of padding them."
+      }
     }
   ]
 }

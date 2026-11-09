@@ -293,8 +293,13 @@ math). `lint_screenplay.py` fails any dollar sign outside a code span; exact fig
 **The hook-to-body handoff line is ROTATED (Mike, 2026-10-01).** The line that closes CH1 ("So, let's dive
 into all this.") must not be the same wording every video. The variant list and the rotation rule live in
 `persona/persona.json` -> `spoken_voice.signature_devices.dive_in_variants`: script ONE `approved` line that
-is not the most recent in `recent_use`, and list 2-3 alternates (at least one `proposed`) in the screenplay's
-OPEN QUESTIONS so Mike picks at GATE 1. Record his pick back into that persona entry the same turn.
+is NOT among the last 3 entries of `recent_use` (prefer the one used longest ago, or a `proposed` line never used),
+and list 2-3 alternates (at least one `proposed`) in the screenplay's OPEN QUESTIONS so Mike picks at GATE 1.
+**In code since 2026-11-01** (Mike, left-behind GATE 1: "why do you always use 'let's dive into all this'?"; the
+hand-kept `recent_use` had gone stale after 2026-10-16, so the first `approved` line never looked recent):
+`lint_screenplay.py` rule 17 FAILS a CH1 handoff that repeats any of the last 3 `recent_use` lines, and the graph
+records the scripted line at the top of `recent_use` when GATE 1 is approved (`skills/doc-reference/handoff_rotation.py`).
+If Mike says a different line on the recording, add that one to `recent_use` too.
 
 **The "go back and rewatch" line, a watch-time device (Mike, 2026-10-24).** Right AFTER a genuinely complex
 beat (a dense mechanism, a system-design diagram or chart that took real explaining), Mike may invite the viewer

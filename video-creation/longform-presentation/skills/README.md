@@ -14,6 +14,6 @@ this folder holds the track's POLICY on top of them and any processing customiza
 | `card-overlays/` | `card-overlays.md` | `card_overlays.py` | Format 4 (deck screen share with webcam PiP, free talk): a few full-screen deck cards over the A-roll, one card per moment, cued off the transcript of Mike's enhanced spine. Card pages from the deck's own `<style>` -> 1920x1080 stills -> ONE ffmpeg encode (spotlight entrance, 0.3 s fade out, audio stream-copied, the spine's frame timing) -> contact sheet. No Remotion, no draft. |
 | `thumbnail/` | `thumbnail.md` | `export_thumb.py` | Series thumbnails as an EDIT of the previous episode's published thumbnail (Higgsfield nano_banana_2, three takes, Mike picks), exported 1920x1080 JPG under YouTube's 2 MB cap. |
 
-Started 2026-10-13 when the track was revived (first videos through it: `media/what-to-buy/` no-deck, then
-`media/history-of-crypto/` with the deck). The track doc (`../longform-presentation.md`) points here from Phases 2
+Started 2026-10-13 when the track was revived (first videos through it: `media/desilence-only/what-to-buy/` no-deck, then
+`media/deck-lecture/history-of-crypto/` with the deck). The track doc (`../longform-presentation.md`) points here from Phases 2
 and 4; the repo router (`CLAUDE.md`) has the one-liners.

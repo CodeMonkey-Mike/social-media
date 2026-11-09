@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ov2-system: How Janction Works (how-it-works)</title>
+<!--
+  SYSTEM-DESIGN CHART, JCT (longform-presentation format 4, card-overlays kind "image"). One state. Dark mode.
+  Canvas 1464 x 1080 (the deck area). A two-sided GPU marketplace read left to right in the order Mike narrates it:
+  GPU owners (supply, green) feed the Janction network (cyan zone: the GPU pool + scheduler, with the validators
+  checking it through the two proofs), AI and 3D teams (demand) rent the compute and pay back; the JCT token (gold)
+  sits under it all with its three jobs (stake, vote, pay). No numbers on it.
+  Every label is from ../../RESEARCH.md 2.2 + 3.1 (the docs, project claims); the deck's wording
+  (../../JCT.html, slide 3, "How It Works") kept. The token mark is Janction's own logo (real pixels, embedded).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* locked tokens: video-creation/longform-edited/skills/container-reference/container-canonical.css (do not change) */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1464px;height:1080px;overflow:hidden;background:#0a0c10}
+body{font-family:'DM Sans',sans-serif}
+.frame{width:1464px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
+.head{position:absolute;left:64px;top:44px;z-index:3}
+.ey{font-family:'DM Sans';font-size:24px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted)}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:68px;line-height:1.07;letter-spacing:-.02em;color:var(--text-primary);margin-top:12px}
+.divider{width:66px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin-top:18px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)} .mu{color:var(--text-secondary)}
+svg.layer{position:absolute;left:0;top:0}
+#zones{z-index:1} #wires{z-index:2}
+
+/* zone label */
+.zl{position:absolute;z-index:3;font-family:'DM Sans';font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:.16em}
+
+/* nodes */
+.node{position:absolute;z-index:4;background:var(--bg-card);border:1.5px solid var(--border);border-radius:16px}
+.node.gr{border-color:rgba(0,230,138,.55);box-shadow:0 0 46px rgba(0,230,138,.13)}
+.node.cy{border-color:rgba(0,194,255,.55);box-shadow:0 0 46px rgba(0,194,255,.13)}
+.node.cyq{border-color:rgba(0,194,255,.34);box-shadow:0 0 40px rgba(0,194,255,.06)}
+.node.src{border-color:#2a3142;box-shadow:0 0 46px rgba(232,234,240,.05)}
+.side{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:4px}
+.side svg{display:block;margin:0 auto}
+.ttl{font-size:27px;font-weight:600;line-height:1.2;color:var(--text-primary)}
+.lead{font-size:20px;line-height:1.35;color:var(--text-secondary)}
+
+/* validators: the two proofs as chips */
+.vrow{position:absolute;left:24px;top:20px;display:flex;align-items:center;gap:12px;white-space:nowrap}
+.chip{position:absolute;display:flex;align-items:center;gap:12px;padding:0 16px 0 14px;border-radius:12px;
+  background:rgba(0,194,255,.05);border:1px solid rgba(0,194,255,.22)}
+.chip svg{flex:0 0 auto}
+.chip .nm{font-size:18px;font-weight:600;line-height:1.2;color:var(--text-primary);white-space:nowrap}
+.chip .ds{font-size:17px;line-height:1.2;color:var(--text-secondary);margin-top:2px;white-space:nowrap}
+
+/* the token */
+.coin{position:absolute;z-index:4;width:148px;height:148px;border-radius:50%;
+  background:radial-gradient(circle at 38% 32%,#2a2409,#0f0d06);
+  border:3px solid rgba(255,215,0,.85);box-shadow:0 0 64px rgba(255,215,0,.24),inset 0 0 34px rgba(255,215,0,.14);
+  display:flex;flex-direction:column;align-items:center;justify-content:center}
+.coin img{display:block;width:68px;height:68px;mix-blend-mode:lighten;margin-top:-6px}
+.coin .tk{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:27px;line-height:1;color:var(--accent-gold);margin-top:-2px}
+
+/* edge labels */
+.lbl{position:absolute;z-index:5;font-size:19px;font-weight:600;line-height:1.2;white-space:nowrap}
+.lbl.ctr{transform:translateX(-50%);text-align:center}
+.lbl .sub{display:block;font-size:18px;font-weight:400;color:var(--text-secondary);margin-top:4px}
+.lbl.big{font-size:21px}
+
+.src-line{position:absolute;left:64px;top:1036px;z-index:3;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:16px;color:var(--text-muted)}
+</style>
+</head>
+<body>
+<div class="frame" id="how">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);opacity:.16;left:-260px;top:-280px"></div>
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-green);opacity:.09;left:-260px;top:700px"></div>
+
+  <div class="head">
+    <div class="ey">The pitch: an "AI Layer 2"</div>
+    <h1>How Janction Works</h1>
+    <div class="divider"></div>
+  </div>
+
+  <!-- the network zone: the pool + the validators that check it -->
+  <svg class="layer" id="zones" width="1464" height="1080" viewBox="0 0 1464 1080">
+    <rect id="zNet" x="422" y="228" width="620" height="506" rx="20" fill="rgba(0,194,255,.035)" stroke="rgba(0,194,255,.18)" stroke-width="1.5"/>
+  </svg>
+  <div class="zl c" style="left:446px;top:242px">The Janction network</div>
+
+  <svg class="layer" id="wires" width="1464" height="1080" viewBox="0 0 1464 1080"></svg>
+
+  <!-- 1. SUPPLY (green, lit) -->
+  <div class="node gr side" id="nOwn" style="left:64px;top:474px;width:248px;height:236px">
+    <svg width="72" height="54" viewBox="0 0 32 24" fill="none" stroke="#00e68a" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round" aria-label="GPU">
+      <path d="M2.5 21.5V3h2.6"/><rect x="5.1" y="5" width="24.4" height="12.4" rx="2"/><circle cx="12" cy="11.2" r="3.7"/><circle cx="22.6" cy="11.2" r="3.7"/><circle cx="12" cy="11.2" r=".9" fill="#00e68a"/><circle cx="22.6" cy="11.2" r=".9" fill="#00e68a"/><path d="M9 17.4v2.8h11.5v-2.8"/>
+    </svg>
+    <div class="ttl" style="margin-top:12px">GPU owners</div>
+    <div class="lead" style="margin-top:6px">pool their cards<br>into one network</div>
+  </div>
+
+  <!-- 2. THE NETWORK: validators (cyan, quieter) over the pool (cyan, lit) -->
+  <div class="node cyq" id="nVal" style="left:444px;top:274px;width:576px;height:146px">
+    <div class="vrow">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00c2ff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M8.8 12.2l2.2 2.2 4.4-4.6"/></svg>
+      <span class="ttl">Validators</span><span class="lead" style="font-size:21px">check the work</span>
+    </div>
+    <div class="chip" id="cPoR" style="left:24px;top:70px;width:256px;height:56px">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00c2ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      <div><div class="nm">Proof of Resource</div><div class="ds">the GPU supplied</div></div>
+    </div>
+    <div class="chip" id="cPoT" style="left:296px;top:70px;width:256px;height:56px">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00c2ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      <div><div class="nm">Proof of Task</div><div class="ds">the job done</div></div>
+    </div>
+  </div>
+
+  <div class="node cy" id="nPool" style="left:444px;top:474px;width:576px;height:236px">
+    <div class="ttl" style="position:absolute;left:0;right:0;top:24px;text-align:center">GPU pool + scheduler</div>
+    <svg id="cells" style="position:absolute;left:27px;top:102px" width="520" height="88" viewBox="0 0 520 88"></svg>
+  </div>
+
+  <!-- 3. DEMAND (neutral) -->
+  <div class="node src side" id="nTeam" style="left:1152px;top:474px;width:248px;height:236px">
+    <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="#e8eaf0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-label="3D">
+      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
+    </svg>
+    <div class="ttl" style="margin-top:13px">AI and 3D teams</div>
+    <div class="lead" style="margin-top:6px">rent that compute<br>on demand</div>
+  </div>
+
+  <!-- flow labels -->
+  <div class="lbl ctr g" id="lGpu" style="left:367px;top:556px">GPUs</div>
+  <div class="lbl ctr c" id="lCompute" style="left:1097px;top:528px">compute</div>
+  <div class="lbl ctr mu" id="lPay" style="left:1097px;top:632px">payment</div>
+
+  <!-- 4. THE TOKEN (gold, lit) and its three jobs -->
+  <div class="coin" id="nJct" style="left:658px;top:810px">
+    <img alt="Janction logo" src="data:image/jpeg;base64,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">
+    <div class="tk">JCT</div>
+  </div>
+  <div class="lbl go" id="lVote" style="left:752px;top:752px">vote with it<span class="sub"><span class="mono">veJCT</span> governance</span></div>
+  <div class="lbl ctr go big" id="lStake" style="left:440px;top:906px">stake as <span class="mono">veJCT</span><span class="sub">priority in the marketplace</span></div>
+  <div class="lbl ctr go big" id="lPayJct" style="left:1024px;top:906px">pay with it</div>
+
+  <div class="src-line">As described in Janction's docs (project claims).</div>
+</div>
+
+<script>
+/* wires + the pool's vGPU cells. Drawn from the node boxes (explicit px, no font dependency). */
+(function(){
+  var NS = 'http://www.w3.org/2000/svg', svg = document.getElementById('wires');
+  function E(tag, a, p){ var n = document.createElementNS(NS, tag); for (var k in a) n.setAttribute(k, a[k]); (p || svg).appendChild(n); return n; }
+  var defs = E('defs', {});
+  defs.innerHTML =
+    '<filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1464" height="1080"><feGaussianBlur in="SourceGraphic" stdDeviation="4" result="b"/>' +
+    '<feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+  [['aGr', '#00e68a'], ['aC', '#00c2ff'], ['aG', '#ffd700'], ['aM', '#8892a4']].forEach(function(m){
+    defs.innerHTML += '<marker id="' + m[0] + '" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5.2" markerHeight="5.2" orient="auto">' +
+      '<path d="M0,0 L10,5 L0,10 z" fill="' + m[1] + '"/></marker>';
+  });
+  function box(id){ var r = document.getElementById(id).getBoundingClientRect();
+    return { l: r.left, t: r.top, r: r.right, b: r.bottom, w: r.width, h: r.height, cx: r.left + r.width / 2, cy: r.top + r.height / 2 }; }
+  function wire(d, color, mk, w, glow, dash, op){
+    var a = { d: d, fill: 'none', stroke: color, 'stroke-width': w, 'stroke-linecap': 'round', 'marker-end': 'url(#' + mk + ')', opacity: op || 1 };
+    if (glow) a.filter = 'url(#glow)';
+    if (dash) a['stroke-dasharray'] = dash;
+    E('path', a);
+  }
+  var O = box('nOwn'), P = box('nPool'), T = box('nTeam'), V = box('nVal'), J = box('nJct'), R = box('cPoR'), K = box('cPoT');
+  var Z = document.getElementById('zNet'), zb = +Z.getAttribute('y') + +Z.getAttribute('height');
+  var gap = 6, y = P.cy;
+
+  /* the marketplace row: GPUs in (supply), compute out, payment back (demand) */
+  wire('M' + (O.r + 2) + ',' + y + ' L' + (P.l - gap) + ',' + y, '#00e68a', 'aGr', 3.2, true);
+  wire('M' + (P.r + 2) + ',' + (y - 28) + ' L' + (T.l - gap) + ',' + (y - 28), '#00c2ff', 'aC', 3.2, true);
+  wire('M' + (T.l - 2) + ',' + (y + 28) + ' L' + (P.r + gap) + ',' + (y + 28), '#8892a4', 'aM', 2.4, false);
+
+  /* the two proofs go up from the pool to the validators who check them */
+  [R, K].forEach(function(c){
+    wire('M' + c.cx + ',' + (P.t - 2) + ' L' + c.cx + ',' + (V.b + gap), '#00c2ff', 'aC', 2.2, false, '5 7', 0.85);
+  });
+
+  /* the token's three jobs: stake (supply side), vote (the network), pay (the renters) */
+  wire('M' + J.cx + ',' + (J.t - 2) + ' L' + J.cx + ',' + (zb + gap), '#ffd700', 'aG', 2.4, true);
+  wire('M' + (J.l - 2) + ',' + J.cy + ' C' + (J.l - 300) + ',' + J.cy + ' ' + O.cx + ',' + (O.b + 130) + ' ' + O.cx + ',' + (O.b + gap), '#ffd700', 'aG', 2.4, true);
+  wire('M' + (J.r + 2) + ',' + J.cy + ' C' + (J.r + 300) + ',' + J.cy + ' ' + T.cx + ',' + (T.b + 130) + ' ' + T.cx + ',' + (T.b + gap), '#ffd700', 'aG', 2.4, true);
+
+  /* the pool: owners' cards split into equal vGPUs (dim green = supplied), the scheduler hands some out (lit cyan) */
+  var cells = document.getElementById('cells'), lit = {
+    0: [1, 2, 5, 8, 9], 1: [0, 3, 4, 7, 10], 2: [2, 5, 6, 9] };
+  for (var r = 0; r < 3; r++) for (var c = 0; c < 11; c++) {
+    var on = lit[r].indexOf(c) >= 0;
+    E('rect', { x: c * 48 + 1, y: r * 32 + 1, width: 38, height: 22, rx: 5,
+      fill: on ? 'rgba(0,194,255,.72)' : 'rgba(0,230,138,.06)',
+      stroke: on ? '#00c2ff' : 'rgba(0,230,138,.38)', 'stroke-width': 1.5 }, cells);
+  }
+  window.__ready = true;
+})();
+</script>
+</body>
+</html>

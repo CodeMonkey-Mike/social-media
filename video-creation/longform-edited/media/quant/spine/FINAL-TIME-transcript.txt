@@ -1,0 +1,228 @@
+    0.00 -     1.32  So what is quant?
+    1.82 -     3.18  This is something I've been recommended
+    3.18 -     4.74  for quite some time, right?
+    4.74 -     7.76  People from my community, people in my live streams,
+    7.88 -     9.86  dropping comments saying I should buy some quant.
+    9.94 -    12.48  And I always say, you know, it looks pretty good
+   12.48 -    13.96  and so on, but there's so many tokens,
+   13.96 -    16.40  I can't buy everything, but I wanna get into this
+   16.40 -    20.42  and do a deep dive into this and just break it all down.
+   20.60 -    22.60  Right, so here's the short version.
+   23.10 -    26.36  Quant is a London company founded in 2015
+   26.36 -    28.48  by a guy named Gilbert Veridian.
+   28.48 -    31.66  And what they sell is not a new blockchain.
+   31.82 -    34.46  It's a software layer that sits on top of the systems
+   34.46 -    35.76  that bank already runs.
+   35.92 -    38.34  And it connects them to the blockchains
+   38.34 -    40.50  and the digital money networks that are out there.
+   40.68 -    43.32  Their customers are banks, financial institutions,
+   43.68 -    44.70  and capital markets.
+   44.92 -    46.22  And by the end of this,
+   46.48 -    48.38  you're gonna know who exactly is using it,
+   48.58 -    51.02  what the token does, and where it sits
+   51.02 -    52.10  for the rest of the world.
+   52.24 -    53.76  So let's walk through all of this.
+   55.52 -    57.58  Now, to understand why quant exists,
+   57.84 -    59.56  think of every bank as an island.
+   59.56 -    62.86  Each island has its own vault and its own ledger.
+   62.96 -    65.44  And the money on one island just can't walk over
+   65.44 -    66.24  to the next one.
+   66.42 -    70.10  It goes on a boat, one payment, one leg at a time,
+   70.10 -    71.76  and that boat can take days.
+   72.02 -    74.36  Now the banks are turning those deposits digital.
+   74.66 -    77.82  A tokenized deposit is still your deposit at your bank,
+   78.26 -    80.02  same protections, same regulator,
+   80.54 -    81.74  it's just recorded differently.
+   82.00 -    85.36  And it can carry rules, like move when this happens,
+   85.44 -    86.80  release when that happens.
+   86.96 -    87.90  But here's the thing though,
+   87.90 -    90.30  right now most of them only move inside the bank
+   90.30 -    91.22  that issued them.
+   91.50 -    94.36  Quant's own words for it, rolled gardens.
+   94.64 -    96.80  Same islands, brand new fences.
+   97.08 -    99.74  So the obvious move will be to build one more island,
+   99.98 -   103.54  one big chain, tell every bank, come and settle over here.
+  103.70 -   107.04  And that is exactly what quant did not do.
+  107.50 -   109.70  Quant is a layer that sits above the islands.
+  110.00 -   113.00  The bank keeps its core systems, keeps its payment rails,
+  113.18 -   114.46  keeps custody of the money.
+  114.74 -   117.16  Quant connects all of that through a set of APIs
+  117.16 -   118.82  and orchestrates the movement.
+  119.02 -   120.60  And it never holds the funds.
+  120.88 -   123.10  Now what does that look like for one payment?
+  123.26 -   126.14  Quant's own example, a manufacturer in London
+  126.14 -   127.94  paying a supplier in Singapore.
+  128.48 -   129.94  Step one, lock.
+  130.22 -   132.36  The London bank locks the manufacturer's money
+  132.36 -   134.12  the moment it accepts the instruction.
+  134.28 -   135.48  Step two, credit.
+  135.66 -   138.40  The Singapore bank credits the supplier right away
+  138.40 -   139.80  against that lock.
+  140.20 -   141.86  Step three, settle.
+  142.06 -   144.76  The two banks settle with each other in the next window
+  144.76 -   146.28  and the lock is released.
+  146.28 -   149.52  No new asset and the money never left the banking system.
+  150.08 -   153.34  It was a deposit at a regulated bank the whole way.
+  153.66 -   155.76  And the second trick is a synchronized settlement.
+  156.00 -   158.62  The old way settles each leg of the deal on its own.
+  158.74 -   161.68  So one leg clears, the other one hasn't yet.
+  161.88 -   164.00  And for a moment, the whole deal sits in limbo.
+  164.14 -   166.22  With this layer, every bank involved
+  166.22 -   167.64  reserves its funds first.
+  167.74 -   170.72  And then every leg commits together or none of them do.
+  170.94 -   173.80  And if that was a bit complex, I feel you bro.
+  173.80 -   176.30  Feel free to double tap the left side of this video
+  176.30 -   177.64  if you're on your phone to go back
+  177.64 -   179.02  and watch it all over again.
+  179.12 -   181.20  Now here's the thing with the real names.
+  181.36 -   183.32  On the left, what a bank already runs.
+  183.52 -   185.84  Core Banking, Treasury, the payment rails.
+  186.12 -   187.20  In the middle, Quant.
+  187.56 -   189.24  Overledger is the API connector.
+  189.54 -   191.54  Quant Flow is where the bank writes the rules
+  191.54 -   193.66  in their own payment language, PayScript.
+  193.88 -   195.58  Quant Net is the orchestration layer
+  195.58 -   196.84  coordinated in the islands.
+  197.12 -   198.88  Quant Fusion is their roll up.
+  199.06 -   202.64  Live on Mainnet sends June 2nd, 2026.
+  203.14 -   204.96  Connected to 74 networks.
+  205.28 -   206.74  And on the right, the ledgers
+  206.74 -   208.66  and the tokenized deposit platforms.
+  210.36 -   211.84  So who's actually using this?
+  212.02 -   214.38  Let's start with the founder, Gilbert Verdian.
+  214.60 -   217.50  He's a cyber security guy with more than 20 years of it.
+  217.54 -   219.48  And he's been a security chief at that level.
+  219.68 -   221.54  He's worked inside the UK government
+  221.54 -   223.34  at Downing Street and the Treasury
+  223.34 -   227.08  and inside big financial names like MasterCard and HSBC.
+  227.32 -   230.20  Back in 2016, Quant says he helped set up
+  230.20 -   232.74  the ISO committee that writes the blockchain standards.
+  232.74 -   236.54  In October of 2026, he sat on a panel in London
+  236.54 -   249.72  and this is how we describe what Quant does.
+  250.26 -   253.68  GBTD, that's the Great British Tokenized Deposit Platform.
+  254.26 -   258.04  Run by UK Finance and Quant built the infrastructure for it.
+  258.12 -   259.58  Seven banks are on it.
+  259.86 -   263.76  Barclays, HSBC, Loy's, Monzo, Nationwide,
+  264.20 -   265.78  NatWest and Santander.
+  265.96 -   267.70  And in September of 2026,
+  267.94 -   270.42  it did its first live customer transactions.
+  270.70 -   272.12  Two of them were remortgages.
+  272.28 -   272.84  Picture it.
+  272.84 -   275.30  Your deposit gets locked the day you sign,
+  275.48 -   277.12  keeps earning interest the whole time
+  277.74 -   279.00  and on completion day,
+  279.24 -   281.12  it releases itself to the other side.
+  281.22 -   284.20  That's the padlock from the whiteboard on real money.
+  284.26 -   286.82  And then the big one, the clearing house.
+  287.36 -   289.68  The US payments company owned by 25
+  289.68 -   291.22  of the largest US banks.
+  291.78 -   293.92  It runs RTP and chips
+  293.92 -   296.58  and clears more than $2 trillion a day.
+  296.70 -   300.48  On September 24th, 2026, after a competitive process,
+  300.48 -   303.38  they picked bank to build over the new tokenized network.
+  303.54 -   304.54  Look right here.
+  304.88 -   307.08  The interoperability, orchestration
+  307.08 -   308.76  and transaction management layer.
+  308.98 -   311.98  Expected to open to banks in the first half of 2027.
+  312.34 -   313.78  Pictures of 25 islands,
+  313.90 -   315.76  each with its own digital deposits
+  315.76 -   317.74  and one shared network between them,
+  318.16 -   320.34  connected to the rails that banks already use.
+  320.62 -   323.38  And around those two are trail of receipts.
+  323.54 -   325.52  Technology vendor on a project Rosaline
+  325.52 -   328.46  with the Bank of England and the BIS in 2023.
+  328.46 -   331.12  One of 18 operators in the Bank of England
+  331.12 -   333.12  synchronization lab in 2026.
+  333.44 -   336.18  And that one is a test, no real money moves there.
+  336.40 -   338.46  A pioneer on a European Central Banks
+  338.46 -   340.66  digital Euro platform in 2025.
+  341.14 -   343.12  Murex in March of 2026.
+  343.48 -   346.92  Densu Soken in Japan in January of 2026.
+  348.76 -   349.62  Now the token.
+  350.16 -   352.84  Quant lives on Ethereum and then supply is fixed.
+  353.12 -   355.18  Around 14.6 million tokens,
+  355.80 -   357.80  almost all of it already circulating.
+  357.80 -   359.62  That's all there will ever be.
+  360.30 -   362.42  It sold to the public in 2018.
+  362.82 -   367.64  And the all time high was around $427 in September of 2021.
+  367.92 -   371.48  And at the time of this recording is trading at $199
+  371.48 -   373.98  for a market cap of $2.9 billion,
+  374.80 -   376.42  which puts it at rank 34.
+  376.56 -   378.56  So what does the token actually do?
+  378.88 -   380.54  The documented use is simple.
+  380.80 -   383.08  If you wanna use Overledger on main net,
+  383.50 -   384.68  you pay a license fee.
+  384.86 -   386.50  And since December of 2021,
+  386.50 -   388.34  that fee is payable in QNT.
+  388.64 -   391.56  The payment goes through a treasury contract to quant.
+  391.78 -   394.80  No governance rights, a utility token, pure and simple.
+  395.00 -   396.92  And here's the thing, the bank deals,
+  397.12 -   399.00  the clearing house, the GBTD,
+  399.14 -   401.36  those are software and service contracts.
+  401.64 -   403.86  And nothing published says how much of that,
+  403.88 -   405.92  if any flows through QNT.
+  406.20 -   407.84  So the open question for the token
+  407.84 -   409.98  is whether the second pipe ever gets built.
+  411.70 -   413.56  Now the price alone tells you very little.
+  413.76 -   417.06  So I wanna look at quant the way the pros do, as ratios.
+  417.06 -   418.34  All right, so now look at this.
+  418.38 -   419.80  This is quant's market cap
+  419.80 -   422.98  as a share of the total crypto market cap going back to 2018.
+  423.14 -   426.06  The all time peak of that share was October of 2022
+  426.06 -   429.88  at 0.269% right in the middle of a bear market.
+  430.06 -   431.94  Then it bled for about three years
+  431.94 -   435.86  down to a band around 0.03 to 0.04%.
+  435.86 -   439.06  And then in September of 2026, the clearing house news,
+  439.16 -   445.34  and the share goes from 0.028 to around 0.09% in 10 weeks,
+  445.34 -   446.94  more than a three X.
+  447.14 -   449.86  And that's still only a third of where it was in 2022.
+  450.26 -   451.10  All right, so now the peers.
+  451.32 -   453.98  So Chainlink, Hedera, XRP, Styler, Canton,
+  454.62 -   457.70  everything indexed to 100 on November 5th, 2025.
+  457.82 -   459.06  You got Bitcoin and Gray.
+  459.22 -   461.66  For 10 months, quant didn't do anything special.
+  461.94 -   464.72  A brief pop in 140 in December of 2025,
+  464.88 -   468.30  then a slow drift down to 82 by the end of August, 2026.
+  468.52 -   471.92  And this is all the while its peers fell from 40 to 60%.
+  471.92 -   473.46  And then one line leaves the group.
+  473.46 -   476.34  A year later, quant sits at 273.
+  476.50 -   478.50  And every other line in this chart is below 100.
+  478.70 -   482.24  And then in Bitcoin terms, on November 5th, 2025,
+  482.66 -   485.70  one quant brought you around 72,000 sats.
+  485.80 -   491.04  And on November 4th, 2026, around 254,000 sats.
+  491.08 -   494.56  That's around a 3.5 X against Bitcoin in a year,
+  494.78 -   497.66  while Bitcoin itself is down 23% in dollars.
+  497.88 -   500.70  Zoom out though, and the all time high in Bitcoin terms
+  500.70 -   502.24  was in October of 2022.
+  502.86 -   505.26  At around 1.17 million sats.
+  505.54 -   508.84  So even after this run, quant sits at around 22%
+  508.84 -   510.88  of its best level against Bitcoin.
+  512.86 -   513.96  Now, what's next?
+  514.12 -   516.70  And I'll use these sources own words for where it stands.
+  517.00 -   520.18  In the UK, UK finance says more pilots are coming,
+  520.42 -   522.90  and the banks plan to issue digital debt instruments,
+  523.02 -   525.28  basically bonds, with the coupons paid
+  525.28 -   526.50  in tokenized deposits.
+  526.72 -   529.92  In the US, the clearing house is building a network now,
+  530.14 -   532.32  and Gilbert Verdean said on that same panel,
+  532.32 -   534.40  it goes live in early 2027.
+  534.54 -   536.44  His words, his forecast.
+  536.72 -   539.42  So here's my read on quant after all of that.
+  539.46 -   541.14  Quant is not a coin trying to become
+  541.14 -   542.28  the bank's new blockchain.
+  542.68 -   545.58  It's a layer the banks are actually letting into the building,
+  545.94 -   548.56  live in the UK, with a date in the US.
+  548.84 -   553.12  Can the token rerate again if the US network opens on time?
+  553.72 -   556.26  It can, but you know, nobody can promise you that.
+  556.42 -   558.88  But every one of those banks is an island,
+  558.90 -   561.62  and right now, quant is the one holding the contracts
+  561.62 -   562.58  that connects them.
+  562.60 -   564.24  And if you enjoyed this rundown,
+  564.24 -   566.90  give this video a like, and hit that subscribe button
+  566.90 -   567.68  if you're new here.
+  567.76 -   569.72  And like I said, like I mentioned earlier on,
+  569.82 -   572.58  I do have a community, it's a rock star community.
+  572.66 -   574.60  We get in like a lot of these awesome gains,
+  575.00 -   575.80  like really, really early.
+  575.92 -   579.36  We just did like 114X on Perp's pad like a month ago.
+  579.70 -   581.46  So click the link in the description below.

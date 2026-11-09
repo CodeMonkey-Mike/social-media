@@ -16,7 +16,10 @@
  * never reaches the deliverable. `audio` (a file in the render --public-dir) is only for Studio / QA chunks.
  *
  * Scene kinds mirror the lecture deck's container vocabulary (chapter h2, tool-card, bullet-list, timeline-item,
- * accent-card, cycle-card, sma-card, stat-box, next-tag). A new deck family with other containers extends the
+ * accent-card, cycle-card, sma-card, stat-box, next-tag). Lecture 4's deck family (2026-11-08) added `block` (the
+ * bullet-block / compare-card / tradeoff-card: a titled box of bullets, active-item highlight), `flow` (the flow-row,
+ * the node the narration is on lit), `supply` (the supply-bar visual) and `[[...]]` accent spans in `statement`
+ * (the closing-statement's highlighted words). A new deck family with other containers extends the
  * union + SceneNode here; the per-project comp only supplies THEME (fonts/colors ported from the deck) + data.
  */
 import React from 'react';
@@ -24,10 +27,14 @@ import { AbsoluteFill, Audio, interpolate, staticFile, useCurrentFrame, useVideo
 
 export type SpotBulletItem = { strong: string; rest?: string; t?: number };
 export type SpotCycle = { num: string; peak: string; date: string; crash: string };
+export type SpotSupplyRow = { value: string; pct: number; tag: string };
 
 export type SpotScene = { id: string; t: number } & (
   | { kind: 'chapter'; eyebrow: string; title: string }
   | { kind: 'card'; icon?: string; title: string; sub: string }
+  | { kind: 'block'; label?: string; title: string; items: SpotBulletItem[]; variant?: 'trad' | 'crypto'; active?: number }
+  | { kind: 'flow'; items: SpotBulletItem[]; active?: number }
+  | { kind: 'supply'; label: string; rows: SpotSupplyRow[]; note: string; variant: 'fiat' | 'btc' }
   | { kind: 'bullets'; label?: string; items: SpotBulletItem[]; active?: number }
   | { kind: 'titem'; date: string; title: string }
   | { kind: 'accent'; title: string }
@@ -95,6 +102,64 @@ const SceneNode: React.FC<{ s: SpotScene; th: SpotTheme; now: number }> = ({ s, 
           <div style={{ fontFamily: th.fontBody, fontSize: 40, lineHeight: 1.5, color: th.muted, marginTop: 24 }}>{s.sub}</div>
         </Box>
       );
+    case 'block': {
+      let active = s.active ?? -1;
+      s.items.forEach((it, i) => { if (it.t !== undefined && it.t <= now) active = Math.max(active, i); });
+      const dot = s.variant === 'trad' ? th.veryMuted : th.accent;
+      return (
+        <Box th={th} width={1360} pad="70px 84px">
+          {s.label && <Eyebrow th={th} color={s.variant === 'trad' ? th.muted : th.accent} size={26} mb={18}>{s.label}</Eyebrow>}
+          <div style={{ fontFamily: th.fontHead, fontWeight: 800, fontSize: 64, lineHeight: 1.15, color: th.text, marginBottom: 30 }}>{s.title}</div>
+          {s.items.map((it, i) => {
+            const on = i === active;
+            const dim = active >= 0 && !on;
+            return (
+              <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 28, padding: '16px 0', opacity: dim ? 0.5 : 1 }}>
+                <div style={{ width: 14, height: 14, minWidth: 14, borderRadius: '50%', background: on ? th.accent : dot, marginTop: 22,
+                  boxShadow: on ? `0 0 20px ${th.accent}` : 'none' }} />
+                <div style={{ fontFamily: th.fontBody, fontSize: 44, lineHeight: 1.4, color: on ? th.text : th.muted, fontWeight: on ? 500 : 400 }}>
+                  {it.strong}{it.rest ?? ''}
+                </div>
+              </div>
+            );
+          })}
+        </Box>
+      );
+    }
+    case 'flow': {
+      let active = s.active ?? -1;
+      s.items.forEach((it, i) => { if (it.t !== undefined && it.t <= now) active = Math.max(active, i); });
+      return (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 26, maxWidth: 1740 }}>
+          {s.items.map((it, i) => it.strong).map((n, i) => (
+            <React.Fragment key={i}>
+              {i > 0 && <div style={{ fontFamily: th.fontBody, fontSize: 52, color: th.veryMuted }}>→</div>}
+              <div style={{ background: th.surface, border: `2px solid ${i === active ? th.accent : th.border}`, borderRadius: 6,
+                padding: '34px 40px', fontFamily: th.fontBody, fontSize: 42, fontWeight: 500, whiteSpace: 'nowrap',
+                color: i === active ? th.accent : th.text, boxShadow: i === active ? `0 0 40px ${th.accent}33` : '0 30px 90px rgba(0,0,0,0.55)' }}>{n}</div>
+            </React.Fragment>
+          ))}
+        </div>
+      );
+    }
+    case 'supply': {
+      const col = s.variant === 'btc' ? th.accent : th.muted;
+      return (
+        <Box th={th} width={1440} pad="70px 84px">
+          <Eyebrow th={th} color={th.muted} size={28} mb={44}>{s.label}</Eyebrow>
+          {s.rows.map((r, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 36, marginBottom: 34 }}>
+              <div style={{ fontFamily: th.fontHead, fontWeight: 800, fontSize: 64, color: col, minWidth: 340, whiteSpace: 'nowrap' }}>{r.value}</div>
+              <div style={{ flex: 1, height: 22, borderRadius: 4, background: th.border, overflow: 'hidden' }}>
+                <div style={{ height: '100%', borderRadius: 4, background: col, width: `${r.pct}%` }} />
+              </div>
+              <div style={{ fontFamily: th.fontBody, fontSize: 34, color: th.veryMuted, width: 110 }}>{r.tag}</div>
+            </div>
+          ))}
+          <div style={{ fontFamily: th.fontBody, fontSize: 36, color: th.muted, marginTop: 20 }}>{s.note}</div>
+        </Box>
+      );
+    }
     case 'accent':
       return (
         <Box th={th} width={1460} left={th.accent} bg="rgba(245,166,35,0.06)" border="rgba(245,166,35,0.2)" pad="68px 84px">
@@ -157,14 +222,16 @@ const SceneNode: React.FC<{ s: SpotScene; th: SpotTheme; now: number }> = ({ s, 
     }
     case 'stat':
       return (
-        <Box th={th} width={1000} pad="72px 80px">
-          <div style={{ fontFamily: th.fontHead, fontWeight: 800, fontSize: 150, lineHeight: 1, color: th.accent }}>{s.num}</div>
+        <Box th={th} width={1300} pad="72px 80px">
+          <div style={{ fontFamily: th.fontHead, fontWeight: 800, fontSize: 150, lineHeight: 1, color: th.accent, whiteSpace: 'nowrap', marginBottom: 34 }}>{s.num}</div>
           <Eyebrow th={th} color={th.muted} size={30}>{s.label}</Eyebrow>
         </Box>
       );
     case 'statement':
       return (
-        <div style={{ fontFamily: th.fontHead, fontWeight: 700, fontSize: 60, lineHeight: 1.35, color: th.text, textAlign: 'center', maxWidth: 1450 }}>{s.text}</div>
+        <div style={{ fontFamily: th.fontHead, fontWeight: 700, fontSize: 60, lineHeight: 1.35, color: th.text, textAlign: 'center', maxWidth: 1450 }}>
+          {s.text.split(/\[\[|\]\]/).map((part, i) => i % 2 ? <span key={i} style={{ color: th.accent }}>{part}</span> : part)}
+        </div>
       );
     case 'nexttag':
       return (

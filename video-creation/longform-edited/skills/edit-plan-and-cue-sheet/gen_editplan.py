@@ -8,7 +8,8 @@ port keeps its one good idea, a mechanical time-sorted event log with SAY lines 
 it from the PRE-build artifacts the graph already verified, so every timecode is a final-spine second:
   - AS-RECORDED.md      chapter headers (card ON/OFF, bed letter), FACE windows, Whisper mishears
   - <spine>.medium-words.json   the SAY lines (segment text, mishears corrected, times untouched)
-  - COVER-PLAN.json     every cover beat -> [CONTAINER]/[DIAGRAM]/[CHART]/[RECEIPT]/[VIDEO]/[IMAGE]/[CARD]
+  - COVER-PLAN.json     every cover beat -> [CONTAINER]/[DIAGRAM]/[CHART]/[RECEIPT]/[VIDEO]/[IMAGE]/[CARD]/[WHITEBOARD]
+                        (a whiteboard row names its clip, its `from` offset and its draw-on cues file, 2026-11-01)
                         + every clip_inserts row -> [INSERT] at its splice_at (the spine pauses, the clip plays with
                         its OWN voice; skills/clip-inserts/clip-inserts.md, 2026-10-09)
   - MUSIC-PLAN.json     beds, automation dips, hard hits -> [MUSIC]/[DUCK]/[IMPACT]/[RISER] placeholders
@@ -33,7 +34,7 @@ FACE_RE = re.compile(r"^\|\s*\d+\s*\|\s*(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)\s*
 MISHEAR_RE = re.compile(r'"([^"]+)"\s*->\s*"([^"]+)"')
 LAYER_OF = {"receipt": "RECEIPT", "real-chart": "RECEIPT", "animated-chart": "CHART", "container": "CONTAINER",
             "diagram": "DIAGRAM", "timeline": "DIAGRAM", "envato-video": "VIDEO", "chatgpt-image": "IMAGE",
-            "card": "CONTAINER", "title": "CARD", "clip-insert": "INSERT"}
+            "card": "CONTAINER", "title": "CARD", "clip-insert": "INSERT", "whiteboard": "WHITEBOARD"}
 
 
 def fmt(t):
@@ -98,19 +99,26 @@ def main():
                        check=False)
     # the per-video FACE transition style (graph/common.py FACE_STYLES, `run.py --face-style`, GRAPH-PROGRESS.json settings)
     try:
-        face_glitch = (json.loads((proj / "GRAPH-PROGRESS.json").read_text(encoding="utf-8")).get("settings") or {}).get("face_style") == "glitch"
+        _settings = json.loads((proj / "GRAPH-PROGRESS.json").read_text(encoding="utf-8")).get("settings") or {}
     except (OSError, ValueError):
-        face_glitch = False
+        _settings = {}
+    face_glitch = _settings.get("face_style") == "glitch"
+    # SCREEN-SHARE face mode (longform-edited.md house rule #1b): a FACE window is the OBS screen share played verbatim, never
+    # punched or leaked; caption scope `none` seeds no caption rows at all
+    screenshare = _settings.get("face_mode") == "screenshare"
+    _scope = _settings.get("caption_scope") or []
+    captions_none = "none" in (_scope if isinstance(_scope, list) else [_scope])
     punch_by_window = {}
-    if joins_p.is_file():
+    if joins_p.is_file() and not screenshare:
         jj = json.loads(joins_p.read_text(encoding="utf-8"))
         for w in jj.get("face_windows") or []:
             punch_by_window[int(w["n"])] = [float(x) for x in w.get("punch_candidates_s") or []]
     for i, (fa, fz, what) in enumerate(faces, 1):
         if fa > 0.05:
             add(fa, "TRANSITION", f"cover→face cut-in F{i} →TRANSITIONS.md (face pick)")
-        add(fa, "FACE", f"F{i} {'opens ON face' if fa <= 0.05 else 'IN'} → {fmt(fz)}  {what[:80]}")
-        if fz - fa > 5.0:                 # captions.md: EVERY face hold over 5 s, never short face punctuation
+        add(fa, "FACE", f"F{i} {'opens ON face' if fa <= 0.05 else 'IN'} → {fmt(fz)}  {what[:80]}"
+                        + ("  [SCREEN SHARE: deck area painted per COVER-PLAN face_body]" if screenshare else ""))
+        if fz - fa > 5.0 and not captions_none:   # captions.md: EVERY face hold over 5 s, never short face punctuation
             add(fa, "CAPTION", f"ON → {fmt(fz)} (face hold over 5 s; FACE window only; montserrat house style)")
         for pj in punch_by_window.get(i, []):
             add(pj, "PUNCH-IN", f"F{i} hard ~15-20% step ON the desilencer join (jumpcuts-final.json) → holds to the next join or {fmt(fz)}")
@@ -139,6 +147,7 @@ def main():
         n_ins += 1
     # cover beats
     n_cov = 0
+    wb_start = {str(w.get("id")): float(w.get("tIn") or 0) for w in cover.get("whiteboards") or []}
     for b in sorted(cover.get("cover_beats") or [], key=lambda b: float(b["tIn"])):
         ct = str(b.get("cover_type", "")).lower()
         if ct in ("title", "clip-insert"):
@@ -146,6 +155,11 @@ def main():
         tag = LAYER_OF.get(ct, ct.upper())
         dur = float(b["tOut"]) - float(b["tIn"])
         what = str(b.get("what", ""))[:150]
+        if ct == "whiteboard":   # a hand-drawn beat (whiteboard-beat.md): the clip + its draw-on cues for the SFX rows
+            wid = str(b.get("asset", ""))
+            what = (f"{wid} assets/whiteboard/{wid}.mp4 (from: {float(b['tIn']) - wb_start.get(wid, float(b['tIn'])):.2f}) {what} · "
+                    f"draw-on cues assets/whiteboard/{wid}.cues.md (hang any draw-on tick / pop SFX on them, catalog picks) · "
+                    f"ingress: the paper sheet comes in over 11 frames, out over 0.3 s (bucket 3 container move, TRANSITIONS.md)")
         add(b["tIn"], tag, f"IN ({dur:.1f}s → {fmt(b['tOut'])}) {what}"
                            + (" `[VERIFY]`" if b.get("verify") else ""))
         n_cov += 1

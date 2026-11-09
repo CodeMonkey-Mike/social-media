@@ -1,0 +1,52 @@
+{
+  "assets": [
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\quant\\assets\\short\\vertical-cards\\C1-one-layer-v.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": [
+        "Frame is 1080x1920 RGB. Ink runs x 47-1011 and y 112-1377; the Quant panel's outer ring ends at y 1388, 32 px above the caption band top (y 1420). Every card, pill and label was checked on 2x crops: no clipping and no overflow.",
+        "Stylesheet matches the 16:9 C1-left and C1-quant states: Playfair headline, DM Sans labels, JetBrains Mono pills, muted eyebrow, orange divider, quant.css accent. No em dash in the body.",
+        "Content is complete: Core banking, Treasury / ERP, Payment rails with RTGS, Faster Payments, RTP, CHIPS; Quant with Overledger, Quant Flow + PayScript, QuantNet, Quant Fusion and their descriptions; Public ledgers, Permissioned ledgers, Tokenised-deposit platforms. The bank stack stays physically left of Quant and both are lit, as SHORT-CUT-PLAN requires.",
+        "COVER-PLAN's per-word spotlight states are replaced by one still. That follows SHORT-CUT-PLAN spans[2] and is not a defect.",
+        "Flagged, not failed: the right column is faint. Its text measures 1.94:1 on white and its label 1.67:1. This is the spec's low-ink state and slightly stronger than the 16:9 (1.79:1), and this span's VO never names those items, but on a phone they will read as background.",
+        "Cosmetic: the wires are straight because the gap is only 56 px, and the Payment rails wire sits about 54 px above that card's centre so it lines up with the right-hand wire.",
+        "The bottom 531 px is empty on purpose, for the caption and platform UI. No caption is rendered on this still, so the real clearance is unverified."
+      ]
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\quant\\assets\\short\\vertical-cards\\C14-gbtd-v.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": [
+        "Frame is 1080x1920 RGB. Ink runs x 48-1031 and y 18-1352, so margins are left 48, right 48, top 18, bottom 567. No ink touches any frame edge. The first and last characters of every line were checked on crops, and nothing is clipped or overflowing.",
+        "All three round-1 defects are fixed. The UK Finance masthead and page title are back, 'Quant' and the infrastructure sentence are on the card, and the highlights now end at y 1214, above the y 1420 caption band. No ink falls below y 1352.",
+        "Text matches the local captures word for word: the title against C14-gbtd-a-title, the bank paragraph against C14-gbtd-b-body, the Quant sentence against C14-gbtd-c-quant. All seven banks are present and highlighted. The live page was not re-read in this round.",
+        "Flagged, not failed: the logo mark starts only 18 px from the top, against 48 px at the sides and about 111 px on the C1 and C6 cards. It is whole, the comp shows cards flat so it cannot be cropped, and the repo sets no numeric top margin, so this is a judgement call. On a phone the platform's top UI may overlap the mark. Moving the whole stack down 40 px would fix it (top 58, end y 1392, still above y 1410).",
+        "Caption clearance is an estimate. The caption track for this span is not built yet (QuantShortCaptions.ts has no bank names), so test captions were pasted on in Montserrat Bold at the comp's size, position and 1.12 pop. One line leaves about 169 px below the card text. A forced two-line caption leaves about 85 px. The comp's real weight is 900, so its width will differ slightly. Check this on the rendered short.",
+        "The card is an edited page, as the round-1 fix asked. The two paragraphs are not adjacent on the real page, and the grey rule at y 966 marks the join. The yellow highlights are ours, in the same #ffe14d the longform uses. The en dash in the title is the page's own.",
+        "Judged as a receipt, so the site's own serif, sans and white page are correct here, not the locked container stylesheet. Contrast is 5.79:1 for body text on white and 13.09:1 for highlighted text on yellow. Type is large enough to read on a phone. No caption is baked in.",
+        "Stage 3 of the COVER-PLAN text, the 'first live customer transactions' paragraph, is not on the card. This is correct for the short: span 5 ends on 'Santander' and never speaks it. The dispatch spec was cut off at 'highligh', so the full text was read from COVER-PLAN.json line 294.",
+        "Cosmetic: the three highlight rows touch with no gap, though their rounded corners keep them readable as separate boxes. Highlighted lines start about 10 px right of plain lines because of the box padding. The masthead rule spans x 54-1025 and the grey rule x 48-1031. All eight highlights are lit from the first frame instead of landing name by name.",
+        "Outside this image, not judged: assets/short/vertical-cards.json and QuantShort.tsx do not list this card yet, and both predate the 10:48 cut plan. QuantShort.tsx also paints CARD_HIGHLIGHTS, using the beat19 card's coordinates, over any native card from about 19.71 s. This card has its highlights baked in, so those wipes must not land on it."
+      ]
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\quant\\assets\\short\\vertical-cards\\C6-peers-payoff-v.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": [
+        "Frame is 1080x1920 RGB. Ink runs x 48-1022 and y 111-1404: the '273' clears the right edge by 57 px, and the source note ends 16 px above the caption band top (y 1420). No clipping or overflow on 2x crops.",
+        "Every printed number matches C6-data.json: QNT 272.9 prints 273, BTC 77, LINK 75.7 prints 76, CC 72.7 prints 73, XLM 60, XRP 58, HBAR 42. The peak of 394.7 stays under the 400 gridline, so the spike is not cut. The takeaway is true: every other series ends below 100.",
+        "Content is complete: all seven legend entries, 'indexed to 100 · 2025-11-05' in clear space, 'Every other line ends below 100.', 'Source: CoinGecko' and the Canton note. QNT is orange and BTC dashed. No '82' or '140' marker, which is correct for the payoff state, and 'fell from 40 to 60' is not printed.",
+        "Stylesheet matches the 16:9 C6-payoff state: Playfair headline, DM Sans labels, JetBrains Mono numbers, muted eyebrow, orange divider, quant.css accent. No em dash in the body.",
+        "Flagged for Mike, not failed: the eyebrow 'RATIO 2 OF 3' is carried over from the longform, and this short has no ratio 1 or 3. It matches the source card and longform-to-short.md has no rule on it, but viewers will have no context for it. It is a one-line change in build_chart_vcards.py.",
+        "Cosmetic: the 'Nov 2025' and 'Jan' tick labels are only about 20 px apart. They still read as separate labels.",
+        "Check on the real render: the source note has the least clearance of the three cards, and captions pop to 1.12 scale. No caption is rendered on this still."
+      ]
+    }
+  ]
+}

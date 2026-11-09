@@ -52,6 +52,9 @@ video-creation/longform-edited/media/<project>/          <- created by `run.py l
 │    title-slides/ title-card-chN.png                            slide-builder
 │    card-slides/  <id>-sN.png                                   slide-builder (one PNG per spotlight state)
 │    slide-sources/ containers.html + _shot.py                   slide-builder's source + screenshot driver
+│    whiteboard/   WB<n>.mp4 + WB<n>.brief.md + WB<n>.cues.md    the assets node's whiteboard lane (whiteboard-builder -> visual-qa
+│                                                                on its stills in _previews/qa/whiteboard/WB<n>/ -> chunked-render, silent;
+│                                                                only when COVER-PLAN carries whiteboards; comp-build §4b)
 │    transitions/ lib/sfx-*.mp3 + plates/tiles/masks             copied per used library id (lint_transition_assets.py)
 │    vertical/  <the same subfolders> + spine.mp4 + face-crop.json + VISUAL-QA.json    the optional vertical lane (run.py vertical)
 ├─ thumbnail/                reference-*.jpg (the YouTube reference) + <project>-thumb-vN.png (Higgsfield) + gen-vN.json
@@ -60,12 +63,14 @@ video-creation/longform-edited/media/<project>/          <- created by `run.py l
 │
 │  ── deliverables (project root) ──
 ├─ <project>-FINAL.mp4       definition_of_done: the mixed final (crf 18 + music/SFX); also copied to schedule-tweets/longform/<project>/
-├─ yt-delivery.json          main loop, before finalize: names for the uncarded chapters + exactly 10 keyword phrases (comp-build §12a.5)
-├─ YT-DELIVERY.md            definition_of_done (scripts/yt_delivery.py): YouTube chapters + timestamps, music codes `|`-delimited, keywords
+├─ yt-delivery.json          main loop, before finalize: title, 2-sentence description (open loop first), 2-3 hashtags, names for the uncarded chapters, exactly 10 keyword phrases + common misspellings (comp-build §12a.5)
+├─ YT-DELIVERY.md            definition_of_done (scripts/yt_delivery.py): the YouTube metadata block: title, description + hashtags, chapters + timestamps, music codes `|`-delimited, keywords + misspellings
 └─ <project>-VERTICAL.mp4    the optional vertical lane (v_deliver); NOT queued unless Mike says so
 
 remotion/src/ (outside the project, recycled with it):
    <Project>.tsx + <Project>Captions.ts + <Project>*Chart*.tsx    comp_build (comp-builder agent)   <- own files only
+   whiteboard/beats/<Project>WB<n>.tsx (+ new kit objects in whiteboard/<domain>.tsx, kept: the kit grows every video)
+                                                                  assets (whiteboard-builder agent); the comp plays the rendered clip
    <Project>Vertical.tsx                                          v_comp                            (lint_comp_imports.py)
 ```
 

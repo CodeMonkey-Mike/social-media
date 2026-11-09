@@ -113,6 +113,9 @@ each (Mike, 2026-10-17; longform-edited.md section 7, the bed's `mike_note`).
   takes a RANDOM `lib:split-swinging-offset-*` id (long or short, varied, never the same id twice in a row); the cut-OUTS
   keep `face_glitch_pick`. Every punch point gets a `role: punch-glitch` row with a RANDOM `lib:glitchoffset-*` or
   `lib:blocks-*` id (mix both families, varied) instead of a `punch-leak` light leak. The graph verifies it from disk.
+- **FACE STYLE `optics` (per video; the graph prompt says when it is on; Mike 2026-11-03).** Every cover→face CUT-IN row takes a
+  RANDOM id of the 6 in `browse/ZOOM/Optics` (`lib:zoom-optics-in`, `-in-impact`, `-in-out-1/2/3`, `-out`; all 6 before a repeat,
+  never the same id twice in a row). Cut-outs keep `face_glitch_pick`, punch-ins keep their light leaks. The graph verifies it from disk.
 - Envato b-roll ingress = `hand:fade` (~0.5s).
 - **Quiet TEXT containers** (spotlight sub-point cards) = `hand:` cross-fade + 0.93→1 scale-in. Keep these
   quiet — a melt/spin on every text card is exhausting and burns the move's specialness.

@@ -42,9 +42,11 @@ and NOT by its aspect ratio:
 |---|---|
 | `longform-edited/` | Mike ON CAMERA, a real recording (defumble -> desilence -> cover-blackout) |
 | `longform-presentation/` | Mike's real recording over a deck / screen share |
+| `longform-discussion/` | NOT produced here: research only, for Mike's freeform recording over shared browser tabs (crypto channel). No video is made in this folder; see `longform-discussion/longform-discussion.md` |
 | `livestream-repurpose/` | a real livestream recording |
 | `ai-engineering/` | Mike's CLONED VOICE over a deck, no camera (so its `evals` video, which Mike recorded himself, lives in `longform-edited/media/`) |
 | `vertical-ai-persona/` | Mike's AI LIKENESS (face + voice), vertical |
+| `whiteboard/` | NO spine recording at all: a VO (Mike or his clone) under a CODE-RENDERED SVG explainer (rough.js kit, no camera, no generated images); first 15 s demo rendered 2026-10-30 (hand-drawn vocabulary, paper-pastel pen), see `whiteboard/whiteboard.md` |
 | `yuli-y-ana/` | AI face + AI voice of Ana and Yuli, two people who are NOT Mike, in ANY format (vertical or longform); router `yuli-y-ana/CLAUDE.md` |
 
 ## Per-batch progress files (READ ONE EVERY SESSION)

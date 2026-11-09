@@ -46,6 +46,9 @@ TROUGH_MIN = 0.04     # s: the shortest quiet run that counts as the gap before 
 TROUGH_SCAN = (0.7, 0.15)   # s scanned before / after the planned (first-word) time
 
 
+ITEM_KINDS = ("bullets", "block", "flow")   # scene kinds whose `items` carry their own cues (the active highlight)
+
+
 def norm(s):
     s = s.lower().replace("’", "'")
     s = re.sub(r"[^a-z0-9$%' ]+", " ", s)
@@ -127,7 +130,7 @@ def resolve(spec, words, min_score, lookahead):
         prev = s["t"]
     # bullet items: inside their scene, before the next scene
     for i, s in enumerate(spec["scenes"]):
-        if s.get("kind") != "bullets":
+        if s.get("kind") not in ITEM_KINDS:
             continue
         s_end = spec["scenes"][i + 1]["t"] if i + 1 < len(spec["scenes"]) else 1e9
         p = s["t"]
@@ -239,7 +242,7 @@ def provisional(spec, gap):
     t = 0.0
     for s in spec["scenes"]:
         s["t"] = round(t, 3); s["score"] = 0.0; s["match"] = "(provisional)"
-        if s.get("kind") == "bullets":
+        if s.get("kind") in ITEM_KINDS:
             k = 0
             for it in s.get("items", []):
                 if it.get("cue"):
@@ -261,7 +264,7 @@ def tc(t):
 def emit_ts(spec, path, comp_hint):
     """the comp's data: every time on the PAUSED timeline (what the middle render plays)."""
     keep_scene = {"id", "kind", "t", "eyebrow", "title", "icon", "sub", "label", "items", "active", "date",
-                  "num", "peak", "crash", "cycles", "variant", "text"}
+                  "num", "peak", "crash", "cycles", "variant", "text", "rows", "note"}
     tl = spec.get("timeline", {})
     pl = [(p["at"], p["dur"]) for p in tl.get("pauses", [])]
     pause_of = {p["scene"]: p for p in tl.get("pauses", [])}

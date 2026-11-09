@@ -14,6 +14,7 @@ logic here, never single-threshold `silencedetect` (banned repo-wide).
 | tail pad | **200 ms** | kept AFTER the sentence that ends a cut pause: word-final releases (the k+s of "banks", the j of "age") live here |
 | head pad | **100 ms** | kept BEFORE the sentence that starts after it; residual = 300 ms, sentences never back-to-back |
 | zones | **one** | no intro/body split for a presentation |
+| deck lecture | **300 + 200 ms, 900 ms at a slide** | format 1 only (`media/deck-lecture/`), applied automatically; see below |
 
 Why the tail pad is the wide one (2026-10-14, history-of-crypto): the detector's silence starts where the level
 first drops under -57 dB, and a word-final stop or affricate has a closure that gets there BEFORE its release.
@@ -39,6 +40,22 @@ from longform-edited's ask-at-the-gate values; those tracks keep theirs.
 explicit per-video deviations; the script banners them loudly and the invocation is their record. A deviation never becomes the
 new default by being recent (the shorts lane's 0.95 incident of 2026-08-11 is why this lives in code, not prose).
 
+**Deck lectures (format 1) have their own DEFAULTS (Mike, 2026-11-08: "Yes, we can default those milliseconds for
+the deck lectures"):** min-silence stays 800 ms, the residual is **500 ms (300 ms tail + 200 ms head)** and a cut pause
+that holds a slide change keeps **900 ms**. The preset applies them automatically when the input is under
+`media/deck-lecture/` (`DECK_PAD_TAIL` / `DECK_PAD_HEAD` / `DECK_SLIDE_PAUSE` in code); formats 2 and 4 keep 200 + 100
+and no slide pause. Why: the 300 ms residual read "too fast" on a scripted lecture (Crypto vs. The Traditional Financial
+System, a 700 ms / 300 ms first pass at 13:02 -> 13:49 on these values, from a 23:27 defumble).
+
+**Slide-change pause (`--slide-pause`, added 2026-11-08; default on for deck lectures, `--slide-pause 0` = off):** on a deck
+capture, Mike asked for more air between slides than between sentences ("in between the beginnings and the endings
+of each slide, there should be a greater pause", 900 ms). The preset finds the slide changes in the PICTURE (the
+deck fades over ~0.5 to 1 s, so a 0.4 s-apart luma diff on tiny frames, not a scene score) and a cut pause that holds
+one keeps `--slide-pause` seconds instead of the pad residual, the extra split evenly between the old slide's last
+word and the new slide's first. A change inside speech or inside an uncut pause is reported, never touched. The
+changes it found go into the map (`slide_changes`). Mind the spotlight's `chapter_pause`: on a deck lecture every
+slide is a chapter, so a chapter pause stacks on top of this air (decide one or the other per video).
+
 ## Procedure
 
 1. **Defumble FIRST** if the take has retakes / false starts / abandoned fragments
@@ -49,9 +66,9 @@ new default by being recent (the shorts lane's 0.95 incident of 2026-08-11 is wh
    no LOW BPS working copy on this track; recycled 2026-10-13), which keeps on-screen text sharp.
 3. **Preview** (optional, about a minute, no render):
    ```
-   python video-creation/longform-presentation/skills/desilence/desilence_preset.py "media/<project>/<master>.mkv" --dry-run
+   python video-creation/longform-presentation/skills/desilence/desilence_preset.py "media/<format>/<project>/<master>.mkv" --dry-run
    ```
-4. **Run** the same command without `--dry-run`. Output: `media/<project>/<project> EDIT.mp4` plus
+4. **Run** the same command without `--dry-run`. Output: `media/<format>/<project>/<project> EDIT.mp4` plus
    `<project> EDIT.map.json` (the folder name is the project name; `--out` overrides). Default encode is the
    canonical tool's libx264 crf 18 (deliverable quality for on-screen text); `--nvenc` is the 2.5 Mbps proxy
    path, not for a deliverable. An encode longer than 10 min is launched detached (visible console, log file)
@@ -78,7 +95,7 @@ new default by being recent (the shorts lane's 0.95 incident of 2026-08-11 is wh
   `desilence_synced.py`, `build_two_zone.py`, single-threshold `silencedetect`, which clipped words) were
   deprecated into redirect stubs when the canonical desilencer was factored out.
 - 2026-10-13: track revived for record-and-edit screen-share videos with no deck. The stubs were recycled,
-  this skill folder was created and the 800 / 200 definition pinned here. First video: `media/what-to-buy/`.
+  this skill folder was created and the 800 / 200 definition pinned here. First video: `media/desilence-only/what-to-buy/`.
 - 2026-10-14: history-of-crypto review, Mike heard word endings clipped. Measured: 7 of 273 cuts ran 20 to 55 ms
   into a word-final release; the pad became asymmetric, 200 ms tail + 100 ms head (300 ms residual). The
   canonical `desilence.py` gained the optional `pad_head` / `--pad-head` for it (method unchanged). Validated

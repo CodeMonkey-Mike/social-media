@@ -53,6 +53,8 @@ Canonical sources win on conflict:
 - **Boundaries land in silence.** Propose each boundary at a silence trough between words, using the
   transcript's word gaps (prefer a gap of >=0.25s; give the exact gap you are cutting in). The builder
   verifies mechanically, but a plan that ignores this wastes a build.
+- **Never a whiteboard beat under a span (Mike, 2026-11-06).** The graph hands you every whiteboard window in final time;
+  a span that overlaps one fails the plan (longform-to-short.md §3 rule 8). Whiteboard scenes cannot be rebuilt for 9:16.
 - **Reserve the outro.** Budget the CTA (~3s) INSIDE the target length. Your spans must total
   `target - outro`, not the full target.
 - **Check the audio flows.** Read your assembled spans back as one paragraph. If it does not read as

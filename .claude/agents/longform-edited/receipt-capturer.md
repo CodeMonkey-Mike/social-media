@@ -44,6 +44,9 @@ pauses. It is the opposite of a muted screen recording, so the "strip audio" rul
   It pulls the window with audio (yt-dlp section pull; falls back to a full-audio mux), normalises to 1920x1080 at
   30 fps, burns the caption on every frame, and VERIFIES: audio present and not silent, exact length, Whisper hears
   the expected phrase. It prints `CLIP-INSERT-OK ... words="..."`; quote those words in your report.
+- A REACTION clip (clip-inserts.md rule 6: the row's Source cell is a local path and its caption cell says none) is captured
+  with `--file "<path>" --start <M:SS.s> --end <M:SS.s> --no-caption` in place of `--url` / `--caption`, and no `--expect`
+  (nothing to hear); report whatever Whisper makes of the sound as is.
 - FLAG a clip whose heard words differ from the plan's `says`, whose source is gone, or whose window needs to move
   to keep the speaker's meaning. Never trim a clip into a different meaning, never swap in a different clip.
 - The graph's `verify_assets` FAILS a clip insert with no audio stream or off its planned length; `visual-qa` opens

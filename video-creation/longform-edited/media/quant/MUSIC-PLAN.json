@@ -1,0 +1,330 @@
+{
+ "project": "quant",
+ "authored": "2026-11-04 by music-placement-strategist (read-only plan; the orchestrator renders the listening copy with mix_music.py --plan-preview)",
+ "spine": "video-creation/longform-edited/media/quant/spine/ALL.f.enhanced.mp4",
+ "spine_duration_sec": 563.33,
+ "ruling": "ONE drone track for the whole video (Mike, PROJECT-LOG constraints): solstice, Bed A from frame 0 to the last frame, carved by the ONE TRACK, CARVED method (music.md). No second track, no hit, no stinger. Title cards CH2 to CH6 under the one-bed waiver: the bed runs through their pauses with the mixer's 0.4 s card fade-out and a 1.0 s swell back in on each chapter's first word.",
+ "track": {
+  "id": "solstice",
+  "title": "Solstice",
+  "artist": "DeHartmann",
+  "file": "video-creation/assets/music/Solstice/DeHartmann_Solstice_instrumental_4_17.mp3",
+  "files_used": [
+   "video-creation/assets/music/Solstice/DeHartmann_Solstice_instrumental_4_17.mp3"
+  ],
+  "duration_sec": 257.0,
+  "bpm": 72,
+  "bar_sec": 3.3333,
+  "section_grid_phase_sec": 0.0,
+  "key": "Ab/G# major",
+  "mix": "instrumental (the only mix; no vocal version exists)",
+  "license_code": "PIMM1ZEYZYLHCITE",
+  "source": "soundstripe 14703",
+  "usage_ledger": "fresh (never used) on the 2026-11-04 report; BLOCKED kitsune / lightheart and the last three videos' atmos-rise / deliverance / get-it do not apply; the screenplay shortlist stands, no replacement needed"
+ },
+ "levels": {
+  "vo_lufs_integrated": -22.0,
+  "vo_note": "ffmpeg ebur128 on spine/ALL.f.enhanced.mp4 (the Adobe-enhanced FINAL spine). PROJECT-LOG: Mike asked for his voice +3 dB (GRAPH-PROGRESS settings.voice_db = 3.0), which mix_music.py applies to the VO only, so every seat is computed against the RAISED voice at -19.0 LUFS. If the mix ran at the +2 default the bed would sit 1 dB closer to the voice than stated.",
+  "bed_lufs_integrated": -11.8,
+  "bed_region_lufs": {
+   "plateau bars 2-72 (6.67-243.3)": -11.7,
+   "CH2 region 54.02-207.36": -11.6,
+   "CH3 region 10.0-136.1": -11.9,
+   "CH4 region 120.0-181.44": -11.3,
+   "CH5 region 103.33-203.0": -11.5,
+   "final movement 188.23-257.0": -11.7,
+   "dip bar 68 (226.67-230.0)": -13.5
+  },
+  "seat_rule": "ONE seat for the whole video, remotion_gain_db -24.3: the plateau at -11.7 LUFS lands at -36.0 LUFS, 17.0 dB under the raised voice; the regions vary only -16.6 to -17.2 under (this file is perceptually flat), the one real dip (bar 68, -13.5 LUFS) reads -18.8 under on its own, the build-in and the fade are the file's own shape. No automation rows: the clip insert CLIP-1 is ducked automatically by mix_music.py (-14 dB, 0.3 s ramps, from the paused sidecar), and nothing else in this video wants a dip. | DRAFT v1 NOTE (Mike, 2026-11-06): 'the background music is slightly too loud, decrease by only 5 dB' -> every bed -29.3 dB (was -24.3), the plateau now ~22 dB under the raised voice; one seat, unchanged shape.",
+  "remotion_gain_db": -29.3,
+  "linear_gain": 0.0343
+ },
+ "energy_profile": {
+  "video-creation/assets/music/Solstice/DeHartmann_Solstice_instrumental_4_17.mp3": {
+   "method": "per-bar RMS read on the 72 BPM grid (bar 3.3333 s, phase 0.0: the drone has no onsets, so onset scoring returns no beat phase; the file's one level step, the tone's arrival, sits inside bar 1 at 3.5-3.7 s), one scan in the scratchpad, plus 0.333 s windows on the build-in and the fade, 0.1 s level steps, and ebur128 per region. The catalog env (2 s windows, 0-9) picked the track; this read places it.",
+   "per_bar_rms_dbfs": "b0 -30.1 (build-in); b1 -14.2 (arrival); b2-9 -12.1 to -13.8; b10-11 -11.8; b12-21 -12.0 to -13.6; b22-28 -11.3 to -12.1; b29-33 -12.7 to -13.2; b34-35 -12.2 and -12.4; b36-48 -13.0 to -14.6; b49 -12.8; b50 -11.7; b51-59 -12.2 to -13.6; b60 -14.0; b61-67 -12.4 to -14.3; b68 -15.7 (dip); b69 -12.7; b70 -11.7; b71 -11.3; b72 -11.1; b73 -14.9; b74 -21.5; b75 -29.9; b76 -47.5; b77 silent",
+   "regions_by_bar": {
+    "BUILD-IN bar 0 (0.0-3.33)": "-69 dBFS at 0.0 rising to -24 at 3.33; the tone arrives 3.5-3.7 (-16.8 then -13.5 at 4.0). The catalog's 8 s build is really 3.7 s to full tone, then a gentle settle to 8 s.",
+    "PLATEAU bars 1-72 (3.33-243.3)": "one continuous tone, -11.1 to -14.6 dBFS RMS, -11.3 to -11.9 LUFS per region: perceptually flat. The RMS swells (bars 10-11, 22-28, 50, 69-72, +1 to +1.7 dB) are low-end fullness the ear barely rates (bars 69-72 measure -11.7 LUFS, the same as the plateau); the RMS troughs (bars 36-48, 60) are a thinner low end, not a quieter bed. No region of this file is a drop or a chorus.",
+    "DIP bar 68 (226.67-230.0)": "-15.7 RMS / -13.5 LUFS, the file's one real step down (-1.8 LU), preceded by the step at 226.2; the arrangement breathes once before its last bars.",
+    "LAST BARS 69-72 (230.0-243.3)": "the fullest low end of the file (RMS -11.1 to -11.7), level in LUFS: the arrangement's last statement, not a lift the viewer will hear as louder.",
+    "FADE bars 73-76 (243.3-256.5)": "-11.3 at 243.0, -13.6 at 244.0, -17.5 at 246.0, -22.2 at 248.0, -26.6 at 250.0, -32.5 at 252.0, -46.7 at 254.0, -57 at 255.3, -66 at 256.0, silent from 256.5; the file ends 257.0. The catalog's outro 248-258 is coarse: the fade begins at 243.3 and is inaudible by 255.5."
+   },
+   "low_energy_regions": [
+    [
+     0.0,
+     3.7
+    ],
+    [
+     226.67,
+     230.0
+    ],
+    [
+     243.3,
+     257.0
+    ]
+   ],
+   "high_energy_regions": [
+    [
+     3.7,
+     243.3
+    ]
+   ],
+   "notes": "A drone. The carve is the build-in on the first words, the plateau under everything, the dip under the hedge, the file's own fade on the last word, and the card pauses as the breaths. Where the plan says a swell or a trough it is a 1 to 1.7 dB RMS shape, written down because it is measured and it lands on the words, not because it is a drop."
+  },
+  "video-creation/assets/music/Solstice/DeHartmann_Solstice_instrumental_chorus_0_59-1.wav": {
+   "cross_correlation": "= the master's LAST 60 s (master 197.07-257.0, envelope correlation 0.85, waveform 0.74 on the mp3 vs wav): its fade IS the master's fade. Nothing new in it; NOT used.",
+   "low_energy_regions": [
+    [
+     46.3,
+     60.0
+    ]
+   ],
+   "high_energy_regions": [
+    [
+     0.0,
+     46.3
+    ]
+   ],
+   "notes": "not used"
+  },
+  "video-creation/assets/music/Solstice/DeHartmann_Solstice_instrumental_verse_0_30-2.wav": {
+   "cross_correlation": "= master 0.04-26.0 (the build-in and the first plateau bars) plus its OWN 4 s ring-down (-12 at 25.1 to -54 at 29.8). The catalog's epic_hit ending tag is the analyzer misreading that fast fade; there is no hit in it. NOT used (this video never hits, screenplay MUSIC-MOOD-PLAN).",
+   "low_energy_regions": [
+    [
+     0.0,
+     3.7
+    ],
+    [
+     26.0,
+     30.1
+    ]
+   ],
+   "high_energy_regions": [
+    [
+     3.7,
+     26.0
+    ]
+   ],
+   "notes": "not used"
+  }
+ },
+ "placement_math": {
+  "grid": "file bar lines = 0.0 + 3.3333 n (72 BPM, phase 0.0: no beat to phase to, the drone's arrival at 3.5-3.7 sits inside bar 1). Every in-point except the end-pinned final movement is a bar line: CH1 0.0 (bar 0), CH3 10.0 (bar 3), CH4 120.0 (bar 36), CH5 103.33 (bar 31). CH2 continues the file unspliced from CH1 (file position = spine time, 54.02 = bar 16.2, no splice: the card pause is the break). The final movement's in-point is its one free parameter, pinned by the file's end on the spine's last frame: 257.0 - 68.77 = 188.23 at 494.56 (bar 56.5), the CH7 row sample-continuous at 212.09 on 518.42.",
+  "breaths": "every chapter change from CH1 into CH2 through CH5 into CH6 is a title card (1.5 s pause, Mike rules cards on or off): the mixer fades the outgoing row 0.4 s from the card's first frame and the incoming row swells in over its fade_in_sec 1.0 to be full on the first word, so the drone is about 0.1 s near-silent in the middle of each card and the jump back in the file is never heard as a seam. CH6 into CH7 has no card: the two rows are sample-continuous (the mixer merges them into one placement, no fade).",
+  "pins": {
+   "open": "frame 0 = file 0.0: the build-in (-69 to -24 dBFS over bar 0) under So what is Quant? (0.00-1.8), the tone arrives at file 3.6 under This is something I've been recommended (1.82-4.7), full by deep dive (around 15 s).",
+   "CH3_TCH": "source_in 10.0 puts bars 22-28 (file 73.3-96.7, RMS +1 dB) on spine 270.7-294.0: And then the big one, The Clearing House (270.46) through the screen share Look right here. The interoperability, orchestration and transaction management layer (289.74-294.9).",
+   "CH5_peers": "source_in 103.33 puts the file's -2.7 dB step at 160.1 on spine 451.67, 50 ms before And this is all the while its peers fell (451.72); the rise through bar 49 under And then one line leaves the group (455.12); the bar 50 peak (file 166.67-170.0, RMS -11.7) on spine 458.2-461.6 under Quant sits at 273. And every other line in this chart is below 100 (456.66-461.9); bars 34-35 (file 113.3-120.0) on 404.9-411.6 under The all time peak of that share was October of 2022 at 0.269% (406.34); bars 59-60 (the -14.0 trough) under Quant sits at around 22% of its best level against Bitcoin (488.74-494.56), a settle into the card.",
+   "CH4_close": "source_in 120.0 puts the +2.5 dB step at file 177.2 on spine 390.66, under So the open question for the token is whether the second pipe ever gets built (390.90-394.68).",
+   "ending": "the file's last sample (257.0) on the spine's last frame (563.33): the DIP bar 68 (file 226.67-230.0, -13.5 LUFS) lands on spine 533.0-536.3 under Can the token re-rate again if the US network opens on time? It can, but you know, nobody can promise you that. (530.54-538.1), the LAST BARS 69-72 (file 230.0-243.3) on 536.3-549.7 under the gear-3 landing line But every one of those banks is an island, and right now, Quant is the one holding the contracts that connects them. (538.12-544.28) and the like/subscribe line, the FADE from file 243.3 = spine 549.7 (And like I said, like I mentioned earlier on, I do have a community, 549.46) down to -57 dBFS at file 255.5 = spine 561.8 and silence at 562.8, under So click the link in the description below. (561.40-563.16). The tone dies on the last word below.; there is no held still (end_card_hold not needed, the spine ends 0.17 s after the word)."
+  },
+  "hard_out_alternative": "if Mike takes the hard-out on them. (544.28, screenplay Open Question 7 / COVER-PLAN K3-K4 dropped): the final movement re-seats to end at 544.28: CH6 row source_in 207.28 at 494.56 (257.0 - 49.72), CH7 row source_in 231.14 at 518.42 with span [518.42, 544.28]; then the dip bar 68 lands at 513.95-517.3 under His words, his forecast. (516.24), the last bars 69-72 under So here's my read on Quant (518.42-530.5), and the fade 530.6-544.28 under the re-rate question and the landing line, dying on them. Everything before 494.56 is unchanged."
+ },
+ "hard_hits": [
+  {
+   "t": 0.0,
+   "beat": "the locked opening line on the screen share",
+   "music_move": "no hit: the file's build-in rises from silence under So what is Quant? and is a full tone by 3.6 s (file 0.0 at frame 0)"
+  },
+  {
+   "t": 270.46,
+   "beat": "the big one, The Clearing House, into FACE 4 Look right here (282.8-294.9)",
+   "music_move": "no hit: the bed's fullest plateau bars 22-28 (file 73.3-96.7) under 270.7-294.0, +1 dB RMS, perceptually the same drone"
+  },
+  {
+   "t": 455.12,
+   "beat": "C6 breakaway: one line leaves the group, Quant sits at 273",
+   "music_move": "no hit: the file's step down at 451.67 under peers fell, the rise through bar 49 under one line leaves the group, bar 50's peak (458.2-461.6) under sits at 273 ... below 100"
+  },
+  {
+   "t": 538.12,
+   "beat": "the gear-3 landing line, FACE 9 (537.97-544.17)",
+   "music_move": "no hit: the dip bar 68 under the hedge (533.0-536.3), the arrangement's last full bars under the landing line, the fade from 549.7 dying on below. (563.16)"
+  }
+ ],
+ "notes": [
+  "Cover is section on every row: the file is longer than every span and no row needs a remix loop (the verifier's loop rule applies only when the file is shorter than its span). The screenplay's planned 8-bar remix loops are replaced by card-pause jump-backs, which a drone makes seamless: the 0.4 s outgoing fade + the 1.0 s incoming swell inside each 1.5 s card.",
+  "CLIP-1 (COVER-PLAN clip_inserts, splice_at 235.92, 10.8 s) rides the CH3 row: file 38.6-49.4, plateau, no splice, no seat change inside 235.92-246.72. mix_music.py ducks it automatically (-14 dB, 0.3 s ramps); no automation row written.",
+  "If Mike turns the title cards OFF (screenplay Open Question 3), the five chapter boundaries become cardless: CH2 continues CH1 sample-continuously (merged by the mixer, nothing to do); CH3, CH4, CH5 and CH6 would then need their jump-backs on a bar line of the running grid with fade_out_sec 0.08 on the outgoing row (CH2 ends at file 207.36 = bar 62.2, not a bar line): re-seat CH2's end to 206.67 (bar 62) or move the in-points to bar lines of the video grid. Flag this at the gate; today's plan assumes cards ON as scripted.",
+  "The level is one seat (-24.3 dB) because the file is perceptually flat (-11.3 to -11.9 LUFS per region); mix_music.py measures lufs_in and lufs_out, so the MIX-DONE line will show the result. Mike tends to call a bed hot: if he does, -26.3 (19 dB under) is the next notch, still one seat.",
+  "2026-11-06 draft v1 fix: all beds -5 dB (remotion_gain_db -24.3 -> -29.3) on Mike's listen; applied at the draft remix and the final mix alike."
+ ],
+ "open_questions": [
+  "LISTEN FOR (plan-preview): (1) the ending: the fade starts under And like I said, like I mentioned earlier on (549.46) and the tone is gone by So click the link in the description below (561.40), dying on below. at 563.16; (2) the dip under It can, but you know, nobody can promise you that (535.42) and the full bars under But every one of those banks is an island (538.12); (3) the peers pin: the step down on peers fell (451.72) and bar 50's peak on sits at 273 (456.66-461.9).",
+  "Hard-out on them. (544.28) vs the recorded CTA (screenplay Open Question 7): this plan lands the fade on the recorded last word below. (563.16). If Mike takes the hard-out, the final movement re-seats as in placement_math.hard_out_alternative (CH6 source_in 207.28, CH7 source_in 231.14, span end 544.28); rows CH1-CH5 are unchanged.",
+  "Title cards ON (scripted, five 1.5 s pauses) is assumed: the card pauses are this plan's breaths and hide the jump-backs. Cards OFF needs the re-seat described in notes[2].",
+  "The screenplay hoped for two brighter windows under look at this and one line leaves the group. Measured, this file has no window a listener will hear as brighter (every region -11.3 to -11.9 LUFS; the RMS swells are low-end fullness within 0.5 LU). One pin was placed on the breakaway (the file's clearest shape); the reveals are carried by the picture and the transition SFX, not the bed. If Mike wants an audible lift there, it is a different track, which contradicts his one-drone ruling, so nothing was changed.",
+  "Usage ledger: solstice is fresh; nothing BLOCKED or recent applies; no waiver needed. The subtle_bed pool is healthy (37 fresh), but this video reserves solstice, so the next drone video picks among the other five Mike added 2026-11-03 (theta-rest is already the kaspa-wise-man intro)."
+ ],
+ "beds": [
+  {
+   "chapter": "CH1",
+   "span": [
+    0.0,
+    54.02
+   ],
+   "register": "gear-1 face into gear-2 definition (THE OPEN, screen share, card OFF)",
+   "source_file": "video-creation/assets/music/Solstice/DeHartmann_Solstice_instrumental_4_17.mp3",
+   "source_in": 0.0,
+   "cover": "section",
+   "intensity": "subtle (the file's own build-in, then the plateau at -17 dB under the voice)",
+   "level_db_under_vo": -22,
+   "measured_db_under_vo": -22.0,
+   "remotion_gain_db": -29.3,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.4,
+   "carve": "BUILD-IN bar 0 (file 0.0-3.33, -69 to -24 dBFS) + the tone's arrival in bar 1 (3.33-6.67) + PLATEAU bars 2-16 (6.67-54.02), the file from its first sample, unspliced",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "frame 0 = the locked opening line So what is Quant? on the screen share (FACE window 1, 0.0-31.767, Mike's webcam + the quant.network hero in the deck area): the drone rises from silence under the question itself and is a full tone by This is something I've been recommended (1.82), well before deep dive (around 15 s); the plateau runs under the short version (20.6), the definition (31.8-44.9) and the handoff So let's walk through all of this (52.24). The bed never leads; it opens the room. Fades out 0.4 s into the Islands of Money card at 54.02."
+  },
+  {
+   "chapter": "CH2",
+   "span": [
+    54.02,
+    207.36
+   ],
+   "register": "gear-2 slow whiteboard explainer (ISLANDS OF MONEY, card ON)",
+   "source_file": "video-creation/assets/music/Solstice/DeHartmann_Solstice_instrumental_4_17.mp3",
+   "source_in": 54.02,
+   "cover": "section",
+   "intensity": "subtle, steady (the plateau, -16.9 dB under)",
+   "level_db_under_vo": -22,
+   "measured_db_under_vo": -21.9,
+   "remotion_gain_db": -29.3,
+   "fade_in_sec": 1.0,
+   "fade_out_sec": 0.4,
+   "carve": "PLATEAU bars 16-62 (file 54.02-207.36): the file's own run continued from CH1 across the card pause, no splice; the RMS swell bars 22-28 (73.3-96.7) under WB2, bar 50 (166.67-170.0) under every leg commits together, the bars 59-60 trough (196.67-203.3) under the Fusion line",
+   "breath_before_sec": 0.5,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "the whiteboard story WB1-WB5 (54.02-177.5) and the C1 system diagram (179.77-207.3) at a slow pace: one steady tone, nothing to fight the drawing. The file's gentle fullness in bars 22-28 sits under A tokenized deposit is still your deposit ... walled gardens (73.16-95.3), bar 50's swell under And then every leg commits together or none of them do (166.24-169.4), the small trough under Quant Fusion is their rollup, live on mainnet since June 2nd, 2026 (195.62-203.78) and the tone is back for And on the right, the ledgers (203.78) before the Who Uses It card. FACE 2 Now here's the thing with the real names (177.6-179.77) sits on the plateau. The screenplay's first remix loop before the file's fade is not needed: this row ends at file 207.36, 19 s before the dip and 36 s before the fade; the card pause at 207.36 is the break and the next row jumps back."
+  },
+  {
+   "chapter": "CH3",
+   "span": [
+    207.36,
+    333.46
+   ],
+   "register": "gear-2 receipts with gear-1 screen-share reactions (WHO USES IT, card ON); CLIP-1 at 235.92 for 10.8 s",
+   "source_file": "video-creation/assets/music/Solstice/DeHartmann_Solstice_instrumental_4_17.mp3",
+   "source_in": 10.0,
+   "cover": "section",
+   "intensity": "subtle (the plateau, -17.2 dB under; ducked automatically -14 dB under CLIP-1)",
+   "level_db_under_vo": -22,
+   "measured_db_under_vo": -22.2,
+   "remotion_gain_db": -29.3,
+   "fade_in_sec": 1.0,
+   "fade_out_sec": 0.4,
+   "carve": "jump back across the card pause to bar 3's line (file 10.0): PLATEAU bars 3-40 (file 10.0-136.1); bars 22-28 (73.3-96.7, RMS -11.3 to -12.1) right under the TCH beat 270.7-294.0",
+   "breath_before_sec": 0.5,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "the founder (FACE 3 207.27-210.13 on the plateau), the panel set-up and CLIP-1 (spine 235.92-246.72 = file 38.6-49.4, plateau, no splice inside the window; mix_music.py ducks the bed -14 dB from the paused sidecar, this row carries the insert), GBTD, the remortgage whiteboard WB6, then the file's fullest plateau bars (22-28) land under And then the big one, The Clearing House (270.46) through FACE 4 Look right here. The interoperability, orchestration and transaction management layer (282.8-294.9): the receipts chapter's biggest beat on the bed's fullest bars, still a drone, no hit. The trail of receipts (306.8-333.4) settles on bars 33-40 (-12.8 to -13.9). Fades out 0.4 s into The Token card."
+  },
+  {
+   "chapter": "CH4",
+   "span": [
+    333.46,
+    394.9
+   ],
+   "register": "gear-2 plain explainer with gear-1 live numbers (THE TOKEN, card ON)",
+   "source_file": "video-creation/assets/music/Solstice/DeHartmann_Solstice_instrumental_4_17.mp3",
+   "source_in": 120.0,
+   "cover": "section",
+   "intensity": "subtle (the plateau's thinner-low-end bars, -16.6 dB under)",
+   "level_db_under_vo": -22,
+   "measured_db_under_vo": -21.6,
+   "remotion_gain_db": -29.3,
+   "fade_in_sec": 1.0,
+   "fade_out_sec": 0.4,
+   "carve": "jump back across the card pause to bar 36's line (file 120.0): PLATEAU bars 36-54 (file 120.0-181.44), the RMS troughs bars 36-48 (-13.0 to -14.6) under the tokenomics, the +2.5 dB step at file 177.2 on spine 390.66 under the chapter's closing question",
+   "breath_before_sec": 0.5,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "supply, the ATH and the live numbers (FACE 5 352.5-361.1, the C4 market-cap card in the deck area) want the thinnest bed in the file: bars 36-48 have the least low end of the plateau so the numbers read clean; WB8 the two lanes (361.26-394.68) runs on the same tone; the file's small step up at 177.2 lands under So the open question for the token is whether the second pipe ever gets built (390.90-394.68), the only lift this chapter gets, into the Quant vs The Market card."
+  },
+  {
+   "chapter": "CH5",
+   "span": [
+    394.9,
+    494.56
+   ],
+   "register": "gear-2 set-up with gear-1 screen-share reads (QUANT VS THE MARKET, card ON); the chapter with the most lift",
+   "source_file": "video-creation/assets/music/Solstice/DeHartmann_Solstice_instrumental_4_17.mp3",
+   "source_in": 103.33,
+   "cover": "section",
+   "intensity": "subtle (the plateau, -16.8 dB under; this file never gets aggressive, the reveals ride the file's own 1 dB shapes)",
+   "level_db_under_vo": -22,
+   "measured_db_under_vo": -21.8,
+   "remotion_gain_db": -29.3,
+   "fade_in_sec": 1.0,
+   "fade_out_sec": 0.4,
+   "carve": "jump back across the card pause to bar 31's line (file 103.33): PLATEAU bars 31-60 (file 103.33-203.0); bars 34-35 (113.3-120.0) on 404.9-411.6; the -2.7 dB step at file 160.1 on 451.67; bar 49's rise and bar 50's peak (163.3-170.0) on 455.1-461.6; bars 59-60 trough (196.67-203.3) on 488.2-494.56",
+   "breath_before_sec": 0.5,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "PINNED on the peers chart: the file's step down at 160.1 lands 50 ms before And this is all the while its peers fell from 40 to 60% (451.72), the rise under And then one line leaves the group (455.12), bar 50's peak under A year later, Quant sits at 273. And every other line in this chart is below 100 (456.66-461.9), back to the plateau as FACE 8 the Bitcoin terms opens (461.77). The same in-point puts bars 34-35 under The all time peak of that share was October of 2022 at 0.269% (406.34) right after FACE 6 All right, so now look at this (400.26-406.2, the C5 reveal, plateau bar 32), FACE 7 the peers (433.27-442.3) on bars 43-45, the 3.5x line (474.28) on bar 54, and the quiet close So even after this run, Quant sits at around 22% of its best level against Bitcoin (488.74-494.56) on the bars 59-60 trough, a settle into the What's Next card. The screenplay's two env-8 windows (116-118 and 130-132) are 14 s apart while look at this and one line leaves the group are 55 s apart, so one pin was chosen: the breakaway, which has the file's clearest shape (a step down, a rise, a peak)."
+  },
+  {
+   "chapter": "CH6",
+   "span": [
+    494.56,
+    518.42
+   ],
+   "register": "gear-2 forward-looking (WHAT'S NEXT, card ON); opens the FINAL MOVEMENT",
+   "source_file": "video-creation/assets/music/Solstice/DeHartmann_Solstice_instrumental_4_17.mp3",
+   "source_in": 188.23,
+   "cover": "section",
+   "intensity": "subtle (the plateau, -17.0 dB under)",
+   "level_db_under_vo": -22,
+   "measured_db_under_vo": -22.0,
+   "remotion_gain_db": -29.3,
+   "fade_in_sec": 1.0,
+   "fade_out_sec": 0.08,
+   "carve": "FINAL MOVEMENT, counted back from the file's end on the spine's last frame: 257.0 - 68.77 = file 188.23 on 494.56 (bar 56.5, the movement's one free in-point); PLATEAU bars 56.5-63.6 (file 188.23-212.09) under WB10; sample-continuous into the CH7 row (the mixer merges them, no fade)",
+   "breath_before_sec": 0.5,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "Now, what's next? and each source's own words (494.56-518.14, WB10 the flags on the horizon): the plateau, nothing moves yet; the in-point is chosen so the file's dip, last bars and fade fall where CH7 needs them. No card between CH6 and CH7, so this row runs straight into the next with no breath and no splice."
+  },
+  {
+   "chapter": "CH7",
+   "span": [
+    518.42,
+    563.33
+   ],
+   "register": "gear-3 landing line then the warm CTA (THE CLOSE, card OFF); the only ending in the video",
+   "source_file": "video-creation/assets/music/Solstice/DeHartmann_Solstice_instrumental_4_17.mp3",
+   "source_in": 212.09,
+   "cover": "section",
+   "intensity": "subtle into dip into the file's own fade (-17.0 dB under on the plateau, -18.8 in the dip, then the fade to silence)",
+   "level_db_under_vo": -22,
+   "measured_db_under_vo": -22.0,
+   "remotion_gain_db": -29.3,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.25,
+   "carve": "sample-continuous with CH6 (file 212.09 on 518.42, bar 63.6): PLATEAU bars 64-67 (213.3-226.67) under my read; DIP bar 68 (226.67-230.0, -13.5 LUFS) on 533.0-536.3 under the hedge; LAST BARS 69-72 (230.0-243.3) on 536.3-549.7 under the landing line and the like/subscribe line; FADE bars 73-76 (243.3-256.5) on 549.7-562.8 under the community pitch, -57 dBFS at 561.8, silent at 562.8; the file's last sample (257.0) on the spine's last frame 563.33. RIGHT-ALIGNED by construction: source_in 212.09 leaves exactly 44.91 s of file for the 44.91 s span",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": true,
+   "why": "So here's my read on Quant (518.42) and the two declaratives on the plateau; the file's one dip under Can the token re-rate again if the US network opens on time? It can, but you know, nobody can promise you that. (530.54-538.1), so the hedge sits in the bed's breath; the arrangement's last, fullest bars under the gear-3 landing line But every one of those banks is an island, and right now, Quant is the one holding the contracts that connects them. (FACE 9, 537.97-544.17, WB11 in the deck area) and the like/subscribe line (544.30-549.4); the fade begins on And like I said, like I mentioned earlier on, I do have a community (549.46) and is inaudible by So click the link in the description below. (561.40-563.16): the tone dies on the last word below. as the screenplay asked (it asked for later., which was not said). No hit, no stinger. The mixer's last-bed default 0.25 s fade sits in the file's silence."
+  }
+ ]
+}

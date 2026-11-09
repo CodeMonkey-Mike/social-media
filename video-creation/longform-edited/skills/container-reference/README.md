@@ -25,6 +25,15 @@ visual-qa (which then judges palette drift against the light tokens, and a white
 Worked example + the dark/light pairs Mike judged: `_light-mode-experiment/` (index.html). First light video: `inference`.
 Watch at the draft gate: a full light frame between dark face shots flashes; the comp's container fade-in covers it.
 
+## ACCENT stylesheets, a per-video THIRD file (Mike, 2026-11-04, first video `quant`)
+`run.py longform --project <p> --container-theme light --container-accent <slug>` (persisted as `settings.container_accent`;
+`off` clears it) loads **`accents/<slug>.css`** (this folder) AFTER the theme file. An accent file re-maps ONLY the page /
+card / text / accent tokens to a brand palette (quant.css = quant.network's look: pure white page, warm near-black text
+#43403E, Quant orange #F15A22 as the one accent, #D14A14 for orange words, orange chart wires, a second series in warm grey);
+anatomy, type, sizes and every rule stay the locked stylesheet's. The graph passes all three files to slide-builder,
+chart-builder and visual-qa, which judges palette drift against the accent tokens. Add a new brand = a new file here, never
+an edit to the canonical or the light file.
+
 ## The reference frames — the THREE official type names (Mike, 2026-07-24)
 This folder carries exemplars of the three container types. Use these NAMES everywhere (BROLL-PLAN's
 CHARTS/SLIDES worklist sections, cue sheets, comps) — they were previously the unnamed "variants" and

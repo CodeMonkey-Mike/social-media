@@ -21,7 +21,7 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 HERE = Path(__file__).resolve().parent
 TRACK = HERE.parent
 MEDIA = TRACK / "media"
-ASSET_DIRS = ("img", "vid", "title-slides", "card-slides", "receipts", "clip-inserts", "charts", "diagrams",
+ASSET_DIRS = ("img", "vid", "title-slides", "card-slides", "receipts", "clip-inserts", "charts", "diagrams", "whiteboard",
               "slide-sources", "transitions")
 DIRS = ("raw", "spine", "assets", "_previews", "_previews/qa") + tuple(f"assets/{d}" for d in ASSET_DIRS)
 

@@ -1,0 +1,135 @@
+{
+ "project": "bullish-on-kaspa",
+ "comp_id": "BullishOnKaspaShort",
+ "comp_file": "video-creation/remotion/src/BullishOnKaspaShort.tsx",
+ "extra_files": [
+  "video-creation/remotion/src/Root.tsx (import + Composition registered)",
+  "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\bullish-on-kaspa\\_previews\\short\\work\\variants\\ (4 clips copied from assets/short/vid)",
+  "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\bullish-on-kaspa\\_previews\\short\\work\\cutframes\\BR-1-phone-chart-teal-night.jpg (whip still, clip frame 11)",
+  "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\bullish-on-kaspa\\_previews\\short\\work\\cutframes\\BR-4-terminal-build-angled.jpg (whip still, clip frame 14)"
+ ],
+ "card_t": [],
+ "pause_s": null,
+ "spine_secs": null,
+ "dur_frames": 904,
+ "covers": 4,
+ "transitions_wired": [
+  {
+   "frame": 101,
+   "tc": 3.367,
+   "id": "hand:film-burn + hand:kt-whip-cut",
+   "where": "F1 -> BR-1 variant, the vertical's ingress; pre-cut burn baked, post-cut half redrawn"
+  },
+  {
+   "frame": 176,
+   "tc": 5.867,
+   "id": "hand:film-burn (compressed to 0.3 s) + hand:kt-whip-cut",
+   "where": "seam 1 -> 2, BR-1 -> BR-4 variant"
+  },
+  {
+   "frame": 213,
+   "tc": 7.1,
+   "id": "hand:fade",
+   "where": "BR-4 -> BR-5 variant, 15 frames"
+  },
+  {
+   "frame": 274,
+   "tc": 9.133,
+   "id": "baked lib:zoom-optics-in-impact + hand outgoing ramp",
+   "where": "BR-5 variant -> F3; the variant hides the engine's outgoing half, a 5-frame zoom ramp stands in for it"
+  },
+  {
+   "frame": 402,
+   "tc": 13.4,
+   "id": "hand:film-burn",
+   "where": "seam 2 -> 3, F3 -> BR-8 variant, hard cut; pre-cut burn baked, post-cut half redrawn"
+  },
+  {
+   "frame": 468,
+   "tc": 15.6,
+   "id": "hand:xfade-scale",
+   "where": "BR-8 variant -> C6 receipt, 11 frames"
+  },
+  {
+   "frame": 581,
+   "tc": 19.367,
+   "id": "hand:film-burn (compressed to 0.3 s) + blur ramp + baked optics",
+   "where": "seam 3 -> 4, C6 -> F7"
+  },
+  {
+   "frame": 814,
+   "tc": 27.133,
+   "id": "hand:film-burn",
+   "where": "F7 -> outro card; pre-cut burn baked, post-cut half redrawn"
+  }
+ ],
+ "captions_groups": 22,
+ "captions_rendered": 18,
+ "gates": {
+  "COMP-IMPORTS-LINT": "PASS files=4 fails=0",
+  "COVERS-LINT": "PASS covers=4 fails=0 warns=1 (GAP 9.133-13.42 s is the F3 face beat, expected)",
+  "EDGE-TEXT (extra, on stills only)": "EDGE-TEXT frames=25 bad=0 worst=0.0s/0px, run on a clip built from 25 stills at the whips and seam 3 -> 4, not on the full short; s_verify_final runs the real one"
+ },
+ "chunks_qa": [
+  {
+   "frames": "30, 130",
+   "what": "span 1: F1 with its burned line and no second caption; BR-1 variant with the caption in the safe zone",
+   "verdict": "ok; the doubling was prevented before the first still (seen on the span frames + the slot geometry, never rendered doubled), see deviations"
+  },
+  {
+   "frames": "200, 320, 400",
+   "what": "span 2: BR-4 variant; F3 caption under the baked BULLISH ON / KASPA pop",
+   "verdict": "ok; the slot was set before the first still from the measured pop, see deviations"
+  },
+  {
+   "frames": "466-479",
+   "what": "span 3: BR-8 variant -> C6 receipt landing and the hand-over to the live span",
+   "verdict": "ok; the receipt landing was built before the first still, because the span's old ship would otherwise show for 11 frames (read off the span and the vertical's Ingress code)"
+  },
+  {
+   "frames": "500, 560",
+   "what": "span 3: caption in the free band under the receipt, baked LAYER 1 IS PROGRAMMABLE pop above it",
+   "verdict": "ok; the slot was set before the first still from the measured receipt, see deviations"
+  },
+  {
+   "frames": "571-584",
+   "what": "seam 3 -> 4",
+   "verdict": "fixed, seen on the first stills: span-04 frame 0 is a leftover frame of the vertical's previous cover (huge letters on white), so frame 581 now holds span-04 frame 1. Also cut the ramp scale to 1.03 before any edge-text failure, so the receipt text stays clear of the 22 px strip"
+  },
+  {
+   "frames": "650, 700",
+   "what": "span 4: F7 side panel, its own burned captions, no short captions",
+   "verdict": "ok"
+  },
+  {
+   "frames": "813-823, 880",
+   "what": "outro: burn into the card, card text and arrow",
+   "verdict": "ok"
+  },
+  {
+   "frames": "30, 320, 500, 700, 880",
+   "what": "one still per span + the outro off the final bundle",
+   "verdict": "ok"
+  }
+ ],
+ "draft": null,
+ "not_verified": [
+  "No video was rendered, per the brief: motion, the seam hits at speed and the whip handovers were checked on stills only.",
+  "lint_face_reframe, lint_transition_assets and the other longform gates were not run: the brief names only lint_comp_imports + lint_covers for a short."
+ ],
+ "needs_review": [
+  "F1 hook captions: the first 3.367 s show the vertical's burned line (I AM MORE BULLISH ON KASPA / NOW THAN I'VE EVER BEEN, Montserrat italic caps with a teal key word), not the short's lowercase track, so the style changes at 3.44 s.",
+  "Captions over the C6 receipt sit at y 1752-1840 (5 groups, short 15.6-19.37 s), the only text-free band on that card. That is below the ~320 px safe pad, so a platform's channel and title row can cover them on a phone. The F3 captions (3 groups, top y 1600) are also below the pad, less severely.",
+  "Baked headlines hidden: the full-frame variants cover NOTHING TO DO WITH THE PRICE and 5 YEARS OF BUILDING, and I did not redraw them. The captions carry the first; the second no longer appears in the short.",
+  "F7 (span 4) carries the side-panel head clipping Mike accepted on the vertical (GRAPH-PROGRESS.json, 2026-11-05).",
+  "The outro card is dark per the brief; this video's containers are light (settings.container_theme).",
+  "Variant content noted by visual-qa is legible on stills: BR-4's terminal reads ~/quantum-engine and an ML training run, and BR-1's chart axis reads 5700-6800, not KAS.",
+  "'programmable.' shows as a caption under the baked LAYER 1 IS PROGRAMMABLE pop for its whole 1.2 s: same word twice, no overlap."
+ ],
+ "deviations": [
+  "Departed from 'never clip them further': 4 of the 22 groups (i am more / bullish on / kaspa now / than i've ever been) are not rendered, via BAKED_CAPTIONS in the comp. The windows file is untouched. Reason: the brief's premise that s_captions removed every burned frame does not hold here. F1 carries a burned caption line (KT_PHRASES t 0.0 and 1.94), but _burned_final in graph/short_graph.py reads only assets/captions.json windows, which omit F1, so the short's track landed on top of it. To restore the groups, empty BAKED_CAPTIONS. The root cause is still in s_captions and I did not change the graph: any kinetic-text video with a burned line on a short face hold can hit the same doubling.",
+  "A caption group's hold now also ends at its span's last frame, which trims 'price.' by about 5 frames and 'online.' by about 2 at the seams.",
+  "Captions leave the bottom-pad-320 slot in two windows, F3 and the C6 receipt, because 'never on card text' conflicts with it there (see needs_review).",
+  "Overlay windows adjusted: BR-8 starts on seam frame 402, not 403 (13.42 s), so no sliver of the vertical's clip shows. BR-4 runs 15 frames past its window under the BR-5 fade. BR-8 runs 11 frames past its window under the C6 landing."
+ ]
+}

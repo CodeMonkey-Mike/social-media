@@ -1,0 +1,738 @@
+{
+ "project": "Crypto vs. The Traditional Financial System",
+ "comp": "CryptoVsTradSpotlight",
+ "deck": "lecture4-crypto-vs-trad.html",
+ "fps": 30,
+ "_doc": "Spotlight scene spec (longform-presentation/skills/spotlight). No chapter_pause: the deck-lecture desilence preset already keeps 900 ms at every slide change (Mike, 2026-11-08). The --edit is the enhanced EDIT (Mike's Adobe Enhance Speech pass, remuxed).",
+ "head_until": {
+  "cue": "Most people go through their entire lives"
+ },
+ "tail_from": {
+  "cue": "In the next lecture, we look at some of Bitcoin's shortcomings"
+ },
+ "scenes": [
+  {
+   "id": "ch01",
+   "kind": "chapter",
+   "eyebrow": "Chapter 01 — The Old System",
+   "title": "The Rules of the Old System",
+   "cue": "Most people go through their entire lives"
+  },
+  {
+   "id": "ch01-flow",
+   "kind": "flow",
+   "cue": "The traditional financial system runs on a hierarchy",
+   "items": [
+    {
+     "strong": "Central Bank",
+     "rest": "",
+     "cue": "At the top you have central banks"
+    },
+    {
+     "strong": "Commercial Banks",
+     "rest": ""
+    },
+    {
+     "strong": "Businesses",
+     "rest": ""
+    },
+    {
+     "strong": "You",
+     "rest": ""
+    }
+   ]
+  },
+  {
+   "id": "ch01-cb",
+   "kind": "block",
+   "title": "Central Banks",
+   "cue": "Central banks control the money supply",
+   "items": [
+    {
+     "strong": "Control money supply",
+     "rest": "",
+     "cue": "control the money supply"
+    },
+    {
+     "strong": "Set interest rates",
+     "rest": "",
+     "cue": "set interest rates"
+    },
+    {
+     "strong": "Lender of last resort",
+     "rest": "",
+     "cue": "lender of last resort"
+    }
+   ]
+  },
+  {
+   "id": "ch01-commercial",
+   "kind": "block",
+   "title": "Commercial Banks",
+   "cue": "Below the central banks are commercial banks",
+   "items": [
+    {
+     "strong": "Hold your deposits",
+     "rest": "",
+     "cue": "They hold your deposits"
+    },
+    {
+     "strong": "Approve or deny accounts",
+     "rest": "",
+     "cue": "approve or deny your account"
+    },
+    {
+     "strong": "Execute transactions",
+     "rest": "",
+     "cue": "execute your transactions"
+    }
+   ]
+  },
+  {
+   "id": "ch01-gov",
+   "kind": "block",
+   "title": "Governments",
+   "cue": "Above all of this, you have governments",
+   "items": [
+    {
+     "strong": "Regulate the banks",
+     "rest": "",
+     "cue": "Governments regulate the banks"
+    },
+    {
+     "strong": "Enforce legal tender laws",
+     "rest": "",
+     "cue": "enforce legal tender laws"
+    },
+    {
+     "strong": "Sanction or seize assets",
+     "rest": "",
+     "cue": "sanction or seize assets"
+    }
+   ]
+  },
+  {
+   "id": "ch01-you",
+   "kind": "block",
+   "title": "You",
+   "cue": "And then there is you",
+   "items": [
+    {
+     "strong": "Agree to their terms",
+     "rest": "",
+     "cue": "You agree to their terms"
+    },
+    {
+     "strong": "Subject to their rules",
+     "rest": "",
+     "cue": "under their rules"
+    },
+    {
+     "strong": "Dependent on their uptime",
+     "rest": "",
+     "cue": "dependent on their systems being online"
+    }
+   ]
+  },
+  {
+   "id": "ch01-flow-you",
+   "kind": "flow",
+   "active": 3,
+   "cue": "This is not necessarily a criticism",
+   "items": [
+    {
+     "strong": "Central Bank",
+     "rest": ""
+    },
+    {
+     "strong": "Commercial Banks",
+     "rest": ""
+    },
+    {
+     "strong": "Businesses",
+     "rest": ""
+    },
+    {
+     "strong": "You",
+     "rest": ""
+    }
+   ]
+  },
+  {
+   "id": "ch02",
+   "kind": "chapter",
+   "eyebrow": "Chapter 02 — Control",
+   "title": "Who's Really in Control?",
+   "cue": "So who's really in control"
+  },
+  {
+   "id": "ch02-q",
+   "kind": "statement",
+   "text": "Do you own your money?",
+   "cue": "Do you own your money"
+  },
+  {
+   "id": "ch02-claim",
+   "kind": "statement",
+   "text": "In the traditional system, you don't own your money. You own a [[claim]] on money held by someone else.",
+   "cue": "but technically no"
+  },
+  {
+   "id": "ch02-trad",
+   "kind": "block",
+   "title": "Centralized",
+   "cue": "And with that comes a set of rules",
+   "items": [
+    {
+     "strong": "Bank can freeze your account",
+     "rest": "",
+     "cue": "The bank can freeze your account"
+    },
+    {
+     "strong": "Transactions can be reversed",
+     "rest": "",
+     "cue": "Transactions can be reversed"
+    },
+    {
+     "strong": "More money can be printed",
+     "rest": "",
+     "cue": "more money can always be printed"
+    },
+    {
+     "strong": "Access can be denied",
+     "rest": ""
+    },
+    {
+     "strong": "Rules can change overnight",
+     "rest": ""
+    }
+   ],
+   "label": "Traditional Finance",
+   "variant": "trad"
+  },
+  {
+   "id": "ch02-crypto",
+   "kind": "block",
+   "title": "Decentralized",
+   "cue": "Crypto flips this model",
+   "items": [
+    {
+     "strong": "No one can freeze your wallet",
+     "rest": "",
+     "cue": "No one can freeze it"
+    },
+    {
+     "strong": "Transactions are irreversible",
+     "rest": "",
+     "cue": "Transactions on the blockchain are irreversible"
+    },
+    {
+     "strong": "Supply is fixed by code",
+     "rest": "",
+     "cue": "capped at 21 million coins"
+    },
+    {
+     "strong": "Open to anyone, anywhere",
+     "rest": ""
+    },
+    {
+     "strong": "Rules enforced by math",
+     "rest": "",
+     "cue": "Crypto runs on math"
+    }
+   ],
+   "label": "Crypto",
+   "variant": "crypto"
+  },
+  {
+   "id": "ch03",
+   "kind": "chapter",
+   "eyebrow": "Chapter 03 — Friction & Fees",
+   "title": "The Cost of Trust",
+   "cue": "Now, the cost of trust"
+  },
+  {
+   "id": "ch03-wire",
+   "kind": "stat",
+   "num": "$25–$50",
+   "label": "Average domestic wire transfer fee",
+   "cue": "If you want to wire money domestically"
+  },
+  {
+   "id": "ch03-days",
+   "kind": "stat",
+   "num": "3–5 days",
+   "label": "International wire settlement time",
+   "cue": "three to five business days"
+  },
+  {
+   "id": "ch03-remit",
+   "kind": "stat",
+   "num": "6–7%",
+   "label": "Average global remittance fee",
+   "cue": "The average global remittance fee"
+  },
+  {
+   "id": "ch03-trad",
+   "kind": "block",
+   "title": "Traditional Finance",
+   "cue": "Why does it take so long",
+   "items": [
+    {
+     "strong": "Banking hours limit access",
+     "rest": ""
+    },
+    {
+     "strong": "Multiple intermediaries add fees",
+     "rest": ""
+    },
+    {
+     "strong": "Cross-border payments take days",
+     "rest": ""
+    },
+    {
+     "strong": "SWIFT network is 50 years old",
+     "rest": "",
+     "cue": "a network called SWIFT"
+    }
+   ]
+  },
+  {
+   "id": "ch03-crypto",
+   "kind": "block",
+   "title": "Crypto",
+   "cue": "Crypto removes all of that",
+   "items": [
+    {
+     "strong": "24/7/365, no banking hours",
+     "rest": "",
+     "cue": "There are no banking hours"
+    },
+    {
+     "strong": "Peer-to-peer, no intermediaries",
+     "rest": "",
+     "cue": "no intermediaries taking a cut"
+    },
+    {
+     "strong": "Global transfers in minutes",
+     "rest": ""
+    },
+    {
+     "strong": "Fee is the same whether sending $10 or $10M",
+     "rest": "",
+     "cue": "the fee to send Bitcoin is essentially the same"
+    }
+   ]
+  },
+  {
+   "id": "ch04",
+   "kind": "chapter",
+   "eyebrow": "Chapter 04 — Inclusion",
+   "title": "Access & Exclusion",
+   "cue": "Access and exclusion"
+  },
+  {
+   "id": "ch04-unbanked",
+   "kind": "stat",
+   "num": "1.4B",
+   "label": "Adults globally with no bank account",
+   "cue": "1.4 billion adults around the world"
+  },
+  {
+   "id": "ch04-bank",
+   "kind": "block",
+   "title": "To Open a Bank Account",
+   "cue": "To open a bank account in most countries",
+   "items": [
+    {
+     "strong": "Government-issued ID required",
+     "rest": "",
+     "cue": "government-issued ID"
+    },
+    {
+     "strong": "Proof of address",
+     "rest": "",
+     "cue": "proof of address"
+    },
+    {
+     "strong": "Credit history check",
+     "rest": "",
+     "cue": "credit history"
+    },
+    {
+     "strong": "Minimum balance requirements",
+     "rest": "",
+     "cue": "minimum balance to maintain"
+    },
+    {
+     "strong": "Subject to approval",
+     "rest": ""
+    }
+   ]
+  },
+  {
+   "id": "ch04-us",
+   "kind": "stat",
+   "num": "6%",
+   "label": "US adults who are unbanked",
+   "cue": "of American adults are unbanked"
+  },
+  {
+   "id": "ch04-crypto",
+   "kind": "block",
+   "title": "To Use Crypto",
+   "cue": "Crypto changes this equation",
+   "items": [
+    {
+     "strong": "Smartphone or internet access",
+     "rest": "",
+     "cue": "you need a smartphone or internet access"
+    },
+    {
+     "strong": "No ID required",
+     "rest": ""
+    },
+    {
+     "strong": "No credit check",
+     "rest": "",
+     "cue": "There is no credit check"
+    },
+    {
+     "strong": "No minimum balance",
+     "rest": "",
+     "cue": "There is no minimum balance"
+    },
+    {
+     "strong": "No one can deny you",
+     "rest": "",
+     "cue": "No one decides whether you are allowed"
+    }
+   ]
+  },
+  {
+   "id": "ch04-zero",
+   "kind": "stat",
+   "num": "$0",
+   "label": "Cost to create a crypto wallet",
+   "cue": "The cost to create a crypto wallet is zero"
+  },
+  {
+   "id": "ch05",
+   "kind": "chapter",
+   "eyebrow": "Chapter 05 — Visibility",
+   "title": "Transparency vs. Opacity",
+   "cue": "Transparency versus opacity"
+  },
+  {
+   "id": "ch05-trad",
+   "kind": "block",
+   "title": "Behind Closed Doors",
+   "cue": "Bank ledgers are private",
+   "items": [
+    {
+     "strong": "Bank ledgers are private",
+     "rest": "",
+     "cue": "Bank ledgers are private"
+    },
+    {
+     "strong": "Fed balance sheet updated weekly",
+     "rest": "",
+     "cue": "publishes its balance sheet weekly"
+    },
+    {
+     "strong": "Audit trails controlled internally",
+     "rest": ""
+    },
+    {
+     "strong": "You trust the institution's report",
+     "rest": ""
+    },
+    {
+     "strong": "Fraud can go undetected for years",
+     "rest": "",
+     "cue": "nobody on the outside can see"
+    }
+   ],
+   "label": "Traditional Finance",
+   "variant": "trad"
+  },
+  {
+   "id": "ch05-crypto",
+   "kind": "block",
+   "title": "Public by Default",
+   "cue": "The blockchain is different",
+   "items": [
+    {
+     "strong": "Every transaction on-chain forever",
+     "rest": "",
+     "cue": "permanently recorded and publicly accessible"
+    },
+    {
+     "strong": "Anyone can verify any balance",
+     "rest": "",
+     "cue": "verify any wallet balance"
+    },
+    {
+     "strong": "Supply provably fixed by code",
+     "rest": "",
+     "cue": "The total supply of Bitcoin can be verified"
+    },
+    {
+     "strong": "No trust required, just math",
+     "rest": ""
+    },
+    {
+     "strong": "“Don't trust, verify”",
+     "rest": "",
+     "cue": "Don't trust, verify"
+    }
+   ],
+   "label": "Crypto",
+   "variant": "crypto"
+  },
+  {
+   "id": "ch05-ledger",
+   "kind": "statement",
+   "text": "The blockchain is the first financial ledger in history that is [[open to everyone]] and controlled by [[no one]].",
+   "cue": "the first financial ledger in history"
+  },
+  {
+   "id": "ch06",
+   "kind": "chapter",
+   "eyebrow": "Chapter 06 — Monetary Policy",
+   "title": "Inflation & Monetary Policy",
+   "cue": "Inflation and monetary"
+  },
+  {
+   "id": "ch06-fiat",
+   "kind": "block",
+   "title": "Fiat Money",
+   "cue": "In the traditional system, the answer is central banks",
+   "items": [
+    {
+     "strong": "Supply set by central banks",
+     "rest": "",
+     "cue": "the answer is central banks"
+    },
+    {
+     "strong": "Printed to fund deficits & bail outs",
+     "rest": ""
+    },
+    {
+     "strong": "More supply = each dollar worth less",
+     "rest": ""
+    },
+    {
+     "strong": "Inflation erodes savings over time",
+     "rest": ""
+    }
+   ]
+  },
+  {
+   "id": "ch06-m2",
+   "kind": "supply",
+   "variant": "fiat",
+   "label": "US Dollar Supply (M2): 2000 to 2024",
+   "rows": [
+    {
+     "value": "$4.6T",
+     "pct": 22,
+     "tag": "2000"
+    },
+    {
+     "value": "$21T+",
+     "pct": 100,
+     "tag": "2024"
+    }
+   ],
+   "note": "The dollar supply has grown ~4.5× in 24 years",
+   "cue": "In the year 2000"
+  },
+  {
+   "id": "ch06-fiat2",
+   "kind": "block",
+   "title": "Fiat Money",
+   "cue": "What does that mean for your purchasing power",
+   "items": [
+    {
+     "strong": "Supply set by central banks",
+     "rest": ""
+    },
+    {
+     "strong": "Printed to fund deficits & bail outs",
+     "rest": ""
+    },
+    {
+     "strong": "More supply = each dollar worth less",
+     "rest": "",
+     "cue": "each dollar buys less"
+    },
+    {
+     "strong": "Inflation erodes savings over time",
+     "rest": "",
+     "cue": "comes at a cost to savers"
+    }
+   ]
+  },
+  {
+   "id": "ch06-btc",
+   "kind": "supply",
+   "variant": "btc",
+   "label": "Bitcoin Supply: Fixed Forever",
+   "rows": [
+    {
+     "value": "21M",
+     "pct": 100,
+     "tag": "Cap"
+    }
+   ],
+   "note": "Hard-coded in Bitcoin's protocol. No central bank can change it.",
+   "cue": "Bitcoin takes a completely different approach"
+  },
+  {
+   "id": "ch06-bitcoin",
+   "kind": "block",
+   "title": "Bitcoin",
+   "cue": "a mechanism called the halving",
+   "items": [
+    {
+     "strong": "21 million cap, hard-coded",
+     "rest": ""
+    },
+    {
+     "strong": "Issuance rate halves every ~4 years",
+     "rest": "",
+     "cue": "Roughly every four years"
+    },
+    {
+     "strong": "Disinflationary by design",
+     "rest": "",
+     "cue": "disinflationary by design"
+    },
+    {
+     "strong": "No one can print more",
+     "rest": "",
+     "cue": "You cannot print more"
+    }
+   ]
+  },
+  {
+   "id": "ch07",
+   "kind": "chapter",
+   "eyebrow": "Chapter 07 — Honest Assessment",
+   "title": "The Tradeoffs",
+   "cue": "The tradeoffs"
+  },
+  {
+   "id": "ch07-vol",
+   "kind": "block",
+   "title": "Volatility",
+   "cue": "First, volatility",
+   "items": [
+    {
+     "strong": "Not a stable store of value (yet)",
+     "rest": ""
+    },
+    {
+     "strong": "Price swings can be extreme",
+     "rest": "",
+     "cue": "The price can move"
+    }
+   ]
+  },
+  {
+   "id": "ch07-charge",
+   "kind": "block",
+   "title": "No Chargebacks",
+   "cue": "Second, there are no chargebacks",
+   "items": [
+    {
+     "strong": "Transactions are irreversible",
+     "rest": "",
+     "cue": "This is the flip side of irreversibility"
+    },
+    {
+     "strong": "Mistakes cannot be undone",
+     "rest": "",
+     "cue": "If you send Bitcoin to the wrong address"
+    }
+   ]
+  },
+  {
+   "id": "ch07-ins",
+   "kind": "block",
+   "title": "No Insurance",
+   "cue": "Third, there is no insurance",
+   "items": [
+    {
+     "strong": "No FDIC equivalent for crypto",
+     "rest": "",
+     "cue": "There is no equivalent for crypto"
+    },
+    {
+     "strong": "Exchange failure = potential total loss",
+     "rest": "",
+     "cue": "If the exchange you are using collapses"
+    }
+   ]
+  },
+  {
+   "id": "ch07-user",
+   "kind": "block",
+   "title": "User Responsibility",
+   "cue": "user responsibility",
+   "items": [
+    {
+     "strong": "Lose your keys, lose your crypto",
+     "rest": "",
+     "cue": "if you lose your private keys"
+    },
+    {
+     "strong": "No one to call for help",
+     "rest": "",
+     "cue": "No one to call"
+    }
+   ]
+  },
+  {
+   "id": "ch07-real",
+   "kind": "statement",
+   "text": "These tradeoffs are [[real]], and understanding them is what separates informed investors from gamblers.",
+   "cue": "what separates informed investors from gamblers"
+  },
+  {
+   "id": "ch08",
+   "kind": "chapter",
+   "eyebrow": "Chapter 08 — The Big Picture",
+   "title": "Not Either/Or",
+   "cue": "Two systems converging. Here is where I want to leave you"
+  },
+  {
+   "id": "ch08-etf",
+   "kind": "card",
+   "title": "Bitcoin ETFs",
+   "sub": "Approved by the SEC in January 2024. Wall Street now sells Bitcoin exposure through traditional brokerage accounts",
+   "cue": "In 2024, the U.S."
+  },
+  {
+   "id": "ch08-stable",
+   "kind": "card",
+   "title": "Stablecoins",
+   "sub": "Dollar-pegged crypto assets with the speed and openness of crypto with the stability of fiat, now used by hundreds of millions",
+   "cue": "Stablecoins are another example"
+  },
+  {
+   "id": "ch08-cbdc",
+   "kind": "card",
+   "title": "CBDCs",
+   "sub": "Central Bank Digital Currencies. Governments worldwide building digital versions of their currencies on blockchain rails",
+   "cue": "And then there are CBDCs"
+  },
+  {
+   "id": "ch08-future",
+   "kind": "statement",
+   "text": "The future isn't crypto [[vs.]] traditional finance. It is crypto [[becoming part of]] traditional finance. That shift is already underway.",
+   "cue": "The future of finance is not crypto replacing banks"
+  }
+ ]
+}

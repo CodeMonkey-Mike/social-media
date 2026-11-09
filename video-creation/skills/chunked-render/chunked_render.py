@@ -126,7 +126,7 @@ def bundle(public_dir: Path, dest: Path, entry="src/index.ts"):
 def comp_frames(bundle_dir: Path, comp: str, props=None):
     """(durationInFrames, fps) of `comp` as the bundle resolves it (input props included)."""
     # no --log=error here: Remotion prints the composition table at INFO level, so --log=error hides the table itself
-    args = ["compositions", str(bundle_dir)] + ([f"--props={props}"] if props else [])
+    args = ["compositions", str(bundle_dir)] + ([f"--props={Path(props).resolve()}"] if props else [])   # Remotion's cwd is not ours
     r = _run(_remotion(args))
     for ln in ((r.stdout or "") + "\n" + (r.stderr or "")).splitlines():
         m = re.match(rf"^\s*{re.escape(comp)}\s+(\d+(?:\.\d+)?)\s+\d+x\d+\s+(\d+)\b", ln)
@@ -358,7 +358,7 @@ def _render(*, comp, out, public_dir, quality, frames, chunk, audio, concurrency
 
 
 def _work_root():
-    """CHUNKED_RENDER_DIR, else the Windows TEMP the launcher set (renders point it at D:, C: is nearly full), else the OS
+    """CHUNKED_RENDER_DIR, else the Windows TEMP the launcher set (on C:, never D:: a removable drive), else the OS
     temp. Not tempfile.gettempdir(): it prefers TMPDIR, which a Git-bash parent exports as C:'s temp (2026-10-27)."""
     root = os.environ.get("CHUNKED_RENDER_DIR") or os.environ.get("TEMP") or tempfile.gettempdir()
     return Path(root) / "chunked-render"

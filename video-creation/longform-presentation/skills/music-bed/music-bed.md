@@ -23,8 +23,8 @@ music under it:
    off the head (print-function opened 12.7 s into the song).
 
 ```
-python video-creation/longform-presentation/skills/music-bed/music_bed.py "media/<p>/raw/<timestamp>.mkv" \
-    --cue-phrase "this is a cool course" [--track <library id>] --out "media/<p>/<p> FINAL-v1.mp4"
+python video-creation/longform-presentation/skills/music-bed/music_bed.py "media/vscode-coding/<p>/raw/<timestamp>.mkv" \
+    --cue-phrase "this is a cool course" [--track <library id>] --out "media/vscode-coding/<p>/<p> FINAL-v1.mp4"
 ```
 - `--cue-phrase` finds the words with local Whisper (small.en, word timestamps) in the first `--cue-window`
   seconds (300) and starts the bed 60 ms after the last word ends; `--bed-start <s>` skips Whisper.

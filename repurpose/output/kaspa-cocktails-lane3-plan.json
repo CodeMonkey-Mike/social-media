@@ -1,0 +1,602 @@
+{
+  "batch": "kaspa-cocktails",
+  "date": "2026-11-02",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/kaspa-cocktails LOW BPS VERTICAL/kaspa-cocktails LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-11-02",
+  "brief": "Make this batch Kaspa-centric: there is a lot of Kaspa content in this stream, so the tweets, threads, polls, quizzes and YT/IG posts should lean on the Kaspa topics first (KCC20 / Nacho migration deadline January 31, Kaspa chart vs early Bitcoin, Kaspa's first bear market vs Bitcoin's 50 week MA, the 3.33 dollar target, GHOSTDAG / blockDAG, Bitcoin maxis rotating to Kaspa, the Kaspa conference cruise).",
+  "fact_check": [
+    {
+      "claim": "'the four-year cycle zombies still have a day left... 25 hours to prove me wrong to get a new bottom... 40K Bitcoin in October' (transcript)",
+      "verdict": "verified and updated to the close: October 2026 closed around $77.3K to $77.6K, down about 7% (reported as the worst October since 2014); the October low was about $76.2K while the 2026 low remains July's ~$58.6K, so no October bottom printed. Copy: 'October closed down 7%, the worst October since 2014, and the 2026 low is still July's $58K.'",
+      "source": "financefeeds.com (Oct close $77,582, open $83,624, low $76,326); cryptoticker.io; cryptonews.net ('worst October finish since 2014'); CoinGecko daily history (2026 monthly lows, July low $58,566), pulled 2026-11-02"
+    },
+    {
+      "claim": "'Bitcoin is still above the 50-week moving average... two weekly closes below is a bear market' (transcript)",
+      "verdict": "verified: on Kraken XBTUSD weekly candles Bitcoin closed below its 50-week SMA from the week of Nov 6 2025 until it reclaimed in the week of Sept 17 2026 (close $84,385 vs SMA $78,606) and has stayed above since; the week ending Oct 29 closed $77,672 vs SMA $75,924, low $76,156 (above). CoinGecko Sunday closes agree (Nov 1: $77,521 vs SMA $75,706). Copy says 'closed the month above its 50-week SMA' (a past fact) rather than a live level.",
+      "source": "api.kraken.com OHLC XBTUSD interval=10080 and api.coingecko.com bitcoin market_chart (365d), computed 2026-11-02"
+    },
+    {
+      "claim": "'Binance got a hack for $5.6 billion dollars, the largest heist in human history... Bitcoin only went down 6.8%' (transcript)",
+      "verdict": "verified in substance, numbers updated: the Oct 29 2026 Binance hack is reported at about $6.3 billion (Chainalysis ~$5.9B at the time; Binance set aside $6.34B), the largest crypto theft on record; Bitcoin fell roughly 3% to 5% over 24 hours to a six-week low near $76.4K to $77K. Copy: '$6.3 billion drained from Binance on October 29... $BTC dropped about 5%'. 'Largest heist in human history' is softened to 'biggest heist in crypto history'.",
+      "source": "en.wikipedia.org/wiki/2026_Binance_hack; cnn.com 2026/10/30; aljazeera.com 2026/10/30; coindesk.com 2026/10/29; e27.co (4.87% drop); blockchainreporter.net (~4%); stocktwits/CoinGlass (>3%)"
+    },
+    {
+      "claim": "'Nacho Migration is live, KCC-20 is live in Kaspa L1... Migration deadline January 31st, after this date un-migrated tokens will not be eligible... you got to bridge over' (transcript, Mike reading Nacho the Kat's post on stream)",
+      "verdict": "verified: the NACHO move to KCC-20 opened on mainnet October 30 2026, one way, 1:1, from KRC-20, Igra L2 or Kasplex L2, and the window closes January 31 2027 (KuCoin repost of the @KASPAglobal post). The 'not eligible after' consequence is the line Mike read aloud from the post. 'KCC-20 is live' rides on the Oct 21 Final declaration (prior ledger). A GitHub community report dated Oct 29 said no migration path was live yet, which predates the Oct 30 opening. Copy avoids calling Nacho 'the first' KRC-20 to migrate in tweets; the IG caption says 'one of the first big KRC-20 names'.",
+      "source": "kucoin.com/news/insight/KAS/6ae5dda4bbcb520007454e85 (Oct 31); crypto.news kaspa-finalizes-kcc-native-token-app-standards (Oct 21); news.bitcoin.com Kasplex indexer article (Sept 20 exploit); github.com/neoalphavault-png/kaspa-pulse/pull/217"
+    },
+    {
+      "claim": "'a third-party indexer... got exploited' / KRC-20 indexer context (drafted copy)",
+      "verdict": "verified: on September 20 2026 an attacker used a signature-bypass flaw in the Kasplex KRC-20 indexer to credit forged transfers and drain two token pools; the team says the flaw was in the indexer, not in Kaspa. KCC-20 puts token rules into covenants that L1 consensus checks.",
+      "source": "news.bitcoin.com/security/kasplex-krc-20-indexer-signature-bypass-drains-two-token-pools/; kucoin.com/news/insight/KAS/6ae5dda4bbcb520007454e85; 30x-tao and kcc20-live ledgers"
+    },
+    {
+      "claim": "'Bitcoin had Miami, Ethereum had Devcon, now it's Kaspa's turn... four-day experience... investing up to a million in Kaspa startups... Port of Miami, April 9th through the 12th, 2027... Norwegian Cruise Line, four days three nights' (transcript, promo video played on stream)",
+      "verdict": "verified: KaspaBots announced the Kaspa Conference on Oct 28 2026 for April 9-12 2027, Miami, Florida, aboard a Norwegian Cruise Line ship; virtual access $97 early bird (regularly $197) until December 31 2026; KaspaBots says up to $1M will go into $KAS startups, 'four days of builders, investors and community'. NOT verified and dropped: 'all ticket proceeds supporting Kaspa core', the accelerator / 'Kaspa University' / demo-day structure, and the 'I used to be a Bitcoin maxi' testimonial line. Copy: 'four-day cruise out of Miami, April 9 to 12, 2027, with up to $1 million going into Kaspa startups'.",
+      "source": "x.com/Chandler_Invest repost of @KaspaBots (Oct 28); kucoin.com/news/community/KAS/6ae550c8bbcb52000745413d (Oct 31)"
+    },
+    {
+      "claim": "Viewer's overlay: 'two different cryptos... 11 years apart identical bear market along with identical current price action before the full bull market' / 'Kaspa's bear market is identical to Bitcoin's first real bear market' (transcript)",
+      "verdict": "verified in the general form and quantified: Bitcoin's first real bear ran from the December 2013 top (~$1,127 to $1,150) to the January 2015 low (~$152 to $175), an 84% to 86% drawdown over about 13 months, and BTC was back at new all-time highs by early 2017 (about two years after the low). Kaspa's first bear ran from the July 31 2024 ATH ($0.2074) to the August 14 2026 low ($0.02526), an 88% drawdown. 'Identical' is written as 'same shape'; '11 years apart' holds for the two lows (Jan 2015 vs Aug 2026).",
+      "source": "nasdaq.com Bitcoin Bear Markets; bitcoinmagazine.com (84.82%); fxempire PrimeXBT research (86%); api.coingecko.com kaspa (ATH, 365d daily history), pulled 2026-11-02"
+    },
+    {
+      "claim": "'Kaspa was not in a bear market in 2022... Kaspa goes into a bear market in December of 2024... stays nearly two years, right up until September, and now it's above its 50-week moving average' (transcript, Mike's chart)",
+      "verdict": "verified on Kraken weekly candles for the 2026 part: KAS closed above its 50-week SMA in the week of Sept 17 2026 (0.0385 vs 0.0370) for six consecutive weekly closes through Oct 22, and the week that began Oct 29 is trading below it (0.0324 vs 0.0356) after the Binance flush; Bitcoin reclaimed its own 50-week SMA in the same week (Sept 17). The December 2024 cross cannot be computed from Kraken (KAS listed Nov 2024) and is written as Mike's own chart read ('on my chart'); it is consistent with the Kraken closes falling from $0.164 to $0.117 across December 2024 against a 2024 average price near $0.15. Kaspa's 2022 bull run (from under a cent to $0.01+ while BTC fell) is public price history. Copy states the retest honestly: 'Six weekly closes above, then the Binance flush dragged it back to the line this week.'",
+      "source": "api.kraken.com OHLC KASUSD interval=10080 (103 weeks) and XBTUSD, computed 2026-11-02; api.coingecko.com kaspa market_chart 365d"
+    },
+    {
+      "claim": "'A $3 Kaspa is only $100 billion market cap... if there is $100 trillion market cap with crypto... $3 is kind of bearish' / '$3.33, that would be a nice target, I get my yacht' (transcript)",
+      "verdict": "updated to real supply: Kaspa circulating supply is 27.79 billion KAS, so $3 is about $83 billion and $3.33 about $93 billion (the transcript's '$100 billion' is corrected everywhere). Current KAS price $0.0325 (3.2 cents), market cap about $903 million, 84% under the ATH. Total crypto market cap is about $2.59 trillion. The $100 trillion figure is Mike's thesis and is written as his view.",
+      "source": "api.coingecko.com/api/v3/coins/kaspa and /global, pulled 2026-11-02"
+    },
+    {
+      "claim": "'Yonatan tried making [improvements] for BTC that were shot down... GHOSTDAG was his proposal, he turned it into a graph' / 'greediest heaviest observed subtree... in the Ethereum white paper' (transcript)",
+      "verdict": "verified in the general form: Sompolinsky and Zohar's 2013 paper (IACR ePrint 2013/881, published as 'Secure High-Rate Transaction Processing in Bitcoin', FC 2015) proposed the GHOST rule as a modification to how Bitcoin nodes build the chain; Bitcoin did not adopt it, Ethereum implemented a variant early on, and the PHANTOM/GHOSTDAG paper (Sompolinsky, Wyborski, Zohar) generalizes Nakamoto consensus to a DAG of blocks, implemented as Kaspa. 'Shot down' is written as 'Bitcoin never adopted it'; the Ethereum link is written as 'built a variant of it into its early design', not as a whitepaper citation claim.",
+      "source": "eprint.iacr.org/2013/881; cris.huji.ac.il secure-high-rate-transaction-processing-in-bitcoin; eprint.iacr.org/2018/104.pdf (PHANTOM GHOSTDAG); hackernoon exploring-yonatan-sompolinskys-blockdag-protocols"
+    },
+    {
+      "claim": "'Kaspa is a 12-lane highway... blocks working in 12 lanes... one lane fans out into multiple lanes and then converges' (transcript, viewer analogy + Mike)",
+      "verdict": "kept as a viewer's analogy, attributed ('one of my viewers put it best'); the technical anchor is verified: Kaspa runs 10 blocks per second since the Crescendo hard fork activated on mainnet May 5 2025.",
+      "source": "kucoin.com/blog/bd-what-is-kaspa-blockdag-10-bps-and-kas-mining; kaspa.org Crescendo pages; medium.com/@coderofstuff post-crescendo-mining-observations"
+    },
+    {
+      "claim": "'there's going to be a day where a lot of Bitcoin maxis move over to Kaspa... Michael Saylor types... Winklevoss twins... eventually Ethereum is going to overtake Bitcoin' (transcript)",
+      "verdict": "Mike's thesis (persona core_theses: ETH flips BTC, maxis seek a PoW alt, they find KAS), written in first person as a theory. The speculation that named figures (Saylor, Winklevoss) are quietly stacking Kaspa is unverifiable and is NOT used anywhere; no named person appears in copy or imagery.",
+      "source": "persona/persona.json core_theses; no external claim made"
+    },
+    {
+      "claim": "'I got me a ton of Graham... Toncoin... a dollar and 18 cents... went down to a dollar 11' (transcript)",
+      "verdict": "skipped: a personal buy alert / trader-portfolio item (persona no_rotation_framing) and the brief asks for a Kaspa-centric batch; no content drafted. 'Graham' is the Whisper spelling of Mike's 'Gram' for Toncoin.",
+      "source": "n/a"
+    },
+    {
+      "claim": "'33 countries are telling their citizens to stockpile... fake alien invasion... one trillion disappeared from the Pentagon... Trump / Nicki Minaj clip' (transcript)",
+      "verdict": "skipped: geopolitical / political / personal tangents (persona avoid_in_drafts); no content drafted.",
+      "source": "n/a"
+    },
+    {
+      "claim": "'we did a 353x on LAB... 550x... 130x on DeAgent AI... 94x on Tutorial... join for one month... $1,700 premium membership' (transcript)",
+      "verdict": "skipped: membership pitch and track-record content (lane 3 instructions exclude membership pitches); no content drafted.",
+      "source": "n/a"
+    },
+    {
+      "claim": "'Five of the magnificent seven are down more than 10%... Tesla 70% down... Google crashed 30%... NASDAQ falls 2.6%' (transcript)",
+      "verdict": "skipped: unverified / garbled stock-market numbers and off-lane for this Kaspa-centric batch; no content drafted.",
+      "source": "n/a"
+    }
+  ],
+  "carousel_versions": {
+    "yt-post-2026-11-02-kaspa-chart-looks-just-like-early-bitcoin": "version4 (a usable topic image exists and the extra V4 weight applies: images/reference/kaspa-logo.png, the 3D Kaspa coin render, IS the subject of the post, so slide 1 cites BOTH kaspa-logo.png and version4/hook.png in ref (array) and slides 2 to 5 cite version4/slide.png. The post is a data walk (two dated bear markets, the 2022 contrast, the September reclaim, an A/B/C question), which the V4 financial-report slide format carries best. Per the SKILL.md 2026-09-10 note on figure drift, the data slides carry dates and labels only (no percentages; the 85% / 88% figures live in the body), and the charts are shape-only with no numbers or axis labels; QA each data slide before attaching. Every prompt carries 'no pagination dots', the badge / watermark warning and the layout-only / exact-text clause. V2 was the runner-up (the post reasons, but its beats are chart facts, not an argument chain); V1 was rejected because the tone is analysis, not a news flash. Five slides: hook, three beats, question.)",
+    "yt-post-2026-11-02-bitcoin-maxis-will-end-up-in-kaspa": "version2 (analytical / editorial: the post is an argument chain, the 2013 lineage, the blockDAG mechanics, the ETH-flips-BTC cascade, the ecosystem signal, the question, so the V2 title + teal insight line + body box carries each beat. V4 was weighed first per the extra-weight rule: the only candidate topic photos are kaspa-logo.png (already the V4 anchor for post 1 this batch) and michael-saylor.png, and putting Saylor's face on a 'maxis will end up in Kaspa' hook would imply an unverified claim about a named person, so V4 was not anchored here. V1 was rejected because the tone is reasoning, not news-flash. Slides cite the role-matched version2 exemplars: 01 the 9611992a hook, 02/03/04 the 4a9a572c / 44d02f9a / 074be0dc beat slides, 05 the 81abb2d9 question slide; every prompt states the counter text once, forbids em dashes (the V2 hook exemplar carries one) and forbids copying the exemplar's words. Five slides: hook, three beats, question.)"
+  },
+  "missing_references": [
+    "Bitcoin logo / coin: no bitcoin reference file in images/reference/; images 3ead6e3e (the older twin) and a56362f4 render a plain unmarked gold coin, Bitcoin is named only in copy",
+    "Binance mark: no reference file; image a56362f4 renders an unbranded cracked vault, Binance is named only in copy",
+    "Norwegian Cruise Line and KaspaBots marks: no reference files; images b74e7c17 and 2fdc9ece render unbranded ships, the names ride in copy only",
+    "Igra L2 and Kasplex L2 marks: no reference files; not rendered anywhere (text in copy only)",
+    "Ethereum: ethereum-eth.png exists but no image renders an ETH coin (the cascade is text only), so it is not cited"
+  ],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "3ead6e3e",
+      "slug": "kaspa-chart-early-bitcoin",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. Two coin characters with arms and legs standing side by side as mirror-image twins on a dark mountain ridge whose silhouette repeats the same jagged shape twice: a steep climb, a long sliding descent, and a turn back upward. On the right stands a tall, older, weathered gold coin character with a calm knowing face; its face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. On the left, at the start of the second identical ridge shape, stands a smaller, younger Kaspa coin character with a hungry, determined face, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan. The gold coin rests one hand on the Kaspa coin's shoulder and points ahead up the slope. Deep navy near-black sky. Dramatic cinematic lighting: warm gold rim light on the older coin, greenish cyan rim light on the Kaspa coin and the ridge beneath it. Knowing and confident; history about to repeat. Use the attached reference only as the source for the backwards-K Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "a56362f4",
+      "slug": "no-october-bottom",
+      "prompt": "Cinematic photorealistic 3D render, 1:1 square aspect ratio. A single triumphant gold coin character with arms and legs standing firm on top of a long horizontal glowing white beam of light that runs across a dark landscape like a floor it refuses to fall through, arms crossed, chin up; its face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Below the beam a crowd of slumped cartoon zombie silhouettes shuffle away into the fog clutching blank, completely empty calendar pages with no letters, numbers or markings. In the background a gigantic cracked steel bank vault door hangs open with a cold blue glow spilling out; no emblem, logo or lettering on the vault. Dark atmospheric background with storm clouds and moonlight. Dramatic rim lighting and warm gold accent glow on the coin, cold blue on the vault and the zombies. Defiant and unbothered. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "9507cd93",
+      "slug": "nacho-migration-deadline",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. TWO REFERENCE IMAGES ARE ATTACHED. The 3D black cat with glowing greenish cyan eyes and a greenish cyan collar shown in the FIRST attached reference image, rendered faithfully to that reference, walks briskly across a sturdy one-way bridge of glowing greenish cyan light from a crumbling grey stone platform on the left toward a vast slab of solid glowing bedrock on the right, where a calm Kaspa coin character with arms and legs waves it in, the coin's face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the SECOND attached reference image, glowing greenish cyan. A large hourglass stands on the bedrock beside the coin, its upper bulb still mostly full of glowing sand. Deep navy near-black background. Dramatic cinematic lighting: greenish cyan rim light on the cat, the bridge and the coin, cold blue shadow on the crumbling platform. Calm urgency; plenty of time, but the clock is running. Use the attached references only as the source for the cat's likeness and the backwards-K Kaspa logo; do not reproduce either reference image itself and do not reproduce any lettering, numbers or posters from them. No text or words anywhere in the image.",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\nacho.jpg",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+      ]
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "63c1d197",
+      "slug": "kaspa-first-bear-market",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A single determined Kaspa coin character with arms and legs hauling itself up over the rim of a deep dark canyon, both hands gripping a long horizontal glowing greenish cyan beam of light that runs across the canyon rim like a finish line, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan. Far below in the canyon lies a long trail of dust and footprints from the climb. Deep navy near-black background. Dramatic cinematic lighting: greenish cyan rim light on the coin and the beam, cold blue shadow filling the canyon. Hungry and determined; almost over the line. Use the attached reference only as the source for the backwards-K Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "b74e7c17",
+      "slug": "kaspa-conference-cruise",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A single triumphant Kaspa coin character with arms and legs wearing a small white captain's hat, standing at the bow rail of an enormous sleek unbranded white cruise ship at night as it pulls away from a glittering tropical waterfront skyline of tall towers and palm trees, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan. The ship's deck lights and the wake glow greenish cyan on the dark water; no badge, emblem, flag lettering or name anywhere on the ship. Deep navy near-black sky with a few stars. Dramatic cinematic lighting: greenish cyan rim light on the coin and the bow, warm distant city lights. Triumphant and proud; setting sail. Use the attached reference only as the source for the backwards-K Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "2fdc9ece",
+      "slug": "three-dollar-kaspa-is-bearish",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A single calm, confident Kaspa coin character with arms and legs lounging in a deck chair on the sun deck of a sleek unbranded luxury yacht at dusk, one arm behind its head and a tiny cocktail glass in the other hand, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan. The yacht's hull lights glow greenish cyan on calm dark water, and in the far distance a much larger, hazier skyline of towers hints at how much bigger the world around it is. Deep navy near-black sky with the last warm band of sunset at the horizon. Dramatic cinematic lighting: greenish cyan rim light on the coin and the deck, warm orange glow from the horizon. Calm and confident; relaxed, not finished. Use the attached reference only as the source for the backwards-K Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "3ead6e3e",
+      "slug": "kaspa-chart-early-bitcoin",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. Two coin characters with arms and legs standing side by side as mirror-image twins on a dark mountain ridge whose silhouette repeats the same jagged shape twice: a steep climb, a long sliding descent, and a turn back upward. On the right stands a tall, older, weathered gold coin character with a calm knowing face; its face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. On the left, at the start of the second identical ridge shape, stands a smaller, younger Kaspa coin character with a hungry, determined face, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan. The gold coin rests one hand on the Kaspa coin's shoulder and points ahead up the slope. Deep navy near-black sky. Dramatic cinematic lighting: warm gold rim light on the older coin, greenish cyan rim light on the Kaspa coin and the ridge beneath it. Knowing and confident; history about to repeat. Use the attached reference only as the source for the backwards-K Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "9507cd93",
+      "slug": "nacho-migration-deadline",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. TWO REFERENCE IMAGES ARE ATTACHED. The 3D black cat with glowing greenish cyan eyes and a greenish cyan collar shown in the FIRST attached reference image, rendered faithfully to that reference, walks briskly across a sturdy one-way bridge of glowing greenish cyan light from a crumbling grey stone platform on the left toward a vast slab of solid glowing bedrock on the right, where a calm Kaspa coin character with arms and legs waves it in, the coin's face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the SECOND attached reference image, glowing greenish cyan. A large hourglass stands on the bedrock beside the coin, its upper bulb still mostly full of glowing sand. Deep navy near-black background. Dramatic cinematic lighting: greenish cyan rim light on the cat, the bridge and the coin, cold blue shadow on the crumbling platform. Calm urgency; plenty of time, but the clock is running. Use the attached references only as the source for the cat's likeness and the backwards-K Kaspa logo; do not reproduce either reference image itself and do not reproduce any lettering, numbers or posters from them. No text or words anywhere in the image.",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\nacho.jpg",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+      ]
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "63c1d197",
+      "slug": "kaspa-first-bear-market",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A single determined Kaspa coin character with arms and legs hauling itself up over the rim of a deep dark canyon, both hands gripping a long horizontal glowing greenish cyan beam of light that runs across the canyon rim like a finish line, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan. Far below in the canyon lies a long trail of dust and footprints from the climb. Deep navy near-black background. Dramatic cinematic lighting: greenish cyan rim light on the coin and the beam, cold blue shadow filling the canyon. Hungry and determined; almost over the line. Use the attached reference only as the source for the backwards-K Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "b74e7c17",
+      "slug": "kaspa-conference-cruise",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A single triumphant Kaspa coin character with arms and legs wearing a small white captain's hat, standing at the bow rail of an enormous sleek unbranded white cruise ship at night as it pulls away from a glittering tropical waterfront skyline of tall towers and palm trees, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan. The ship's deck lights and the wake glow greenish cyan on the dark water; no badge, emblem, flag lettering or name anywhere on the ship. Deep navy near-black sky with a few stars. Dramatic cinematic lighting: greenish cyan rim light on the coin and the bow, warm distant city lights. Triumphant and proud; setting sail. Use the attached reference only as the source for the backwards-K Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "2fdc9ece",
+      "slug": "three-dollar-kaspa-is-bearish",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A single calm, confident Kaspa coin character with arms and legs lounging in a deck chair on the sun deck of a sleek unbranded luxury yacht at dusk, one arm behind its head and a tiny cocktail glass in the other hand, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan. The yacht's hull lights glow greenish cyan on calm dark water, and in the far distance a much larger, hazier skyline of towers hints at how much bigger the world around it is. Deep navy near-black sky with the last warm band of sunset at the horizon. Dramatic cinematic lighting: greenish cyan rim light on the coin and the deck, warm orange glow from the horizon. Calm and confident; relaxed, not finished. Use the attached reference only as the source for the backwards-K Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "03d61c1b",
+      "slug": "01-hook",
+      "prompt": "Single editorial hook image for a carousel, 1:1 square. TWO REFERENCE IMAGES ARE ATTACHED. Use the FIRST attached reference (the dark 3D Kaspa coin with the glowing greenish cyan backwards-K logo bursting with greenish cyan light on a black background) as the full-bleed background image, keeping the coin and its backwards-K logo faithful, cropped to a square with the coin centred in the upper two thirds of the frame. Use the SECOND attached reference ONLY as the layout and typography key: match its bold all-caps bottom text treatment, its small circular chart bubble overlay and its bottom SWIPE FOR MORE bar. In the top right corner place a small circular bubble overlay containing two simple green line charts of the same shape drawn one above the other, each a steep rise, a long decline and a turn upward, with no numbers or axis labels. Bold all-caps text across the bottom: 'KASPA'S CHART LOOKS JUST LIKE' in white on the first line, then 'EARLY BITCOIN' in bright green on the second line. Small white all-caps 'SWIPE FOR MORE' text at the very bottom. No pagination dots, no carousel indicators. Keep every line of text inside a margin of at least 8 percent of the frame width. Render NO watermark, no @handle, no username, no shield badge, no artist signature and no initials anywhere in the frame or in any corner; the second attached reference carries a small badge and page dots and they must NOT be reproduced. No em dashes anywhere in the rendered text, use colons or commas instead. Do not invent any numbers, tickers, logos or lettering beyond the exact text specified above.",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\hook.png"
+      ]
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "8ec97d8b",
+      "slug": "02-two-first-bear-markets",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Two first bear markets, eleven years apart'. Stat boxes: 'BITCOIN: DEC 2013 TO JAN 2015', 'KASPA: JUL 2024 TO AUG 2026', 'SHAPE: THE SAME'. Centre panel: two simple line charts drawn side by side, each the same shape, a steep rise, a long sliding decline and a turn back upward at the right edge, the left chart in dark grey and headed 'BITCOIN', the right chart in green and headed 'KASPA', with no numbers, dates or axis labels on either chart. Bottom green box labelled 'THE PARALLEL' with two bullets: 'A parabolic first run, then a long grinding first bear market.' and 'Bitcoin took about two years from that low to a new all-time high.'. Page number 2 in a circle at the top right. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and no text beyond what is listed here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "718c52b0",
+      "slug": "03-kaspa-skipped-2022",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Kaspa skipped the 2022 bear market'. Stat boxes: '2022 BITCOIN: UNDER THE 50-WEEK SMA', '2022 KASPA: FIRST BULL RUN', 'DEC 2024: KASPA'S FIRST BEAR BEGINS'. Centre panel: two horizontal timeline bars stacked one above the other, the top bar headed 'BITCOIN' with its left half shaded red and its right half shaded green, the bottom bar headed 'KASPA' with its left half shaded green and its right half shaded red, no dates, numbers or other labels on the bars. Bottom green box labelled 'THE DEFINITION' with two bullets: 'In crypto a bear market is weekly closes under the 50-week SMA.' and 'Kaspa only lost that line in December 2024, on my chart.'. Page number 3 in a circle at the top right. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and no text beyond what is listed here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "ffb24010",
+      "slug": "04-september-reclaim",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'September: both back above the 50-week SMA'. Stat boxes: 'BITCOIN: ABOVE SINCE SEPTEMBER', 'KASPA: RECLAIMED IN SEPTEMBER', 'NOW: KASPA RETESTING THE LINE'. Centre panel: a single line chart with a horizontal dashed grey line across the middle and a green price line that runs below it, crosses above it, rides above it for a stretch and dips back down to touch it at the right edge, no numbers, dates or axis labels. Bottom green box labelled 'WHAT I AM WATCHING' with two bullets: 'Six weekly closes above, then the Binance hack flushed the whole market.' and 'Bitcoin is still above its line. Kaspa is the one being tested.'. Page number 4 in a circle at the top right. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and no text beyond what is listed here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "d07b1827",
+      "slug": "05-question",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Where does Kaspa top this cycle?'. Stat boxes: 'A: UNDER $1', 'B: $1 TO $3', 'C: $3.33 AND HIGHER'. Centre panel: three plain rounded panels side by side, each headed A, B and C, otherwise empty. Bottom green box labelled 'TELL ME IN THE COMMENTS' with one bullet: 'And if the Bitcoin overlay is a coincidence, tell me what breaks it.'. Page number 5 in a circle at the top right. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and no text beyond what is listed here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "e96ea539",
+      "slug": "01-hook",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '1 OF 5'. Large bold white title: 'THE BITCOIN MAXIS WILL END UP IN KASPA'. Below, a teal accent line: 'The path is already drawn, and it starts with a 2013 Bitcoin paper'. At the bottom a dark rounded box with teal label 'THE CLAIM' and white body text: 'Not all of them, and not this year. A slow cascade, not a flip of a switch.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. The counter label '1 OF 5' appears exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. Do not copy any words, numbers or tickers from the attached reference; use it for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-9611992a-01-hook.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "1ca8a40d",
+      "slug": "02-written-for-bitcoin-first",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '2 OF 5'. Large bold white title: 'GHOSTDAG WAS WRITTEN FOR BITCOIN FIRST'. Below, a teal accent line: 'Secure High-Rate Transaction Processing in Bitcoin, 2013'. At the bottom a dark rounded box with teal label 'THE LINEAGE' and white body text: 'Bitcoin never adopted GHOST. Sompolinsky generalized it into GHOSTDAG, and Kaspa is the full implementation.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. The counter label '2 OF 5' appears exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. Do not copy any words, numbers or tickers from the attached reference; use it for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-4a9a572c-02-btc-failure.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "9ac196b0",
+      "slug": "03-twelve-lane-highway",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '3 OF 5'. Large bold white title: 'ONE LANE VERSUS A 12-LANE HIGHWAY'. Below, a teal accent line: 'A chain makes every block wait its turn. A blockDAG fans out and merges back in order.'. At the bottom a dark rounded box with teal label 'SAME ROOTS' and white body text: 'Same proof of work, same fair launch with no premine. 10 blocks per second since Crescendo in May 2025.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. The counter label '3 OF 5' appears exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. Do not copy any words, numbers or tickers from the attached reference; use it for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-44d02f9a-03-the-problem.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "f3e28fb4",
+      "slug": "04-kaspa-gets-a-ship",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '4 OF 5'. Large bold white title: 'BITCOIN HAD MIAMI. ETHEREUM HAD DEVCON.'. Below, a teal accent line: 'The Kaspa Conference: four days at sea out of Miami, April 9 to 12, 2027'. At the bottom a dark rounded box with teal label 'THE SIGNAL' and white body text: 'Up to 1 million dollars going into Kaspa startups, and Nacho the Kat is already migrating to KCC-20 on the L1.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. The counter label '4 OF 5' appears exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. Do not copy any words, numbers or tickers from the attached reference; use it for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-074be0dc-04-the-solution.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "4982940f",
+      "slug": "05-question",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '5 OF 5'. Large bold white title: 'WHEN DO THE MAXIS MOVE?'. Below, a teal accent line: 'Already, when ETH flips BTC, after a new Kaspa high, or never'. At the bottom a dark rounded box with teal label 'TELL ME IN THE COMMENTS' and white body text: 'If you were a Bitcoin maxi who came over to Kaspa, what flipped you?'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. The counter label '5 OF 5' appears exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. Do not copy any words, numbers or tickers from the attached reference; use it for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-81abb2d9-06-question.png"
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "Kaspa's chart looks just like early Bitcoin, and I am not talking vibes.\n\nBitcoin's first real bear market: an 85% drawdown from the December 2013 top to the January 2015 low. Kaspa's first real bear market: an 88% drawdown from the July 2024 top to the August 2026 low. Eleven years apart, same shape.\n\n$BTC took about two years from that 2015 low to a new all-time high. $KAS is sitting at 3.2 cents, 84% under its high.\n\n#kaspa #kas #bitcoin",
+      "hook": "Kaspa's chart looks just like early Bitcoin, and I am not talking vibes.",
+      "image_id": "3ead6e3e",
+      "notes": "Kaspa subject; IG companion shares image 3ead6e3e. No Follow line (Kaspa). Drawdowns verified: BTC ~85% (Dec 2013 ~$1,150 to Jan 2015 ~$170), KAS 88% (ATH $0.207 Jul 31 2024 to $0.0253 Aug 14 2026, CoinGecko). Bitcoin logo has no reference file, so the image renders a plain gold coin."
+    },
+    {
+      "tweet": "The four-year cycle zombies had all of October to print their bottom. October closed down 7%, the worst October since 2014, and the 2026 low is still July's $58K.\n\nThe biggest heist in crypto history landed in the same month: $6.3 billion drained from Binance on October 29. $BTC dropped about 5% on it and still closed the month above its 50-week SMA.\n\nThe largest hack ever could not push Bitcoin into a bear market. So where is the October bottom?\n\n#bitcoin #btc",
+      "hook": "The four-year cycle zombies had all of October to print their bottom.",
+      "image_id": "a56362f4",
+      "notes": "BTC / macro subject: no X poll, no IG companion. Named opposition (four-year cycle zombies) per persona; question closer, no aphorism. Numbers updated to the October close (-7%, worst October since 2014; Oct low ~$76.2K vs July 2026 low ~$58.6K; hack $6.3B; BTC -3 to -5% on the news; weekly close above the 50-week SMA ~$76K). Image is entity-free (plain gold coin, unbranded vault)."
+    },
+    {
+      "tweet": "Nacho the Kat is moving to KCC-20 on the Kaspa L1. The migration opened October 30: one way, 1:1, from KRC-20, Igra L2 or Kasplex L2.\n\nThe window closes January 31, 2027. If you hold $NACHO, bridge it before then; after that date the un-migrated tokens are not eligible.\n\nThis is the whole point of KCC-20: the token rules get enforced by Kaspa consensus itself, not by a third-party indexer that already got exploited once. $KAS\n\n#kaspa #kas #kcc20 #nacho",
+      "hook": "Nacho the Kat is moving to KCC-20 on the Kaspa L1. The migration opened October 30: one way, 1:1, from KRC-20, Igra L2 or Kasplex L2.",
+      "image_id": "9507cd93",
+      "notes": "Kaspa / KRC20 / KCC-20 subject; IG companion shares image 9507cd93. No Follow line (Kaspa subject; nacho has no entry in project_handles). Migration facts verified (opened Oct 30, one way 1:1, window closes Jan 31 2027); 'not eligible after' is the line Mike read aloud from Nacho's post on stream. nacho.jpg IS the mascot reference and rides in ref with kaspa-logo.png."
+    },
+    {
+      "tweet": "Kaspa never had a 2022 bear market. While $BTC spent most of 2022 under its 50-week SMA, $KAS was in its first bull run.\n\nKaspa's first bear market began in December 2024, when it lost the 50-week SMA on my chart, and it ran almost two years. In September it closed back above that line, the same week Bitcoin reclaimed its own.\n\nSix weekly closes above, then the Binance flush dragged it back to the line this week. Bitcoin is still above. Kaspa at 3.2 cents is the one being tested.\n\n#kaspa #kas",
+      "hook": "Kaspa never had a 2022 bear market. While $BTC spent most of 2022 under its 50-week SMA, $KAS was in its first bull run.",
+      "image_id": "63c1d197",
+      "notes": "Kaspa subject; IG companion shares image 63c1d197. No Follow line. Verified on Kraken weekly candles: KAS and BTC both closed above their 50-week SMA in the week of Sept 17 2026; KAS held six weekly closes above (through Oct 22) and the current week sits below the line; BTC still above. The December 2024 cross is Mike's own chart read ('on my chart'), consistent with the Kraken closes ($0.164 to $0.117 across December 2024 vs a 2024 average near $0.15)."
+    },
+    {
+      "tweet": "The Kaspa Conference is a four-day cruise out of Miami, April 9 to 12, 2027, with up to $1 million going into Kaspa startups. Bitcoin had Miami. Ethereum had Devcon. $KAS gets a ship 🚢\n\n#kaspa #kas",
+      "hook": "The Kaspa Conference is a four-day cruise out of Miami, April 9 to 12, 2027, with up to $1 million going into Kaspa startups. Bitcoin had Miami. Ethereum had Devcon. $KAS gets a ship 🚢",
+      "image_id": "b74e7c17",
+      "notes": "Single-line image-first format. Kaspa subject; IG companion shares image b74e7c17. Content-anchor emoji (ship). Conference facts verified (KaspaBots announcement Oct 28: April 9-12 2027, Miami, Norwegian Cruise Line, up to $1M into KAS startups). Cruise line and KaspaBots are named in copy only; the ship in the image is unbranded."
+    },
+    {
+      "tweet": "A $3 $KAS is only an $83 billion market cap. If crypto runs to $100 trillion the way I think it does, my $3.33 Kaspa target is bearish... 😎\n\n#kaspa #kas",
+      "hook": "A $3 $KAS is only an $83 billion market cap. If crypto runs to $100 trillion the way I think it does, my $3.33 Kaspa target is bearish... 😎",
+      "image_id": "2fdc9ece",
+      "notes": "Single-line image-first format. Kaspa subject; IG companion shares image 2fdc9ece. DELIBERATE ENGAGEMENT-BAIT ITEM (persona 1-in-10 rule): provocative prediction (technique 5), the '$3 is bearish' framing Mike stated on stream, nothing manufactured. $83B = $3 x 27.79B circulating (CoinGecko); the transcript's '$100 billion' was updated to the real figure. Signature ellipsis used here (one in this batch's broadcast tweets)."
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-11-02-kaspa-chart-looks-just-like-early-bitcoin",
+      "topic": "Kaspa's chart versus early Bitcoin: the first bear markets, Kaspa skipped 2022, the September reclaim, the $3.33 target (built from YT post 1)",
+      "variation_label": "A (historical parallel, then the reframe)",
+      "tweets": [
+        {
+          "text": "Kaspa's chart looks just like early Bitcoin.\n\nNot vibes: the first bear market, the drawdown and the reclaim all line up, eleven years apart. And there is one thing about Kaspa's bear market almost nobody noticed...",
+          "hook": "Kaspa's chart looks just like early Bitcoin."
+        },
+        {
+          "text": "Bitcoin's first real bear: the December 2013 top near $1,150 to the January 2015 low near $170. An 85% drawdown over about 13 months.\n\nThen two years of base building, and by early 2017 $BTC was printing new all-time highs."
+        },
+        {
+          "text": "Kaspa's first real bear: the July 2024 top at 20.7 cents to the August 2026 low at 2.5 cents. An 88% drawdown.\n\nSame shape: a parabolic first run, a long grinding first bear, and a bottom nobody rings a bell for."
+        },
+        {
+          "text": "Here is the part I had never considered: Kaspa never had a 2022 bear market.\n\nBitcoin spent most of 2022 under its 50-week SMA. $KAS was in its first bull run the entire time. On my chart it only lost the 50-week SMA in December 2024."
+        },
+        {
+          "text": "In September Kaspa closed back above its 50-week SMA for the first time since December 2024, the same week Bitcoin reclaimed its own.\n\nSix weekly closes above. Then the $6.3 billion Binance hack flushed the market and $KAS slipped back to the line at 3.2 cents."
+        },
+        {
+          "text": "A $3 Kaspa is an $83 billion market cap. If crypto grows into the $100 trillion asset class I think it becomes, that is low, not high.\n\nMy $3.33 target gets me the yacht. It might also be conservative. Never financial advice."
+        },
+        {
+          "text": "If the Bitcoin overlay changed how you look at $KAS at 3 cents...\n\nFollow me for the Kaspa chart reads before the rest of the market catches up 😎"
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-11-02-bitcoin-maxis-will-end-up-in-kaspa",
+      "topic": "Bitcoin maxis will end up in Kaspa: GHOST to GHOSTDAG, the blockDAG highway, the cascade, the conference cruise (built from YT post 2)",
+      "variation_label": "A (hook-and-thesis-first)",
+      "tweets": [
+        {
+          "text": "Bitcoin maxis are going to end up in Kaspa.\n\nNot all of them, and not this year. But the path is already drawn, and the first clue is a 2013 research paper written for Bitcoin itself...",
+          "hook": "Bitcoin maxis are going to end up in Kaspa."
+        },
+        {
+          "text": "2013: Yonatan Sompolinsky and Aviv Zohar publish GHOST, a paper titled Secure High-Rate Transaction Processing in Bitcoin.\n\nA scaling fix for Bitcoin: use the blocks that arrive at the same time instead of throwing them away. Bitcoin never adopted it."
+        },
+        {
+          "text": "Sompolinsky generalized the idea into GHOSTDAG, and Kaspa is the full implementation: a proof-of-work blockDAG at 10 blocks per second since Crescendo in May 2025.\n\nA chain is one lane. $KAS is a 12-lane highway that merges back in order."
+        },
+        {
+          "text": "Same proof of work as Bitcoin. Same fair launch, no premine.\n\nJust the part of the Bitcoin design that was left on the table in 2013."
+        },
+        {
+          "text": "The cascade: Ethereum eventually knocks Bitcoin out of the number one spot. The maxis who care about PoW and fair launch go looking for the next thing.\n\nThere is one chain built on those principles with a research lineage back to Bitcoin. Some move the first year, more the next."
+        },
+        {
+          "text": "The ecosystem is already acting like it. KaspaBots announced the Kaspa Conference: four days on a Norwegian Cruise Line ship out of Miami, April 9 to 12, 2027, with up to $1 million into Kaspa startups.\n\nBitcoin had Miami. Ethereum had Devcon. Kaspa gets a ship."
+        },
+        {
+          "text": "$KAS is 3.2 cents, 84% under its high, with a market cap under a billion dollars.\n\nThat is the entry the maxis will wish they took. Never financial advice."
+        },
+        {
+          "text": "If this changed how you see the maxi-to-Kaspa cascade...\n\nFollow me for the Kaspa takes that ignore the four-year cycle echo chamber 🧠"
+        }
+      ]
+    }
+  ],
+  "x_polls": [
+    {
+      "id": "poll-2026-11-02-where-does-kas-top",
+      "topic": "Kaspa cycle top: the $3.33 target versus a $100 trillion crypto market",
+      "eligible_topic": "kaspa",
+      "tweet_text": "A $3 $KAS is only an $83 billion market cap. If crypto runs to $100 trillion, my $3.33 target is conservative.\n\nWhere does $KAS top this cycle?",
+      "hook": "A $3 $KAS is only an $83 billion market cap.",
+      "options": [
+        "Under $1",
+        "$1 to $3",
+        "$3.33, yacht time",
+        "Higher, $3 is bearish"
+      ],
+      "duration": "1d"
+    },
+    {
+      "id": "poll-2026-11-02-when-do-maxis-move-to-kaspa",
+      "topic": "When do the Bitcoin maxis move to Kaspa",
+      "eligible_topic": "kaspa",
+      "tweet_text": "Bitcoin maxis are going to end up in Kaspa. Same proof of work, same fair launch, and a research lineage back to a 2013 Bitcoin paper.\n\nWhen do the maxis move to $KAS?",
+      "hook": "Bitcoin maxis are going to end up in Kaspa.",
+      "options": [
+        "Already, quietly",
+        "When ETH flips BTC",
+        "After a new $KAS ATH",
+        "Never"
+      ],
+      "duration": "1d"
+    }
+  ],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-11-02-where-does-kas-top",
+      "topic": "Kaspa cycle top: the $3.33 target versus a $100 trillion crypto market",
+      "source_post": "yt-post-2026-11-02-kaspa-chart-looks-just-like-early-bitcoin",
+      "question_text": "A $3 Kaspa is only an $83 billion market cap. If crypto grows into the $100 trillion asset class I think it becomes, Kaspa does not stop at $3. My $3.33 target gets me the yacht, and from that perspective it might be conservative.\n\n$KAS is 3.2 cents right now, 84% under its high, with a September reclaim of the 50-week SMA that is being retested this week. Bitcoin's first bear market bottomed in 2015 and it took about two years to print a new high.\n\nWhere does $KAS top this cycle?",
+      "hook": "A $3 Kaspa is only an $83 billion market cap.",
+      "options": [
+        "Under $1",
+        "$1 to $3",
+        "$3.33: Mike gets the yacht",
+        "Higher: $3 is bearish"
+      ]
+    },
+    {
+      "id": "yt-text-poll-2026-11-02-when-do-maxis-move-to-kaspa",
+      "topic": "When do the Bitcoin maxis move to Kaspa",
+      "source_post": "yt-post-2026-11-02-bitcoin-maxis-will-end-up-in-kaspa",
+      "question_text": "Bitcoin maxis are going to end up in Kaspa. The research lineage goes straight back to a 2013 Bitcoin scaling paper, the proof of work and the fair launch are the same, and my theory is the cascade starts in earnest once Ethereum knocks Bitcoin out of the number one spot.\n\nSome will move the first year, more the next. Or maybe you think a maxi never moves.\n\nWhen do the Bitcoin maxis move to $KAS?",
+      "hook": "Bitcoin maxis are going to end up in Kaspa.",
+      "options": [
+        "Already happening, quietly",
+        "When ETH flips BTC",
+        "After a new $KAS all-time high",
+        "Never, maxis stay maxis"
+      ]
+    }
+  ],
+  "yt_posts": [
+    {
+      "id": "yt-post-2026-11-02-kaspa-chart-looks-just-like-early-bitcoin",
+      "topic": "Kaspa's chart versus early Bitcoin: the first bear markets, Kaspa skipped 2022, the September 50-week SMA reclaim, the $3.33 target",
+      "variation_label": "A + CTA1",
+      "body_style": "historical-parallel walk (Bitcoin 2013 to 2015 overlaid on Kaspa 2024 to 2026), then the first-bear-market reframe, then the target",
+      "cta_target": "subscribe_youtube",
+      "body": "Kaspa's chart looks just like early Bitcoin. Not the vibes, the actual structure: the first real bear market, the drawdown, the reclaim. One of you dropped the overlay in my stream this week and I have been staring at it since. Here is what lines up, and the one thing about Kaspa's bear market that I had never thought about.\n\nStart with Bitcoin's first real bear. From the December 2013 top near $1,150 to the January 2015 low near $170 is an 85% drawdown over about 13 months. Then two years of base building, and by early 2017 $BTC was printing new all-time highs.\n\nNow Kaspa. From the July 2024 top at 20.7 cents to the August 2026 low at 2.5 cents is an 88% drawdown. Eleven years apart, same shape: a parabolic first run, a long grinding first bear, and a bottom that nobody rings a bell for.\n\nHere is the part I had never considered until this week. Kaspa never had a 2022 bear market. In crypto the common definition of a bear market is weekly closes under the 50-week SMA, and Bitcoin spent most of 2022 under that line. Kaspa did not. It was in its first bull run the entire time. On my chart Kaspa only lost its 50-week SMA in December 2024, so its first bear market started then and ran almost two years.\n\nAnd in September it closed back above that line. Kaspa reclaimed its 50-week SMA for the first time since December 2024, in the same week Bitcoin reclaimed its own. It held the line for six weekly closes. Then the Binance hack flushed the whole market, $6.3 billion drained in the biggest heist in crypto history, and $KAS slipped back to the line. It sits at 3.2 cents, 84% under its high, while Bitcoin is still above its 50-week SMA.\n\nSo that is the setup: a first bear market with Bitcoin's 2015 shape, a reclaim that is being retested, and a market cap under a billion dollars. A $3 Kaspa is an $83 billion market cap. If crypto grows into the $100 trillion asset class I think it becomes, that number is low, not high. My $3.33 target gets me the yacht; it might also be conservative. Never financial advice.\n\nTell me in the comments: where does $KAS top this cycle? Under $1, $1 to $3, or $3.33 and higher? And if you think the Bitcoin overlay is a coincidence, tell me what breaks it.\n\nHit like and subscribe if you want the Kaspa chart read before the rest of the market catches up.",
+      "engagement_question": "Where does $KAS top this cycle: under $1, $1 to $3, or $3.33 and higher? And if you think the Bitcoin overlay is a coincidence, tell me what breaks it.",
+      "images": [
+        {
+          "image_id": "03d61c1b",
+          "slide_text": "KASPA'S CHART LOOKS JUST LIKE EARLY BITCOIN"
+        },
+        {
+          "image_id": "8ec97d8b",
+          "slide_text": "TWO FIRST BEAR MARKETS, ELEVEN YEARS APART"
+        },
+        {
+          "image_id": "718c52b0",
+          "slide_text": "KASPA SKIPPED THE 2022 BEAR MARKET"
+        },
+        {
+          "image_id": "ffb24010",
+          "slide_text": "SEPTEMBER: BOTH BACK ABOVE THE 50-WEEK SMA"
+        },
+        {
+          "image_id": "d07b1827",
+          "slide_text": "WHERE DOES KASPA TOP THIS CYCLE?"
+        }
+      ]
+    },
+    {
+      "id": "yt-post-2026-11-02-bitcoin-maxis-will-end-up-in-kaspa",
+      "topic": "Bitcoin maxis will end up in Kaspa: the GHOST to GHOSTDAG lineage, the blockDAG highway, the ETH-flips-BTC cascade, the Kaspa Conference cruise, the Nacho migration",
+      "variation_label": "A + CTA2",
+      "body_style": "hook-and-thesis-first argument chain: the lineage, the mechanics, the cascade, the ecosystem signals, the price",
+      "cta_target": "subscribe_youtube",
+      "body": "Bitcoin maxis are going to end up in Kaspa. Not all of them, and not this year, but the path is already drawn, and the first clue is sitting in a 2013 research paper written for Bitcoin itself. Here is the whole cascade.\n\nStart with where Kaspa comes from. In 2013 Yonatan Sompolinsky and Aviv Zohar published GHOST, a paper literally titled Secure High-Rate Transaction Processing in Bitcoin. It was a fix for Bitcoin's scaling problem: stop throwing away the blocks that arrive at the same time and use them. Bitcoin never adopted it. Ethereum built a variant of it into its early design. Then Sompolinsky generalized the idea into GHOSTDAG, and Kaspa is the full implementation: a proof-of-work blockDAG running 10 blocks per second since the Crescendo hard fork in May 2025.\n\nOne of my viewers put it best this week: Kaspa is a 12-lane highway. A chain is one lane and every block waits its turn. A blockDAG fans one lane out into many parallel lanes and then merges them back together in order. Same proof of work, same fair launch with no premine, just the part of the Bitcoin design that was left on the table in 2013.\n\nNow the cascade. My theory is that Ethereum eventually knocks Bitcoin out of the number one spot, and the way $ETH has been trading I am more convinced, not less. When that happens, the Bitcoin maxis who care about proof of work and fair launch go looking for the next thing, and there is exactly one chain built on those principles with a research lineage straight back to Bitcoin. Some move the first year, more the next. A slow cascade, not a flip of a switch.\n\nThe ecosystem is already acting like it. This week KaspaBots announced the Kaspa Conference: four days aboard a Norwegian Cruise Line ship out of Miami, April 9 to 12, 2027, with up to $1 million going into Kaspa startups. Bitcoin had Miami. Ethereum had Devcon. Kaspa gets a ship. And on the token side, Nacho the Kat opened its migration to KCC-20 on the Kaspa L1 on October 30, with the window closing January 31, 2027: token rules enforced by Kaspa consensus, not by a third-party indexer.\n\n$KAS is 3.2 cents, 84% under its high, with a market cap under a billion dollars. That is the entry the maxis will wish they took. Never financial advice.\n\nSo tell me in the comments: when do the Bitcoin maxis move? Already happening quietly, when ETH flips BTC, after a new Kaspa all-time high, or never? And if you were a maxi who came over, what flipped you?\n\nHit like and subscribe for the Kaspa takes that ignore the four-year cycle echo chamber.",
+      "engagement_question": "When do the Bitcoin maxis move: already happening quietly, when ETH flips BTC, after a new Kaspa all-time high, or never? And if you were a maxi who came over, what flipped you?",
+      "images": [
+        {
+          "image_id": "e96ea539",
+          "slide_text": "THE BITCOIN MAXIS WILL END UP IN KASPA"
+        },
+        {
+          "image_id": "1ca8a40d",
+          "slide_text": "GHOSTDAG WAS WRITTEN FOR BITCOIN FIRST"
+        },
+        {
+          "image_id": "9ac196b0",
+          "slide_text": "ONE LANE VERSUS A 12-LANE HIGHWAY"
+        },
+        {
+          "image_id": "f3e28fb4",
+          "slide_text": "BITCOIN HAD MIAMI. ETHEREUM HAD DEVCON."
+        },
+        {
+          "image_id": "4982940f",
+          "slide_text": "WHEN DO THE MAXIS MOVE?"
+        }
+      ]
+    }
+  ],
+  "ig_single": [
+    {
+      "id": "ig-2026-11-02-kaspa-chart-early-bitcoin",
+      "kaspa_subject": true,
+      "image_id": "3ead6e3e",
+      "aspect_ratio": "4:5",
+      "hook": "Kaspa's chart looks just like early Bitcoin, and I am not talking vibes.",
+      "caption": "Kaspa's chart looks just like early Bitcoin, and I am not talking vibes.\n\nBitcoin's first real bear market ran from the December 2013 top near $1,150 to the January 2015 low near $170: an 85% drawdown over about 13 months. Kaspa's first real bear market ran from the July 2024 top at 20.7 cents to the August 2026 low at 2.5 cents: an 88% drawdown. Eleven years apart, same shape. A parabolic first run, a long grinding first bear, and a bottom that nobody rings a bell for.\n\nThen the part people forget: $BTC took about two years from that 2015 low to a new all-time high. The base building was boring, and the people who sat through it got paid.\n\n$KAS is sitting at 3.2 cents, 84% under its high, with a market cap under a billion dollars. Same proof of work as Bitcoin, same fair launch, and a chart that is tracing the same first chapter.\n\nSave this for the day the overlay stops being a coincidence.",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "source_post": "Kaspa's chart looks just like early Bitcoin, and I am not talking vibes."
+    },
+    {
+      "id": "ig-2026-11-02-nacho-migration-deadline",
+      "kaspa_subject": true,
+      "image_id": "9507cd93",
+      "aspect_ratio": "4:5",
+      "hook": "Nacho the Kat is moving to KCC-20 on the Kaspa L1, and the window closes January 31, 2027.",
+      "caption": "Nacho the Kat is moving to KCC-20 on the Kaspa L1, and the window closes January 31, 2027.\n\nThe migration opened October 30: one way, 1:1, from KRC-20, Igra L2 or Kasplex L2 over to KCC-20. If you hold $NACHO, you bridge it before the deadline; after that date the un-migrated tokens are not eligible. Three months is plenty of time, but it is not forever, so do not be the holder who finds out in February.\n\nWhy it matters: a KRC-20 balance was never enforced by Kaspa consensus. A third-party indexer read the chain and decided who owned what, and in September that indexer got tricked into minting tokens that did not exist. KCC-20 puts the token rules into covenants that Kaspa consensus itself checks. The network decides, not somebody's server.\n\nKCC-20 went final on October 21. Nacho is one of the first big KRC-20 names to walk across. $KAS is 3.2 cents while the whole token layer of Kaspa moves onto the L1.\n\nTag the Nacho holder in your life before January 31.",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#kcc20",
+        "#krc20",
+        "#nacho",
+        "#proofofwork",
+        "#fairlaunch",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting"
+      ],
+      "source_post": "Nacho the Kat is moving to KCC-20 on the Kaspa L1. The migration opened October 30: one way, 1:1, from KRC-20, Igra L2 or Kasplex L2."
+    },
+    {
+      "id": "ig-2026-11-02-kaspa-first-bear-market",
+      "kaspa_subject": true,
+      "image_id": "63c1d197",
+      "aspect_ratio": "4:5",
+      "hook": "Kaspa never had a 2022 bear market.",
+      "caption": "Kaspa never had a 2022 bear market.\n\nIn crypto the common definition of a bear market is weekly closes under the 50-week SMA. $BTC spent most of 2022 under that line. $KAS did not; it was in its first bull run the entire time, from a fraction of a cent to the 2024 top.\n\nKaspa's first bear market began in December 2024, when it lost the 50-week SMA on my chart, and it ran almost two years. In September it closed back above that line for the first time since, in the same week Bitcoin reclaimed its own 50-week SMA. Six weekly closes above. Then the $6.3 billion Binance hack flushed the whole market and dragged Kaspa back to the line this week.\n\nBitcoin is still above its line. Kaspa, at 3.2 cents, is the one being tested. That is exactly the kind of stretch I stack in: a little here, a little there, and if it dips further I have more to buy with. Never financial advice.\n\nSave this and check it again in six months.",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "source_post": "Kaspa never had a 2022 bear market. While $BTC spent most of 2022 under its 50-week SMA, $KAS was in its first bull run."
+    },
+    {
+      "id": "ig-2026-11-02-kaspa-conference-cruise",
+      "kaspa_subject": true,
+      "image_id": "b74e7c17",
+      "aspect_ratio": "4:5",
+      "hook": "Bitcoin had Miami. Ethereum had Devcon. Kaspa gets a ship.",
+      "caption": "Bitcoin had Miami. Ethereum had Devcon. Kaspa gets a ship.\n\nThe Kaspa Conference is a four-day cruise out of Miami aboard a Norwegian Cruise Line ship, April 9 to 12, 2027: builders, investors and the community in one place, with up to $1 million going into Kaspa startups. Early-bird virtual access is $97 until December 31.\n\nI will say it straight: I am not really a boat person. Four days out in the open ocean is a different thing from a yacht parked offshore. But a chain with no premine, no foundation treasury and no marketing budget just got its own conference with real capital attached, and that is the kind of thing that only happens when the builders show up on their own. $KAS is 3.2 cents while that is happening.\n\nWho is going? Tag the Kaspa friend you would share a cabin with.",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "source_post": "The Kaspa Conference is a four-day cruise out of Miami, April 9 to 12, 2027, with up to $1 million going into Kaspa startups. Bitcoin had Miami. Ethereum had Devcon. $KAS gets a ship 🚢"
+    },
+    {
+      "id": "ig-2026-11-02-three-dollar-kaspa-is-bearish",
+      "kaspa_subject": true,
+      "image_id": "2fdc9ece",
+      "aspect_ratio": "4:5",
+      "hook": "A $3 $KAS is only an $83 billion market cap.",
+      "caption": "A $3 $KAS is only an $83 billion market cap.\n\nRun the numbers. Kaspa has about 27.8 billion coins in circulation, so $3 a coin is roughly $83 billion, and my $3.33 target is about $93 billion. The whole crypto market is about $2.6 trillion right now.\n\nHere is my thesis: if the dollar system keeps moving onto stablecoins and stocks start trading as tokenized assets, crypto does not stay a $2.6 trillion market. It grows past the global stock market. Call it $100 trillion. In a $100 trillion crypto market, a fair-launched proof-of-work chain at 10 blocks per second is worth a lot more than $83 billion.\n\nSo from that perspective, $3.33 is bearish... 😎 It is still the number that gets me the Kaspa yacht, and I will be streaming from the deck when it prints. Never financial advice.\n\nDrop your $KAS cycle top in the comments.",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "source_post": "A $3 $KAS is only an $83 billion market cap. If crypto runs to $100 trillion the way I think it does, my $3.33 Kaspa target is bearish... 😎"
+    }
+  ]
+}
