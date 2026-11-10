@@ -276,6 +276,22 @@ All voice rules live in `persona/persona.json` (`spoken_voice`). Three gears: (1
 beats; drop toward gear 2 for mechanics). No "right?" tags / no conviction-then-hedge in gear 3. No em
 dashes anywhere.
 
+**Write every spoken line the way Mike talks (Mike, 2026-11-10, persona `word_choice_rules`).** A
+`[FACE]` / `[COVER]` line is what he reads out loud, so it is already in his words: he should never have to
+translate it into his own phrasing while recording ("if it's already in my own words when I read it, it's
+perfect"). The mechanical half, gated in code by `lint_screenplay.py` (rules 18 and 19) on every FACE / COVER line:
+
+- **Contractions by default:** "we don't", "it doesn't", "that isn't", "they aren't", "you won't", "it's",
+  "that's", "there's", "here's", "I'm", "we're", "you're", "they're". Never "we do not", "it is not", "it is a".
+- **"cannot" only as emphasis, and then with "just":** "we just cannot", "you just cannot compete with that".
+  Everywhere else it is "can't".
+- **"around", never "about", in front of a number:** "around 1.6 million people", "around 23 percent",
+  "around half". "About" keeps only its topic sense ("a video about why").
+
+`--fix` (the graph runs it) rewrites these in place; a verbatim quote of someone else in double quotes keeps its
+own words, and a 🔒 `[SAY-EXACT]` line is Mike's locked wording, so it only WARNs. A screenplay that is already
+recorded (a master in `raw/`) only WARNs too and is never rewritten: the take is what gets built.
+
 **Numbers on the page (persona `whole_number_format` + `year_and_date_format`, Mike 2026-10-01).** In a
 screenplay Mike reads himself, numbers are DIGITS, whole numbers included: "369 billion dollars", "250 percent",
 "2,200 holders", "15x", "24/7", "28.4 million". The scale word (thousand, million, billion) and "dollars" /
@@ -286,7 +302,7 @@ dates are digits ("in December of 2015", "July 1st, 2026"). Spelled-out numbers 
 reads them right (persona `tts_note`); lint those with `--voice-clone`.
 **No dollar signs in a screenplay (persona `money_format`, Mike 2026-10-01).** Written money is a number with
 K / M / B, the way Mike types it ("4.2M market cap", "1.04B TVL"), in notes, verify lines and on-screen text
-alike; tickers carry no cashtag sign ("GOLDEN"). Spoken lines stay words ("about a 4.2 million dollar market
+alike; tickers carry no cashtag sign ("GOLDEN"). Spoken lines stay words ("around a 4.2 million dollar market
 cap"). A pair of dollar signs also breaks the VS Code Markdown preview (it renders the text between them as
 math). `lint_screenplay.py` fails any dollar sign outside a code span; exact figures live in DATA.md.
 

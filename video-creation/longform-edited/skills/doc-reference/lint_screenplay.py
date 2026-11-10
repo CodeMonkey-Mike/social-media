@@ -59,6 +59,16 @@ no-cold-open rule; the format owner wins on conflict):
      all this." AGAIN): the CH1 handoff ("So, let's ...") may not repeat any of the last 3 `recent_use` lines of
      persona.json dive_in_variants (other projects). The graph records the scripted line there when GATE 1 is
      approved (handoff_rotation.py), so the list can no longer go stale.
+ 18. CONTRACTIONS, THE WAY MIKE TALKS (Mike, 2026-11-10, AI destroying lives; persona word_choice_rules
+     contractions_by_default): a FACE / COVER line never spells out a negative ("do not", "is not", "will not")
+     or a common pronoun form followed by a word ("it is a", "that is why", "we are", "I am"); and "cannot" is
+     only the emphasis "just cannot", everywhere else "can't".
+ 19. "AROUND", NEVER "ABOUT", IN FRONT OF A NUMBER (persona around_not_about_for_numbers, 2026-10-16, in code
+     2026-11-10): "about 1.6 million" / "about a 4.2 million dollar" / "about half" FAIL; the topic sense
+     ("talk about 3 things") is left alone.
+     18 + 19: --fix rewrites them in place; verbatim quotes (double quotes) and code spans keep their own words;
+     a SAY-EXACT line (Mike's locked wording) and a screenplay already RECORDED (a master in raw/) only WARN and
+     are never rewritten.
 
 Usage:
   python video-creation/longform-edited/skills/doc-reference/lint_screenplay.py <SCREENPLAY.md> [--face-max N] [--fix] [--voice-clone]
@@ -95,6 +105,64 @@ SPELLED_NUMBER = re.compile(
     r"\b(?:ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|"
     r"forty|fifty|sixty|seventy|eighty|ninety|hundred)\b"
     r"|\b(?:one|two|three|four|five|six|seven|eight|nine)\s+(?:percent|thousand|million|billion|trillion)\b", re.I)
+# 18 + 19: Mike's spoken diction (persona spoken_voice.word_choice_rules, Mike 2026-11-10).
+# "about" in front of a rough number -> "around" (the topic sense, "talk about 3 things", is left alone).
+ABOUT_NUM = re.compile(r"\babout(?=\s+(?:an?\s+)?(?:\d|half\b|a\s+(?:third|quarter|dozen|hundred|thousand|million|billion)\b"
+                       r"|(?:one|two|three|four|five|six|seven|eight|nine|ten)\s+(?:in|out\s+of)\s))", re.I)
+ABOUT_TOPIC_WORDS = {"talk", "talks", "talked", "talking", "think", "thinks", "thinking", "thought", "know", "knew",
+                     "care", "cares", "worry", "worries", "worried", "video", "videos", "story", "stories", "news",
+                     "question", "questions", "ask", "asks", "asked", "asking", "learn", "learned", "read", "hear",
+                     "heard", "say", "says", "said", "forget", "forgot", "wrong", "right", "post", "thread"}
+# spelled-out negatives -> contractions; a bare "cannot" -> "can't" ("just cannot" is the sanctioned emphasis)
+NEG_CONTRACT = {"do": "don't", "does": "doesn't", "did": "didn't", "is": "isn't", "are": "aren't", "was": "wasn't",
+                "were": "weren't", "will": "won't", "would": "wouldn't", "should": "shouldn't", "could": "couldn't",
+                "has": "hasn't", "have": "haven't", "had": "hadn't"}
+NEG_RE = re.compile(r"\b(" + "|".join(NEG_CONTRACT) + r")\s+not\b", re.I)
+CANNOT_RE = re.compile(r"\b(?:cannot|can\s+not)\b", re.I)
+JUST_BEFORE = re.compile(r"\bjust\s*$", re.I)
+# the common pronoun forms, only when a word follows (a sentence-final "that's what it is." cannot contract)
+POS_CONTRACT = {("it", "is"): "it's", ("that", "is"): "that's", ("there", "is"): "there's", ("here", "is"): "here's",
+                ("i", "am"): "I'm", ("we", "are"): "we're", ("you", "are"): "you're", ("they", "are"): "they're"}
+POS_RE = re.compile(r"\b(" + "|".join(rf"{a}\s+{b}" for a, b in POS_CONTRACT) + r")\b(?=\s+[A-Za-z0-9])", re.I)
+QUOTED = re.compile(r"(`[^`]*`|\"[^\"]*\"|“[^”]*”)")   # code spans and verbatim quotes keep their own words
+
+
+def _case(src: str, repl: str) -> str:
+    return repl[0].upper() + repl[1:] if src[:1].isupper() else repl
+
+
+def _diction_sub(seg: str, found: list) -> str:
+    """Rewrite one unquoted stretch of a spoken line; append each offending phrase to `found`."""
+    def neg(m):
+        found.append(m.group(0))
+        return _case(m.group(0), NEG_CONTRACT[m.group(1).lower()])
+
+    def cannot(m):
+        if JUST_BEFORE.search(seg[: m.start()]):
+            return m.group(0)
+        found.append(m.group(0))
+        return _case(m.group(0), "can't")
+
+    def about(m):
+        prev = re.search(r"(\w+)\W*$", seg[: m.start()])
+        if prev and prev.group(1).lower() in ABOUT_TOPIC_WORDS:
+            return m.group(0)
+        found.append(m.group(0) + seg[m.end(): m.end() + 12].rstrip())
+        return _case(m.group(0), "around")
+
+    seg = NEG_RE.sub(neg, seg)                  # negatives first: "it is not" -> "it isn't", not "it's not"
+    seg = CANNOT_RE.sub(cannot, seg)
+    seg = POS_RE.sub(lambda m: (found.append(m.group(0)), _case(m.group(0), POS_CONTRACT[tuple(m.group(1).lower().split())]))[1], seg)
+    return ABOUT_NUM.sub(about, seg)
+
+
+def diction(rest: str):
+    """(rewritten text, offending phrases) for the spoken part of a FACE / COVER line."""
+    found = []
+    parts = QUOTED.split(rest)
+    return "".join(p if QUOTED.fullmatch(p) else _diction_sub(p, found) for p in parts), found
+
+
 REQUIRED = [
     (r"^##\s+.*chapter map", "## CHAPTER MAP section"),
     (r"^\|\s*👤\s*`\[FACE\]`", "the tag legend table with backticked tags (a `| 👤 `[FACE]` |` row)"),
@@ -121,7 +189,7 @@ def _backtick_outside_code(line: str) -> str:
                    for p in parts)
 
 
-def fix_text(text: str) -> str:
+def fix_text(text: str, fix_diction: bool = True) -> str:
     out = []
     for line in text.splitlines():
         s = line.lstrip()
@@ -143,12 +211,17 @@ def fix_text(text: str) -> str:
                 if len(units) >= 2 and any("[SAY-EXACT]" in u for u in units) and "[SAY-EXACT]" not in units[0]:
                     units.sort(key=lambda u: 0 if "[SAY-EXACT]" in u else 1)
                     fixed = " ".join(units) + " " + fixed[head.end():].lstrip()
+            head = TAGGED_LINE.match(fixed)
+            tags = set(line_tags(fixed))
+            # 18 + 19: contractions / "just cannot" / "around" on a FACE / COVER line (never a locked SAY-EXACT line)
+            if fix_diction and head and (tags & SPOKEN) and "SAY-EXACT" not in tags:
+                fixed = fixed[: head.end()] + diction(fixed[head.end():])[0]
             line = fixed
         out.append(line.replace("—", ", "))
     return "\n".join(out) + ("\n" if text.endswith("\n") else "")
 
 
-def lint(text: str, face_max=None, voice_clone=False):
+def lint(text: str, face_max=None, voice_clone=False, recorded=False):
     fails, warns = [], []
     lines = text.splitlines()
     for pat, what in REQUIRED:                                    # 5
@@ -196,6 +269,18 @@ def lint(text: str, face_max=None, voice_clone=False):
                 fails.append(f"line {i + 1}: a year spelled out as words ('{SPELLED_YEAR.search(rest).group(0)}'); years and dates are digits (persona year_and_date_format)")
             if (set(tags) & SPOKEN) and re.search(r"\bhonest(?:ly)?\b", spoken_text, re.I):   # 14
                 fails.append(f"line {i + 1}: an 'honest' lead-in on a spoken line (Mike reads it as deceitful); say \"Here's the thing\" (persona word_choice_rules)")
+            if set(tags) & SPOKEN:                                    # 18 + 19
+                found = diction(spoken_text)[1]
+                if found:
+                    msg = (f"line {i + 1}: not how Mike talks: {', '.join(repr(f) for f in found[:6])}; write contractions "
+                           "(don't, isn't, it's), 'cannot' only as 'just cannot', 'around' (never 'about') before a number "
+                           "(persona word_choice_rules; --fix rewrites them)")
+                    if "SAY-EXACT" in tags:
+                        warns.append(msg + " [a locked SAY-EXACT line: Mike's own wording, never rewritten; raise it at the gate]")
+                    elif recorded:
+                        warns.append(msg + " [already recorded: raw/ holds a master, so the take is what gets built]")
+                    else:
+                        fails.append(msg)
             if "SAY-EXACT" in tags and not (set(tags) & {"FACE", "COVER"}):
                 fails.append(f"line {i + 1}: a locked `[SAY-EXACT]` line must carry its gate (`[FACE]` or `[COVER]`) written out")
             elif "SAY-EXACT" in tags and tags[0] != "SAY-EXACT":
@@ -284,20 +369,26 @@ def main():
         print(f"usage: no such file {p}", file=sys.stderr)
         sys.exit(2)
     text = p.read_text(encoding="utf-8")
+    # 18 + 19 on a screenplay Mike already RECORDED (a master in raw/): WARN only, never rewritten (the take is built)
+    raw = p.resolve().parent / "raw"
+    recorded = raw.is_dir() and any(f.suffix.lower() in {".mkv", ".mp4", ".mov"} for f in raw.iterdir() if f.is_file())
     if args.fix:
-        fixed = fix_text(text)
+        fixed = fix_text(text, fix_diction=not recorded)
         if fixed != text:
             p.write_text(fixed, encoding="utf-8", newline="\n")
-            print(f"--fix: rewrote {p.name} (tags backticked / locked-line order / em dashes)")
+            print(f"--fix: rewrote {p.name} (tags backticked / locked-line order / em dashes / contractions / around)")
             text = fixed
-    fails, warns, faces, inserts = lint(text, args.face_max, args.voice_clone)
+    fails, warns, faces, inserts = lint(text, args.face_max, args.voice_clone, recorded)
     try:                                                          # 17
         import handoff_rotation as HR
         line = HR.find_handoff(text)
         hit = HR.blocked(p.resolve().parent.name).get(HR.norm(line)) if line else None
         if hit:
-            fails.append(f"handoff line '{line}' repeats a recent video ({hit}); pick a line from persona.json "
-                         "dive_in_variants that is not in the last 3 of recent_use (screenplay.md, the handoff rotation)")
+            msg = (f"handoff line '{line}' repeats a recent video ({hit}); pick a line from persona.json "
+                   "dive_in_variants that is not in the last 3 of recent_use (screenplay.md, the handoff rotation)")
+            # already recorded (a master in raw/): the line is said; a later approval of ANOTHER video must not
+            # fail this one's re-drive (2026-11-10: canton's GATE 1 recorded the line AI destroying lives had also scripted)
+            (warns if recorded else fails).append(msg + (" [already recorded: raw/ holds a master]" if recorded else ""))
     except Exception as e:   # the persona file is the rule's input; a read error is reported, never a silent pass
         warns.append(f"handoff rotation not checked: {e}")
     for w in warns:

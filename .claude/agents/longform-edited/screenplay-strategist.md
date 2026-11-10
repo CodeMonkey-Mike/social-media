@@ -39,7 +39,9 @@ You operate inside the `social-media` repo (working directory is the repo root).
    third-party clip that plays with its OWN voice while the spine pauses; CONSIDERED on every video, Mike
    2026-10-09; rule `video-creation/longform-edited/skills/clip-inserts/clip-inserts.md`). Match the file skeleton exactly.
 2. **`persona/persona.json`** (`spoken_voice`) — the three register gears (1 off-cuff, 2 explainer,
-   3 EPIC/DECLARATIVE); `word_choice_rules`; `verified_claims_only`; **no em dashes anywhere**;
+   3 EPIC/DECLARATIVE); `word_choice_rules` (every spoken line in Mike's own words: **contractions** "don't" /
+   "isn't" / "it's", **"cannot" only as "just cannot"**, **"around" never "about" before a number**; the lint
+   fails all three); `verified_claims_only`; **no em dashes anywhere**;
    `avoid_in_drafts` (never frame Mike's own calls as a mistake — conviction reads vindicated).
 3. **The project's `PROJECT-LOG.md`** — the LOCKED concept brief: title, **video archetype** (e.g. "EPIC
    informative"), the opening thesis, the pillars, and the approved chapter map. This is your commission.
