@@ -45,22 +45,37 @@ def main():
     P = Path(a.project).resolve(); S = P / "spine"; sc = a.scope
     # the FINAL desilence map = the highest letter above c (d without burst removal, e after d.cleaned; retire-early 2026-10-11)
     finals = sorted(p for p in S.glob(f"{sc}.?.desilenced.map.json") if p.name[len(sc) + 1] > "c")
-    if not finals:
-        raise SystemExit(f"no final desilence map ({sc}.<d|e>.desilenced.map.json) in {S}")
-    final_p = finals[-1]
-    final_letter = final_p.name[len(sc) + 1]
-    d_map = json.loads(final_p.read_text(encoding="utf-8"))
+    if finals:
+        final_p = finals[-1]
+        final_letter = final_p.name[len(sc) + 1]
+        d_map = json.loads(final_p.read_text(encoding="utf-8"))
+    else:
+        # no final pass: Mike's final silence definition IS the coarse one, so the graph's desilence_final skips and the
+        # coarse (or burst-cleaned) spine is final (AI destroying lives, 2026-11-10: "700 ms for the entire video")
+        final_p, final_letter, d_map = None, "c", {"cuts": []}
     c_map = json.loads((S / f"{sc}.c.desilenced.map.json").read_text(encoding="utf-8"))
-    burst_p = next(iter(sorted(S.glob(f"{sc}.?.cleaned.mp4.cuts.json"))), None) if final_letter > "d" else None
+    burst_p = (next(iter(sorted(S.glob(f"{sc}.?.cleaned.mp4.cuts.json"))), None)
+               if final_letter > "d" or not finals else None)
     burst_cuts = ([[float(c["cut_start"]), float(c["cut_end"])] for c in json.loads(burst_p.read_text(encoding="utf-8"))["cuts"]]
                   if burst_p else [])
+    # a later CUT on the final spine (a word removed at a gate ruling, AI destroying lives 2026-11-10: "humanoid"):
+    # spine/<scope>.<x>.cut.<...>.map.json, cuts in the time of its input, applied after the final pass in letter order
+    post_ps = sorted(p for p in S.glob(f"{sc}.?.cut.*map.json") if p.name[len(sc) + 1] > final_letter)
+    post_cuts = [json.loads(p.read_text(encoding="utf-8"))["cuts"] for p in post_ps]
+
+    def through_post(t, start=0):
+        for cuts in post_cuts[start:]:
+            if t is None:
+                return None
+            t = src_to_out(t, cuts)
+        return t
 
     def c_to_final(t_c):
-        """c-time -> final-spine time, through the burst cuts when the chain has them."""
+        """c-time -> final-spine time, through the burst cuts, the final pass and any later cut when the chain has them."""
         if t_c is None:
             return None
         t_d = src_to_out(t_c, burst_cuts) if burst_cuts else t_c
-        return None if t_d is None else src_to_out(t_d, d_map["cuts"])
+        return None if t_d is None else through_post(src_to_out(t_d, d_map["cuts"]))
     spans_p = S / f"{sc}.a.defumbled.mp4.spans.json"
     a_cuts = json.loads(spans_p.read_text(encoding="utf-8"))["cuts"] if spans_p.is_file() else []
     joins = {}                                    # final-spine frame -> set(sources)
@@ -85,10 +100,14 @@ def main():
         if s <= 1e-6:
             continue
         t_d = s - sum(e2 - s2 for s2, e2 in burst_cuts if e2 <= s + 1e-6)
-        add(src_to_out(t_d, d_map["cuts"]), "burst-removal")
+        add(through_post(src_to_out(t_d, d_map["cuts"])), "burst-removal")
     # final desilence joins: a cut in the final pass's input time -> final-spine time
     for s, e in d_map["cuts"]:
-        add(s - sum(e2 - s2 for s2, e2 in d_map["cuts"] if e2 <= s + 1e-6), "desilence-final")
+        add(through_post(s - sum(e2 - s2 for s2, e2 in d_map["cuts"] if e2 <= s + 1e-6)), "desilence-final")
+    # later cut joins (the post maps): a cut in its input's time -> its output time -> the later post maps
+    for i, cuts in enumerate(post_cuts):
+        for s, e in cuts:
+            add(through_post(s - sum(e2 - s2 for s2, e2 in cuts if e2 <= s + 1e-6), i + 1), "cut")
 
     # FACE windows from AS-RECORDED.md
     asr = (P / "AS-RECORDED.md").read_text(encoding="utf-8")
@@ -113,7 +132,10 @@ def main():
                      "joins_frames": inside,
                      "punch_candidates_s": [round(f / FPS, 3) for f in punch],
                      "sources": {str(round(f / FPS, 3)): sorted(joins[f]) for f in inside}})
-    out = {"fps": FPS, "final_spine": str(S / f"{sc}.{final_letter}.desilenced.mp4"), "final_map": final_p.name,
+    final_spine = (S / (post_ps[-1].name[: -len(".map.json")] + ".mp4") if post_ps
+                   else S / f"{sc}.{final_letter}.desilenced.mp4")
+    out = {"fps": FPS, "final_spine": str(final_spine), "final_map": final_p.name if final_p else None,
+           "post_cut_maps": [p.name for p in post_ps],
            "burst_cuts": str(burst_p.name) if burst_p else None, "note": "final-spine seconds, pre-card-pause; the comp routes every value through sh()",
            "joins_s": [round(f / FPS, 3) for f in all_joins], "joins_total": len(all_joins),
            "edge_margin_s": a.edge_margin, "min_gap_s": a.min_gap, "face_windows": face, "face_windows_with_joins": sum(1 for w in face if w["joins_s"]),

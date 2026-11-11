@@ -642,13 +642,26 @@ def desilence_final(state: LongformState) -> LongformState:
     map_json = Path(str(out)[:-4] + ".map.json")
     pre, post = float(state.get("sil_pre") or 0.25), float(state.get("sil_post") or 0.5)
     split = state.get("split")
-    zone = (f"two-zone: `--split {split} --sil-pre {pre} --sil-post {post}` (intro {pre} s / body {post} s, "
-            f"split at the measured hook end {split}s)") if split else \
-           (f"two-zone with the hook end measured by you: `--split <hook-end> --sil-pre {pre} --sil-post {post}`. The "
-            "hook = the WHOLE of CH1 (the intro chapter): find the last spoken line of CH1 in SCREENPLAY.md on the input "
-            "(a local Whisper pass over the first ~3 min), and split in the pause after it. NEVER a face-window or "
-            "black-picture boundary (evals 2026-10-19: a split at the first face line's end, 4.2 s, left the whole intro "
-            f"on the body setting). If no clear CH1 end exists, ONE zone at `--min-sil {post}`")
+    coarse = float(state.get("coarse_sil") or 0.7)
+    if abs(pre - coarse) < 1e-6 and abs(post - coarse) < 1e-6 and not out.is_file():
+        # Mike's final definition IS the coarse one (AI destroying lives, 2026-11-10: "700 ms for the entire video,
+        # regardless of chapter"): the coarse pass already cut every pause >= that length with the same pads, so a
+        # second pass finds nothing to cut (and would fail the shorter-than check). The coarse (or burst-cleaned)
+        # spine is the final spine as is: C.final_spine() resolves to it, and it skips one more encode generation.
+        return {"steps": C._step(state, node, "skipped",
+                                 f"final definition = the coarse pass ({coarse:.3f} s, whole video): "
+                                 f"{src.name} is the final spine")}
+    if abs(pre - post) < 1e-6 and not split:
+        zone = f"ONE zone: `--min-sil {pre}` (Mike gave one silence definition for the whole video, so no hook split)"
+    elif split:
+        zone = (f"two-zone: `--split {split} --sil-pre {pre} --sil-post {post}` (intro {pre} s / body {post} s, "
+                f"split at the measured hook end {split}s)")
+    else:
+        zone = (f"two-zone with the hook end measured by you: `--split <hook-end> --sil-pre {pre} --sil-post {post}`. The "
+                "hook = the WHOLE of CH1 (the intro chapter): find the last spoken line of CH1 in SCREENPLAY.md on the input "
+                "(a local Whisper pass over the first ~3 min), and split in the pause after it. NEVER a face-window or "
+                "black-picture boundary (evals 2026-10-19: a split at the first face line's end, 4.2 s, left the whole intro "
+                f"on the body setting). If no clear CH1 end exists, ONE zone at `--min-sil {post}`")
     zone += _pad_clause(state) + _face_pause_clause(state)
     prompt = (f"Desilence (FINAL tight pass) for project `{proj.name}`.\n"
               f"INPUT: `{src}`\nOUTPUT (fixed 13a path): `{out}` with the cut map `{map_json}` (--map-out).\n"
