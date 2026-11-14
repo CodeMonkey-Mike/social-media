@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evals: clip-strategist</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Page system: the same tokens as index.html / langgraph.html, not invented here. */
+      --bg:        #f0f2f5;
+      --surface:   #ffffff;
+      --line:      #e4e6ea;
+      --ink:       #1a1a1a;
+      --ink-2:     #65676b;
+      --ink-muted: #8a8d91;
+      --accent:    #1877f2;
+      --accent-wash: #e7f0fd;
+
+      /* One hue, light -> dark: meters and the "kept" share. The unfilled meter track is a lighter
+         step of the same ramp. "Killed" is the de-emphasis gray, so the bar reads without red/green. */
+      --seq-100: #cde2fb;
+      --seq-450: #2a78d6;
+      --deemph:  #b9bfc8;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── left nav (shared with index.html and langgraph.html) ─────────────── */
+    .sidenav {
+      width: 190px; flex: 0 0 190px; background: var(--surface); border-right: 1px solid var(--line);
+      padding: 16px 0; position: sticky; top: 0; height: 100vh;
+    }
+    .sidenav .brand {
+      font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      color: var(--ink-muted); padding: 0 18px 12px;
+    }
+    .sidenav a {
+      display: flex; align-items: center; gap: 9px; padding: 9px 18px; font-size: 13.5px; font-weight: 500;
+      color: var(--ink-2); text-decoration: none; border-left: 3px solid transparent;
+    }
+    .sidenav a:hover { background: #f5f6f7; color: var(--ink); }
+    .sidenav a.active {
+      color: var(--accent); border-left-color: var(--accent); background: var(--accent-wash); font-weight: 600;
+    }
+    .sidenav a .ico { width: 16px; text-align: center; font-size: 13px; }
+
+    .main { flex: 1; min-width: 0; }
+    header {
+      background: var(--surface); border-bottom: 1px solid var(--line); padding: 14px 24px;
+      display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+    }
+    header h1 { font-size: 17px; font-weight: 600; }
+    header .sub { font-size: 12.5px; color: var(--ink-muted); }
+    header .refresh { margin-left: auto; font-size: 11.5px; color: var(--ink-muted); }
+
+    .wrap { padding: 20px 24px 60px; max-width: 1280px; }
+    section { margin-bottom: 28px; }
+    h2 {
+      font-size: 11.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+      color: var(--ink-muted); margin-bottom: 10px;
+    }
+    h3 { font-size: 12.5px; font-weight: 600; color: var(--ink-2); margin: 16px 0 8px; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+    .card.scroll { overflow-x: auto; }
+    .note { font-size: 12px; color: var(--ink-muted); margin-top: 9px; line-height: 1.55; max-width: 900px; }
+    .note code, .mono { font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace; font-size: 11.5px; }
+    .empty { color: var(--ink-muted); padding: 22px 16px; font-size: 13px; }
+    .error {
+      background: #fbe9e9; border: 1px solid #f1c9c9; color: #a52a2a; border-radius: 10px;
+      padding: 12px 16px; font-size: 13px; margin-bottom: 18px;
+    }
+
+    /* ── stat tiles: one hero figure, the rest supporting ─────────────────── */
+    .tiles { display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); gap: 12px; }
+    @media (max-width: 1050px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+    .tile { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+    .tile .label { font-size: 12px; color: var(--ink-2); font-weight: 500; }
+    .tile .value { font-size: 26px; font-weight: 600; margin: 4px 0 3px; line-height: 1.15; }
+    .tile.hero .value { font-size: 50px; }
+    .tile .value.words { font-size: 20px; padding: 3px 0; }
+    .tile .sub { font-size: 12px; color: var(--ink-muted); line-height: 1.45; }
+
+    /* ── tables ───────────────────────────────────────────────────────────── */
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th {
+      font-size: 10.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+      color: var(--ink-muted); text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line);
+      white-space: nowrap;
+    }
+    td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+    tr:last-child > td { border-bottom: 0; }
+    .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .muted { color: var(--ink-muted); }
+    .nowrap { white-space: nowrap; }
+
+    /* meter: fill + a lighter step of the same hue as the track */
+    .meterwrap { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
+    .meter { display: inline-block; width: 84px; height: 6px; border-radius: 3px; background: var(--seq-100); overflow: hidden; }
+    .meter i { display: block; height: 100%; background: var(--seq-450); border-radius: 3px; }
+    .meterwrap .fig { font-variant-numeric: tabular-nums; min-width: 46px; text-align: right; }
+
+    /* thin segmented bar: the figures sit beside it, so it carries no text; 2px surface gap between parts */
+    .seg { display: inline-flex; width: 96px; height: 8px; gap: 2px; vertical-align: middle; }
+    .seg i { display: block; height: 100%; min-width: 3px; }
+    .seg i.kept { background: var(--seq-450); }
+    .seg i.killed { background: var(--deemph); }
+    .seg i:first-child { border-radius: 4px 0 0 4px; }
+    .seg i:last-child { border-radius: 0 4px 4px 0; }
+    .seg i:only-child { border-radius: 4px; }
+    .legend { display: flex; gap: 16px; font-size: 12px; color: var(--ink-2); align-items: center; }
+    .legend .sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
+    /* status pills: colour + icon + label, never colour alone (same classes as langgraph.html) */
+    .pill {
+      display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 700;
+      padding: 2px 9px 2px 7px; border-radius: 11px; white-space: nowrap; border: 1px solid transparent;
+    }
+    .pill .dot { font-size: 10px; line-height: 1; }
+    .pill.done   { color: #067806; background: #e8f6e8; border-color: #c3e6c3; }
+    .pill.halted { color: #a52a2a; background: #fbe9e9; border-color: #f1c9c9; }
+    .pill.info   { color: #0b57c2; background: var(--accent-wash); border-color: #c5dcfa; }
+    .pill.idle   { color: var(--ink-muted); background: #f0f1f3; border-color: var(--line); }
+    .tag {
+      display: inline-block; font-size: 10.5px; font-weight: 600; color: var(--ink-2); background: #f0f1f3;
+      border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; margin-left: 6px; vertical-align: 1px;
+    }
+
+    /* ── filter row: one row above everything it scopes ───────────────────── */
+    .filters { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
+    .chip {
+      font: inherit; font-size: 12.5px; font-weight: 500; color: var(--ink-2); background: var(--surface);
+      border: 1px solid var(--line); border-radius: 15px; padding: 4px 12px; cursor: pointer;
+    }
+    .chip:hover { color: var(--ink); border-color: #cfd3d8; }
+    .chip[aria-pressed="true"] { color: var(--accent); background: var(--accent-wash); border-color: #c5dcfa; font-weight: 600; }
+    .filters input {
+      font: inherit; font-size: 12.5px; padding: 5px 10px; border: 1px solid var(--line); border-radius: 15px;
+      background: var(--surface); color: var(--ink); width: 190px;
+    }
+    .filters .legend { margin-left: auto; }
+
+    /* ── batch rows: click to open the decisions ──────────────────────────── */
+    tr.batch { cursor: pointer; }
+    tr.batch:hover > td { background: #fafbfc; }
+    tr.batch.open > td { background: #f7f9fc; border-bottom-color: transparent; }
+    .rowbtn {
+      font: inherit; font-weight: 600; color: var(--ink); background: none; border: 0; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 7px; padding: 2px 0; text-align: left;
+    }
+    .rowbtn .chev { display: inline-block; width: 10px; color: var(--ink-muted); font-size: 10px; transition: transform .12s; }
+    tr.batch.open .rowbtn .chev { transform: rotate(90deg); }
+    .rowbtn:focus-visible, .chip:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+    .when { display: block; font-size: 11.5px; color: var(--ink-muted); font-weight: 400; margin-left: 17px; }
+    tr.detail > td { background: #f7f9fc; padding: 4px 18px 20px 29px; }
+    .brief { font-size: 12.5px; color: var(--ink-2); line-height: 1.5; margin: 4px 0 2px; max-width: 900px; }
+    .inner { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+    .inner td, .inner th { padding: 8px 11px; }
+    .inner td { vertical-align: top; }
+    .title { font-weight: 600; }
+    .slug { display: block; color: var(--ink-muted); margin-top: 1px; }
+    details { margin-top: 5px; }
+    summary { font-size: 12px; color: var(--accent); cursor: pointer; width: fit-content; }
+    .why { font-size: 12.5px; color: var(--ink-2); line-height: 1.55; margin-top: 6px; max-width: 760px; }
+    .why li { margin: 4px 0 4px 16px; }
+    .why .t { color: var(--ink); font-variant-numeric: tabular-nums; font-weight: 600; }
+    .reuse { display: block; font-size: 12px; color: #8a6100; margin-top: 4px; }
+    .reuse::before { content: '\26A0\FE0E  '; }
+    .rowbtn, td.title { white-space: nowrap; }
+  </style>
+</head>
+<body>
+
+<nav class="sidenav">
+  <div class="brand">Dashboard</div>
+  <a href="index.html"><span class="ico">📋</span> Social</a>
+  <a href="langgraph.html"><span class="ico">🕸</span> LangGraph</a>
+  <a href="evals.html" class="active"><span class="ico">🎯</span> Evals</a>
+</nav>
+
+<div class="main">
+  <header>
+    <h1>Evals</h1>
+    <span class="sub">The clip-strategist: what it proposed, what was kept or killed at the gates, and the score</span>
+    <span class="refresh" id="refresh">loading…</span>
+  </header>
+
+  <div class="wrap">
+    <div class="error" id="error" hidden></div>
+
+    <section>
+      <h2>Where it stands</h2>
+      <div class="tiles" id="tiles"></div>
+      <p class="note" id="tilesNote"></p>
+    </section>
+
+    <section>
+      <h2>Score from the gates, by prompt version</h2>
+      <div class="card scroll" id="recordTable"></div>
+      <p class="note">
+        <b>Selection precision</b> is the share of proposed clips kept at the first gate (4b), which judges the choice of clip.
+        <b>Final precision</b> counts only clips that also survived the second gate, where a kill may be about the edit.
+        <b>Recall</b> needs a miss review at the gate (<code>--missed "..."</code> or <code>--missed none</code>).
+        A new prompt version appears here on its own after the next livestream batch.
+      </p>
+    </section>
+
+    <section>
+      <h2>Replays: old transcripts re-run under a later prompt</h2>
+      <div class="card scroll" id="replayTable"></div>
+      <h3>Run-to-run noise (the same prompt, run more than once on one batch)</h3>
+      <div class="card scroll" id="noiseTable"></div>
+      <p class="note">
+        A new pick counts as the same clip when it shares at least <span id="matchMin">50</span>% of the shorter clip's seconds.
+        A pick with no verdict on record is neither right nor wrong, so it is left out of precision.
+        <b>Carry killed material</b> counts picks that match a kept clip (or nothing) yet include at least 10 seconds of a killed one;
+        they do not lower precision, so read them in the batch's replay list.
+        A prompt edit only counts when it moves the score by more than the spread between runs of the same prompt.
+        <b>Same picks between runs</b> pairs the picks one to one, so an extra impact clip counts as a difference.
+      </p>
+    </section>
+
+    <section>
+      <h2>Batches and decisions</h2>
+      <div class="filters" id="filters"></div>
+      <div class="card scroll" id="batchTable"></div>
+      <p class="note">
+        Read-only. Verdicts are made at the gates and written to
+        <code>video-creation/livestream-repurpose/evals/clip-verdicts.jsonl</code>. Open a batch to see every clip, the
+        strategist's reasoning, any misses, and its replays.
+      </p>
+    </section>
+
+    <section>
+      <h2>Score history</h2>
+      <div class="card scroll" id="historyTable"></div>
+      <p class="note">A line is saved each time <code>clip_evals.py score</code> gives a result that differs from the last one.</p>
+    </section>
+  </div>
+</div>
+
+<script>
+const FEED = '/evals/data.json';
+const POLL_MS = 30000;
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+let DATA = null, lastBody = '', filter = 'all', query = '';
+const open = new Set();          // batches whose decisions are showing
+const openWhy = new Set();       // "<batch>|<clip>" reasoning panels left open across a refresh
+
+// ── formatting ──────────────────────────────────────────────────────────────
+const pct = (v) => (v == null ? 'n/a' : Number(v).toFixed(1) + '%');
+const clock = (s) => {
+  s = Math.round(s);
+  const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), x = s % 60;
+  return (h ? h + ':' + String(m).padStart(2, '0') : m) + ':' + String(x).padStart(2, '0');
+};
+const span = (segs) => (segs || []).map((p) => clock(p[0]) + '-' + clock(p[1])).join(', ');
+const secs = (v) => (v == null ? '' : Math.round(v) + ' s');
+const day = (iso) => (iso ? new Date(iso).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : '');
+const dayTime = (iso) => (iso ? new Date(iso).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '');
+const version = (v) => (v ? `<span class="mono">${esc(v)}</span>` : '<span class="muted" title="This batch ran before the record existed, so its prompt version could not be recovered.">not recorded</span>');
+
+const meter = (v) => (v == null
+  ? '<span class="muted">n/a</span>'
+  : `<span class="meterwrap"><span class="meter" role="img" aria-label="${pct(v)}"><i style="width:${Math.max(0, Math.min(100, v))}%"></i></span><span class="fig">${pct(v)}</span></span>`);
+
+const seg = (kept, killed) => {
+  if (!kept && !killed) return '';
+  const label = `${kept} kept, ${killed} killed`;
+  return `<span class="seg" role="img" aria-label="${label}" title="${label}">`
+    + (kept ? `<i class="kept" style="flex:${kept}"></i>` : '') + (killed ? `<i class="killed" style="flex:${killed}"></i>` : '') + '</span>';
+};
+
+const PILLS = {
+  kept:       ['done', '✓', 'kept'],
+  killed:     ['halted', '✕', 'killed'],
+  hit:        ['done', '✓', 'matches a kept clip'],
+  bad:        ['halted', '✕', 're-picks a killed clip'],
+  found_miss: ['info', '◎', 'finds a recorded miss'],
+  unjudged:   ['idle', '○', 'new: no verdict'],
+  none:       ['idle', '·', 'not judged'],
+};
+const pill = (kind) => { const [cls, ico, label] = PILLS[kind] || PILLS.none; return `<span class="pill ${cls}"><span class="dot">${ico}</span>${label}</span>`; };
+
+const table = (head, rows, emptyText) => (rows.length
+  ? `<table><thead><tr>${head.map((h) => `<th${h.num ? ' class="num"' : ''}>${h.t}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table>`
+  : `<div class="empty">${emptyText}</div>`);
+
+// ── sections ────────────────────────────────────────────────────────────────
+function renderTiles(t) {
+  const recall = t.recall_batches
+    ? [`<div class="value">${pct(t.recall)}</div>`, `${t.missed} miss${t.missed === 1 ? '' : 'es'} named across ${t.recall_batches} reviewed batch${t.recall_batches === 1 ? '' : 'es'}`]
+    : ['<div class="value words">Not reviewed</div>', `misses named in 0 of ${t.scored_batches} batches`];
+  $('tiles').innerHTML = `
+    <div class="tile hero"><div class="label">Selection precision</div><div class="value">${pct(t.precision)}</div>
+      <div class="sub">${t.kept} of ${t.judged} proposed clips kept at the first gate</div></div>
+    <div class="tile"><div class="label">Clips killed</div><div class="value">${t.killed_4b + t.killed_2nd}</div>
+      <div class="sub">${t.killed_4b} at the first gate, ${t.killed_2nd} at the second</div></div>
+    <div class="tile"><div class="label">Recall</div>${recall[0]}<div class="sub">${recall[1]}</div></div>
+    <div class="tile"><div class="label">Replays</div><div class="value">${t.replays}</div>
+      <div class="sub">${t.replayable} of ${t.batches} batches have a saved transcript</div></div>
+    <div class="tile"><div class="label">On record</div><div class="value">${t.lines} lines</div>
+      <div class="sub">${t.batches} batches, last verdict ${day(t.last_verdict_at) || 'none yet'}</div></div>`;
+  $('tilesNote').innerHTML = t.left_out.length
+    ? `Scores cover ${t.scored_batches} of ${t.batches} batches. Left out: ${t.left_out.map((b) => `<span class="mono">${esc(b)}</span>`).join(', ')}, whose old logs cannot tie a kill to the clip that was proposed.`
+    : '';
+}
+
+function renderRecord(rows) {
+  $('recordTable').innerHTML = table(
+    [{ t: 'Prompt version' }, { t: 'Model' }, { t: 'Batches', num: 1 }, { t: 'Judged', num: 1 }, { t: 'Kept', num: 1 },
+     { t: 'Killed, gate 4b', num: 1 }, { t: 'Selection precision' }, { t: 'Killed, 2nd gate', num: 1 }, { t: 'Final precision', num: 1 }, { t: 'Recall', num: 1 }],
+    rows.map((r) => `<tr><td>${version(r.prompt_version)}</td><td>${esc(r.model || 'unknown')}</td>
+      <td class="num">${r.batches}</td><td class="num">${r.judged}</td><td class="num">${r.kept_4b}</td><td class="num">${r.killed_4b}</td>
+      <td>${meter(r.selection_precision)}</td><td class="num">${r.killed_2nd}</td><td class="num">${pct(r.final_precision)}</td>
+      <td class="num">${r.recall_batches ? `${pct(r.recall)} <span class="muted">(${r.recall_batches} b.)</span>` : '<span class="muted">not reviewed</span>'}</td></tr>`),
+    'Nothing on record yet. The first gate approval of a livestream batch writes the first lines.');
+}
+
+function renderReplays(rows, noise) {
+  $('replayTable').innerHTML = table(
+    [{ t: 'Prompt version' }, { t: 'Model' }, { t: 'Replays', num: 1 }, { t: 'Picks', num: 1 }, { t: 'Match a kept clip', num: 1 },
+     { t: 'Re-pick a killed clip', num: 1 }, { t: 'Carry killed material', num: 1 }, { t: 'Find a miss', num: 1 }, { t: 'New', num: 1 }, { t: 'Precision' },
+     { t: 'Kept clips found', num: 1 }, { t: 'Kills re-picked', num: 1 }],
+    rows.map((g) => `<tr><td>${version(g.group.split(' | ')[0] === 'unknown' ? null : g.group.split(' | ')[0])}</td><td>${esc(g.group.split(' | ')[1] || '')}</td>
+      <td class="num">${g.replays}</td><td class="num">${g.picks}</td><td class="num">${g.hit}</td><td class="num">${g.bad}</td>
+      <td class="num">${g.reuses_killed ?? 0}</td><td class="num">${g.found_miss}</td><td class="num">${g.unjudged}</td><td>${meter(g.precision_on_judged)}</td>
+      <td class="num">${pct(g.kept_refound_pct)}</td><td class="num">${pct(g.killed_repicked_pct)}</td></tr>`),
+    'No replays yet. Run <span class="mono">clip_evals.py replay --batch &lt;batch&gt;</span> on a batch with a saved transcript.');
+  $('noiseTable').innerHTML = table(
+    [{ t: 'Batch' }, { t: 'Prompt version' }, { t: 'Model' }, { t: 'Runs', num: 1 }, { t: 'Picks per run', num: 1 },
+     { t: 'Same picks between runs' }, { t: 'Precision per run', num: 1 }, { t: 'Spread', num: 1 }],
+    noise.map((n) => `<tr><td class="title">${esc(n.batch)}</td><td>${version(n.prompt_version)}</td><td>${esc(n.model || '')}</td>
+      <td class="num">${n.runs}</td><td class="num">${n.picks.join(', ')}</td><td>${meter(n.agreement)}</td>
+      <td class="num">${n.precisions.map(pct).join(', ')}</td>
+      <td class="num">${n.precision_spread == null ? '<span class="muted">n/a</span>' : n.precision_spread.toFixed(1) + ' pts'}</td></tr>`),
+    'No batch has been replayed twice under the same prompt yet, so the noise between runs is unknown.');
+}
+
+function clipRows(b) {
+  return b.clips.map((c) => {
+    const key = `${b.batch}|${c.clip_id}`;
+    const whys = (c.why || []).map((w, i) => (w ? `<li><span class="t">${c.segments && c.segments[i] ? clock(c.segments[i][0]) + '-' + clock(c.segments[i][1]) : ''}</span> ${esc(w)}</li>` : '')).join('');
+    const reasoning = (c.notes || whys)
+      ? `<details data-why="${esc(key)}"${openWhy.has(key) ? ' open' : ''}><summary>The strategist's reasoning</summary><div class="why">${c.notes ? `<p>${esc(c.notes)}</p>` : ''}${whys ? `<ul>${whys}</ul>` : ''}</div></details>`
+      : '';
+    const name = c.matched
+      ? `<span class="title">${esc(c.title || c.slug || 'Clip ' + c.clip_id)}</span>${c.variant && c.variant !== 'full' ? `<span class="tag">${esc(c.variant)}</span>` : ''}<span class="slug mono">${esc(c.slug || '')}</span>${reasoning}`
+      : `<span class="title">Clip ${esc(c.clip_id)}</span><span class="slug">The old log cannot say which proposal this was.</span>`;
+    return `<tr><td class="num">${esc(c.clip_id ?? '')}</td><td>${name}</td><td class="num">${secs(c.seconds)}</td>
+      <td class="nowrap">${esc(span(c.segments))}</td><td>${pill(c.verdicts['4b'] || 'none')}</td>
+      <td>${c.verdicts['4b'] === 'killed' ? '<span class="muted">not reached</span>' : pill(c.verdicts['2nd'] || 'none')}</td></tr>`;
+  }).join('');
+}
+
+function batchDetail(b) {
+  const g1 = b.gates['4b'], g2 = b.gates['2nd'];
+  const when = [g1 && `First gate ${dayTime(g1.at)}`, g2 && `second gate ${dayTime(g2.at)}`].filter(Boolean).join(', ');
+  let h = `<p class="brief"><b>${esc(when || 'No gate time on record')}.</b> ${b.source === 'seed' ? 'Recovered from the old logs (backfill).' : 'Recorded live at the gate.'}</p>`;
+  if (b.brief) h += `<p class="brief"><b>Brief for this run:</b> ${esc(b.brief)}</p>`;
+  h += `<h3>Clips proposed (${b.clips.length})</h3><div class="inner"><table><thead><tr><th class="num">#</th><th>Clip</th><th class="num">Length</th><th>Where in the stream</th><th>First gate (4b)</th><th>Second gate</th></tr></thead><tbody>${clipRows(b)}</tbody></table></div>`;
+  h += '<h3>Misses (what it should have found)</h3>';
+  if (!b.misses_reviewed) h += '<p class="brief muted">Not asked. Nobody recorded a miss review for this batch, so its recall is unknown.</p>';
+  else if (!b.misses.length) h += '<p class="brief">Reviewed: nothing was missed.</p>';
+  else h += `<div class="inner"><table><tbody>${b.misses.map((m) => `<tr><td class="nowrap">${m.start == null ? '<span class="muted">no time</span>' : clock(m.start) + (m.end != null ? '-' + clock(m.end) : '')}</td><td>${esc(m.note || '')}</td></tr>`).join('')}</tbody></table></div>`;
+  const reps = (DATA.replays || []).filter((r) => r.batch === b.batch);
+  h += `<h3>Replays (${reps.length})</h3>`;
+  if (!reps.length) {
+    h += `<p class="brief muted">${b.transcript_saved ? 'None yet. The transcript is saved, so this batch can be replayed.' : 'None. The transcript was recycled before the record existed, so this batch cannot be replayed.'}</p>`;
+  }
+  for (const r of reps) {
+    h += `<p class="brief"><span class="mono">${esc(r.file)}</span> · prompt ${version(r.prompt_version)} · ${esc(r.model || '')} · ${dayTime(r.replayed_at)}</p>
+      <div class="inner"><table><thead><tr><th>Pick</th><th class="num">Length</th><th>Where in the stream</th><th>Against the record</th></tr></thead><tbody>${
+        r.detail.map((d) => `<tr><td><span class="title">${esc(d.title || d.slug || '')}</span><span class="slug mono">${esc(d.slug || '')}</span></td>
+          <td class="num">${secs(d.seconds)}</td><td class="nowrap">${esc(span(d.segments))}</td>
+          <td>${pill(d.kind)}${d.match != null ? ` <span class="muted">clip ${esc(d.match)}</span>` : ''}${
+            (d.reuses_killed || []).map((u) => `<span class="reuse">also carries ${Math.round(u.seconds)} s of killed clip ${esc(u.clip_id)}</span>`).join('')}</td></tr>`).join('')
+      }</tbody></table></div>`;
+  }
+  return h;
+}
+
+const FILTERS = {
+  all:        ['All', () => true],
+  kills:      ['With kills', (b) => Object.values(b.gates).some((g) => g.killed > 0)],
+  replayable: ['Can be replayed', (b) => b.transcript_saved],
+  unscored:   ['Not scored', (b) => !b.scored],
+};
+
+function renderFilters(batches) {
+  const chips = Object.entries(FILTERS).map(([k, [label, fn]]) =>
+    `<button class="chip" data-filter="${k}" aria-pressed="${filter === k}">${label} (${batches.filter(fn).length})</button>`).join('');
+  $('filters').innerHTML = chips
+    + `<input id="search" type="search" placeholder="Find a batch" aria-label="Find a batch" value="${esc(query)}">`
+    + '<span class="legend"><span><span class="sw" style="background:var(--seq-450)"></span>kept</span><span><span class="sw" style="background:var(--deemph)"></span>killed</span></span>';
+}
+
+function renderBatches(batches) {
+  const shown = batches.filter(FILTERS[filter][1]).filter((b) => !query || b.batch.toLowerCase().includes(query.toLowerCase()));
+  const rows = shown.map((b) => {
+    const g1 = b.gates['4b'] || { kept: 0, killed: 0 }, g2 = b.gates['2nd'];
+    const isOpen = open.has(b.batch);
+    const proposed = b.scored ? g1.kept + g1.killed : '<span class="muted">?</span>';
+    const first = b.scored
+      ? `${seg(g1.kept, g1.killed)} <span class="nowrap">&nbsp;${g1.kept} kept, ${g1.killed} killed</span>`
+      : `<span class="muted">${g1.killed} killed, kept unknown</span>`;
+    const second = !g2 ? '<span class="muted">not reached</span>'
+      : b.scored ? `${g2.kept} kept, ${g2.killed} killed` : `<span class="muted">${g2.killed} killed</span>`;
+    const miss = !b.misses_reviewed ? '<span class="muted">not asked</span>' : b.misses.length ? `${b.misses.length} named` : 'none';
+    const replay = b.transcript_saved
+      ? `${b.replays} run${b.replays === 1 ? '' : 's'}`
+      : '<span class="muted" title="The transcript was recycled before the record existed.">transcript gone</span>';
+    return `<tr class="batch${isOpen ? ' open' : ''}" data-batch="${esc(b.batch)}">
+        <td><button class="rowbtn" aria-expanded="${isOpen}"><span class="chev">▶</span>${esc(b.batch)}</button>${b.scored ? '' : '<span class="tag" title="Its old log cannot tie a kill to the clip that was proposed.">not scored</span>'}<span class="when">${day(b.first_at)}</span></td>
+        <td>${version(b.prompt_version)}</td><td>${esc(b.model || 'unknown')}</td><td class="num">${proposed}</td>
+        <td class="nowrap">${first}</td><td class="nowrap">${second}</td><td>${miss}</td><td class="nowrap">${replay}</td></tr>`
+      + (isOpen ? `<tr class="detail"><td colspan="8">${batchDetail(b)}</td></tr>` : '');
+  });
+  $('batchTable').innerHTML = table(
+    [{ t: 'Batch' }, { t: 'Prompt version' }, { t: 'Model' }, { t: 'Proposed', num: 1 }, { t: 'First gate (4b)' }, { t: 'Second gate' }, { t: 'Misses' }, { t: 'Replays' }],
+    rows, batches.length ? 'No batch matches this filter.' : 'Nothing on record yet.');
+}
+
+function renderHistory(hist) {
+  const rows = hist.slice().reverse().slice(0, 12).map((h) => {
+    const rec = h.record || [], rep = h.replays || [];
+    const judged = rec.reduce((a, r) => a + r.judged, 0), kept = rec.reduce((a, r) => a + r.kept_4b, 0);
+    const good = rep.reduce((a, g) => a + g.hit + g.found_miss, 0), bad = rep.reduce((a, g) => a + g.bad, 0);
+    const runs = rep.reduce((a, g) => a + g.replays, 0);
+    return `<tr><td class="nowrap">${dayTime(h.at)}</td><td class="num">${judged}</td><td>${meter(judged ? 100 * kept / judged : null)}</td>
+      <td class="num">${runs}</td><td>${runs ? meter(good + bad ? 100 * good / (good + bad) : null) : '<span class="muted">none</span>'}</td></tr>`;
+  });
+  $('historyTable').innerHTML = table(
+    [{ t: 'Saved' }, { t: 'Clips judged', num: 1 }, { t: 'Selection precision' }, { t: 'Replays', num: 1 }, { t: 'Replay precision' }],
+    rows, 'No score saved yet.');
+}
+
+function render() {
+  const d = DATA;
+  renderTiles(d.totals);
+  renderRecord(d.score.record);
+  renderReplays(d.score.replays, d.noise);
+  $('matchMin').textContent = Math.round((d.match_min || 0.5) * 100);
+  renderFilters(d.batches);
+  renderBatches(d.batches);
+  renderHistory(d.history || []);
+}
+
+// ── events (delegated, so a re-render never loses them) ─────────────────────
+$('batchTable').addEventListener('click', (e) => {
+  if (e.target.closest('tr.detail')) return;            // clicks inside the opened panel do not close it
+  const tr = e.target.closest('tr.batch');
+  if (!tr) return;
+  const b = tr.dataset.batch;
+  if (open.has(b)) open.delete(b); else open.add(b);
+  renderBatches(DATA.batches);
+});
+$('batchTable').addEventListener('toggle', (e) => {
+  const key = e.target.dataset && e.target.dataset.why;
+  if (!key) return;
+  if (e.target.open) openWhy.add(key); else openWhy.delete(key);
+}, true);
+$('filters').addEventListener('click', (e) => {
+  const chip = e.target.closest('.chip');
+  if (!chip) return;
+  filter = chip.dataset.filter;
+  renderFilters(DATA.batches);
+  renderBatches(DATA.batches);
+});
+$('filters').addEventListener('input', (e) => {
+  if (e.target.id !== 'search') return;
+  query = e.target.value;
+  renderBatches(DATA.batches);
+});
+
+// ── load + poll: hold the last render if a fetch fails, redraw only when the data changed ──
+async function load() {
+  try {
+    const res = await fetch(FEED, { cache: 'no-store' });
+    if (!res.ok) throw new Error(res.status === 404 ? 'The dashboard server is an older build without the Evals feed. Restart it (schedule-tweets/skills/dashboard.md).' : 'HTTP ' + res.status);
+    const d = await res.json();
+    if (d.error) throw new Error('The score layer could not read its record: ' + d.error);
+    const body = JSON.stringify({ ...d, generated_at: null });
+    if (body !== lastBody) { lastBody = body; DATA = d; render(); }
+    $('error').hidden = true;
+    $('refresh').textContent = 'updated ' + new Date().toLocaleTimeString() + ' · checks every 30 s';
+  } catch (err) {
+    $('error').hidden = false;
+    $('error').textContent = (DATA ? 'Showing the last good data. ' : '') + err.message;
+    $('refresh').textContent = 'not updated';
+  }
+}
+load();
+setInterval(() => { if (!document.hidden) load(); }, POLL_MS);
+</script>
+</body>
+</html>

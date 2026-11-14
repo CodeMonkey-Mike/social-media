@@ -1,0 +1,545 @@
+{
+  "v": 1,
+  "batch": "30x-tao",
+  "prompt_version": "57ecbf267a8c",
+  "prompt_parts": {
+    "agent": "726ef081ebe0d12a6d389e8b7169224801520d30",
+    "topic_finding": "e84409de6050635d9ede84868f31fd425ddc5581",
+    "clip_selection": "f6468ec145ee6457e96cb7236f94ddc7bb245299",
+    "template": "9c717582f5abd3ea3bf21162ed6b1b8703031f9d"
+  },
+  "model": "fable/max",
+  "brief": null,
+  "replayed_at": "2026-11-14T00:03:02",
+  "plan": {
+    "batch": "30x-tao",
+    "source_vertical": "NOT ON DISK (evaluation replay)",
+    "transcript_json": "video-creation/livestream-repurpose/evals/transcripts/30x-tao/words.txt",
+    "authored_by": "clip-strategist 2026-11-13",
+    "constraints": {
+      "max_topics": 5,
+      "max_clips": 8,
+      "note": "No per-run brief. Standing constraints applied: 5 topics, 8 clips = 5 full cuts (clips 1-5, by rank) + 3 impact cuts (clips 6-8) for the three topics with a clear peak. Four of the five fulls are scatter-gathered from separate points of the stream. Evaluation replay: no segment ends after 3923 s (latest out-point is 3320.6)."
+    },
+    "topics": [
+      {
+        "topic_id": "robots-last-chance-assets",
+        "rank": 1,
+        "hook_type": "philosophical-conviction",
+        "hook_summary": "\"You got to get into assets now because this might be your last chance.\" Robots get mass produced, every job gets completely wiped out, \"but the good news is you guys are on to crypto and you have a chance.\""
+      },
+      {
+        "topic_id": "ten-dollars-ten-plays-350x",
+        "rank": 2,
+        "hook_type": "community-win / data-anchored",
+        "hook_summary": "\"If you're doing a hundred dollars a week, ten dollars into ten different plays, it does add up\": the 350x with LAB, the 550x last September, a 20 million market cap that pumped to 7 billion, and the one 300x that more than makes up for the one that rugs."
+      },
+      {
+        "topic_id": "pieverse-secret-insider-play",
+        "rank": 3,
+        "hook_type": "project-hype / prediction",
+        "hook_summary": "\"Pieverse was one that I kept secret throughout pretty much the entire bear market.\" VC-funded insider token, agent-to-agent payments, \"good for multiple billions... much better than LAB, and LAB went to 7 billion.\""
+      },
+      {
+        "topic_id": "tao-is-the-arena",
+        "rank": 4,
+        "hook_type": "project-hype / contrarian",
+        "hook_summary": "\"TAO isn't competing. It's the arena.\" NEAR and Render qualify as one subnet under Bittensor, the TAO token itself is not centralized, and \"TAO, I think you're going to get many, many multipliers.\""
+      },
+      {
+        "topic_id": "kaspa-tokens-on-the-l1",
+        "rank": 5,
+        "hook_type": "project-hype",
+        "hook_summary": "\"Good things cooking with Kaspa now that we got the KCC-20 protocol live. Now we have Kaspa tokens, officially... because they're on the L1.\""
+      }
+    ],
+    "clips": [
+      {
+        "clip_id": 1,
+        "slug": "robots-last-chance-assets",
+        "title": "Get Into Assets Now, This Might Be Your Last Chance",
+        "topic_id": "robots-last-chance-assets",
+        "variant": "full",
+        "est_seconds": 151.7,
+        "segments": [
+          {
+            "start": 517.15,
+            "end": 545.6,
+            "why": "Context: \"the robotics narrative is going to be insane... for the whole economy and for humanity\", mass production of robots, more than cars. Plays SECOND, after the cold-open hook."
+          },
+          {
+            "start": 547.45,
+            "end": 566.5,
+            "why": "COLD OPEN. \"You got to get into assets now because this might be your last chance. So many normal things are going to be so cheap that how the hell do you make extra money to invest.\" Drops the leading \"And\"."
+          },
+          {
+            "start": 613.45,
+            "end": 630.45,
+            "why": "\"Quite literally, this month, everybody's saying programming completely wiped out... every software engineer is acknowledging that AI can now produce better code than us.\" His own profession, so it carries credibility. Starts after the radiology line on purpose."
+          },
+          {
+            "start": 645.8,
+            "end": 733.0,
+            "why": "The run: software engineers, designers, graphic designers, actors, video \"completely wiped out\", then the robots take electricians and plumbers, the driverless-truck joke, and the payoff: \"the good news is you guys are on to crypto and you have a chance\", closing on the yacht line (\"rather than spend a hundred million on a yacht we'll spend like, I don't know, 50\")."
+          }
+        ],
+        "assembly_order": [
+          1,
+          0,
+          2,
+          3
+        ],
+        "peak_beats": [
+          {
+            "start": 547.45,
+            "end": 554.85,
+            "note": "\"You got to get into assets now because this might be your last chance.\""
+          },
+          {
+            "start": 674.2,
+            "end": 686.35,
+            "note": "\"When these guys hit the market, you're talking about electricians, plumbers, everybody completely wiped out.\""
+          },
+          {
+            "start": 708.4,
+            "end": 716.4,
+            "note": "\"The good news is you guys are on to crypto and you have a chance. We all have a chance.\""
+          }
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "Strongest topic of the stream and the only evergreen philosophical one: conviction plus a hopeful tribal payoff, no market narration. Emotional core (to confirm by ear) is segment index 3, the repeated \"completely wiped out\" hammer through to \"you have a chance\". Assembly is NOT chronological: it opens cold on the \"last chance\" line (index 1), then steps back to the robotics setup (index 0). Deliberately left out between segments: the entrepreneurial-mind ramble (568-588), the plug for his next video (588-600), the radiology claim (602-613, unverifiable) and the code-review bottleneck aside (630-645). Tighten candidates inside index 3: the \"negative job growth in these sectors\" stumble (654.6-662.9) and the restarts around 686.6-694."
+      },
+      {
+        "clip_id": 2,
+        "slug": "ten-dollars-ten-plays-350x",
+        "title": "10 Dollars Into 10 Plays a Week: How We Got a 350x",
+        "topic_id": "ten-dollars-ten-plays-350x",
+        "variant": "full",
+        "est_seconds": 126.3,
+        "segments": [
+          {
+            "start": 286.65,
+            "end": 349.7,
+            "why": "Hook and the wins: \"if you're doing a hundred dollars a week, ten dollars into ten different plays, it does add up\", some 50x, the 350x with LAB, the 550x last September, \"20 million market cap, watch that bad boy pump to 7 billion\", then cash out with thousands in dry powder and rotate. Ends before the 500-dollar-bag ramble."
+          },
+          {
+            "start": 2103.4,
+            "end": 2133.75,
+            "why": "The spread of outcomes: a lot in the hundreds of Xs, a lot in the dozens, a lot at 2x to 7x, and a few that rug."
+          },
+          {
+            "start": 2155.7,
+            "end": 2173.6,
+            "why": "The answer to the rug: \"if the highest performer is a 300x like LAB, it more than makes up for it. One is the 300x, one rugs, but the other eight still give you multipliers, a 5x, a 10x, a 20x.\" Starts AFTER the ElizaOS aside."
+          },
+          {
+            "start": 2300.1,
+            "end": 2315.1,
+            "why": "Closer, lands on the 20x echo: \"but I thought we were just going to get like a 20x out of LAB. There's no way I thought we'd go over 350x. I had no idea.\""
+          }
+        ],
+        "assembly_order": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "peak_beats": [
+          {
+            "start": 308.4,
+            "end": 321.9,
+            "note": "\"A 350x with LAB we got back in May, we got the 550x last September. It happens, it happens.\""
+          },
+          {
+            "start": 329.5,
+            "end": 335.4,
+            "note": "\"Get in at like 20 million market cap, watch that bad boy pump to 7 billion, man.\""
+          }
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "Community-win hype with real multiples, gathered from three points 30+ minutes apart (4:46, 35:03, 38:20). Emotional core (to confirm by ear) is segment index 0, from \"350x with LAB\" to \"pump to 7 billion, man\". HARD EXCLUSION: 2134.2-2155.5 names ElizaOS and the lawsuit and must stay out, which is why index 1 and index 2 are separate segments. The in-point of index 2 is tight (0.26 s after \"ten\"), snap it to silence at tighten. The \"550x last September\" is the MYX call."
+      },
+      {
+        "clip_id": 3,
+        "slug": "pieverse-secret-insider-play",
+        "title": "The Play I Kept Secret the Entire Bear Market",
+        "topic_id": "pieverse-secret-insider-play",
+        "variant": "full",
+        "est_seconds": 85.0,
+        "segments": [
+          {
+            "start": 1189.1,
+            "end": 1201.3,
+            "why": "What it is: \"Pieverse, which is agent to agent... the payments narrative, but it's AI too because we're talking about payments among agents, x402.\" Plays SECOND."
+          },
+          {
+            "start": 1245.7,
+            "end": 1293.5,
+            "why": "HOOK. \"A lot of my plays in my community are insider tokens. They got funding. Pieverse was one that I kept secret throughout pretty much the entire bear market.\" Then why VC-backed at an 85 million market cap is safer than a 100K degen where you have no idea who the dev is. Ends before the \"in my group\" membership line."
+          },
+          {
+            "start": 1395.7,
+            "end": 1420.7,
+            "why": "Payoff: \"I think Pieverse is good for multiple billions... 300 million, that will take you to 3 billion... much better than LAB, and LAB went to 7 billion, so we did some phenomenal gains with that one.\""
+          }
+        ],
+        "assembly_order": [
+          1,
+          0,
+          2
+        ],
+        "peak_beats": [
+          {
+            "start": 1253.7,
+            "end": 1260.0,
+            "note": "\"Pieverse was one that I kept secret throughout pretty much the entire bear market.\""
+          },
+          {
+            "start": 1395.7,
+            "end": 1416.15,
+            "note": "\"Good for multiple billions... much better than LAB, and LAB went to 7 billion.\""
+          }
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "The one moment in this stream where he hypes a specific coin with a number and a reason, which is the kind of clip he asks for. Emotional core (to confirm by ear) is segment index 2, the doubled \"good for multiple billions\". Assembly: secret-play hook (index 1), what the project does (index 0), then the prediction (index 2). Index 0 carries a \"so it's all the same thing, right\" aside (1191.8-1194.5) that points back at the AI narrative and can be tightened out."
+      },
+      {
+        "clip_id": 4,
+        "slug": "tao-is-the-arena",
+        "title": "TAO Isn't Competing, It's the Arena",
+        "topic_id": "tao-is-the-arena",
+        "variant": "full",
+        "est_seconds": 55.75,
+        "segments": [
+          {
+            "start": 1390.0,
+            "end": 1393.75,
+            "why": "Closer: \"TAO, I think you're going to get many, many multipliers, same thing with Kaspa.\" Plays LAST."
+          },
+          {
+            "start": 2204.5,
+            "end": 2235.7,
+            "why": "HOOK. \"TAO isn't competing. It's the arena for all others to compete to produce the best decentralized AI. I agree.\" Then his own claim: NEAR and Render \"qualify as like one subnet under Bittensor.\" Ends before the hedged GPU / hosting trail-off."
+          },
+          {
+            "start": 3267.0,
+            "end": 3278.0,
+            "why": "\"I don't think it's centralized. The TAO token itself is not centralized. I've heard people say that, I don't quite agree with that.\""
+          },
+          {
+            "start": 3310.8,
+            "end": 3320.6,
+            "why": "\"Even the founder stepped down out of that org... I think it's better than most.\" Ends before the Solana comparison."
+          }
+        ],
+        "assembly_order": [
+          1,
+          2,
+          3,
+          0
+        ],
+        "peak_beats": [
+          {
+            "start": 2204.5,
+            "end": 2213.2,
+            "note": "\"TAO isn't competing. It's the arena for all others to compete to produce the best decentralized AI.\""
+          },
+          {
+            "start": 2228.3,
+            "end": 2235.7,
+            "note": "\"NEAR and Render qualify as one subnet under Bittensor.\""
+          }
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "TAO hype gathered from four points across 32 minutes. This is the clip I am least sure carries on delivery: the hook line is a chat comment he reads and agrees with, and the pacing in index 1 (dead air 2225.4-2228.3, \"under under under\") and index 2 (gaps 3272-3277) is slow, so it needs a hard tighten. Emotional core, if there is one, is index 1 at the NEAR / Render line, which is his own claim and gives the viewer a side to pick. If index 1 plays flat, kill the clip rather than ship it."
+      },
+      {
+        "clip_id": 5,
+        "slug": "kaspa-tokens-on-the-l1",
+        "title": "Now We Can Officially Call Them Kaspa Tokens",
+        "topic_id": "kaspa-tokens-on-the-l1",
+        "variant": "full",
+        "est_seconds": 24.15,
+        "segments": [
+          {
+            "start": 383.15,
+            "end": 407.3,
+            "why": "Single contiguous punch: \"Let's go Kaspa. Good things cooking with Kaspa now that we got the KCC-20 protocol live. Now we have Kaspa tokens, officially... the same way we say Solana tokens and ETH tokens and Sui tokens, because they're on the L1, they're on the L1.\""
+          }
+        ],
+        "assembly_order": [
+          0
+        ],
+        "peak_beats": [
+          {
+            "start": 392.6,
+            "end": 398.0,
+            "note": "\"Now we have Kaspa tokens, officially, we can call them Kaspa tokens.\""
+          }
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "A 24 second punch on his primary coin, not padded. The emotional core is the whole segment; the doubled \"they're on the L1\" is the landing. I left the KRC-20 migration answer (1460-1480) out on purpose: it is a slow chat answer resting on a third party's reply he had only just read. If Mike wants the \"KRC-20 holders have nothing to worry about\" beat, it can be added as a second segment."
+      },
+      {
+        "clip_id": 6,
+        "slug": "robots-last-chance-assets-impact",
+        "title": "Every Job Gets Wiped Out, but You Have a Chance",
+        "topic_id": "robots-last-chance-assets",
+        "variant": "impact",
+        "est_seconds": 38.15,
+        "segments": [
+          {
+            "start": 547.45,
+            "end": 554.85,
+            "why": "Peak beat 1: \"You got to get into assets now because this might be your last chance.\""
+          },
+          {
+            "start": 668.7,
+            "end": 686.35,
+            "why": "Peak beat 2: \"Actors next on the list. Now we have videos completely wiped out. And when these guys hit the market, electricians, plumbers, everybody completely wiped out.\""
+          },
+          {
+            "start": 703.3,
+            "end": 716.4,
+            "why": "Peak beat 3: \"It's going to be really, really difficult... and it's going to happen very, very soon. But the good news is you guys are on to crypto and you have a chance. We all have a chance.\""
+          }
+        ],
+        "assembly_order": [
+          0,
+          1,
+          2
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "Three peak beats stitched for punch, not a trim of clip 1: warning, proof, hope. Emotional core is index 1. \"These guys right here\" points at the robots on the shared screen, so that frame has to be visible in the content zone."
+      },
+      {
+        "clip_id": 7,
+        "slug": "ten-dollars-ten-plays-350x-impact",
+        "title": "A 20 Million Market Cap That Pumped to 7 Billion",
+        "topic_id": "ten-dollars-ten-plays-350x",
+        "variant": "impact",
+        "est_seconds": 48.75,
+        "segments": [
+          {
+            "start": 286.65,
+            "end": 335.4,
+            "why": "The contiguous peak: a hundred dollars a week into ten plays, the 50x, the 350x with LAB, the 550x last September, ending on \"watch that bad boy pump to 7 billion, man.\""
+          }
+        ],
+        "assembly_order": [
+          0
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "The first 49 seconds of clip 2 standing on their own: it ends on the hardest line and never reaches the rotation and portfolio math. Emotional core is 308.4-335.4."
+      },
+      {
+        "clip_id": 8,
+        "slug": "pieverse-secret-insider-play-impact",
+        "title": "Why I Think Pieverse Is Good for Multiple Billions",
+        "topic_id": "pieverse-secret-insider-play",
+        "variant": "impact",
+        "est_seconds": 25.0,
+        "segments": [
+          {
+            "start": 1395.7,
+            "end": 1420.7,
+            "why": "Peak beat: \"I think Pieverse is good for multiple billions... 300 million, that will take you to 3 billion... much better than LAB, and LAB went to 7 billion, so we did some phenomenal gains with that one.\""
+          }
+        ],
+        "assembly_order": [
+          0
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "A 25 second prediction with its reason attached. This is the most marginal of the eight: it is the first one to delete if the delivery is matter-of-fact, since clip 3 already contains it."
+      }
+    ],
+    "dropped": [
+      {
+        "topic": "Opening countdown, greeting and stock / Bitcoin market recap (0:00-4:20)",
+        "reason": "Housekeeping plus a market-state readout (May high, 50-day, 50-week). Dead countdown picture for the first minute."
+      },
+      {
+        "topic": "Trump voter-fraud bounty, Iran war \"wrench in the machinery\", midterms (6:48-7:58, 53:40-54:08)",
+        "reason": "Political tangent, excluded by the run doctrine."
+      },
+      {
+        "topic": "Not a believer in any four-year cycle, no 2029 top, 100K is easy, think in value not dollars (12:40-13:57, 32:38-33:08)",
+        "reason": "Runner-up. It is a conviction line, but it is his standing position (\"you know me\") answering a chat goal, it is forward speculation, and its middle leans on the Iran war. Ordinary stream talk under the 2026-08-13 rule, not something that makes this stream worth clipping."
+      },
+      {
+        "topic": "Gold can be made in a lab + the Twilight Zone gold-bar episode (13:58-16:50)",
+        "reason": "Fun, but a long fumbled retelling that never lands a crypto or hard-money thesis, and he hedges the hook himself (no need to worry for 20 or 30 years). Worth a look only if Mike wants a story clip."
+      },
+      {
+        "topic": "Cable TV, sci-fi channel, torrents and Netflix story (16:50-17:20, 27:20-32:36)",
+        "reason": "Personal tangent. The things-get-cheaper-under-capitalism tail is a flat explainer."
+      },
+      {
+        "topic": "peaq falling-triangle chart and sell orders in the member swing-trading software (17:40-19:12)",
+        "reason": "Chart narration plus a membership pitch."
+      },
+      {
+        "topic": "Narrative filter walk-through, Arbitrum and its 120 million in funding, Litecoin privacy (19:15-20:38, 21:50-22:55)",
+        "reason": "Flat list readout off a screen share, no take. Only the Pieverse lines were pulled into clip 3."
+      },
+      {
+        "topic": "KRC-20 to KCC-20 migration and getting tokens out of Ghost Wallet (23:47-26:35)",
+        "reason": "Slow chat Q&A on a third-party plan he had only just read, full of \"I do not know\", and the wallet half is negative about a named product."
+      },
+      {
+        "topic": "Like-button asks and the closing sign-off (26:35-27:20, 63:50-65:23)",
+        "reason": "Housekeeping and CTA."
+      },
+      {
+        "topic": "Community favorites list, Keeta, ZBCN (33:10-34:58, 37:32-37:50)",
+        "reason": "Member list walk-through that doubts a named project (Keeta hacked, not doing much). Pitch-adjacent."
+      },
+      {
+        "topic": "ElizaOS mentions (35:34-35:56, 47:38-47:48)",
+        "reason": "Banned by persona avoid_in_drafts. Clip 2 is cut around the first one."
+      },
+      {
+        "topic": "Bot calls pitch (36:16-36:35)",
+        "reason": "Membership pitch, trails off."
+      },
+      {
+        "topic": "TUT 94x comeback and Pippin 89x stories (38:35-39:52)",
+        "reason": "Real wins, but told as halting chart narration (\"when was it, when was it\") that depends on the showcase screen. The LAB half of that passage is used as the closer of clip 2."
+      },
+      {
+        "topic": "Rate hike vs pause, supply-crunch inflation, 50-week moving average crash (39:55-42:57)",
+        "reason": "Macro speculation on what the market might do next, heavily hedged."
+      },
+      {
+        "topic": "Anthropic files for IPO: \"no bubble anytime soon, this is not like 2000\" (42:58-43:26)",
+        "reason": "Runner-up for the fifth slot. A 23 second conviction take, but it hangs on a news headline, \"the profits are still being made\" is not something I can verify, and it hypes no project. Kaspa got the slot."
+      },
+      {
+        "topic": "AI doing his video editing, video editors next on the chopping block (43:30-45:38)",
+        "reason": "Mostly about his own AI editing workflow, which he keeps off the crypto channel. The job-loss point is already made better in clip 1."
+      },
+      {
+        "topic": "Bittensor subnet yields read from chat: Lium 33% APR, Vanta 42% APR (45:38-46:42, 60:05-60:34)",
+        "reason": "Chat comments he reads and reacts to (he had not heard of the yield and has not bought any subnet). No take of his own."
+      },
+      {
+        "topic": "IF 200x that got away, lost plays, Burgers on Base road-trip story (46:55-49:28)",
+        "reason": "The burger road trip is funny, but the project is closed, the passage is about losses, and he second-guesses the decision of the dev. Self-undermining and a critique of a named project."
+      },
+      {
+        "topic": "Business cycle: ISM PMI, Chicago and Dallas Fed prints, Fear and Greed at 43, buy the fear (49:50-53:38)",
+        "reason": "Data readout and hedged market-state talk."
+      },
+      {
+        "topic": "Rest of the TAO centralization thread: what is the argument, Solana and XRP are more centralized, NEAR tokenomics, fully decentralized by 2029 (54:42-56:25, 60:35-62:38)",
+        "reason": "He says he does not remember the argument, the 2029 line is a claim from a commenter that he questions instead of endorsing, and the rest makes its point by knocking Solana, XRP and NEAR. Only his two clean lines went into clip 4."
+      },
+      {
+        "topic": "Kaspa at 3.5 cents and the alt chart tour (56:28-60:00)",
+        "reason": "Chart narration with downside levels (\"maybe 3.2 cents\", \"who knows\"). Hedged price talk."
+      },
+      {
+        "topic": "Bike Tyson meme coin (61:35-63:45)",
+        "reason": "Opens on \"Bike Tyson is wrecked\" and \"everything is dead\", with a hedged \"has potential to take off when the volume comes back\"."
+      }
+    ],
+    "review_callouts": [
+      "NO VERTICAL MASTER (evaluation replay). The word file carries word START times only, so every out-point is the start of the last word plus roughly 0.5 s, held before the next word. Snap every boundary to silence at the tighten step.",
+      "Energy is unverified on all eight clips: I worked from text only. Confirm the emotional core named in the notes of each clip by ear before anything is built.",
+      "Clip 2: 2134.2-2155.5 (ElizaOS and the lawsuit) sits between segments 2 and 3 and must never be pulled back in when boundaries are adjusted.",
+      "Clips 3 and 8: confirm the project name. The transcript says piverse / pyverse; I read it as Pieverse (agent-to-agent payments, x402). Also confirm the market caps he quotes (300 million for Pieverse, the 85 million example, LAB to 7 billion) are still right at posting time.",
+      "Clip 3: \"insider tokens\" is his own label for VC-funded early plays. Check it reads that way on a caption and not as insider trading.",
+      "Clip 4: the hook sentence is a chat comment from a viewer that he reads and agrees with. \"The founder stepped down out of that org\" needs a fact check before it ships. The NEAR / Render line is a comparison, not a put-down, but it does name two other projects: that is a call for Mike.",
+      "Clips 1 and 6: \"these guys right here\" (675.5) and \"one of these bad boys, one of these yachts\" (720-723) point at the shared screen. Check the vertical layout shows the robots and the yacht at those moments.",
+      "Clip 1 leaves out \"radiology completely wiped out\" (605-609) because it is not accurate as stated. Keep the in-point of segment 3 at 613.45 or later.",
+      "This is a thin 65 minute stream, mostly chat replies, chart tours and tangents. Clips 1, 2, 3, 6 and 7 are the ones I would stand behind. Clips 4, 5 and 8 are the marginal ones and the first to delete."
+    ],
+    "stt_caption_fixes": [
+      {
+        "heard": "piverse / pyverse / Pyverse",
+        "correct": "Pieverse (confirm with Mike)",
+        "where": "~1190, 1254.6, 1260.3, 1396.6, 1402.6, 1412.4 (clips 3, 8)"
+      },
+      {
+        "heard": "x4 or 2",
+        "correct": "x402",
+        "where": "~1200.5 (clip 3)"
+      },
+      {
+        "heard": "band market",
+        "correct": "bear market",
+        "where": "~1258.6 (clip 3)"
+      },
+      {
+        "heard": "D gen / dj in play(s)",
+        "correct": "degen / degen play(s)",
+        "where": "~327.2 (clips 2, 7), ~1265.8 and ~1289.1 (clip 3)"
+      },
+      {
+        "heard": "it could rock tomorrow",
+        "correct": "it could rug tomorrow",
+        "where": "~1273.8 (clip 3)"
+      },
+      {
+        "heard": "phenomenal games",
+        "correct": "phenomenal gains",
+        "where": "~1418.6 (clips 3, 8)"
+      },
+      {
+        "heard": "lab / Lab",
+        "correct": "LAB",
+        "where": "~313.9 (clips 2, 7), ~2159.8 and ~2305 (clip 2), ~1411.7-1415 (clips 3, 8)"
+      },
+      {
+        "heard": "a 350x would lab",
+        "correct": "a 350x with LAB",
+        "where": "~313.7 (clips 2, 7)"
+      },
+      {
+        "heard": "the plays that I grew up",
+        "correct": "the plays in my group",
+        "where": "~2106.2 (clip 2)"
+      },
+      {
+        "heard": "Tao",
+        "correct": "TAO",
+        "where": "~1390.1 (clip 4)"
+      },
+      {
+        "heard": "Nier / near",
+        "correct": "NEAR",
+        "where": "~2222.5, ~2229.1 (clip 4)"
+      },
+      {
+        "heard": "render",
+        "correct": "Render",
+        "where": "~2223.4, ~2229.5 (clip 4)"
+      },
+      {
+        "heard": "under the tensor",
+        "correct": "under Bittensor",
+        "where": "~2234.6 (clip 4)"
+      },
+      {
+        "heard": "the same way we say cut, Solana tokens",
+        "correct": "the same way we say, what, Solana tokens (stray word, check by ear)",
+        "where": "~399.8 (clip 5)"
+      },
+      {
+        "heard": "KCC20",
+        "correct": "KCC-20 (confirm the hyphenation Mike wants)",
+        "where": "~388.6 (clip 5)"
+      },
+      {
+        "heard": "cooperatives",
+        "correct": "carpenters (check by ear)",
+        "where": "~682.8 (clips 1, 6)"
+      },
+      {
+        "heard": "millions of them produce every year, like even more so than the produce they produce cars",
+        "correct": "millions of them produced every year, even more so than they produce cars",
+        "where": "~540-544.6 (clip 1)"
+      }
+    ]
+  }
+}

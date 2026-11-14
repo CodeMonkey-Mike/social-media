@@ -86,6 +86,22 @@ def longform_gates(batch):
     return gates
 
 
+# ── Evals page feed (added 2026-11-14) ──────────────────────────────────────
+# /evals/data.json is COMPUTED, never a file mount: the clip-strategist's score layer
+# (video-creation/livestream-repurpose/skills/clip-evals/clip_evals.py) reads its own record and
+# returns one object. The scoring lives in ONE place (that module); evals.html only draws it.
+# The page is read-only: verdicts are made at the gates, never from the browser.
+EVALS_SKILL_DIR = os.path.join(REPO_ROOT, "video-creation", "livestream-repurpose", "skills", "clip-evals")
+
+
+def evals_data():
+    import sys
+    if EVALS_SKILL_DIR not in sys.path:
+        sys.path.insert(0, EVALS_SKILL_DIR)
+    import clip_evals
+    return clip_evals.dashboard_data()
+
+
 # Batch ids are slugs. Anything else is refused rather than interpolated into a path.
 BATCH_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$")
 
@@ -148,6 +164,18 @@ class CORSHandler(http.server.SimpleHTTPRequestHandler):
         # handoff artifacts exist right now for that batch.
         raw = self.path.lstrip("/")
         route, _, query = raw.partition("?")
+        if route == "evals/data.json":
+            try:
+                body = json.dumps(evals_data(), ensure_ascii=False).encode("utf-8")
+            except Exception as e:   # the page shows the reason instead of a blank screen
+                body = json.dumps({"error": repr(e)}).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(body)
+            return
         if route in ("livestream/gates.json", "longform/gates.json"):
             batch = ""
             for kv in query.split("&"):

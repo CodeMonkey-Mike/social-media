@@ -1,0 +1,477 @@
+{
+  "v": 1,
+  "batch": "stock-market",
+  "prompt_version": "57ecbf267a8c",
+  "prompt_parts": {
+    "agent": "726ef081ebe0d12a6d389e8b7169224801520d30",
+    "topic_finding": "e84409de6050635d9ede84868f31fd425ddc5581",
+    "clip_selection": "f6468ec145ee6457e96cb7236f94ddc7bb245299",
+    "template": "9c717582f5abd3ea3bf21162ed6b1b8703031f9d"
+  },
+  "model": "fable/max",
+  "brief": "Keep every clip UNDER 50 seconds (hard cap, after tighten).",
+  "replayed_at": "2026-11-14T00:19:14",
+  "plan": {
+    "batch": "stock-market",
+    "source_vertical": "NOT ON DISK (evaluation replay)",
+    "transcript_json": "video-creation/livestream-repurpose/evals/transcripts/stock-market/words.txt",
+    "authored_by": "clip-strategist 2026-11-14",
+    "constraints": {
+      "max_topics": 5,
+      "max_clips": 8,
+      "note": "Brief applied: 5 topics, 7 clips (5 full + 2 impact), one under the 8-clip ceiling on purpose. Every clip is UNDER 50s on the RAW segment sum (longest 46.91s), so the cap holds before tighten and has headroom after it. Impacts only for the two topics with a clear peak beat (ranks 1 and 3); clips 2, 4 and 5 are already 22-30s punches, an impact of them would be a duplicate. Scatter-gather used on clips 1, 3, 4, 5, 6, 7. Selection leads with project hype (three Kaspa angles, TAO) and one evergreen philosophical clip; the market narration (stock drop, 50-week SMA, jobs data, QE) is in dropped[]. Political and personal tangents, the video plugs and the sign-off are out. No ElizaOS in this stream. Evaluation replay: timecodes come from words.txt (word START times only, so every out-point is set from the start of the next word and is unverified against audio)."
+    },
+    "topics": [
+      {
+        "topic_id": "bitcoin-maxis-move-to-kaspa",
+        "rank": 1,
+        "hook_type": "tribal-contrast",
+        "hook_summary": "I get all these haters when I say that eventually Ethereum is going to flip Bitcoin, and eventually Bitcoin maxis are going to look for Kaspa and move over to Kaspa."
+      },
+      {
+        "topic_id": "kaspa-3-33-is-the-start",
+        "rank": 2,
+        "hook_type": "prediction",
+        "hook_summary": "$3.33 is going to be the start. If crypto gets to 100 trillion, I can't imagine Kaspa being under a hundred billion in market cap, which will put us well above $3."
+      },
+      {
+        "topic_id": "economy-without-labor",
+        "rank": 3,
+        "hook_type": "philosophical",
+        "hook_summary": "A lot of people are in denial. They think that their job is safe, but it really isn't. It's capitalism, not moneyism."
+      },
+      {
+        "topic_id": "kaspa-war-grade-money",
+        "rank": 4,
+        "hook_type": "project-hype",
+        "hook_summary": "Kaspa sells speed to normies and war-grade money to cypherpunks. I approve of that. Fair launch, proof of work, no premine, no insider allocation, no pre-sales."
+      },
+      {
+        "topic_id": "tao-if-they-ban-ai",
+        "rank": 5,
+        "hook_type": "project-hype",
+        "hook_summary": "If they're gonna want to start to ban AI, that's going to cause a surge with TAO, with Bittensor and all the subnets, because then you have decentralized AI."
+      }
+    ],
+    "clips": [
+      {
+        "clip_id": 1,
+        "slug": "bitcoin-maxis-move-to-kaspa",
+        "title": "Why Bitcoin Maxis Are Going to End Up in Kaspa",
+        "topic_id": "bitcoin-maxis-move-to-kaspa",
+        "variant": "full",
+        "est_seconds": 46.28,
+        "segments": [
+          {
+            "start": 2097.85,
+            "end": 2120.12,
+            "why": "HOOK + thesis in one breath: 'I get all these haters when I say that eventually Ethereum is going to flip Bitcoin... and eventually Bitcoin maxis are going to look for Kaspa and eventually move over to Kaspa.' Ends on 'Kaspa.' before the 'it'll take years' softener."
+          },
+          {
+            "start": 2128.02,
+            "end": 2133.65,
+            "why": "The reason the flip matters: 'There are thousands of tokens that are launched and they can't really overcome the network effect of Bitcoin.' Cut before the 'inferior technology' aside."
+          },
+          {
+            "start": 2146.8,
+            "end": 2148.75,
+            "why": "'I think that's the push' (head of the payoff sentence; split here only to drop 4.6s of dead air at 2148.7-2153.3)."
+          },
+          {
+            "start": 2153.32,
+            "end": 2169.75,
+            "why": "Payoff: '...that a lot of the Bitcoin maxis are going to need, having Ethereum, proof of stake, flip Bitcoin. And they're going to see Kaspa, the superior in every way, and warm up to Kaspa.' Ends on 'Kaspa.'"
+          }
+        ],
+        "assembly_order": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "peak_beats": [
+          {
+            "start": 2097.85,
+            "end": 2120.12,
+            "note": "'I get all these haters when I say that eventually Ethereum is going to flip Bitcoin... Bitcoin maxis are going to look for Kaspa and eventually move over to Kaspa.'"
+          },
+          {
+            "start": 2164.2,
+            "end": 2169.75,
+            "note": "'they're going to see Kaspa, the superior in every way, and warm up to Kaspa.'"
+          }
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "Emotional core (believed, not heard): segment 0, the haters line. Chronological order is also the argument order: thesis, why nothing beats the Bitcoin network effect on its own, then the push (ETH flipping BTC) that sends maxis to Kaspa. Segments 2+3 are ONE sentence split around 4.6s of dead air. Segment 0 still holds roughly 6s of mid-sentence pauses (2111-2117) for tighten, so the tightened clip lands near 39s. Left out on purpose: 'It'll take years and years' (2120.17-2122.60, softener), 'Bitcoin being an inferior technology' (2133.69-2143.0, put-down), 'a bearish sign for Bitcoin' + 'move up in the ranks' (2172.9-2187.4, 7s dead air and would break the 50s cap)."
+      },
+      {
+        "clip_id": 2,
+        "slug": "kaspa-3-33-is-the-start",
+        "title": "Kaspa at $3.33 Is Going to Be the Start",
+        "topic_id": "kaspa-3-33-is-the-start",
+        "variant": "full",
+        "est_seconds": 30.15,
+        "segments": [
+          {
+            "start": 342.95,
+            "end": 373.1,
+            "why": "Single contiguous block. Claim: '$3.33 is going to be the start. That's what I've been saying. That's what I've been saying.' Reason: a total crypto market cap like the global stock market cap = 100 trillion, 'I can't imagine Kaspa being under a hundred billion in market cap, which will put us well above $3.' Ends on '$3' (the next word is 3s later)."
+          }
+        ],
+        "assembly_order": [
+          0
+        ],
+        "peak_beats": [
+          {
+            "start": 342.95,
+            "end": 347.95,
+            "note": "'$3.33 is going to be the start. That's what I've been saying. That's what I've been saying.' (doubling)"
+          }
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "Emotional core (believed): the opening 5s with the doubled 'That's what I've been saying'. Single contiguous block, claim then the reason (100 trillion crypto market cap, Kaspa over 100 billion). Opens cold right after the Bitcoin chart talk ('That's crazy' at 339.9 is excluded). The word Kaspa is not spoken until 367.6, so the title and the first caption must carry it. 2.7s pause at 350.6-353.4 and 1.9s at 364.6-366.5 for tighten. No impact variant: the clip is already a 30s punch."
+      },
+      {
+        "clip_id": 3,
+        "slug": "economy-without-labor",
+        "title": "We Are Getting an Economy With No Labor Needed",
+        "topic_id": "economy-without-labor",
+        "variant": "full",
+        "est_seconds": 46.91,
+        "segments": [
+          {
+            "start": 2628.02,
+            "end": 2639.62,
+            "why": "HOOK claim: 'we're going to get to an economy very soon where there's not going to be any labor needed, right? ...robots are going to be doing everything.' In-point is AFTER the IQ tangent and after the 'We're going to get to a,' false start."
+          },
+          {
+            "start": 2653.62,
+            "end": 2678.28,
+            "why": "The reframe: 'we're gonna get to a point where nobody's gonna need to trade time... for labor anymore. It's all gonna be like dividends and ownership... There's nothing about capitalism that says it has to do with labor and money. It's capitalism, not moneyism.' Ends on 'moneyism' (drops 'and so on')."
+          },
+          {
+            "start": 2705.15,
+            "end": 2715.8,
+            "why": "Closer / emotional core: 'A lot of people are in denial, and a lot of people are in denial. They think that their job is safe, but it really isn't.' Ends on 'isn't.'"
+          }
+        ],
+        "assembly_order": [
+          0,
+          1,
+          2
+        ],
+        "peak_beats": [
+          {
+            "start": 2705.15,
+            "end": 2715.8,
+            "note": "'A lot of people are in denial, and a lot of people are in denial. They think that their job is safe, but it really isn't.'"
+          },
+          {
+            "start": 2669.35,
+            "end": 2678.28,
+            "note": "'There's nothing about capitalism that says it has to do with labor and money. It's capitalism, not moneyism.'"
+          }
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "Emotional core (believed): segment 2, the doubled 'in denial' and 'their job is safe, but it really isn't'; it is placed LAST here so the full clip ends on it, while the impact clip (7) opens on it, so the two do not start the same way. Evergreen, not tied to the market this week. Skipped between segments: the 'I've been doing these videos' self-plug (2639.6-2653.4) and the 'weird conversation' filler (2681.4-2704.5). Segment 1 has a verbal slip ('trade time, well, trade money for labor'; he means labor for money) with 2s pauses either side: tighten can cut 2658.9-2661.0 to leave 'need to trade time for labor anymore' or keep it as said. The 46:40 restatement ('economy without labor... labor share is already decreasing', 2800.6-2810.9) was left out to stay under 50s."
+      },
+      {
+        "clip_id": 4,
+        "slug": "kaspa-war-grade-money",
+        "title": "Kaspa Sells Speed to Normies and War-Grade Money to Cypherpunks",
+        "topic_id": "kaspa-war-grade-money",
+        "variant": "full",
+        "est_seconds": 24.57,
+        "segments": [
+          {
+            "start": 2189.44,
+            "end": 2193.7,
+            "why": "The speed half: 'Kaspa: proof of work, BlockDAG, running at 10 blocks per second.' Cut before the parallel-blocks / acyclic-graph jargon and the mainnet date."
+          },
+          {
+            "start": 2206.1,
+            "end": 2215.72,
+            "why": "The money half: 'Fair launch, proof of work, no premine, no insider allocation, no pre-sales, right? So yeah, it's got all this Bitcoin type of lore.'"
+          },
+          {
+            "start": 2217.36,
+            "end": 2228.05,
+            "why": "HOOK line: 'Kaspa sells speed to normies and war-grade money to cypherpunks. I like that. Yeah, I approve of that.' In-point skips 'I like the sentence right here' (screen reference)."
+          }
+        ],
+        "assembly_order": [
+          2,
+          0,
+          1
+        ],
+        "peak_beats": [
+          {
+            "start": 2217.36,
+            "end": 2228.05,
+            "note": "'Kaspa sells speed to normies and war-grade money to cypherpunks. I like that. Yeah, I approve of that.'"
+          }
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "Emotional core (believed): segment 2, the line he stops to endorse. NOT chronological: the quotable line opens the clip, then the two halves it names, speed (10 blocks per second) and war-grade money (fair launch, no premine, no insider allocation, no pre-sales), ending on 'it's got all this Bitcoin type of lore'. Chronological [0,1,2] is the fallback if the reorder feels abrupt; it ends on 'I approve of that'. Risk: he is READING a Kaspa summary off the screen here, so delivery may be flat until 'I like that'. If it is flat, kill this clip rather than ship a spec recital."
+      },
+      {
+        "clip_id": 5,
+        "slug": "tao-if-they-ban-ai",
+        "title": "What Happens to TAO If They Try to Ban AI",
+        "topic_id": "tao-if-they-ban-ai",
+        "variant": "full",
+        "est_seconds": 22.52,
+        "segments": [
+          {
+            "start": 1671.6,
+            "end": 1686.55,
+            "why": "Claim: 'They seem to be against AI now, and... if they're gonna want to start to ban AI, that's going to cause a surge with TAO, with Bittensor and all the subnets and so on, because then you have decentralized AI.' In-point is after the party is named, so no party is spoken in the clip."
+          },
+          {
+            "start": 1697.18,
+            "end": 1704.75,
+            "why": "Button: 'if they try any funny business with the AI industry, then there's going to be people circumventing that.' Ends before 'we shall see what happens there'."
+          }
+        ],
+        "assembly_order": [
+          0,
+          1
+        ],
+        "peak_beats": [
+          {
+            "start": 1674.54,
+            "end": 1686.55,
+            "note": "'if they're gonna want to start to ban AI, that's going to cause a surge with TAO, with Bittensor and all the subnets, because then you have decentralized AI.'"
+          }
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "Emotional core (believed): segment 0, the surge line. This is the only TAO hype in the stream and it matches his neutral-layer thesis (the more they try to control AI, the more decentralized AI is worth). It sits INSIDE a political riff about the Democrats; the in-point is placed after the party is named so the clip only says 'they'. Segment 0 has a false start ('and if you want it if they're gonna') and a triple 'with with with' for tighten. Dropped between segments: 'in theory, they'll' + 5s of dead air; dropped after: 'we shall see what happens there' (hedge). Lowest-confidence pick of the five: it is a hypothetical, not something that happened."
+      },
+      {
+        "clip_id": 6,
+        "slug": "bitcoin-maxis-move-to-kaspa-impact",
+        "title": "The Day Ethereum Flips Bitcoin, the Maxis Find Kaspa",
+        "topic_id": "bitcoin-maxis-move-to-kaspa",
+        "variant": "impact",
+        "est_seconds": 27.82,
+        "segments": [
+          {
+            "start": 2097.85,
+            "end": 2120.12,
+            "why": "Peak beat: the haters line + ETH flips BTC + maxis move over to Kaspa."
+          },
+          {
+            "start": 2164.2,
+            "end": 2169.75,
+            "why": "Payoff tail only: 'they're going to see Kaspa, the superior in every way, and warm up to Kaspa.'"
+          }
+        ],
+        "assembly_order": [
+          0,
+          1
+        ],
+        "peak_beats": [
+          {
+            "start": 2097.85,
+            "end": 2120.12,
+            "note": "The haters line, same beat as clip 1 segment 0."
+          }
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "Impact of clip 1: the haters line plus only the last clause of the payoff ('they're going to see Kaspa, the superior in every way, and warm up to Kaspa'). Drops the network-effect reasoning. Roughly 21s after tighten removes the pauses at 2111-2117."
+      },
+      {
+        "clip_id": 7,
+        "slug": "economy-without-labor-impact",
+        "title": "They Think Their Job Is Safe. It Really Isn't.",
+        "topic_id": "economy-without-labor",
+        "variant": "impact",
+        "est_seconds": 17.93,
+        "segments": [
+          {
+            "start": 2705.15,
+            "end": 2715.8,
+            "why": "Peak beat, opens the clip: 'A lot of people are in denial... They think that their job is safe, but it really isn't.'"
+          },
+          {
+            "start": 2628.02,
+            "end": 2635.3,
+            "why": "The why: 'we're going to get to an economy very soon where there's not going to be any labor needed, right?' Ends on 'right?' before the false start."
+          }
+        ],
+        "assembly_order": [
+          0,
+          1
+        ],
+        "peak_beats": [
+          {
+            "start": 2705.15,
+            "end": 2715.8,
+            "note": "The doubled 'in denial' and 'their job is safe, but it really isn't'."
+          }
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "Impact of clip 3, reordered: opens on the denial beat (said at 45:05), then the claim it rests on (said at 43:48). Ends on 'right?', his own tag."
+      }
+    ],
+    "dropped": [
+      {
+        "topic": "Stocks lost $3 trillion in a day and Bitcoin held above the 50-week SMA (02:37-03:40, 05:20-05:40)",
+        "reason": "The headline of the stream, and the strongest thing left out: it already happened and he calls it 'crazy' twice. Dropped on doctrine: time-bound market-state commentary, stale within days, and it is hedged right after ('who knows, Bitcoin might not hang in there', 'the week is gonna close tomorrow'). If Mike wants it anyway: 165.30-175.95 + 201.80-219.60 (about 28s) and swap it for clip 5."
+      },
+      {
+        "topic": "2022-23 chart fractal, S&P drawdown comparisons, 20% bear-market definition (03:40-05:20, 06:15-09:00)",
+        "reason": "Chart narration that needs the screen share; forward speculation about next week."
+      },
+      {
+        "topic": "Bottom timing, midterms, 'no new bottom below 57K', Tucker / Iran aside (09:00-10:30)",
+        "reason": "Where-do-we-bottom talk with heavy hedging ('we'll see what happens', 'who the hell knows') plus a political aside."
+      },
+      {
+        "topic": "QE vs QT, M2, fractional reserves, jobs data, ISM, Strait of Hormuz supply crunch (10:30-16:20)",
+        "reason": "Flat macro explainer and a data readout (JOLTS, ADP, claims). No hook, no side to pick."
+      },
+      {
+        "topic": "Quant, Linea + Swift, Canton, settlement narrative (16:30-19:10, 22:00-22:45)",
+        "reason": "He says he is still trying to wrap his head around it; mostly reading a press release and plugging his own videos. 'I'm bullish on Linea because Linea's partnered with Swift' (1086-1098) is one line, not a clip."
+      },
+      {
+        "topic": "Video plans, Kaspa video views, upcoming Canton and robotics videos (01:00-01:30, 18:55-20:30)",
+        "reason": "Channel housekeeping and self-promotion."
+      },
+      {
+        "topic": "Georgia election memory card, JPMorgan / Epstein investigation (20:30-21:55)",
+        "reason": "Political tangent; excluded by the brief and persona avoid_in_drafts."
+      },
+      {
+        "topic": "Base volume vs Solana, 'eventually there'll be a base season', four-year cycle zombies and the midterms (22:50-25:30)",
+        "reason": "Mostly him searching for a post on screen; the zombie mention is hedged timeline talk ('I don't know, it could be') and puts him inside the group ('when we were all four-year cycle zombies')."
+      },
+      {
+        "topic": "Democrats, the Iran war, rate hikes and who keeps Congress (25:30-27:50)",
+        "reason": "Political tangent; only the TAO consequence that follows it was kept (clip 5)."
+      },
+      {
+        "topic": "Naka, Hellhound, gaming coins and the GTA release (28:35-31:30)",
+        "reason": "Chat-driven, 'looks kind of dead' (negative on a named project) and hedged throughout ('I don't know' again and again)."
+      },
+      {
+        "topic": "Kaspa was in a bull market from birth while Bitcoin was in its bear market, now below the 50-week SMA (31:35-33:20)",
+        "reason": "The only payoff ('still a good time to buy') depends on a minute of counting weekly closes below the average on screen; chart-definition talk that reads as his own coin being weak."
+      },
+      {
+        "topic": "Aero, DCA advice, 'expecting some red in the markets next week' (33:20-34:50)",
+        "reason": "Hedged trade talk and generic advice."
+      },
+      {
+        "topic": "Silverscript, DAGKnight, 49% BFT, 100 blocks per second in 2027 (37:10-38:25)",
+        "reason": "He is reading and says he is unsure what it means ('What is it', 'I guess that's what that really is related to'). Jargon run with no plain-English payoff."
+      },
+      {
+        "topic": "Chat comment and the IQ / monks / genetic enhancement tangent (38:30-43:47)",
+        "reason": "Personal tangent on ethnicity and IQ. Never a short. Clips 3 and 7 start after it ends."
+      },
+      {
+        "topic": "Welcome, being sick, closing chat reply on 12 vs 24 months, sign-off and community link (00:58-02:30, 45:20-47:16)",
+        "reason": "Stream housekeeping, hedged chat reply, membership plug."
+      }
+    ],
+    "review_callouts": [
+      "Energy is NOT confirmed on any clip: this was a text-only replay with no audio or video. Believed emotional cores: clip 1 seg 0 (haters), clip 2 first 5s, clip 3 seg 2 (denial), clip 4 seg 2 (the quote), clip 5 seg 0.",
+      "50s cap: every clip is under 50s on the raw sum (46.28, 30.15, 46.91, 24.57, 22.52, 27.82, 17.93). Clips 1 and 3 are the tight ones; do not add material to either.",
+      "7 clips, not 8, and 3 of the 5 topics are Kaspa. That is what this 47-minute stream holds once market narration and the tangents are removed; an eighth clip would have been filler.",
+      "Clip 5 (TAO) comes out of a political riff. No party is named in the cut, but 'they' is the Democrats in the stream. Confirm Mike wants it; if not, delete it and do not backfill (or take the Bitcoin-held clip listed first in dropped[]).",
+      "Clip 4: Mike is reading a Kaspa summary off his screen. Check delivery is not flat, and check the reorder (quote first) does not jump visibly.",
+      "Clips 3 and 7 sit right after the IQ tangent. Confirm the 2628.02 in-point is clean: 'no reason why not to do that' ends at about 2627.0 and must not leak in.",
+      "Out-points are estimated from the start of the next word (the word file has no end times). Tight ones to check by ear: clip 1 in-point 2097.85 ('everybody' ends about 0.3s earlier), clip 4 seg 1 out 2215.72 ('lore.' is followed immediately by 'I like the sentence'), clip 3 seg 0 out 2639.62 ('everything' is followed immediately by 'AI is already').",
+      "Clip 2: '$3.33' is said with no coin name until 24s in. Title and opening caption must say Kaspa."
+    ],
+    "stt_caption_fixes": [
+      {
+        "heard": "town",
+        "correct": "TAO",
+        "where": "~1680.1 (clip 5)"
+      },
+      {
+        "heard": "the tensor",
+        "correct": "Bittensor",
+        "where": "~1681.9 (clip 5)"
+      },
+      {
+        "heard": "start the ban AI",
+        "correct": "start to ban AI",
+        "where": "~1675.8 (clip 5)"
+      },
+      {
+        "heard": "CASP",
+        "correct": "Kaspa",
+        "where": "~2189.5 (clip 4)"
+      },
+      {
+        "heard": "block tag",
+        "correct": "BlockDAG",
+        "where": "~2191.1 (clip 4)"
+      },
+      {
+        "heard": "pre -mine",
+        "correct": "premine",
+        "where": "~2208.0 (clip 4)"
+      },
+      {
+        "heard": "war grade",
+        "correct": "war-grade",
+        "where": "~2219.7 (clip 4)"
+      },
+      {
+        "heard": "cypher puns",
+        "correct": "cypherpunks",
+        "where": "~2221.2 (clip 4)"
+      },
+      {
+        "heard": "I just got all this",
+        "correct": "it's got all this",
+        "where": "~2212.2 (clip 4), check by ear"
+      },
+      {
+        "heard": "all All these haters",
+        "correct": "all these haters",
+        "where": "~2098.8 (clips 1, 6), duplicated word"
+      },
+      {
+        "heard": "Bitcoin Maxis / Bitcoin max is",
+        "correct": "Bitcoin maxis",
+        "where": "~2110.3 (clips 1, 6) and ~2154.5 (clip 1)"
+      },
+      {
+        "heard": "warm up the Kaspa",
+        "correct": "warm up to Kaspa",
+        "where": "~2168.5 (clips 1, 6)"
+      },
+      {
+        "heard": "Kaspa the superior",
+        "correct": "Kaspa, the superior",
+        "where": "~2165.1 (clips 1, 6)"
+      },
+      {
+        "heard": "which we'll put as well above $3",
+        "correct": "which will put us well above $3",
+        "where": "~370.3 (clip 2)"
+      },
+      {
+        "heard": "$3 .33",
+        "correct": "$3.33",
+        "where": "~343.0 (clip 2)"
+      },
+      {
+        "heard": "need need to trade time well trade money for labor",
+        "correct": "need to trade time, well, trade money for labor (verbal slip, keep as said or tighten out)",
+        "where": "~2657.3 (clip 3)"
+      },
+      {
+        "heard": "moneyism",
+        "correct": "moneyism (his coinage, keep)",
+        "where": "~2677.7 (clip 3)"
+      }
+    ]
+  }
+}

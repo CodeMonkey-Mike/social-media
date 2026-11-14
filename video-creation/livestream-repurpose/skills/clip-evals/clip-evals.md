@@ -9,6 +9,15 @@ human grades, and a score that compares one version of the clip-strategist's pro
 It measures. It does not change the strategist. A person still edits the prompt, and the score says whether the edit
 helped.
 
+## Looking at it: the dashboard's Evals page
+
+`http://localhost:8766/evals.html` (start the dashboard: `schedule-tweets/skills/dashboard.md`). It shows the
+score per prompt version, the replays and their run-to-run noise, and every batch: open one to see each clip
+with its verdict at both gates, the strategist's reasoning, any misses, and its replays pick by pick.
+
+The page is read-only and holds no scoring logic. It draws `dashboard_data()` from `clip_evals.py`, served by
+the dashboard at `/evals/data.json`. To see the same object in a terminal: `clip_evals.py dashboard-data`.
+
 ## What is where
 
 | Path | What it holds |
@@ -117,6 +126,9 @@ Each new pick is matched to the clips that were judged at 4b:
 - **killed:** the pick matches a clip that was killed at 4b. The new prompt repeated a rejected choice.
 - **misses:** the pick lands on a recorded miss (a time range it overlaps, or a timestamp within 30 s).
 - **new:** no verdict on record. It is neither right nor wrong, and it is left out of precision.
+- **carries killed material:** a flag, not a verdict. The match rule works on whole clips, so a pick can match
+  a kept clip and still include a stretch of a killed one. A pick with 10 s or more of a killed clip
+  (`REUSE_MIN_S`) is flagged. It does not lower precision; it is shown so a person can judge it.
 
 | Number | Meaning |
 |---|---|
@@ -127,7 +139,15 @@ Each new pick is matched to the clips that were judged at 4b:
 ### Reading it honestly
 
 - **The strategist varies between runs.** Replay the SAME prompt first (`r1`, `r2`): the spread between repeats is
-  the noise floor. A prompt edit only counts when it moves the score by more than that.
+  the noise floor. A prompt edit only counts when it moves the score by more than that. `noise_table` reports,
+  per batch replayed more than once under one prompt and model, the share of picks the runs have in common
+  and the spread in precision between them (the Evals page shows it under the replays). Picks are paired one
+  to one for this, so a run that adds a short impact clip beside the same long clip counts as different.
+- **First noise runs (2026-11-13, prompt `57ecbf267a8c`, Fable, two runs on each of the 4 replayable
+  batches):** the strategist picked the same moments both times on every batch. What changed between runs
+  was which impact clips it added, and that alone moved precision by 0 to 16.7 points on a single batch
+  (one killed impact clip re-picked out of 6 judged picks). Across all 8 runs: 89.7% precision on judged
+  picks. Treat a difference smaller than about 17 points on one batch as noise.
 - **The sample is small.** With about 17 kills on record, one clip moves precision by about a point.
 - **A replay is not blind by design, only by instruction.** The agent can read files, and the answer key is in this
   repo. The replay prompt tells it to work only from the transcript files and not to open `evals/` or an earlier

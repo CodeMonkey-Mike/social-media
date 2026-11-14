@@ -5,13 +5,14 @@ description: Start the local dashboard server that shows pending/posted content 
 
 ## What it is
 
-A browser-based dashboard at `http://localhost:8766`. A **left nav** splits it into two
+A browser-based dashboard at `http://localhost:8766`. A **left nav** splits it into three
 pages:
 
 | Nav item | Page | What it shows |
 |---|---|---|
 | **Social** | `index.html` (home) | All pending/posted content across every queue (X tweets, threads, polls, IG, YT, shorts, reply-guy). This is the original "Pending Posts" page, renamed. |
 | **LangGraph** | `langgraph.html` | Live state of the LinkedIn LangGraph lanes — which node is running right now, the lane diagram, today's profile-view total against the restriction threshold, and the run history. |
+| **Evals** | `evals.html` | The clip-strategist's score layer (added 2026-11-14): selection precision, every batch with its clips kept or killed at the 4b and 2nd gates, the strategist's reasoning per clip, recorded misses, replays pick by pick, and the run-to-run noise. Read-only: verdicts are made at the gates. Detail: `video-creation/livestream-repurpose/skills/clip-evals/clip-evals.md` |
 
 ## How to start
 
@@ -37,7 +38,11 @@ python C:\Users\mnede\Documents\Claude\social-media\schedule-tweets\scripts\serv
 
 ## What the server does
 
-- Serves `index.html`, `langgraph.html` and all static files from `schedule-tweets/` at `/`
+- Serves `index.html`, `langgraph.html`, `evals.html` and all static files from `schedule-tweets/` at `/`
+- `/evals/data.json` is **computed**, not a file mount: it calls `dashboard_data()` in
+  `video-creation/livestream-repurpose/skills/clip-evals/clip_evals.py`, so the scoring lives in one place and
+  the page only draws it. Served `Cache-Control: no-store`; the page checks every 30 s and redraws only when
+  the data changed. The module is imported once, so **restart the server after editing `clip_evals.py`**.
 - Routes `/x-reply-guy/...` GET requests to `../x-reply-guy/` on disk
 - Routes `/linkedin/<file>` to `../linkedin-automation/private/data/<file>` — an **allowlist**
   (`lane_runs.json`, `lane_progress.json`) rather than a directory mount, because that

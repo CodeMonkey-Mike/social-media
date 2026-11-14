@@ -117,6 +117,53 @@ def main() -> int:
     check("a score is saved", ce.save_score(rec, rep) is True)
     check("the same score is not saved twice", ce.save_score(rec, ce.score_replays(ce.read_record())) is False)
 
+    # ── a pick that matches a kept clip but carries a stretch of a killed one is flagged ──
+    mixed = {"v": 1, "batch": "demo", "prompt_version": "cccccccccccc", "model": "fable/max", "plan": {"clips": [
+        clip(1, "kept-plus-killed-material", (0, 50), (100, 115))]}}
+    (ce.replays_dir() / "demo--cccccccccccc--r1.json").write_text(json.dumps(mixed), encoding="utf-8")
+    r = [x for x in ce.score_replays(ce.read_record())["replays"] if x["prompt_version"] == "cccccccccccc"][0]
+    check("a pick matching a kept clip that reuses 15 s of a killed one still counts as kept, and is flagged",
+          r["hit"] == 1 and r["bad"] == 0 and r["reuses_killed"] == 1
+          and r["detail"][0]["reuses_killed"] == [{"clip_id": 2, "seconds": 15.0}], str(r["detail"]))
+
+    # ── run-to-run noise: the same prompt, twice, on one batch ──────────────
+    a, b2, c5 = clip(1, "a", (0, 60)), clip(2, "b", (100, 160)), clip(3, "c", (300, 360))
+    ce.record_gate("noisy", "4b", {"clips": [a], "eval": meta,
+                                   "deleted_at_gate": [{"gate": "4b", "clip_id": 2, "slug": "b", "clip": b2}]})
+    for n, picks in ((1, [a, b2]), (2, [clip(1, "a-again", (5, 58)), c5])):
+        (ce.replays_dir() / f"noisy--dddddddddddd--r{n}.json").write_text(json.dumps(
+            {"v": 1, "batch": "noisy", "prompt_version": "dddddddddddd", "model": "fable/max",
+             "plan": {"clips": picks}}), encoding="utf-8")
+    lines2 = ce.read_record()
+    noise = ce.noise_table(ce.load_replays(), ce.score_replays(lines2)["replays"])
+    row = [x for x in noise if x["batch"] == "noisy"]
+    check("noise: one row per batch replayed more than once (single replays are left out)",
+          len(noise) == 1 and len(row) == 1, str(noise))
+    check("noise: 1 of 2 picks is shared between the runs = 50% agreement", row and row[0]["agreement"] == 50.0, str(row))
+    check("noise: precision per run 50% and 100%, a 50 point spread",
+          row and row[0]["precisions"] == [50.0, 100.0] and row[0]["precision_spread"] == 50.0, str(row))
+
+    one = {"plan": {"clips": [clip(1, "long", (100, 180))]}}
+    two = {"plan": {"clips": [clip(1, "long-again", (102, 178)), clip(2, "impact-of-it", (130, 150))]}}
+    check("noise: picks pair one to one, so an added impact clip counts as a difference (2 x 1 / 3 = 66.7%)",
+          ce.pick_agreement(one, two) == 66.7 and ce.pick_agreement(two, one) == 66.7 and ce.pick_agreement(one, one) == 100.0,
+          str(ce.pick_agreement(one, two)))
+
+    # ── the dashboard feed ──────────────────────────────────────────────────
+    feed = ce.dashboard_data()
+    json.dumps(feed)                       # must be plain JSON: no sets, no tuples as keys
+    demo = [x for x in feed["batches"] if x["batch"] == "demo"][0]
+    check("feed: totals leave the unscorable batch out", feed["totals"]["left_out"] == ["old"]
+          and feed["totals"]["batches"] == 4 and feed["totals"]["judged"] == 7, str(feed["totals"]))
+    check("feed: a batch carries its clips, both gate verdicts and the strategist's reasoning",
+          [c["verdicts"] for c in demo["clips"]] == [{"4b": "kept", "2nd": "kept"}, {"4b": "killed"},
+                                                     {"4b": "kept", "2nd": "killed"}, {"4b": "kept", "2nd": "kept"}]
+          and demo["clips"][1]["why"] == ["x"] and demo["gates"]["4b"] == {"at": "2026-01-01T10:00:00", "kept": 3, "killed": 1},
+          str(demo["gates"]))
+    check("feed: misses, replays and noise ride along", demo["misses_reviewed"] and len(demo["misses"]) == 1
+          and demo["replays"] == 2 and len(feed["replays"]) == 4 and len(feed["noise"]) == 1
+          and feed["totals"]["recall_batches"] == 1)
+
     # ── the prompt version ──────────────────────────────────────────────────
     a, b = ce.prompt_info("template one"), ce.prompt_info("template two")
     check("the prompt version is stable", a == ce.prompt_info("template one"))

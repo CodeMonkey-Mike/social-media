@@ -18,6 +18,8 @@ Commands:
   python clip_evals.py missed --batch B "12:30-14:10 the ETF rant; 45:00 kaspa hashrate"     (or: none)
   python clip_evals.py record --batch B --gate 4b|2nd     (repair: re-record a gate from the plan on disk)
 
+To LOOK at it: the dashboard's Evals page, http://localhost:8766/evals.html (it reads dashboard_data() below).
+
 This file spawns nothing itself: `replay` goes through batch_graph.spawn_agent, so the Fable-to-Opus fallback
 and the API-overload respawn are the batch orchestrator's own.
 """
@@ -43,6 +45,7 @@ EVALS = Path(os.environ.get("CLIP_EVALS_DIR") or (LSR / "evals"))   # tests poin
 SCHEMA = 1
 MATCH_MIN = 0.5          # a new pick is "the same clip" when it shares >= 50% of the shorter clip's seconds
 MISS_NEAR_S = 30.0       # a miss given as one timestamp counts as found when a pick lands within 30 s of it
+REUSE_MIN_S = 10.0       # a pick that carries >= 10 s of a KILLED clip is flagged, whatever it was matched to
 GATES = ("4b", "2nd")
 
 AGENT = REPO_ROOT / ".claude" / "agents" / "clip-strategist.md"
@@ -491,7 +494,7 @@ def score_replay(rep: dict, clips: dict, misses: dict) -> dict:
     res = {"file": rep.get("file"), "batch": batch, "prompt_version": rep.get("prompt_version"),
            "model": rep.get("model"), "picks": 0, "hit": 0, "bad": 0, "found_miss": 0, "unjudged": 0,
            "kept_total": len(kept), "killed_total": len(killed), "kept_refound": set(), "killed_repicked": set(),
-           "detail": []}
+           "reuses_killed": 0, "detail": []}
     for p in (rep.get("plan") or {}).get("clips") or []:
         segs = segs_of(p)
         if not segs:
@@ -501,20 +504,30 @@ def score_replay(rep: dict, clips: dict, misses: dict) -> dict:
         if m and m["gates"]["4b"] == "killed":
             res["bad"] += 1
             res["killed_repicked"].add(m["clip_id"])
-            what = f"re-picks KILLED clip {m['clip_id']} ({m['slug']})"
+            kind, what = "bad", f"re-picks KILLED clip {m['clip_id']} ({m['slug']})"
         elif m:
             res["hit"] += 1
             res["kept_refound"].add(m["clip_id"])
-            what = f"matches kept clip {m['clip_id']} ({m['slug']})"
+            kind, what = "hit", f"matches kept clip {m['clip_id']} ({m['slug']})"
         else:
             miss = _found_miss(segs, misses.get(batch) or [])
             if miss:
                 res["found_miss"] += 1
-                what = f"finds a recorded miss ({miss.get('note') or 'no note'})"
+                kind, what = "found_miss", f"finds a recorded miss ({miss.get('note') or 'no note'})"
             else:
                 res["unjudged"] += 1
-                what = "no verdict on record (new territory)"
-        res["detail"].append({"slug": p.get("slug"), "seconds": seconds(segs), "result": what})
+                kind, what = "unjudged", "no verdict on record (new territory)"
+        # The match rule works on whole clips, so a pick can match a KEPT clip and still carry a stretch of a
+        # KILLED one. That does not change the score; it is shown so a reader can judge it.
+        reused = [{"clip_id": c["clip_id"], "seconds": round(overlap(segs, c["segments"]), 1)}
+                  for c in judged if c is not m and c["gates"]["4b"] == "killed" and c.get("segments")
+                  and overlap(segs, c["segments"]) >= REUSE_MIN_S]
+        if reused:
+            res["reuses_killed"] += 1
+            what += "; also reuses " + ", ".join(f"{r['seconds']:.0f} s of killed clip {r['clip_id']}" for r in reused)
+        res["detail"].append({"slug": p.get("slug"), "title": p.get("title"), "seconds": seconds(segs),
+                              "segments": segs, "kind": kind, "match": m["clip_id"] if m else None,
+                              "reuses_killed": reused, "result": what})
     return res
 
 
@@ -526,9 +539,9 @@ def score_replays(lines: list, batch: Optional[str] = None) -> dict:
         key = f"{r['prompt_version'] or 'unknown'} | {r['model'] or 'unknown'}"
         g = groups.setdefault(key, {"group": key, "replays": 0, "picks": 0, "hit": 0, "bad": 0, "found_miss": 0,
                                     "unjudged": 0, "kept_total": 0, "killed_total": 0, "kept_refound": 0,
-                                    "killed_repicked": 0})
+                                    "killed_repicked": 0, "reuses_killed": 0})
         g["replays"] += 1
-        for f in ("picks", "hit", "bad", "found_miss", "unjudged", "kept_total", "killed_total"):
+        for f in ("picks", "hit", "bad", "found_miss", "unjudged", "kept_total", "killed_total", "reuses_killed"):
             g[f] += r[f]
         g["kept_refound"] += len(r["kept_refound"])
         g["killed_repicked"] += len(r["killed_repicked"])
@@ -543,6 +556,134 @@ def score_replays(lines: list, batch: Optional[str] = None) -> dict:
     for r in per:
         r["kept_refound"], r["killed_repicked"] = sorted(r["kept_refound"]), sorted(r["killed_repicked"])
     return {"rows": rows, "replays": per}
+
+
+def pick_agreement(a: dict, b: dict) -> Optional[float]:
+    """How alike two replays' picks are, 0 to 100. Picks are paired ONE TO ONE (best intersection-over-union
+    first, and a pair must pass the usual match rule), then: 2 x pairs / all picks of both runs. One to one
+    matters: a run that adds a short impact clip beside the same long clip has made one more pick, and a looser
+    pairing would hide that by letting the impact clip ride on the long one."""
+    sa = [s for s in (segs_of(c) for c in (a.get("plan") or {}).get("clips") or []) if s]
+    sb = [s for s in (segs_of(c) for c in (b.get("plan") or {}).get("clips") or []) if s]
+    if not sa or not sb:
+        return None
+    cands = []
+    for i, x in enumerate(sa):
+        for j, y in enumerate(sb):
+            share, iou = match_score(x, y)
+            if share >= MATCH_MIN:
+                cands.append((iou, share, i, j))
+    used_a, used_b = set(), set()
+    for _, _, i, j in sorted(cands, reverse=True):
+        if i not in used_a and j not in used_b:
+            used_a.add(i)
+            used_b.add(j)
+    return _pct(2 * len(used_a), len(sa) + len(sb))
+
+
+def noise_table(replays: list, scored: list) -> list:
+    """The noise floor: for every batch replayed MORE THAN ONCE under one prompt and model, how much the runs
+    differ from each other. A prompt edit only counts when it moves the score by more than this."""
+    by_file = {r["file"]: r for r in scored}
+    groups = {}
+    for r in replays:
+        groups.setdefault((r.get("batch"), r.get("prompt_version"), r.get("model")), []).append(r)
+    rows = []
+    for (batch, version, model), runs in sorted(groups.items(), key=str):
+        if len(runs) < 2:
+            continue
+        pairs = [pick_agreement(a, b) for i, a in enumerate(runs) for b in runs[i + 1:]]
+        pairs = [x for x in pairs if x is not None]
+        precisions = []
+        for r in runs:
+            sc = by_file.get(r.get("file")) or {}
+            good = sc.get("hit", 0) + sc.get("found_miss", 0)
+            precisions.append(_pct(good, good + sc.get("bad", 0)))
+        known = [x for x in precisions if x is not None]
+        rows.append({
+            "batch": batch, "prompt_version": version, "model": model, "runs": len(runs),
+            "picks": [len((r.get("plan") or {}).get("clips") or []) for r in runs],
+            "agreement": round(sum(pairs) / len(pairs), 1) if pairs else None,
+            "precisions": precisions,
+            "precision_spread": round(max(known) - min(known), 1) if len(known) >= 2 else None,
+        })
+    return rows
+
+
+def dashboard_data() -> dict:
+    """Everything the dashboard's Evals page shows, in one object (served by
+    schedule-tweets/scripts/serve_dashboard.py at /evals/data.json). Read-only: it computes, it writes nothing."""
+    lines = read_record()
+    clips, misses = clip_table(lines), miss_table(lines)
+    rec, rep = score_record(lines), score_replays(lines)
+    replays = load_replays()
+    left_out = set(rec["left_out_batches"])
+    batches = {}
+    for x in lines:
+        if x.get("type") != "verdict":
+            continue
+        b = batches.setdefault(x["batch"], {
+            "batch": x["batch"], "prompt_version": None, "model": None, "brief": None, "source": x.get("source"),
+            "first_at": x.get("at"), "gates": {}, "clips": {}})
+        for f in ("prompt_version", "model", "brief"):
+            if x.get(f) and not b[f]:
+                b[f] = x[f]
+        if x.get("at") and (not b["first_at"] or x["at"] < b["first_at"]):
+            b["first_at"] = x["at"]
+        g = b["gates"].setdefault(x.get("gate"), {"at": x.get("at"), "kept": 0, "killed": 0})
+        if x.get("verdict") in ("kept", "killed"):
+            g[x["verdict"]] += 1
+        c = b["clips"].setdefault(x.get("clip_id"), {
+            "clip_id": x.get("clip_id"), "slug": None, "title": None, "variant": None, "seconds": None,
+            "segments": None, "verdicts": {}, "matched": True, "notes": None, "why": []})
+        c["verdicts"][x.get("gate")] = x.get("verdict")
+        for f in ("slug", "title", "variant", "seconds", "segments"):
+            if x.get(f) and not c[f]:
+                c[f] = x[f]
+        if x.get("matched") is False:
+            c["matched"] = False
+        prop = x.get("proposal") or {}
+        if prop:
+            c["notes"] = prop.get("notes")
+            c["why"] = [s.get("why") for s in prop.get("segments") or [] if isinstance(s, dict)]
+    out_batches = []
+    for name, b in batches.items():
+        b["clips"] = sorted(b["clips"].values(), key=lambda c: (c["clip_id"] is None, c["clip_id"]))
+        b["scored"] = name not in left_out
+        b["misses_reviewed"] = name in misses
+        b["misses"] = [{"start": m.get("start"), "end": m.get("end"), "note": m.get("note"), "gate": m.get("gate")}
+                       for m in misses.get(name, [])]
+        b["transcript_saved"] = (transcripts_dir(name) / TRANSCRIPT_FILES["chunks"]).is_file()
+        b["replays"] = sum(1 for r in replays if r.get("batch") == name)
+        out_batches.append(b)
+    out_batches.sort(key=lambda b: str(b["first_at"] or ""), reverse=True)
+    scored = [c for c in clips.values() if c["matched"] and c["batch"] not in left_out and "4b" in c["gates"]]
+    kept = sum(1 for c in scored if c["gates"]["4b"] == "kept")
+    reviewed = [b for b in out_batches if b["misses_reviewed"] and b["scored"]]
+    kept_rev = sum(b["gates"].get("4b", {}).get("kept", 0) for b in reviewed)
+    n_missed = sum(len(b["misses"]) for b in reviewed)
+    when = {r.get("file"): {"replayed_at": r.get("replayed_at"), "brief": r.get("brief")} for r in replays}
+    for r in rep["replays"]:
+        r.update(when.get(r["file"], {}))
+    verdict_times = [x.get("at") for x in lines if x.get("at")]
+    return {
+        "generated_at": now_iso(), "match_min": MATCH_MIN,
+        "totals": {
+            "lines": len(lines), "batches": len(out_batches),
+            "scored_batches": len({c["batch"] for c in scored}), "judged": len(scored), "kept": kept,
+            "killed_4b": len(scored) - kept,
+            "killed_2nd": sum(1 for c in scored if c["gates"].get("2nd") == "killed"),
+            "precision": _pct(kept, len(scored)),
+            "recall": _pct(kept_rev, kept_rev + n_missed), "recall_batches": len(reviewed), "missed": n_missed,
+            "replays": len(replays), "replayable": sum(1 for b in out_batches if b["transcript_saved"]),
+            "left_out": sorted(left_out), "last_verdict_at": max(verdict_times) if verdict_times else None,
+        },
+        "score": {"record": rec["rows"], "replays": rep["rows"]},
+        "noise": noise_table(replays, rep["replays"]),
+        "batches": out_batches,
+        "replays": rep["replays"],
+        "history": read_jsonl(scores_path())[-30:],
+    }
 
 
 def _fmt(v, suffix="%"):
@@ -621,6 +762,11 @@ def cmd_list(args) -> int:
         saved = "saved" if (transcripts_dir(b) / TRANSCRIPT_FILES["chunks"]).is_file() else "gone"
         print(f"  {b[:26]:26s} {pv:14s} {model[:24]:24s} {tally('4b'):>14s} {tally('2nd'):>15s} {miss:>8s} "
               f"{saved:>10s} {sum(1 for r in reps if r.get('batch') == b):7d}")
+    return 0
+
+
+def cmd_dashboard_data(args) -> int:
+    print(json.dumps(dashboard_data(), indent=2, ensure_ascii=False))
     return 0
 
 
@@ -732,6 +878,8 @@ def main() -> int:
     s.set_defaults(fn=cmd_score)
     s = sub.add_parser("list", help="what is on record, batch by batch")
     s.set_defaults(fn=cmd_list)
+    s = sub.add_parser("dashboard-data", help="the JSON the dashboard's Evals page reads (debugging)")
+    s.set_defaults(fn=cmd_dashboard_data)
     s = sub.add_parser("replay", help="re-run the clip-strategist on a saved transcript and score its picks")
     s.add_argument("--batch", required=True)
     s.add_argument("--brief", default=None, help="override the batch's original per-run brief")

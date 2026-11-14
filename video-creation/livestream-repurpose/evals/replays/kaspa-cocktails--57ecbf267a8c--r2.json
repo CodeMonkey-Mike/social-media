@@ -1,0 +1,544 @@
+{
+  "v": 1,
+  "batch": "kaspa-cocktails",
+  "prompt_version": "57ecbf267a8c",
+  "prompt_parts": {
+    "agent": "726ef081ebe0d12a6d389e8b7169224801520d30",
+    "topic_finding": "e84409de6050635d9ede84868f31fd425ddc5581",
+    "clip_selection": "f6468ec145ee6457e96cb7236f94ddc7bb245299",
+    "template": "9c717582f5abd3ea3bf21162ed6b1b8703031f9d"
+  },
+  "model": "fable/max",
+  "brief": "Make this batch Kaspa-centric: there is a lot of Kaspa content in this stream (KCC20 / Nacho migration, Kaspa chart vs early Bitcoin, Kaspa's first bear market and the 50 week MA, the 3.33 dollar target and 100 trillion crypto market cap, GHOSTDAG / blockDAG lanes, Bitcoin maxis moving to Kaspa, the Kaspa conference cruise), so favor Kaspa clips over everything else. Prefer longer clips, but if the content cannot support a much longer clip, make the clips shorter instead of padding them.",
+  "replayed_at": "2026-11-13T23:59:34",
+  "plan": {
+    "batch": "kaspa-cocktails",
+    "source_vertical": "NOT ON DISK (evaluation replay)",
+    "transcript_json": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\livestream-repurpose\\evals\\transcripts\\kaspa-cocktails\\words.txt",
+    "authored_by": "clip-strategist 2026-11-13",
+    "constraints": {
+      "max_topics": 5,
+      "max_clips": 8,
+      "note": "Brief applied: Kaspa-centric, so all 5 topics are Kaspa and nothing else from the stream is in. 7 clips, not 8: 5 fulls + 2 impacts, because only two topics have a section strong enough to stand alone (the $100 trillion math and the first-bear-market timeline); a third impact would have been filler. Prefer-longer applied where the content carries it (clip 1 = 131 s, clip 3 = 109 s raw, both shorter after tighten because of long on-air pauses); clips 2, 4 and 5 run 70-80 s because that is all the material there is. Mike named 7 Kaspa items and the cap is 5 topics: chart-vs-early-Bitcoin is merged into the first-bear-market clip (same train of thought), the Kaspa yacht is folded into clip 1, and the Kaspa conference cruise is dropped (see dropped[]). All timecodes are master seconds from words.txt; no segment ends after 6009 s (latest end = 5525.6). Replay for evaluation: nothing was sampled or cut."
+    },
+    "topics": [
+      {
+        "topic_id": "kaspa-3-dollars-is-bearish",
+        "rank": 1,
+        "hook_type": "prediction",
+        "hook_summary": "\"$3.33, that would be a nice target, man, and I get my yacht.\" Then the reason: if crypto explodes past the global stock market cap to $100 trillion, a $3 Kaspa is only a $100 billion market cap, \"so $3 is kind of bearish from that perspective.\""
+      },
+      {
+        "topic_id": "bitcoin-maxis-move-to-kaspa",
+        "rank": 2,
+        "hook_type": "tribal-contrast",
+        "hook_summary": "\"I really think there's going to be a day where a lot of Bitcoin maxis move over to Kaspa.\" His theory: Ethereum knocks Bitcoin out of the number one position, and at that point the maxis move over in a cascading effect over time."
+      },
+      {
+        "topic_id": "kaspa-first-bear-market",
+        "rank": 3,
+        "hook_type": "pattern-break",
+        "hook_summary": "A viewer's chart puts Kaspa next to early Bitcoin, 11 years apart, \"identical bear market\". Mike realizes on air: \"Kaspa didn't have a bear market until just now.\" In 2022 Bitcoin was in a bear market and Kaspa was in a bull market; Kaspa went below its 50-week SMA in December 2024, stayed there nearly two years, and is above it again."
+      },
+      {
+        "topic_id": "kcc20-live-nacho-migration",
+        "rank": 4,
+        "hook_type": "personal-story",
+        "hook_summary": "\"I didn't know it was going to go live the day it went live, because I was making this video about KCC20 going live.\" Nacho is already migrating to KCC20 on the Kaspa L1 (deadline January 31st). \"Good things are coming. They're gonna pump like hell. We're still very, very early.\""
+      },
+      {
+        "topic_id": "kaspa-12-lane-highway-ghostdag",
+        "rank": 5,
+        "hook_type": "technical-explained-plainly",
+        "hook_summary": "\"Kaspa is a 12-lane highway.\" Yonatan wanted to improve Bitcoin and was shot down; GHOSTDAG was his proposal: not a chain, a graph. One lane fans out into multiple lanes, blocks work at the same time, then the lanes converge up ahead."
+      }
+    ],
+    "clips": [
+      {
+        "clip_id": 1,
+        "slug": "kaspa-3-dollars-is-bearish",
+        "title": "$3 Kaspa Is Kind of Bearish. Here Is the Math",
+        "topic_id": "kaspa-3-dollars-is-bearish",
+        "variant": "full",
+        "est_seconds": 131.05,
+        "segments": [
+          {
+            "start": 5058.9,
+            "end": 5076.4,
+            "why": "HOOK. \"$3.33, that would be a nice target, man, and I get my yacht. I get my yacht, man, when Kaspa's $3.33, man.\" Opens cold on the number; has a ~3.9 s pause between \"Three dollars and\" and \"33 cents\" for the tighten pass."
+          },
+          {
+            "start": 3981.9,
+            "end": 3994.5,
+            "why": "Scatter-gather from 66:22. \"We're going to be doing live streams from a nice Kaspa yacht one day. Maybe not next year or the following year, but one of these years.\" Pays the yacht line and sets up the question of whether that is outlandish."
+          },
+          {
+            "start": 5120.15,
+            "end": 5221.1,
+            "why": "The argument, one contiguous run. \"No, I don't think it's outlandish... we've been conditioned to be really scared to give moon boy predictions\" (LAB: said 20x, did 350x), then oil-backed dollar to stablecoin-backed dollar, crypto bigger than the global stock market cap, $100 trillion, \"$3 Kaspa is only $100 billion market cap... So $3 is kind of bearish from that perspective.\" Ends on that line; the next words (\"Well, you know, we shall see\") are a hedge and are cut."
+          }
+        ],
+        "assembly_order": [
+          0,
+          1,
+          2
+        ],
+        "peak_beats": [
+          {
+            "start": 5197.4,
+            "end": 5221.1,
+            "note": "\"A $3 Kaspa is only $100 billion market cap. If there's $100 trillion market cap with crypto in general, Kaspa is going to have a lot more than 100 billion. So $3 is kind of bearish from that perspective.\""
+          },
+          {
+            "start": 5059.0,
+            "end": 5068.5,
+            "note": "\"$3.33, that would be a nice target, man, and I get my yacht.\""
+          }
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "Emotional core = the last ~35 s of segment 2 (5186-5221), where he does the $100 trillion math and lands \"$3 is kind of bearish\". Second live spot is the doubled \"I get my yacht\" in segment 0. Assembly: number + yacht (84:19), yacht livestream dream pulled back from 66:22, then the full reasoning (85:20-87:01). Segment 0 ends on \"man\" at ~5076.3 with \"you're gonna see me\" starting at 5076.43: not a silence boundary, tighten must snap it (fallback: end at 5068.5 after the first \"I get my yacht\"). Stops before the \"people in my group won't be slamming me\" membership turn at 5233."
+      },
+      {
+        "clip_id": 2,
+        "slug": "bitcoin-maxis-move-to-kaspa",
+        "title": "The Day Bitcoin Maxis Move Over to Kaspa",
+        "topic_id": "bitcoin-maxis-move-to-kaspa",
+        "variant": "full",
+        "est_seconds": 70.49,
+        "segments": [
+          {
+            "start": 4470.96,
+            "end": 4476.5,
+            "why": "HOOK, cold. \"I mean, I really think there's going to be a day where a lot of Bitcoin maxis move over to Kaspa.\""
+          },
+          {
+            "start": 4477.95,
+            "end": 4496.0,
+            "why": "\"It could be a lot of these Bitcoin maxis are keeping it quiet. They actually like Kaspa, just stacking... the Michael Saylor types... the Winklevoss twins... they have their eye on it for now.\" Kept as its OWN segment so the reviewer can drop it without re-timing (speculation about named people)."
+          },
+          {
+            "start": 4496.2,
+            "end": 4543.1,
+            "why": "The thesis. \"My theory is that eventually Ethereum is going to overtake Bitcoin... knock out Bitcoin from the number one position... at that point a lot of Bitcoin maxis are going to move over to Kaspa... a cascading effect over time... Kaspa's future is very, very bright.\" Ends on \"bright\"; the next words are a chat comment being read."
+          }
+        ],
+        "assembly_order": [
+          0,
+          1,
+          2
+        ],
+        "peak_beats": [
+          {
+            "start": 4515.6,
+            "end": 4527.9,
+            "note": "\"At that point, I think a lot of Bitcoin maxis are going to move over to Kaspa. It's going to be like a cascading effect over time.\""
+          },
+          {
+            "start": 4496.2,
+            "end": 4504.9,
+            "note": "\"Ethereum is going to knock out Bitcoin from the number one position.\""
+          }
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "Emotional core = segment 2, 4515-4537 (\"at that point... cascading effect over time\"); the hook line in segment 0 is the other conviction beat. Contiguous in the stream (74:31-75:43), split only to make the Saylor / Winklevoss speculation droppable. Starts AFTER \"I think Kaspa is going to have his day\" because that sentence is glued to the \"I don't know\" before it with no cuttable gap. This is the persona core thesis (ETH flips BTC, the maxis look for a PoW home, they find KAS), stated as his own theory."
+      },
+      {
+        "clip_id": 3,
+        "slug": "kaspa-first-bear-market",
+        "title": "Kaspa Didn't Have a Bear Market Until Just Now",
+        "topic_id": "kaspa-first-bear-market",
+        "variant": "full",
+        "est_seconds": 108.4,
+        "segments": [
+          {
+            "start": 4204.5,
+            "end": 4224.7,
+            "why": "HOOK (he reads a viewer's chart post, chart on screen). \"Two different cryptos. One is the king and the other is up and coming. 11 years apart. Identical bear market along with identical current price action before the full bull market.\" Long reading pauses inside (4.3 s at 4213) for tighten."
+          },
+          {
+            "start": 4229.7,
+            "end": 4232.8,
+            "why": "\"I've been waiting for something to deviate and it hasn't.\" (still the viewer's words, read by Mike)."
+          },
+          {
+            "start": 4250.9,
+            "end": 4253.7,
+            "why": "Mike's own reaction: \"I see what you mean. It looks the same. Look at that.\" Deliberately skips his \"left is Bitcoin, right is Kaspa\" line just before it, which the viewer later corrected (Kaspa is on the LEFT)."
+          },
+          {
+            "start": 4744.15,
+            "end": 4749.4,
+            "why": "Bridge from 79:04: \"But Kaspa's bear market is identical to Bitcoin's first real bear market.\""
+          },
+          {
+            "start": 4759.75,
+            "end": 4777.5,
+            "why": "\"Now, when we say Kaspa's bear market, I never actually thought about that. Is this Kaspa's first bear market? ...Bitcoin is below the 50 week moving average, therefore it's a bear market.\""
+          },
+          {
+            "start": 4796.35,
+            "end": 4810.7,
+            "why": "\"When Bitcoin was in a bear market in 2022, Kaspa was not in a bear market. I never actually thought about it from that perspective.\""
+          },
+          {
+            "start": 4862.2,
+            "end": 4870.5,
+            "why": "PEAK. \"Kaspa didn't have a bear market until just, just now. It clearly was not in a bear market.\""
+          },
+          {
+            "start": 4967.65,
+            "end": 5004.3,
+            "why": "Payoff timeline. \"Kaspa's in a bull market since it really started... 2022 Bitcoin is in a bear market, Kaspa is in a bull market. Kaspa goes into a bear market in December of 2024... stays in the bear market for nearly two years, right up until September, and now it's above its 50-week moving average.\""
+          }
+        ],
+        "assembly_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "peak_beats": [
+          {
+            "start": 4862.2,
+            "end": 4866.0,
+            "note": "\"Kaspa didn't have a bear market until just, just now.\""
+          },
+          {
+            "start": 4978.0,
+            "end": 5004.3,
+            "note": "\"2022 Bitcoin is in a bear market, Kaspa is in a bull market... nearly two years, right up until September, and now it's above its 50-week moving average.\""
+          }
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "Merges two items from Mike's brief (Kaspa chart vs early Bitcoin + Kaspa's first bear market and the 50-week) because the second is literally his reaction to the first. Emotional core = segments 6-7 (4862-4870 and 4978-5004): the realization lands and he walks the timeline with growing certainty. Segments 0-3 are him READING a viewer's post, so the delivery there is probably flat: if it drags, the reviewer can drop segments 0-3 and open on segment 4 (\"Is this Kaspa's first bear market?\"). Everything skipped between the segments is dead air while he fiddles with the chart indicator (11-20 s silences) plus a membership-refund chat aside at 72:00-73:15. Backward-looking facts about Kaspa, not a forecast, so it is not the what-the-market-might-do-next failure mode. Whisper word times around 4862 are bunched after a 19.5 s silence: check the in-point by ear."
+      },
+      {
+        "clip_id": 4,
+        "slug": "kcc20-live-nacho-migration",
+        "title": "KCC20 Went Live While I Was Making the Video About It",
+        "topic_id": "kcc20-live-nacho-migration",
+        "variant": "full",
+        "est_seconds": 79.9,
+        "segments": [
+          {
+            "start": 1253.1,
+            "end": 1280.75,
+            "why": "HOOK, personal story from 20:53. \"I knew about it, like it was very, very soon, and I didn't know it was going to go live the day it went live, because I was making this video about KCC20 going live, not realizing it was going live while I was making it. I had to edit out a few lines where I said it's coming soon.\""
+          },
+          {
+            "start": 2963.65,
+            "end": 2982.0,
+            "why": "The proof it is live, from 49:23. \"I saw this post from Nacho the Cat. Nacho migration is live... KCC-20 is live on Kaspa L1. So this is it, Nacho Nation, the move we've been preparing for.\" He stumbles \"KRC-22, KRC, KCC-20\" while reading."
+          },
+          {
+            "start": 3008.6,
+            "end": 3015.4,
+            "why": "\"Migration deadline January 31st. After this date un-migrated tokens will not be eligible.\""
+          },
+          {
+            "start": 3031.7,
+            "end": 3051.2,
+            "why": "The call to act. \"So you have to bridge over your tokens... do it before January 31... Anybody got some Nacho, you want to bridge it over to the KCC20 protocol, right on the L1. You got to make sure you do that.\" Has a 3.2 s pause at 3044 for tighten."
+          },
+          {
+            "start": 1289.3,
+            "end": 1296.9,
+            "why": "CLOSE, back to 21:29. \"The good things are coming, right, pretty soon. Good things are coming. They're gonna pump like hell. We're still very, very early.\""
+          }
+        ],
+        "assembly_order": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "peak_beats": [
+          {
+            "start": 1289.3,
+            "end": 1296.9,
+            "note": "\"Good things are coming. They're gonna pump like hell. We're still very, very early.\""
+          },
+          {
+            "start": 1260.0,
+            "end": 1271.9,
+            "note": "\"I didn't know it was going to go live the day it went live, because I was making this video about KCC20 going live.\""
+          }
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "Emotional core = the last segment (\"pump like hell... still very, very early\") and the self-amused story in segment 0. The Nacho middle (segments 1-3) is a read-out of a post and is the likely flat stretch: it is in because it is the concrete news Mike asked for (KCC20 / Nacho migration) and it gives holders something to do. If it plays flat, the short still works as segments 0 + 4 alone (35 s). Non-chronological on purpose: story, then proof, then deadline, then the hype close. The \"maybe vProgs is going live tomorrow, I have no idea\" aside between the two 21:00 pieces is cut (unverified timing, day-relative)."
+      },
+      {
+        "clip_id": 5,
+        "slug": "kaspa-12-lane-highway-ghostdag",
+        "title": "Why Kaspa Is a 12-Lane Highway",
+        "topic_id": "kaspa-12-lane-highway-ghostdag",
+        "variant": "full",
+        "est_seconds": 72.03,
+        "segments": [
+          {
+            "start": 5406.82,
+            "end": 5413.9,
+            "why": "HOOK (reading a viewer's line he then endorses). \"Kaspa is a 12-lane highway, amazing things to come, 12-lane highway.\""
+          },
+          {
+            "start": 5339.4,
+            "end": 5342.5,
+            "why": "Origin, from 88:59. \"Yonatan was shot down. He wanted to improve Bitcoin.\""
+          },
+          {
+            "start": 5356.5,
+            "end": 5360.3,
+            "why": "\"The GHOSTDAG was his proposal.\" Stumbly (\"was, was his, uh, his\"); tighten."
+          },
+          {
+            "start": 5365.65,
+            "end": 5375.0,
+            "why": "\"He basically turned it into a graph, so it's not linear, it's not a chain, it turns into a graph.\""
+          },
+          {
+            "start": 5424.2,
+            "end": 5451.4,
+            "why": "\"Imagine blocks working in 12 lanes, like you just said, that's a perfect analogy. So things are just working at the same time. And a directed acyclic graph, so they can meet ahead and converge up ahead. Not just a graph, but a directed acyclic graph.\""
+          },
+          {
+            "start": 5500.3,
+            "end": 5517.8,
+            "why": "\"The correct word in computer science is it fans out. One lane fans out into multiple lanes. That's the description of what the blocks do. Instead of a single chain, it fans out into multiple chains.\""
+          },
+          {
+            "start": 5521.6,
+            "end": 5525.6,
+            "why": "\"And then you have the concept of the lanes converging, fanning back in.\" Cut before \"if I'm making any sense\"."
+          }
+        ],
+        "assembly_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "peak_beats": [
+          {
+            "start": 5424.2,
+            "end": 5435.5,
+            "note": "\"Imagine blocks working in 12 lanes... that's a perfect analogy. Things are just working at the same time.\""
+          },
+          {
+            "start": 5500.3,
+            "end": 5517.8,
+            "note": "\"Instead of a single chain, it fans out into multiple chains.\""
+          }
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "LOWEST-CONFIDENCE clip, ranked last on purpose. He is tired and says twice in this stretch that he cannot think straight (5380-5390, 5452-5460): both are cut, along with the detour into his own AI video pipeline (5468-5499, never on the crypto channel). What is left is a clean plain-English GHOSTDAG explainer, but whether the delivery is alive is exactly what the reviewer must judge. Likely emotional core = segment 4 (\"that's a perfect analogy\") and segment 5 (\"it fans out\"). If the energy is not there, kill it rather than ship a flat explainer. Seven short segments, so listen to every join."
+      },
+      {
+        "clip_id": 6,
+        "slug": "kaspa-3-dollars-is-bearish-impact",
+        "title": "$100 Trillion in Crypto Makes $3 Kaspa Look Bearish",
+        "topic_id": "kaspa-3-dollars-is-bearish",
+        "variant": "impact",
+        "est_seconds": 44.1,
+        "segments": [
+          {
+            "start": 5177.0,
+            "end": 5221.1,
+            "why": "Peak of clip 1 as one contiguous run. \"I think crypto is going to be absolutely huge, it's going to explode way past the global stock market cap. So you're talking about like $100 trillion in crypto. A $3 Kaspa is only $100 billion market cap... So $3 is kind of bearish from that perspective.\""
+          }
+        ],
+        "assembly_order": [
+          0
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "The math and the punchline only, no yacht, no LAB aside. Self-contained: opens on a full sentence of his own claim and ends on the hardest line of the stream. Has a 5.3 s pause at 5191-5196 (\"...in crypto. [pause] Right?\") for tighten. Emotional core = 5197-5221."
+      },
+      {
+        "clip_id": 7,
+        "slug": "kaspa-first-bear-market-impact",
+        "title": "Bitcoin Was in a Bear Market. Kaspa Was in a Bull Market",
+        "topic_id": "kaspa-first-bear-market",
+        "variant": "impact",
+        "est_seconds": 44.95,
+        "segments": [
+          {
+            "start": 4862.2,
+            "end": 4870.5,
+            "why": "HOOK. \"Kaspa didn't have a bear market until just, just now. It clearly was not in a bear market.\""
+          },
+          {
+            "start": 4967.65,
+            "end": 5004.3,
+            "why": "\"Kaspa's in a bull market since it really started... 2022 Bitcoin is in a bear market, Kaspa is in a bull market. Kaspa goes into a bear market in December of 2024... nearly two years, right up until September, and now it's above its 50-week moving average.\""
+          }
+        ],
+        "assembly_order": [
+          0,
+          1
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "The realization plus the timeline, without the chart-post read or the definition of a bear market. Emotional core = 4978-5004. Same in-point caveat as clip 3 for 4862 (bunched Whisper times after a long silence)."
+      }
+    ],
+    "dropped": [
+      {
+        "topic": "Kaspa conference cruise (37:50-42:36, 2270-2556 s)",
+        "reason": "Named in the brief, cut on the merits. Around 2.5 minutes of it is the promo video's own voiceover, not Mike. His own reaction is lukewarm to negative: \"it's all cool and all of that\", \"that's far out\", \"cruise doesn't really float my fancy\", \"I think that's kind of scary\", \"I'm not really a boat person\". A short of Mike shrugging at a Kaspa community event is not hype. The one usable beat, the Kaspa yacht, is in clip 1."
+      },
+      {
+        "topic": "Kaspa chart vs early Bitcoin as its OWN clip (70:04-71:30 and 73:19-74:28, 4204-4290 and 4399-4463 s)",
+        "reason": "Not dropped, merged into clip 3 as the opener. Standalone it fails: he reads the viewer's post, says \"I don't know what this is a chart of\" and \"I don't know what you're getting at though\", the leg-counting (4257-4277) only works pointing at the screen, and he gets left / right backwards until corrected."
+      },
+      {
+        "topic": "Viewer line \"My view of Kaspa right now is Bitcoin at 250\" (96:49-97:05, 5809-5825 s)",
+        "reason": "Good line, but it is the viewer's, read in a garbled run with no take from Mike after it."
+      },
+      {
+        "topic": "Kaspa price prediction, \"a dollar... I don't know about that\" (66:55-68:10, 4015-4090 s)",
+        "reason": "Heavily hedged (\"I don't know what to say\", \"it's so hard to say\"), tied to the Iran war, and it undercuts the $3.33 clip from the same stream."
+      },
+      {
+        "topic": "vProgs / DagKnight timing (20:17-20:52, 1217-1252 s)",
+        "reason": "He says he has no new information and guesses it will be delayed. Unverified, no claim to react to."
+      },
+      {
+        "topic": "Four-year cycle zombies have 25 hours left for a 40K Bitcoin (6:00-6:25, 14:55-15:25, 16:37-17:10)",
+        "reason": "Funny and tribal, but it expires within a day of the stream (\"tomorrow at 8 p.m.\"), it is market-state talk, and the brief is Kaspa-centric."
+      },
+      {
+        "topic": "Biggest hack in history / Binance hack / Bitcoin still above the 50-week (6:35-8:00, 14:10-15:00, 37:55-38:15)",
+        "reason": "News recap and market narration."
+      },
+      {
+        "topic": "33 countries stockpiling, fake alien invasion, Three Body Problem (9:10-12:00, 18:55-19:40, 78:10-78:55)",
+        "reason": "Political / conspiracy tangent. Skipped per the brief; Mike can post it himself."
+      },
+      {
+        "topic": "AI bubble is not a bubble, 2008 comparison, Chicago PMI (43:30-45:40, 51:55-52:50)",
+        "reason": "Market narration with hedging."
+      },
+      {
+        "topic": "Gram / TON buy, Gordius Maximus, Virtuals, LAB 353x, MYX 550x, swing-trade software, membership tiers (54:00-66:05, 87:05-88:30, 95:20-96:45)",
+        "reason": "Membership pitch and trader-portfolio framing. Skipped per the brief."
+      },
+      {
+        "topic": "Code Monkey Ming video, the cocktail, the Trump / Nicki Minaj AI video, Sam Hyde, New York neighbourhoods, YouTube effort and subscriber talk",
+        "reason": "Personal tangents, third-party audio and stream housekeeping."
+      },
+      {
+        "topic": "Closing \"if you want to see Kaspa go to $3.33, hit that like button\" (99:16-99:50, 5956-5990 s)",
+        "reason": "Sign-off housekeeping. Lively, but a like-button ask is never a clip, and tacking it on after \"$3 is kind of bearish\" would weaken clip 1's ending."
+      },
+      {
+        "topic": "\"More pain to come but eventually we're gonna get there\" (88:33-88:50, 5313-5329 s)",
+        "reason": "Generic and hedged, no number or opponent."
+      }
+    ],
+    "review_callouts": [
+      "Energy is NOT verified on any clip (text-only pass, master not on disk). He is drinking and says he is tired in the last 20 minutes, which is where clips 1, 3 and 5 come from. Confirm delivery on clip 5 first: it is the one most likely to be flat.",
+      "Clip 2, segment 1 speculates that \"the Michael Saylor types\" and \"the Winklevoss twins\" quietly like Kaspa and are stacking. He frames it as \"it could be\", but it is an unverified claim about named people (persona: verified claims only). It is its own segment so it can be deleted cleanly; the clip stands without it (52 s).",
+      "Clip 4 states a Nacho migration deadline of January 31st, read from the Nacho the Cat post. Confirm it is still correct before this ships, and confirm KRC20 to KCC20 is how the migration should be described in the caption.",
+      "Clip 4 title says \"Went Live\" (past tense, matches \"the day it went live\"). Clip 3 title uses his exact past-tense line.",
+      "Clip 3 opens with Mike reading a viewer's post and depends on the two charts being readable in the content zone. If the screen share is not legible in the vertical, drop segments 0-3 and open on \"Is this Kaspa's first bear market?\" (segment 4).",
+      "Clips 3 and 7: the in-point at 4862.2 sits right after a 19.5 s silence where Whisper bunched the word times (\"was\" and \"Kaspa\" share a stamp). Set it by ear.",
+      "Clip 1 says a $3 Kaspa is \"only $100 billion market cap\" and crypto reaches \"$100 trillion\". These are his round numbers, spoken as a scenario; captions keep them as said.",
+      "Clip 1 mentions the LAB call as \"350x\" (the call is 353x). Spoken, so the caption keeps 350x; any written copy uses the verified figure.",
+      "Clip 1 segment 0 ends on \"man\" with the next sentence starting around 0.1 s later: tighten must snap that join.",
+      "Every clip has long on-air pauses (he is reading chat and working the chart). est_seconds is the raw sum; expect clips 1, 3 and 4 to lose 10-20 s each in the tighten pass."
+    ],
+    "stt_caption_fixes": [
+      {
+        "heard": "Casper's / Casper / Casvah / CASPA",
+        "correct": "Kaspa's / Kaspa",
+        "where": "throughout; ~4541 (clip 2), ~4744, 4761, 4765, 4967 (clips 3, 7), ~5073 (clip 1)"
+      },
+      {
+        "heard": "Casper's feature is very very bright",
+        "correct": "Kaspa's future is very, very bright",
+        "where": "~4541 (clip 2)"
+      },
+      {
+        "heard": "the theorem",
+        "correct": "Ethereum",
+        "where": "~4508 (clip 2)"
+      },
+      {
+        "heard": "Winkleboss twins",
+        "correct": "Winklevoss twins",
+        "where": "~4490 (clip 2)"
+      },
+      {
+        "heard": "some Bitcoin Maxi is going to move over the Kaspa",
+        "correct": "some Bitcoin maxis are going to move over to Kaspa",
+        "where": "~4528 (clip 2)"
+      },
+      {
+        "heard": "Moon Boy perditions",
+        "correct": "moon boy predictions",
+        "where": "~5134 (clip 1)"
+      },
+      {
+        "heard": "lab",
+        "correct": "LAB",
+        "where": "~5139, 5142 (clip 1)"
+      },
+      {
+        "heard": "$3 .33 / Three dollars and 33 cents",
+        "correct": "$3.33",
+        "where": "~5059-5075 (clip 1)"
+      },
+      {
+        "heard": "50 -week movement average",
+        "correct": "50-week moving average (written copy: 50-week SMA, never 50WMA)",
+        "where": "~5003 (clips 3, 7); also ~4772 (clip 3)"
+      },
+      {
+        "heard": "KRC -22. KRC, KCC -20",
+        "correct": "KRC-20... KCC-20 (he stumbles reading it; caption the corrected \"KCC-20 is live on Kaspa L1\")",
+        "where": "~2968-2972 (clip 4)"
+      },
+      {
+        "heard": "the movie we've been preparing for",
+        "correct": "the move we've been preparing for (probable; check by ear)",
+        "where": "~2980 (clip 4)"
+      },
+      {
+        "heard": "Anybody got some not sure",
+        "correct": "Anybody got some Nacho",
+        "where": "~3040 (clip 4)"
+      },
+      {
+        "heard": "un -migrated",
+        "correct": "unmigrated",
+        "where": "~3012 (clip 4)"
+      },
+      {
+        "heard": "KCC 20 / KCC20",
+        "correct": "KCC20 (consistent casing)",
+        "where": "~1254, 1267, 3042 (clip 4)"
+      },
+      {
+        "heard": "the ghost tag",
+        "correct": "GHOSTDAG",
+        "where": "~5357 (clip 5)"
+      },
+      {
+        "heard": "the lanes conversion fanning back in",
+        "correct": "the lanes converging, fanning back in",
+        "where": "~5524 (clip 5)"
+      },
+      {
+        "heard": "12 -lane",
+        "correct": "12-lane",
+        "where": "~5408, 5412 (clip 5)"
+      }
+    ]
+  }
+}
