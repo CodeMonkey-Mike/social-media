@@ -1,2 +1,5 @@
 # Hook scripts must keep LF line endings or sh cannot run them on a CRLF checkout (Windows).
 .githooks/* text eol=lf
+
+# The eval record is append-only: keep it LF on every checkout, so a line-ending rewrite never touches old lines.
+video-creation/livestream-repurpose/evals/** text eol=lf

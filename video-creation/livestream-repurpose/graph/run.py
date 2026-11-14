@@ -1522,6 +1522,8 @@ def main_post():
 #       [--delete N,N] [--lane3-brief "..."] [--clip-brief "..."] [--publish-date D]
 #       [--max-builders 2] [--thread ID] [--resume] [--stub ok|fail]
 #   python run.py batch --batch <b> --resume --approve 4b [--delete 2,5]   (after a gate)
+#       [--missed "12:30-14:10 the ETF rant; 45:00 kaspa hashrate" | --missed none]   (evals recall:
+#        what the clip-strategist should have found; skills/clip-evals/clip-evals.md)
 #   python run.py batch --batch <b> [--resume --approve 2nd] --clips 1 --until build   (build a SUBSET of clips; the rest held for a later --clips run)
 #   python run.py lane3 --batch <b> [--resume] [--stub ok|fail]             (Lane 3 alone)
 #   python run.py status --batch <b>                                        (exit 1 if pending)
@@ -1589,6 +1591,10 @@ def main_batch():
     ap.add_argument("--approve", default="", help="pre-approve gates: 4b,2nd")
     ap.add_argument("--delete", default="",
                     help="clip numbers to delete at the gate being approved, e.g. 2,5")
+    ap.add_argument("--missed", default=None,
+                    help='with --approve: what the clip-strategist should have found, for the evals record. '
+                         '"MM:SS-MM:SS note; MM:SS note" (vertical-master times, as in the 90 s chunk '
+                         'transcript), or "none" when nothing was missed')
     ap.add_argument("--lane3-brief", default=None, help="Mike's Lane 3 overrides for this batch")
     ap.add_argument("--clip-brief", default=None, help="Mike's clip-selection overrides")
     ap.add_argument("--publish-date", default=None)
@@ -1605,6 +1611,12 @@ def main_batch():
     deletes = _parse_ints(args.delete)
     delete_4b = deletes if "4b" in approve else []
     delete_2nd = deletes if ("2nd" in approve and "4b" not in approve) else []
+    if args.missed and not approve:
+        print("--missed belongs to a gate approval: pass it with --approve 4b (or 2nd). To add it later: "
+              "python video-creation/livestream-repurpose/skills/clip-evals/clip_evals.py missed --batch <b> \"...\"",
+              file=sys.stderr)
+        sys.exit(1)
+    missed_gate = approve[0] if (approve and args.missed) else ""
 
     if args.stub:
         batch = "stub-batch"
@@ -1640,7 +1652,8 @@ def main_batch():
             "min_sil": args.min_sil, "shorts_min_sil": args.shorts_min_sil,
             "skip_longform": args.skip_longform, "publish_date": args.publish_date,
             "until": args.until, "approve": approve, "delete_4b": delete_4b,
-            "delete_2nd": delete_2nd, "max_builders": args.max_builders,
+            "delete_2nd": delete_2nd, "missed": args.missed, "missed_gate": missed_gate,
+            "max_builders": args.max_builders,
             "build_clips": _parse_ints(args.clips),
             "lane3_brief": args.lane3_brief, "clip_brief": args.clip_brief,
             "stub": "", "steps": {}, "status": "running",
@@ -1659,9 +1672,9 @@ def main_batch():
     t0 = time.monotonic()
     if args.resume:
         update = {k: v for k, v in init.items()
-                  if k in ("approve", "delete_4b", "delete_2nd", "until", "publish_date",
+                  if k in ("approve", "delete_4b", "delete_2nd", "missed", "missed_gate", "until", "publish_date",
                            "shorts_min_sil", "max_builders", "build_clips", "lane3_brief", "clip_brief")}
-        payload = ({"approve": approve[0], "delete": deletes} if approve else None)
+        payload = ({"approve": approve[0], "delete": deletes, "missed": args.missed} if approve else None)
         # A plain resume (no approval) must carry NO state update: the checkpoint's own
         # pending writes + an update to the same key = InvalidUpdateError (caught live
         # 2026-09-10). Per-run knobs ride on env (BATCH_MAX_BUILDERS) in that case.

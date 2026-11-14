@@ -20,6 +20,19 @@ const lib = require('./lib');
 
 const REPO_ROOT = path.resolve(__dirname, '..');
 
+// NEVER RECYCLED, whatever a target plans: the eval record of the livestream clip-strategist (every keep / kill
+// at a gate, the transcripts kept for replays, the replays and scores). It is permanent by design
+// (video-creation/livestream-repurpose/skills/clip-evals/clip-evals.md). No target touches it today; this guard
+// makes sure a later change to a target, or an empty-folder prune of a parent, never does.
+const PROTECTED = [path.join(REPO_ROOT, 'video-creation', 'livestream-repurpose', 'evals')];
+function isProtected(p) {
+  const a = path.resolve(p).toLowerCase();
+  return PROTECTED.some((root) => {
+    const b = root.toLowerCase();
+    return a === b || a.startsWith(b + path.sep) || b.startsWith(a + path.sep);   // inside it, or a parent of it
+  });
+}
+
 // Keep batch lifecycle status fresh before planning. The video-creation target
 // PROTECTS active batches and RECYCLES completed ones, so a finished batch still
 // flagged `active` would wrongly shield its source artifacts (and a never-reconciled
@@ -125,6 +138,13 @@ function runTarget(name, opts) {
       emptyDirs = emptyDirs.filter(d => path.relative(REPO_ROOT, d).replace(/\\/g, '/').toLowerCase().includes(needle));
     }
     for (const d of emptyDirs) recycle.push({ path: d, reason: 'empty folder (no files remain after cleanup)' });
+  }
+
+  const blocked = recycle.filter((r) => isProtected(r.path));
+  if (blocked.length) {
+    recycle = recycle.filter((r) => !isProtected(r.path));
+    console.log(`  PROTECTED: kept ${blocked.length} path(s) that hold the eval record (never recycled):`);
+    for (const r of blocked) console.log(`    ${path.relative(REPO_ROOT, r.path)}`);
   }
 
   const totalBytes = recycle.reduce((sum, r) => sum + lib.sizeOf(r.path), 0);

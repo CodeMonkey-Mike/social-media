@@ -1,0 +1,320 @@
+{
+  "v": 1,
+  "batch": "best-time",
+  "prompt_version": "57ecbf267a8c",
+  "prompt_parts": {
+    "agent": "726ef081ebe0d12a6d389e8b7169224801520d30",
+    "topic_finding": "e84409de6050635d9ede84868f31fd425ddc5581",
+    "clip_selection": "f6468ec145ee6457e96cb7236f94ddc7bb245299",
+    "template": "9c717582f5abd3ea3bf21162ed6b1b8703031f9d"
+  },
+  "model": "fable/max",
+  "brief": "Select EXACTLY 3 clips, no more. Every clip must be UNDER 60 seconds final length after tighten, so pick raw spans that land under 60 s.",
+  "replayed_at": "2026-11-13T23:21:32",
+  "plan": {
+    "batch": "best-time",
+    "source_vertical": "NOT ON DISK (evaluation replay)",
+    "transcript_json": "C:/Users/mnede/Documents/Claude/social-media/video-creation/livestream-repurpose/evals/transcripts/best-time/words.txt",
+    "authored_by": "clip-strategist 2026-11-13",
+    "constraints": {
+      "max_topics": 5,
+      "max_clips": 8,
+      "note": "Mike's per-run brief overrides the standing 5 topics / 8 clips ceiling: EXACTLY 3 clips, each under 60 s after tighten. So the clips list has exactly 3 entries, one full cut for each of the 3 strongest topics, and no impact variants (an impact clip would have used one of the 3 slots on a topic already covered). Every raw span sums under 60 s (58.85 / 43.50 / 55.58) and each one holds removable dead air, so tighten only shortens them. No segment ends after 2661 s. Picked for hype and conviction: one philosophical / inspiring clip and two project-hype clips; zero market-state, political, membership-pitch or ElizaOS material."
+    },
+    "topics": [
+      {
+        "topic_id": "last-chance-to-get-ahead-ai",
+        "rank": 1,
+        "hook_type": "philosophical-conviction",
+        "hook_summary": "'I do think this is going to be one of the last opportunities that any of us have to actually get ahead': AI is exploding at an exponential level, one robot in your house replaces the roofer, the plumber and the electrician within a couple of years, so buy those assets now. Touched at 274-330, 434-472, 479-492, 695-720, 754-790; built from 3 ranges (multi-snippet)."
+      },
+      {
+        "topic_id": "lab-100-dollars-350x-compounding",
+        "rank": 2,
+        "hook_type": "data-anchored community win",
+        "hook_summary": "'If you put in 100 bucks into LAB and you end up doing a 350x, you're sitting pretty': roll it into the next plays at $1,000 each and when one does a 300x 'now your profits are in the hundreds of thousands'. Touched at 1351-1366 (LAB went to 7 billion, got in around 20 million) and 2153-2223; built from 3 ranges inside the second run."
+      },
+      {
+        "topic_id": "ton-gram-billion-telegram-users",
+        "rank": 3,
+        "hook_type": "project-hype prediction with a reason",
+        "hook_summary": "'Very, very bullish on Gram, on TON': over a billion monthly users on Telegram, every crypto mini app in Telegram has to run on TON, and at $1.26 against a $7.88 all-time high 'it's probably gonna beat its all-time high'. Touched at 797-807, 845-885, 1002-1100, 1987-1992; built from 3 ranges (multi-snippet)."
+      }
+    ],
+    "clips": [
+      {
+        "clip_id": 1,
+        "slug": "last-chance-to-get-ahead-ai",
+        "title": "One of the Last Chances to Get Ahead",
+        "topic_id": "last-chance-to-get-ahead-ai",
+        "variant": "full",
+        "est_seconds": 58.85,
+        "segments": [
+          {
+            "start": 296.4,
+            "end": 330.55,
+            "why": "HOOK + thesis, cold open on 'I do think this is going to be one of the last opportunities that any of us have to actually get ahead': AI exploding at an exponential level, jobs taken away, everything gets cheap, hard to make money, so buy into assets right now before all this happens. Ends on 'right?' before 'And it's happening'."
+          },
+          {
+            "start": 454.7,
+            "end": 472.05,
+            "why": "The picture that makes it real: 'There's one robot in your house' and you don't need a roofer, a plumber, an electrician, a carpenter, a security guard, 'that's coming within just a couple of years, man'. Ends on 'man' before the repeated 'and a couple of years here we go'."
+          },
+          {
+            "start": 484.5,
+            "end": 491.85,
+            "why": "The call to action that ties it back to the channel: 'stop eating out, stop spending extra money, buy those assets, you're here for crypto, right? So buy that crypto'. Ends on 'crypto' before 'maybe diversify a little bit' (the gold / stocks hedge is left out)."
+          }
+        ],
+        "assembly_order": [
+          0,
+          1,
+          2
+        ],
+        "peak_beats": [
+          {
+            "start": 296.4,
+            "end": 301.3,
+            "note": "'this is going to be like one of the last opportunities that any of us have to actually get ahead'"
+          },
+          {
+            "start": 454.7,
+            "end": 472.05,
+            "note": "'There's one robot in your house... you don't need a plumber, you don't need an electrician... that's coming within just a couple of years, man'"
+          }
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "Emotional core (to confirm by ear) = segment 1, the one-robot list: fast, stacked 'you don't need', lands on 'a couple of years, man'. Segment 0 is the conviction hook and carries the 'goddamn cheap' line. Chronological order is also the narrative order: claim, picture, what to do about it. Raw 58.85 s holds roughly 8 s of dead air for tighten (301.9-305.2 and 310.8-313.6 inside segment 0, the 'you don't need you don't like I say' restart at 457.5-460.0 in segment 1), so the tightened cut should land near 50 s. If tighten comes back over 60 s, drop segment 2 and end on 'a couple of years, man' (51.5 s raw)."
+      },
+      {
+        "clip_id": 2,
+        "slug": "lab-100-dollars-350x-compounding",
+        "title": "What $100 in LAB at 350x Turns Into",
+        "topic_id": "lab-100-dollars-350x-compounding",
+        "variant": "full",
+        "est_seconds": 43.5,
+        "segments": [
+          {
+            "start": 2153.85,
+            "end": 2173.2,
+            "why": "HOOK, cold open on 'if you put in 100 bucks into LAB and you end up doing a 350x, I mean you're sitting pretty', then rotate into the others: some die, some do another 300x. Ends on 'right' before the dangling 'so'. (The 'um, you know' at 2164.5-2167.5 is tighten material.)"
+          },
+          {
+            "start": 2183.25,
+            "end": 2189.05,
+            "why": "The first number: 'you turn like a hundred dollars into, you know, like thirty thousand or something, right'. Uses the clean restart, not the first attempt at 2176 that dies into a 5 s pause; the 'maybe twenty thousand, you can't sell the exact top' hedge (2194.9-2203.0) is left out."
+          },
+          {
+            "start": 2204.25,
+            "end": 2222.6,
+            "why": "PAYOFF: 'now you have all this extra dry powder', so instead of $100 on each play you put in $1,000, 'and when the thousand dollars does a 300x, now your profits are in the hundreds of thousands'. Hard out on 'thousands', before 'Which is why you gotta click the link' (membership pitch)."
+          }
+        ],
+        "assembly_order": [
+          0,
+          1,
+          2
+        ],
+        "peak_beats": [
+          {
+            "start": 2153.85,
+            "end": 2162.3,
+            "note": "'if you put in 100 bucks into LAB and you end up doing a 350x, I mean you're sitting pretty'"
+          },
+          {
+            "start": 2214.45,
+            "end": 2222.6,
+            "note": "'what happens when the thousand dollars does a 300x? Now your profits are in the hundreds of thousands'"
+          }
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "Emotional core (to confirm by ear) = segment 2, the escalation to 'hundreds of thousands'. This is the community-win hype clip of the batch: a verified call (LAB, 350x) turned into simple compounding math the viewer can picture. Chronological order. The cut must end at 2222.60: the very next words are the cryptorich.vip pitch. Optional proof beat if Mike wants it and the length allows: 1351.20-1365.60 ('market cap 5, 10, 20 million and they still go 100, 300, 500x because they go into a billion, like LAB went to 7 billion, we got in like 20 million'); left out because it opens mid-thought ('they') and comes from the 'in my group I make calls' run."
+      },
+      {
+        "clip_id": 3,
+        "slug": "ton-gram-billion-telegram-users",
+        "title": "Very Bullish on TON: A Billion Telegram Users",
+        "topic_id": "ton-gram-billion-telegram-users",
+        "variant": "full",
+        "est_seconds": 55.58,
+        "segments": [
+          {
+            "start": 848.15,
+            "end": 885.1,
+            "why": "HOOK + thesis, cold open on 'very, very bullish on Gram, on TON, for a number of reasons': the distribution, over a billion monthly users on Telegram, Telegram started The Open Network, every crypto mini app in Telegram has to run on TON, a built-in Gram wallet rolls out to the user base, 'I think it's a really good play'. Ends on 'play' before 'There's a lot of cryptos you can get into'."
+          },
+          {
+            "start": 1039.65,
+            "end": 1042.58,
+            "why": "Bridge into the price beat, from 3 minutes later: 'there's a price right now. The price is really, really low.'"
+          },
+          {
+            "start": 1057.4,
+            "end": 1073.1,
+            "why": "PAYOFF: 'it's $1.26 right now... all time high, we're talking about $7.88. Wow, man. It's one of those things that's probably gonna beat its all-time high'. Ends on 'high' before 'A lot of things are gonna do good'."
+          }
+        ],
+        "assembly_order": [
+          0,
+          1,
+          2
+        ],
+        "peak_beats": [
+          {
+            "start": 856.45,
+            "end": 862.05,
+            "note": "'especially the distribution it has, right? Over a billion monthly users on Telegram'"
+          },
+          {
+            "start": 1061.55,
+            "end": 1073.1,
+            "note": "'all time high, we're talking about $7.88. Wow, man... probably gonna beat its all-time high'"
+          }
+        ],
+        "energy_confirmed": "flagged-for-review",
+        "notes": "Emotional core (to confirm by ear) = segment 2, the '$7.88. Wow, man' reaction and the all-time-high call. Scatter-gather across 3 minutes: the reasons (segment 0) then the price payoff (segments 1-2), which reads as an outsized prediction WITH its reason, not a chart readout. RISK, lowest-confidence clip of the three: segment 0 reads on paper like he is going down a list (pauses at 851.7-854.8, 863.2-865.6, 878.3-879.8), so the delivery may be flat. If it is flat by ear, swap in the software-engineering alternate listed first in the dropped list. Extra TON line that did not fit under 60 s: 1987.05-1991.95 ('I got a lot of TON... some of the highest conviction ones')."
+      }
+    ],
+    "dropped": [
+      {
+        "topic": "Software engineering is completely wiped out, says the code monkey (360.5-454.6)",
+        "reason": "FIRST ALTERNATE, cut only by the 3-clip cap. Live on paper (doubling: 'completely wiped out, it's like completely gone', 'me as a code monkey, I'm in the know', 'everything, everything, everything') but it is the same AI-jobs theme as clip 1, and with 3 slots the batch is stronger with two project-hype clips beside one AI clip. Ready-made under-60 cut if Mike wants it in place of clip 3: 362.35-385.95 + 410.10-433.85 + 441.95-447.30 (52.7 s raw)."
+      },
+      {
+        "topic": "One year ago it wasn't like this, imagine one year from now (695.8-719.8)",
+        "reason": "Good 24 s closer for the AI topic, but it does not fit in clip 1 under 60 s and has no number or picture as strong as the one-robot list. Second alternate."
+      },
+      {
+        "topic": "100x on plays that are not degen + PiVerse 'is going to be ripping one day' (1311.0-1377.0)",
+        "reason": "Runs through 'in my discord' and 'in my group I make calls' (membership-adjacent), and the 50-70x on PiVerse is a forward call on an unverified project. Its one hard fact (LAB to 7 billion from around 20 million, 1351.2-1365.6) is offered as an optional proof beat in the notes of clip 2."
+      },
+      {
+        "topic": "The one-person pod: product engineer replaces the whole engineering team (540.0-690.0)",
+        "reason": "Flat explainer of a Silicon Valley org chart, slow build, no hook line; trails off into 'I don't know what's going to happen'."
+      },
+      {
+        "topic": "Third-party video playback: 100 million to a billion humanoid robots, economy doubles in 5 to 7 years (511.9-545.0, 723.0-757.0)",
+        "reason": "Somebody else's voice playing on the stream, not Mike. His reactions around it are one-liners."
+      },
+      {
+        "topic": "Opening + lost the 50-day moving average, 'everything looks like hell' (60.0-135.0)",
+        "reason": "Stream welcome (housekeeping) and current market-state narration; goes stale in days."
+      },
+      {
+        "topic": "Russia diesel, midterms, 'all the world is a stage' (135.0-250.0)",
+        "reason": "Political tangent, excluded by the brief."
+      },
+      {
+        "topic": "Tom Lee: 99% of finance still runs on old rails (250.0-274.0)",
+        "reason": "Reading a headline; a news readout with one line of reaction."
+      },
+      {
+        "topic": "GTA 6 narrative, Glitch, Hellhound, cybersecurity and quantum narratives (905.0-990.0, 1125.0-1275.0)",
+        "reason": "Heavily hedged ('I don't know', 'I'm staying away', 'I'm not into it'), chat replies, names coins only to say he is not buying."
+      },
+      {
+        "topic": "TON renamed to Gram, 'I like when things make sense' (1002.4-1026.6)",
+        "reason": "Naming aside with a garbled line ('they call it Gram because of me'); adds no reason to want the coin."
+      },
+      {
+        "topic": "PiVerse entry levels on the chart + 85 million first call (1377.0-1535.0)",
+        "reason": "Chart-pointing ('down to here', 'this level') that does not work without the screen, hedged entries, and a 'join my group or super chat' pitch."
+      },
+      {
+        "topic": "Halloween pumpkin coin (1560.0-1690.0)",
+        "reason": "Dead air while he hunts for the chart, then 'if it's still at 19K on Halloween it's dead'. Negative and time-bound."
+      },
+      {
+        "topic": "Pump.fun 8 to 20 billion top + higher-lows chart read (1690.0-1740.0, 1800.0-1920.0)",
+        "reason": "'Who the hell knows' prediction with heavy hedging, then a level-by-level chart readout."
+      },
+      {
+        "topic": "Battle hardened in crypto (1742.5-1775.0)",
+        "reason": "Lands on the ElizaOS lawsuit as its example (excluded), and without it there are around 15 s of setup with no payoff."
+      },
+      {
+        "topic": "Stonk launchpad (1775.0-1790.0, 2000.0-2090.0)",
+        "reason": "Chart readout with 'never financial advice' on repeat; no thesis stated beyond 'another launchpad'."
+      },
+      {
+        "topic": "cryptorich.vip showcase, Velvet, Tutorial comeback, PEAK swing-trade software walkthrough (2223.0-2565.0)",
+        "reason": "Membership pitch and a software demo, excluded by the brief; the PEAK part is a sell-average explainer that needs the screen."
+      },
+      {
+        "topic": "Likes plea + sign-off (2565.0-2661.0)",
+        "reason": "Stream housekeeping."
+      }
+    ],
+    "review_callouts": [
+      "Energy is NOT confirmed for any clip: this plan was built from text only, with no video or audio on disk. Listen first to clip 1 segment 1 (454.70-472.05), clip 2 segment 2 (2204.25-2222.60) and clip 3 segment 2 (1057.40-1073.10), the three beats I am calling the emotional cores.",
+      "Clip 3 (TON) is the lowest-confidence pick: its first 37 s read like a list. If the delivery is flat, replace it with the software-engineering alternate (first entry in the dropped list, timecodes ready).",
+      "Clip 1 is 58.85 s raw, the closest to the 60 s cap. It needs tighten to take out the dead air inside segment 0; if the tightened cut is still over 60 s, drop segment 2 (484.50-491.85).",
+      "Clip 3 states prices ($1.26 now, $7.88 all-time high). They are his spoken numbers from the stream and will age; confirm they are still fair at posting time, or cut segments 1-2 and ship the 37 s thesis alone.",
+      "Clip 3: confirm the Gram naming before captions and title (he says both 'Gram' and 'TON' for the coin, and 'a built-in Gram wallet'). The title keeps TON.",
+      "Clip 2: the multiple is spoken as 350x here; the verified LAB call is 353x. Captions follow the spoken word, the title uses 350x to match.",
+      "Word timings in this replay are word STARTS only, so every out point sits just before the start of the next word. Let tighten snap them to silence."
+    ],
+    "stt_caption_fixes": [
+      {
+        "heard": "roof or",
+        "correct": "roofer",
+        "where": "~460.5 (clip 1)"
+      },
+      {
+        "heard": "ton / Ton",
+        "correct": "TON",
+        "where": "~851.3, ~874.6 (clip 3)"
+      },
+      {
+        "heard": "gram",
+        "correct": "Gram",
+        "where": "~849.7 (clip 3)"
+      },
+      {
+        "heard": "the open network to UN",
+        "correct": "The Open Network, TON",
+        "where": "~867.8 (clip 3)"
+      },
+      {
+        "heard": "telegram / telegrams blockchain",
+        "correct": "Telegram / Telegram's blockchain",
+        "where": "~861.6-870.9 (clip 3)"
+      },
+      {
+        "heard": "every crypto mini app and telegram has to run a ton",
+        "correct": "every crypto mini app in Telegram has to run on TON",
+        "where": "~872.6 (clip 3)"
+      },
+      {
+        "heard": "a built and grand wallet is roll out",
+        "correct": "a built-in Gram wallet is rolled out",
+        "where": "~875.8 (clip 3)"
+      },
+      {
+        "heard": "beat us all time. Hi",
+        "correct": "beat its all-time high",
+        "where": "~1072.0 (clip 3)"
+      },
+      {
+        "heard": "lab",
+        "correct": "LAB",
+        "where": "~2155.6 (clip 2)"
+      },
+      {
+        "heard": "Incentive $100",
+        "correct": "Instead of $100",
+        "where": "~2209.2 (clip 2)"
+      },
+      {
+        "heard": "and all these different plays",
+        "correct": "in all these different plays",
+        "where": "~2212.9 (clip 2)"
+      },
+      {
+        "heard": "Not now your profits in a hundreds of thousands",
+        "correct": "now your profits are in the hundreds of thousands",
+        "where": "~2219.4 (clip 2)"
+      }
+    ]
+  }
+}

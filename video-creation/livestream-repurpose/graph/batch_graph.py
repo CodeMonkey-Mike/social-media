@@ -96,6 +96,8 @@ class BatchState(TypedDict, total=False):
     approve: List[str]
     delete_4b: List[int]
     delete_2nd: List[int]
+    missed: Optional[str]        # --missed "...": what the clip-strategist should have found (evals recall)
+    missed_gate: str             # the gate that --missed was said at
     max_builders: int
     build_clips: List[int]       # per-run --clips scope for lane2_build (empty = every surviving clip)
     lane3_brief: Optional[str]
@@ -268,6 +270,8 @@ def _step(state: BatchState, node: str, status: str, detail: str = "") -> dict:
 
 
 def _beat(state: BatchState, node: str, event: str):
+    if state.get("no_heartbeat"):        # an evals replay (clip_evals.py replay) is not a batch run
+        return
     write_progress({
         "lane": LANE_BATCH, "lane_name": "batch", "node": node,
         "batch": state.get("batch"), "status": "running", "stub": bool(state.get("stub")),
@@ -448,9 +452,11 @@ def _apply_deletes(batch: str, gate: str, deletes: List[int]) -> List[int]:
             (gone if int(c.get("clip_id", -1)) in deletes else keep).append(c)
         if gone:
             cp["clips"] = keep
+            # "clip" = the strategist's whole proposal: a kill used to keep only its id + slug, so the
+            # evals record could not say WHAT was rejected.
             cp.setdefault("deleted_at_gate", []).extend(
                 {"gate": gate, "clip_id": c["clip_id"], "slug": c.get("slug"),
-                 "at": _now_iso()} for c in gone)
+                 "at": _now_iso(), "clip": c} for c in gone)
             _write_json_atomic(cp_path, cp)
             applied = [c["clip_id"] for c in gone]
         p = prog(batch)
@@ -462,11 +468,54 @@ def _apply_deletes(batch: str, gate: str, deletes: List[int]) -> List[int]:
     return applied
 
 
-def _record_gate(batch: str, gate: str, deletes: List[int]):
+def _record_gate(batch: str, gate: str, deletes: List[int], missed: Optional[str] = None) -> str:
     p = prog(batch)
     p.setdefault("gates", {})[gate] = {"approved_at": _now_iso(), "deleted": deletes}
     if p:
         prog_write(batch, p)
+    return _evals_gate(batch, gate, missed)
+
+
+# ── the eval score layer (skills/clip-evals) ─────────────────────────────────
+# Every keep / kill at a gate is appended to evals/clip-verdicts.jsonl (committed, never recycled), with the
+# prompt version that produced the plan. The record must never break a batch: a failure here is printed loudly
+# and shown in the gate's step detail, and `clip_evals.py record --batch <b> --gate <g>` repairs it afterwards.
+
+def _evals():
+    d = str(LSR / "skills" / "clip-evals")
+    if d not in sys.path:
+        sys.path.insert(0, d)
+    import clip_evals  # noqa: E402
+    return clip_evals
+
+
+def _evals_selected(state: BatchState, master_len, log: Path, log_offset: int) -> str:
+    batch = state["batch"]
+    try:
+        ce, mp = _evals(), media_paths(state)
+        brief = ((reg_entry(batch) or {}).get("briefs") or {}).get("clips")
+        fb = FABLE_FALLBACK_MODEL if ce.fell_back(log, log_offset, FABLE_LIMIT_RE) else None
+        ver = ce.stamp_selection(batch, clip_plan_path(batch), clip_prompt_template(), brief,
+                                 {"chunks": mp["chunks"], "plain": mp["plain"], "words": mp["words"]},
+                                 master_seconds=master_len, fallback_model=fb)
+        return f"evals: prompt {ver}"
+    except Exception as e:  # noqa: BLE001
+        print(f"[batch] EVALS WARNING: the prompt version / transcripts were NOT saved for {batch}: {e!r}",
+              flush=True)
+        return f"evals: NOT STAMPED ({e!r})"
+
+
+def _evals_gate(batch: str, gate: str, missed: Optional[str]) -> str:
+    try:
+        c = _evals().record_gate(batch, gate, _read_json(clip_plan_path(batch), {}) or {}, missed=missed)
+        return (f"evals: {c['kept']} kept, {c['killed']} killed"
+                + (f", {c['missed']} missed" if missed else "")
+                + (f" ({c['already']} already on record)" if c["already"] else ""))
+    except Exception as e:  # noqa: BLE001
+        print(f"[batch] EVALS WARNING: gate {gate} verdicts were NOT recorded for {batch}: {e!r}. Repair: "
+              f"python video-creation/livestream-repurpose/skills/clip-evals/clip_evals.py record "
+              f"--batch {batch} --gate {gate}", flush=True)
+        return f"evals: NOT RECORDED ({e!r})"
 
 
 def _gate(state: BatchState, gate: str, delete_key: str) -> BatchState:
@@ -480,20 +529,22 @@ def _gate(state: BatchState, gate: str, delete_key: str) -> BatchState:
                                f"approved {already.get('approved_at')}")}
     if gate in (state.get("approve") or []):
         applied = _apply_deletes(batch, gate, state.get(delete_key) or [])
-        _record_gate(batch, gate, applied)
-        return {"steps": _step(state, node, "ran", f"approved via flag; deleted {applied}")}
+        missed = state.get("missed") if state.get("missed_gate") == gate else None
+        note = _record_gate(batch, gate, applied, missed)
+        return {"steps": _step(state, node, "ran", f"approved via flag; deleted {applied}; {note}")}
     _beat(state, node, f"WAITING on Mike's {gate} review")
     # Literal LangGraph HITL: the run stops here (exit 2) and prints the resume command.
     answer = interrupt({
         "gate": gate, "batch": batch,
         "dashboard": str(SHORTS / batch / "dashboard.html"),
         "resume": f"python video-creation/livestream-repurpose/graph/run.py batch "
-                  f"--batch {batch} --resume --approve {gate} [--delete N,N]",
+                  f"--batch {batch} --resume --approve {gate} [--delete N,N] "
+                  f'[--missed "MM:SS-MM:SS what it should have found; ..." | --missed none]',
     })
     deletes = [int(x) for x in (answer or {}).get("delete", [])]
     applied = _apply_deletes(batch, gate, deletes)
-    _record_gate(batch, gate, applied)
-    return {"steps": _step(state, node, "ran", f"approved on resume; deleted {applied}")}
+    note = _record_gate(batch, gate, applied, (answer or {}).get("missed"))
+    return {"steps": _step(state, node, "ran", f"approved on resume; deleted {applied}; {note}")}
 
 
 # ── nodes ────────────────────────────────────────────────────────────────────
@@ -603,18 +654,17 @@ def launch_lane3(state: BatchState) -> BatchState:
     return {"lane3_pid": pid, "steps": _step(state, node, "ran", f"pid {pid}")}
 
 
-def _clip_prompt(state: BatchState) -> str:
-    batch = state["batch"]
-    mp = media_paths(state)
-    e = reg_entry(batch) or {}
-    brief = ((e.get("briefs") or {}).get("clips")) or "none"
+def clip_prompt_text(batch, chunks, plain, words, vertical, out_path, brief) -> str:
+    """The clip-strategist's instructions. ONE text for the live run (`_clip_prompt`) and for an evals replay
+    (skills/clip-evals/clip_evals.py replay), so a replay asks exactly what a real batch asks. Editing this
+    wording is a PROMPT CHANGE: it is part of the prompt version the evals record stores."""
     return (
         f"Select the vertical-shorts clip plan for livestream batch `{batch}` (Lane 2, Phase 3-4).\n\n"
         f"SOURCE ARTIFACTS (glossary-adjudicated by the intake graph):\n"
-        f"- 90s chunk transcript (primary input): `{mp['chunks']}`\n"
-        f"- Plain transcript: `{mp['plain']}`\n- Word timings: `{mp['words']}`\n"
-        f"- Vertical master the timecodes index: `{mp['vertical']}`\n\n"
-        f"OUTPUT: write `{clip_plan_path(batch)}` in the canonical clip-plan schema consumed by "
+        f"- 90s chunk transcript (primary input): `{chunks}`\n"
+        f"- Plain transcript: `{plain}`\n- Word timings: `{words}`\n"
+        f"- Vertical master the timecodes index: `{vertical}`\n\n"
+        f"OUTPUT: write `{out_path}` in the canonical clip-plan schema consumed by "
         f"`run.py cut --batch {batch}` (see `video-creation/livestream-repurpose/scripts/cut_topics.py` "
         f"validate_plan; it MUST pass). Create the folder if needed.\n\n"
         f"CONSTRAINTS: best 5 topics, no more than 8 clips total; a long clip AND a shorter impact "
@@ -628,6 +678,20 @@ def _clip_prompt(state: BatchState) -> str:
     )
 
 
+def clip_prompt_template() -> str:
+    """The instruction text with placeholders for everything that differs per batch (what gets versioned)."""
+    return clip_prompt_text("{batch}", "{chunks}", "{plain}", "{words}", "{vertical}", "{clip_plan}", "{brief}")
+
+
+def _clip_prompt(state: BatchState) -> str:
+    batch = state["batch"]
+    mp = media_paths(state)
+    e = reg_entry(batch) or {}
+    brief = ((e.get("briefs") or {}).get("clips")) or "none"
+    return clip_prompt_text(batch, mp["chunks"], mp["plain"], mp["words"], mp["vertical"],
+                            clip_plan_path(batch), brief)
+
+
 def lane2_select(state: BatchState) -> BatchState:
     node = "lane2_select"
     batch = state["batch"]
@@ -637,8 +701,9 @@ def lane2_select(state: BatchState) -> BatchState:
     if cp.is_file() and (_read_json(cp, {}) or {}).get("clips"):
         return {"steps": _step(state, node, "skipped", "clip-plan.json on disk")}
     _beat(state, node, "clip-strategist selecting clips")
-    rc, out = spawn_agent(state, node, "clip-strategist", _clip_prompt(state),
-                          f"agent-clip-strategist-{batch}.log")
+    log = DATA / f"agent-clip-strategist-{batch}.log"
+    log_offset = log.stat().st_size if log.is_file() else 0
+    rc, out = spawn_agent(state, node, "clip-strategist", _clip_prompt(state), log.name)
     if not persist_agent_json(out, cp, want_key="clips"):
         err = f"clip-strategist exit {rc}; clip-plan.json missing/empty. tail:\n{out[-1000:]}"
         return {"status": "failed", "error": err, "steps": _step(state, node, "failed", err)}
@@ -646,12 +711,13 @@ def lane2_select(state: BatchState) -> BatchState:
     sys.path.insert(0, str(SCRIPTS))
     from cut_topics import validate_plan as validate_clip_plan  # noqa: E402
     try:
-        validate_clip_plan(_read_json(cp, {}), str(media_paths(state)["vertical"]))
+        master_len = validate_clip_plan(_read_json(cp, {}), str(media_paths(state)["vertical"]))
     except SystemExit as e:
         err = f"clip-plan.json INVALID: {e}"
         return {"status": "failed", "error": err, "steps": _step(state, node, "failed", err)}
+    note = _evals_selected(state, master_len, log, log_offset)
     return {"steps": _step(state, node, "ran",
-                           f"{len(_read_json(cp, {})['clips'])} clips planned")}
+                           f"{len(_read_json(cp, {})['clips'])} clips planned; {note}")}
 
 
 def lane2_cut(state: BatchState) -> BatchState:

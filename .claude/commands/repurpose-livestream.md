@@ -52,6 +52,10 @@ unique).
    `video-creation/shorts/<batch>/dashboard.html`) or his 2nd review (tightened clips). Tell Mike,
    with the clip table, and resume ONLY with his verdicts:
    `run.py batch --batch <batch> --resume --approve 4b [--delete N,N]` (same for `2nd`).
+   Every keep and kill is written to the evals record (`skills/clip-evals/clip-evals.md`). If Mike
+   names a moment the strategist should have found, pass it on the same command as
+   `--missed "MM:SS-MM:SS what; MM:SS what"`; if he says nothing was missed, pass `--missed none`.
+   Never invent either: with no word from Mike, leave `--missed` off.
    Lane 3 keeps running through both gates; report its state from `run.py status`.
 7. **Do not go past the 2nd-review gate unless Mike asks for renders/publish.** The default
    scope of this command is: Lane 1 queued, Lane 3 fully queued (images visual-QA'd), Lane 2
