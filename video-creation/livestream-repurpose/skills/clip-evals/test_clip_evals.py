@@ -47,11 +47,19 @@ def main() -> int:
 
     # ── --missed parsing ────────────────────────────────────────────────────
     m = ce.parse_missed("12:30-14:10 the ETF rant; 45:00 kaspa hashrate; the whole Q and A")
-    check("missed: a time range", m[0] == {"none": False, "start": 750.0, "end": 850.0, "note": "the ETF rant"}, str(m[0]))
-    check("missed: one timestamp", m[1]["start"] == 2700.0 and m[1]["end"] is None and m[1]["note"] == "kaspa hashrate")
-    check("missed: a note with no time", m[2] == {"none": False, "start": None, "end": None, "note": "the whole Q and A"})
+    check("missed: a time range", m[0] == {"none": False, "start": 750.0, "end": 850.0, "spans": [[750.0, 850.0]],
+                                           "note": "the ETF rant"}, str(m[0]))
+    check("missed: one timestamp", m[1]["start"] == 2700.0 and m[1]["end"] is None and m[1]["spans"] == [[2700.0, None]]
+          and m[1]["note"] == "kaspa hashrate", str(m[1]))
+    check("missed: a note with no time", m[2] == {"none": False, "start": None, "end": None, "spans": [],
+                                                  "note": "the whole Q and A"}, str(m[2]))
     check("missed: hours", ce.parse_missed("1:02:03 late one")[0]["start"] == 3723.0)
-    check("missed: none", ce.parse_missed("None") == [{"none": True, "start": None, "end": None, "note": None}])
+    check("missed: none", ce.parse_missed("None") == [{"none": True, "start": None, "end": None, "spans": [], "note": None}])
+    many = ce.parse_missed("2:44-6:44, 8:56 and 28:04-28:53 the IPO talk, said 3 times; 45:00 android wallets")
+    check("missed: several stretches before one note are ONE miss",
+          len(many) == 2 and many[0]["spans"] == [[164.0, 404.0], [536.0, None], [1684.0, 1733.0]]
+          and many[0]["note"] == "the IPO talk, said 3 times" and many[0]["start"] == 164.0 and many[0]["end"] == 404.0
+          and many[1]["spans"] == [[2700.0, None]] and many[1]["note"] == "android wallets", str(many))
 
     # ── the gate record: two gates, append-only, safe to repeat ─────────────
     meta = {"prompt_version": "aaaaaaaaaaaa", "model": "fable/max", "brief": None, "prompt_parts": {"agent": "x"}}
@@ -75,6 +83,30 @@ def main() -> int:
     check("the proposal is stored once per clip", sum(1 for x in lines if x.get("clip_id") == 1 and x.get("proposal")) == 1)
     check("every line carries the prompt version", all(x.get("prompt_version") == "aaaaaaaaaaaa" for x in lines if x["type"] == "verdict"))
     check("the file is one JSON object per line", all(json.loads(r) for r in ce.record_path().read_text(encoding="utf-8").splitlines()))
+
+    # ── why a clip was killed ───────────────────────────────────────────────
+    check("why: items parse as <clip number>: <reason>",
+          ce.parse_reasons("2: duplicate of clip 1; 3 = weak hook;; nonsense") ==
+          ([(2, "duplicate of clip 1"), (3, "weak hook")], ["nonsense"]))
+    size = ce.record_path().stat().st_size
+    res = ce.record_reasons("demo", "2: duplicate of clip 1; 1: kept clips have no kill reason")
+    check("why: a reason for a clip that was kept is refused, and nothing at all is written",
+          res["recorded"] == 0 and "clip 1 of demo is kept, not killed" in res["problems"]
+          and ce.record_path().stat().st_size == size, str(res))
+    check("why: a clip that is not on record is refused", "clip 9 of demo is not on record" in
+          ce.record_reasons("demo", "9: no such clip")["problems"])
+    check("why: an unreadable item is refused", ce.record_reasons("demo", "just words")["recorded"] == 0
+          and ce.record_path().stat().st_size == size)
+    res = ce.record_reasons("demo", "2: duplicate of clip 1; 3: weak hook", at="2026-01-01T12:00:00")
+    check("why: reasons for two killed clips are recorded", res == {"recorded": 2, "already": 0, "problems": []}, str(res))
+    res = ce.record_reasons("demo", "2: duplicate of clip 1")
+    check("why: the same reason twice writes nothing", res["recorded"] == 0 and res["already"] == 1, str(res))
+    why_lines = [x for x in ce.read_record() if x.get("type") == "reason"]
+    check("why: each reason line names its clip and the gate that killed it",
+          [(x["clip_id"], x["gate"], x["reason"]) for x in why_lines] ==
+          [(2, "4b", "duplicate of clip 1"), (3, "2nd", "weak hook")], str(why_lines))
+    check("why: reasons never change a score", ce.score_record(ce.read_record()) == ce.score_record(lines))
+    lines = ce.read_record()
 
     # ── the score from the record ───────────────────────────────────────────
     row = ce.score_record(lines)["rows"][0]
@@ -117,6 +149,30 @@ def main() -> int:
     check("a score is saved", ce.save_score(rec, rep) is True)
     check("the same score is not saved twice", ce.save_score(rec, ce.score_replays(ce.read_record())) is False)
 
+    # ── one miss, several stretches: counted once, found at any of them ──────
+    ce.record_gate("recur", "4b", {"clips": [clip(1, "kept", (0, 60))], "eval": meta}, missed="3:00 the recurring topic")
+    # a line in the format written before stretches existed (start / end only) must still read as a miss
+    ce.append_jsonl(ce.record_path(), [{"v": 1, "type": "missed", "batch": "recur", "gate": "4b", "at": "x",
+                                        "none": False, "start": 2000.0, "end": 2060.0, "note": "an older line"}])
+    before = ce.score_record(ce.read_record(), "recur")["rows"][0]
+    added = ce.record_missed("recur", "10:00-12:00, 28:04-28:53 the recurring topic", gate="4b", source="located-in-transcript")
+    again = ce.record_missed("recur", "10:00-12:00, 28:04-28:53 the recurring topic")
+    table = ce.miss_table(ce.read_record(), "recur")["recur"]
+    check("misses: stretches added later under the same note join the same miss",
+          added == 1 and again == 0 and len(table) == 2
+          and table[0]["spans"] == [[180.0, None], [600.0, 720.0], [1684.0, 1733.0]]
+          and table[1]["spans"] == [[2000.0, 2060.0]], str(table))
+    after = ce.score_record(ce.read_record(), "recur")["rows"][0]
+    check("misses: adding stretches does not change recall (1 kept, 2 missed = 33.3%)",
+          before["recall"] == after["recall"] == 33.3 and after["missed"] == 2, f"{before['recall']} -> {after['recall']}")
+    (ce.replays_dir() / "recur--eeeeeeeeeeee--r1.json").write_text(json.dumps(
+        {"v": 1, "batch": "recur", "prompt_version": "eeeeeeeeeeee", "model": "fable/max", "plan": {"clips": [
+            clip(1, "at-the-third-stretch", (1690, 1730)), clip(2, "near-the-timestamp", (190, 230)),
+            clip(3, "the-older-line", (2010, 2050)), clip(4, "elsewhere", (900, 950))]}}), encoding="utf-8")
+    r = [x for x in ce.score_replays(ce.read_record())["replays"] if x["batch"] == "recur"][0]
+    check("misses: a replay finds a miss at any of its stretches (3 picks land on a miss, 1 does not)",
+          r["found_miss"] == 3 and r["unjudged"] == 1, str([d["kind"] for d in r["detail"]]))
+
     # ── a pick that matches a kept clip but carries a stretch of a killed one is flagged ──
     mixed = {"v": 1, "batch": "demo", "prompt_version": "cccccccccccc", "model": "fable/max", "plan": {"clips": [
         clip(1, "kept-plus-killed-material", (0, 50), (100, 115))]}}
@@ -154,15 +210,19 @@ def main() -> int:
     json.dumps(feed)                       # must be plain JSON: no sets, no tuples as keys
     demo = [x for x in feed["batches"] if x["batch"] == "demo"][0]
     check("feed: totals leave the unscorable batch out", feed["totals"]["left_out"] == ["old"]
-          and feed["totals"]["batches"] == 4 and feed["totals"]["judged"] == 7, str(feed["totals"]))
+          and feed["totals"]["batches"] == 5 and feed["totals"]["judged"] == 8, str(feed["totals"]))
     check("feed: a batch carries its clips, both gate verdicts and the strategist's reasoning",
           [c["verdicts"] for c in demo["clips"]] == [{"4b": "kept", "2nd": "kept"}, {"4b": "killed"},
                                                      {"4b": "kept", "2nd": "killed"}, {"4b": "kept", "2nd": "kept"}]
           and demo["clips"][1]["why"] == ["x"] and demo["gates"]["4b"] == {"at": "2026-01-01T10:00:00", "kept": 3, "killed": 1},
           str(demo["gates"]))
+    check("feed: a killed clip carries the reason it was killed for",
+          [c["reasons"] for c in demo["clips"]] == [[], ["duplicate of clip 1"], ["weak hook"], []]
+          and feed["totals"]["kills_with_reason"] == 2, str([c["reasons"] for c in demo["clips"]]))
     check("feed: misses, replays and noise ride along", demo["misses_reviewed"] and len(demo["misses"]) == 1
-          and demo["replays"] == 2 and len(feed["replays"]) == 4 and len(feed["noise"]) == 1
-          and feed["totals"]["recall_batches"] == 1)
+          and demo["replays"] == 2 and len(feed["replays"]) == 5 and len(feed["noise"]) == 1
+          and feed["totals"]["recall_batches"] == 2
+          and demo["misses"][0]["spans"] == [[750.0, 810.0]])
 
     # ── the prompt version ──────────────────────────────────────────────────
     a, b = ce.prompt_info("template one"), ce.prompt_info("template two")

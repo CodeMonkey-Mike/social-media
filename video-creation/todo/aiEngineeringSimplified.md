@@ -55,6 +55,9 @@ logs have no clip numbers. The old prompt versions could not be recovered, so al
 - Replay the same prompt twice on a batch to learn how much the strategist varies between runs. A prompt edit only
   counts when it moves the score by more than that.
 - Name misses at the gate, or recall stays "not reviewed".
+- Kill reasons: `clip_evals.py why --batch <b> "2: duplicate of clip 1"` records why a clip was killed (built
+  2026-11-15, optional). Still to add: a `--why` option on the gate approval in `run.py` / `batch_graph.py`, held
+  back because a livestream batch was running when the command was built.
 - Commit `evals/` with each batch: a new line is on this machine only until it is pushed.
 - Not built, possible next: feed kept and killed examples into the strategist's prompt, and use the record to test
   whether a cheaper model picks as well as Fable (engineering gap 5).

@@ -172,6 +172,8 @@
     .why li { margin: 4px 0 4px 16px; }
     .why .t { color: var(--ink); font-variant-numeric: tabular-nums; font-weight: 600; }
     .reuse { display: block; font-size: 12px; color: #8a6100; margin-top: 4px; }
+    .misswhen { font-variant-numeric: tabular-nums; max-width: 300px; line-height: 1.5; }
+    .whykill { display: block; font-size: 12px; color: var(--ink-2); margin-top: 5px; max-width: 230px; line-height: 1.45; white-space: normal; }
     .reuse::before { content: '\26A0\FE0E  '; }
     .rowbtn, td.title { white-space: nowrap; }
   </style>
@@ -234,7 +236,8 @@
       <p class="note">
         Read-only. Verdicts are made at the gates and written to
         <code>video-creation/livestream-repurpose/evals/clip-verdicts.jsonl</code>. Open a batch to see every clip, the
-        strategist's reasoning, any misses, and its replays.
+        strategist's reasoning, why a clip was killed (when a reason was given), any misses, and its replays.
+        To add a reason: <code>clip_evals.py why --batch &lt;batch&gt; "2: duplicate of clip 1"</code>.
       </p>
     </section>
 
@@ -356,11 +359,20 @@ function clipRows(b) {
     const name = c.matched
       ? `<span class="title">${esc(c.title || c.slug || 'Clip ' + c.clip_id)}</span>${c.variant && c.variant !== 'full' ? `<span class="tag">${esc(c.variant)}</span>` : ''}<span class="slug mono">${esc(c.slug || '')}</span>${reasoning}`
       : `<span class="title">Clip ${esc(c.clip_id)}</span><span class="slug">The old log cannot say which proposal this was.</span>`;
+    const why = (c.reasons || []).length ? `<span class="whykill"><b>Why:</b> ${c.reasons.map(esc).join('; ')}</span>` : '';
     return `<tr><td class="num">${esc(c.clip_id ?? '')}</td><td>${name}</td><td class="num">${secs(c.seconds)}</td>
-      <td class="nowrap">${esc(span(c.segments))}</td><td>${pill(c.verdicts['4b'] || 'none')}</td>
-      <td>${c.verdicts['4b'] === 'killed' ? '<span class="muted">not reached</span>' : pill(c.verdicts['2nd'] || 'none')}</td></tr>`;
+      <td class="nowrap">${esc(span(c.segments))}</td><td>${pill(c.verdicts['4b'] || 'none')}${c.verdicts['4b'] === 'killed' ? why : ''}</td>
+      <td>${c.verdicts['4b'] === 'killed' ? '<span class="muted">not reached</span>' : pill(c.verdicts['2nd'] || 'none') + (c.verdicts['2nd'] === 'killed' ? why : '')}</td></tr>`;
   }).join('');
 }
+
+// every stretch of a miss: a topic that keeps coming back is one miss with several stretches
+const missWhen = (m) => {
+  const spans = (m.spans && m.spans.length) ? m.spans : (m.start == null ? [] : [[m.start, m.end]]);
+  return spans.length
+    ? spans.map((p) => clock(p[0]) + (p[1] != null ? '-' + clock(p[1]) : '')).join(', ')
+    : '<span class="muted">no time given</span>';
+};
 
 function batchDetail(b) {
   const g1 = b.gates['4b'], g2 = b.gates['2nd'];
@@ -371,7 +383,7 @@ function batchDetail(b) {
   h += '<h3>Misses (what it should have found)</h3>';
   if (!b.misses_reviewed) h += '<p class="brief muted">Not asked. Nobody recorded a miss review for this batch, so its recall is unknown.</p>';
   else if (!b.misses.length) h += '<p class="brief">Reviewed: nothing was missed.</p>';
-  else h += `<div class="inner"><table><tbody>${b.misses.map((m) => `<tr><td class="nowrap">${m.start == null ? '<span class="muted">no time</span>' : clock(m.start) + (m.end != null ? '-' + clock(m.end) : '')}</td><td>${esc(m.note || '')}</td></tr>`).join('')}</tbody></table></div>`;
+  else h += `<div class="inner"><table><thead><tr><th>Where in the stream</th><th>What it should have found</th></tr></thead><tbody>${b.misses.map((m) => `<tr><td class="misswhen">${missWhen(m)}</td><td>${esc(m.note || '')}</td></tr>`).join('')}</tbody></table></div>`;
   const reps = (DATA.replays || []).filter((r) => r.batch === b.batch);
   h += `<h3>Replays (${reps.length})</h3>`;
   if (!reps.length) {

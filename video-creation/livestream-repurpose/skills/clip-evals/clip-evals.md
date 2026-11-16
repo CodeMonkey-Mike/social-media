@@ -66,9 +66,34 @@ python video-creation/livestream-repurpose/graph/run.py batch --batch <b> --resu
 
 - Items are separated by `;`. A time range or a single timestamp is optional but lets a replay be credited for
   finding the miss. Times are the vertical master's, as printed in the 90-second chunk transcript.
+- **A topic that keeps coming back is ONE miss with several stretches.** Put every stretch before the note,
+  separated by commas: `--missed "2:44-6:44, 8:56-9:16, 28:04-28:53 the IPO discussion"`. A replay is credited
+  when a pick lands on any of them, and recall still counts the miss once.
+- **To add stretches to a miss already on record**, record them again with the SAME note text
+  (`clip_evals.py missed --batch <b> "10:00-12:00 <the same note>"`): lines of one batch that share a note are one
+  miss. A session that locates the stretches in the saved transcript after the gate marks its line
+  `"source":"located-in-transcript"`; the note stays Mike's words (first done for `peach`, 2026-11-16).
+- A single timestamp only credits a pick within 30 s of it, so give a range whenever the topic runs longer.
 - `--missed none` means the review found nothing missing. Without it the batch's recall is "not reviewed", which is
   different from 100%.
 - To add one later: `python .../clip_evals.py missed --batch <b> "..."`.
+
+### Why a clip was killed (optional)
+
+A kill counts in every score without a reason. A reason is what tells a prompt edit what to fix: a duplicate, a
+weak cut and an off-topic pick each need a different edit, and the record alone cannot tell them apart.
+
+```
+python video-creation/livestream-repurpose/skills/clip-evals/clip_evals.py why --batch <b> "2: duplicate of clip 1; 5: weak hook"
+```
+
+- Run it AFTER the gate that killed the clip was approved (the kill must be on record). One item per `;`, written
+  as `<clip number>: <reason>`, in Mike's own words, a few words each.
+- It is all or nothing: an unreadable item, or a clip that was kept or is not on record, and nothing is written.
+- It appends a `"type":"reason"` line (batch, clip, the gate that killed it, the reason). Reasons never change a
+  score. The Evals page shows them beside the killed clip, and `list` shows how many kills have one.
+- Never invent a reason. Record only what Mike said.
+- Not built yet: a `--why` option on the gate approval itself, so the reason goes in with the kill in one step.
 
 ### The prompt version
 
@@ -95,6 +120,7 @@ python video-creation/livestream-repurpose/skills/clip-evals/clip_evals.py list
 python video-creation/livestream-repurpose/skills/clip-evals/clip_evals.py score [--batch B] [--json]
 python video-creation/livestream-repurpose/skills/clip-evals/clip_evals.py replay --batch B [--brief "..."]
 python video-creation/livestream-repurpose/skills/clip-evals/clip_evals.py missed --batch B "..."
+python video-creation/livestream-repurpose/skills/clip-evals/clip_evals.py why --batch B "2: duplicate of clip 1"
 python video-creation/livestream-repurpose/skills/clip-evals/clip_evals.py record --batch B --gate 4b|2nd
 python video-creation/livestream-repurpose/skills/clip-evals/test_clip_evals.py
 ```

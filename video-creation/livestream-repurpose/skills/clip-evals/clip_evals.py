@@ -16,6 +16,8 @@ Commands:
   python clip_evals.py score [--batch B] [--json]
   python clip_evals.py replay --batch B [--brief "..."]
   python clip_evals.py missed --batch B "12:30-14:10 the ETF rant; 45:00 kaspa hashrate"     (or: none)
+                                         a topic that comes back: "2:44-6:44, 28:04-28:53 the IPO talk" = ONE miss
+  python clip_evals.py why --batch B "2: duplicate of clip 1; 5: weak hook"     (why a clip was killed)
   python clip_evals.py record --batch B --gate 4b|2nd     (repair: re-record a gate from the plan on disk)
 
 To LOOK at it: the dashboard's Evals page, http://localhost:8766/evals.html (it reads dashboard_data() below).
@@ -338,47 +340,132 @@ def clock_to_seconds(text: str) -> float:
 
 
 _CLOCK = r"\d{1,3}:\d{2}(?::\d{2})?(?:\.\d+)?"
-_MISS_RE = re.compile(rf"^\s*({_CLOCK})(?:\s*(?:-|to)\s*({_CLOCK}))?\s*[,:]?\s*(.*)$", re.S)
+_SPAN_RE = re.compile(rf"^\s*({_CLOCK})(?:\s*(?:-|to)\s*({_CLOCK}))?\s*")
+_NEXT_SPAN_RE = re.compile(r"^\s*(?:,|and|&)\s*")
+
+
+def _lead_spans(raw: str) -> tuple:
+    """The times an item starts with, and the note after them:
+    "2:44-6:44, 28:04-28:53 the IPO talk" -> ([[164.0, 404.0], [1684.0, 1733.0]], "the IPO talk").
+    A single timestamp is [start, None]."""
+    spans, rest = [], raw
+    while True:
+        m = _SPAN_RE.match(rest)
+        if not m:
+            break
+        start = clock_to_seconds(m.group(1))
+        end = clock_to_seconds(m.group(2)) if m.group(2) else None
+        spans.append([start, end if (end is not None and end > start) else None])
+        rest = rest[m.end():]
+        nxt = _NEXT_SPAN_RE.match(rest)
+        if not nxt or not _SPAN_RE.match(rest[nxt.end():]):
+            break                                  # no further time follows: the rest is the note
+        rest = rest[nxt.end():]
+    return spans, re.sub(r"^\s*[,:]\s*", "", rest).strip()
+
+
+def _spans_of(line: dict) -> list:
+    """The stretches of a "missed" line. Lines written before 2026-11-16 carry only start / end."""
+    if line.get("spans") is not None:
+        return [list(sp) for sp in line["spans"]]
+    return [[line["start"], line.get("end")]] if line.get("start") is not None else []
 
 
 def parse_missed(text: str) -> list:
-    """"12:30-14:10 the ETF rant; 45:00 kaspa hashrate" -> one item per `;` or line. A time range or a single
-    timestamp is optional (times are the vertical master's, as printed in the 90 s chunk transcript). "none"
-    means the review found nothing missing, which is what lets recall be 100% instead of unknown."""
+    """"12:30-14:10 the ETF rant; 45:00 kaspa hashrate" -> one item per `;` or line. An item may start with one time,
+    one range, or SEVERAL separated by commas when the topic comes back more than once
+    ("2:44-6:44, 28:04-28:53 the IPO talk" is ONE miss with two stretches). Times are optional; they are the
+    vertical master's, as printed in the 90 s chunk transcript. "none" means the review found nothing missing,
+    which is what lets recall be 100% instead of unknown."""
     if (text or "").strip().lower() in ("none", "no", "nothing", "0"):
-        return [{"none": True, "start": None, "end": None, "note": None}]
+        return [{"none": True, "start": None, "end": None, "spans": [], "note": None}]
     items = []
     for raw in re.split(r"[;\n]+", text or ""):
         raw = raw.strip()
         if not raw:
             continue
-        m = _MISS_RE.match(raw)
-        if m:
-            start = clock_to_seconds(m.group(1))
-            end = clock_to_seconds(m.group(2)) if m.group(2) else None
-            if end is not None and end <= start:
-                end = None
-            items.append({"none": False, "start": start, "end": end, "note": m.group(3).strip() or None})
-        else:
-            items.append({"none": False, "start": None, "end": None, "note": raw})
+        spans, note = _lead_spans(raw)
+        first = spans[0] if spans else [None, None]
+        items.append({"none": False, "start": first[0], "end": first[1], "spans": spans, "note": note or None})
     return items
 
 
 def record_missed(batch: str, text: str, gate: Optional[str] = None, at: Optional[str] = None,
                   source: str = "cli") -> int:
+    """Append "missed" lines. To add stretches to a miss ALREADY on record, record them again with the SAME note:
+    lines of one batch that share a note are one miss (see miss_table), so recall still counts it once."""
+    def key(b, x):
+        return (b, bool(x.get("none")), tuple(tuple(sp) for sp in _spans_of(x)), x.get("note"))
     old = read_record()
-    have = {(x.get("batch"), x.get("none"), x.get("start"), x.get("end"), x.get("note"))
-            for x in old if x.get("type") == "missed"}
+    have = {key(x.get("batch"), x) for x in old if x.get("type") == "missed"}
     new = []
     for item in parse_missed(text):
-        key = (batch, item["none"], item["start"], item["end"], item["note"])
-        if key in have:
+        k = key(batch, item)
+        if k in have:
             continue
-        have.add(key)
+        have.add(k)
         new.append({"v": SCHEMA, "type": "missed", "batch": batch, "gate": gate, "at": at or now_iso(),
                     **item, "source": source})
     append_jsonl(record_path(), new)
     return len(new)
+
+
+_REASON_RE = re.compile(r"^\s*(\d+)\s*[:=]\s*(.+?)\s*$", re.S)
+
+
+def parse_reasons(text: str) -> tuple:
+    """"2: duplicate of clip 1; 5: weak hook" -> ([(2, "duplicate of clip 1"), (5, "weak hook")], [unreadable items]).
+    One item per `;` or line, each written as <clip number>: <reason>."""
+    items, bad = [], []
+    for raw in re.split(r"[;\n]+", text or ""):
+        raw = raw.strip()
+        if not raw:
+            continue
+        m = _REASON_RE.match(raw)
+        if m:
+            items.append((int(m.group(1)), m.group(2)))
+        else:
+            bad.append(raw)
+    return items, bad
+
+
+def record_reasons(batch: str, text: str, at: Optional[str] = None, source: str = "cli") -> dict:
+    """WHY a clip was killed, in Mike's words. A kill counts in every score without one; the reason is what tells a
+    prompt edit what to fix (a duplicate, a weak cut and an off-topic pick each need a different edit). All or
+    nothing: if any item is unreadable or names a clip that is not a kill on record, nothing is written."""
+    lines = read_record()
+    mine = [x for x in lines if x.get("batch") == batch]
+    killed = {x.get("clip_id"): x.get("gate") for x in mine if x.get("type") == "verdict" and x.get("verdict") == "killed"}
+    judged = {x.get("clip_id") for x in mine if x.get("type") == "verdict"}
+    have = {(x.get("clip_id"), x.get("reason")) for x in mine if x.get("type") == "reason"}
+    items, bad = parse_reasons(text)
+    problems = [f'cannot read "{b}": write each item as <clip number>: <reason>' for b in bad]
+    for cid, _ in items:
+        if cid not in killed:
+            problems.append(f"clip {cid} of {batch} is " + ("kept, not killed" if cid in judged else "not on record"))
+    if not items and not bad:
+        problems.append("no reason given")
+    if problems:
+        return {"recorded": 0, "already": 0, "problems": problems}
+    new, already = [], 0
+    for cid, why in items:
+        if (cid, why) in have:
+            already += 1
+            continue
+        have.add((cid, why))
+        new.append({"v": SCHEMA, "type": "reason", "batch": batch, "clip_id": cid, "gate": killed[cid],
+                    "reason": why, "at": at or now_iso(), "source": source})
+    append_jsonl(record_path(), new)
+    return {"recorded": len(new), "already": already, "problems": []}
+
+
+def reason_table(lines: list, batch: Optional[str] = None) -> dict:
+    """{(batch, clip_id): [reason, ...]} in the order they were given."""
+    out = {}
+    for x in lines:
+        if x.get("type") == "reason" and (not batch or x.get("batch") == batch):
+            out.setdefault((x["batch"], x.get("clip_id")), []).append(x.get("reason"))
+    return out
 
 
 # ── scoring ──────────────────────────────────────────────────────────────────
@@ -402,14 +489,27 @@ def clip_table(lines: list, batch: Optional[str] = None) -> dict:
 
 
 def miss_table(lines: list, batch: Optional[str] = None) -> dict:
-    """{batch: [missed items]}. A batch is in here only when a miss review was recorded (items may be empty)."""
-    out = {}
+    """{batch: [miss, ...]}. A batch is in here only when a miss review was recorded (the list may be empty).
+    Lines of one batch with the SAME note are ONE miss with several stretches, so a topic that keeps coming back
+    is counted once in recall and can be found by a replay at any of its stretches."""
+    out, by_note = {}, {}
     for x in lines:
         if x.get("type") != "missed" or (batch and x.get("batch") != batch):
             continue
         items = out.setdefault(x["batch"], [])
-        if not x.get("none"):
-            items.append(x)
+        if x.get("none"):
+            continue
+        note = x.get("note")
+        item = by_note.get((x["batch"], note)) if note else None
+        if item is None:
+            item = {"note": note, "gate": x.get("gate"), "at": x.get("at"), "start": x.get("start"),
+                    "end": x.get("end"), "spans": []}
+            items.append(item)
+            if note:
+                by_note[(x["batch"], note)] = item
+        for sp in _spans_of(x):
+            if sp not in item["spans"]:
+                item["spans"].append(sp)
     return out
 
 
@@ -473,14 +573,13 @@ def load_replays(batch: Optional[str] = None) -> list:
 
 def _found_miss(segs: list, items: list) -> Optional[dict]:
     for m in items:
-        if m.get("start") is None:
-            continue
-        if m.get("end") is not None:
-            span = [[m["start"], m["end"]]]
-            if overlap(segs, span) >= min(10.0, 0.3 * min(seconds(segs), seconds(span))):
+        for start, end in m.get("spans") or []:
+            if end is not None:
+                span = [[start, end]]
+                if overlap(segs, span) >= min(10.0, 0.3 * min(seconds(segs), seconds(span))):
+                    return m
+            elif any(a - MISS_NEAR_S <= start <= b + MISS_NEAR_S for a, b in segs):
                 return m
-        elif any(a - MISS_NEAR_S <= m["start"] <= b + MISS_NEAR_S for a, b in segs):
-            return m
     return None
 
 
@@ -617,6 +716,7 @@ def dashboard_data() -> dict:
     clips, misses = clip_table(lines), miss_table(lines)
     rec, rep = score_record(lines), score_replays(lines)
     replays = load_replays()
+    reasons = reason_table(lines)
     left_out = set(rec["left_out_batches"])
     batches = {}
     for x in lines:
@@ -649,10 +749,12 @@ def dashboard_data() -> dict:
     out_batches = []
     for name, b in batches.items():
         b["clips"] = sorted(b["clips"].values(), key=lambda c: (c["clip_id"] is None, c["clip_id"]))
+        for c in b["clips"]:
+            c["reasons"] = reasons.get((name, c["clip_id"]), [])
         b["scored"] = name not in left_out
         b["misses_reviewed"] = name in misses
-        b["misses"] = [{"start": m.get("start"), "end": m.get("end"), "note": m.get("note"), "gate": m.get("gate")}
-                       for m in misses.get(name, [])]
+        b["misses"] = [{"start": m.get("start"), "end": m.get("end"), "spans": m.get("spans") or [],
+                        "note": m.get("note"), "gate": m.get("gate")} for m in misses.get(name, [])]
         b["transcript_saved"] = (transcripts_dir(name) / TRANSCRIPT_FILES["chunks"]).is_file()
         b["replays"] = sum(1 for r in replays if r.get("batch") == name)
         out_batches.append(b)
@@ -676,6 +778,8 @@ def dashboard_data() -> dict:
             "precision": _pct(kept, len(scored)),
             "recall": _pct(kept_rev, kept_rev + n_missed), "recall_batches": len(reviewed), "missed": n_missed,
             "replays": len(replays), "replayable": sum(1 for b in out_batches if b["transcript_saved"]),
+            "kills_with_reason": sum(1 for b in out_batches for c in b["clips"]
+                                     if c["reasons"] and "killed" in c["verdicts"].values()),
             "left_out": sorted(left_out), "last_verdict_at": max(verdict_times) if verdict_times else None,
         },
         "score": {"record": rec["rows"], "replays": rep["rows"]},
@@ -746,10 +850,11 @@ def cmd_score(args) -> int:
 def cmd_list(args) -> int:
     lines = read_record()
     clips, misses, reps = clip_table(lines), miss_table(lines), load_replays()
+    reasons = reason_table(lines)
     batches = sorted({c["batch"] for c in clips.values()})
     print(f"{record_path()}: {len(lines)} lines, {len(batches)} batches")
     print(f"  {'batch':26s} {'prompt version':14s} {'model':24s} {'4b kept/killed':>14s} {'2nd kept/killed':>15s} "
-          f"{'misses':>8s} {'transcript':>10s} {'replays':>7s}")
+          f"{'kills why':>9s} {'misses':>9s} {'transcript':>10s} {'replays':>7s}")
     for b in batches:
         cl = [c for c in clips.values() if c["batch"] == b]
 
@@ -760,7 +865,9 @@ def cmd_list(args) -> int:
         model = next((c["model"] for c in cl if c["model"]), None) or "unknown"
         miss = str(len(misses[b])) if b in misses else "not asked"
         saved = "saved" if (transcripts_dir(b) / TRANSCRIPT_FILES["chunks"]).is_file() else "gone"
-        print(f"  {b[:26]:26s} {pv:14s} {model[:24]:24s} {tally('4b'):>14s} {tally('2nd'):>15s} {miss:>8s} "
+        kills = [c for c in cl if "killed" in c["gates"].values()]
+        why = f"{sum(1 for c in kills if (b, c['clip_id']) in reasons)}/{len(kills)}" if kills else "-"
+        print(f"  {b[:26]:26s} {pv:14s} {model[:24]:24s} {tally('4b'):>14s} {tally('2nd'):>15s} {why:>9s} {miss:>9s} "
               f"{saved:>10s} {sum(1 for r in reps if r.get('batch') == b):7d}")
     return 0
 
@@ -773,6 +880,16 @@ def cmd_dashboard_data(args) -> int:
 def cmd_missed(args) -> int:
     n = record_missed(args.batch, args.text, gate=args.gate, source="cli")
     print(f"recorded {n} new missed line(s) for {args.batch}")
+    return 0
+
+
+def cmd_why(args) -> int:
+    res = record_reasons(args.batch, args.text)
+    if res["problems"]:
+        print("nothing recorded:\n  " + "\n  ".join(res["problems"]), file=sys.stderr)
+        return 1
+    print(f"recorded {res['recorded']} kill reason(s) for {args.batch}"
+          + (f" ({res['already']} already on record)" if res["already"] else ""))
     return 0
 
 
@@ -889,6 +1006,10 @@ def main() -> int:
     s.add_argument("--gate", choices=GATES, default=None)
     s.add_argument("text", help='"12:30-14:10 the ETF rant; 45:00 kaspa hashrate"  or  none')
     s.set_defaults(fn=cmd_missed)
+    s = sub.add_parser("why", help="record why a clip was killed (after its gate was approved)")
+    s.add_argument("--batch", required=True)
+    s.add_argument("text", help='"2: duplicate of clip 1; 5: weak hook"')
+    s.set_defaults(fn=cmd_why)
     s = sub.add_parser("record", help="repair: re-record one gate from the clip-plan.json on disk")
     s.add_argument("--batch", required=True)
     s.add_argument("--gate", choices=GATES, required=True)

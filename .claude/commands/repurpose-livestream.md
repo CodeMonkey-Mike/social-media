@@ -55,7 +55,13 @@ unique).
    Every keep and kill is written to the evals record (`skills/clip-evals/clip-evals.md`). If Mike
    names a moment the strategist should have found, pass it on the same command as
    `--missed "MM:SS-MM:SS what; MM:SS what"`; if he says nothing was missed, pass `--missed none`.
+   A topic that comes back several times is ONE miss: find its stretches in the chunk transcript and
+   put them all before the note, comma-separated (`--missed "2:44-6:44, 28:04-28:53 the IPO talk"`).
+   Prefer ranges to a single timestamp, which only credits a replay pick within 30 s of it.
    Never invent either: with no word from Mike, leave `--missed` off.
+   If Mike says WHY he is killing a clip, record it right after the gate is approved:
+   `python video-creation/livestream-repurpose/skills/clip-evals/clip_evals.py why --batch <batch> "2: duplicate of clip 1; 5: weak hook"`
+   (his words, a few each; a kill needs no reason, so never ask for one and never make one up).
    Lane 3 keeps running through both gates; report its state from `run.py status`.
 7. **Do not go past the 2nd-review gate unless Mike asks for renders/publish.** The default
    scope of this command is: Lane 1 queued, Lane 3 fully queued (images visual-QA'd), Lane 2
