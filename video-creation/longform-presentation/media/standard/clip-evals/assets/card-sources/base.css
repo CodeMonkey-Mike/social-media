@@ -1,0 +1,340 @@
+/* clip-evals base.css
+   PART 1 (below, until the END marker): video-creation/longform-edited/skills/container-reference/container-canonical.css
+   pasted VERBATIM, unchanged. PART 2: the clip-evals components, built on its tokens only. */
+
+/* ===== BEGIN container-canonical.css (verbatim) ===== */
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+
+/* ############################################################################
+   ########  END OF container-canonical.css (pasted verbatim above)  ##########
+   ############################################################################
+
+   clip-evals COMPONENTS: every class below is built on the canonical tokens only
+   (--bg-*, --accent-*, --text-*, --border). Nothing above this line is changed.
+
+   ONE ACCENT MEANING FOR THE WHOLE VIDEO (CARDS-SPEC section 0):
+     cyan  = the part being talked about (a lit row, a lit code line)   -> .lit
+     green = kept / good                                                 -> .lit-g / .g
+     red   = killed / risk                                               -> .lit-re / .re
+     gold  = a human gate or a caveat                                    -> .go / .own
+
+   COVER CARDS fill the frame: a card is <section class="frame" id="NAME">, 1920x1080,
+   content left-aligned. Link this file and the 3 Google fonts in the HTML <head>:
+   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+   Shoot with assets/card-sources/shoot.py.
+
+   STATES: a lit state only adds a class (.lit / .lit-g / .lit-re) and never changes a
+   size, a weight or a margin, so every state of one card is pixel-stable. Resting rows
+   stay readable (text-secondary, full opacity).
+   ############################################################################ */
+
+/* ---- FRAME helpers --------------------------------------------------------
+   .frame.top    content starts near the top instead of centred (tall cards)
+   .wide         lets a body block use the full 1640px content width
+   .hl           a headline (h1) with tighter space under it when no divider is used   */
+.frame.top{justify-content:flex-start;padding-top:96px}
+.wide{max-width:1640px !important;width:100%}
+h1.hl{margin-bottom:40px}
+h1.xs{font-size:60px}
+
+/* ---- SOURCE LINE, CARD'S OWN LINE, NOTE LINE --------------------------------
+   <div class="source">Anthropic, "Demystifying evals for AI agents", Jan 9, 2026</div>
+   <div class="own">A rule that only lives in the context is a request.</div>   (gold, the card's own line)
+   <div class="note-line">same prompt, same transcript, same model.</div>      (muted footer / detail)   */
+.source{font-family:'DM Sans';font-size:27px;font-weight:500;color:var(--text-secondary);margin-top:30px;
+  letter-spacing:.01em}
+.own{font-family:'DM Sans';font-size:36px;font-weight:600;color:var(--accent-gold);margin-top:44px;
+  padding-left:24px;border-left:4px solid var(--accent-gold);line-height:1.35}
+.note-line{font-family:'DM Sans';font-size:28px;color:var(--text-muted);margin-top:34px;line-height:1.45}
+
+/* ---- QUOTE CARD ------------------------------------------------------------
+   <blockquote class="quote xl">The next layer is a dataset and the score.</blockquote>
+   .quote = Playfair, the opening/closing marks added by CSS (do NOT type them in the text).
+   sizes: default 52px (under a headline) · .lg 64px · .xl 92px (a quote-only card)
+   .quote.small = the 30px quote-style aside (an under-row citation)                   */
+.quote{font-family:'Playfair Display',serif;font-weight:700;font-size:52px;line-height:1.28;
+  color:var(--text-primary);max-width:1560px;letter-spacing:-.005em;position:relative}
+.quote::before{content:"\201C";color:var(--accent-cyan)}
+.quote::after{content:"\201D";color:var(--accent-cyan)}
+.quote.lg{font-size:64px}
+.quote.xl{font-size:92px;line-height:1.16;max-width:1600px}
+.quote.small{font-family:'DM Sans';font-weight:400;font-style:italic;font-size:28px;line-height:1.4;
+  color:var(--text-secondary)}
+.quote.small::before,.quote.small::after{color:var(--text-secondary)}
+
+/* ---- NUMBERED ROWS (one row lit) -------------------------------------------
+   <div class="nrows">
+     <div class="nrow lit"><div class="nrow-n">1</div>
+       <div class="nrow-b"><div class="nrow-t">THE HARNESS</div><div class="nrow-d">the code around ...</div></div></div>
+     ...
+   </div>
+   .lit = cyan (talked about) · .lit-g green · .lit-re red · .lit-go gold
+   .nrow.nonum = a row without a number (drop the .nrow-n div)
+   .nrows.tight = less padding (4+ rows)                                             */
+.nrows{display:flex;flex-direction:column;gap:20px;max-width:1640px;width:100%}
+.nrow{display:grid;grid-template-columns:96px 1fr;column-gap:26px;align-items:start;padding:28px 38px;
+  border-radius:18px;background:rgba(255,255,255,.02);border:1px solid var(--border);position:relative}
+.nrow.nonum{grid-template-columns:1fr}
+.nrow::before{content:"";position:absolute;left:-1px;top:16px;bottom:16px;width:6px;border-radius:3px;background:transparent}
+.nrow-n{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:52px;line-height:1;color:var(--text-muted);padding-top:2px}
+.nrow-t{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:34px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--text-secondary);line-height:1.2}
+.nrow-d{font-family:'DM Sans';font-size:32px;line-height:1.4;color:var(--text-secondary);margin-top:8px}
+.nrows.tight{gap:14px} .nrows.tight .nrow{padding:20px 34px}
+.nrow.lit{background:rgba(0,194,255,.08);border-color:rgba(0,194,255,.45);box-shadow:0 0 44px rgba(0,194,255,.10)}
+.nrow.lit::before{background:var(--accent-cyan)}
+.nrow.lit .nrow-n{color:var(--accent-cyan)}
+.nrow.lit .nrow-t,.nrow.lit .nrow-d{color:var(--text-primary)}
+.nrow.lit-g{background:rgba(0,230,138,.07);border-color:rgba(0,230,138,.42)} .nrow.lit-g::before{background:var(--accent-green)}
+.nrow.lit-g .nrow-n{color:var(--accent-green)} .nrow.lit-g .nrow-t,.nrow.lit-g .nrow-d{color:var(--text-primary)}
+.nrow.lit-re{background:rgba(255,64,96,.07);border-color:rgba(255,64,96,.42)} .nrow.lit-re::before{background:var(--accent-red)}
+.nrow.lit-re .nrow-n{color:var(--accent-red)} .nrow.lit-re .nrow-t,.nrow.lit-re .nrow-d{color:var(--text-primary)}
+.nrow.lit-go{background:rgba(255,215,0,.06);border-color:rgba(255,215,0,.40)} .nrow.lit-go::before{background:var(--accent-gold)}
+.nrow.lit-go .nrow-n{color:var(--accent-gold)} .nrow.lit-go .nrow-t,.nrow.lit-go .nrow-d{color:var(--text-primary)}
+
+/* ---- TABLE WITH LIT ROWS ---------------------------------------------------
+   <table class="tbl"><thead><tr><th>LIVESTREAM</th><th class="r">...</th></tr></thead>
+     <tbody><tr class="grp"><td colspan="3">JUDGMENT, HANDS BACK A PLAN</td></tr>
+            <tr class="lit-g"><td class="mono">30x-tao</td>...<td class="em">16.7 points</td></tr></tbody></table>
+   row states: .lit cyan · .lit-g green · .lit-re red (its td.em cells turn red too)
+   cells: .mono (JetBrains numbers/names) · .r right-aligned · .em emphasized when its row is lit
+   .grp = a group header row inside the table                                        */
+.tbl{border-collapse:separate;border-spacing:0;width:100%;max-width:1640px}
+.tbl th{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:24px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--text-secondary);text-align:left;padding:0 24px 16px;
+  border-bottom:1px solid var(--border);vertical-align:bottom;line-height:1.3}
+.tbl td{font-family:'DM Sans';font-size:31px;color:var(--text-secondary);padding:18px 24px;
+  border-bottom:1px solid var(--border);line-height:1.3}
+.tbl td.mono{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--text-primary)}
+.tbl .r{text-align:right}
+.tbl tr.grp td{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:24px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--text-secondary);padding:26px 24px 10px;border-bottom:none}
+.tbl tr.lit td{background:rgba(0,194,255,.08);color:var(--text-primary)}
+.tbl tr.lit td:first-child{box-shadow:inset 6px 0 0 var(--accent-cyan)}
+.tbl tr.lit-g td{background:rgba(0,230,138,.08);color:var(--text-primary)}
+.tbl tr.lit-g td:first-child{box-shadow:inset 6px 0 0 var(--accent-green)}
+.tbl tr.lit-g td.em{color:var(--accent-green)}
+.tbl tr.lit-re td{background:rgba(255,64,96,.08);color:var(--text-primary)}
+.tbl tr.lit-re td:first-child{box-shadow:inset 6px 0 0 var(--accent-red)}
+.tbl tr.lit-re td.em{color:var(--accent-red)}
+
+/* ---- BIG-NUMBER STAT ---------------------------------------------------------
+   <div class="bigstat"><div class="bigstat-n c">82.7%</div><div class="bigstat-cap">selection precision ...</div></div>
+   number colour: .c cyan · .g · .re · .go (canonical spans) · .bigstat.sm = the smaller kept-block size  */
+.bigstat-n{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:200px;line-height:1;letter-spacing:-.04em;color:var(--text-primary)}
+.bigstat-cap{font-family:'DM Sans';font-size:40px;line-height:1.35;color:var(--text-secondary);margin-top:22px;max-width:1640px}
+.bigstat-n.c{color:var(--accent-cyan)} .bigstat-n.g{color:var(--accent-green)}
+.bigstat-n.re{color:var(--accent-red)} .bigstat-n.go{color:var(--accent-gold)}
+.bigstat.sm .bigstat-n{font-size:110px}
+.bigstat.sm .bigstat-cap{font-size:32px;margin-top:14px}
+
+/* ---- A ROW OF STATS ----------------------------------------------------------
+   <div class="stats"><div class="stat"><div class="stat-n">184</div><div class="stat-l">lines</div></div>
+                      <div class="stat g">...</div><div class="stat re">...</div></div>               */
+.stats{display:flex;gap:0;margin-top:56px;max-width:1640px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stat{flex:1;padding:30px 0 30px 34px;border-left:1px solid var(--border)}
+.stat:first-child{border-left:none;padding-left:0}
+.stat-n{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:66px;line-height:1;color:var(--text-primary)}
+.stat-l{font-family:'JetBrains Mono',monospace;font-size:22px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-secondary);margin-top:16px}
+.stat.g .stat-n{color:var(--accent-green)} .stat.re .stat-n{color:var(--accent-red)} .stat.c .stat-n{color:var(--accent-cyan)}
+
+/* ---- 2-UP COMPARISON (the one sanctioned two-box shape) ---------------------
+   <div class="cmp2"><div class="cmp2-col c"><div class="cmp2-k">THE TOP MODEL</div>
+     <div class="cmp2-big">84.1%</div><div class="cmp2-sub">17 livestreams · 82 clips</div></div> ... </div>
+   column colour (top-accent line + label): .c cyan · .g green · .re red · .go gold · none = neutral
+   .cmp2-big.re = a red number in a neutral column                                         */
+.cmp2{display:grid;grid-template-columns:1fr 1fr;gap:34px;max-width:1640px;width:100%}
+.cmp2-col{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:40px 46px 44px;position:relative;overflow:hidden}
+.cmp2-col::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--text-muted)}
+.cmp2-col.c::before{background:var(--accent-cyan)} .cmp2-col.g::before{background:var(--accent-green)}
+.cmp2-col.re::before{background:var(--accent-red)} .cmp2-col.go::before{background:var(--accent-gold)}
+.cmp2-k{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:26px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-secondary)}
+.cmp2-col.c .cmp2-k{color:var(--accent-cyan)} .cmp2-col.g .cmp2-k{color:var(--accent-green)}
+.cmp2-col.re .cmp2-k{color:var(--accent-red)} .cmp2-col.go .cmp2-k{color:var(--accent-gold)}
+.cmp2-big{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:112px;line-height:1;letter-spacing:-.03em;color:var(--text-primary);margin-top:26px}
+.cmp2-big.re{color:var(--accent-red)} .cmp2-big.g{color:var(--accent-green)}
+.cmp2-sub{font-family:'DM Sans';font-size:31px;line-height:1.45;color:var(--text-secondary);margin-top:22px}
+
+/* ---- LEFT-TO-RIGHT FLOW STRIP --------------------------------------------------
+   <div class="flow"><div class="flow-step"><div class="flow-t">LIVESTREAM</div><div class="flow-d">...</div></div>
+     <div class="flow-arrow"></div><div class="flow-step lit">...</div></div>
+   step states: .lit cyan · .g green border · .go gold border                          */
+.flow{display:flex;align-items:stretch;max-width:1640px;width:100%;margin-top:12px}
+.flow-step{flex:1;background:var(--bg-card);border:1px solid var(--border);border-radius:18px;padding:32px 28px;
+  display:flex;flex-direction:column;justify-content:center;min-height:250px}
+.flow-n{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:600;color:var(--text-muted);letter-spacing:.1em;margin-bottom:14px}
+.flow-t{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:31px;letter-spacing:.03em;line-height:1.25;color:var(--text-primary);text-transform:uppercase}
+.flow-d{font-family:'DM Sans';font-size:27px;line-height:1.4;color:var(--text-secondary);margin-top:14px;text-wrap:balance}
+.flow-arrow{flex:none;width:64px;position:relative;align-self:center;height:3px;background:var(--text-muted);margin:0 6px}
+.flow-arrow::after{content:"";position:absolute;right:-3px;top:-7px;border-left:14px solid var(--text-muted);border-top:8.5px solid transparent;border-bottom:8.5px solid transparent}
+.flow-step.lit{border-color:rgba(0,194,255,.5);background:rgba(0,194,255,.07)}
+.flow-step.go{border-color:rgba(255,215,0,.42)}
+
+/* ---- FORMULA BLOCK -----------------------------------------------------------
+   <div class="formula"><span class="formula-name">PRECISION</span><span class="formula-eq">=</span>
+     <span class="frac"><span class="frac-top">clips I kept</span><span class="frac-bot">clips it proposed</span></span></div>
+   <div class="formula-note g">the gate can see this.</div>     (note colour: .g .go .re or none = muted)  */
+.formula{display:flex;align-items:center;gap:30px;font-family:'DM Sans';font-size:38px;color:var(--text-primary)}
+.formula-name{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:40px;letter-spacing:.04em;color:var(--accent-cyan)}
+.formula-eq{font-family:'JetBrains Mono',monospace;font-size:44px;color:var(--text-secondary)}
+.frac{display:inline-flex;flex-direction:column;align-items:center;text-align:center}
+.frac-top{padding:0 18px 12px}
+.frac-bot{padding:12px 18px 0;border-top:3px solid var(--text-secondary)}
+.formula-note{font-family:'DM Sans';font-size:28px;color:var(--text-muted);margin-top:16px}
+.formula-note.g{color:var(--accent-green)} .formula-note.go{color:var(--accent-gold)} .formula-note.re{color:var(--accent-red)}
+
+/* ---- CLIP BARS (a small drawing of clips as bars) ------------------------------
+   <div class="clipbars"><div class="clipbar g" style="width:620px"><b>FULL CLIP</b> kept</div>
+     <div class="clipbar re" style="width:300px">...</div></div>                           */
+.clipbars{display:flex;gap:24px;align-items:center;margin-top:44px}
+.clipbar{height:74px;border-radius:12px;display:flex;align-items:center;gap:16px;padding:0 26px;
+  font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-secondary);
+  background:rgba(255,255,255,.03);border:2px solid var(--text-muted)}
+.clipbar b{font-weight:700;color:var(--text-primary)}
+.clipbar span{text-transform:none;letter-spacing:.02em}
+.clipbar.g{border-color:var(--accent-green);background:rgba(0,230,138,.08)} .clipbar.g span{color:var(--accent-green)}
+.clipbar.re{border-color:var(--accent-red);background:rgba(255,64,96,.08)} .clipbar.re span{color:var(--accent-red)}
+
+/* ---- CODE CARD ---------------------------------------------------------------
+   Written by build_code_cards.py from code-cards.json; never hand-typed. Anatomy:
+   <section class="frame code-frame" id="spawn-code-retry" style="--cc-fs:26px">
+     <div class="cc-wrap">
+       <div class="ey">EYEBROW</div><h1 class="cc-title">title</h1>
+       <div class="cc-panel">
+         <div class="cc-block"><div class="cc-label">file.py · function</div>
+           <div class="cc-line lit" style="--ind:4"><span class="cc-ln">339</span><span class="cc-tx">code</span></div>
+           <div class="cc-gap"><span class="cc-ln"></span><span class="cc-tx">· · ·  label</span></div>
+         </div></div>
+       <div class="cc-foot">a note line</div></div></section>
+   --cc-fs = the code font size (22px minimum, the build picks the largest that fits)
+   --ind   = the line's leading spaces; the text is drawn without them and indented by
+             (ind)ch, a wrapped line hangs 4ch further in.
+   .cc-line.lit = cyan bar + full brightness; every other line rests dimmer, readable.
+   mark.cc-mark = one lit substring.  syntax spans: .sx-k keyword .sx-s string .sx-n number
+   .sx-c comment .sx-key JSON key .sx-d decorator / constant                             */
+.frame.code-frame{padding:0 120px;--cc-fs:24px}
+.cc-wrap{display:flex;flex-direction:column;width:100%}
+.cc-wrap .ey{margin-bottom:14px}
+.cc-title{font-family:'Playfair Display',serif;font-weight:900;font-size:58px;line-height:1.1;letter-spacing:-.015em;color:var(--text-primary)}
+.cc-panel{margin-top:24px;background:var(--bg-card);border:1px solid var(--border);border-radius:18px;
+  padding:12px 0 14px;position:relative;overflow:hidden}
+.cc-panel::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));opacity:.85}
+.cc-block+.cc-block{margin-top:10px;border-top:1px solid var(--border);padding-top:4px}
+.cc-label{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:calc(var(--cc-fs) * .78);letter-spacing:.06em;
+  color:var(--text-secondary);padding:6px 40px 6px calc(var(--cc-fs) * 4.2 + 40px)}
+.cc-line,.cc-gap{display:grid;grid-template-columns:calc(var(--cc-fs) * 3.4 + 40px) 1fr;column-gap:calc(var(--cc-fs) * .8);
+  position:relative;padding:0 40px 0 0}
+.cc-ln{font-family:'JetBrains Mono',monospace;font-size:calc(var(--cc-fs) * .82);color:var(--text-muted);text-align:right;
+  line-height:calc(var(--cc-fs) * 1.42);padding-top:calc(var(--cc-fs) * .07);user-select:none}
+/* continuation mark: every soft-wrapped row of a code line gets a faint arrow in the gutter where a number would sit,
+   so a wrap never reads as a real line. Gutter-only (a pseudo-element, never in the code text): the cell is the row's
+   full height; the arrows sit absolutely from the second row down (so they never size the row) and the box clips the
+   ones past the last row. One row = calc(var(--cc-fs) * 1.42), the code's own line height. */
+.cc-line .cc-ln{position:relative}
+.cc-line .cc-ln::after{content:"\21AA\A\21AA\A\21AA\A\21AA\A\21AA\A\21AA\A\21AA\A\21AA\A\21AA";
+  position:absolute;right:0;left:0;top:calc(var(--cc-fs) * 1.42 + var(--cc-fs) * .07);bottom:0;overflow:hidden;
+  white-space:pre;color:var(--text-muted);opacity:.75}
+.cc-tx{font-family:'JetBrains Mono',monospace;font-size:var(--cc-fs);line-height:1.42;color:var(--text-primary);
+  white-space:pre-wrap;overflow-wrap:anywhere;padding-left:calc((var(--ind,0) + 4) * 1ch);text-indent:-4ch;
+  font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}  /* no ligatures: -> and == stay 2 characters */
+/* resting line: every token span at .6, comments at .8 (a comment is already the dimmer text-secondary) */
+.cc-line:not(.lit) .cc-tx>span{opacity:.6}
+.cc-line:not(.lit) .cc-tx>span.sx-c{opacity:.8}
+.cc-line.lit{background:rgba(0,194,255,.09)}
+.cc-line.lit::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--accent-cyan)}
+.cc-line.lit .cc-ln{color:var(--accent-cyan)}
+.cc-gap .cc-tx{font-family:'DM Sans';font-style:italic;font-size:calc(var(--cc-fs) * .9);color:var(--text-secondary);
+  padding-left:0;text-indent:0;letter-spacing:.02em;opacity:1}
+.cc-dots{font-family:'JetBrains Mono',monospace;font-style:normal;font-weight:700;font-size:1.35em;line-height:1;
+  letter-spacing:.12em;color:var(--text-secondary);margin-right:.6em;vertical-align:-.04em}
+/* tint + a cyan bar under the glyphs: vertical padding gives the text room, no horizontal padding, so the
+   monospace columns do not move and nothing crosses into the next character */
+mark.cc-mark{background:rgba(0,194,255,.26);color:var(--text-primary);border-radius:4px;
+  padding:.12em 0;box-shadow:inset 0 -4px 0 var(--accent-cyan)}
+.sx-k{color:color-mix(in srgb,var(--accent-purple) 70%,var(--text-primary))}
+.sx-s{color:color-mix(in srgb,var(--accent-gold) 42%,var(--text-primary))}
+.sx-n{color:color-mix(in srgb,var(--accent-green) 45%,var(--text-primary))}
+.sx-c{color:var(--text-secondary);font-style:italic}
+.sx-key{color:var(--text-primary)}
+.sx-d{color:color-mix(in srgb,var(--accent-purple) 70%,var(--text-primary))}
+.cc-foot{font-family:'DM Sans';font-size:26px;line-height:1.4;color:var(--text-secondary);margin-top:20px}
+.cc-foot .mono{font-size:.92em;color:var(--text-primary)}
+
+/* ---- TIMELINE STRIP (stamp-code; any two-to-four point time rail) --------------
+   <div class="tl"><div class="tl-title">the last livestream</div>
+     <div class="tl-rail"><div class="tl-span">9 hours</div></div>
+     <div class="tl-pts"><div class="tl-pt c"><div class="tl-when">Nov 15, 21:20</div><div class="tl-what">...</div>
+       <div class="tl-tag">STAMPED HERE</div></div><div class="tl-pt go">...</div></div></div>
+   point colour: .c cyan (the talked-about moment) · .go gold (a human gate)               */
+.tl{margin-top:26px;width:100%}
+.tl-title{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:21px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted)}
+.tl-rail{position:relative;height:3px;background:var(--text-muted);margin:34px 14px 0}
+.tl-rail::before,.tl-rail::after{content:"";position:absolute;top:-11px;width:22px;height:22px;border-radius:50%;background:var(--bg-deep);border:4px solid var(--text-muted);box-sizing:border-box}
+.tl-rail::before{left:-11px;border-color:var(--accent-cyan);background:var(--accent-cyan)}
+.tl-rail::after{right:-11px;border-color:var(--accent-gold)}
+.tl-span{position:absolute;left:50%;top:-40px;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-weight:600;
+  font-size:24px;color:var(--text-secondary);background:var(--bg-deep);padding:0 16px}
+.tl-pts{display:flex;justify-content:space-between;margin-top:22px}
+.tl-pt{max-width:46%}
+.tl-pt+.tl-pt{text-align:right}
+.tl-when{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:26px;color:var(--text-primary)}
+.tl-pt.c .tl-when{color:var(--accent-cyan)} .tl-pt.go .tl-when{color:var(--accent-gold)}
+.tl-what{font-family:'DM Sans';font-size:25px;color:var(--text-secondary);margin-top:6px}
+.tl-tag{display:inline-block;margin-top:10px;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:19px;letter-spacing:.12em;
+  color:var(--accent-cyan);border:1px solid rgba(0,194,255,.5);border-radius:8px;padding:5px 12px}

@@ -1,0 +1,422 @@
+{
+ "project": "AI vs ML",
+ "authored": "2026-11-10 by music-placement-strategist (read-only plan; the orchestrator renders the listening copy with mix_music.py --plan-preview)",
+ "spine": "video-creation/longform-edited/media/AI vs ML/spine/ALL.e.enhanced.mp4",
+ "spine_duration_sec": 145.2,
+ "ruling": "ONE track, carved, the whole video (SCREENPLAY MUSIC-MOOD-PLAN, approved at GATE 1): concrete-mazes, Bed A from frame 0, no title cards, the hit ending right-aligned to the last one. (PROJECT-LOG: the hit moves off next with the 4-slot close).",
+ "track": {
+  "id": "concrete-mazes",
+  "title": "Concrete Mazes",
+  "artist": "PALA",
+  "file": "video-creation/assets/music/Concrete Mazes/PALA_Concrete_Mazes_instrumental_3_02-6.wav",
+  "files_used": [
+   "video-creation/assets/music/Concrete Mazes/PALA_Concrete_Mazes_instrumental_3_02-6.wav",
+   "video-creation/assets/music/Concrete Mazes/PALA_Concrete_Mazes_instrumental_0_36-5.wav"
+  ],
+  "duration_sec": 182.81,
+  "bpm": 128,
+  "bar_sec": 1.875,
+  "section_grid_phase_sec": 0.0,
+  "key": "Eb/D# major",
+  "mix": "instrumental (the 3:02 instrumental master, plus the 0:36 instrumental cut for its ending)",
+  "license_code": "5IQX9DCHAVKOGQXX",
+  "source": "soundstripe 13616",
+  "usage_ledger": "fresh (never used) in every pool on the 2026-11-10 report run with this project excluded; BLOCKED solstice and avoid get-it / kitsune / lightheart do not apply; the screenplay shortlist stands, no replacement needed"
+ },
+ "end_card_hold": {
+  "after_last_word_sec": 2.0,
+  "hold_until_sec": 147.0,
+  "why": "The END HOLD Mike asked for (PROJECT-LOG, spoken in the recording and repeated at spine_review): the comp runs 2.0 s past the last word (145.00) on the end screen with the bed, no trim. The last row plays on into the hold: the stab and its echoes are the sound of the hold."
+ },
+ "levels": {
+  "vo_lufs_integrated": -22.4,
+  "vo_note": "ffmpeg ebur128 on spine/ALL.e.enhanced.mp4. mix_music.py raises the voice +2.0 dB by default (GRAPH-PROGRESS settings carry no voice_db), so every seat is computed against the raised voice at -20.4 LUFS.",
+  "bed_region_lufs": {
+   "build bars 9-11": -15.3,
+   "rise bars 12-15 / 44-47": -10.7,
+   "chorus 1 bars 16-31": -8.4,
+   "verse bars 32-39": -15.5,
+   "build bars 40-43": -15.2,
+   "chorus 2 bars 48-55": -9.0,
+   "breakdown bars 66-71": -18.2,
+   "final chorus bars 72-79": -8.3
+  },
+  "seat_rule": "THREE seats, because the track has a 10 LU range and one seat would bury the verse 26 dB under the voice: rise + chorus rows remotion_gain_db -31.0 (chorus at -39.4 LUFS, 19 dB under the raised voice); verse + build rows -26.0 (-41.3 LUFS, 21 under); breakdown rows -24.0 (-42.2 LUFS, 22 under). The track keeps about 3 LU of its lift into each chorus, and every rise row sits at the chorus seat so a drop is always a real step up. Where a seat changes inside sample-continuous audio the mixer ramps it over 0.5 s at the row boundary (5.865, 92.115, 125.265), always before a drop. No automation rows; no clip inserts in this video (COVER-PLAN clip_inserts is empty).",
+  "remotion_gain_db": {
+   "rise_and_chorus": -31.0,
+   "verse_and_build": -26.0,
+   "breakdown": -24.0
+  },
+  "linear_gain": {
+   "rise_and_chorus": 0.0282,
+   "verse_and_build": 0.0501,
+   "breakdown": 0.0631
+  }
+ },
+ "energy_profile": {
+  "video-creation/assets/music/Concrete Mazes/PALA_Concrete_Mazes_instrumental_3_02-6.wav": {
+   "low_energy_regions": [
+    [
+     0.0,
+     15.0
+    ],
+    [
+     60.0,
+     75.0
+    ],
+    [
+     120.0,
+     135.0
+    ],
+    [
+     165.0,
+     180.0
+    ]
+   ],
+   "high_energy_regions": [
+    [
+     30.0,
+     60.0
+    ],
+    [
+     90.0,
+     120.0
+    ],
+    [
+     135.0,
+     165.0
+    ]
+   ],
+   "per_bar": {
+    "intro strokes bars 0-7 (0.0-15.0)": "-23 / -35 dBFS alternating, not used",
+    "build bars 8-11 (15.0-22.5)": "-18 to -20 dBFS",
+    "rise bars 12-15 (22.5-30.0)": "-15.2, -15.8, -14.2, -11.8 dBFS, 16th snare roll at 29.64-29.88",
+    "CHORUS 1 bars 16-31 (30.0-60.0)": "-9 dBFS, drop exactly on 30.00",
+    "verse bars 32-39 (60.0-75.0)": "-19 / -24 dBFS alternating, sparse plucks",
+    "build bars 40-43 (75.0-82.5)": "-19.4, -20.5, -17.3, -18.9 dBFS (same audio as bars 8-11)",
+    "rise bars 44-47 (82.5-90.0)": "-15.4, -15.8, -14.4, -11.9 dBFS",
+    "CHORUS 2 bars 48-63 (90.0-120.0)": "-9 dBFS, a copy of chorus 1 (bar similarity 0.97)",
+    "breakdown bars 64-71 (120.0-135.0)": "-21 to -24 dBFS, a pad with 0-2 onsets per bar, bars 70-71 carry the riser",
+    "FINAL CHORUS bars 72-87 (135.0-165.0)": "-9 dBFS, drop exactly on 135.00",
+    "outro bars 88-95 (165.0-180.0)": "-25 dBFS then a fade, not used (the master ends on a fade, no hit)"
+   },
+   "notes": "Bar = 1.875 s, bar lines on file 0.0 + 1.875 n (phase by onset scoring; all three drops sit on bar lines 30.0, 90.0, 135.0). Chroma shows a strict 2-bar chord loop in every section (even bars one chord, odd bars the other), so every splice in this plan leaves an odd bar and enters an even bar."
+  },
+  "video-creation/assets/music/Concrete Mazes/PALA_Concrete_Mazes_instrumental_0_36-5.wav": {
+   "low_energy_regions": [
+    [
+     30.94,
+     36.56
+    ]
+   ],
+   "high_energy_regions": [
+    [
+     0.94,
+     30.94
+    ]
+   ],
+   "notes": "Cross-correlated to the master: a sample copy of CHORUS 1 (cut 5.00 = master 34.06, ncc 1.00) behind a 2-beat pickup, so cut bar lines are 0.9375 + 1.875 n. Its own ENDING: the chorus stops on bar line 30.94, the ring falls to -18 dBFS, the final STAB is one beat after the bar line at 31.41 (peak 0.82), echoes at 32.10, 32.36, 32.58 and 33.28, silent by 34.5. Used only for that ending."
+  }
+ },
+ "placement_math": {
+  "grid": "ONE grid for the whole video: video bar lines = 0.240 + 1.875 k (k 0 to 77). The grid is fixed by the open (the stroke at file 16.64 on frame 0) and it puts the ending where it is wanted with no second pin: chorus stop at k 77 = 144.615, stab at 145.08.",
+  "bars_by_k": "k 0-2 build 9-11 | k 3-6 rise 12-15 | k 7-22 CHORUS 1 16-31 | k 23-30 verse 32-39 | k 31-34 breakdown 66-69 | k 35-40 verse 34-39 | k 41-44 build 40-43 | k 45-48 build 40-43 again | k 49-52 rise 44-47 | k 53-60 CHORUS 2 48-55 | k 61-66 breakdown 66-71 | k 67-74 FINAL CHORUS 72-79 | k 75-76 chorus bars 30-31 from the cut | k 77 stop, stab one beat later",
+  "landings": {
+   "13.365": "chorus 1 drop, on it all down (break 12.96, down. 13.56-13.88)",
+   "43.365": "chorus 1 ends by itself, verse in, 2.3 s before FACE 4",
+   "58.365": "breakdown pad in, 0.3 s after To sum it up starts (58.06)",
+   "65.865": "verse back, 1.4 s into CH3",
+   "77.115": "build in, on the last verdict AI. (77.14), 0.5 s before the versus stack",
+   "84.615": "the build repeats (4-bar jump back)",
+   "92.115": "rise in, on If you have the math (92.08)",
+   "99.615": "chorus 2 drop, on in total pay, after the drum roll under Now the money",
+   "114.615": "hard stop to the pad, 0.07 s after gap. ends",
+   "125.865": "final chorus drop, 0.18 s before AI engineering is the key",
+   "140.865": "splice to the last two bars of the cut (under video right here)",
+   "144.615": "chorus stop, under this",
+   "145.084": "the stab, 0.08 s after the last one. ends"
+  },
+  "parity": "The 2-bar chord loop decides two things. (1) Counted back from the ending the first drop can only fall 7 bars after frame 0 (13.365), so the video opens on bar 9, mid-groove. (2) A chorus can only start on an odd k, so the money drop is 99.615 or 95.865, never 97.7 on Now, and the verdict drop is 125.865 or 122.115, never 123.98 on Therefore. The later line was taken both times: the drum roll gets Now the money, the riser gets Therefore, for most developers.",
+  "splices": "Five, all on bar lines of the one grid, outgoing rows fade 0.08 s under the hard entry of the incoming row: 58.365 (verse to pad), 65.865 (pad to verse), 84.615 (build repeat), 114.615 (chorus to pad), 140.865 (master final chorus bar 79 to bar 30 of the cut). Everything else is the file playing on, merged by the mixer into one placement per run."
+ },
+ "hard_hits": [
+  {
+   "t": 0.0,
+   "beat": "frame 0, the locked opening line (FACE 1)",
+   "music_move": "the stroke of the build hits on frame 0 (file 16.64), groove already running"
+  },
+  {
+   "t": 13.365,
+   "beat": "the handoff line break it all down, the roles-split card",
+   "music_move": "chorus 1 drop lands on it all down, the rise and its snare roll under the open loop"
+  },
+  {
+   "t": 99.615,
+   "beat": "Now the money, into the C3 money ladder",
+   "music_move": "drum roll under Now the money, chorus 2 drop on in total pay; the peak rides 155,000, 495,000 and the 340,000 gap"
+  },
+  {
+   "t": 114.615,
+   "beat": "the payoff line And it goes to the people who train the models",
+   "music_move": "hard stop to the pad as gap. ends, the line lands in the hush"
+  },
+  {
+   "t": 125.865,
+   "beat": "the verdict AI engineering is the key (FACE 6)",
+   "music_move": "the riser of the pad under Therefore, for most developers, the final chorus drop just before AI engineering"
+  },
+  {
+   "t": 145.084,
+   "beat": "the last word one. (ends 145.00) and the 2.0 s end hold",
+   "music_move": "chorus stops at 144.615, the stab of the cut lands as the word closes, echoes ring through the end screen"
+  }
+ ],
+ "notes": [
+  "No title cards, so there is no inter-bed breath by silence: the bed is one track from frame 0 to the end, and the two pad sections (58.365-65.865 and 114.615-125.865) are the breaths. No gap anywhere; every splice is an 80 ms overlap.",
+  "No clip inserts in this video (COVER-PLAN clip_inserts is empty), so no bed carries one and nothing is ducked automatically.",
+  "The final chorus under the subscribe face and the end screen is the fuller arrangement of the master for 8 bars, then the chorus-1 arrangement of the cut for the last 2 bars before the stop (the master itself ends on a fade and has no hit).",
+  "The span of the last row stops at the spine end (145.20) for the verifier; mix_music.py runs the last bed to the end of the video, so with the 2.0 s hold it plays to 147.00 (cut 33.32) and the closing fade of the mixer takes the last echo.",
+  "If Mike calls the bed hot, move all three seats down together (next notch -2 dB: -33 / -28 / -26); the shape stays.",
+  "The listening copy is laid on the spine, which ends at 145.20 with no hold: it carries the chorus stop and the stab (145.08) but cuts 0.1 s later, so the echoes over the end screen are first heard in the draft."
+ ],
+ "open_questions": [
+  "LISTEN FOR (plan-preview): (1) the ending, 2:20.9 to 2:27: the splice into the cut at 140.865, the chorus stopping under this, one. said clean, the stab at 145.08 and the echoes over the end screen; (2) the money movement, 1:32 to 2:06: the drum roll under Now the money, the drop on in total pay, the hard stop after the 340,000 gap line, the pad under the train the models line, the drop before AI engineering is the key.",
+  "The pad under the paper card (58.365-65.865) is the one splice pair that changes texture mid-explainer (verse to pad to verse). If it reads as a hiccup, the fallback is one row: verse bars 32-35 again (source_in 60.0) on the same span, same seat as the verse.",
+  "The money drop lands on in total pay (99.615), not on the word Now (98.14), and the verdict drop lands before AI engineering (125.865), not on Therefore (123.98): the 2-bar chord loop of the track allows no bar line nearer without an audible chord jump. Say so if either should move; the cost is one off-loop splice inside a riser bar.",
+  "Three seats instead of one (19 / 21 / 22 dB under the raised voice) lift the verse and the pad about 5 to 7 dB against the choruses. If Mike wants the full dynamics of the file, set every row to -31.0.",
+  "The screenplay planned the hit on next; the take ends on a fourth this one, so the stab is on the last one. per the PROJECT-LOG ruling. The screenplay also planned chorus 2 across the whole money beat into a face landing; that landing was recorded as COVER, so the chorus now stops after the gap and the verdict gets the final drop instead.",
+  "Variety: concrete-mazes is fresh, nothing shortlisted was blocked or recent, so nothing was replaced. The subtle pool is not drawn on here (one track, carved)."
+ ],
+ "beds": [
+  {
+   "chapter": "CH1",
+   "span": [
+    0.0,
+    5.865
+   ],
+   "register": "gear-3-epic (the hook, voice-forward open)",
+   "source_file": "video-creation/assets/music/Concrete Mazes/PALA_Concrete_Mazes_instrumental_3_02-6.wav",
+   "source_in": 16.635,
+   "cover": "section",
+   "intensity": "subtle",
+   "level_db_under_vo": -21,
+   "remotion_gain_db": -26.0,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.25,
+   "carve": "BUILD bars 9-11 (file 16.635-22.5): frame 0 enters mid-groove on the stroke at file 16.64, 0.24 s before bar line 9",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "The first stroke hits frame 0 under AI engineer versus ML engineer (FACE 1, 0.00-2.57) and the build groove runs under They sound like the same job, they are not (BR-1). Sample-continuous into the next row, no fade."
+  },
+  {
+   "chapter": "CH2",
+   "span": [
+    5.865,
+    43.365
+   ],
+   "register": "gear-3-epic rise into the gear-2.5 explainer peak",
+   "source_file": "video-creation/assets/music/Concrete Mazes/PALA_Concrete_Mazes_instrumental_3_02-6.wav",
+   "source_in": 22.5,
+   "cover": "section",
+   "intensity": "aggressive",
+   "level_db_under_vo": -19,
+   "remotion_gain_db": -31.0,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.25,
+   "carve": "RISE bars 12-15 (file 22.5-30.0) on 5.865-13.365, then CHORUS 1 bars 16-31 (file 30.0-60.0) on 13.365-43.365. Enters inside CH1 by right-alignment: the drop is pinned, the rise is counted back from it",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "The rise climbs under the pay gap between them is huge (IMG-1) and the open loop big checks / door open (FACE 2), its snare roll under So let's break; the drop of the track lands at 13.365 on it all down as the roles-split card holds. Chorus 1 carries the CH2 pops (BUILD TRAIN DEPLOY 23.9-25.5, the C1 lanes 26.2-33.3, FACE 3 my side) and stops by itself at 43.365 on Because the hard part."
+  },
+  {
+   "chapter": "CH2",
+   "span": [
+    43.365,
+    58.445
+   ],
+   "register": "gear-2-explainer, the quiet face turn",
+   "source_file": "video-creation/assets/music/Concrete Mazes/PALA_Concrete_Mazes_instrumental_3_02-6.wav",
+   "source_in": 60.0,
+   "cover": "section",
+   "intensity": "subtle",
+   "level_db_under_vo": -21,
+   "remotion_gain_db": -26.0,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "VERSE bars 32-39 (file 60.0-75.0), sample-continuous out of chorus 1 (the exit the track itself makes)",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "The sparse verse sits under the training is already done for you and the whole of FACE 4 (45.63-58.10): the CAN / SHOULD turn and the confessional ad-lib been thinking about lately. Hmm, how to cut those costs. Softest groove in the file for the quietest face lines."
+  },
+  {
+   "chapter": "CH2",
+   "span": [
+    58.365,
+    65.945
+   ],
+   "register": "gear-2-explainer, the ONE paper statement card",
+   "source_file": "video-creation/assets/music/Concrete Mazes/PALA_Concrete_Mazes_instrumental_3_02-6.wav",
+   "source_in": 123.75,
+   "cover": "section",
+   "intensity": "dip",
+   "level_db_under_vo": -22,
+   "remotion_gain_db": -24.0,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "BREAKDOWN bars 66-69 (file 123.75-131.25), a 4-bar pad with no drums; splice in on bar line 58.365 (verse bar 39 out, even bar 66 in, chord parity kept)",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "The level dips under To sum it up, AI engineering is less about developing models and more about adapting and evaluating them (paper-sum-up, 58.10-64.39) and the first 1.4 s of CH3; the pad leaves ADAPTING and EVALUATING alone."
+  },
+  {
+   "chapter": "CH3",
+   "span": [
+    65.865,
+    84.695
+   ],
+   "register": "gear-2.5 rising, the criteria and the versus stack",
+   "source_file": "video-creation/assets/music/Concrete Mazes/PALA_Concrete_Mazes_instrumental_3_02-6.wav",
+   "source_in": 63.75,
+   "cover": "section",
+   "intensity": "subtle",
+   "level_db_under_vo": -21,
+   "remotion_gain_db": -26.0,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "VERSE bars 34-39 (file 63.75-75.0) on 65.865-77.115, running into BUILD bars 40-43 (file 75.0-82.5) on 77.115-84.615 (verse into build as the track plays it)",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "The verse groove returns under the four criteria and their verdict pops (ML 69.82, AI 72.44, ML 74.86, AI 77.14); the build enters at 77.115 as the last verdict lands and climbs under the versus stack (FACE 5, 77.63-82.40) and the start of the LinkedIn line."
+  },
+  {
+   "chapter": "CH3",
+   "span": [
+    84.615,
+    92.115
+   ],
+   "register": "gear-2.5 rising, the LinkedIn receipt",
+   "source_file": "video-creation/assets/music/Concrete Mazes/PALA_Concrete_Mazes_instrumental_3_02-6.wav",
+   "source_in": 75.0,
+   "cover": "section",
+   "intensity": "subtle",
+   "level_db_under_vo": -21,
+   "remotion_gain_db": -26.0,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.25,
+   "carve": "BUILD bars 40-43 again (file 75.0-82.5): a 4-bar jump back on bar line 84.615 (bar 43 out, bar 40 in), the one remix repeat the screenplay asked for",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "The build holds under fastest growing job in the US for 2026 is AI engineer (C12) and If you have the code but not the math, AI is your way in (BR-8). Sample-continuous into the next row."
+  },
+  {
+   "chapter": "CH3",
+   "span": [
+    92.115,
+    114.695
+   ],
+   "register": "gear-3-epic, the money",
+   "source_file": "video-creation/assets/music/Concrete Mazes/PALA_Concrete_Mazes_instrumental_3_02-6.wav",
+   "source_in": 82.5,
+   "cover": "section",
+   "intensity": "aggressive",
+   "level_db_under_vo": -19,
+   "remotion_gain_db": -31.0,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "RISE bars 44-47 (file 82.5-90.0) on 92.115-99.615, then CHORUS 2 bars 48-55 (file 90.0-105.0) on 99.615-114.615; the chorus is cut on the bar line after its first 8-bar phrase",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "The rise starts on If you have the math but not the production code (92.08) and its drum roll sits under Now the money (98.14-99.04); the drop lands at 99.615 on in total pay. Chorus 2 rides the Levels.fyi receipt and the C3 money ladder: 155,000, 495,000 (108.12), My God, dude, and the 340,000 gap line, and stops dead on the bar line as gap. ends (114.54)."
+  },
+  {
+   "chapter": "CH3",
+   "span": [
+    114.615,
+    125.265
+   ],
+   "register": "gear-2, the payoff line and the caveat in the hush",
+   "source_file": "video-creation/assets/music/Concrete Mazes/PALA_Concrete_Mazes_instrumental_3_02-6.wav",
+   "source_in": 123.75,
+   "cover": "section",
+   "intensity": "dip",
+   "level_db_under_vo": -22,
+   "remotion_gain_db": -24.0,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.25,
+   "carve": "BREAKDOWN bars 66-71 (file 123.75-134.4, the last 0.6 s of bar 71 belongs to the next row): hard entry on bar line 114.615 (chorus bar 55 out, even bar 66 in), RIGHT-ALIGNED so its last bar runs into the final drop",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "The bed drops to a pad the instant the gap is said, so And it goes to the people who train the models (the direction the hook withheld) lands in the hush; the pad holds under But those seats are few, competing with PhDs for them, something to ponder, and its riser bar climbs under Therefore, for most developers (FACE 6 from 123.70). Sample-continuous into the next row."
+  },
+  {
+   "chapter": "CH4",
+   "span": [
+    125.265,
+    140.945
+   ],
+   "register": "gear-3-epic, the verdict and subscribe",
+   "source_file": "video-creation/assets/music/Concrete Mazes/PALA_Concrete_Mazes_instrumental_3_02-6.wav",
+   "source_in": 134.4,
+   "cover": "section",
+   "intensity": "aggressive",
+   "level_db_under_vo": -19,
+   "remotion_gain_db": -31.0,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.08,
+   "carve": "the last 0.6 s of bar 71 (the seat steps down before the drop, never on it), then FINAL CHORUS bars 72-79 (file 135.0-150.0) on 125.865-140.865, its first 8-bar phrase",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": false,
+   "why": "The dip-into-drop lands at 125.865, in the pause before AI engineering is the key (126.04-127.52, the sparkle on the key). The final chorus drives The door is open, the subscribe face (FACE 7, 130.40-139.53) and And watch this next video."
+  },
+  {
+   "chapter": "CH4",
+   "span": [
+    140.865,
+    145.2
+   ],
+   "register": "gear-3-epic, the ending",
+   "source_file": "video-creation/assets/music/Concrete Mazes/PALA_Concrete_Mazes_instrumental_0_36-5.wav",
+   "source_in": 27.188,
+   "cover": "section",
+   "intensity": "aggressive",
+   "level_db_under_vo": -19,
+   "remotion_gain_db": -31.0,
+   "fade_in_sec": 0,
+   "fade_out_sec": 0.25,
+   "carve": "the last two chorus bars of the 0:36 instrumental cut (cut 27.19-30.94 = chorus bars 30-31, the turnaround) on 140.865-144.615, the chorus STOP on bar line 144.615, the final STAB one beat later (cut 31.41) at 145.08, then the echoes (cut 32.10, 32.36, 32.58, 33.28) through the 2.0 s end hold",
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": null,
+   "loop_out_sec": null,
+   "align_end": true,
+   "why": "Right-aligned ending: the chorus runs under right here, or maybe even this one, or this one, or even and stops on this (144.44-144.76); the last one. (144.76-145.00) is said clean in the ring and the stab closes it at 145.08. The echoes fall at 145.78, 146.04, 146.26 and 146.96 under the 4-slot end screen; the video ends at 147.00."
+  }
+ ]
+}

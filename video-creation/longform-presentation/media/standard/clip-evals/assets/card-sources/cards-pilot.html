@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>clip-evals: text cards, pilot batch (CARDS-SPEC section 1)</title>
+<!-- One <section class="frame" id="FILE-NAME"> per still, 1920x1080, text exactly as CARDS-SPEC writes it.
+     Components: base.css (canonical stylesheet + clip-evals components). Shoot:
+     python shoot.py cards-pilot.html --out ../cards -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="base.css" rel="stylesheet">
+<style>
+/* names the 3 families inline so shoot.py's font check can read them */
+.font-probe{font-family:'Playfair Display','DM Sans','JetBrains Mono'}
+body{display:flex;flex-direction:column;gap:40px;align-items:flex-start}
+.th-sub{text-transform:none;letter-spacing:.04em}
+.lc{text-transform:none}
+#the-job .flow-step{min-height:300px;padding:36px 24px 36px 28px}
+#the-job .flow-d{font-size:29px}
+.nowrap{white-space:nowrap}
+/* kills-pairs -> kills-rates: both states pinned to ONE top anchor (no vertical centring), so the eyebrow and the
+   top of "11 of 17" stay put and only the number's size and the added 2-up change. 234.4px = kills-rates' centred
+   position, so that state is unchanged. The portrait anchor is in portrait-text.css. */
+#kills-pairs,#kills-rates{justify-content:flex-start;padding-top:234.4px}
+</style>
+<link href="portrait-text.css" rel="stylesheet" media="(orientation: portrait)">
+</head>
+<body>
+
+<!-- the-job -->
+<section class="frame" id="the-job">
+  <div class="orb" style="width:620px;height:620px;background:var(--accent-cyan);top:-200px;right:-160px"></div>
+  <div class="ey">THE JOB</div>
+  <h1>A livestream in. <span class="c">Up to 8 clips</span> out.</h1>
+  <div class="divider"></div>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-t">LIVESTREAM</div></div>
+    <div class="flow-arrow"></div>
+    <div class="flow-step"><div class="flow-t">CLIP STRATEGIST</div><div class="flow-d">an agent reads the transcript</div></div>
+    <div class="flow-arrow"></div>
+    <div class="flow-step"><div class="flow-t">UP TO 8 CLIPS</div><div class="flow-d nowrap">30 s · 60 s · 90 s</div></div>
+    <div class="flow-arrow"></div>
+    <div class="flow-step go"><div class="flow-t">MIKE:<br><span class="nowrap"><span class="g">KEEP</span> <span class="lc">or</span> <span class="re">KILL</span></span></div><div class="flow-d">every clip</div></div>
+  </div>
+</section>
+
+<!-- last-video -->
+<section class="frame" id="last-video">
+  <div class="orb" style="width:640px;height:640px;background:var(--accent-cyan);bottom:-240px;right:-160px"></div>
+  <div class="ey">FROM THE LAST EVALS VIDEO</div>
+  <blockquote class="quote xl">The next layer is a dataset<br>and the score.</blockquote>
+  <div class="source">Mike, in the first evals video.</div>
+</section>
+
+<!-- roadmap (harness, graph, evals) -->
+<section class="frame" id="roadmap-harness">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">IN THIS VIDEO</div>
+  <h1>The harness, the graph, the evals</h1>
+  <div class="divider"></div>
+  <div class="nrows">
+    <div class="nrow lit"><div class="nrow-n">1</div><div class="nrow-b"><div class="nrow-t">THE HARNESS</div><div class="nrow-d">the code around the agents that holds them to the rules</div></div></div>
+    <div class="nrow"><div class="nrow-n">2</div><div class="nrow-b"><div class="nrow-t">THE WHOLE GRAPH</div><div class="nrow-d">every step and every agent in it</div></div></div>
+    <div class="nrow"><div class="nrow-n">3</div><div class="nrow-b"><div class="nrow-t">THE EVALS</div><div class="nrow-d">record a verdict, replay a livestream, score a prompt</div></div></div>
+  </div>
+</section>
+
+<section class="frame" id="roadmap-graph">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">IN THIS VIDEO</div>
+  <h1>The harness, the graph, the evals</h1>
+  <div class="divider"></div>
+  <div class="nrows">
+    <div class="nrow"><div class="nrow-n">1</div><div class="nrow-b"><div class="nrow-t">THE HARNESS</div><div class="nrow-d">the code around the agents that holds them to the rules</div></div></div>
+    <div class="nrow lit"><div class="nrow-n">2</div><div class="nrow-b"><div class="nrow-t">THE WHOLE GRAPH</div><div class="nrow-d">every step and every agent in it</div></div></div>
+    <div class="nrow"><div class="nrow-n">3</div><div class="nrow-b"><div class="nrow-t">THE EVALS</div><div class="nrow-d">record a verdict, replay a livestream, score a prompt</div></div></div>
+  </div>
+</section>
+
+<section class="frame" id="roadmap-evals">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">IN THIS VIDEO</div>
+  <h1>The harness, the graph, the evals</h1>
+  <div class="divider"></div>
+  <div class="nrows">
+    <div class="nrow"><div class="nrow-n">1</div><div class="nrow-b"><div class="nrow-t">THE HARNESS</div><div class="nrow-d">the code around the agents that holds them to the rules</div></div></div>
+    <div class="nrow"><div class="nrow-n">2</div><div class="nrow-b"><div class="nrow-t">THE WHOLE GRAPH</div><div class="nrow-d">every step and every agent in it</div></div></div>
+    <div class="nrow lit"><div class="nrow-n">3</div><div class="nrow-b"><div class="nrow-t">THE EVALS</div><div class="nrow-d">record a verdict, replay a livestream, score a prompt</div></div></div>
+  </div>
+</section>
+
+<!-- agent-harness -->
+<section class="frame" id="agent-harness">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">HARNESS, MEANING 1</div>
+  <h1>The <span class="c">agent harness</span></h1>
+  <div class="divider"></div>
+  <blockquote class="quote lg">An agent harness (or scaffold) is the system that enables a model to act as an agent: it processes inputs, orchestrates tool calls, and returns results.</blockquote>
+  <div class="source">Anthropic, "Demystifying evals for AI agents", Jan 9, 2026</div>
+</section>
+
+<!-- six-agents -->
+<section class="frame" id="six-agents">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">THE AGENTS</div>
+  <h1 class="sm">6 agents work inside this graph</h1>
+  <div class="divider"></div>
+  <table class="tbl">
+    <thead><tr><th style="width:470px">AGENT</th><th>JOB</th><th style="width:360px">MODEL TIER</th></tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="3">JUDGMENT, HANDS BACK A PLAN</td></tr>
+      <tr><td class="mono">clip-strategist</td><td>picks the clips from the transcript</td><td>fable, max effort</td></tr>
+      <tr><td class="mono">tighten-strategist</td><td>plans which filler to cut from a clip</td><td>fable, max effort</td></tr>
+      <tr><td class="mono">lane3-drafter</td><td>drafts the tweets, threads and posts</td><td>fable, max effort</td></tr>
+      <tr class="grp"><td colspan="3">BUILDS OR CHECKS</td></tr>
+      <tr><td class="mono">remotion-builder</td><td>builds each short's video</td><td>opus, xhigh effort</td></tr>
+      <tr><td class="mono">publish-meta-author</td><td>writes the titles and captions</td><td>opus, medium effort</td></tr>
+      <tr><td class="mono">visual-qa</td><td>checks the rendered images</td><td>opus, high effort</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- noise-table (all, held, moved) -->
+<section class="frame" id="noise-table-all">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">NOISE</div>
+  <h1 class="sm">The same prompt, twice, on 4 livestreams</h1>
+  <div class="divider"></div>
+  <table class="tbl">
+    <thead><tr><th>LIVESTREAM</th><th class="r">PICKS<br><span class="th-sub">(run 1 / run 2)</span></th><th class="r">SAME PICKS<br>BETWEEN RUNS</th><th class="r">PRECISION<br><span class="th-sub">(run 1 / run 2)</span></th><th class="r">SPREAD</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">30x-tao</td><td class="mono r">8 / 8</td><td class="mono r">100%</td><td class="mono r">83.3 / 83.3</td><td class="mono r em">0</td></tr>
+      <tr><td class="mono">best-time</td><td class="mono r">3 / 3</td><td class="mono r">100%</td><td class="mono r">100 / 100</td><td class="mono r em">0</td></tr>
+      <tr><td class="mono">kaspa-cocktails</td><td class="mono r">7 / 7</td><td class="mono r">85.7%</td><td class="mono r em">100 / 83.3</td><td class="mono r em">16.7 points</td></tr>
+      <tr><td class="mono">stock-market</td><td class="mono r">6 / 7</td><td class="mono r">92.3%</td><td class="mono r em">100 / 83.3</td><td class="mono r em">16.7 points</td></tr>
+    </tbody>
+  </table>
+  <div class="note-line">same prompt, same transcript, same model.</div>
+</section>
+
+<section class="frame" id="noise-table-held">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">NOISE</div>
+  <h1 class="sm">The same prompt, twice, on 4 livestreams</h1>
+  <div class="divider"></div>
+  <table class="tbl">
+    <thead><tr><th>LIVESTREAM</th><th class="r">PICKS<br><span class="th-sub">(run 1 / run 2)</span></th><th class="r">SAME PICKS<br>BETWEEN RUNS</th><th class="r">PRECISION<br><span class="th-sub">(run 1 / run 2)</span></th><th class="r">SPREAD</th></tr></thead>
+    <tbody>
+      <tr class="lit-g"><td class="mono">30x-tao</td><td class="mono r">8 / 8</td><td class="mono r">100%</td><td class="mono r">83.3 / 83.3</td><td class="mono r em">0</td></tr>
+      <tr class="lit-g"><td class="mono">best-time</td><td class="mono r">3 / 3</td><td class="mono r">100%</td><td class="mono r">100 / 100</td><td class="mono r em">0</td></tr>
+      <tr><td class="mono">kaspa-cocktails</td><td class="mono r">7 / 7</td><td class="mono r">85.7%</td><td class="mono r em">100 / 83.3</td><td class="mono r em">16.7 points</td></tr>
+      <tr><td class="mono">stock-market</td><td class="mono r">6 / 7</td><td class="mono r">92.3%</td><td class="mono r em">100 / 83.3</td><td class="mono r em">16.7 points</td></tr>
+    </tbody>
+  </table>
+  <div class="note-line">same prompt, same transcript, same model.</div>
+</section>
+
+<section class="frame" id="noise-table-moved">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">NOISE</div>
+  <h1 class="sm">The same prompt, twice, on 4 livestreams</h1>
+  <div class="divider"></div>
+  <table class="tbl">
+    <thead><tr><th>LIVESTREAM</th><th class="r">PICKS<br><span class="th-sub">(run 1 / run 2)</span></th><th class="r">SAME PICKS<br>BETWEEN RUNS</th><th class="r">PRECISION<br><span class="th-sub">(run 1 / run 2)</span></th><th class="r">SPREAD</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">30x-tao</td><td class="mono r">8 / 8</td><td class="mono r">100%</td><td class="mono r">83.3 / 83.3</td><td class="mono r em">0</td></tr>
+      <tr><td class="mono">best-time</td><td class="mono r">3 / 3</td><td class="mono r">100%</td><td class="mono r">100 / 100</td><td class="mono r em">0</td></tr>
+      <tr class="lit-re"><td class="mono">kaspa-cocktails</td><td class="mono r">7 / 7</td><td class="mono r">85.7%</td><td class="mono r em">100 / 83.3</td><td class="mono r em">16.7 points</td></tr>
+      <tr class="lit-re"><td class="mono">stock-market</td><td class="mono r">6 / 7</td><td class="mono r">92.3%</td><td class="mono r em">100 / 83.3</td><td class="mono r em">16.7 points</td></tr>
+    </tbody>
+  </table>
+  <div class="note-line">same prompt, same transcript, same model.</div>
+</section>
+
+<!-- record-today -->
+<section class="frame" id="record-today">
+  <div class="orb" style="width:620px;height:620px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">THE RECORD TODAY</div>
+  <div class="bigstat"><div class="bigstat-n c">82.7%</div><div class="bigstat-cap">selection precision (81 of 98 clips kept)</div></div>
+  <div class="stats">
+    <div class="stat"><div class="stat-n">184</div><div class="stat-l">lines</div></div>
+    <div class="stat"><div class="stat-n">21</div><div class="stat-l">livestreams</div></div>
+    <div class="stat"><div class="stat-n">98</div><div class="stat-l">clips judged</div></div>
+    <div class="stat g"><div class="stat-n">81</div><div class="stat-l">kept</div></div>
+    <div class="stat re"><div class="stat-n">17</div><div class="stat-l">killed</div></div>
+  </div>
+  <div class="note-line">as of 2026-11-16.</div>
+</section>
+
+<!-- by-model -->
+<section class="frame" id="by-model">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">BY MODEL</div>
+  <h1>The top model against the fallback</h1>
+  <div class="divider"></div>
+  <div class="cmp2">
+    <div class="cmp2-col"><div class="cmp2-k">THE TOP MODEL</div><div class="cmp2-big">84.1%</div><div class="cmp2-sub"><span class="mono">17</span> livestreams · <span class="mono">82</span> clips · <span class="mono">69</span> kept</div></div>
+    <div class="cmp2-col"><div class="cmp2-k">THE FALLBACK MODEL</div><div class="cmp2-big">75.0%</div><div class="cmp2-sub"><span class="mono">2</span> livestreams · <span class="mono">16</span> clips · <span class="mono">12</span> kept</div></div>
+  </div>
+  <div class="own">2 livestreams is a lead, not a result.</div>
+</section>
+
+<!-- kills (pairs, rates) -->
+<section class="frame" id="kills-pairs">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-red);top:-240px;right:-180px;opacity:.18"></div>
+  <div class="ey">WHERE THE KILLS ARE</div>
+  <div class="bigstat"><div class="bigstat-n re">11 of 17</div><div class="bigstat-cap">kills were one half of a pair, a full clip and its impact cut, where the other half was kept.</div></div>
+  <div class="clipbars">
+    <div class="clipbar g" style="width:720px"><b>FULL CLIP</b><span>kept</span></div>
+    <div class="clipbar re" style="width:380px"><b>IMPACT CUT</b><span>killed</span></div>
+  </div>
+  <div class="note-line">8 impact cuts and 3 full clips.</div>
+</section>
+
+<section class="frame" id="kills-rates">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-red);top:-240px;right:-180px;opacity:.18"></div>
+  <div class="ey">WHERE THE KILLS ARE</div>
+  <div class="bigstat sm"><div class="bigstat-n re">11 of 17</div><div class="bigstat-cap">kills were one half of a pair, a full clip and its impact cut, where the other half was kept.</div></div>
+  <div class="cmp2" style="margin-top:56px">
+    <div class="cmp2-col"><div class="cmp2-k">FULL CLIPS</div><div class="cmp2-big">88.3%</div><div class="cmp2-sub">kept (<span class="mono">77</span> judged, <span class="mono">9</span> killed)</div></div>
+    <div class="cmp2-col"><div class="cmp2-k">IMPACT CUTS</div><div class="cmp2-big re">61.9%</div><div class="cmp2-sub">kept (<span class="mono">21</span> judged, <span class="mono">8</span> killed)</div></div>
+  </div>
+</section>
+
+<div class="font-probe" style="position:absolute;left:-9999px;top:0"><span style="font-family:'Playfair Display'">Aa</span><span style="font-family:'DM Sans'">Aa</span><span style="font-family:'JetBrains Mono'">Aa</span></div>
+</body>
+</html>

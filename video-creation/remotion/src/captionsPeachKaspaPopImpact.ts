@@ -1,0 +1,30 @@
+// batch peach / clip #7 kaspa-things-are-gonna-pop-impact (IMPACT). Built from shorts/peach/kaspa-things-are-gonna-pop-impact/whisper-words.json
+// via skills/captions/build_captions.py --style montserrat (timings, casper->kaspa), regrouped by hand to 2-4 words.
+// Word stream scanned: no gaps > 0.45 s in running speech. "this things" stutter dropped to "things".
+export const CAPTIONS_PCH7: { t: number; h: string }[] = [
+  { t: 0.00, h: "we've been like this" },
+  { t: 0.86, h: 'for too long.' },
+  { t: 1.76, h: 'we never got' },
+  { t: 2.12, h: 'a <r>break.</r>' },
+  { t: 2.60, h: 'keep getting <r>beaten</r>' },
+  { t: 3.76, h: 'over the head' },
+  { t: 4.48, h: 'as i keep saying.' },
+  { t: 5.42, h: '<g>smart money</g>' },
+  { t: 6.18, h: 'keeps building things.' },
+  { t: 7.30, h: 'they keep <gr>investing</gr>' },
+  { t: 8.32, h: 'and i think' },
+  { t: 9.38, h: 'things are just' },
+  { t: 10.16, h: 'gonna <y>pop,</y> man.' },
+  { t: 11.22, h: 'things are gonna' },
+  { t: 11.82, h: '<y>pop.</y>' },
+  { t: 12.20, h: "and it's like" },
+  { t: 12.82, h: '<g>2027</g> is gonna' },
+  { t: 13.70, h: 'be <gr>awesome.</gr>' },
+  { t: 14.28, h: "there's a <gr>bright</gr>" },
+  { t: 15.08, h: '<gr>future</gr> for <g>kaspa.</g>' },
+  { t: 16.06, h: 'just a lot' },
+  { t: 16.38, h: 'of <r>pain</r> right now.' },
+  { t: 17.26, h: "yeah, it's always" },
+  { t: 18.16, h: 'good to <gr>buy more</gr>' },
+  { t: 18.84, h: '<g>kaspa.</g>' },
+];

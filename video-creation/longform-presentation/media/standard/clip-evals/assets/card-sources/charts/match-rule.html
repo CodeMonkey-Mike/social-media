@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>clip-evals chart: match-rule (overlap, half, long-short)</title>
+<!--
+  SYSTEM-DESIGN CHART, full-frame cover, 1920x1080, 3 states. Spec: ../../CARDS-SPEC.md section 3, "match-rule".
+  Used in SCRIPT.md CH13: "So the code counts how many seconds of the recording 2 clips share." (overlap) / "If the
+  overlap is at least 50 percent of the shorter clip, that's a match." (half) / "In that case it gets matched to the
+  closer fit, and the measure is intersection over union" (long-short)
+  Layout: a timeline of one livestream, minute ticks; the judged clips on the top row (2 lines, so an impact cut can
+  sit inside its full clip's span), the replay's picks on the row under it, the shared stretch shaded cyan between
+  a pick and the clip it matches. The times are an illustration of the rule, not record data: the chart carries a
+  gold EXAMPLE stamp (gold = a caveat in this video). The first pair: judged 10:00 to 10:45 (45 s), pick 10:05 to
+  10:55 (50 s), so the judged clip is the shorter one. Only the first pair's times are printed (the spec gives no
+  times for the second group, whose pick is labelled "new pick"); its bars are drawn so the rule really holds: the
+  pick lies wholly inside the full clip and wholly covers the impact cut (both pass the 50% test), and the full
+  clip has the higher intersection over union. In long-short the winner (full clip + pick) is lit and the losing
+  impact cut rests in a dashed outline. The 9:16 cut is match-rule-vertical.html.
+  Shoot: python ../shoot.py match-rule.html --out ../../diagrams
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chart.css">
+<style>
+/* the two rows of the timeline */
+.rowbg{background:rgba(232,234,240,.025);border-radius:16px}
+.rl{font-family:'DM Sans';font-weight:700;font-size:24px;line-height:1.25;letter-spacing:.10em;text-transform:uppercase;
+  color:var(--text-secondary);display:flex;align-items:center}
+/* a clip on the timeline */
+.bar{height:56px;border-radius:12px;border:2px solid;display:flex;align-items:center;gap:14px;padding:0 12px;white-space:nowrap}
+.bar.kept{background:rgba(0,230,138,.08);border-color:rgba(0,230,138,.34)}
+.bar.kept.on{background:rgba(0,230,138,.22);border-color:var(--accent-green);box-shadow:0 0 28px rgba(0,230,138,.30)}
+.bar.killed{background:rgba(255,64,96,.08);border-color:rgba(255,64,96,.38)}
+.bar.killed.on{background:rgba(255,64,96,.20);border-color:var(--accent-red);box-shadow:0 0 28px rgba(255,64,96,.28)}
+.bar.pick{background:rgba(232,234,240,.04);border-color:rgba(232,234,240,.22);justify-content:center}
+.bar.pick.on{background:rgba(232,234,240,.14);border-color:rgba(232,234,240,.88);box-shadow:0 0 26px rgba(232,234,240,.14)}
+/* the candidate that is NOT the closer fit: a thin dashed outline */
+.bar.killed.dashed{background:transparent;border:2px dashed rgba(255,64,96,.9);box-shadow:none}
+.bar.centered{justify-content:center}
+.vt{font-family:'DM Sans';font-weight:700;font-size:22px;letter-spacing:.08em;text-transform:uppercase;line-height:1;
+  padding:6px 9px 5px;border-radius:7px;color:var(--bg-deep)}
+.kept .vt{background:var(--accent-green);opacity:.5}
+.killed .vt{background:var(--accent-red);opacity:.55}
+.on .vt{opacity:1}
+.tm{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:22px;color:var(--rest-title)}
+.bn{font-family:'DM Sans';font-weight:700;font-size:22px;letter-spacing:.08em;text-transform:uppercase;color:var(--rest-title)}
+.on .tm,.on .bn,.bn.on{color:var(--text-primary)}
+/* the shared stretch between a judged clip and a pick */
+.band{background:rgba(0,194,255,.05);border-left:2px solid rgba(0,194,255,.32);border-right:2px solid rgba(0,194,255,.32);
+  display:flex;align-items:center;justify-content:center}
+.band.on{background:rgba(0,194,255,.20);border-color:var(--accent-cyan);box-shadow:0 0 30px rgba(0,194,255,.20)}
+.band .bt{font-family:'DM Sans';font-weight:700;font-size:24px;color:var(--rest-title);white-space:nowrap}
+.band.on .bt{color:var(--text-primary)}
+/* the axis */
+.tk{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:24px;color:var(--text-secondary);width:120px;text-align:center}
+/* the 50% test */
+.test{padding:16px 26px 18px;border-left:4px solid rgba(0,194,255,.32);background:rgba(0,194,255,.03);border-radius:0 12px 12px 0;
+  font-family:'DM Sans';font-weight:600;font-size:28px;line-height:1.5;color:var(--rest-sub);white-space:nowrap}
+.test.on{border-left-color:var(--accent-cyan);background:rgba(0,194,255,.08);color:var(--text-primary)}
+.test .n{font-family:'JetBrains Mono',monospace;font-weight:600}
+.test.on .hi{color:var(--accent-cyan)}
+/* the caveat stamp */
+.stamp{border:2px solid var(--accent-gold);color:var(--accent-gold);border-radius:10px;padding:8px 16px 7px;
+  font-family:'DM Sans';font-weight:700;font-size:22px;letter-spacing:.16em;text-transform:uppercase;line-height:1}
+</style>
+</head>
+<body>
+<template id="chart"></template>
+<script src="chart.js"></script>
+<script>
+(function () {
+  // ---- the time scale: 9:55 to 13:15 of one livestream across x 440..1800 ----
+  var T0 = 595, T1 = 795, XA = 440, XB = 1800;
+  function x(mmss) { var p = mmss.split(":"), t = (+p[0]) * 60 + (+p[1]); return XA + (t - T0) * (XB - XA) / (T1 - T0); }
+  function span(a, b) { return 'left:' + x(a).toFixed(1) + 'px;width:' + (x(b) - x(a)).toFixed(1) + 'px'; }
+
+  var D = 24;   // the whole timeline block moves down by D (vertical balance under the head)
+  var Y = { up: 306 + D, low: 382 + D, pick: 572 + D, bandTop: 438 + D, bandBot: 572 + D, axis: 690 + D, test: 772 + D };  // bars are 56px tall
+  var h = [];
+  h.push('<div class="stage">');
+  h.push('<div class="orb" style="width:640px;height:640px;background:var(--accent-cyan);opacity:.12;left:-300px;top:-320px"></div>');
+  h.push('<div class="orb" style="width:620px;height:620px;background:var(--accent-green);opacity:.06;left:1520px;top:760px"></div>');
+  h.push('<div class="head"><h1>When are 2 clips the same clip?</h1><div class="divider"></div></div>');
+  h.push('<div class="corner" data-own><span class="stamp">example</span></div>');
+
+  // the two rows
+  h.push('<div class="rowbg" style="left:420px;top:' + (Y.up - 14) + 'px;width:1400px;height:160px"></div>');
+  h.push('<div class="rowbg" style="left:420px;top:' + (Y.pick - 14) + 'px;width:1400px;height:84px"></div>');
+  h.push('<div class="rl" data-own style="left:120px;top:' + (Y.up - 14) + 'px;width:280px;height:160px">JUDGED CLIPS</div>');
+  h.push('<div class="rl" data-own style="left:120px;top:' + (Y.pick - 14) + 'px;width:280px;height:84px">THE REPLAY\'S PICKS</div>');
+
+  // the axis: minute ticks
+  var ax = '<svg class="wires" width="1920" height="1080" viewBox="0 0 1920 1080">' +
+    '<path class="wr" d="M' + XA + ',' + Y.axis + ' L' + (XB + 4) + ',' + Y.axis + '" style="stroke:#5a6377;stroke-width:2.5;marker-end:url(#ah-rest)"/>';
+  ['10:00', '11:00', '12:00', '13:00'].forEach(function (t) {
+    ax += '<path class="wr nohead" d="M' + x(t) + ',' + (Y.axis - 9) + ' L' + x(t) + ',' + (Y.axis + 9) + '" style="stroke:#5a6377;stroke-width:2.5"/>';
+  });
+  ax += '</svg>';
+  h.push(ax);
+  ['10:00', '11:00', '12:00', '13:00'].forEach(function (t) {
+    h.push('<div class="tk" style="left:' + (x(t) - 60) + 'px;top:' + (Y.axis + 18) + 'px">' + t + '</div>');
+  });
+
+  // group 1: one judged clip (10:00 to 10:45, kept, 45 s) and the pick under it (10:05 to 10:55, 50 s): the judged
+  // clip is the shorter one, so "40 s shared / 45 s (the shorter clip)" holds (CARDS-SPEC, changed after the QA)
+  h.push('<div class="band" data-k="band1" style="' + span('10:05', '10:45') + ';top:' + Y.bandTop + 'px;height:' + (Y.bandBot - Y.bandTop) + 'px">' +
+    '<span class="bt">40 seconds shared</span></div>');
+  h.push('<div class="bar kept" data-k="g1j" style="' + span('10:00', '10:45') + ';top:' + Y.low + 'px"><span class="vt">KEPT</span><span class="tm">10:00 to 10:45</span></div>');
+  h.push('<div class="bar pick" data-k="g1p" style="' + span('10:05', '10:55') + ';top:' + Y.pick + 'px"><span class="tm">10:05 to 10:55</span></div>');
+
+  // group 2: a full clip (kept), its impact cut inside it (killed), one new pick that overlaps both
+  h.push('<div class="band ap" data-k="band2" style="' + span('12:05', '13:05') + ';top:' + Y.bandTop + 'px;height:' + (Y.bandBot - Y.bandTop) + 'px">' +
+    '<span class="bt">best intersection over union</span></div>');
+  h.push('<div class="bar kept" data-k="g2full" style="' + span('12:00', '13:10') + ';top:' + Y.low + 'px"><span class="vt">KEPT</span><span class="bn">FULL CLIP</span></div>');
+  h.push('<div class="bar killed centered" data-k="g2imp" style="' + span('12:28', '12:50') + ';top:' + Y.up + 'px"><span class="vt">KILLED</span></div>');
+  h.push('<div class="bn" data-k="g2imp" style="left:' + (x('12:28') - 186) + 'px;width:170px;text-align:right;top:' + (Y.up + 15) + 'px">IMPACT CUT</div>');
+  h.push('<div class="bar pick" data-k="g2pick" style="' + span('12:05', '13:05') + ';top:' + Y.pick + 'px"><span class="bn">new pick</span></div>');
+
+  // the 50% test, beside the first pair
+  h.push('<div class="test ap" data-k="test" style="left:' + x('10:00') + 'px;top:' + Y.test + 'px">' +
+    '<span class="n">40</span> s shared / <span class="n">45</span> s (the shorter clip) = <span class="n hi">89%</span><br>' +
+    'at least <span class="n">50%</span> = <span class="hi">the same clip</span></div>');
+
+  h.push('</div>');
+  document.getElementById('chart').innerHTML = h.join('');
+
+  buildChart({
+    "match-rule-overlap":    { on: ["g1j", "g1p", "band1"] },
+    "match-rule-half":       { on: ["g1j", "g1p", "band1", "test"], show: ["test"] },
+    // the closer fit wins: the full clip and the pick lit; the impact cut, the losing candidate, rests in a dashed outline
+    "match-rule-long-short": { on: ["g2full", "g2pick", "band2"], show: ["band2", "test"], cls: { g2imp: "dashed" } }
+  });
+})();
+</script>
+</body>
+</html>

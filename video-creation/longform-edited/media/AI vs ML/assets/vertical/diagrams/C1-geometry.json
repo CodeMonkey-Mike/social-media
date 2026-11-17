@@ -1,0 +1,207 @@
+{
+ "chart": "C1",
+ "orientation": "portrait",
+ "canvas": [
+  1080,
+  1920
+ ],
+ "beat": "CH2@26.24-33.333",
+ "twin": "assets/diagrams/C1.html (1920x1080)",
+ "layout": "two COLUMNS (AI left, ML right), each flowing top -> bottom; step i of both lanes on the same row",
+ "lanes": {
+  "ai": {
+   "x": 72,
+   "y": 432,
+   "w": 456,
+   "h": 1130
+  },
+  "ml": {
+   "x": 552,
+   "y": 432,
+   "w": 456,
+   "h": 1130
+  }
+ },
+ "nodes": {
+  "ai": [
+   {
+    "label": "MODEL SOMEONE ELSE TRAINED",
+    "sub": "like Claude",
+    "x": 96,
+    "y": 548,
+    "w": 408,
+    "h": 148
+   },
+   {
+    "label": "API",
+    "sub": "glue code",
+    "x": 96,
+    "y": 758,
+    "w": 408,
+    "h": 148
+   },
+   {
+    "label": "YOUR DATA",
+    "sub": "RAG",
+    "x": 96,
+    "y": 968,
+    "w": 408,
+    "h": 148
+   },
+   {
+    "label": "PRODUCT",
+    "sub": "what ships",
+    "x": 96,
+    "y": 1178,
+    "w": 408,
+    "h": 148
+   },
+   {
+    "label": "EVALS",
+    "sub": "are the answers any good?",
+    "x": 96,
+    "y": 1388,
+    "w": 408,
+    "h": 148
+   }
+  ],
+  "ml": [
+   {
+    "label": "DATA",
+    "sub": "datasets",
+    "x": 576,
+    "y": 548,
+    "w": 408,
+    "h": 148
+   },
+   {
+    "label": "FEATURES",
+    "sub": "feature engineering",
+    "x": 576,
+    "y": 758,
+    "w": 408,
+    "h": 148
+   },
+   {
+    "label": "TRAIN",
+    "sub": "your own model",
+    "x": 576,
+    "y": 968,
+    "w": 408,
+    "h": 148
+   },
+   {
+    "label": "VALIDATE",
+    "sub": "test sets",
+    "x": 576,
+    "y": 1178,
+    "w": 408,
+    "h": 148
+   },
+   {
+    "label": "DEPLOY",
+    "sub": "to production",
+    "x": 576,
+    "y": 1388,
+    "w": 408,
+    "h": 148
+   }
+  ]
+ },
+ "arrows": {
+  "ai": [
+   {
+    "x": 300,
+    "y1": 708,
+    "y2": 746
+   },
+   {
+    "x": 300,
+    "y1": 918,
+    "y2": 956
+   },
+   {
+    "x": 300,
+    "y1": 1128,
+    "y2": 1166
+   },
+   {
+    "x": 300,
+    "y1": 1338,
+    "y2": 1376
+   }
+  ],
+  "ml": [
+   {
+    "x": 780,
+    "y1": 708,
+    "y2": 746
+   },
+   {
+    "x": 780,
+    "y1": 918,
+    "y2": 956
+   },
+   {
+    "x": 780,
+    "y1": 1128,
+    "y2": 1166
+   },
+   {
+    "x": 780,
+    "y1": 1338,
+    "y2": 1376
+   }
+  ],
+  "direction": "down"
+ },
+ "states": [
+  {
+   "id": "C1-s0-base",
+   "lit": 0,
+   "cue": 26.24,
+   "word": "(melt in, nothing lit)"
+  },
+  {
+   "id": "C1-s1-model",
+   "lit": 1,
+   "cue": 28.18,
+   "word": "model"
+  },
+  {
+   "id": "C1-s2-api",
+   "lit": 2,
+   "cue": 28.7,
+   "word": "Claude"
+  },
+  {
+   "id": "C1-s3-data",
+   "lit": 3,
+   "cue": 29.64,
+   "word": "data"
+  },
+  {
+   "id": "C1-s4-product",
+   "lit": 4,
+   "cue": 30.46,
+   "word": "product"
+  },
+  {
+   "id": "C1-s5-evals",
+   "lit": 5,
+   "cue": 31.4,
+   "word": "testing (EVALS pop on \"any\" 32.76)"
+  }
+ ],
+ "kt_keyword_pop_band_clear": {
+  "y0": 1580,
+  "y1": 1724,
+  "pop_x": 540,
+  "pop_y": 1652,
+  "note": "no diagram ink between the lanes bottom (1562) and the source line (1748): centre the EVALS kt-keyword-pop at (540, 1652) in portrait px; keep its glyph box inside y 1580-1724"
+ },
+ "source_line": {
+  "top": 1748,
+  "lines": 2
+ }
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>clip-evals chart, 9:16: match-rule (overlap, half, long-short)</title>
+<!--
+  The 9:16 cut of match-rule.html: the same chart, states, text and lit parts, re-composed for a 1080x1920 phone
+  frame. The livestream's timeline is too wide for a phone at a legible size, so it WRAPS into 2 stretches of the
+  same timeline, one per group, both at the same scale (12 px a second, so every bar stays to scale against the
+  other): 9:53 to 11:11 with the first pair, 11:56 to 13:14 with the full clip, its impact cut and the new pick.
+  Each stretch keeps the judged clips on top and the replay's picks under them; a legend under the headline names
+  the 2 rows once. The 50% test appears under the first pair. Times are an example: the gold EXAMPLE stamp.
+  Text 28px and up, nothing below y 1450, 72px side margins.
+  Shoot (from assets/card-sources/): python shoot.py charts/match-rule-vertical.html --out ../vertical/diagrams --size 1080x1920
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chart.css">
+<style>
+/* the legend naming the 2 rows */
+.legend{display:flex;gap:40px;align-items:center}
+.lgi{display:flex;align-items:center;gap:14px;font-family:'DM Sans';font-weight:700;font-size:28px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--text-secondary);white-space:nowrap}
+.sw{display:flex;width:46px;height:26px;border-radius:7px;overflow:hidden;border:2px solid}
+.sw.j{border-color:rgba(232,234,240,.30)} .sw.j i{flex:1} .sw.j i:first-child{background:rgba(0,230,138,.55)} .sw.j i:last-child{background:rgba(255,64,96,.55)}
+.sw.p{border-color:rgba(232,234,240,.50);background:rgba(232,234,240,.10)}
+/* a clip on the timeline */
+.bar{height:64px;border-radius:13px;border:2px solid;display:flex;align-items:center;gap:14px;padding:0 14px;white-space:nowrap}
+.bar.kept{background:rgba(0,230,138,.08);border-color:rgba(0,230,138,.34)}
+.bar.kept.on{background:rgba(0,230,138,.22);border-color:var(--accent-green);box-shadow:0 0 28px rgba(0,230,138,.30)}
+.bar.killed{background:rgba(255,64,96,.08);border-color:rgba(255,64,96,.38)}
+.bar.killed.on{background:rgba(255,64,96,.20);border-color:var(--accent-red);box-shadow:0 0 28px rgba(255,64,96,.28)}
+.bar.pick{background:rgba(232,234,240,.04);border-color:rgba(232,234,240,.22);justify-content:center}
+.bar.pick.on{background:rgba(232,234,240,.14);border-color:rgba(232,234,240,.88);box-shadow:0 0 26px rgba(232,234,240,.14)}
+.bar.killed.dashed{background:transparent;border:2px dashed rgba(255,64,96,.9);box-shadow:none}
+.bar.centered{justify-content:center}
+.vt{font-family:'DM Sans';font-weight:700;font-size:28px;letter-spacing:.08em;text-transform:uppercase;line-height:1;
+  padding:7px 10px 6px;border-radius:8px;color:var(--bg-deep)}
+.kept .vt{background:var(--accent-green);opacity:.5}
+.killed .vt{background:var(--accent-red);opacity:.55}
+.on .vt{opacity:1}
+.tm{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:28px;color:var(--rest-title)}
+.bn{font-family:'DM Sans';font-weight:700;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:var(--rest-title)}
+.on .tm,.on .bn,.bn.on{color:var(--text-primary)}
+.band{background:rgba(0,194,255,.05);border-left:2px solid rgba(0,194,255,.32);border-right:2px solid rgba(0,194,255,.32);
+  display:flex;align-items:center;justify-content:center}
+.band.on{background:rgba(0,194,255,.20);border-color:var(--accent-cyan);box-shadow:0 0 30px rgba(0,194,255,.20)}
+.band .bt{font-family:'DM Sans';font-weight:700;font-size:30px;color:var(--rest-title);white-space:nowrap}
+.band.on .bt{color:var(--text-primary)}
+.tk{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:28px;color:var(--text-secondary);width:120px;text-align:center}
+.test{padding:18px 26px 20px;border-left:4px solid rgba(0,194,255,.32);background:rgba(0,194,255,.03);border-radius:0 12px 12px 0;
+  font-family:'DM Sans';font-weight:600;font-size:30px;line-height:1.5;color:var(--rest-sub);white-space:nowrap}
+.test.on{border-left-color:var(--accent-cyan);background:rgba(0,194,255,.08);color:var(--text-primary)}
+.test .n{font-family:'JetBrains Mono',monospace;font-weight:600}
+.test.on .hi{color:var(--accent-cyan)}
+.stamp{border:2px solid var(--accent-gold);color:var(--accent-gold);border-radius:10px;padding:9px 16px 8px;
+  font-family:'DM Sans';font-weight:700;font-size:28px;letter-spacing:.16em;text-transform:uppercase;line-height:1}
+</style>
+</head>
+<body>
+<template id="chart"></template>
+<script src="chart.js"></script>
+<script>
+(function () {
+  // ---- one timeline, 2 stretches, ONE scale: 12 px a second, each stretch 78 s across x 72..1008 ----
+  var PXS = 12, XL = 72, XR = 1008;
+  function sec(mmss) { var p = mmss.split(":"); return (+p[0]) * 60 + (+p[1]); }
+  function mk(t0) {                       // t0 = the stretch's left edge, in seconds
+    var f = function (mmss) { return XL + (sec(mmss) - t0) * PXS; };
+    f.span = function (a, b) { return 'left:' + f(a) + 'px;width:' + (f(b) - f(a)) + 'px'; };
+    return f;
+  }
+  var A = mk(sec("9:53")), B = mk(sec("11:56"));          // A: 9:53 to 11:11, B: 11:56 to 13:14
+  // bar tops (bars 64px tall); A = the first pair, B = the full clip, its impact cut and the new pick
+  var YA = { low: 440, bandTop: 504, bandBot: 594, pick: 594, axis: 706, test: 798 };
+  var YB = { up: 976, low: 1056, bandTop: 1120, bandBot: 1212, pick: 1212, axis: 1324 };
+
+  var h = [];
+  h.push('<div class="stage">');
+  h.push('<div class="orb" style="width:620px;height:620px;background:var(--accent-cyan);opacity:.12;left:-300px;top:-300px"></div>');
+  h.push('<div class="orb" style="width:620px;height:620px;background:var(--accent-green);opacity:.06;left:620px;top:1460px"></div>');
+  h.push('<div class="head"><h1>When are 2 clips the same clip?</h1><div class="divider"></div></div>');
+  h.push('<div class="corner" data-own style="top:232px"><span class="stamp">example</span></div>');
+  h.push('<div class="legend" data-own style="left:72px;top:356px">' +
+    '<span class="lgi"><span class="sw j"><i></i><i></i></span>JUDGED CLIPS</span>' +
+    '<span class="lgi"><span class="sw p"></span>THE REPLAY\'S PICKS</span></div>');
+
+  // the 2 axes, minute ticks
+  var ax = '<svg class="wires" width="1080" height="1920" viewBox="0 0 1080 1920">';
+  [[A, YA.axis, ["10:00", "11:00"]], [B, YB.axis, ["12:00", "13:00"]]].forEach(function (s) {
+    ax += '<path class="wr" d="M' + XL + ',' + s[1] + ' L' + (XR + 4) + ',' + s[1] + '" style="stroke:#5a6377;stroke-width:2.5;marker-end:url(#ah-rest)"/>';
+    s[2].forEach(function (t) {
+      ax += '<path class="wr nohead" d="M' + s[0](t) + ',' + (s[1] - 10) + ' L' + s[0](t) + ',' + (s[1] + 10) + '" style="stroke:#5a6377;stroke-width:2.5"/>';
+    });
+  });
+  ax += '</svg>';
+  h.push(ax);
+  [[A, YA.axis, ["10:00", "11:00"]], [B, YB.axis, ["12:00", "13:00"]]].forEach(function (s) {
+    s[2].forEach(function (t) { h.push('<div class="tk" style="left:' + (s[0](t) - 60) + 'px;top:' + (s[1] + 20) + 'px">' + t + '</div>'); });
+  });
+
+  // stretch A: one judged clip (10:00 to 10:45, kept, 45 s) and the pick under it (10:05 to 10:55, 50 s)
+  h.push('<div class="band" data-k="band1" style="' + A.span('10:05', '10:45') + ';top:' + YA.bandTop + 'px;height:' + (YA.bandBot - YA.bandTop) + 'px">' +
+    '<span class="bt">40 seconds shared</span></div>');
+  h.push('<div class="bar kept" data-k="g1j" style="' + A.span('10:00', '10:45') + ';top:' + YA.low + 'px"><span class="vt">KEPT</span><span class="tm">10:00 to 10:45</span></div>');
+  h.push('<div class="bar pick" data-k="g1p" style="' + A.span('10:05', '10:55') + ';top:' + YA.pick + 'px"><span class="tm">10:05 to 10:55</span></div>');
+  // the 50% test, under the first pair
+  h.push('<div class="test ap" data-k="test" style="left:72px;top:' + YA.test + 'px">' +
+    '<span class="n">40</span> s shared / <span class="n">45</span> s (the shorter clip) = <span class="n hi">89%</span><br>' +
+    'at least <span class="n">50%</span> = <span class="hi">the same clip</span></div>');
+
+  // stretch B: a full clip (kept), its impact cut inside it (killed), one new pick that overlaps both
+  h.push('<div class="band ap" data-k="band2" style="' + B.span('12:05', '13:05') + ';top:' + YB.bandTop + 'px;height:' + (YB.bandBot - YB.bandTop) + 'px">' +
+    '<span class="bt">best intersection over union</span></div>');
+  h.push('<div class="bar kept" data-k="g2full" style="' + B.span('12:00', '13:10') + ';top:' + YB.low + 'px"><span class="vt">KEPT</span><span class="bn">FULL CLIP</span></div>');
+  h.push('<div class="bar killed centered" data-k="g2imp" style="' + B.span('12:28', '12:50') + ';top:' + YB.up + 'px"><span class="vt">KILLED</span></div>');
+  h.push('<div class="bn" data-k="g2imp" style="left:' + (B('12:28') - 236) + 'px;width:220px;text-align:right;top:' + (YB.up + 15) + 'px">IMPACT CUT</div>');
+  h.push('<div class="bar pick" data-k="g2pick" style="' + B.span('12:05', '13:05') + ';top:' + YB.pick + 'px"><span class="bn">new pick</span></div>');
+
+  h.push('</div>');
+  document.getElementById('chart').innerHTML = h.join('');
+
+  buildChart({
+    "match-rule-overlap":    { on: ["g1j", "g1p", "band1"] },
+    "match-rule-half":       { on: ["g1j", "g1p", "band1", "test"], show: ["test"] },
+    // the closer fit wins: the full clip and the pick lit; the impact cut, the losing candidate, rests in a dashed outline
+    "match-rule-long-short": { on: ["g2full", "g2pick", "band2"], show: ["band2", "test"], cls: { g2imp: "dashed" } }
+  }, { portrait: true });
+})();
+</script>
+</body>
+</html>

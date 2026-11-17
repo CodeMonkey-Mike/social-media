@@ -1,0 +1,103 @@
+{
+ "source_video": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\AI vs ML\\AI vs ML-VERTICAL.mp4",
+ "source_audio": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\AI vs ML\\spine\\ALL.f.paused.mp4",
+ "clock": "final-video seconds",
+ "target_seconds": 30.0,
+ "outro_seconds": 3.0,
+ "claim": "The $340,000 pay gap between the two roles goes to the few who train models, so for most developers AI engineering is the open door.",
+ "why_this_claim": "It is the open loop of the video and its payoff: the hook states a huge gap and withholds the direction, the money beat gives the number and the direction, the caveat (few seats, PhDs) earns the verdict. It needs none of the role definitions or the three criteria to make sense.",
+ "spans": [
+  {
+   "role": "hook",
+   "order": 1,
+   "start": 0.005,
+   "end": 8.25,
+   "seconds": 8.25,
+   "sourced": "FACE",
+   "says": "AI engineer versus ML engineer. They sound like the same job, they are not. At the top, the pay gap between them is huge.",
+   "on_screen": "0.00-2.57 FACE F1, the signature open (kt-grid-zoom-in, AI ENGINEER label lower-left 0.5, ML ENGINEER label lower-right 1.6; no burned caption on F1, the labels are the words). 2.57-5.25 COVER BR-1 two engineers side by side (Envato, enters on the whip). 5.25-8.25 COVER IMG-1 cash stacks (ChatGPT still) with the headline AT THE TOP: A $340K GAP + its framing line landing 7.7. The face is on screen at 1.0 s for the hook-face check; frames from 2.57 on are COVER and need the captions of the short.",
+   "why": "The engineered hook of the longform: names the two roles and opens the money loop. The $340K headline on IMG-1 plants the number the next span says out loud.",
+   "self_contained": "It is the first 8 seconds of the video, written to be heard cold.",
+   "in_gap": 0.0,
+   "out_gap": 0.24,
+   "clear_of_transitions": true
+  },
+  {
+   "role": "body",
+   "order": 2,
+   "start": 110.72,
+   "end": 122.65,
+   "seconds": 11.98,
+   "sourced": "COVER",
+   "says": "My God, dude, that's a $340,000 gap. And it goes to the people who train the models. But those seats are few and you're competing with PhDs for them,",
+   "on_screen": "110.72-117.2 C3 money ladder chart with all three bars already landed (AI ENGINEER MEDIAN 155.5K, ML ENGINEER MEDIAN 287.5K, ML ENGINEER TOP 10% 495K, source line at the foot): reaction shake 110.8, bracket THE GAP 339.5K draws 112.5, crash zoom 114.6, word-by-word AND IT GOES TO / THE PEOPLE WHO / payoff TRAIN 116.1. 117.2-119.8 IMG-4 three empty chairs (ChatGPT still, fades in). 119.8-122.7 BR-9 research lab (Envato) with the headline COMPETING WITH PhDs.",
+   "why": "Pays the hook off: the number, which way the gap runs, and the caveat that makes the verdict follow.",
+   "self_contained": "The $340,000 gap line lands straight on the hook line (the pay gap between them is huge), and the chart on screen labels both roles and both numbers, so no earlier line is needed. Those seats = the people who train the models, said one sentence before inside the same span.",
+   "in_gap": 0.18,
+   "out_gap": 0.2,
+   "clear_of_transitions": true
+  },
+  {
+   "role": "kicker",
+   "order": 3,
+   "start": 123.7,
+   "end": 130.35,
+   "seconds": 6.65,
+   "sourced": "FACE",
+   "says": "Therefore, for most developers, AI engineering is the key. The door is open, you already have the skills.",
+   "on_screen": "123.70-127.53 FACE F6, the verdict (whip cut-in plays whole from the first frame of the span; burned kt caption 123.7-125.9, then the AI ENGINEERING keyword pop 125.9 and sparkle on the key). 127.53-130.35 COVER BR-10 door opening (Envato) with the headline THE DOOR IS OPEN; this tail needs the captions of the short.",
+   "why": "The verdict and the payoff image: the checks go to the few, the door is open to the many.",
+   "self_contained": "Therefore follows the caveat that ends span 2; the line names its own subject (most developers, AI engineering).",
+   "in_gap": 0.32,
+   "out_gap": 0.22,
+   "clear_of_transitions": true
+  }
+ ],
+ "assembled_read": "AI engineer versus ML engineer. They sound like the same job, they are not. At the top, the pay gap between them is huge. My God, dude, that's a $340,000 gap. And it goes to the people who train the models. But those seats are few and you're competing with PhDs for them. Therefore, for most developers, AI engineering is the key. The door is open, you already have the skills.",
+ "spans_total_seconds": 26.88,
+ "outro": {
+  "line": "Click below to WATCH the full video!",
+  "card_text": "WATCH THE FULL VIDEO",
+  "note": "Card over the held last frame of span 3 (BR-10 door opening, THE DOOR IS OPEN). The shared take video-creation/assets/vo/cta-watch-full.mp3 is the voice."
+ },
+ "rejected": [
+  {
+   "span": "8.25-12.37",
+   "reason": "F2 open loop (big checks / door open). Strong, but with it the short runs past 28 s of spans unless the PhD caveat or the door line is dropped, and both carry the verdict. Its out gap is also only 0.08 s."
+  },
+  {
+   "span": "98.14-110.72",
+   "reason": "The $155,000 and $495,000 set-up. 12.6 s, starts inside the C6 receipt and crosses the SPIN into C3 and two bar animations; the take also says the typical engineer with no AI. The chart in span 2 already shows both numbers at rest."
+  },
+  {
+   "span": "122.70-123.70",
+   "reason": "something to ponder, an ad-lib aside. Dropping it puts a real seam before the verdict and keeps the total at 26.9 s. See risks for the one-span alternative."
+  },
+  {
+   "span": "33.33-39.97",
+   "reason": "F3, my side / never trained a model. Authority line, but a second idea; it does not serve the money claim."
+  },
+  {
+   "span": "45.63-58.10",
+   "reason": "F4 CAN / SHOULD turn plus the cost ad-lib: 12.5 s on a side point, opens on But."
+  },
+  {
+   "span": "77.63-88.60",
+   "reason": "Versus stack + LinkedIn receipt: the how-to-choose idea, a different claim; the C12 receipt is mid 3D pan for 4.4 s."
+  },
+  {
+   "span": "130.40-139.53",
+   "reason": "Subscribe ask. The short has its own CTA."
+  }
+ ],
+ "risks": [
+  "Span 2 ends on the words for them (122.60) with something to ponder cut. I cannot hear the take: if his pitch hangs on the comma, the cut will sound clipped. Fix: make spans 2 and 3 one span 110.72-130.35 (keeps something to ponder, total 27.88 s, still inside 27 plus or minus 1).",
+  "Span 2 opens on My God, dude 0.08 s before the reaction shake of the chart (110.8). The 0.18 s in gap is tight; if the lint snaps later than 110.78 the first frames are mid-shake (harmless, but check the seam frame).",
+  "Span 1 is mixed: FACE for 2.57 s, then COVER. It is marked FACE for the hook-face check; the caption step must still caption 2.57-8.25 (F1 itself carries no burned caption, by design).",
+  "Span 1 ends at 8.25, one frame before the F2 whip cut-in at 8.267, and span 3 ends at 130.35, before the F7 whip at 130.40. A snap of more than about 1 frame later at either end would catch the first frame of a face whip.",
+  "Span 3 starts exactly on the F6 window edge (123.70) so the whip cut-in plays whole; a snap later than 123.70 lands inside the 0.37 s whip. The trough should sit in 123.66-123.98.",
+  "Span 2 runs through the fade into IMG-4 (117.2) and the whip into BR-9 (119.8) whole; no boundary sits in either. Read from TRANSITIONS.md, not watched.",
+  "Everything in on_screen is from the CUE-SHEET, not from watching the vertical. No span touches the wave wall or the end card (the two vertical flags in PROJECT-LOG).",
+  "IMG-1, IMG-4, BR-1, BR-9 and BR-10 fall inside spans, so the variety rule will source one alternate each; the headlines over them (A $340K GAP, COMPETING WITH PhDs, THE DOOR IS OPEN) are baked into the vertical, so an alternate laid on top would hide them unless the comp redraws them."
+ ]
+}

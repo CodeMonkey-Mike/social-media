@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>clip-evals: text cards, batch 2 (CARDS-SPEC section 1)</title>
+<!-- One <section class="frame" id="FILE-NAME"> per still, 1920x1080, text exactly as CARDS-SPEC writes it.
+     Same structure as cards-pilot.html. Components: base.css, plus the few local helpers below (tokens only).
+     Content that a state makes "appear" is present in every state with visibility:hidden, so states are pixel-stable.
+     Shoot (from assets/card-sources/): python shoot.py cards-text.html --out ../cards -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="base.css" rel="stylesheet">
+<style>
+/* names the 3 families inline so shoot.py's font check can read them */
+.font-probe{font-family:'Playfair Display','DM Sans','JetBrains Mono'}
+body{display:flex;flex-direction:column;gap:40px;align-items:flex-start}
+.lc{text-transform:none}
+.nowrap{white-space:nowrap}
+/* reserved space for content a later state makes appear (keeps every state pixel-stable) */
+.hide{visibility:hidden}
+/* .on: a row at full brightness with no accent (cards with no lit state, or "all equally bright") */
+.nrow.on .nrow-t,.nrow.on .nrow-d{color:var(--text-primary)}
+/* .inl: the row title and its description on one line */
+.nrow.inl{align-items:center}
+.nrow.inl .nrow-b{display:flex;align-items:baseline;flex-wrap:wrap;column-gap:22px}
+.nrow.inl .nrow-d{margin-top:0}
+.nrow.kv .nrow-t{min-width:330px}
+.nrow-t.go{color:var(--accent-gold)}
+/* inline code name inside DM Sans text */
+.code{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.86em;color:var(--text-primary);
+  background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;padding:1px 10px}
+/* rule > enforcement arrow inside a row description */
+.arr{font-family:'JetBrains Mono',monospace;color:var(--text-muted);margin-right:14px}
+.nrow.lit .arr{color:var(--accent-cyan)}
+/* chips (file names, livestream names, runtime features) */
+.chips{display:flex;flex-wrap:wrap;gap:18px;max-width:1640px}
+.chip{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:32px;color:var(--text-primary);
+  background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:16px 28px;line-height:1.2}
+.chips.sm .chip{font-size:26px;padding:12px 22px;font-weight:400}
+.sublabel{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:24px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--text-secondary);margin-bottom:18px}
+/* three-layers: the runtime detail block */
+.detail{margin-top:30px;padding:6px 0 6px 28px;border-left:4px solid var(--accent-cyan)}
+.detail .sublabel{color:var(--accent-cyan);text-transform:none;letter-spacing:.04em}
+/* what-survives: the small quote under row 1 */
+.nrow-q{margin-top:14px}
+.nrow-q .source{margin-top:6px;font-size:23px}
+/* compact table (what-changed) */
+.tbl.compact td{padding:13px 24px;font-size:29px}
+.tbl.compact tr.grp td{padding:24px 24px 8px}
+.tbl tr.grp.on td{color:var(--accent-cyan)}
+/* backfill: two sources joined into one step */
+.join{flex:1.15;display:flex;flex-direction:column}
+.join .flow-step{min-height:0;padding:26px 28px}
+.join-plus{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:40px;color:var(--text-muted);text-align:center;line-height:1;padding:12px 0}
+#backfill .flow-step{flex:1}
+#backfill .flow-step.res{flex:1.6}
+#backfill .flow-step.res .flow-t{font-size:34px}
+/* precision-recall / four-outcomes formula */
+.fblock .formula-name{min-width:240px}
+.fblock .frac{align-items:stretch}  /* the fraction bar spans the wider of the two halves */
+.fblock+.fblock{margin-top:60px}
+.fblock .formula-note{font-size:32px;margin-top:20px}
+.fblock.under{margin-top:40px}
+/* scorer-tests: check rows */
+.checks{display:flex;flex-direction:column;gap:16px;max-width:1640px;width:100%}
+.check{display:grid;grid-template-columns:56px 1fr;column-gap:28px;align-items:center;padding:24px 34px;
+  border-radius:18px;background:rgba(255,255,255,.02);border:1px solid var(--border)}
+.check-mark{width:56px;height:56px;border-radius:50%;background:rgba(0,230,138,.10);border:2px solid var(--accent-green);
+  display:flex;align-items:center;justify-content:center}
+.check-tx{font-family:'JetBrains Mono',monospace;font-size:29px;line-height:1.4;color:var(--text-primary)}
+/* recall: the big number scaled up so the frame is not sparse */
+#recall .bigstat-n{font-size:300px}
+#recall .bigstat-cap{font-size:48px}
+.path{font-family:'JetBrains Mono',monospace;font-size:26px;color:var(--text-secondary);margin-top:36px}
+</style>
+<link href="portrait-text.css" rel="stylesheet" media="(orientation: portrait)">
+</head>
+<body>
+<!-- eval-harness -->
+<section class="frame" id="eval-harness">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">HARNESS, MEANING 2</div>
+  <h1>The <span class="c">evaluation harness</span></h1>
+  <div class="divider"></div>
+  <blockquote class="quote lg">An evaluation harness is the infrastructure that runs evals end-to-end. It provides instructions and tools, runs tasks concurrently, records all the steps, grades outputs, and aggregates results.</blockquote>
+  <div class="source">Anthropic, "Demystifying evals for AI agents", Jan 9, 2026</div>
+</section>
+<!-- harness-plus-model -->
+<section class="frame" id="harness-plus-model">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <blockquote class="quote xl">When we evaluate <span class="pnw">“an agent,”</span> we're evaluating the harness and the model working together.</blockquote>
+  <div class="source">Anthropic, "Demystifying evals for AI agents", Jan 9, 2026</div>
+</section>
+<!-- three-layers-all -->
+<section class="frame" id="three-layers-all">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">LANGCHAIN'S 3 LAYERS</div>
+  <h1>Framework, runtime, harness</h1>
+  <div class="divider"></div>
+  <div class="nrows tight">
+    <div class="nrow nonum inl kv on"><div class="nrow-b"><div class="nrow-t">FRAMEWORK</div><div class="nrow-d">LangChain</div></div></div>
+    <div class="nrow nonum inl kv on"><div class="nrow-b"><div class="nrow-t">RUNTIME</div><div class="nrow-d">LangGraph</div></div></div>
+    <div class="nrow nonum inl kv on"><div class="nrow-b"><div class="nrow-t">HARNESS</div><div class="nrow-d">DeepAgents</div></div></div>
+  </div>
+  <div class="detail hide"><div class="sublabel">what a runtime provides</div><div class="chips sm"><div class="chip">durable execution</div><div class="chip">human-in-the-loop support</div><div class="chip">thread level persistence</div><div class="chip">cross-thread persistence</div><div class="chip">streaming</div></div></div>
+  <blockquote class="quote hide" style="font-size:46px;margin-top:40px">Now, I will readily admit that the lines are blurry.</blockquote>
+  <div class="source">LangChain (Harrison Chase), "Agent Frameworks, Runtimes, and Harnesses- oh my!", October 25, 2025</div>
+</section>
+<!-- three-layers-runtime -->
+<section class="frame" id="three-layers-runtime">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">LANGCHAIN'S 3 LAYERS</div>
+  <h1>Framework, runtime, harness</h1>
+  <div class="divider"></div>
+  <div class="nrows tight">
+    <div class="nrow nonum inl kv "><div class="nrow-b"><div class="nrow-t">FRAMEWORK</div><div class="nrow-d">LangChain</div></div></div>
+    <div class="nrow nonum inl kv lit"><div class="nrow-b"><div class="nrow-t">RUNTIME</div><div class="nrow-d">LangGraph</div></div></div>
+    <div class="nrow nonum inl kv "><div class="nrow-b"><div class="nrow-t">HARNESS</div><div class="nrow-d">DeepAgents</div></div></div>
+  </div>
+  <div class="detail"><div class="sublabel">what a runtime provides</div><div class="chips sm"><div class="chip">durable execution</div><div class="chip">human-in-the-loop support</div><div class="chip">thread level persistence</div><div class="chip">cross-thread persistence</div><div class="chip">streaming</div></div></div>
+  <blockquote class="quote hide" style="font-size:46px;margin-top:40px">Now, I will readily admit that the lines are blurry.</blockquote>
+  <div class="source">LangChain (Harrison Chase), "Agent Frameworks, Runtimes, and Harnesses- oh my!", October 25, 2025</div>
+</section>
+<!-- three-layers-blurry -->
+<section class="frame" id="three-layers-blurry">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">LANGCHAIN'S 3 LAYERS</div>
+  <h1>Framework, runtime, harness</h1>
+  <div class="divider"></div>
+  <div class="nrows tight">
+    <div class="nrow nonum inl kv "><div class="nrow-b"><div class="nrow-t">FRAMEWORK</div><div class="nrow-d">LangChain</div></div></div>
+    <div class="nrow nonum inl kv lit"><div class="nrow-b"><div class="nrow-t">RUNTIME</div><div class="nrow-d">LangGraph</div></div></div>
+    <div class="nrow nonum inl kv "><div class="nrow-b"><div class="nrow-t">HARNESS</div><div class="nrow-d">DeepAgents</div></div></div>
+  </div>
+  <div class="detail"><div class="sublabel">what a runtime provides</div><div class="chips sm"><div class="chip">durable execution</div><div class="chip">human-in-the-loop support</div><div class="chip">thread level persistence</div><div class="chip">cross-thread persistence</div><div class="chip">streaming</div></div></div>
+  <blockquote class="quote" style="font-size:46px;margin-top:40px">Now, I will readily admit that the lines are blurry.</blockquote>
+  <div class="source">LangChain (Harrison Chase), "Agent Frameworks, Runtimes, and Harnesses- oh my!", October 25, 2025</div>
+</section>
+<!-- context-engineering -->
+<section class="frame" id="context-engineering">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">CONTEXT ENGINEERING</div>
+  <blockquote class="quote lg">Context engineering is the art and science of curating what will go into the limited context window</blockquote>
+  <div class="source">Anthropic, "Effective context engineering for AI agents", Sep 29, 2025</div>
+  <div class="own">A rule that only lives in the context is a request.</div>
+</section>
+<!-- rules-in-code-plan -->
+<section class="frame" id="rules-in-code-plan">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">WHERE A RULE LIVES</div>
+  <h1 class="sm">Every rule that has to hold lives in code</h1>
+  <div class="divider"></div>
+  <div class="nrows tight">
+    <div class="nrow nonum lit"><div class="nrow-b"><div class="nrow-t">THE SHAPE OF A CLIP PLAN</div><div class="nrow-d"><span class="arr">&gt;</span>the validator, <span class="code">validate_plan</span></div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">WHERE FILES MAY GO</div><div class="nrow-d"><span class="arr">&gt;</span>a hook, at the end of every turn and before every commit</div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">THE MODEL FALLBACK</div><div class="nrow-d"><span class="arr">&gt;</span>the spawner, and a script that proves every spawner has it</div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">"DONE"</div><div class="nrow-d"><span class="arr">&gt;</span>the last step of the graph checks the disk and the queues</div></div></div>
+  </div>
+</section>
+<!-- rules-in-code-files -->
+<section class="frame" id="rules-in-code-files">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">WHERE A RULE LIVES</div>
+  <h1 class="sm">Every rule that has to hold lives in code</h1>
+  <div class="divider"></div>
+  <div class="nrows tight">
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">THE SHAPE OF A CLIP PLAN</div><div class="nrow-d"><span class="arr">&gt;</span>the validator, <span class="code">validate_plan</span></div></div></div>
+    <div class="nrow nonum lit"><div class="nrow-b"><div class="nrow-t">WHERE FILES MAY GO</div><div class="nrow-d"><span class="arr">&gt;</span>a hook, at the end of every turn and before every commit</div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">THE MODEL FALLBACK</div><div class="nrow-d"><span class="arr">&gt;</span>the spawner, and a script that proves every spawner has it</div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">"DONE"</div><div class="nrow-d"><span class="arr">&gt;</span>the last step of the graph checks the disk and the queues</div></div></div>
+  </div>
+</section>
+<!-- rules-in-code-fallback -->
+<section class="frame" id="rules-in-code-fallback">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">WHERE A RULE LIVES</div>
+  <h1 class="sm">Every rule that has to hold lives in code</h1>
+  <div class="divider"></div>
+  <div class="nrows tight">
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">THE SHAPE OF A CLIP PLAN</div><div class="nrow-d"><span class="arr">&gt;</span>the validator, <span class="code">validate_plan</span></div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">WHERE FILES MAY GO</div><div class="nrow-d"><span class="arr">&gt;</span>a hook, at the end of every turn and before every commit</div></div></div>
+    <div class="nrow nonum lit"><div class="nrow-b"><div class="nrow-t">THE MODEL FALLBACK</div><div class="nrow-d"><span class="arr">&gt;</span>the spawner, and a script that proves every spawner has it</div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">"DONE"</div><div class="nrow-d"><span class="arr">&gt;</span>the last step of the graph checks the disk and the queues</div></div></div>
+  </div>
+</section>
+<!-- rules-in-code-done -->
+<section class="frame" id="rules-in-code-done">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">WHERE A RULE LIVES</div>
+  <h1 class="sm">Every rule that has to hold lives in code</h1>
+  <div class="divider"></div>
+  <div class="nrows tight">
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">THE SHAPE OF A CLIP PLAN</div><div class="nrow-d"><span class="arr">&gt;</span>the validator, <span class="code">validate_plan</span></div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">WHERE FILES MAY GO</div><div class="nrow-d"><span class="arr">&gt;</span>a hook, at the end of every turn and before every commit</div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">THE MODEL FALLBACK</div><div class="nrow-d"><span class="arr">&gt;</span>the spawner, and a script that proves every spawner has it</div></div></div>
+    <div class="nrow nonum lit"><div class="nrow-b"><div class="nrow-t">"DONE"</div><div class="nrow-d"><span class="arr">&gt;</span>the last step of the graph checks the disk and the queues</div></div></div>
+  </div>
+</section>
+<!-- what-survives-nothing -->
+<section class="frame" id="what-survives-nothing">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">WHAT SURVIVES A RUN</div>
+  <h1 class="sm">The harness holds the state</h1>
+  <div class="divider"></div>
+  <div class="nrows tight">
+    <div class="nrow nonum lit"><div class="nrow-b"><div class="nrow-t">THE AGENT</div><div class="nrow-d">nothing. Every run starts fresh.</div><div class="nrow-q"><blockquote class="quote small">each new session begins with no memory of what came before.</blockquote><div class="source">Anthropic, "Effective harnesses for long-running agents", Nov 26, 2025</div></div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">CHECKPOINTS</div><div class="nrow-d">every step saved to SQLite, 1 thread per batch</div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">FILES ON DISK</div><div class="nrow-d">the clip plan and a progress file, the contract between the steps</div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">DOCS</div><div class="nrow-d">what the agents read at the start of every run</div></div></div>
+  </div>
+</section>
+<!-- what-survives-checkpoints -->
+<section class="frame" id="what-survives-checkpoints">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">WHAT SURVIVES A RUN</div>
+  <h1 class="sm">The harness holds the state</h1>
+  <div class="divider"></div>
+  <div class="nrows tight">
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">THE AGENT</div><div class="nrow-d">nothing. Every run starts fresh.</div><div class="nrow-q"><blockquote class="quote small">each new session begins with no memory of what came before.</blockquote><div class="source">Anthropic, "Effective harnesses for long-running agents", Nov 26, 2025</div></div></div></div>
+    <div class="nrow nonum lit"><div class="nrow-b"><div class="nrow-t">CHECKPOINTS</div><div class="nrow-d">every step saved to SQLite, 1 thread per batch</div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">FILES ON DISK</div><div class="nrow-d">the clip plan and a progress file, the contract between the steps</div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">DOCS</div><div class="nrow-d">what the agents read at the start of every run</div></div></div>
+  </div>
+</section>
+<!-- what-survives-files -->
+<section class="frame" id="what-survives-files">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">WHAT SURVIVES A RUN</div>
+  <h1 class="sm">The harness holds the state</h1>
+  <div class="divider"></div>
+  <div class="nrows tight">
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">THE AGENT</div><div class="nrow-d">nothing. Every run starts fresh.</div><div class="nrow-q"><blockquote class="quote small">each new session begins with no memory of what came before.</blockquote><div class="source">Anthropic, "Effective harnesses for long-running agents", Nov 26, 2025</div></div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">CHECKPOINTS</div><div class="nrow-d">every step saved to SQLite, 1 thread per batch</div></div></div>
+    <div class="nrow nonum lit"><div class="nrow-b"><div class="nrow-t">FILES ON DISK</div><div class="nrow-d">the clip plan and a progress file, the contract between the steps</div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">DOCS</div><div class="nrow-d">what the agents read at the start of every run</div></div></div>
+  </div>
+</section>
+<!-- what-survives-docs -->
+<section class="frame" id="what-survives-docs">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">WHAT SURVIVES A RUN</div>
+  <h1 class="sm">The harness holds the state</h1>
+  <div class="divider"></div>
+  <div class="nrows tight">
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">THE AGENT</div><div class="nrow-d">nothing. Every run starts fresh.</div><div class="nrow-q"><blockquote class="quote small">each new session begins with no memory of what came before.</blockquote><div class="source">Anthropic, "Effective harnesses for long-running agents", Nov 26, 2025</div></div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">CHECKPOINTS</div><div class="nrow-d">every step saved to SQLite, 1 thread per batch</div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">FILES ON DISK</div><div class="nrow-d">the clip plan and a progress file, the contract between the steps</div></div></div>
+    <div class="nrow nonum lit"><div class="nrow-b"><div class="nrow-t">DOCS</div><div class="nrow-d">what the agents read at the start of every run</div></div></div>
+  </div>
+</section>
+<!-- three-graders -->
+<section class="frame" id="three-graders">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">3 GRADERS, ALREADY RUNNING</div>
+  <h1 class="sm">Code, a model, and a human</h1>
+  <div class="divider"></div>
+  <div class="nrows tight">
+    <div class="nrow nonum inl kv on"><div class="nrow-b"><div class="nrow-t">CODE-BASED</div><div class="nrow-d">the validators</div></div></div>
+    <div class="nrow nonum inl kv on"><div class="nrow-b"><div class="nrow-t">MODEL-BASED</div><div class="nrow-d">the visual QA agent, a model judging another model's images</div></div></div>
+    <div class="nrow nonum inl kv on"><div class="nrow-b"><div class="nrow-t"><span class="go">HUMAN</span></div><div class="nrow-d">the 2 gates</div></div></div>
+  </div>
+  <blockquote class="quote small" style="margin-top:36px;font-size:30px">Agent evaluations typically combine three types of graders: code-based, model-based, and human.</blockquote>
+  <div class="source" style="margin-top:10px">Anthropic, "Demystifying evals for AI agents", Jan 9, 2026</div>
+  <div class="own" style="margin-top:36px">Each one judges a single run.</div>
+</section>
+<!-- what-changed-added -->
+<section class="frame" id="what-changed-added">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">THE WHOLE CHANGE</div>
+  <h1 class="sm hl">What was added, what was changed</h1>
+  <table class="tbl compact">
+    <colgroup><col style="width:500px"><col><col style="width:300px"></colgroup>
+    <tbody>
+      <tr class="grp on"><td colspan="3">ADDED</td></tr>
+      <tr class="lit"><td class="mono">clip_evals.py</td><td>the record, the replay, the score</td><td class="mono r">1,023 lines</td></tr>
+      <tr class="lit"><td class="mono">test_clip_evals.py</td><td>70 checks</td><td class="mono r">316 lines</td></tr>
+      <tr class="lit"><td class="mono">seed_verdicts.py</td><td>the one-time backfill</td><td class="mono r">163 lines</td></tr>
+      <tr class="lit"><td class="mono">evals/</td><td>the record, the saved transcripts, the replays</td><td class="mono r"></td></tr>
+      <tr class="lit"><td class="mono">evals.html</td><td>the dashboard page</td><td class="mono r">518 lines</td></tr>
+      <tr class="grp "><td colspan="3">CHANGED</td></tr>
+      <tr class=""><td class="mono">batch_graph.py</td><td>the graph</td><td class="mono r">+86 / -20</td></tr>
+      <tr class=""><td class="mono">run.py</td><td>the command that drives it</td><td class="mono r">+16 / -3</td></tr>
+      <tr class=""><td class="mono">serve_dashboard.py</td><td>the page's data feed</td><td class="mono r">+28</td></tr>
+      <tr class=""><td class="mono">cleanup.js</td><td>never recycle the evals folder</td><td class="mono r">+20</td></tr>
+    </tbody>
+  </table>
+</section>
+<!-- what-changed-changed -->
+<section class="frame" id="what-changed-changed">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">THE WHOLE CHANGE</div>
+  <h1 class="sm hl">What was added, what was changed</h1>
+  <table class="tbl compact">
+    <colgroup><col style="width:500px"><col><col style="width:300px"></colgroup>
+    <tbody>
+      <tr class="grp "><td colspan="3">ADDED</td></tr>
+      <tr class=""><td class="mono">clip_evals.py</td><td>the record, the replay, the score</td><td class="mono r">1,023 lines</td></tr>
+      <tr class=""><td class="mono">test_clip_evals.py</td><td>70 checks</td><td class="mono r">316 lines</td></tr>
+      <tr class=""><td class="mono">seed_verdicts.py</td><td>the one-time backfill</td><td class="mono r">163 lines</td></tr>
+      <tr class=""><td class="mono">evals/</td><td>the record, the saved transcripts, the replays</td><td class="mono r"></td></tr>
+      <tr class=""><td class="mono">evals.html</td><td>the dashboard page</td><td class="mono r">518 lines</td></tr>
+      <tr class="grp on"><td colspan="3">CHANGED</td></tr>
+      <tr class="lit"><td class="mono">batch_graph.py</td><td>the graph</td><td class="mono r">+86 / -20</td></tr>
+      <tr class="lit"><td class="mono">run.py</td><td>the command that drives it</td><td class="mono r">+16 / -3</td></tr>
+      <tr class="lit"><td class="mono">serve_dashboard.py</td><td>the page's data feed</td><td class="mono r">+28</td></tr>
+      <tr class="lit"><td class="mono">cleanup.js</td><td>never recycle the evals folder</td><td class="mono r">+20</td></tr>
+    </tbody>
+  </table>
+</section>
+<!-- record-guarantees -->
+<section class="frame" id="record-guarantees">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">THE RECORD</div>
+  <h1>3 guarantees</h1>
+  <div class="divider"></div>
+  <div class="nrows">
+    <div class="nrow nonum on"><div class="nrow-b"><div class="nrow-t">APPEND-ONLY</div><div class="nrow-d">nothing in the code ever rewrites a line</div></div></div>
+    <div class="nrow nonum on"><div class="nrow-b"><div class="nrow-t">IN GIT</div><div class="nrow-d">the file is committed</div></div></div>
+    <div class="nrow nonum on"><div class="nrow-b"><div class="nrow-t">PROTECTED</div><div class="nrow-d">the cleanup tool refuses the evals folder</div></div></div>
+  </div>
+  <div class="path"><span class="nowrap">video-creation/livestream-repurpose/</span><wbr><span class="nowrap">evals/clip-verdicts.jsonl</span></div>
+</section>
+<!-- backfill -->
+<section class="frame" id="backfill">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">THE BACKFILL</div>
+  <h1>The old verdicts were still on disk</h1>
+  <div class="divider"></div>
+  <div class="flow">
+    <div class="join">
+      <div class="flow-step"><div class="flow-t">STRATEGIST LOGS</div><div class="flow-d">every plan</div></div>
+      <div class="join-plus">+</div>
+      <div class="flow-step"><div class="flow-t">CHECKPOINT DATABASE</div><div class="flow-d">every kill</div></div>
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-step"><div class="flow-t">A ONE-TIME SCRIPT</div></div>
+    <div class="flow-arrow"></div>
+    <div class="flow-step res lit"><div class="flow-t nowrap"><span class="c">168</span> LINES &middot; <span class="c">20</span> LIVESTREAMS</div></div>
+  </div>
+  <div class="note-line">2 livestreams were too old to tie a kill to a clip: on record, left out of every score.</div>
+</section>
+<!-- precision-recall -->
+<section class="frame" id="precision-recall">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">2 NUMBERS</div>
+  <h1>Precision and recall</h1>
+  <div class="divider"></div>
+  <div class="fblock">
+    <div class="formula"><span class="formula-name">PRECISION</span><span class="formula-eq">=</span>
+      <span class="frac"><span class="frac-top">clips I kept</span><span class="frac-bot">clips it proposed</span></span></div>
+    <div class="formula-note g">the gate can see this.</div>
+  </div>
+  <div class="fblock">
+    <div class="formula"><span class="formula-name">RECALL</span><span class="formula-eq">=</span>
+      <span class="frac"><span class="frac-top">good moments it found</span><span class="frac-bot">(found + missed)</span></span></div>
+    <div class="formula-note go">the gate can't. It only sees what was proposed.</div>
+  </div>
+</section>
+<!-- saved-transcripts -->
+<section class="frame" id="saved-transcripts">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">SAVED FOR A REPLAY</div>
+  <h1>3 transcript files per livestream</h1>
+  <div class="divider"></div>
+  <div class="chips"><div class="chip">chunks_90s.txt</div><div class="chip">plain.txt</div><div class="chip">words.txt</div></div>
+  <div class="sublabel" style="margin-top:56px"><span class="c">5</span> LIVESTREAMS CAN BE REPLAYED:</div>
+  <div class="chips"><div class="chip">30x-tao</div><div class="chip">best-time</div><div class="chip">kaspa-cocktails</div><div class="chip">stock-market</div><div class="chip">peach</div></div>
+  <div class="note-line">the batch folder gets cleaned up later. The evals copy stays.</div>
+</section>
+<!-- four-outcomes-kept -->
+<section class="frame" id="four-outcomes-kept">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">SCORING A REPLAY</div>
+  <h1 class="sm">4 outcomes for every new pick</h1>
+  <div class="divider"></div>
+  <div class="nrows tight">
+    <div class="nrow inl lit-g"><div class="nrow-n">1</div><div class="nrow-b"><div class="nrow-t">IT MATCHES A CLIP I KEPT:</div><div class="nrow-d"><span class="g">a hit</span></div></div></div>
+    <div class="nrow inl "><div class="nrow-n">2</div><div class="nrow-b"><div class="nrow-t">IT MATCHES A CLIP I KILLED:</div><div class="nrow-d"><span class="re">a repeated kill</span></div></div></div>
+    <div class="nrow inl "><div class="nrow-n">3</div><div class="nrow-b"><div class="nrow-t">IT LANDS ON A MOMENT I SAID WAS MISSED:</div><div class="nrow-d"><span class="g">counts in its favor</span></div></div></div>
+    <div class="nrow inl "><div class="nrow-n">4</div><div class="nrow-b"><div class="nrow-t">IT'S NEW, NO VERDICT:</div><div class="nrow-d"><span style="color:var(--text-muted)">left out of the score</span></div></div></div>
+  </div>
+  <div class="fblock under hide">
+    <div class="formula"><span class="formula-name">PRECISION</span><span class="formula-eq">=</span>
+      <span class="frac"><span class="frac-top">good picks</span><span class="frac-bot">(good picks + repeated kills)</span></span></div>
+    <div class="formula-note">good picks = outcomes 1 and 3</div>
+  </div>
+</section>
+<!-- four-outcomes-killed -->
+<section class="frame" id="four-outcomes-killed">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">SCORING A REPLAY</div>
+  <h1 class="sm">4 outcomes for every new pick</h1>
+  <div class="divider"></div>
+  <div class="nrows tight">
+    <div class="nrow inl "><div class="nrow-n">1</div><div class="nrow-b"><div class="nrow-t">IT MATCHES A CLIP I KEPT:</div><div class="nrow-d"><span class="g">a hit</span></div></div></div>
+    <div class="nrow inl lit-re"><div class="nrow-n">2</div><div class="nrow-b"><div class="nrow-t">IT MATCHES A CLIP I KILLED:</div><div class="nrow-d"><span class="re">a repeated kill</span></div></div></div>
+    <div class="nrow inl "><div class="nrow-n">3</div><div class="nrow-b"><div class="nrow-t">IT LANDS ON A MOMENT I SAID WAS MISSED:</div><div class="nrow-d"><span class="g">counts in its favor</span></div></div></div>
+    <div class="nrow inl "><div class="nrow-n">4</div><div class="nrow-b"><div class="nrow-t">IT'S NEW, NO VERDICT:</div><div class="nrow-d"><span style="color:var(--text-muted)">left out of the score</span></div></div></div>
+  </div>
+  <div class="fblock under hide">
+    <div class="formula"><span class="formula-name">PRECISION</span><span class="formula-eq">=</span>
+      <span class="frac"><span class="frac-top">good picks</span><span class="frac-bot">(good picks + repeated kills)</span></span></div>
+    <div class="formula-note">good picks = outcomes 1 and 3</div>
+  </div>
+</section>
+<!-- four-outcomes-missed -->
+<section class="frame" id="four-outcomes-missed">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">SCORING A REPLAY</div>
+  <h1 class="sm">4 outcomes for every new pick</h1>
+  <div class="divider"></div>
+  <div class="nrows tight">
+    <div class="nrow inl "><div class="nrow-n">1</div><div class="nrow-b"><div class="nrow-t">IT MATCHES A CLIP I KEPT:</div><div class="nrow-d"><span class="g">a hit</span></div></div></div>
+    <div class="nrow inl "><div class="nrow-n">2</div><div class="nrow-b"><div class="nrow-t">IT MATCHES A CLIP I KILLED:</div><div class="nrow-d"><span class="re">a repeated kill</span></div></div></div>
+    <div class="nrow inl lit-g"><div class="nrow-n">3</div><div class="nrow-b"><div class="nrow-t">IT LANDS ON A MOMENT I SAID WAS MISSED:</div><div class="nrow-d"><span class="g">counts in its favor</span></div></div></div>
+    <div class="nrow inl "><div class="nrow-n">4</div><div class="nrow-b"><div class="nrow-t">IT'S NEW, NO VERDICT:</div><div class="nrow-d"><span style="color:var(--text-muted)">left out of the score</span></div></div></div>
+  </div>
+  <div class="fblock under hide">
+    <div class="formula"><span class="formula-name">PRECISION</span><span class="formula-eq">=</span>
+      <span class="frac"><span class="frac-top">good picks</span><span class="frac-bot">(good picks + repeated kills)</span></span></div>
+    <div class="formula-note">good picks = outcomes 1 and 3</div>
+  </div>
+</section>
+<!-- four-outcomes-new -->
+<section class="frame" id="four-outcomes-new">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">SCORING A REPLAY</div>
+  <h1 class="sm">4 outcomes for every new pick</h1>
+  <div class="divider"></div>
+  <div class="nrows tight">
+    <div class="nrow inl "><div class="nrow-n">1</div><div class="nrow-b"><div class="nrow-t">IT MATCHES A CLIP I KEPT:</div><div class="nrow-d"><span class="g">a hit</span></div></div></div>
+    <div class="nrow inl "><div class="nrow-n">2</div><div class="nrow-b"><div class="nrow-t">IT MATCHES A CLIP I KILLED:</div><div class="nrow-d"><span class="re">a repeated kill</span></div></div></div>
+    <div class="nrow inl "><div class="nrow-n">3</div><div class="nrow-b"><div class="nrow-t">IT LANDS ON A MOMENT I SAID WAS MISSED:</div><div class="nrow-d"><span class="g">counts in its favor</span></div></div></div>
+    <div class="nrow inl lit"><div class="nrow-n">4</div><div class="nrow-b"><div class="nrow-t">IT'S NEW, NO VERDICT:</div><div class="nrow-d"><span style="color:var(--text-muted)">left out of the score</span></div></div></div>
+  </div>
+  <div class="fblock under hide">
+    <div class="formula"><span class="formula-name">PRECISION</span><span class="formula-eq">=</span>
+      <span class="frac"><span class="frac-top">good picks</span><span class="frac-bot">(good picks + repeated kills)</span></span></div>
+    <div class="formula-note">good picks = outcomes 1 and 3</div>
+  </div>
+</section>
+<!-- four-outcomes-formula -->
+<section class="frame" id="four-outcomes-formula">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">SCORING A REPLAY</div>
+  <h1 class="sm">4 outcomes for every new pick</h1>
+  <div class="divider"></div>
+  <div class="nrows tight">
+    <div class="nrow inl "><div class="nrow-n">1</div><div class="nrow-b"><div class="nrow-t">IT MATCHES A CLIP I KEPT:</div><div class="nrow-d"><span class="g">a hit</span></div></div></div>
+    <div class="nrow inl "><div class="nrow-n">2</div><div class="nrow-b"><div class="nrow-t">IT MATCHES A CLIP I KILLED:</div><div class="nrow-d"><span class="re">a repeated kill</span></div></div></div>
+    <div class="nrow inl "><div class="nrow-n">3</div><div class="nrow-b"><div class="nrow-t">IT LANDS ON A MOMENT I SAID WAS MISSED:</div><div class="nrow-d"><span class="g">counts in its favor</span></div></div></div>
+    <div class="nrow inl "><div class="nrow-n">4</div><div class="nrow-b"><div class="nrow-t">IT'S NEW, NO VERDICT:</div><div class="nrow-d"><span style="color:var(--text-muted)">left out of the score</span></div></div></div>
+  </div>
+  <div class="fblock under">
+    <div class="formula"><span class="formula-name">PRECISION</span><span class="formula-eq">=</span>
+      <span class="frac"><span class="frac-top">good picks</span><span class="frac-bot">(good picks + repeated kills)</span></span></div>
+    <div class="formula-note">good picks = outcomes 1 and 3</div>
+  </div>
+</section>
+<!-- scorer-tests -->
+<section class="frame" id="scorer-tests">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">THE SCORER IS TESTED</div>
+  <h1>70 checks on made-up clips</h1>
+  <div class="divider"></div>
+  <div class="checks">
+    <div class="check"><div class="check-mark"><svg width="28" height="28" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="#00e68a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-tx">a long pick matches the long clip, not the impact clip inside it</div></div>
+    <div class="check"><div class="check-mark"><svg width="28" height="28" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="#00e68a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-tx">recording a gate twice writes nothing</div></div>
+    <div class="check"><div class="check-mark"><svg width="28" height="28" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="#00e68a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-tx">noise: picks pair one to one, so an added impact clip counts as a difference <span class="nowrap">(2 x 1 / 3 = 66.7%)</span></div></div>
+  </div>
+  <div class="own">If the matching math is wrong, every score after it is wrong.</div>
+</section>
+<!-- recall -->
+<section class="frame" id="recall">
+  <div class="orb" style="width:620px;height:620px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">RECALL, FIRST LIVE RUN</div>
+  <div class="bigstat"><div class="bigstat-n c">87.5%</div><div class="bigstat-cap">7 kept, 1 missed (7 of 8)</div></div>
+  <div class="note-line">1 livestream so far. Every stream from here on adds to it.</div>
+</section>
+<!-- not-yet-not-memory -->
+<section class="frame" id="not-yet-not-memory">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">NOT YET</div>
+  <h1 class="sm">What the record isn't, and what's next</h1>
+  <div class="divider"></div>
+  <div class="nrows">
+    <div class="nrow nonum lit"><div class="nrow-b"><div class="nrow-t">NOT MEMORY</div><div class="nrow-d">the strategist never sees the record. It's a measurement.</div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">FEED EXAMPLES BACK</div><div class="nrow-d">kept and killed examples into the prompt, then measure if it helps</div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">A CHEAPER MODEL</div><div class="nrow-d">can it pick as well? Now that's a replay.</div></div></div>
+  </div>
+</section>
+<!-- not-yet-feed-back -->
+<section class="frame" id="not-yet-feed-back">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">NOT YET</div>
+  <h1 class="sm">What the record isn't, and what's next</h1>
+  <div class="divider"></div>
+  <div class="nrows">
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">NOT MEMORY</div><div class="nrow-d">the strategist never sees the record. It's a measurement.</div></div></div>
+    <div class="nrow nonum lit"><div class="nrow-b"><div class="nrow-t">FEED EXAMPLES BACK</div><div class="nrow-d">kept and killed examples into the prompt, then measure if it helps</div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">A CHEAPER MODEL</div><div class="nrow-d">can it pick as well? Now that's a replay.</div></div></div>
+  </div>
+</section>
+<!-- not-yet-cheaper-model -->
+<section class="frame" id="not-yet-cheaper-model">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">NOT YET</div>
+  <h1 class="sm">What the record isn't, and what's next</h1>
+  <div class="divider"></div>
+  <div class="nrows">
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">NOT MEMORY</div><div class="nrow-d">the strategist never sees the record. It's a measurement.</div></div></div>
+    <div class="nrow nonum "><div class="nrow-b"><div class="nrow-t">FEED EXAMPLES BACK</div><div class="nrow-d">kept and killed examples into the prompt, then measure if it helps</div></div></div>
+    <div class="nrow nonum lit"><div class="nrow-b"><div class="nrow-t">A CHEAPER MODEL</div><div class="nrow-d">can it pick as well? Now that's a replay.</div></div></div>
+  </div>
+</section>
+
+<div class="font-probe" style="position:absolute;left:-9999px;top:0"><span style="font-family:'Playfair Display'">Aa</span><span style="font-family:'DM Sans'">Aa</span><span style="font-family:'JetBrains Mono'">Aa</span></div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+{
+ "project": "AI vs ML",
+ "comp_id": "AIVsMLShort",
+ "comp_file": "video-creation/remotion/src/AIVsMLShort.tsx",
+ "extra_files": [
+  "video-creation/remotion/src/Root.tsx (import + <Composition id=\"AIVsMLShort\"> 1080x1920, fps 30, durationInFrames = DUR)",
+  "_previews/short/work/variants/ (IMG-1-cash-stacks-alt.png, IMG-4-three-chairs-alt.png, BR-9-scientist-presenting-data.mp4, copied from assets/short/)",
+  "_previews/short/work/cutframes/span-02-f193.png (the C3 frame the vertical's IMG-4 fade starts from, held under the variant fade)",
+  "_previews/short/work/cutframes/span-03-last.png (span 3 final frame, the outro hold)",
+  "imports (own project prefix AIVsML, lint PASS): ./AIVsMLShortCaptions, ./AIVsMLKit (wobbleCss), ./AIVsMLVerticalKit (HeadlinePopV, DownArrow, VFULL); shared ./effects/kinetic-text (KtWhipCut, KtClock, useKtTime)"
+ ],
+ "mode": "SHORT, vertical-sourced (AI vs ML-VERTICAL.mp4 exists; no assets/short/from-16x9.json and no vertical-cards.json, so no native-vertical cards apply)",
+ "card_t": [],
+ "pause_s": null,
+ "spine_secs": null,
+ "spans_total_s": 26.8,
+ "span_frames": [247, 358, 199],
+ "span_start_frames": [0, 247, 605],
+ "outro": {
+  "from_frame": 804,
+  "frames": 96,
+  "seconds": 3.2,
+  "text": "WATCH THE FULL VIDEO",
+  "look": "locked container stylesheet, dark: #0a0c10 ground, blurred accent orb, grain, Playfair Display 900 at 136 px, FULL VIDEO in --accent-green #00e68a, green to cyan divider, green down arrow that bobs; entrance = container cross-fade + 0.93 to 1 scale-in over 11 frames, over span 3's held final frame"
+ },
+ "dur_frames": 900,
+ "covers": 3,
+ "transitions_wired": [
+  {"tc": 5.233, "frame": 157, "id": "hand:kt-whip-cut", "what": "IMG-1 variant ingress (the vertical's BR-1 to IMG-1 whip, same cut frame)"},
+  {"tc": 8.233, "frame": 247, "id": "hand:kt-whip-cut", "what": "SEAM 1 hit: span 1 (IMG-1) to span 2 (C3 chart), incoming span wrapped, lens off + 360-degree shutter as in the vertical"},
+  {"tc": 14.667, "frame": 440, "id": "hand:fade", "what": "IMG-4 variant ingress, 0.33 s from the vertical's cut frame over the frozen C3 frame (frame 440 equals the live C3, diff 0.56; first variant step at 441)"},
+  {"tc": 17.267, "frame": 518, "id": "hand:kt-whip-cut", "what": "BR-9 variant ingress (the vertical's IMG-4 to BR-9 whip, same cut frame); 25 fps clip at playbackRate 1.2, frame for frame"},
+  {"tc": 20.167, "frame": 605, "id": "hand:kt-whip-cut", "what": "SEAM 2 hit: BAKED into span-03 frames 0-10 (span 3 starts on the vertical's F6 whip cut-in, master frame 3711, measured); the comp adds nothing, a second wrapper would compound the zoom to 4x"},
+  {"tc": 26.8, "frame": 804, "id": "hand:container-xfade-scale-in", "what": "outro TITLE SLIDE entrance over the held last frame"}
+ ],
+ "captions_groups": 30,
+ "captions_shown": 20,
+ "captions_style": "Montserrat 900 lowercase, 80 px, 12 px #000 stroke, paint-order stroke fill, pop 0.7 to 1.12 to 1 over 9 frames, block bottom at y 1600 (bottom pad 320), maxWidth 860, topmost under the outro card; widest group 'with phds for them' measured 844 px (about 945 px at the pop peak)",
+ "gates": {
+  "COMP-IMPORTS-LINT": "PASS files=4 fails=0",
+  "COVERS-LINT": "PASS covers=3 fails=0 warns=1 (GAP 8.245 to 14.705 = span 2's own C3 chart from the vertical; COVERS lists only the variant overlays, all cap: true by design)",
+  "DECK-CONTAINERS": "n/a (SHORT mode: s_verify_comp runs lint_comp_imports + lint_covers only)",
+  "SLIDE-BALANCE-LINT": "n/a (SHORT mode)",
+  "ANIMATED-CHARTS-LINT": "n/a (SHORT mode)",
+  "TRANSITION-ASSETS-LINT": "n/a (SHORT mode; no library engine used, only the hand kt-whip-cut)",
+  "SPINE-FPS": "n/a (SHORT mode; span intermediates probed: 1080x1920, 30/1, 247 / 358 / 199 frames, equal to spans.json)",
+  "TSC": "npx tsc --noEmit: 0 errors in AIVsMLShort.tsx / Root.tsx"
+ },
+ "chunks_qa": [
+  {"frames": "30", "what": "hook face at 1.0 s (span 1, F1 open, AI ENGINEER label)", "verdict": "ok: face centred at about 45 percent, no short caption over the burned label"},
+  {"frames": "100, 200", "what": "BR-1 (the vertical's own clip, waived variant) / IMG-1 variant + captions", "verdict": "ok"},
+  {"frames": "156, 157", "what": "IMG-1 variant whip ingress", "verdict": "ok: 156 live BR-1, 157 variant at 2x whip"},
+  {"frames": "238, 246", "what": "IMG-1 variant + redrawn AT THE TOP: A $340K GAP headline + 'is huge.'", "verdict": "ok: headline at y 330, caption at the bottom, no collision"},
+  {"frames": "247, 251", "what": "SEAM 1 kt-whip-cut on span 2", "verdict": "fixed: 'is huge.' held 1 frame onto the seam (continuous-time window end 8.245 vs seam 8.2333); added the span-end clamp, re-rendered 247: clean"},
+  {"frames": "300", "what": "caption over the C3 chart", "verdict": "ok: '$340,000 gap.' about 60 px below the DATA POINTS line, single line"},
+  {"frames": "380", "what": "C3 word-by-word AND IT GOES TO", "verdict": "ok: short caption suppressed (the burned text carries the words)"},
+  {"frames": "420", "what": "'the models.' + TRAIN payoff", "verdict": "ok: no overlap"},
+  {"frames": "439, 440, 441, 445, 480", "what": "IMG-4 variant fade", "verdict": "ok: 439/440 equal the C3 cut frame (diff 0.67 / 0.56), 441 is the first 10 percent step, no bleed of the vertical's own chairs"},
+  {"frames": "521, 560, 604", "what": "BR-9 variant whip + 'with phds for them' + last span-2 frame", "verdict": "ok: widest caption inside 1080 at the pop peak, no caption on 604"},
+  {"frames": "605, 610, 650", "what": "SEAM 2 (baked F6 whip) + the F6 burned KT caption line", "verdict": "ok: no doubled caption"},
+  {"frames": "760, 803", "what": "BR-10 + THE DOOR IS OPEN + captions", "verdict": "ok"},
+  {"frames": "804, 805, 806, 808, 816", "what": "outro entrance over the held frame", "verdict": "fixed: 'skills.' held onto frame 804 (window end 26.817 vs spans end 26.8); span-end clamp, re-rendered: clean; card opacity ramp 0 to 1 over 11 frames measured (0.07 / 0.15 / 0.33 / 1.0)"},
+  {"frames": "860, 899", "what": "outro TITLE SLIDE", "verdict": "fixed: added word-spacing 0.12em (FULL VIDEO read tight); text ends at x about 925, clear of the right rail and the bottom UI"}
+ ],
+ "qa_stills_dir": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\AI vs ML\\_previews\\short\\qa\\stills",
+ "draft": null,
+ "needs_review": [
+  "CAPTIONS DEVIATION (the brief said render exactly inside CAPTION_WINDOWS): the vertical BURNS text that says the spoken words in the caption slot in three places s_captions did not exempt, so 10 of the 30 generated groups are suppressed while the vertical's own text carries them: short frames [0,76) the F1 labels AI ENGINEER / ML ENGINEER (y 1400 / 1560), [362,407) the C3 kt-word-by-word AND IT GOES TO / THE PEOPLE WHO (y 1595), [605,720) the F6 kt caption line THEREFORE, FOR MOST DEVELOPERS + the AI ENGINEERING pop (y 1520). Captioning them would put the short's caption ON that text and read every word twice. ROOT CAUSE upstream: short_graph._burned_final reads the assets/captions.json windows (house captions only: 33.333-39.967, 45.633-58.1, 130.4-139.533) and misses the vertical's kt-caption-highlight line (its CAPTION_SRC also holds 8.267-12.367 and 123.7-125.865) and the KT word devices. Declared as BURNED in AIVsMLShort.tsx section 4.",
+  "IMG-1 headline REDRAWN over its variant (HeadlinePopV from AIVsMLVerticalKit, identical props, same frame phase): the variant otherwise hid the vertical's baked AT THE TOP: A $340K GAP plant (SHORT-CUT-PLAN risk 8). COMPETING WITH PhDs (under the BR-9 variant) is NOT redrawn: the captions say those words and that headline would sit in the caption slot (y 1400, 124 px).",
+  "Seam 2 has no comp-added hit: span 3 opens on the vertical's own F6 kt-whip-cut cut-in (baked), which IS the video's family move at that seam.",
+  "BR-1 and BR-10 were AUTO-WAIVED by s_variants (variant-waivers.json): those beats show the vertical's own clips (fine in vertical-sourced mode; the coverage gate is 16:9-mode only). Mike can ask for a re-source.",
+  "DISK: C: has about 926 MB free. A 900-frame 1080x1920 render should fit, but watch s_render for ENOSPC; the smoke bundle was deleted after QA.",
+  "The outro card carries no eyebrow, so it reads exactly WATCH THE FULL VIDEO as briefed."
+ ],
+ "deviations": [
+  "Captions suppressed inside the three vertical-burned-text windows above (10 groups), instead of rendering every group inside CAPTION_WINDOWS.",
+  "Caption holds also clamped at the end of the span holding the group's t (the lane's never-across-a-seam rule): the generated windows end at continuous-time 8.245 / 26.817 while the frame-exact seams are 8.2333 / 26.8, which carried 'is huge.' onto seam frame 247 and 'skills.' onto outro frame 804.",
+  "IMG-1 headline redrawn over the variant (additive, not in the brief)."
+ ]
+}

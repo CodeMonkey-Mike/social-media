@@ -1,0 +1,598 @@
+{
+ "id": "C4",
+ "stage": [
+  1080,
+  1920
+ ],
+ "png_scale": 1,
+ "states": [
+  "start",
+  "mid",
+  "bars",
+  "payoff"
+ ],
+ "geom": {
+  "stage": [
+   1080,
+   1920
+  ],
+  "zero_y": 880,
+  "px_per_point": 40,
+  "zero_line": {
+   "x1": 72,
+   "x2": 1008
+  },
+  "bars": [
+   {
+    "k": "prog",
+    "label": [
+     "Computer programmers"
+    ],
+    "quote": [
+     "\u201cwrite, modify, and test code\u2026\u201d"
+    ],
+    "v": -7,
+    "txt": "<span style=\"margin-right:-.24em\">\u2212</span>7%",
+    "cls": "neg",
+    "x": 112,
+    "w": 250,
+    "col": "#ff4060",
+    "label_at": {
+     "x": 72,
+     "y": 728
+    },
+    "quote_at": {
+     "x": 72,
+     "y": 770
+    },
+    "rect": {
+     "x": 112,
+     "y": 880,
+     "w": 250,
+     "h": 280
+    },
+    "value_box": {
+     "x": 77,
+     "y": 1176,
+     "w": 320,
+     "h": 80
+    }
+   },
+   {
+    "k": "dev",
+    "label": [
+     "Software developers,",
+     "quality assurance",
+     "analysts, and testers"
+    ],
+    "quote": [
+     "\u201cdesign computer applications",
+     "or programs\u201d"
+    ],
+    "v": 10,
+    "txt": "+10%",
+    "cls": "pos",
+    "x": 662,
+    "w": 250,
+    "col": "#00e68a",
+    "label_at": {
+     "x": 590,
+     "y": 914
+    },
+    "quote_at": {
+     "x": 590,
+     "y": 1030
+    },
+    "rect": {
+     "x": 662,
+     "y": 480,
+     "w": 250,
+     "h": 400
+    },
+    "value_box": {
+     "x": 627,
+     "y": 384,
+     "w": 320,
+     "h": 80
+    }
+   }
+  ],
+  "arrow": {
+   "d": "M374,1090 C 530,1090 556,612 650,612",
+   "head": {
+    "x": 662,
+    "y": 612
+   }
+  },
+  "bls_lines": [
+   "\u201csome higher skilled programming tasks will likely shift",
+   "to other workers, such as software developers.\u201d"
+  ],
+  "takeaway_lines": [
+   "The demand didn't disappear.",
+   "It moved."
+  ]
+ },
+ "elements": {
+  "start": {
+   "zero": {
+    "x": 72,
+    "y": 880,
+    "w": 936,
+    "h": 0,
+    "visible": true,
+    "opacity": 1
+   },
+   "slot-prog": {
+    "x": 112,
+    "y": 873,
+    "w": 250,
+    "h": 14,
+    "visible": true,
+    "opacity": 1
+   },
+   "bar-prog": {
+    "x": 112,
+    "y": 880,
+    "w": 250,
+    "h": 280,
+    "visible": false,
+    "opacity": 1
+   },
+   "slot-dev": {
+    "x": 662,
+    "y": 873,
+    "w": 250,
+    "h": 14,
+    "visible": true,
+    "opacity": 1
+   },
+   "bar-dev": {
+    "x": 662,
+    "y": 480,
+    "w": 250,
+    "h": 400,
+    "visible": false,
+    "opacity": 1
+   },
+   "arrow": {
+    "x": 374,
+    "y": 601,
+    "w": 288,
+    "h": 489,
+    "visible": false,
+    "opacity": 1
+   },
+   "zeroLabel": {
+    "x": 72,
+    "y": 846,
+    "w": 151.2,
+    "h": 22,
+    "visible": true,
+    "opacity": 1
+   },
+   "label-prog": {
+    "x": 72,
+    "y": 728,
+    "w": 411.1,
+    "h": 35,
+    "visible": true,
+    "opacity": 1
+   },
+   "quote-prog": {
+    "x": 72,
+    "y": 770,
+    "w": 365,
+    "h": 32,
+    "visible": false,
+    "opacity": 1
+   },
+   "val-prog": {
+    "x": 77,
+    "y": 1176,
+    "w": 320,
+    "h": 80,
+    "visible": false,
+    "opacity": 1
+   },
+   "label-dev": {
+    "x": 590,
+    "y": 914,
+    "w": 374.7,
+    "h": 105,
+    "visible": true,
+    "opacity": 1
+   },
+   "quote-dev": {
+    "x": 590,
+    "y": 1030,
+    "w": 363.9,
+    "h": 64,
+    "visible": false,
+    "opacity": 1
+   },
+   "val-dev": {
+    "x": 627,
+    "y": 384,
+    "w": 320,
+    "h": 80,
+    "visible": false,
+    "opacity": 1
+   },
+   "sublabel": {
+    "x": 72,
+    "y": 212,
+    "w": 667.4,
+    "h": 34,
+    "visible": true,
+    "opacity": 1
+   },
+   "bls": {
+    "x": 72,
+    "y": 1300,
+    "w": 720.4,
+    "h": 68,
+    "visible": false,
+    "opacity": 1
+   },
+   "take": {
+    "x": 72,
+    "y": 1408,
+    "w": 755.4,
+    "h": 124,
+    "visible": false,
+    "opacity": 1
+   }
+  },
+  "mid": {
+   "zero": {
+    "x": 72,
+    "y": 880,
+    "w": 936,
+    "h": 0,
+    "visible": true,
+    "opacity": 1
+   },
+   "bar-prog": {
+    "x": 112,
+    "y": 880,
+    "w": 250,
+    "h": 280,
+    "visible": true,
+    "opacity": 1
+   },
+   "slot-dev": {
+    "x": 662,
+    "y": 873,
+    "w": 250,
+    "h": 14,
+    "visible": true,
+    "opacity": 1
+   },
+   "bar-dev": {
+    "x": 662,
+    "y": 480,
+    "w": 250,
+    "h": 400,
+    "visible": false,
+    "opacity": 1
+   },
+   "arrow": {
+    "x": 374,
+    "y": 601,
+    "w": 288,
+    "h": 489,
+    "visible": false,
+    "opacity": 1
+   },
+   "zeroLabel": {
+    "x": 72,
+    "y": 846,
+    "w": 151.2,
+    "h": 22,
+    "visible": true,
+    "opacity": 1
+   },
+   "label-prog": {
+    "x": 72,
+    "y": 728,
+    "w": 411.1,
+    "h": 35,
+    "visible": true,
+    "opacity": 1
+   },
+   "quote-prog": {
+    "x": 72,
+    "y": 770,
+    "w": 365,
+    "h": 32,
+    "visible": true,
+    "opacity": 1
+   },
+   "val-prog": {
+    "x": 77,
+    "y": 1176,
+    "w": 320,
+    "h": 80,
+    "visible": true,
+    "opacity": 1
+   },
+   "label-dev": {
+    "x": 590,
+    "y": 914,
+    "w": 374.7,
+    "h": 105,
+    "visible": true,
+    "opacity": 1
+   },
+   "quote-dev": {
+    "x": 590,
+    "y": 1030,
+    "w": 363.9,
+    "h": 64,
+    "visible": false,
+    "opacity": 1
+   },
+   "val-dev": {
+    "x": 627,
+    "y": 384,
+    "w": 320,
+    "h": 80,
+    "visible": false,
+    "opacity": 1
+   },
+   "sublabel": {
+    "x": 72,
+    "y": 212,
+    "w": 667.4,
+    "h": 34,
+    "visible": true,
+    "opacity": 1
+   },
+   "bls": {
+    "x": 72,
+    "y": 1300,
+    "w": 720.4,
+    "h": 68,
+    "visible": false,
+    "opacity": 1
+   },
+   "take": {
+    "x": 72,
+    "y": 1408,
+    "w": 755.4,
+    "h": 124,
+    "visible": false,
+    "opacity": 1
+   }
+  },
+  "bars": {
+   "zero": {
+    "x": 72,
+    "y": 880,
+    "w": 936,
+    "h": 0,
+    "visible": true,
+    "opacity": 1
+   },
+   "bar-prog": {
+    "x": 112,
+    "y": 880,
+    "w": 250,
+    "h": 280,
+    "visible": true,
+    "opacity": 1
+   },
+   "bar-dev": {
+    "x": 662,
+    "y": 480,
+    "w": 250,
+    "h": 400,
+    "visible": true,
+    "opacity": 1
+   },
+   "arrow": {
+    "x": 374,
+    "y": 601,
+    "w": 288,
+    "h": 489,
+    "visible": false,
+    "opacity": 1
+   },
+   "zeroLabel": {
+    "x": 72,
+    "y": 846,
+    "w": 151.2,
+    "h": 22,
+    "visible": true,
+    "opacity": 1
+   },
+   "label-prog": {
+    "x": 72,
+    "y": 728,
+    "w": 411.1,
+    "h": 35,
+    "visible": true,
+    "opacity": 1
+   },
+   "quote-prog": {
+    "x": 72,
+    "y": 770,
+    "w": 365,
+    "h": 32,
+    "visible": true,
+    "opacity": 1
+   },
+   "val-prog": {
+    "x": 77,
+    "y": 1176,
+    "w": 320,
+    "h": 80,
+    "visible": true,
+    "opacity": 1
+   },
+   "label-dev": {
+    "x": 590,
+    "y": 914,
+    "w": 374.7,
+    "h": 105,
+    "visible": true,
+    "opacity": 1
+   },
+   "quote-dev": {
+    "x": 590,
+    "y": 1030,
+    "w": 363.9,
+    "h": 64,
+    "visible": true,
+    "opacity": 1
+   },
+   "val-dev": {
+    "x": 627,
+    "y": 384,
+    "w": 320,
+    "h": 80,
+    "visible": true,
+    "opacity": 1
+   },
+   "sublabel": {
+    "x": 72,
+    "y": 212,
+    "w": 667.4,
+    "h": 34,
+    "visible": true,
+    "opacity": 1
+   },
+   "bls": {
+    "x": 72,
+    "y": 1300,
+    "w": 720.4,
+    "h": 68,
+    "visible": false,
+    "opacity": 1
+   },
+   "take": {
+    "x": 72,
+    "y": 1408,
+    "w": 755.4,
+    "h": 124,
+    "visible": false,
+    "opacity": 1
+   }
+  },
+  "payoff": {
+   "zero": {
+    "x": 72,
+    "y": 880,
+    "w": 936,
+    "h": 0,
+    "visible": true,
+    "opacity": 1
+   },
+   "bar-prog": {
+    "x": 112,
+    "y": 880,
+    "w": 250,
+    "h": 280,
+    "visible": true,
+    "opacity": 1
+   },
+   "bar-dev": {
+    "x": 662,
+    "y": 480,
+    "w": 250,
+    "h": 400,
+    "visible": true,
+    "opacity": 1
+   },
+   "arrow": {
+    "x": 374,
+    "y": 601,
+    "w": 288,
+    "h": 489,
+    "visible": true,
+    "opacity": 1
+   },
+   "zeroLabel": {
+    "x": 72,
+    "y": 846,
+    "w": 151.2,
+    "h": 22,
+    "visible": true,
+    "opacity": 1
+   },
+   "label-prog": {
+    "x": 72,
+    "y": 728,
+    "w": 411.1,
+    "h": 35,
+    "visible": true,
+    "opacity": 1
+   },
+   "quote-prog": {
+    "x": 72,
+    "y": 770,
+    "w": 365,
+    "h": 32,
+    "visible": true,
+    "opacity": 1
+   },
+   "val-prog": {
+    "x": 77,
+    "y": 1176,
+    "w": 320,
+    "h": 80,
+    "visible": true,
+    "opacity": 1
+   },
+   "label-dev": {
+    "x": 590,
+    "y": 914,
+    "w": 374.7,
+    "h": 105,
+    "visible": true,
+    "opacity": 1
+   },
+   "quote-dev": {
+    "x": 590,
+    "y": 1030,
+    "w": 363.9,
+    "h": 64,
+    "visible": true,
+    "opacity": 1
+   },
+   "val-dev": {
+    "x": 627,
+    "y": 384,
+    "w": 320,
+    "h": 80,
+    "visible": true,
+    "opacity": 1
+   },
+   "sublabel": {
+    "x": 72,
+    "y": 212,
+    "w": 667.4,
+    "h": 34,
+    "visible": true,
+    "opacity": 1
+   },
+   "bls": {
+    "x": 72,
+    "y": 1300,
+    "w": 720.4,
+    "h": 68,
+    "visible": true,
+    "opacity": 1
+   },
+   "take": {
+    "x": 72,
+    "y": 1408,
+    "w": 755.4,
+    "h": 124,
+    "visible": true,
+    "opacity": 1
+   }
+  }
+ }
+}

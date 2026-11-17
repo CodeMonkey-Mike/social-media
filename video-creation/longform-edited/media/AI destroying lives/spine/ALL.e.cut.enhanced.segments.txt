@@ -1,0 +1,333 @@
+ALL.e.cut.enhanced  -  TRANSCRIPT BREAKDOWN (segments, chapter-mapped)
+==============================================================================
+Project      : AI destroying lives (longform-edited)
+Spine        : spine/ALL.e.cut.enhanced.mp4  (the FINAL spine the comp loads)
+Word JSON    : spine/ALL.e.cut.enhanced.medium-words.json  (Whisper medium, GPU, word-level; NEVER hand-edited)
+Duration     : 475.30 s = 7:55.30 (ffprobe); last word "this." ends 7:55.27
+Segments     : 75   Words: 1344
+Screenplay   : SCREENPLAY.md (5 chapters; the CH1 Beat 1 montage plays BEFORE the spine)
+Made         : 2026-11-10 by the transcriber agent; every time after 5:10.90 moved back 0.633 s for the
+               'humanoid' cut (Mike, plan gate 2026-11-10; the word removed from the FINAL spine)
+
+Text below = the JSON's segment text with Whisper mishears corrected (TEXT ONLY). Timecodes are the
+JSON's, exact, untouched. [brackets] = a word that IS spoken (confirmed on a re-listen of that window)
+but has NO word time in the JSON. FACE windows = blackdetect on this exact file (non-black = face).
+
+CHAPTER OPENERS (first word, spine time)
+------------------------------------------------------------------------------
+  CH1 THE PEOPLE (B2; the montage plays before 0:00)    0.00  0:00.00  "So some of those people say that AI took their work" (FACE-1)
+  CH2 ALREADY LEAVING                                  20.72  0:20.72  "I covered the first wave in my last two videos."
+  CH3 THE ONES NOBODY BELIEVES                        139.72  2:19.72  "Now we get to the jobs that nobody believes are at risk." (FACE-3)
+  CH4 IT WON'T BE ME                                  381.41  6:21.41  "And yet people ask about their own job"
+  CH5 WHAT NOW                                        439.39  7:19.39  "So what does this mean for you?"
+
+BEAT OPENERS
+------------------------------------------------------------------------------
+     0.00  0:00.00  CH1 B2 the promise
+    20.72  0:20.72  CH2 B1 layoffs where employers named AI
+    52.46  0:52.46  CH2 B2 the bottom rung
+    72.32  1:12.32  CH2 B3 office work, the government's forecast
+   104.68  1:44.68  CH2 B4 freelance language work
+   139.72  2:19.72  CH3 B1 the disbelief
+   153.78  2:33.78  CH3 B2 what welds today
+   174.12  2:54.12  CH3 B3 why the money is going there
+   189.40  3:09.40  CH3 B4 mid-roll plug
+   225.04  3:45.04  CH3 B5 the robot with the human body
+   245.18  4:05.18  CH3 B6 the humanoid welder
+   275.90  4:35.90  CH3 B7 the maintenance worker
+   381.41  6:21.41  CH4 B1 what people say about their own job
+   403.41  6:43.41  CH4 B2 why we believe it
+   439.39  7:19.39  CH5 B1 what it means
+   454.85  7:34.85  CH5 B2 the next watch and the close
+  The CH3 B4 plug runs 3:09.40 "By the way" to "data." (ends 3:45.04). With ~76 s of clips before it
+  (montage 68.4 + CLIP-21 7.6) and ~129.4 s of clips in all, it sits at about 43.8 to 49.7 percent of a ~10:05 cut.
+
+FACE WINDOWS (7, budget 8; blackdetect d=0.2 pix_th=0.10 on ALL.e.cut.enhanced.mp4)
+------------------------------------------------------------------------------
+  FACE-1     0.000 -    6.490  (0:00.00 - 0:06.49, 6.49 s)  Some of those people say ... searching for months.
+  FACE-2    72.256 -   75.023  (1:12.26 - 1:15.02, 2.77 s)  Now look at what the government itself expects.
+  FACE-3   139.556 -  144.123  (2:19.56 - 2:24.12, 4.57 s)  Now we get to the jobs that nobody believes are at risk.
+  FACE-4   259.923 -  265.156  (4:19.92 - 4:25.16, 5.23 s)  So no, a humanoid robot is not welding in a shipyard today.
+  FACE-5   369.626 -  375.326  (6:09.63 - 6:15.33, 5.70 s)  A robot doesn't need to be a better electrician than you. It just needs to be already in the house.
+  FACE-6   435.093 -  438.026  (7:15.10 - 7:18.03, 2.93 s)  Feeling safe isn't the same thing as being safe,
+  FACE-7   450.726 -  454.660  (7:30.73 - 7:34.66, 3.93 s)  Don't wait for a layoff announcement to tell you that your job has changed.
+  Note: "unfortunately." (7:18.35) after FACE-6 and "and receive an expert electrician download..." after FACE-5
+  fall on COVER (black), not on the face.
+
+CLIP-INSERT SPLICE POINTS (Whisper word edges; card_pauses must snap to the silence trough via lint-pause-silence)
+------------------------------------------------------------------------------
+     0.00  CH1 montage (CLIP-29, 3, 12, 20, 2, 27, 9, 24, 30, 6, 16; ~68.4 s) plays BEFORE spine 0:00.00
+   128.68  CLIP-21 (translator, ~7.6 s): after "...this is how she said it happened." (ends 2:08.68), before "That's what" (2:08.80)
+   369.47  CLIP-61 (Musk, ~6 s): after "...a G20 meeting this September." (ends 6:09.47), before FACE-5 "A robot doesn't need" (6:09.79)
+   403.41  CLIP-42 / 40 / 51 run (~23.8 s): after "Here's what it sounds like." (ends 6:43.41), before "I get why" (6:43.41); Whisper shows NO gap, snap to the trough
+   417.03  CLIP-44 (trade-program woman, ~23.6 s): after "...puts it." (ends 6:57.03), before "A study in Germany" (6:57.23)
+
+SEGMENTS
+==============================================================================
+
+###### CH1 THE PEOPLE ########################################################
+[#00    0.00-   6.00 | 0:00.00-0:06.00] {CH1 B2 the promise}
+      So some of those people say that AI took their work and all of them have been searching for
+        >    0.00  == CHAPTER OPENS: CH1 THE PEOPLE
+        >    0.00  -- beat opens: CH1 B2 the promise
+        >    0.00  FACE-1 IN   0:00.00
+        >    0.00  INSERT  CH1 montage (CLIP-29, 3, 12, 20, 2, 27, 9, 24, 30, 6, 16; ~68.4 s) plays BEFORE spine 0:00.00
+[#01    6.00-  11.90 | 0:06.00-0:11.90] {CH1 B2 the promise}
+      months. This is not a warning about the future. It's already happening in jobs that felt safe
+        >    6.49  FACE-1 OUT  0:06.49
+[#02   11.90-  18.66 | 0:11.90-0:18.66] {CH1 B2 the promise}
+      just two years ago. And the next jobs in line are the ones you were told a machine could never do.
+[#03   18.84-  29.98 | 0:18.84-0:29.98] {CH1 B2 the promise}   <!> JSON word times from 0:24.32 on are broken (FLAGS 1)
+      So let's unpack all of this. I covered the first wave in my last two videos. So I'm not going to
+        >   20.72  == CHAPTER OPENS: CH2 ALREADY LEAVING
+        >   20.72  -- beat opens: CH2 B1 layoffs where employers named AI
+
+###### CH2 ALREADY LEAVING ###################################################
+[#04   29.98-  36.54 | 0:29.98-0:36.54] {CH2 B1 layoffs where employers named AI}   <!> text re-listened; JSON word times 0:24.32-0:30.78 are WRONG (FLAGS 1)
+      go back over those jobs in particular. This year through October, employers named AI as a reason for 121,401 job cuts since 2023,
+[#05   38.70-  46.86 | 0:38.70-0:46.86] {CH2 B1 layoffs where employers named AI}
+      193,226. Here's the thing. October was the lowest month of the year, only 1265. But a layoff
+[#06   46.86-  53.50 | 0:46.86-0:53.50] {CH2 B1 layoffs where employers named AI}
+      announcement is the loud part. The quiet part is the job that never gets posted. Entry level job
+        >   52.46  -- beat opens: CH2 B2 the bottom rung
+[#07   53.50-  62.22 | 0:53.50-1:02.22] {CH2 B2 the bottom rung}
+      postings are down 7.5% in a year while senior postings are up 14.7%. Companies are still hiring.
+[#08   62.72-  68.92 | 1:02.72-1:08.92] {CH2 B2 the bottom rung}
+      They're not hiring the beginners. The researchers don't put it all on AI, but if you're 22 with a
+[#09   68.92-  74.26 | 1:08.92-1:14.26] {CH2 B2 the bottom rung}
+      brand new degree, the reason doesn't change the result. Now look at what the government itself
+        >   72.26  FACE-2 IN   1:12.26
+        >   72.32  -- beat opens: CH2 B3 office work, the government's forecast
+[#10   74.26-  80.64 | 1:14.26-1:20.64] {CH2 B3 office work, the government's forecast}
+      expects. The Bureau of Labor Statistics projects that office and administrative support will lose
+        >   75.02  FACE-2 OUT  1:15.02
+[#11   80.64-  89.44 | 1:20.64-1:29.44] {CH2 B3 office work, the government's forecast}
+      752,000 jobs by 2035. The most of any group. And it puts the reason in writing automation tools,
+[#12   89.98-  98.96 | 1:29.98-1:38.96] {CH2 B3 office work, the government's forecast}
+      including those powered by AI typists down 34% data entry down 25% telemarketers down 21%.
+[#13   99.60- 105.90 | 1:39.60-1:45.90] {CH2 B3 office work, the government's forecast}
+      That's a forecast, not jobs gone already, but it is from the government. Then there's freelance
+        >  104.68  -- beat opens: CH2 B4 freelance language work
+[#14  105.90- 111.86 | 1:45.90-1:51.86] {CH2 B4 freelance language work}
+      work where nobody announces anything. The jobs just stopped showing up. A study of more than
+[#15  111.86- 118.36 | 1:51.86-1:58.36] {CH2 B4 freelance language work}
+      3 million freelance job posts found that in the first year after ChatGPT translation work in
+[#16  118.36- 125.02 | 1:58.36-2:05.02] {CH2 B4 freelance language work}
+      Western languages fell 30% and one of a kind routine writing fell by 50%. One of the people
+[#17  125.02- 130.58 | 2:05.02-2:10.58] {CH2 B4 freelance language work}   <!> [bracket] = spoken, no JSON word (FLAGS 2)
+      you heard at the start is a translator. And this is how she said it happened. That's what a 30% drop [feels like]
+        >  128.68  INSERT  CLIP-21 (translator, ~7.6 s): after "...this is how she said it happened." (ends 2:08.68), before "That's what" (2:08.80)
+[#18  131.14- 138.52 | 2:11.14-2:18.52] {CH2 B4 freelance language work}
+      from the inside. Here's the thing. Total freelance demand went up over that same year. It just moves
+[#19  138.52- 146.34 | 2:18.52-2:26.34] {CH2 B4 freelance language work}
+      away from them. Now we get to the jobs that nobody believes are at risk. Welders, maintenance workers,
+        >  139.56  FACE-3 IN   2:19.56
+        >  139.72  == CHAPTER OPENS: CH3 THE ONES NOBODY BELIEVES
+        >  139.72  -- beat opens: CH3 B1 the disbelief
+        >  144.12  FACE-3 OUT  2:24.12
+
+###### CH3 THE ONES NOBODY BELIEVES ##########################################
+[#20  146.58- 151.90 | 2:26.58-2:31.90] {CH3 B1 the disbelief}
+      people tell me that no robot with a human body will ever do the work as well as a person. So
+[#21  151.90- 157.14 | 2:31.90-2:37.14] {CH3 B1 the disbelief}
+      here's exactly where it stands. Start with welding. Robots already weld in production
+        >  153.78  -- beat opens: CH3 B2 what welds today
+[#22  157.14- 163.88 | 2:37.14-2:43.88] {CH3 B2 what welds today}
+      every day. They just don't look like people. They are arms and smaller collaborative robots
+[#23  163.88- 172.02 | 2:43.88-2:52.02] {CH3 B2 what welds today}
+      called cobots. One Korean shipbuilder group, HD Hyundai, went from 129 of these robots to 211,
+[#24  172.02- 177.84 | 2:52.02-2:57.84] {CH3 B2 what welds today}
+      mostly for cutting and welding steel. Why? Because the industry just cannot find the people.
+        >  174.12  -- beat opens: CH3 B3 why the money is going there
+[#25  178.18- 187.12 | 2:58.18-3:07.12] {CH3 B3 why the money is going there}
+      The US is projected to need over 320,000 new welding professionals by 2029 and more than 157,000
+[#26  187.14- 193.64 | 3:07.14-3:13.64] {CH3 B3 why the money is going there}
+      are getting close to retirement. By the way, if you're new here, I'm CodeMonkey Mike. I run a
+        >  189.40  -- beat opens: CH3 B4 mid-roll plug
+[#27  193.64- 199.34 | 3:13.64-3:19.34] {CH3 B4 mid-roll plug}
+      crypto community, build software for my members, create courses and so on. The goal of my channel
+[#28  199.34- 205.56 | 3:19.34-3:25.56] {CH3 B4 mid-roll plug}
+      is to get people invested into assets before the paychecks run out. And my calls more than make
+[#29  205.56- 211.88 | 3:25.56-3:31.88] {CH3 B4 mid-roll plug}
+      up for the memberships. For example, three weeks ago, I called a new AI crypto called Janction,
+[#30  211.88- 218.70 | 3:31.88-3:38.70] {CH3 B4 mid-roll plug}
+      and it shot up 6x a few days ago. Just a simple $300 investment would have more than paid for my
+[#31  218.70- 224.06 | 3:38.70-3:44.06] {CH3 B4 mid-roll plug}
+      community's lifetime membership. Click the link in the description if you're interested. Now let's
+[#32  224.06- 230.24 | 3:44.06-3:50.24] {CH3 B4 mid-roll plug}
+      get back to the data. So next, the robot with a human body, a Figure humanoid loaded sheet metal
+        >  225.04  -- beat opens: CH3 B5 the robot with the human body
+[#33  230.24- 237.22 | 3:50.24-3:57.22] {CH3 B5 the robot with the human body}
+      at a BMW plant for 11 months and BMW called it a pilot. Another one called Digit has moved more
+[#34  237.22- 243.36 | 3:57.22-4:03.36] {CH3 B5 the robot with the human body}
+      than 100,000 totes in a working warehouse. And that company CEO says that humanoids are a couple
+[#35  243.36- 249.94 | 4:03.36-4:09.94] {CH3 B5 the robot with the human body}
+      years away from paying for themselves and the humanoid welder. It exists. Persona AI is building
+        >  245.18  -- beat opens: CH3 B6 the humanoid welder
+[#36  249.94- 256.40 | 4:09.94-4:16.40] {CH3 B6 the humanoid welder}
+      one with HD Hyundai. And right now it's learning to weld in straight lines at around one centimeter
+[#37  256.40- 264.48 | 4:16.40-4:24.48] {CH3 B6 the humanoid welder}
+      per second. Field tests are planned for 2027. So no, a humanoid robot is not welding in a shipyard
+        >  259.92  FACE-4 IN   4:19.92
+[#38  264.48- 270.98 | 4:24.48-4:30.98] {CH3 B6 the humanoid welder}
+      today, but the arms already are the humanoid is in training and the industry just cannot hire
+        >  265.16  FACE-4 OUT  4:25.16
+[#39  270.98- 278.20 | 4:30.98-4:38.20] {CH3 B6 the humanoid welder}
+      welders fast enough. So it's early, but it has started. Now the maintenance worker in the US
+        >  275.90  -- beat opens: CH3 B7 the maintenance worker
+[#40  278.20- 283.84 | 4:38.20-4:43.84] {CH3 B7 the maintenance worker}
+      around 1.6 million people do this job and look at how the government itself describes the job
+[#41  283.84- 289.90 | 4:43.84-4:49.90] {CH3 B7 the maintenance worker}   <!> [bracket] = spoken, no JSON word (FLAGS 2)
+      fix or replace faulty switches, outlets or circuit breakers, figure out what went wrong, order the [parts.]
+[#42  290.66- 296.46 | 4:50.66-4:56.46] {CH3 B7 the maintenance worker}   <!> [bracket] = spoken, no JSON word (FLAGS 2)
+      [A] maintenance worker doesn't do just one task. They do whatever broke that day. And a humanoid robot
+[#43  296.46- 302.68 | 4:56.46-5:02.68] {CH3 B7 the maintenance worker}
+      isn't built for one task either. In my video, literally every job is at risk. I said that one
+[#44  302.68- 308.16 | 5:02.68-5:08.16] {CH3 B7 the maintenance worker}
+      day these robots work inside your house. You don't need to call a plumber. You don't need to call
+[#45  308.16- 312.41 | 5:08.16-5:12.41] {CH3 B7 the maintenance worker}
+      an electrician. You don't need to call a roofer. A electrician needs an apprenticeship.
+[#46  312.63- 318.11 | 5:12.63-5:18.11] {CH3 B7 the maintenance worker}
+      A robot needs a download. And that's how these robots are already being taught. Boston Dynamics
+[#47  318.11- 324.27 | 5:18.11-5:24.27] {CH3 B7 the maintenance worker}
+      and Toyota teach their Atlas humanoid new skills by showing it. And they say it needs fewer and
+[#48  324.27- 332.01 | 5:24.27-5:32.01] {CH3 B7 the maintenance worker}
+      fewer demonstrations each time. For now, that's in the lab on tasks like packing and sorting.
+[#49  332.39- 337.79 | 5:32.39-5:37.79] {CH3 B7 the maintenance worker}
+      The ordering part already exists too. Amazon has an AI that completes the purchase for you.
+[#50  338.25- 344.07 | 5:38.25-5:44.07] {CH3 B7 the maintenance worker}
+      You just press confirm. So picture it. An outlet in your house stops working. The robot already in
+[#51  344.07- 349.39 | 5:44.07-5:49.39] {CH3 B7 the maintenance worker}
+      your house loads the skill of an expert electrician, orders the wire and the parts it needs and does the
+[#52  349.39- 355.17 | 5:49.39-5:55.17] {CH3 B7 the maintenance worker}
+      repair. A leak in your roof. Same thing. It goes up the ladder and fixes it. Can it do that today?
+[#53  355.43- 362.27 | 5:55.43-6:02.27] {CH3 B7 the maintenance worker}
+      In 2026? No. Nobody's put those pieces together inside a house yet. But my prediction is that by
+[#54  362.27- 369.01 | 6:02.27-6:09.01] {CH3 B7 the maintenance worker}
+      2029, it will. And Elon Musk goes even further than that. This is what he said at a G20 meeting this
+[#55  369.01- 374.01 | 6:09.01-6:14.01] {CH3 B7 the maintenance worker}
+      September. A robot doesn't need to be a better electrician than you. It just needs to be already
+        >  369.47  INSERT  CLIP-61 (Musk, ~6 s): after "...a G20 meeting this September." (ends 6:09.47), before FACE-5 "A robot doesn't need" (6:09.79)
+        >  369.63  FACE-5 IN   6:09.63
+[#56  374.01- 380.45 | 6:14.01-6:20.45] {CH3 B7 the maintenance worker}
+      in the house and receive an expert electrician download. The problem here is that it's just not
+        >  375.33  FACE-5 OUT  6:15.33
+[#57  380.45- 385.45 | 6:20.45-6:25.45] {CH3 B7 the maintenance worker}
+      in the house yet. And yet people ask about their own job and most of them are not even worried.
+        >  381.41  == CHAPTER OPENS: CH4 IT WON'T BE ME
+        >  381.41  -- beat opens: CH4 B1 what people say about their own job
+
+###### CH4 IT WON'T BE ME ####################################################
+[#58  385.81- 392.59 | 6:25.81-6:32.59] {CH4 B1 what people say about their own job}
+      In one poll in March, 70% of Americans said AI will cut jobs. But only 30% of these people with
+[#59  392.59- 397.83 | 6:32.59-6:37.83] {CH4 B1 what people say about their own job}
+      a job were worried about their own. Blue collar workers show it the most. Around three in four
+[#60  397.83- 403.41 | 6:37.83-6:43.41] {CH4 B1 what people say about their own job}
+      expect AI to cut jobs and three in four are not worried about theirs. Here's what it sounds like.
+[#61  403.41- 408.33 | 6:43.41-6:48.33] {CH4 B2 why we believe it}
+      I get why people say it. Nobody wants to believe that the thing they spent years getting good at
+        >  403.41  -- beat opens: CH4 B2 why we believe it
+        >  403.41  INSERT  CLIP-42 / 40 / 51 run (~23.8 s): after "Here's what it sounds like." (ends 6:43.41), before "I get why" (6:43.41); Whisper shows NO gap, snap to the trough
+[#62  408.33- 413.71 | 6:48.33-6:53.71] {CH4 B2 why we believe it}
+      can be done by a machine. And notice the pattern. Almost everyone expects this to happen to somebody
+[#63  413.71- 419.21 | 6:53.71-6:59.21] {CH4 B2 why we believe it}
+      else. Listen to how this woman in a trade program puts it. A study in Germany measured that gap.
+        >  417.03  INSERT  CLIP-44 (trade-program woman, ~23.6 s): after "...puts it." (ends 6:57.03), before "A study in Germany" (6:57.23)
+[#64  419.65- 425.29 | 6:59.65-7:05.29] {CH4 B2 why we believe it}
+      Workers in the jobs most exposed to automation guessed that about 30% of their work could be
+[#65  425.29- 430.39 | 7:05.29-7:10.39] {CH4 B2 why we believe it}
+      done by a machine. The measured figure was 75. And the translator you heard at the start of this
+[#66  430.39- 436.79 | 7:10.39-7:16.79] {CH4 B2 why we believe it}
+      video had more than 15 years in her job. She says AI took her livelihood. Feeling safe isn't the same
+        >  435.10  FACE-6 IN   7:15.10
+[#67  436.79- 442.99 | 7:16.79-7:22.99] {CH4 B2 why we believe it}
+      thing as being safe, unfortunately. So what does this mean for you? The damage so far is quiet.
+        >  438.03  FACE-6 OUT  7:18.03
+        >  439.39  == CHAPTER OPENS: CH5 WHAT NOW
+        >  439.39  -- beat opens: CH5 B1 what it means
+
+###### CH5 WHAT NOW ##########################################################
+[#68  443.61- 449.27 | 7:23.61-7:29.27] {CH5 B1 what it means}
+      The entry level job that never gets posted, the freelance work that stops coming, the office job
+[#69  449.27- 454.45 | 7:29.27-7:34.45] {CH5 B1 what it means}
+      already expected to shrink. Don't wait for a layoff announcement to tell you that your job has
+        >  450.73  FACE-7 IN   7:30.73
+[#70  454.45- 459.09 | 7:34.45-7:39.09] {CH5 B1 what it means}
+      changed. I made two videos over the last couple of weeks on which jobs are next and how to protect
+        >  454.66  FACE-7 OUT  7:34.66
+        >  454.85  -- beat opens: CH5 B2 the next watch and the close
+[#71  459.09- 464.11 | 7:39.09-7:44.11] {CH5 B2 the next watch and the close}
+      yourself. This one right here called literally every job is at risk. And then this one AI will
+[#72  464.11- 469.29 | 7:44.11-7:49.29] {CH5 B2 the next watch and the close}
+      wipe out these jobs next. But watch those next and comment below and tell me what the job market
+[#73  469.29- 475.07 | 7:49.29-7:55.07] {CH5 B2 the next watch and the close}
+      looks like for you. And don't forget to click that like button and subscribe if you like videos like
+[#74  475.07- 475.27 | 7:55.07-7:55.27] {CH5 B2 the next watch and the close}
+      this.
+
+==============================================================================
+CORRECTIONS APPLIED (text only; the JSON is untouched)
+------------------------------------------------------------------------------
+Persona standing mishears (persona.json terminology_rules: tau, Casper, Caspie, Cassie, Cappy, Casper-the-Ghost,
+50WMA/200WMA, ghost(DAG), scion, NYX, Perp's Pad): 0 occurrences in this spine, none applied.
+Project / Whisper mishears:
+  x1  "word" -> "work" (0:03.20)
+  x1  "Chad GPT" -> "ChatGPT" (1:55.82)
+  x1  "Kobots" -> "cobots" (2:44.36)
+  x1  "Code Monkey Mike" -> "CodeMonkey Mike" (3:11.82)
+  x1  "Jankson" -> "Janction" (3:31.14, the project coin)
+  x1  "six X" -> "6x" (3:32.88)
+  x1  "figure" -> "Figure" (the company, 3:48.56)
+  x1  "human noise" -> "humanoids" (4:02.38)
+  x1  "in a pressure ship" -> "an apprenticeship" (5:11.59)
+  x1  "in September" -> "this September" (6:08.85)
+  x1  "put an all on AI" -> "put it all on AI" (1:06.02, inference, see FLAGS 4)
+  x2  "three and four" -> "three in four" (6:36.95, 6:39.99, inference, see FLAGS 4)
+Hallucination replaced (re-listened):
+  x1  HALLUCINATION 0:24.32-0:30.78: "go into detail. So let's look at the next wave. So AI is a reason for" -> "go back over those jobs in particular. This year through October, employers named AI as a reason for"
+Dropped words restored in [brackets] (re-listened):
+  x1  DROPPED "feels like" restored at ~2:10.56
+  x1  DROPPED "parts." restored at ~4:49.86
+  x1  DROPPED "A" restored at ~4:50.74
+
+FLAGS
+------------------------------------------------------------------------------
+1. BROKEN WORD TIMES 0:24.32-0:30.78 (the CH2 opener, the Challenger line). The JSON carries a Whisper hallucination there:
+   "go into detail. So let's look at the next wave. So AI is a reason for", every word at probability 0.00-0.47, all stacked
+   at 29.98-30.28. A re-listen of 22.5-36.0 s (same medium model) hears what the chunk map and the screenplay say.
+   Approximate true starts: go 24.32  back 24.52  over 24.70  those 24.92  jobs 25.26  in 25.56  particular 25.88 |
+   This 26.54  year 26.82  through 27.30  October 27.58 | employers 28.62  named 29.34  AI 29.70  as 30.24  a 30.60
+   reason 30.78. From "121,401" on (31.34) the JSON is right. Anything cued off a JSON word between 24.22 and 30.78
+   (the C19 card-1 build, captions) must use these re-listened times instead.
+2. Dropped words (spoken, no JSON word time): "feels like" ~2:10.56-2:11.20 (between "drop" 2:10.34 and "from" 2:11.04;
+   the JSON's "from" is probability 0.02); "parts." ~4:49.86 and "A" ~4:50.74 (the JSON's "maintenance" at 4:50.66 is
+   probability 0.00, the re-listen puts it at 4:50.84). Captions built from the JSON will miss these words.
+3. CONTENT SLIP, RESOLVED 2026-11-10: Mike ruled "humanoid" out; it is cut from the spine at 5:10.90-5:11.53. Was: 5:10.88 "A humanoid electrician needs an apprenticeship." "humanoid" is what he said
+   (probability 0.96 on a re-listen; the chunk map agrees). The screenplay line is "A HUMAN electrician needs an
+   apprenticeship." As recorded it contradicts the next line ("A robot needs a download"). Text left as said.
+4. Inferences (corrected; re-listen if a caption or card is cut from them): "put an all on AI" -> "put it all on AI"
+   (1:06.02; all three passes hear "an all"); "three and four" -> "three in four" x2 (6:36.95, 6:39.99; the ratio the
+   script and the poll carry, and the chunk map heard "three in four" once).
+5. Left as said (not mishears): "moves away from them" (2:18.12, re-listen 0.98, script "moved"); "one of a kind routine
+   writing fell by 50%" (2:01.24, every pass hears it; script "one kind of routine writing job", a meaning shift for C8);
+   "But watch those next" (7:45.81, probability 0.48; the chunk map and the re-listen hear "We'll", likely "Well,");
+   the leading "So" at 0:00.00 (probability 0.29-0.30, absent from the chunk map and the locked line, likely a breath onset).
+6. Spoken numbers that differ from the screenplay / card text (said as recorded; the cards must match what airs):
+   "752,000 jobs" (1:20.64; script and C6 = 752,100); "typists down 34%, data entry down 25%, telemarketers down 21%"
+   (1:31.94-1:38.58; C3 = 34.4 / 25.5 / 21.4); "over 320,000 new welding professionals" (2:59.94; C12 = 320,500).
+   These match: 121,401, 193,226, 1265, 7.5% / 14.7%, 129 to 211, 157,000, 1.6 million, 70% / 30%, 30 / 75, 2029, 2027.
+7. The CLOSE differs from the screenplay: no "click the link in the description to get involved in the best community ever"
+   and no "I'm gonna catch you guys, later." The take ends "...click that like button and subscribe if you like videos like
+   this." LAST WORD = "this." 7:55.07-7:55.27: the MUSIC-MOOD-PLAN's right-aligned final hit (planned on "later.") lands here.
+8. Ad-libs not in the screenplay (all on COVER): "and receive an expert electrician download. The problem here is that it's
+   just not in the house yet." (6:14.63-6:20.99, after FACE-5); "unfortunately." (7:18.35, after FACE-6); "create courses
+   and so on" (the plug); CH5 B2 names the two videos as "this one right here called literally every job is at risk. And then
+   this one AI will wipe out these jobs next" (on-screen pointers expected there).
+9. The CH4 clip-run splice (6:43.41) shows NO gap between Whisper's "like." end and "I" start: lint-pause-silence must find
+   the real trough there before CLIP-42 / 40 / 51 are baked.
+10. Do NOT cue off ALL.e.cut.enhanced.map.json arithmetic: its sum of keeps is 474.514 s while the file is 475.306 s (render
+   rounding over 110 joins), so map-derived times drift up to ~0.75 s late in the video. The FACE windows above come from
+   blackdetect on the file itself, and the word times from the JSON (also made on the file).
+11. Transcription ran the canonical transcribe.py main() with a low-RAM model loader: host RAM was ~2 GB free (Brave held
+   ~13.8 GB) and whisper.load_model's 1.5 GB read raised MemoryError twice. Same medium.pt (sha256 verified), weights
+   mmap'd and built straight on CUDA; the transcribe() call and its parameters are the canonical script's, unchanged.

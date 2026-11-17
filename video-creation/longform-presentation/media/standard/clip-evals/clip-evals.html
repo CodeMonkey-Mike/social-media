@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The harness and the evals behind my clips</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-deep:#0a0c10;
+  --bg-card:#12151c;
+  --bg-card-hover:#181c26;
+  --accent-green:#00e68a;
+  --accent-cyan:#00c2ff;
+  --accent-gold:#ffd700;    /* the questions / callouts */
+  --accent-red:#ff4060;     /* caveats */
+  --accent-purple:#a855f7;  /* atmosphere */
+  --text-primary:#e8eaf0;
+  --text-secondary:#8892a4;
+  --text-muted:#505a6e;
+  --border:#1e2330;
+}
+
+/* ===== Foundation (presentation.md, verbatim) ===== */
+*{box-sizing:border-box;margin:0;padding:0}
+
+html{scroll-behavior:smooth;scroll-snap-type:y mandatory}
+body{background:var(--bg-deep);font-family:'DM Sans',sans-serif;color:var(--text-primary);overflow-x:hidden}
+
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.slide{
+  min-height:100vh;scroll-snap-align:start;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:60px 80px;position:relative;overflow:hidden;
+}
+@media(max-width:900px){ .slide{padding:40px 28px} }
+
+.orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:.4;pointer-events:none}
+.slide>*:not(.orb){position:relative;z-index:1}
+
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2.8rem,6vw,5.5rem);line-height:1.05;letter-spacing:-.02em}
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(1.8rem,3.5vw,3rem);line-height:1.15}
+h3{font-family:'DM Sans',sans-serif;font-weight:700;font-size:1.15rem;text-transform:uppercase;letter-spacing:.12em}
+h3.mono{text-transform:none;letter-spacing:0}
+.ey{display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);font-weight:600;margin-bottom:18px}
+p{font-size:clamp(.95rem,1.05vw,1.05rem);line-height:1.7;color:var(--text-secondary)}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.divider{width:60px;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:24px 0}
+.center{text-align:center}
+
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.pu{color:var(--accent-purple)} .re{color:var(--accent-red)} .tl{color:var(--accent-teal)}
+
+/* ===== Components (presentation.md) ===== */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:32px;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.card .top-accent{position:absolute;top:0;left:0;right:0;height:2px}
+.card h3{margin-bottom:6px}
+.card p{margin-top:12px}
+
+.tag{display:inline-block;padding:4px 12px;border-radius:100px;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.tag.green{background:rgba(0,230,138,.15);color:var(--accent-green)}
+.tag.cyan{background:rgba(0,194,255,.15);color:var(--accent-cyan)}
+.tag.gold{background:rgba(255,215,0,.15);color:var(--accent-gold)}
+.tag.red{background:rgba(255,64,96,.15);color:var(--accent-red)}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:900px){ .grid2,.grid3{grid-template-columns:1fr} }
+
+.impact{background:linear-gradient(135deg,rgba(0,230,138,.08),rgba(0,194,255,.06));border:1px solid rgba(0,230,138,.2);border-radius:12px;padding:24px 28px;margin-top:30px}
+
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:28px}
+.col{padding:32px;border-radius:16px}
+.col .ml{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
+.col .q{font-style:italic;color:var(--text-primary);margin-top:16px;padding-left:18px;border-left:3px solid var(--accent-green)}
+@media(max-width:900px){ .cmp{grid-template-columns:1fr} }
+
+.rules{list-style:none;margin-top:24px}
+.rules li{padding:16px 20px;margin-bottom:12px;border-radius:12px;background:rgba(255,255,255,.02);border-left:3px solid var(--accent-cyan);font-family:'JetBrains Mono',monospace;font-size:.95rem;color:var(--text-primary);line-height:1.5}
+.rules li .why{color:var(--text-muted);font-size:.8rem}
+
+table.mx{width:100%;border-collapse:separate;border-spacing:0 12px;margin-top:24px}
+table.mx th,table.mx td{padding:16px 22px;text-align:center;font-size:1rem}
+table.mx th{color:var(--text-secondary);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em}
+table.mx td.name{text-align:left;font-weight:700;font-size:1.1rem}
+table.mx tr.row td{background:var(--bg-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+table.mx tr.row td:first-child{border-left:1px solid var(--border);border-radius:14px 0 0 14px}
+table.mx tr.row td:last-child{border-right:1px solid var(--border);border-radius:0 14px 14px 0}
+
+/* ===== Animation + navigation (presentation.md, verbatim) ===== */
+.fade-in{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+.delay-1{transition-delay:.15s}.delay-2{transition-delay:.3s}.delay-3{transition-delay:.45s}
+.delay-4{transition-delay:.6s}.delay-5{transition-delay:.75s}
+
+.nav-dots{position:fixed;right:28px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:100}
+.nav-dots button{width:8px;height:8px;border-radius:50%;border:none;background:var(--text-muted);cursor:pointer;padding:0;transition:transform .3s,background .3s}
+.nav-dots button.active{background:var(--accent-green);transform:scale(1.4)}
+@media(max-width:900px){ .nav-dots{right:14px} }
+
+.scroll-hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.2em;z-index:2}
+.scroll-hint svg{animation:bounce 1.8s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* ===== This deck: screen-share recording with a webcam PiP bottom-right =====
+   Every slide's content sits in .wrap (the left 68vw), so the webcam corner (the right 25vw x bottom 25vh at
+   1080p) is never covered. G shows the webcam guide box, F toggles fullscreen. The scrollbar is hidden so it
+   never shows in the recording. */
+html{scrollbar-width:none} html::-webkit-scrollbar{display:none}
+.wrap{max-width:68vw}
+@media(max-width:900px){ .wrap{max-width:none} }
+.sub{font-size:clamp(1.05rem,1.4vw,1.35rem);line-height:1.6;color:var(--text-secondary);margin-top:18px;max-width:52vw}
+.quote{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.15rem,1.6vw,1.6rem);line-height:1.45;color:var(--text-primary)}
+.quote-by{margin-top:14px;font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);font-weight:600}
+.card .big{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(1.3rem,2vw,1.9rem);line-height:1.2;color:var(--text-primary)}
+.col.near{background:linear-gradient(135deg,rgba(0,230,138,.07),rgba(0,230,138,.02));border:1px solid rgba(0,230,138,.28)}
+.col.tao{background:linear-gradient(135deg,rgba(0,194,255,.07),rgba(0,194,255,.02));border:1px solid rgba(0,194,255,.28)}
+.col .rules{margin-top:16px}
+.col.near .rules li{border-left-color:var(--accent-green)}
+.col .rules li{font-family:'DM Sans',sans-serif;font-size:clamp(.95rem,1.05vw,1.05rem)}
+.col .rules li b{color:var(--text-primary)}
+.col .rules li{color:var(--text-secondary)}
+.col .q{font-family:'Playfair Display',serif;font-size:clamp(1.1rem,1.4vw,1.35rem)}
+.col.tao .q{border-left-color:var(--accent-cyan)}
+/* the foundation's `.slide>*:not(.orb){position:relative}` outranks `.scroll-hint{position:absolute}`; restore it */
+.slide>.scroll-hint{position:absolute}
+table.mx td{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:1.3rem;padding:14px 22px}
+table.mx td.name{font-family:'DM Sans',sans-serif;font-size:1.15rem}
+table.mx td .note{display:block;font-family:'DM Sans',sans-serif;font-weight:400;font-size:.95rem;color:var(--text-secondary);margin-top:4px}
+table.mx{margin-top:8px}
+table.mx th.g{color:var(--accent-green)} table.mx th.c{color:var(--accent-cyan)}
+.qcard{padding:22px 26px}
+.qcard .qnum{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.8rem;color:var(--accent-gold);margin-bottom:8px}
+.qcard .qtext{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(1.05rem,1.35vw,1.3rem);line-height:1.3;color:var(--text-primary)}
+.asof{margin-top:18px;font-size:.72rem;color:var(--text-muted);letter-spacing:.04em}
+.col.vote{background:linear-gradient(135deg,rgba(255,215,0,.06),rgba(255,215,0,.015));border:1px solid rgba(255,215,0,.26)}
+.col.vote .rules li{border-left-color:var(--accent-gold)}
+.col.vote .q{border-left-color:var(--accent-gold)}
+.col .stat{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:clamp(1.9rem,2.9vw,2.8rem);line-height:1.1;margin-top:14px}
+.col .stat-note{font-size:clamp(.9rem,1vw,1rem);color:var(--text-secondary);margin-top:6px}
+#vote .col{padding:26px 30px}
+#vote .rules li{padding:11px 16px;margin-bottom:8px}
+#vote .q{margin-top:12px}
+
+#pip-zone{position:fixed;right:2.08vw;bottom:3.7vh;width:25vw;height:25vh;border:3px dashed rgba(255,255,255,.35);border-radius:6px;
+  display:none;align-items:center;justify-content:center;color:rgba(255,255,255,.5);font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;z-index:200}
+#pip-zone.show{display:flex}
+
+/* ===== Shared standard-deck components ===== */
+.hero{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:clamp(3rem,5.4vw,5.4rem);line-height:1;margin-top:26px}
+.hero .hero-note{font-family:'DM Sans',sans-serif;font-weight:500;font-size:clamp(1rem,1.3vw,1.3rem);color:var(--text-secondary);margin-left:14px;vertical-align:middle}
+.stat-card{padding:22px 26px}
+.stat-card .num,.money-card .num{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:clamp(1.6rem,2.4vw,2.4rem);line-height:1.1}
+.stat-card p{margin-top:8px}
+.stat-card.sm{padding:18px 22px}
+.stat-card.sm .num{font-size:clamp(1.4rem,2vw,2rem)}
+.money-card{padding:24px 26px}
+.money-card .tag{margin-bottom:10px}
+.money-card .lead{margin-top:4px;color:var(--text-primary)}
+.mini{list-style:none;margin-top:14px}
+.mini li{padding:7px 0 7px 14px;border-left:2px solid var(--border);margin-bottom:6px;color:var(--text-secondary);font-size:clamp(.9rem,1vw,1rem);line-height:1.45}
+.col.night{background:linear-gradient(135deg,rgba(255,64,96,.07),rgba(255,64,96,.015));border:1px solid rgba(255,64,96,.26)}
+.col.story{background:linear-gradient(135deg,rgba(255,215,0,.06),rgba(255,215,0,.015));border:1px solid rgba(255,215,0,.24)}
+.col.story .rules li{border-left-color:var(--accent-gold)}
+.col.story .q{border-left-color:var(--accent-gold);font-size:clamp(1rem,1.2vw,1.2rem)}
+.tl-list{list-style:none;margin-top:16px}
+.tl-list li{display:flex;gap:18px;padding:12px 0;border-bottom:1px solid var(--border);color:var(--text-secondary);font-size:clamp(.95rem,1.05vw,1.05rem);line-height:1.45}
+.tl-list li:last-child{border-bottom:none}
+.tl-list li b{color:var(--text-primary)}
+.tl-list .t{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--accent-red);min-width:58px}
+#how .col,#next .col,#dprk .col{padding:24px 28px}
+#how .rules li,#next .rules li,#dprk .rules li{padding:10px 16px;margin-bottom:8px}
+.col.dprk{background:linear-gradient(135deg,rgba(255,64,96,.07),rgba(168,85,247,.03));border:1px solid rgba(255,64,96,.26)}
+.col.dprk .rules li{border-left-color:var(--accent-red)}
+.col.heists{background:linear-gradient(135deg,rgba(255,215,0,.06),rgba(255,215,0,.015));border:1px solid rgba(255,215,0,.24)}
+table.hx{width:100%;border-collapse:collapse;margin-top:14px}
+table.hx td{padding:11px 6px;border-bottom:1px solid var(--border);font-size:clamp(.95rem,1.1vw,1.1rem);color:var(--text-primary)}
+table.hx td.y{color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-size:.9rem}
+table.hx td.a{text-align:right;font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--accent-gold)}
+table.hx tr.hot td{border-bottom:none;font-weight:700}
+table.hx tr.hot td.a{color:var(--accent-red);font-size:clamp(1.2rem,1.5vw,1.5rem)}
+.col.pays{background:linear-gradient(135deg,rgba(255,215,0,.06),rgba(255,215,0,.015));border:1px solid rgba(255,215,0,.24)}
+.col.pays .rules li{border-left-color:var(--accent-gold)}
+.col.paths{background:linear-gradient(135deg,rgba(0,230,138,.06),rgba(0,194,255,.02));border:1px solid rgba(0,230,138,.24)}
+.path{margin-top:16px;padding:18px 20px;border-radius:12px;background:rgba(255,255,255,.02)}
+.path.good{border-left:3px solid var(--accent-green)}
+.path.bad{border-left:3px solid var(--accent-red)}
+.path .pt{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(1.1rem,1.4vw,1.35rem);color:var(--text-primary)}
+.path.good .pt{color:var(--accent-green)} .path.bad .pt{color:var(--accent-red)}
+.path .pd{margin-top:6px;color:var(--text-secondary);font-size:clamp(.95rem,1.05vw,1.05rem);line-height:1.5}
+
+/* ===== Earlier standard-deck additions ===== */
+table.mx tr.row.hot td{background:#1d1b12;border-color:rgba(255,215,0,.35)}
+table.mx tr.row.hot td.name{color:var(--accent-gold)}
+table.mx th{padding:4px 22px}
+table.hx th{padding:0 6px 6px;text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);font-weight:600}
+table.hx th.r{text-align:right}
+table.hx td.s{color:var(--text-secondary);font-size:clamp(.88rem,1vw,1rem)}
+table.hx td.live{color:var(--accent-green)}
+.col.locked{background:linear-gradient(135deg,rgba(168,85,247,.07),rgba(168,85,247,.015));border:1px solid rgba(168,85,247,.28)}
+.col.locked .rules li{border-left-color:var(--accent-purple)}
+.col.pitch{background:linear-gradient(135deg,rgba(0,194,255,.07),rgba(0,194,255,.02));border:1px solid rgba(0,194,255,.28)}
+.col.who{background:linear-gradient(135deg,rgba(0,230,138,.06),rgba(0,230,138,.015));border:1px solid rgba(0,230,138,.24)}
+.col.who .rules li{border-left-color:var(--accent-green)}
+.col.flags{background:linear-gradient(135deg,rgba(255,64,96,.07),rgba(255,64,96,.015));border:1px solid rgba(255,64,96,.26)}
+.col.flags .rules li{border-left-color:var(--accent-red)}
+#what .col,#live .col,#unlock .col,#watch .col{padding:24px 28px}
+#what .rules li,#unlock .rules li,#watch .rules li{padding:10px 16px;margin-bottom:8px}
+#peers table.mx td{padding:11px 22px}
+.gap-card{padding:20px 24px}
+.gap-card .num{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:clamp(1.15rem,1.5vw,1.5rem);line-height:1.15}
+.gap-card p{margin-top:8px;font-size:clamp(.9rem,1vw,1rem);line-height:1.5}
+.claim{margin-top:16px;padding:16px 20px;border-radius:12px;background:rgba(255,255,255,.02);border-left:3px solid var(--accent-cyan)}
+.claim .src{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);font-weight:600}
+.claim .say{margin-top:6px;font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.1rem,1.4vw,1.35rem);line-height:1.35;color:var(--text-primary)}
+.claim.l1{border-left-color:var(--accent-gold)}
+#nonews .col,#identity .col{padding:24px 28px}
+#nonews .tl-list .t{min-width:66px;white-space:nowrap}
+#identity .cmp{margin-top:12px !important}
+#identity .col{padding:34px 38px}
+#identity .claim{margin-top:22px;padding:22px 26px}
+#identity .claim .say{font-size:clamp(1.3rem,1.75vw,1.7rem)}
+#identity .rules li{padding:16px 20px;margin-bottom:14px;font-size:clamp(1.05rem,1.2vw,1.2rem)}
+#identity h3{font-size:1.3rem}
+.repo-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.repo-links a{font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:600;color:var(--accent-red);text-decoration:none;padding:5px 12px;border-radius:100px;background:rgba(255,64,96,.12);border:1px solid rgba(255,64,96,.3);position:relative;z-index:2}
+.repo-links a:hover{background:rgba(255,64,96,.22)}
+#identity .col.pitch{display:flex;flex-direction:column}
+#identity .col.pitch .claim{flex:1;display:flex;flex-direction:column;justify-content:center}
+#identity .claim .say{font-size:clamp(1.4rem,1.9vw,1.85rem)}
+#identity .col.story .rules{margin-top:22px}
+#identity .col.story .rules li{padding:24px 24px;margin-bottom:20px;font-size:clamp(1.15rem,1.35vw,1.35rem)}
+#nonews .rules li,#identity .rules li{padding:10px 16px;margin-bottom:8px}
+
+/* ===== clip-evals deck additions: one slide per chapter, a headline and a few large points =====
+   Built from the tokens and classes above. Every block is capped at the left 68vw of the screen (the .wrap box
+   starts after the slide's 80px left padding), so nothing reaches the webcam corner. */
+.wrap>.ey,.wrap>h1,.wrap>h2,.pts,.parts,.say{max-width:calc(68vw - 80px)}
+@media(max-width:900px){ .wrap>.ey,.wrap>h1,.wrap>h2,.pts,.parts,.say{max-width:none} }
+.wrap>.ey{font-size:clamp(.8rem,1.05vw,1.25rem);margin-bottom:22px}
+.wrap>h2{font-size:clamp(2rem,4vw,4rem);line-height:1.1}
+.pts{list-style:none;margin-top:6px}
+.pts li{padding:20px 28px;margin-bottom:16px;border-radius:12px;background:rgba(255,255,255,.02);border-left:4px solid var(--accent-cyan);font-weight:500;font-size:clamp(1.15rem,1.85vw,2.1rem);line-height:1.35;color:var(--text-primary)}
+.pts li:last-child{margin-bottom:0}
+.pts li b{font-weight:700}
+.pts li.key{border-left-color:var(--accent-gold)}
+.pts.sm li{padding:14px 24px;margin-bottom:12px;font-size:clamp(1rem,1.4vw,1.6rem)}
+.parts{margin-top:34px}
+.parts .card{padding:26px 28px}
+.parts .big{font-size:clamp(1.4rem,2.2vw,2.3rem);margin-top:10px}
+.parts .card p{margin-top:10px;font-size:clamp(1.05rem,1.4vw,1.55rem);line-height:1.4;text-wrap:balance}
+.say{margin-top:26px;padding:22px 28px}
+.say p{color:var(--text-primary);font-size:clamp(1.1rem,1.6vw,1.8rem);line-height:1.4}
+.say .big-line{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(1.6rem,3vw,3.2rem);line-height:1.15;color:var(--text-primary)}
+.say .url{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:clamp(1.2rem,2.4vw,2.6rem);line-height:1.2;margin-top:16px;color:var(--accent-cyan);font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1 · CH1 THE OPEN · the title slide, on camera -->
+<section class="slide" id="ch1">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-cyan);top:-240px;left:-180px;opacity:.22"></div>
+  <div class="orb" style="width:480px;height:480px;background:var(--accent-green);top:-140px;right:-200px;opacity:.16"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Chapter 1</span>
+    <h1 class="fade-in delay-1">The <span class="c">harness</span> and the <span class="g">evals</span> behind my clips</h1>
+    <div class="grid3 parts fade-in delay-2">
+      <div class="card stat-card">
+        <div class="top-accent" style="background:linear-gradient(90deg,var(--accent-cyan),transparent)"></div>
+        <div class="num c">1</div>
+        <div class="big">The harness</div>
+        <p>The code around the agents that holds them to the rules</p>
+      </div>
+      <div class="card stat-card">
+        <div class="top-accent" style="background:linear-gradient(90deg,var(--accent-gold),transparent)"></div>
+        <div class="num go">2</div>
+        <div class="big">The whole graph</div>
+        <p>Every step and every agent in it</p>
+      </div>
+      <div class="card stat-card">
+        <div class="top-accent" style="background:linear-gradient(90deg,var(--accent-green),transparent)"></div>
+        <div class="num g">3</div>
+        <div class="big">The evals</div>
+        <p>Record a verdict, replay a livestream, score a prompt</p>
+      </div>
+    </div>
+    <div class="impact say fade-in delay-3">
+      <p>All of it at the <b class="c">code level</b>: the Python, the JSON, what I added and what I changed</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 2 · CH2 TWO KINDS OF HARNESS · on camera for one line -->
+<section class="slide" id="ch2">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-cyan);bottom:-260px;left:-180px;opacity:.2"></div>
+  <div class="orb" style="width:420px;height:420px;background:var(--accent-gold);top:-180px;right:-120px;opacity:.14"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Chapter 2</span>
+    <h2 class="fade-in delay-1">Two Kinds of Harness</h2>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="pts">
+      <li class="fade-in delay-2"><b class="c">The agent harness</b> runs the loop and hands the model its tools</li>
+      <li class="fade-in delay-3"><b class="c">The evaluation harness</b> hands out the tasks and grades the output</li>
+      <li class="fade-in delay-4">You never grade the model alone. <b class="c">You grade it with its harness</b></li>
+      <li class="key fade-in delay-5"><b class="go">Harness engineering:</b> everything you build around the model</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLIDE 3 · CH3 THE PIPELINE AND THE GRAPH · place-marker -->
+<section class="slide" id="ch3">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-green);top:-240px;left:-180px;opacity:.18"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-cyan);bottom:-260px;left:40%;opacity:.14"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Chapter 3</span>
+    <h2 class="fade-in delay-1">The Pipeline and the Graph</h2>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="pts">
+      <li class="fade-in delay-2"><b class="c">A livestream fans out into <span class="mono">3</span> lanes.</b> Lane <span class="mono">2</span> is the clips</li>
+      <li class="fade-in delay-3"><b class="c">One LangGraph graph owns all <span class="mono">3</span> lanes:</b> <span class="mono">14</span> steps, <span class="mono">2</span> human gates</li>
+      <li class="fade-in delay-4"><b class="c"><span class="mono">6</span> agents inside it:</b> <span class="mono">3</span> make judgment calls, <span class="mono">3</span> build or check</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLIDE 4 · CH4 HOW THE HARNESS HOLDS AN AGENT · on camera for one line -->
+<section class="slide" id="ch4">
+  <div class="orb" style="width:540px;height:540px;background:var(--accent-cyan);top:-260px;left:30%;opacity:.18"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-purple);bottom:-240px;left:-180px;opacity:.16"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Chapter 4</span>
+    <h2 class="fade-in delay-1">How the Harness Holds an Agent</h2>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="pts">
+      <li class="fade-in delay-2"><b class="c">Spawn:</b> a step runs its agent headless, output to a log file</li>
+      <li class="fade-in delay-3"><b class="c">Retry:</b> once on an overload, once on the next model down</li>
+      <li class="fade-in delay-4"><b class="c">Trust the artifact:</b> the plan has to exist on disk as JSON</li>
+      <li class="fade-in delay-5"><b class="c">Validate:</b> a failed plan stops the run before a frame gets cut</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLIDE 5 · CH5 RULES IN CODE, NOT IN THE PROMPT · on camera for one line -->
+<section class="slide" id="ch5">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-gold);top:-260px;left:-180px;opacity:.16"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-cyan);bottom:-240px;left:40%;opacity:.16"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Chapter 5</span>
+    <h2 class="fade-in delay-1">Rules in Code, Not in the Prompt</h2>
+    <div class="divider fade-in delay-1" style="background:linear-gradient(90deg,var(--accent-gold),var(--accent-cyan))"></div>
+    <ul class="pts">
+      <li class="fade-in delay-2"><b class="c">The shape of a clip plan:</b> in the validator</li>
+      <li class="fade-in delay-3"><b class="c">Where files may go:</b> in a hook, every turn and every commit</li>
+      <li class="fade-in delay-4"><b class="c">The model fallback:</b> in the spawner, with a script that proves it</li>
+      <li class="fade-in delay-5"><b class="c">"Done":</b> checked by the last step of the graph</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLIDE 6 · CH6 STATE AND MEMORY · place-marker -->
+<section class="slide" id="ch6">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-purple);top:-240px;left:-180px;opacity:.2"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-green);bottom:-260px;left:40%;opacity:.14"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Chapter 6</span>
+    <h2 class="fade-in delay-1">State and Memory</h2>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="pts">
+      <li class="fade-in delay-2"><b class="c">The agents remember nothing.</b> Every run starts fresh</li>
+      <li class="fade-in delay-3"><b class="c">The harness holds the state:</b> SQLite checkpoints, files, docs</li>
+      <li class="fade-in delay-4"><b class="c">A human gate is a LangGraph interrupt:</b> stop now, resume later</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLIDE 7 · CH7 WHAT WAS MISSING · place-marker -->
+<section class="slide" id="ch7">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-gold);bottom:-260px;left:-180px;opacity:.16"></div>
+  <div class="orb" style="width:420px;height:420px;background:var(--accent-cyan);top:-180px;right:-120px;opacity:.16"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Chapter 7</span>
+    <h2 class="fade-in delay-1">What Was Missing</h2>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="pts">
+      <li class="fade-in delay-2"><b class="c"><span class="mono">3</span> graders already ran:</b> code-based, model-based and human</li>
+      <li class="fade-in delay-3"><b class="c">Each one judged a single run.</b> My verdicts were thrown away</li>
+      <li class="fade-in delay-4"><b class="c">The fix has <span class="mono">3</span> parts:</b> a record, a replay, a score</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLIDE 8 · CH8 WHAT CHANGED IN THE REPO · place-marker -->
+<section class="slide" id="ch8">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-green);top:-240px;left:-180px;opacity:.16"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-purple);bottom:-260px;left:40%;opacity:.14"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Chapter 8</span>
+    <h2 class="fade-in delay-1">What Changed in the Repo</h2>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="pts">
+      <li class="fade-in delay-2"><b class="c">Outside the graph:</b> a module of around <span class="mono">1,000</span> lines and its tests</li>
+      <li class="fade-in delay-3"><b class="c">Inside the graph:</b> small on purpose, <span class="mono">86</span> lines added</li>
+      <li class="fade-in delay-4"><b class="c">An eval layer should watch production,</b> not be woven through it</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLIDE 9 · CH9 RECORDING A VERDICT · on camera for one line -->
+<section class="slide" id="ch9">
+  <div class="orb" style="width:540px;height:540px;background:var(--accent-cyan);top:-260px;left:-180px;opacity:.2"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-gold);bottom:-240px;left:40%;opacity:.14"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Chapter 9</span>
+    <h2 class="fade-in delay-1">Recording a Verdict</h2>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="pts">
+      <li class="fade-in delay-2"><b class="c">One new call at the gate</b> records every verdict</li>
+      <li class="key fade-in delay-3"><b class="go">If the record can't be written,</b> the batch keeps going</li>
+      <li class="fade-in delay-4"><b class="c">Every clip gets a line:</b> kept or killed</li>
+      <li class="fade-in delay-5"><b class="c">The file is append-only,</b> and it's committed to Git</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLIDE 10 · CH10 THE PROMPT VERSION · place-marker -->
+<section class="slide" id="ch10">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-purple);bottom:-260px;left:-180px;opacity:.18"></div>
+  <div class="orb" style="width:420px;height:420px;background:var(--accent-green);top:-180px;right:-120px;opacity:.14"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Chapter 10</span>
+    <h2 class="fade-in delay-1">The Prompt Version</h2>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="pts">
+      <li class="fade-in delay-2"><b class="c">A hash of <span class="mono">4</span> things:</b> <span class="mono">3</span> files and the instruction text</li>
+      <li class="fade-in delay-3"><b class="c">Change any one of them</b> and you get a new <span class="mono">12</span> character version</li>
+      <li class="fade-in delay-4"><b class="c">Stamped when the plan passes validation,</b> never at the gate</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLIDE 11 · CH11 RECALL · place-marker -->
+<section class="slide" id="ch11">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-green);top:-240px;left:-180px;opacity:.18"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-gold);bottom:-260px;left:40%;opacity:.14"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Chapter 11</span>
+    <h2 class="fade-in delay-1">Recall</h2>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="pts">
+      <li class="fade-in delay-2"><b class="c">Precision:</b> of the clips it proposed, how many did I keep?</li>
+      <li class="fade-in delay-3"><b class="c">No recall from a gate:</b> it only sees what was proposed</li>
+      <li class="fade-in delay-4"><b class="c">So when I approve the gate,</b> I name what it missed</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLIDE 12 · CH12 REPLAY · on camera for one line -->
+<section class="slide" id="ch12">
+  <div class="orb" style="width:540px;height:540px;background:var(--accent-cyan);top:-260px;left:30%;opacity:.18"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-gold);bottom:-240px;left:-180px;opacity:.16"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Chapter 12</span>
+    <h2 class="fade-in delay-1">Replay</h2>
+    <div class="divider fade-in delay-1" style="background:linear-gradient(90deg,var(--accent-cyan),var(--accent-gold))"></div>
+    <ul class="pts">
+      <li class="fade-in delay-2"><b class="c">A replay:</b> the same transcript with today's prompt</li>
+      <li class="fade-in delay-3"><b class="c">Nothing gets cut</b> and nothing gets posted</li>
+      <li class="fade-in delay-4"><b class="c">The same instructions a live run sends,</b> plus a note</li>
+      <li class="key fade-in delay-5"><b class="go">The note's last line:</b> don't open the evals folder</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLIDE 13 · CH13 MATCHING AND SCORING · place-marker -->
+<section class="slide" id="ch13">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-cyan);bottom:-260px;left:-180px;opacity:.18"></div>
+  <div class="orb" style="width:420px;height:420px;background:var(--accent-purple);top:-180px;right:-120px;opacity:.14"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Chapter 13</span>
+    <h2 class="fade-in delay-1">Matching and Scoring</h2>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="pts">
+      <li class="fade-in delay-2"><b class="c">A match:</b> the overlap is at least <span class="mono">50%</span> of the shorter clip</li>
+      <li class="fade-in delay-3"><b class="c"><span class="mono">4</span> buckets for a new pick:</b> kept, killed, missed, or new</li>
+      <li class="fade-in delay-4"><b class="c">Precision:</b> good picks over good picks plus repeated kills</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLIDE 14 · CH14 NOISE · place-marker -->
+<section class="slide" id="ch14">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-gold);top:-240px;left:-180px;opacity:.16"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-cyan);bottom:-260px;left:40%;opacity:.14"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Chapter 14</span>
+    <h2 class="fade-in delay-1">Noise</h2>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="pts">
+      <li class="fade-in delay-2"><b class="c">The same prompt, twice,</b> on <span class="mono">4</span> livestreams</li>
+      <li class="fade-in delay-3"><b class="c"><span class="mono">2</span> scored the same.</b> <span class="mono">2</span> went from <span class="mono">100%</span> to <span class="mono">83.3%</span></li>
+      <li class="fade-in delay-4"><b class="c">On one livestream,</b> a swing of around <span class="mono">17</span> points is noise</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLIDE 15 · CH15 WHAT THE RECORD SHOWS · the 3 screen-share lines are filmed in the browser, not here -->
+<section class="slide" id="ch15">
+  <div class="orb" style="width:540px;height:540px;background:var(--accent-green);top:-260px;left:-180px;opacity:.18"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-cyan);bottom:-240px;left:40%;opacity:.16"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Chapter 15</span>
+    <h2 class="fade-in delay-1">What the Record Shows</h2>
+    <div class="divider fade-in delay-1"></div>
+    <div class="impact say fade-in delay-2" style="margin-top:6px">
+      <div class="big-line">Switch to the browser: the Evals dashboard</div>
+      <div class="url">http://localhost:8766/evals.html</div>
+    </div>
+    <ul class="pts sm" style="margin-top:22px">
+      <li class="fade-in delay-3"><b class="c">Every livestream is a row</b></li>
+      <li class="fade-in delay-4"><b class="c">Open one:</b> every clip, the verdict at each gate, the strategist's reasoning</li>
+      <li class="fade-in delay-5"><b class="c">Under that:</b> every replay of that livestream, pick by pick</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLIDE 16 · CH16 WHAT IT ISN'T YET · place-marker -->
+<section class="slide" id="ch16">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-purple);top:-240px;left:-180px;opacity:.18"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-gold);bottom:-260px;left:40%;opacity:.14"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Chapter 16</span>
+    <h2 class="fade-in delay-1">What It Isn't Yet</h2>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="pts">
+      <li class="fade-in delay-2"><b class="c">The record isn't memory.</b> The strategist never sees it</li>
+      <li class="fade-in delay-3"><b class="c">Next:</b> feed kept and killed examples back into the prompt</li>
+      <li class="fade-in delay-4"><b class="c">A cheaper model?</b> That used to be an opinion. Now it's a replay</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLIDE 17 · CH17 THE CLOSE · the closing slide, on camera -->
+<section class="slide" id="ch17">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-green);top:-240px;left:-180px;opacity:.2"></div>
+  <div class="orb" style="width:480px;height:480px;background:var(--accent-cyan);bottom:-260px;left:30%;opacity:.16"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Chapter 17</span>
+    <h1 class="fade-in delay-1">Find where a human already says yes or no. <span class="g">Record it.</span></h1>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="pts">
+      <li class="fade-in delay-2"><b class="c">An agent harness</b> holds the model to the rules</li>
+      <li class="fade-in delay-3"><b class="c">An evaluation harness</b> tells you if it's getting any better</li>
+    </ul>
+    <div class="impact say fade-in delay-4">
+      <p><b class="g">Like</b> · <b class="c">Comment:</b> what would you score in your own pipeline? · <b class="go">Subscribe</b></p>
+    </div>
+  </div>
+</section>
+
+<div id="pip-zone">Webcam</div>
+
+<div class="nav-dots" id="navDots"></div>
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+
+/* fade-in on scroll */
+const fadeObserver = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.15});
+document.querySelectorAll('.fade-in').forEach(el=>fadeObserver.observe(el));
+
+/* nav dots */
+const dotsWrap = document.getElementById('navDots');
+slides.forEach((s,i)=>{
+  const b=document.createElement('button');
+  b.setAttribute('aria-label','Go to slide '+(i+1));
+  b.addEventListener('click',()=>s.scrollIntoView({behavior:'smooth'}));
+  dotsWrap.appendChild(b);
+});
+const dots = Array.from(dotsWrap.children);
+const dotObserver = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ const i=slides.indexOf(e.target); dots.forEach((d,j)=>d.classList.toggle('active',j===i)); } });
+},{threshold:0.5});
+slides.forEach(s=>dotObserver.observe(s));
+
+/* arrow-key / spacebar nav (handy when recording) */
+function currentIndex(){
+  const mid=window.innerHeight/2; let idx=0,best=Infinity;
+  slides.forEach((s,i)=>{ const r=s.getBoundingClientRect(); const d=Math.abs((r.top+r.bottom)/2-mid); if(d<best){best=d;idx=i;} });
+  return idx;
+}
+document.addEventListener('keydown',e=>{
+  if(['ArrowRight','ArrowDown',' '].includes(e.key)){ e.preventDefault(); slides[Math.min(slides.length-1,currentIndex()+1)].scrollIntoView({behavior:'smooth'}); }
+  if(['ArrowLeft','ArrowUp'].includes(e.key)){ e.preventDefault(); slides[Math.max(0,currentIndex()-1)].scrollIntoView({behavior:'smooth'}); }
+});
+</script>
+<script>
+/* recording helpers: G = webcam guide box, F = fullscreen */
+document.addEventListener('keydown',e=>{
+  if(e.key==='g'||e.key==='G') document.getElementById('pip-zone').classList.toggle('show');
+  if(e.key==='f'||e.key==='F'){ if(!document.fullscreenElement) document.documentElement.requestFullscreen(); else document.exitFullscreen(); }
+});
+</script>
+</body>
+</html>

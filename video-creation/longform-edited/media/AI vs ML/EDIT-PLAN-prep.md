@@ -1,0 +1,51 @@
+# AI vs ML - EDIT-PLAN-prep (beat-indexed layer plan)
+_Rendered 2026-11-10 from `COVER-PLAN.json` by `scripts/render_cover_plan.py`; format owner `skills/edit-plan-and-cue-sheet/edit-plan-and-cue-sheet.md` §0 (the PREP file: provisional, beat-indexed; the time-ordered `EDIT-PLAN.md` and the layer-grouped `CUE-SHEET.md` are authored post-record off the transcript). Timecodes here ARE final-spine seconds (the plan was authored on the final spine), so they carry straight into the event log. Transitions per `TRANSITIONS.md` (authored after this file)._
+
+**FACE windows (from the spine picture, not covered):** 0:00.00-0:02.57, 0:08.27-0:12.37, 0:33.33-0:39.97, 0:45.63-0:58.10, 1:17.63-1:22.40, 2:03.70-2:07.53, 2:10.40-2:19.53
+
+## CH1 - THE TWO ROLES AND THE MONEY HOOK (0:02.57-0:13.97)
+
+| Beat | Time | SAY (anchor) | Layer / asset | Priority | Transition |
+|---|---|---|---|---|---|
+| B1 | 0:02.57-0:05.25 | "They sound like the same job, they are not." | ENVATO-VIDEO BR-1: two engineers at two desks in one office, near-identical setups (kt-whip-cut in, sound fast-reverse-5) | med | per TRANSITIONS.md |
+| B2 | 0:05.25-0:08.27 | "At the top, the pay gap between them is huge." | CHATGPT-IMAGE IMG-1: two unlabelled stacks of cash on a desk, one small, one towering; kt-headline-over-broll AT THE TOP: A $340K GAP lands on huge 7.68 (sound cash-register), with the framing line under it in small caps, part of the same asset: TOP 10% VS TYPICAL · LEVELS.FYI · US · TOTAL COMP · 2026. NO role label anywhere (stacks unlabelled, framing line names no role), so the direction stays withheld until 112.02 | med | per TRANSITIONS.md |
+| B3 | 0:12.37-0:13.97 | "So let's break it all down." | CONTAINER roles-split: full-frame split card on turquoise suede, AI ENGINEER (yellow) left, ML ENGINEER (green) right, VS between; kt-push-slide in (sound swoosh-4), camera wobble | med | per TRANSITIONS.md |
+
+## CH2 - WHAT THEY ACTUALLY DO (0:13.97-1:04.39)
+
+| Beat | Time | SAY (anchor) | Layer / asset | Priority | Transition |
+|---|---|---|---|---|---|
+| B1 | 0:13.97-0:17.33 | "The AI engineer is commonly associated with shipping products." | ENVATO-VIDEO BR-2: a product demo on a laptop (an app UI being clicked through), framed left; kt-side-panel dark-teal right (sound swoosh-1): AI ENGINEER in yellow, SHIPS PRODUCTS under it; kt-icon-pop rocket on shipping products 16.46 (sound cartoon-accent) | med | per TRANSITIONS.md |
+| B2 | 0:17.33-0:19.70 | "On a model, someone else has already trained." | CONTAINER ai-identity: full-frame card, eyebrow AI ENGINEER (yellow), headline SHIPS PRODUCTS ON A MODEL SOMEONE ELSE ALREADY TRAINED, SOMEONE ELSE in yellow landing 18.22 | med | per TRANSITIONS.md |
+| B3 | 0:19.70-0:23.60 | "The ML engineer is commonly associated with the model itself," | ENVATO-VIDEO BR-3: a model-training dashboard (loss curves, GPU meters) on a monitor, framed right; kt-side-panel left (sound swoosh-2): ML ENGINEER in green, THE MODEL ITSELF under it on 22.50 | med | per TRANSITIONS.md |
+| B4 | 0:23.60-0:26.24 | "building it, training it and deploying it." | CONTAINER build-train-deploy: full-frame kt-scatter-words card on turquoise suede, BUILD 23.90, TRAIN 24.70, DEPLOY 25.50 land one per spoken word (sound pop-1), ML green accent | med | per TRANSITIONS.md |
+| B5 | 0:26.24-0:33.33 | "Day to day, that means wiring a model like Claude into your data and your product and then" | DIAGRAM C1 system-design split, shown ONCE: AI ENGINEER lane lights node by node: MODEL SOMEONE ELSE TRAINED 28.18 -> API 28.70 -> YOUR DATA 29.64 -> PRODUCT 30.46 -> EVALS 31.40; ML lane dim underneath (DATA -> FEATURES -> TRAIN -> VALIDATE -> DEPLOY); kt-keyword-pop EVALS on any good 32.76 (sound twinkle) | high | per TRANSITIONS.md |
+| B6 | 0:39.97-0:42.57 | "So why does an AI engineer even exist?" | CHATGPT-IMAGE IMG-2: a lone developer at a desk looking up at a colossal, finished, glowing machine (the already-trained model) that fills the hall behind the laptop | low | per TRANSITIONS.md |
+| B7 | 0:42.57-0:45.63 | "Because the hard part, the training, is already done for you." | ENVATO-VIDEO BR-4: a developer leaning back in the chair, relieved, hands behind the head (the licensed stock reaction of kt-meme-inset, sound swoosh-4); kt-emoji-pop clapping emoji on done for you 44.92 | med | per TRANSITIONS.md |
+| B8 | 0:58.10-1:04.39 | "To sum it up, AI engineering is less about developing models and more about adapting and e" | CONTAINER paper-sum-up: the ONE paper statement (kt-statement-over-broll variant paper, sound fast-swoosh): black type on crumpled paper, AI ENGINEERING IS LESS ABOUT DEVELOPING MODELS AND MORE ABOUT ADAPTING AND EVALUATING THEM, ADAPTING 62.78 and EVALUATING 63.50 turn red; credit at the foot CHIP HUYEN, AI ENGINEERING; camera wobble | high | per TRANSITIONS.md |
+
+## CH3 - HOW TO CHOOSE (1:04.39-2:03.70)
+
+| Beat | Time | SAY (anchor) | Layer / asset | Priority | Transition |
+|---|---|---|---|---|---|
+| B1 | 1:04.39-1:07.86 | "If you have the research background, the stats, the math," | ENVATO-VIDEO BR-5: a hand writing equations on a whiteboard already full of math; kt-lower-third-band verdict_pop (sound fast-swoosh): IF YOU HAVE THE RESEARCH BACKGROUND | med | per TRANSITIONS.md |
+| B2 | 1:07.86-1:10.20 | "the graduate degree, go for ML." | CHATGPT-IMAGE IMG-3: a graduation cap and a rolled diploma on a stack of math textbooks; the band holds, verdict ML ENGINEER pops green on ML 69.82 (sound knock-pop) | low | per TRANSITIONS.md |
+| B3 | 1:10.20-1:13.05 | "If you're a software developer, choose AI." | ENVATO-VIDEO BR-6: a developer typing code in an editor, over the shoulder; band IF YOU'RE A SOFTWARE DEVELOPER, verdict AI ENGINEER pops yellow on AI 72.44 (sound knock-pop) | med | per TRANSITIONS.md |
+| B4 | 1:13.05-1:15.37 | "If you wanna train models, ML." | CONTAINER wave-wall: kt-spin-cut in (sound whoosh-4), the kt-wave-wall, alternating rows TRAIN / SHIP, white outline and green fill on black; the one full-frame interlude of the video | med | per TRANSITIONS.md |
+| B5 | 1:15.37-1:17.63 | "If you wanna ship products, AI." | ENVATO-VIDEO BR-7: a small team celebrating a product launch around a laptop; band with both verdicts: TRAIN MODELS -> ML ENGINEER, SHIP PRODUCTS -> AI ENGINEER, the second pops on AI 77.14 (sound knock-pop) | med | per TRANSITIONS.md |
+| B6 | 1:22.40-1:28.60 | "And right now, LinkedIn's fastest growing job in the US for 2026 is AI engineer." | RECEIPT C12 R(article): the real LinkedIn Jobs on the Rise 2026 page; wide establish on the title, then a push to the number 1 entry AI Engineers (skills line visible), highlight on the entry at 87.54; band WHAT'S HIRING NOW, verdict AI ENGINEER pops (sound knock-pop). Never restyled | high · VERIFY | per TRANSITIONS.md |
+| B7 | 1:28.60-1:32.02 | "If you have the code but not the math, AI is your way in." | ENVATO-VIDEO BR-8: lines of code scrolling on a dark monitor, framed left; kt-side-panel dark right (sound swoosh-1): CODE green tick 89.34, MATH red cross 90.12, then AI ENGINEER yellow kt-keyword-pop 90.54 (sound twinkle) | med | per TRANSITIONS.md |
+| B8 | 1:32.02-1:34.58 | "If you have the math but not the production code," | CONTAINER math-not-code: full-frame paper-variant panel card: MATH green tick 92.76, PRODUCTION CODE red cross 93.58, ML green accent (sound whoosh-4) | med | per TRANSITIONS.md |
+| B9 | 1:34.58-1:38.05 | "here's the thing, ML teams want shipping experience too." | RECEIPT C9 R(other): the real Stripe Machine Learning Engineer, Radar posting, settling push, then a highlight on 5+ years of experience developing, evaluating, and deploying machine learning models in a production environment at 96.82 | high · VERIFY | per TRANSITIONS.md |
+| B10 | 1:38.05-1:41.70 | "Now the money, in total pay, the typical engineer in the US" | RECEIPT C6 R(other): the real Levels.fyi AI Engineer, United States page, plain push toward the total-comp median panel; the title AI Engineer and United States stay in frame | high · VERIFY | per TRANSITIONS.md |
+| B11 | 1:41.70-1:57.18 | "makes around $155,000 a year. And the top 10% of ML engineers start at around $495,000 a y" | ANIMATED-CHART C3 money ladder (code-built, the marquee chart, kt-spin-cut in, sound whoosh-4). States: bar 1 AI ENGINEER, MEDIAN (yellow) grows + counts to 155.5K on 102.38; bar 2 ML ENGINEER, MEDIAN (green, dim) grows to 287.5K unspoken 104.1-105.9; bar 3 ML ENGINEER, TOP 10% (green) grows to 495K on 108.12 (sound cash-register-2); reaction shake on My God, dude 110.80; bracket 339.5K draws bar 1 to bar 3 on 112.48 labelled TOP 10% ML ENGINEER VS AI ENGINEER MEDIAN (sound cash-register); payoff word TRAIN goes big on 116.06 (kt-word-by-word, sound cash-register-2). Fixed source line the whole hold: LEVELS.FYI · UNITED STATES · TOTAL COMP · READ 2026-11-09 · THE AI ENGINEER TITLE SKEWS JUNIOR | high · VERIFY | per TRANSITIONS.md |
+| B12 | 1:57.18-1:59.75 | "But those seats are few" | CHATGPT-IMAGE IMG-4: three empty chairs under one spotlight at a long table in a vast dark hall (few seats) | low | per TRANSITIONS.md |
+| B13 | 1:59.75-2:03.70 | "and you're competing with PhDs for them, something to ponder." | ENVATO-VIDEO BR-9: researchers at work in a lab or research office (whiteboards, papers, screens); kt-headline-over-broll COMPETING WITH PhDs on 120.32 (sound swoosh-3) | med | per TRANSITIONS.md |
+
+## CH4 - THE VERDICT AND SUBSCRIBE (2:07.53-2:25.20)
+
+| Beat | Time | SAY (anchor) | Layer / asset | Priority | Transition |
+|---|---|---|---|---|---|
+| B1 | 2:07.53-2:10.40 | "The door is open, you already have the skills." | ENVATO-VIDEO BR-10: a door swinging open with bright light pouring through (leading motion); kt-headline-over-broll THE DOOR IS OPEN on 127.80 (sound swoosh-3) | med | per TRANSITIONS.md |
+| B2 | 2:19.53-2:25.20 | "And watch this next video right here, or maybe even this one, or this one, or even this on" | CONTAINER end-screen: turquoise suede end card with FOUR empty video slots (YouTube end-screen positions); the playlist arrow of kt-subscribe-close (sound cartoon-accent) points to slot 1 on right here 140.86, slot 2 on 142.32, slot 3 on 143.14, slot 4 on 144.44; the comp holds this card 2.0 s past the last word (145.00) per the END HOLD | high | per TRANSITIONS.md |
+

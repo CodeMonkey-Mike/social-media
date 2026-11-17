@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>clip-evals chart: nested (claude-code, graph, evals)</title>
+<!--
+  SYSTEM-DESIGN CHART, full-frame cover, 1920x1080, 3 states. Spec: ../../CARDS-SPEC.md section 3, "nested".
+  Used in SCRIPT.md CH2: "Every one of my agents runs inside Claude Code ... It owns the loop and the tools."
+  (claude-code) / "Around the agents sits a LangGraph graph. It decides the order, checks every output, stops for
+  a human and retries what fails." (graph) / "And right beside the graph sits the evaluation harness." (evals)
+  Layout: the outer box is the graph (its 4 jobs as chips under its name); inside it 3 agents, each in a thinner
+  CLAUDE CODE box; ONE bracket under the 3 says what Claude Code is (the spec's "an agent harness: owns the loop
+  and the tools", written once instead of 3 times). The evaluation harness sits beside the graph, joined by the
+  "verdicts" arrow. Shoot: python ../shoot.py nested.html --out ../../diagrams
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chart.css">
+<style>
+/* the thinner CLAUDE CODE box around each agent */
+.node.cc{border-width:1.5px}
+.cct{position:absolute;left:0;right:0;top:24px;text-align:center;font-family:'DM Sans';font-weight:700;font-size:24px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--rest-title)}
+.cc.on .cct{color:var(--accent-cyan)}
+/* the agent itself: bright (white) when lit, never cyan, so the cyan stays on the Claude Code layer */
+.node.agent{position:absolute;left:44px;top:96px;width:260px;height:196px;background:var(--bg-card-hover)}
+.node.agent.on{border-color:rgba(232,234,240,.62);background:var(--bg-card-hover);box-shadow:0 0 30px rgba(232,234,240,.08)}
+.an{font-family:'DM Sans';font-weight:600;font-size:38px;letter-spacing:.01em}
+/* the one line under the bracket */
+.cap{font-family:'DM Sans';font-weight:500;font-size:26px;color:var(--rest-sub);white-space:nowrap;text-align:center}
+.cap.on{color:var(--text-primary)}
+/* the evaluation harness */
+.etl{width:270px}
+.echips{display:flex;flex-direction:column;gap:14px;margin-top:26px;align-items:center}
+.echips .chip{width:206px}
+</style>
+</head>
+<body>
+<template id="chart">
+<div class="stage">
+  <div class="orb" style="width:640px;height:640px;background:var(--accent-cyan);opacity:.12;left:-300px;top:-320px"></div>
+  <div class="orb" style="width:620px;height:620px;background:var(--accent-green);opacity:.06;left:1520px;top:760px"></div>
+
+  <div class="head"><h1>Two harnesses, and a third beside them</h1><div class="divider"></div></div>
+
+  <!-- THE LANGGRAPH GRAPH: the outer box -->
+  <div class="zone" data-k="graph" style="left:120px;top:270px;width:1250px;height:690px"></div>
+  <div data-own style="left:162px;top:300px;display:flex;align-items:baseline;gap:18px">
+    <span class="zl" data-k="graph">THE LANGGRAPH GRAPH</span><span class="st" data-k="graph" style="font-size:26px">the runtime</span>
+  </div>
+  <div data-own style="left:162px;top:358px;display:flex;gap:14px">
+    <span class="pill chip" data-k="graph">decides the order</span>
+    <span class="pill chip" data-k="graph">checks every output</span>
+    <span class="pill chip" data-k="graph">stops for a human</span>
+    <span class="pill chip" data-k="graph">retries what fails</span>
+  </div>
+
+  <svg class="wires" width="1920" height="1080" viewBox="0 0 1920 1080">
+    <!-- the bracket under the 3 Claude Code boxes -->
+    <path class="wr nohead" data-k="ccnote" d="M196,808 L196,824 L1294,824 L1294,808 M745,824 L745,836"/>
+    <!-- verdicts: the graph to the evaluation harness -->
+    <path class="wr" data-k="verdicts" d="M1374,615 L1483,615"/>
+  </svg>
+
+  <!-- 3 agents, each inside a thinner CLAUDE CODE box -->
+  <div class="node cc" data-k="cc" style="left:175px;top:464px;width:350px;height:322px">
+    <div class="cct">CLAUDE CODE</div>
+    <div class="node agent flex" data-k="agents"><span class="an">agent</span></div>
+  </div>
+  <div class="node cc" data-k="cc" style="left:570px;top:464px;width:350px;height:322px">
+    <div class="cct">CLAUDE CODE</div>
+    <div class="node agent flex" data-k="agents"><span class="an">agent</span></div>
+  </div>
+  <div class="node cc" data-k="cc" style="left:965px;top:464px;width:350px;height:322px">
+    <div class="cct">CLAUDE CODE</div>
+    <div class="node agent flex" data-k="agents"><span class="an">agent</span></div>
+  </div>
+  <div class="cap" data-own data-k="ccnote" style="left:245px;width:1000px;top:850px">an agent harness: owns the loop and the tools</div>
+
+  <!-- THE EVALUATION HARNESS, beside the graph -->
+  <div class="wl" data-k="verdicts" style="left:1374px;width:110px;top:572px;text-align:center">verdicts</div>
+  <div class="node flex" data-k="evals" style="left:1490px;top:425px;width:320px;height:380px">
+    <div class="tt etl">THE EVALUATION HARNESS</div>
+    <div class="echips">
+      <span class="pill chip" data-k="evals">record</span>
+      <span class="pill chip" data-k="evals">replay</span>
+      <span class="pill chip" data-k="evals">score</span>
+    </div>
+  </div>
+</div>
+</template>
+<script src="chart.js"></script>
+<script>
+buildChart({
+  "nested-claude-code": { on: ["cc", "agents", "ccnote"] },
+  "nested-graph":       { on: ["graph"] },
+  "nested-evals":       { on: ["evals", "verdicts"] }
+});
+</script>
+</body>
+</html>

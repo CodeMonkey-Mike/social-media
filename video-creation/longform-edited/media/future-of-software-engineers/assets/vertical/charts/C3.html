@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>C3 VERTICAL · ANIMATED CHART 1 · how much code AI writes, 1080x1920 (future-of-software-engineers)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET (verbatim copy of
+   skills/container-reference/container-canonical.css). DO NOT CHANGE TOKENS.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+b{color:var(--text-primary);font-weight:700}
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+</style>
+<style>
+/* ---- C3 chart layer, PORTRAIT. Same series colours as the 16:9: GOOGLE = --accent-cyan (supporting, drawn first),
+   ANTHROPIC = --accent-green (the lit / stylesheet-default accent, the payoff series). The two panels STACK (Google
+   above Anthropic) on ONE time axis (2024-10-01 to 2026-10-01) and ONE 0-100% scale, so the two slopes still compare
+   directly, one above the other. Layout + type sizes only. */
+.frame.ch{display:block;padding:0;width:1080px;height:1920px}
+.cv{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.hdr .ey{position:absolute;left:72px;top:64px;margin:0;white-space:nowrap}
+.hdr h1{position:absolute;left:72px;top:98px;white-space:nowrap;font-size:60px}
+.hdr .divider{position:absolute;left:72px;top:184px;margin:0}
+.pnl{position:absolute;left:72px;width:936px;height:640px;border-radius:20px;background:rgba(18,21,28,.6);border:1.5px solid #1e2330}
+.pt{position:absolute;left:40px;top:24px;font-family:'DM Sans';font-weight:700;font-size:36px;line-height:44px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap}
+.pt.lit.gg{color:var(--accent-cyan)} .pt.lit.an{color:var(--accent-green)}
+.pm{position:absolute;left:40px;top:74px;font-family:'DM Sans';font-weight:500;font-size:21px;line-height:28px;color:var(--text-secondary);white-space:nowrap}
+.pnl svg{position:absolute;left:0;top:0;width:936px;height:640px;overflow:visible}
+.hide{visibility:hidden}
+.lgd{position:absolute;left:72px;top:1566px;width:936px;display:flex;flex-wrap:wrap;column-gap:30px;row-gap:6px;align-items:center;font-family:'DM Sans';font-weight:500;font-size:19px;line-height:34px;color:var(--text-secondary);white-space:nowrap}
+.lgd span{display:flex;align-items:center;gap:10px}
+.src{position:absolute;left:72px;top:1704px;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:17px;line-height:27px;color:var(--text-muted);white-space:nowrap}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script>
+/* ============================== the data: DATA.md pillar 1 + CHART-SOURCE INDEX C3 ===============================
+   IDENTICAL to ../../charts/C3.html (every value a company's own published statement, re-read live 2026-11-14).
+   Only the plot box, the callout positions and the type sizes are portrait. */
+const DAY0 = Date.UTC(2024, 9, 1), DAYS = 730;                  // 2024-10-01 .. 2026-10-01
+const day = s => (Date.parse(s + 'T00:00:00Z') - DAY0) / 86400000;
+const PW = 936, PH = 640;                                       // panel box
+const PX0 = 96, PXW = 800, PY0 = 552, PYH = 340;                // plot box, panel-local (0% at y 552, 100% at y 212)
+const X = s => +(PX0 + day(s) * PXW / DAYS).toFixed(1);
+const Y = v => +(PY0 - v * PYH / 100).toFixed(1);
+const PANELS = {google: {x: 72, y: 232}, anthropic: {x: 72, y: 900}};
+const CYAN = '#00c2ff', GREEN = '#00e68a';
+const G = [
+  {k: 'g1', kind: 'floor', date: '2024-10-29', v: 25, val: 'MORE THAN 25%', what: '', when: 'OCT 2024', src: 'Pichai, Q3 2024 earnings remarks',
+   call: {anchor: 'start', x: 112, y: 508}},
+  {k: 'g2', kind: 'season', from: '2025-09-01', to: '2025-11-30', date: '2025-10-15', v: 50, val: '50%', what: '', when: 'FALL 2025', src: 'per Pichai, 2026-04-22',
+   call: {anchor: 'start', x: 522, y: 424}},
+  {k: 'g3', kind: 'exact', date: '2026-04-22', v: 75, val: '75%', what: '', when: 'APR 2026', src: "Pichai, Cloud Next '26",
+   call: {anchor: 'end', x: 688, y: 252}},
+];
+const A = [
+  {k: 'a1', kind: 'band', from: '2024-10-01', to: '2025-02-15', date: '2025-02-15', v: 2.5, top: 5, val: 'LOW SINGLE DIGITS', what: '', when: 'BEFORE FEB 2025', src: 'Anthropic Institute essay',
+   call: {anchor: 'start', x: 430, y: 506}},
+  {k: 'a2', kind: 'floor', date: '2026-05-15', v: 80, val: 'MORE THAN 80%', what: 'OF MERGED CODE', when: 'MAY 2026', src: 'Anthropic Institute essay',
+   call: {anchor: 'end', x: 700, y: 238}},
+  {k: 'a3', kind: 'floor', date: '2026-09-15', v: 90, val: 'OVER 90%', what: 'OF CODEBASE CONTRIBUTIONS', when: 'SEP 2026', src: 'Anthropic S-1',
+   call: {anchor: 'end', x: 896, y: 140}},
+];
+const CC = {date: '2025-02-15', label: 'CLAUDE CODE', when: 'FEB 2025', v: 30};   // launch marker (the essay's own anchor)
+const LINKS = [
+  {k: 'gL1', series: 'google', from: 'g1', to: 'g2', style: 'solid'},
+  {k: 'gL2', series: 'google', from: 'g2', to: 'g3', style: 'solid'},
+  {k: 'aL1', series: 'anthropic', from: 'a1', to: 'a2', style: 'solid'},
+  {k: 'aL2', series: 'anthropic', from: 'a2', to: 'a3', style: 'dashed', why: 'two different measures (merged code vs codebase contributions)'},
+];
+const pt = p => ({x: X(p.date), y: Y(p.v)});
+const ALL = Object.fromEntries([...G, ...A].map(p => [p.k, p]));
+const TYPE = {val: 34, band: 25, what: 19, when: 18, src: 19, lineVal: 27, lineWhat: 25, axisY: 18, month: 17, year: 19, cc: 17, ccWhen: 16};
+
+/* ============================================ states (identical to the 16:9) ============================================ */
+const S = {
+  start:  {gTitle: 0, aTitle: 0, g: [], a: [], links: [], cc: 0},
+  mid:    {gTitle: 1, aTitle: 0, g: ['g1', 'g2', 'g3'], a: [], links: ['gL1', 'gL2'], cc: 0},
+  payoff: {gTitle: 1, aTitle: 1, g: ['g1', 'g2', 'g3'], a: ['a1', 'a2', 'a3'], links: ['gL1', 'gL2', 'aL1', 'aL2'], cc: 1},
+};
+const ORDER = Object.keys(S);
+
+/* ============================================ drawing ============================================ */
+function axes() {
+  let s = '';
+  [0, 25, 50, 75, 100].forEach(v => {
+    s += v === 0 ? `<line x1="${PX0}" y1="${Y(0)}" x2="${PX0 + PXW}" y2="${Y(0)}" stroke="#3a4357" stroke-width="2"/>`
+                 : `<line x1="${PX0}" y1="${Y(v)}" x2="${PX0 + PXW}" y2="${Y(v)}" stroke="#1e2330" stroke-width="1.5" stroke-dasharray="4 6"/>`;
+    s += `<text x="${PX0 - 16}" y="${Y(v) + 6}" text-anchor="end" font-family="JetBrains Mono" font-weight="400" font-size="${TYPE.axisY}" fill="#505a6e">${v}%</text>`;
+  });
+  const q = [['2024-10-01','OCT','2024'],['2025-01-01','JAN','2025'],['2025-04-01','APR'],['2025-07-01','JUL'],['2025-10-01','OCT'],
+             ['2026-01-01','JAN','2026'],['2026-04-01','APR'],['2026-07-01','JUL']];
+  q.forEach(([d, m, yr]) => {
+    const x = X(d);
+    if (yr && d !== '2024-10-01') s += `<line x1="${x}" y1="${Y(100)}" x2="${x}" y2="${Y(0)}" stroke="#1e2330" stroke-width="1.5"/>`;
+    s += `<line x1="${x}" y1="${Y(0)}" x2="${x}" y2="${Y(0) + 8}" stroke="#3a4357" stroke-width="2"/>`;
+    s += `<text x="${x}" y="${Y(0) + 32}" text-anchor="middle" font-family="JetBrains Mono" font-weight="400" font-size="${TYPE.month}" fill="#505a6e">${m}</text>`;
+    if (yr) s += `<text x="${x - 2}" y="${Y(0) + 60}" text-anchor="start" font-family="JetBrains Mono" font-weight="600" font-size="${TYPE.year}" fill="#8892a4">${yr}</text>`;
+  });
+  s += `<line x1="${PX0 + PXW}" y1="${Y(0)}" x2="${PX0 + PXW}" y2="${Y(0) + 8}" stroke="#3a4357" stroke-width="2"/>`;
+  return s;
+}
+function marker(p, col, gid) {
+  const {x, y} = pt(p);
+  if (p.kind === 'exact')
+    return `<circle cx="${x}" cy="${y}" r="24" fill="${col}" opacity=".18"/><circle cx="${x}" cy="${y}" r="10.5" fill="${col}" stroke="#0e1117" stroke-width="3"/>`;
+  if (p.kind === 'floor')   // a floor: the bar at the stated value, an open top (wash + chevron) for "more than" / "over"
+    return `<rect x="${x - 20}" y="${y - 36}" width="40" height="36" fill="url(#${gid})"/>` +
+           `<path d="M${x - 8},${y - 16} l8,-9 l8,9" fill="none" stroke="${col}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>` +
+           `<line x1="${x - 20}" y1="${y}" x2="${x + 20}" y2="${y}" stroke="${col}" stroke-width="5.5" stroke-linecap="round"/>`;
+  if (p.kind === 'season') {
+    const x1 = X(p.from), x2 = X(p.to);
+    return `<rect x="${x1}" y="${y - 8}" width="${(x2 - x1).toFixed(1)}" height="16" rx="8" fill="${col}" opacity=".9"/>` +
+           `<circle cx="${x}" cy="${y}" r="4.5" fill="#0e1117"/>`;
+  }
+  if (p.kind === 'band') {
+    const x1 = X(p.from), x2 = X(p.to), yt = Y(p.top);
+    return `<rect x="${x1}" y="${yt}" width="${(x2 - x1).toFixed(1)}" height="${(Y(0) - yt).toFixed(1)}" fill="url(#bandfade)"/>` +
+           `<line x1="${x1}" y1="${yt}" x2="${x2}" y2="${yt}" stroke="${col}" stroke-width="2" stroke-dasharray="3 5" opacity=".8"/>` +
+           `<line x1="${x2}" y1="${yt}" x2="${x2}" y2="${Y(0)}" stroke="${col}" stroke-width="2.5"/>`;
+  }
+}
+function callout(p, col) {
+  const c = p.call, ta = c.anchor;
+  let s = `<text x="${c.x}" y="${c.y}" text-anchor="${ta}">` +
+          (p.kind === 'band'
+            ? `<tspan font-family="DM Sans" font-weight="700" font-size="${TYPE.band}" letter-spacing="1.4" fill="${col}">${p.val}</tspan>`
+            : `<tspan font-family="JetBrains Mono" font-weight="600" font-size="${TYPE.val}" fill="${col}">${p.val}</tspan>`) + `</text>`;
+  let y = c.y;
+  if (p.what) { y += TYPE.lineWhat; s += `<text x="${c.x}" y="${y}" text-anchor="${ta}" font-family="DM Sans" font-weight="700" font-size="${TYPE.what}" letter-spacing="1.3" fill="#e8eaf0">${p.what}</text>`; }
+  y += TYPE.lineVal - (p.what ? 2 : 0);
+  s += `<text x="${c.x}" y="${y}" text-anchor="${ta}"><tspan font-family="JetBrains Mono" font-weight="600" font-size="${TYPE.when}" fill="#c3c9d6">${p.when}</tspan>` +
+       `<tspan font-family="DM Sans" font-weight="500" font-size="${TYPE.src}" fill="#8892a4">  ·  ${p.src}</tspan></text>`;
+  return s;
+}
+function linkPath(l) {
+  const a = pt(ALL[l.from]), b = pt(ALL[l.to]);
+  return {a, b, d: `M${a.x},${a.y} L${b.x},${b.y}`};
+}
+function panel(key, title, measure, st) {
+  const P = PANELS[key], col = key === 'google' ? CYAN : GREEN, pts = key === 'google' ? G : A;
+  const on = key === 'google' ? st.g : st.a;
+  const lit = key === 'google' ? st.gTitle : st.aTitle;
+  let s = `<defs><linearGradient id="wash-${key}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="${col}" stop-opacity=".42"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient>` +
+          `<linearGradient id="bandfade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${GREEN}" stop-opacity="0"/><stop offset="1" stop-color="${GREEN}" stop-opacity=".45"/></linearGradient></defs>`;
+  s += axes();
+  if (key === 'anthropic') {
+    const x = X(CC.date);
+    s += `<g class="${st.cc ? '' : 'hide'}" data-k="claudeCode"><line x1="${x}" y1="${Y(CC.v)}" x2="${x}" y2="${Y(0)}" stroke="#505a6e" stroke-width="1.8" stroke-dasharray="2 5"/>` +
+         `<text x="${x - 6}" y="${Y(CC.v) - 26}" text-anchor="start" font-family="DM Sans" font-weight="700" font-size="${TYPE.cc}" letter-spacing="1.3" fill="#8892a4">${CC.label}</text>` +
+         `<text x="${x - 6}" y="${Y(CC.v) - 7}" text-anchor="start" font-family="JetBrains Mono" font-weight="600" font-size="${TYPE.ccWhen}" fill="#8892a4">${CC.when}</text></g>`;
+  }
+  LINKS.filter(l => l.series === key).forEach(l => {
+    const {d} = linkPath(l);
+    s += `<path class="${st.links.includes(l.k) ? '' : 'hide'}" data-k="${l.k}" d="${d}" fill="none" stroke="${col}" stroke-width="4" stroke-linecap="round"${l.style === 'dashed' ? ' stroke-dasharray="10 9"' : ''}/>`;
+  });
+  pts.forEach(p => {
+    s += `<g class="${on.includes(p.k) ? '' : 'hide'}" data-k="${p.k}">${marker(p, col, 'wash-' + key)}</g>`;
+    s += `<g class="${on.includes(p.k) ? '' : 'hide'}" data-k="${p.k}Call">${callout(p, col)}</g>`;
+  });
+  return `<div class="pnl" data-k="panel-${key}" style="top:${P.y}px"><div class="pt${lit ? ' lit' : ''} ${key === 'google' ? 'gg' : 'an'}" data-k="title-${key}">${title}</div>` +
+         `<div class="pm">${measure}</div><svg viewBox="0 0 ${PW} ${PH}">${s}</svg></div>`;
+}
+function frame(name, st) {
+  const h = [];
+  h.push(`<div class="hdr"><div class="ey">By the companies' own statements</div><h1 class="sm">How much code <span class="g">AI writes</span></h1><div class="divider"></div></div>`);
+  h.push(panel('google', 'Google', 'share of NEW code that is AI-generated and approved by engineers', st));
+  h.push(panel('anthropic', 'Anthropic', 'share of its own code written by Claude (each point names its measure)', st));
+  h.push(`<div class="lgd">` +
+    `<span><svg width="24" height="24"><circle cx="12" cy="12" r="8" fill="#8892a4"/></svg>stated figure</span>` +
+    `<span><svg width="32" height="26"><path d="M10,14 l6,-7 l6,7" fill="none" stroke="#8892a4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><line x1="2" y1="22" x2="30" y2="22" stroke="#8892a4" stroke-width="4" stroke-linecap="round"/></svg>a floor: "more than", "over"</span>` +
+    `<span><svg width="42" height="16"><rect x="1" y="1" width="40" height="14" rx="7" fill="#8892a4"/></svg>a season, not a day</span>` +
+    `<span><svg width="46" height="12"><line x1="2" y1="6" x2="44" y2="6" stroke="#8892a4" stroke-width="3" stroke-dasharray="8 6"/></svg>two different measures</span>` +
+    `<span style="color:#505a6e">straight links join two statements; nothing between them is reported</span></div>`);
+  h.push(`<div class="src">Google: Pichai, Q3 2024 earnings remarks (2024-10-29); Cloud Next '26 post (2026-04-22).<br>Anthropic: "When AI builds itself" essay; S-1 filed 2026-10-26.</div>`);
+  return `<div class="frame ch" id="C3-${name}"><div class="orb" style="width:560px;height:560px;right:-250px;top:-280px;background:#00e68a;opacity:.12"></div>` +
+         `<div class="orb" style="width:540px;height:540px;left:-280px;bottom:-320px;background:#0b3a66;opacity:.35"></div><div class="cv">${h.join('')}</div></div>`;
+}
+document.getElementById('stage').innerHTML = ORDER.map(n => frame(n, S[n])).join('<div style="height:24px"></div>');
+window.STATES = ORDER;
+window.GEOM = {
+  note: 'PORTRAIT. panel-local px: add the panel origin for stage px. x is linear in UTC date, y linear in percent.',
+  stage: [1080, 1920],
+  panels: Object.fromEntries(Object.entries(PANELS).map(([k, p]) => [k, {x: p.x, y: p.y, w: PW, h: PH}])),
+  plot: {x0: PX0, x1: PX0 + PXW, y0_pct0: PY0, y_pct100: Y(100), date0: '2024-10-01', date1: '2026-10-01', px_per_day: +(PXW / DAYS).toFixed(5), px_per_pct: PYH / 100},
+  type_px: TYPE,
+  colors: {google: CYAN, anthropic: GREEN},
+  points: Object.fromEntries([...G, ...A].map(p => [p.k, Object.assign({series: G.includes(p) ? 'google' : 'anthropic'}, p, pt(p),
+          p.from ? {x_from: X(p.from), x_to: X(p.to)} : {}, p.top ? {y_top: Y(p.top)} : {})])),
+  links: LINKS.map(l => Object.assign({}, l, linkPath(l))),
+  claude_code_marker: Object.assign({}, CC, {x: X(CC.date), y_top: Y(CC.v), y_bottom: Y(0)}),
+};
+</script>
+</body></html>

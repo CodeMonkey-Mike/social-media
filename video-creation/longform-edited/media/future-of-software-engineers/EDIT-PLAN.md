@@ -1,0 +1,764 @@
+# future-of-software-engineers - EDIT-PLAN  (time-ordered EVENT LOG, pre-build blueprint)
+
+> AUTHORED by edit-plan-author 2026-11-14 (the REDO on the corrected face joins, PROJECT-LOG 2026-11-14 "supervisor RE-DRIVE"),
+> refined from the graph's seed `_previews/EDIT-PLAN.seed.md` (gen_editplan.py, 18:58) off AS-RECORDED.md +
+> `spine/ALL.e.enhanced.medium-words.json` + COVER-PLAN.json (37 cover beats, 6 receipts, 0 clip inserts, 0 whiteboards) +
+> MUSIC-PLAN.json + `spine/jumpcuts-final.json` (128 joins) + `assets/diagrams/_state-cues.md` + `assets/slide-sources/_state-cues.md`
+> + `assets/charts/C3.spec.md` / `C4.spec.md` + `_previews/receipt-capture/receipts-geometry.json` + `assets/VISUAL-QA.json` (138 of
+> 138 PASS) + PROJECT-LOG.md (format: `skills/edit-plan-and-cue-sheet/edit-plan-and-cue-sheet.md` section 1; the comp is built TO
+> this log, section 0 ORDER).
+> Watch file: `spine/ALL.e.enhanced.mp4` (477.38 s / 7:57.4, 1080p30, Mike's enhanced audio). Timecodes = FINAL-spine seconds,
+> pre-card-pause. This video has NO title cards and NO clip inserts, so nothing pauses the spine and no chain shift exists: the
+> spine IS the runtime (`sh()` is the identity). No chain shift is ever re-applied here.
+> AUDIO OFFSET: AS-RECORDED's flag (enhanced track 30 / 69 ms late from 167 / 350 s) is CLOSED by PROJECT-LOG 2026-11-14 (0.0 ms on
+> fully decoded audio; the steps were an `-ss` seek artifact). Every cue below stands as written off the word JSON.
+> FACE JOINS, MEASURED ON THE PICTURE (this redo): `jumpcuts-final.json` maps the coarse desilence map forward, and its keeps drift
+> from the real file (PROJECT-LOG caveat). Checked against the word gap of every cover join, the real joins land LATER than listed,
+> by ~0.1 s at the open growing to ~0.75 s by 465 s. Shifted by that drift, the seed's punch points for F7 (352.933), F8 (441.633)
+> and F9 (464.4) land EXACTLY on each window's face-out edge (353.481, 442.281, 465.148): they are the EDGE joins (every face edge
+> sits in a desilence join, AS-RECORDED), not interior ones, and a punch there would zoom mid-word ("owns", "left", "owns"). A
+> per-frame scene score on a face crop of all 9 windows (`ffmpeg -ss <in> -i spine/ALL.e.enhanced.mp4 -vf
+> crop=800:700:560:150,scale=400:-1,select='gte(scene,0)',metadata=print`) finds ONE interior jump cut in the whole video: F3 at
+> 124.289 (score 0.188 on a 0.002 floor, plus the dropped frame 124.222 to 124.289), in the pause between "cheap," (ends 124.26)
+> and "but" (124.38) = the seed's 124.067 plus its drift. So ONE [PUNCH-IN] + ONE [LIGHTLEAK], on F3 at 2:04.3; F1, F2 and F4 to
+> F9 have no interior join, so no punch and no leak (overlays.md section 1, Mike 2026-10-07: hold length no longer matters).
+> TRANSITIONS: every transition row is marked `TRANSITIONS.md`. The current TRANSITION-PLAN.json / TRANSITIONS.md (17:27 / 17:30)
+> were authored on the WRONG joins: their 7 punch-leak rows (0.767, 24.967, 253.133, 254.867, 290.733, 320.967, 463.133) sit on
+> joins that do not exist and they carry no row for F3 at 124.289, so the transition-strategist must re-run (`--redo transitions`)
+> before reconcile_docs fans the picks in. SILENT PICKS ONLY: `mix_music.py` lays a `lib:` transition's own sfx, so under the
+> no-SFX ruling every pick is a `hand:` move, a sfx-free row, or a light leak with its baked whoosh trimmed (sfx_rel_db -60).
+> RULINGS THAT SHAPE THIS LOG (Mike 2026-11-13, PROJECT-LOG "Hard constraints" + SCREENPLAY OPEN QUESTIONS 11, never reversed):
+> NO captions anywhere (`caption_scope none`) · NO clip inserts · NO Envato, NO ChatGPT images, NO whiteboard · NO kinetic-text
+> theme (SCREENPLAY names no device id) · NO impact / riser / hype SFX: ZERO SFX rows, every MUSIC-PLAN hard hit is a `[MUSIC]`
+> move of the one bed, never a sound · ONE drone bed (`emergence`, license F3TNRU2B44JSS3FW), so NO title cards (every chapter
+> card OFF, flow straight in). Visual caps held: 2 system-design charts (C1, C2), 2 animated charts (C3, C4), 17 deck cards
+> (D1 to D13, D15 to D18), 6 receipts in 11 views, 9 FACE windows.
+> FACE: gated full-screen face (house rule #6), measured reframe (assets/face-reframe.json at comp). Punch-in + library light leak
+> ON the ONE interior desilencer join (F3, 124.289); the other 8 windows have none, so no punch and no leak there.
+> ZERO ORPHANS: every file in `assets/` (card-slides, diagrams, charts, receipts) is PLACED below with a timecode or marked
+> REJECTED / BENCH in the reconciliation at the end; `assets/vid`, `img`, `title-slides`, `clip-inserts`, `whiteboard` and
+> `transitions` are empty by design. Card and chart text follows the SOURCE where the voice drifts (S-1 verbatim on D2, the
+> essay's "a person" on D4, 23.8% on D13, MINUS 7% on C4); SAY lines quote the take, Whisper mishears corrected per AS-RECORDED.
+
+## CH1 - THE OPEN (0:00.0-0:33.9, Bed A `emergence`, card OFF)
+```
+0:00.0  [FACE] F1 opens ON face → 0:05.4 (0.000-5.355) "At Google, 75% of all new code is generated by AI." no cut-in (the
+        video opens here); measured face reframe. NO punch, NO leak: no interior join (its one join, 5.333, is the face-out edge)
+0:00.0  [CAPTION] NONE for the whole video (caption_scope none, Mike 2026-11-13): no captions over FACE or COVER
+0:00.0  [MUSIC] Bed A `emergence` (Outside The Sky, Outside_The_Sky_Emergence_instrumental_5_01.mp3), the ONE bed, pass 1 from
+        file 1.0, NO fade-in (the file sits at -35 dBFS there), one seat remotion_gain_db -28.5 for the whole video · CH1 row:
+        the intro swell of the file, file 1.0-34.92 (bars 0-14), -22.8 dB under the raised VO
+0:00.0  [MUSIC] hard hit (MUSIC-PLAN 0.0) the locked hook: no hit and NO SFX (Mike's ruling); the swell rises from silence at
+        frame 0 and is audible from around 7 s (MUSIC-PLAN LISTEN 1)
+0:00.0  SAY:  "At Google, 75% of all new code is generated by AI."
+0:05.4  [TRANSITION] face→cover F1 out → hand:film-burn (face-cut, 0.76s)
+0:05.4  [RECEIPT] C5-sentence IN (5.355 → 7.06), Sundar Pichai's Cloud Next '26 post on blog.google, the paragraph 'Today, 75% of
+        all new code at Google is now AI-generated and approved by engineers, up from 50% last fall.' (sentence_rect x 666 y 404,
+        receipts-geometry.json); settling push that stops, both halves in frame (NEW code, approved by engineers), never "75% of
+        Google's code" · treatment: highlight `[VERIFY no Google figure newer than 75%]`
+0:05.7  SAY:  "Engineers approve it."
+0:06.0  [HIGHLIGHT] C5-sentence 'approved by engineers' wipes in on "approve" (5.96)
+0:07.1  [RECEIPT] C5-header IN (7.06 → 10.85), the same post's header: byline 'Sundar Pichai, CEO of Google and Alphabet' + date
+        'Apr 22, 2026' (date_rect, byline_rect); quick cross-fade inside the receipt, settling push · treatment: highlight
+0:07.1  SAY:  "That's Google's own CEO in April, 2026."
+0:08.0  [HIGHLIGHT] C5-header byline 'CEO of Google and Alphabet' on "CEO" (7.96)
+0:09.1  [HIGHLIGHT] C5-header date 'Apr 22, 2026' on "April" (9.14)
+0:10.8  [TRANSITION] cover swap C5 → C6, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+0:10.8  [RECEIPT] C6-sentence IN (10.85 → 20.04), Anthropic's S-1 on sec.gov, filing page 136 'Operating Efficiency', the line
+        'For example, over 90% of the contributions to our codebase in September 2026 were written by Claude.' (sentence_rect y
+        381); slow settling push · treatment: highlight (the S-1's words, never the spoken "what went into their codebase")
+        `[VERIFY the sentence in the newest amendment]`
+0:11.0  SAY:  "At Anthropic, the company that makes Claude,"
+0:13.6  SAY:  "over 90% of what went into their codebase"
+0:13.6  [HIGHLIGHT] C6-sentence wipe starts on "over" (13.64) and runs across 'over 90% of the contributions to our codebase in
+        September 2026 were written by Claude' to 19.4 ("Claude.")
+0:16.2  SAY:  "in September, 2026 was written by Claude."
+0:20.0  [RECEIPT] C6-cover IN (20.04 → 22.555), the S-1 cover page (UNITED STATES SECURITIES AND EXCHANGE COMMISSION, FORM S-1,
+        Anthropic, PBC) shown as an OBJECT on "their own filing with the SEC" · treatment: pan · [MOTION]
+        lib:motion-3d-pan-1-up (one library move fitted to the 2.5 s view, no sound)
+0:20.0  SAY:  "That's in their own filing with the SEC."
+0:22.6  [TRANSITION] cover→face cut-in F2 → hand:film-burn (face-cut, 0.76s) (face pick)
+0:22.6  [FACE] F2 IN → 0:26.0 (22.555-25.955) "You just cannot keep your head down and write code anymore." NO punch, NO
+        leak: no interior join (its one join, 25.9, is the face-out edge)
+0:22.6  SAY:  "You just cannot keep your head down and write code anymore."
+0:26.0  [TRANSITION] face→cover F2 out → hand:film-burn (face-cut, 0.76s)
+0:26.0  [CONTAINER] D1 IN (25.955 → 33.78), question card, text only, full frame (slot in on the face-out)
+0:26.1  [CONTAINER] D1 line 1 'IF AI WRITES THE CODE,' lands on "So" (26.06) = D1.png
+0:26.1  SAY:  "So the question isn't whether an AI writes the code."
+0:28.8  [CONTAINER] D1-s1 line 2 'WHAT DOES THE ENGINEER GET PAID FOR?' lands (28.80), holds through the handoff line to 0:33.8
+0:28.8  SAY:  "The question is what the software engineer's"
+0:30.5  SAY:  "actually getting paid for."
+0:32.1  SAY:  "So let me show you how we got here."
+0:33.8  [TRANSITION] D1 → C3, quiet cross-fade + scale-in (SPIN candidate: the first animated chart) → hand:xfade-scale (container-xfade, 0.35s)
+0:33.8  [CHART] C3 IN (33.78 → 68.14), ANIMATED chart 1 'How much code AI writes, by the companies' own statements', a real
+        useCurrentFrame component built from C3.geometry.json (never a held PNG): container entrance 0.35 s fade + 0.97 → 1
+        scale on the header only; two panels, GOOGLE cyan left, ANTHROPIC green right, one time axis, one 0-100% scale
+```
+
+## CH2 - THE SHIFT (0:33.9-2:10.1, Bed A, card OFF)
+```
+0:33.9  [MUSIC] Bed A continues, CH2 row: the first plateau, file 34.92-131.12 (bars 14-54), sample-continuous with CH1 (no
+        fade, no breath), -19.7 dB under VO
+0:33.9  [MUSIC] hard hit (MUSIC-PLAN 33.9) CH2 opens on "Start": the plateau step of the file (file 34.8-35.0) arrives by itself;
+        no hit, NO SFX
+0:33.9  [CHART] C3 both panels, gridlines and axes draw left to right (33.92 → 34.30), titles muted = C3-start
+0:33.9  SAY:  "Start with Google."
+0:34.3  [CHART] C3 GOOGLE title lights cyan on "Google" (34.28)
+0:35.0  SAY:  "In October of 2024, their CEO said that more than a quarter"
+0:37.8  [CHART] C3 g1 FLOOR lands at 25% (open top, chevron), callout 'MORE THAN 25% / OCT 2024 · Pichai, Q3 2024 earnings
+        remarks' on "more" (37.80)
+0:38.7  SAY:  "of all new code was generated by AI."
+0:41.1  SAY:  "By the fall of 2025, it was 50%."
+0:41.4  [CHART] C3 gL1 link draws g1 → g2 (41.36 → 43.40)
+0:43.3  [CHART] C3 g2 CAPSULE grows from its centre (43.30), callout '50% / FALL 2025 · per Pichai, 2026-04-22' lands on "50%"
+        (43.70; Pichai's own look back, never a separate fall statement)
+0:44.7  SAY:  "By April, 2026, 75."
+0:45.1  [CHART] C3 gL2 link draws g2 → g3 (45.06 → 47.10)
+0:47.4  [CHART] C3 g3 DOT pops at 75% + callout '75% / APR 2026 · Pichai, Cloud Next '26' on "75" (47.36) = C3-mid, holds to 0:48.5
+0:48.5  [CHART] C3 ANTHROPIC title lights green, GOOGLE steps to REST at .55 (48.50)
+0:48.5  SAY:  "Anthropic moved even faster."
+0:50.7  SAY:  "Before Claude Code launched in February of 2025,"
+0:52.4  [CHART] C3 the dotted Claude Code marker draws up + label 'CLAUDE CODE / FEB 2025' on "February" (52.36)
+0:54.3  SAY:  "Claude's share of their code was in the low single digits."
+0:55.4  [CHART] C3 a1 BAND fills left to right (55.40), callout 'LOW SINGLE DIGITS / BEFORE FEB 2025 · Anthropic Institute
+        essay' on "low" (56.06), no number printed
+0:57.1  SAY:  "By May of 2026, Claude had authored more than 80%"
+0:57.6  [CHART] C3 aL1 link draws band → a2, the steep climb (57.60 → 60.00)
+1:00.2  [CHART] C3 a2 FLOOR lands, callout 'MORE THAN 80% / OF MERGED CODE / MAY 2026 · Anthropic Institute essay' on "more"
+        (60.20) `[VERIFY the essay figure, page updated in place]`
+1:01.2  SAY:  "of the code they merged."
+1:02.8  SAY:  "By September, over 90%."
+1:03.0  [CHART] C3 aL2 DASHED link draws a2 → a3, two different measures (63.04 → 63.80)
+1:03.9  [CHART] C3 a3 FLOOR lands, callout 'OVER 90% / OF CODEBASE CONTRIBUTIONS / SEP 2026 · Anthropic S-1' on "over" (63.90)
+1:05.3  [CHART] C3 GOOGLE returns to LIT (0.4 s) on "Both" (65.30) = C3-payoff; slow push 1.00 → 1.02 centred (960, 580) to 1:08.1
+1:05.3  SAY:  "Both companies describe the same change."
+1:08.1  [TRANSITION] cover swap C3 → D2, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+1:08.1  [CONTAINER] D2 IN (68.14 → 77.60), quote card 'direct and review its work rather than write code line by line', source
+        line 'Anthropic S-1, filed 2026-10-26', strip at rest = D2.png (the S-1 verbatim, never the spoken "this engineer is")
+1:08.6  [CONTAINER] D2 quote lands, no spotlight yet (68.58)
+1:08.6  SAY:  "Anthropic's filing says this engineer is increasingly"
+1:11.0  [CONTAINER] D2-s1 DIRECT lit (70.98)
+1:11.0  SAY:  "direct and review its work rather than write code"
+1:11.6  [CONTAINER] D2-s2 REVIEW lit, DIRECT stays (71.56)
+1:13.5  SAY:  "line by line."
+1:14.7  [CONTAINER] D2-s3 LESS TYPING lit (74.74)
+1:14.7  SAY:  "Less typing, more directing, and more reviewing."
+1:15.7  [CONTAINER] D2-s4 MORE DIRECTING lit (75.68)
+1:16.9  [CONTAINER] D2-s5 MORE REVIEWING lit (76.86), holds to 1:17.6
+1:17.6  [TRANSITION] cover swap D2 → D3, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+1:17.6  [CONTAINER] D3 IN (77.60 → 84.94), 'THE LOOP', slot-1 layout (row 1 only), row 1 at rest = D3.png
+1:17.8  SAY:  "Now the big idea behind all of this"
+1:19.4  SAY:  "is recursive self-improvement."
+1:19.6  [CONTAINER] D3-s1 row 1 lit, RECURSIVE SELF-IMPROVEMENT in cyan on "recursive" (79.62), shown as a DEFINITION, never as reached
+1:19.8  [MUSIC] hard hit (MUSIC-PLAN 79.8) the big idea: the swell of bars 33-34 as the file plays it (79.0-82.6, its peak on
+        "recursive self"); no hit, NO SFX
+1:21.3  [CONTAINER] D3-s2 the definition 'AN AI THAT BUILDS ITS OWN SUCCESSOR, NO HUMAN IN THE LOOP' brightens (81.30), holds to 1:24.9
+1:21.3  SAY:  "An AI that designs and builds its own successor"
+1:23.8  SAY:  "with no human in the loop."
+1:24.9  [TRANSITION] cover swap D3 → C7, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+1:24.9  [RECEIPT] C7-title-sentence IN (84.94 → 86.30), the Anthropic Institute essay 'When AI builds itself' with its subtitle
+        and intro, the title in view on "Anthropic's own words"; a short push toward sentence_rect · treatment: push (a 1.4 s
+        establishing flash; the read is the next view) `[VERIFY the sentence unchanged, page updated in place]`
+1:24.9  SAY:  "Anthropic's own words on that: 'We're not there yet,'"
+1:26.3  [RECEIPT] C7-sentence IN (86.30 → 90.49), the tight crop of the essay's intro column set large, 'We are not there yet, and
+        recursive self-improvement is not inevitable.'; cross-fade between "words" and "on", settling push that stops ·
+        treatment: highlight
+1:26.9  [HIGHLIGHT] C7-sentence 'We are not there yet' wipes in on "We're" (86.88) → 88.08; the rest of the sentence reads through
+        "but the loop has started closing" (held 2.4 s past the quote on purpose, GATE 3 ruling 5)
+1:28.1  SAY:  "but the loop has started closing."
+1:30.5  [TRANSITION] cover swap C7 → D3, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+1:30.5  [CONTAINER] D3-s3 D3 RETURNS (90.49 → 107.31), slot-2 three-row layout: row 1 at rest, row 2 ALREADY HAPPENING lit on
+        "Each" (90.68): 'Each version of a Claude model assists in building the next' (S-1, 2026-10-26)
+1:30.7  SAY:  "Each version of Claude already helps build the next one."
+1:33.9  SAY:  "And on November 10th, 2026, in its IPO filing,"
+1:34.2  [CONTAINER] D3-s4 row 3 lands, date tag '2026-11-10, S-1/A No.2' lit, quote at rest (94.16)
+1:37.8  [CONTAINER] D3-s5 row 3 first half 'we made a determination that we have met this threshold' lit (97.80)
+        `[VERIFY live: the sentence changed between amendments]`
+1:37.8  SAY:  "Anthropic told investors it has met its own threshold"
+1:40.2  SAY:  "for AI accelerating AI progress based on what it expects"
+1:42.4  [CONTAINER] D3-s6 the caveat half (gold) 'based on what we expect from future models and our overall rate of progress,
+        rather than on what we have observed from current models' lit (102.40), holds to 1:47.3
+1:43.7  SAY:  "from future models, not on what today's models have shown."
+1:47.3  [TRANSITION] cover swap D3 → D4, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+1:47.3  [CONTAINER] D4 IN (107.31 → 123.322), text card, no data marks (a picture, not a forecast)
+1:47.5  [CONTAINER] D4 END OF 2026 lit, left (107.50); END OF 2027 and the quote at rest = D4.png
+1:47.5  SAY:  "We're at the end of 2026 now."
+1:50.2  [CONTAINER] D4-s1 END OF 2027 lit, right, '12 MONTHS' rail lit (110.20)
+1:50.2  SAY:  "Now picture the end of 2027."
+1:52.4  [CONTAINER] D4-s2 the essay quote lands under END OF 2027: 'In 2027, AI systems could be capable of tasks that take a
+        person weeks.' (112.40; the essay's "a person", not the spoken "humans")
+1:52.4  SAY:  "Anthropic says in 2027, AI systems could be capable"
+1:55.8  [CONTAINER] D4-s3 COULD spotlighted, gold (115.84)
+1:56.5  SAY:  "of tasks that take humans weeks to do."
+1:59.0  [CONTAINER] D4-s4 question line 'HOW MUCH DEMAND IS LEFT FOR AN ENGINEER WHO ONLY WANTS TO SIT THERE AND CODE?' lands
+        (118.98), holds to the FACE 3 cut-in
+1:59.0  SAY:  "So picture how much demand is left for an engineer"
+2:01.4  SAY:  "who only wants to sit there and code."
+2:03.3  [TRANSITION] cover→face cut-in F3 → hand:film-burn (face-cut, 0.76s) (face pick)
+2:03.3  [FACE] F3 IN → 2:05.3 (123.322-125.255, 1.9 s) "Code got cheap, but outcomes didn't." the ONE interior join of the
+        video: 124.289 (measured on the picture; the seed's 124.067 plus the map drift), 0.97 s from either edge
+2:03.4  SAY:  "Code got cheap, but outcomes didn't."
+2:04.3  [PUNCH-IN] F3 hard ~15-20% step IN, ON the desilencer join 124.289 (frame 3729; the pause between "cheap," 124.26 and
+        "but" 124.38, so no word is zoomed across) → holds to the face-out 2:05.3 (0.97 s)
+2:04.3  [LIGHTLEAK] F3 library light leak peaking ON the same join frame → lib:lightleaks-soft-short-5 (punch-leak, 0.40s) (punch-leak): from the video's Soft set,
+        screen blend; a 0.40 s Soft Short fits (clear of the cut-in flash, which ends ~123.70, and the cut-out flash, which
+        starts ~124.88; a 1.44 s Soft would run into the cut-out burn); its baked whoosh trimmed silent (sfx_rel_db -60, no SFX)
+2:05.3  [TRANSITION] face→cover F3 out → hand:film-burn (face-cut, 0.76s)
+2:05.3  [CONTAINER] D5 IN (125.255 → 129.92), one-line card, full frame
+2:05.4  [CONTAINER] D5 lead 'NOT FOR THE CODE.' lands (125.42) = D5.png
+2:05.4  SAY:  "A company doesn't pay you for the code."
+2:07.3  [CONTAINER] D5-s1 main line 'YOU GET PAID FOR WHAT THE CODE DOES TO THE BUSINESS.' lands (127.34), holds to 2:09.9
+        (4.7 s slot, narration-bounded, GATE 3 ruling 8)
+2:07.3  SAY:  "It pays you for what the code does to the business."
+2:09.9  [TRANSITION] cover swap D5 → C2, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+2:09.9  [DIAGRAM] C2 IN (129.92 → 153.40), SYSTEM-DESIGN chart 2 'the pod, then and now' (4320x2430 PNGs rendered into a
+        1920x1080 box, camera transform per _state-cues.md), state THEN on camera LEFT (80, 304.8, 870, 489.4; s 2.2069):
+        the frame 'A TYPICAL POD' with six empty dashed seats = C2-empty
+```
+
+## CH3 - THE POD (2:10.1-3:14.5, Bed A, card OFF)
+```
+2:10.1  [MUSIC] Bed A continues, CH3 row: the plateau, file 131.12-195.54 (bars 54-81), sample-continuous, -20.1 dB under VO;
+        the low bars 54-56 open the chapter
+2:10.1  SAY:  "Here's how software has usually been built."
+2:12.5  SAY:  "Engineers work in a pod inside their company."
+2:15.3  SAY:  "A small cross-functional team, typically of 10 people"
+2:15.8  [DIAGRAM] C2-scope T→B mask over C2-empty (x 100-930, first edge y 420): 'cross-functional, typically 10 or fewer people
+        (Scrum Guide 2020)' on "cross" (135.78)
+2:18.3  SAY:  "or fewer, working on one or more steps of a funnel"
+2:19.3  [DIAGRAM] C2-scope mask edge runs to y 1080: 'works on funnel steps or product features' on "working" (139.32)
+2:21.1  SAY:  "or features of a product."
+2:23.0  SAY:  "A typical pod looked like this, a front engineer,"
+2:24.8  [DIAGRAM] C2-seats region box FRONTEND fills, a person in the seat, on "front" (144.78; the label stays FRONTEND)
+2:25.7  SAY:  "a backend engineer, a QA engineer, a project manager,"
+2:25.8  [DIAGRAM] C2-seats region box BACKEND (145.82)
+2:26.8  [DIAGRAM] C2-seats region box QA (146.84)
+2:28.2  [DIAGRAM] C2-seats region box PROJECT MANAGER (148.22)
+2:29.6  SAY:  "a designer, maybe a marketer, six seats, six people."
+2:29.8  [DIAGRAM] C2-seats region box DESIGNER (149.84)
+2:30.7  [DIAGRAM] C2-seats region box MARKETER (150.74)
+2:31.6  [DIAGRAM] C2-then all six seats light + '6 SEATS, 6 PEOPLE' on "six" (151.60); camera LEFT drifts 1.00 → 1.015
+2:33.4  [DIAGRAM] C2 NOW (153.40 → 167.38), a contiguous STATE SWAP of the same diagram, no ingress transition: the camera pans
+        LEFT → RIGHT (153.40 → 154.25, eased)
+2:33.6  [DIAGRAM] C2-now-base cross-fade 0.4 s into the drawn NOW panel, header 'NOW · ONE ENGINEER CAN FILL ALMOST EVERY SEAT'
+        on "Now" (153.58; CAN, nothing measured)
+2:33.6  SAY:  "Now one single engineer can fill almost all of those seats."
+2:37.6  SAY:  "The engineer supplies the goal, the AI agents do the work,"
+2:38.2  [DIAGRAM] C2-goal arrow out + SUPPLIES THE GOAL on "supplies" (158.18)
+2:39.9  [DIAGRAM] C2-agents the six agent seats light + AI AGENTS DO THE WORK on "AI" (159.92)
+2:41.8  SAY:  "and the engineer reviews what comes back."
+2:42.5  [DIAGRAM] C2-now arrow back + REVIEWS on "reviews" (162.54)
+2:44.0  [DIAGRAM] C2-dim camera pulls back RIGHT → FULL (163.98 → 164.78) while the old pod dims to .30, takeaway 'The pod
+        doesn't disappear.'
+2:44.0  SAY:  "The pod doesn't disappear."
+2:45.6  [DIAGRAM] C2-final ONE ENGINEER lights (green, glow) + 'One engineer runs the whole pod.' on "One" (165.60), holds to 2:47.4
+        (C2 runs 37.5 s over its two states: declared DIAGRAM ref, LONG HOLD justified, GATE 3 ruling 10)
+2:45.6  SAY:  "One engineer runs the whole pod."
+2:47.4  [TRANSITION] cover swap C2 → D18, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s) (D18 lands ON C2's out, ~0.2 s overlap: the
+        blacked-out FACE 4 picture must never show at either edge, PROJECT-LOG open flag)
+2:47.4  [CONTAINER] D18 IN (167.38 → 180.34), own-proof card covering the BLACKED-OUT FACE 4 line (GATE 3 ruling 1); six jobs at rest
+2:47.6  [CONTAINER] D18 headline 'I RUN A WHOLE COMPANY THIS WAY' (167.56) = D18.png
+2:47.6  SAY:  "I run a whole company this way,"
+2:49.0  SAY:  "from the research of the scripts to the edits"
+2:49.7  [CONTAINER] D18-s1 RESEARCH (169.70)
+2:50.5  [CONTAINER] D18-s2 SCRIPTS (170.48)
+2:51.4  [CONTAINER] D18-s3 EDITS (171.36)
+2:51.7  SAY:  "to the reviews to the software that we build"
+2:52.2  [CONTAINER] D18-s4 REVIEWS (172.18)
+2:53.4  [CONTAINER] D18-s5 THE SOFTWARE WE BUILD (173.42)
+2:54.5  SAY:  "to the customer service, pretty much everything."
+2:54.8  [CONTAINER] D18-s6 CUSTOMER SERVICE (174.82)
+2:56.0  [CONTAINER] D18-s7 all six lit on "pretty much everything" (176.02)
+2:57.0  [CONTAINER] D18-s8 closing line 'ONE PERSON, DIRECTING A WHOLE BUNCH OF AGENTS' lands (177.02), holds to 3:00.3
+2:57.0  SAY:  "Just one person directing a whole bunch of agents."
+3:00.3  [TRANSITION] cover swap D18 → D6, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+3:00.3  [CONTAINER] D6 IN (180.34 → 194.41), the two words at rest
+3:00.5  [CONTAINER] D6 lead line 'RUN THE WHOLE POD, OWN A PIECE OF THE BUSINESS' (180.52) = D6.png
+3:00.5  SAY:  "And when you run the whole pod,"
+3:01.8  SAY:  "you own a piece of the business."
+3:03.3  SAY:  "That's why software engineers need to be more business-minded"
+3:05.3  [CONTAINER] D6-s1 BUSINESS-MINDED lit (185.34)
+3:05.9  SAY:  "nowadays, more entrepreneurial."
+3:07.1  [CONTAINER] D6-s2 ENTREPRENEURIAL lit (187.08)
+3:08.2  [CONTAINER] D6-s3 the words give way to 'WHICH PIECE DO YOU OWN?' (188.18)
+3:08.2  SAY:  "So which piece of the business do you own?"
+3:10.3  SAY:  "Nowadays, there seems to be four versions of an engineer,"
+3:11.4  [CONTAINER] D6-s4 four empty role slots numbered 1 to 4 draw in on "four" (191.40), names hidden, hold to 3:14.4 (the slots
+        D7, D9, D11 and D12 fill, same numbering)
+3:12.9  SAY:  "and each one has a different answer."
+3:14.4  [TRANSITION] D6 → C1, quiet cross-fade + scale-in (MELT or SPIN candidate: the funnel map, the marquee reveal of the video) → hand:xfade-scale (container-xfade, 0.35s)
+3:14.4  [DIAGRAM] C1 IN (194.41 → 209.72), SYSTEM-DESIGN chart 1 'the pirate funnel' map, state FUNNEL (stages only, no roles):
+        entry on the ghost funnel = C1-funnel-outline (24 pixel-locked stills, every swap a spotlight move, never a redraw)
+```
+
+## CH4 - THE VERSIONS OF THE ENGINEER (3:14.5-6:08.4, Bed A, card OFF)
+```
+3:14.5  [MUSIC] Bed A continues, CH4 row 1: the end of pass 1, file 195.54-256.8 (bars 81-106), -20.3 dB under VO; its last bar
+        cross-fades out (2.4 s, spine 253.4-255.8)
+3:14.5  [MUSIC] hard hit (MUSIC-PLAN 194.54) CH4 opens on the funnel map C1, the marquee reveal: the fuller run of the plateau
+        (bars 77-83) is up from 183.8 and holds through it; no hit, NO SFX
+3:14.5  SAY:  "To see them, you need one map, the pirate funnel,"
+3:15.5  [DIAGRAM] C1 the ghost funnel reads as drawn by the entrance on "one map" (195.52)
+3:16.5  [DIAGRAM] C1-funnel-title cross-fade: eyebrow ONE MAP + headline 'The pirate funnel' + divider (196.46)
+3:17.4  [DIAGRAM] C1-funnel-letters L→R mask over C1-funnel-title, one letter per spelled letter: A 197.40 · A 198.14 · A 198.34 ·
+        R 198.66 · R 198.92 · R 199.18 (mask edges x 329 / 541 / 753 / 965 / 1177 / 1920); on screen always AAARRR
+3:17.4  SAY:  "AAARRR, awareness, acquisition, activation,"
+3:19.9  [DIAGRAM] C1-funnel-names L→R mask over C1-funnel-letters, each slice firms up as its name is said: AWARENESS 199.86 ·
+        ACQUISITION 200.32 · ACTIVATION 201.12 · RETENTION 201.76 · REFERRAL 202.34 · REVENUE 202.90 (same edges)
+3:21.8  SAY:  "retention, referral, and revenue."
+3:23.6  SAY:  "It comes from Dave McClure's Startup Metrics for Pirates."
+3:24.0  [DIAGRAM] C1-funnel cross-fade: source line 'after Dave McClure, Startup Metrics for Pirates (AARRR)', no year (204.00)
+3:26.6  SAY:  "Every customer moves through each of these six steps."
+3:26.8  [DIAGRAM] C1-funnel comp-drawn customer dot (r 9 #e8eaf0 + halo r 20) fades in at (96, 668) and hops the slice centres
+        223 (207.00) · 435 (207.45) · 647 (207.90) · 859 (208.35) · 1071 (208.80) · 1283 (209.25), holds in REVENUE to 3:29.7;
+        travelling spotlight = C1-funnel-glow inside the dot's column at .6; push 1.00 → 1.03 centred (750, 560)
+3:29.7  [TRANSITION] cover swap C1 → D7, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+3:29.7  [CONTAINER] D7 IN (209.72 → 221.70), role card 1, both rows at rest
+3:29.9  [CONTAINER] D7 '1 GROWTH ENGINEER' (209.90) = D7.png (fills slot 1 of the D6 tease)
+3:29.9  SAY:  "First, the growth engineer."
+3:32.1  SAY:  "This role has existed for quite a while."
+3:34.3  SAY:  "It's a growth marketer and software engineer"
+3:34.7  [CONTAINER] D7-s1 row 1 lit, GROWTH MARKETER in cyan (214.72)
+3:35.5  [CONTAINER] D7-s2 + SOFTWARE ENGINEER in cyan (215.52)
+3:36.2  SAY:  "all in one person, and sometimes a software engineer"
+3:38.9  SAY:  "can be just a front-end developer or it can be full-stack."
+3:39.7  [CONTAINER] D7-s3 small row lit, FRONTEND in cyan, row 1 back to rest (219.70)
+3:41.0  [CONTAINER] D7-s4 or FULL STACK in cyan (220.98), holds to 3:41.7
+3:41.7  [TRANSITION] cover swap D7 → D8, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+3:41.7  [CONTAINER] D8 IN (221.70 → 235.48), three rows lit one at a time, earlier rows dim
+3:41.8  SAY:  "A growth marketer is all about strategy,"
+3:42.0  [CONTAINER] D8 row 1 'GROWTH MARKETER = STRATEGY, THE BIGGER PICTURE' lit (222.02) = D8.png
+3:44.2  SAY:  "the bigger picture."
+3:45.0  SAY:  "A growth hacker is slightly more technical"
+3:45.2  [CONTAINER] D8-s1 row 2 'GROWTH HACKER = TACTICS, RAPID TURNAROUND' lit, row 1 back to rest (225.24)
+3:47.0  SAY:  "than a growth marketer."
+3:48.4  [CONTAINER] D8-s2 TACTICS lit (228.42)
+3:48.4  SAY:  "Tactics, shorter-term growth, rapid turnaround."
+3:50.3  [CONTAINER] D8-s3 RAPID TURNAROUND lit (230.32)
+3:51.5  [CONTAINER] D8-s4 row 3 'GROWTH ENGINEER = BOTH, PLUS THE SOFTWARE' lit (231.54), holds to 3:55.5
+3:51.5  SAY:  "The growth engineer has all of those traits,"
+3:53.8  SAY:  "and they're also a software engineer."
+3:55.5  [TRANSITION] cover swap D8 → C1, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+3:55.5  [DIAGRAM] C1 RETURNS (235.48 → 250.508), state GROWTH: entry on C1-funnel
+3:55.6  SAY:  "They know all six steps of the funnel,"
+3:56.0  [DIAGRAM] C1-funnel-glow all six stages glow ONCE on "all" (236.02 up 0.25 s, hold to 236.80, down 0.4 s back to C1-funnel)
+3:57.8  [DIAGRAM] C1-growth-bracket tier-1 bracket over AWARENESS-ACTIVATION + '1 GROWTH ENGINEER' (237.80)
+3:57.8  SAY:  "and they work in one or more of them."
+3:59.6  [DIAGRAM] C1-growth-tags L→R mask over C1-growth-bracket: LANDING PAGES 239.60 · SIGNUPS 240.52 · ONBOARDING 241.18 ·
+        ACTIVATION 241.80 · the LIGHT tick on RETENTION 242.80 (edges x 302 / 422 / 586 / 760 / 1920; RETENTION stays the
+        product engineer's brightest stage, GATE 3 ruling 4)
+3:59.6  SAY:  "Landing pages, sign-ups, onboarding, activation, retention."
+4:03.8  [DIAGRAM] C1-growth-test L→R mask over C1-growth-tags: EVERY IDEA IS AN EXPERIMENT 243.76 · SCRAPPED (red, struck)
+        245.80 · SCALED 246.42 (edges x 395 / 535 / 1920)
+4:03.8  SAY:  "Every idea is an experiment, and it gets scrapped or scaled."
+4:07.0  SAY:  "The outcome they own would be something like sign-ups,"
+4:08.6  [DIAGRAM] C1-growth L→R mask over C1-growth-test: 'OWNS SIGNUPS, SUBSCRIPTIONS, REVENUE' (PostHog's wording) 248.60, then
+        the light ticks on REFERRAL + REVENUE 249.90 (edges x 760 / 1920; the OWNS row lives on the map, GATE 3 ruling 2);
+        push 1.00 → 1.03 centred (430, 420) across the state
+4:09.2  SAY:  "subscription, revenue."
+4:10.4  SAY:  "I've worked as a growth engineer,"
+4:10.5  [TRANSITION] cover→face cut-in F4 → hand:film-burn (face-cut, 0.76s) (face pick)
+4:10.5  [FACE] F4 IN → 4:16.7 (250.508-256.741, 6.2 s) "I've worked as a growth engineer, and the whole job is about getting
+        the product out there and getting the market to say yes." NO punch, NO leak: no interior join (its one join, 256.367
+        plus the drift, is the face-out edge 256.741); the 6.2 s hold stays on the base frame (hold length no longer matters)
+4:12.2  SAY:  "and the whole job is about getting the product out there"
+4:13.4  [MUSIC] the bed's ONE join starts: pass 1 fades out over spine 253.4-255.8 (file 254.4-256.8) while pass 2 fades in
+        (file 60.0-62.4); same chord, should not be heard (MUSIC-PLAN LISTEN 2)
+4:15.1  SAY:  "and getting the market to say yes."
+4:15.8  [MUSIC] Bed A pass 2 FULL on the bar line (spine 255.8 = file 62.4), CH4 row 2: file 62.4-175.02 (bars 26-72), -19.9 dB
+        under VO, full 1.0 s before "Second"
+4:15.8  [MUSIC] hard hit (MUSIC-PLAN 255.8) the one join, an 81-bar jump back cross-faded over the bar before it (253.4-255.8);
+        no hit, NO SFX
+4:16.7  SAY:  "Second, the product engineer."
+4:16.7  [TRANSITION] face→cover F4 out → hand:film-burn (face-cut, 0.76s)
+4:16.7  [CONTAINER] D9 IN (256.741 → 262.89), role card 2, slot-1 layout (one row)
+4:16.8  [CONTAINER] D9 '2 PRODUCT ENGINEER' lands on the REAL onset of "Second" (256.83, not Whisper's early 256.72), features
+        row at rest = D9.png (fills slot 2 of the D6 tease)
+4:18.8  SAY:  "They're mostly concerned with features,"
+4:19.7  [CONTAINER] D9-s1 'FEATURES: WHAT THE CUSTOMER INTERACTS WITH' lit (259.68), holds to 4:22.9
+4:20.2  SAY:  "what the customer actually interacts with"
+4:21.9  SAY:  "inside of the product."
+4:22.9  [TRANSITION] cover swap D9 → C1, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+4:22.9  [DIAGRAM] C1 RETURNS (262.89 → 275.03), state PRODUCT: growth steps back to its bracket + label at .30; tier-2 bracket
+        over ACTIVATION + RETENTION + '2 PRODUCT ENGINEER' lit = C1-product-bracket
+4:23.0  SAY:  "There's a lot of overlap with the growth engineer."
+4:23.8  [DIAGRAM] C1-product-overlap OVERLAP tag inside ACTIVATION, where the two brackets meet, on "overlap" (263.84)
+4:25.6  SAY:  "The difference is what they care about most."
+4:27.6  SAY:  "The product engineer has to care about the customer,"
+4:29.4  [DIAGRAM] C1-product-customer THE CUSTOMER tag on "customer" (269.38)
+4:29.9  SAY:  "what the customer needs, and above all, retention,"
+4:32.0  [DIAGRAM] C1-product-retention RETENTION lights brightest (green fill, glow), cross-fade 0.35 s, on "retention" (272.02)
+4:33.0  [DIAGRAM] C1-product 'THE CUSTOMER KEEPS USING THE PRODUCT' on "getting" (272.98); push 1.00 → 1.03 centred (860, 500)
+4:33.0  SAY:  "getting the customer to keep using the product."
+4:35.0  [TRANSITION] cover swap C1 → D10, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+4:35.0  [CONTAINER] D10 IN (275.03 → 281.97), quote card, quote at rest, source line 'incident.io, quoted in PostHog, What is a
+        product engineer, 2022-12-01' = D10.png `[VERIFY the sentence as PostHog quotes it]`
+4:35.2  SAY:  "One company that hires product engineers sums it up."
+4:38.1  [CONTAINER] D10-s1 the quote lands full white (278.14): 'Care more about outcomes and impact than the exact
+        implementation, or the tools used to solve the problem.'
+4:38.1  SAY:  "Care more about outcomes and impact"
+4:38.9  [CONTAINER] D10-s2 OUTCOMES AND IMPACT spotlighted (278.92), holds to 4:42.0
+4:40.1  SAY:  "than the exact implementation."
+4:42.0  [TRANSITION] cover swap D10 → D9, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+4:42.0  [CONTAINER] D9-s2 D9 RETURNS (281.97 → 289.741), two-row layout, both rows at rest, the FDE phrase not yet shown (a
+        deliberate callback with a new row, D9's second and last appearance)
+4:42.2  SAY:  "Some product engineers even work inside"
+4:43.5  [CONTAINER] D9-s3 'INSIDE A CLIENT'S BUSINESS' lit (283.50)
+4:44.0  SAY:  "of a client's business,"
+4:45.2  SAY:  "building their company's product into it."
+4:47.9  SAY:  "That's the forward-deployed engineer."
+4:48.3  [CONTAINER] D9-s4 '= FORWARD-DEPLOYED ENGINEER' lands (288.28), holds to the FACE 5 cut-in (never a fifth version)
+4:49.7  [TRANSITION] cover→face cut-in F5 → hand:film-burn (face-cut, 0.76s) (face pick)
+4:49.7  [FACE] F5 IN → 4:52.6 (289.741-292.608) "If the customer doesn't come back, the feature didn't work." NO punch,
+        NO leak: no interior join (its one join, 292.133, is the face-out edge)
+4:49.8  SAY:  "If the customer doesn't come back, the feature didn't work."
+4:52.6  [TRANSITION] face→cover F5 out → hand:film-burn (face-cut, 0.76s)
+4:52.6  [CONTAINER] D11 IN (292.608 → 304.14), role card 3, both rows at rest
+4:52.7  [CONTAINER] D11 '3 PLATFORM ENGINEER' (292.74) = D11.png (fills slot 3)
+4:52.7  SAY:  "Third, the platform engineer."
+4:55.0  [CONTAINER] D11-s1 'NOT MARKETING. NOT THE PRODUCT.' lit (295.02)
+4:55.0  SAY:  "This one might not touch marketing or the product at all."
+4:58.4  SAY:  "They work on something internal, the systems,"
+4:59.2  [CONTAINER] D11-s2 'INTERNAL: THE SYSTEMS EVERY OTHER TEAM BUILDS ON' lit (299.20), holds to 5:04.1
+5:00.7  SAY:  "the backend of the company,"
+5:02.1  SAY:  "the platform every other team builds on."
+5:04.1  [TRANSITION] cover swap D11 → C1, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+5:04.1  [DIAGRAM] C1 RETURNS (304.14 → 317.975), state PLATFORM: growth + product dimmed; the floor under the whole funnel +
+        '3 PLATFORM ENGINEER' lit = C1-platform-floor
+5:04.3  SAY:  "Their customers are inside the company,"
+5:06.2  SAY:  "the application developers, the data scientists."
+5:06.5  [DIAGRAM] C1-platform-customers L→R mask over C1-platform-floor: INTERNAL CUSTOMERS: APPLICATION DEVELOPERS 306.46, then
+        DATA SCIENTISTS 307.78 (edges x 633 / 1920; CNCF's users)
+5:08.9  SAY:  "A few platform teams serve many product teams,"
+5:10.0  [DIAGRAM] C1-platform-arrows bottom-to-top wipe over C1-platform-customers, the mask's top edge rising y 852 → 690
+        (310.02 → 310.52, ease out): six arrows rise from the floor into every stage on "serve"
+5:11.2  SAY:  "and that's why a platform team"
+5:12.4  SAY:  "can have a product manager of its own."
+5:13.0  [DIAGRAM] C1-platform-pm 'ITS OWN PRODUCT MANAGER' on "product" (312.98)
+5:14.1  SAY:  "The outcome is that they own the company's speed,"
+5:16.3  [DIAGRAM] C1-platform L→R mask over C1-platform-pm: 'OWNS SPEED, RELIABILITY, COST' word by word 316.34 / 316.50 /
+        317.48 (edges x 1156 / 1300 / 1920; GATE 3 ruling 2); push 1.00 → 1.03 centred (750, 760)
+5:16.5  SAY:  "reliability, and cost."
+5:18.0  [TRANSITION] cover→face cut-in F6 → hand:film-burn (face-cut, 0.76s) (face pick)
+5:18.0  [FACE] F6 IN → 5:21.9 (317.975-321.908) "Their customer sits inside the company, and is still a customer." NO punch,
+        NO leak: no interior join (its one join, 321.433, is the face-out edge)
+5:18.1  SAY:  "Their customer sits inside the company,"
+5:20.1  SAY:  "and is still a customer."
+5:21.9  [TRANSITION] face→cover F6 out → hand:film-burn (face-cut, 0.76s)
+5:21.9  [CONTAINER] D12 IN (321.908 → 329.58), role card 4, both rows at rest
+5:22.1  SAY:  "And fourth, the GTM engineer."
+5:22.3  [CONTAINER] D12 '4 GTM ENGINEER' (322.28) = D12.png (fills slot 4)
+5:25.2  [CONTAINER] D12-s1 'GO TO MARKET' lit (325.18)
+5:25.2  SAY:  "GTM means go to market."
+5:27.2  SAY:  "This is a software engineer who works with sales."
+5:27.6  [CONTAINER] D12-s2 'SOFTWARE ENGINEER + SALES' lit (327.64), holds to 5:29.6
+5:29.6  [TRANSITION] cover swap D12 → C12, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+5:29.6  [RECEIPT] C12-title-date IN (329.58 → 332.94), Clay's 'GTM engineering' post: the title, the Clay mark and the date
+        'Apr 21, 2026' shown as an OBJECT under "Clay, the company that says it coined the term in 2023" (self-reported on
+        Clay's own page, no added on-screen text states the coinage as fact) · treatment: pan · [MOTION]
+        lib:motion-3d-orbit-2-right-down (fitted to the 3.4 s view, no sound) `[VERIFY 'coined the term in 2023' still on the page]`
+5:29.8  SAY:  "Clay, the company that says it coined the term in 2023,"
+5:32.9  [RECEIPT] C12-definition IN (332.94 → 339.35), the definition line (definition_rect); cross-fade on "defines", settling
+        push that stops · treatment: highlight
+5:32.9  SAY:  "defines the work as building automated revenue systems"
+5:33.8  [HIGHLIGHT] C12-definition wipe follows the words 'building automated revenue systems using AI, data enrichment, and
+        workflow automation' from "building" (333.84) to "automation" (338.60)
+5:35.4  SAY:  "using AI, data enrichment, and workflow automation."
+5:39.4  [TRANSITION] cover swap C12 → C1, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+5:39.4  [DIAGRAM] C1 RETURNS (339.35 → 350.481), state GTM: growth, product, platform dimmed (the growth bracket stays visible so
+        the split reads); '4 GTM ENGINEER', the side lane and its link into REVENUE lit, the three nodes ghosted = C1-gtm-lane
+5:39.6  SAY:  "There's some overlap with the growth engineer,"
+5:41.4  SAY:  "but they work in different systems."
+5:42.9  SAY:  "The CRM, which is a sales team's customer database,"
+5:43.4  [DIAGRAM] C1-gtm T→B mask over C1-gtm-lane (x 1440-1800): CRM 343.40 · its line 'the sales team's customer database,
+        e.g. Salesforce' 344.64 · OUTBOUND 348.08 · PIPELINE 349.52 (edges y 460 / 516 / 592 / 1080); no on-screen text quotes
+        the unclear 340.66 words; push 1.00 → 1.03 centred (1500, 520)
+5:46.5  SAY:  "like Salesforce, plus outbound email and the sales pipeline."
+5:50.5  [TRANSITION] cover→face cut-in F7 → hand:film-burn (face-cut, 0.76s) (face pick)
+5:50.5  [FACE] F7 IN → 5:53.5 (350.481-353.481, 3.0 s) "Growth owns the funnel, GTM owns the pipeline." NO punch, NO leak: no
+        interior join (the seed's punch point 352.933 is the face-out edge join, 353.481 once the drift is added; on the picture
+        the window shows only a hand gesture, 352.08-352.48, no cut)
+5:50.6  SAY:  "Growth owns the funnel, GTM owns the pipeline."
+5:53.5  [TRANSITION] face→cover F7 out (SPIN candidate: the finished map; C1-all-base is the post-transform look) → hand:film-burn (face-cut, 0.76s)
+5:53.5  [DIAGRAM] C1 RETURNS (353.481 → 368.28), state ALL, the finished map shown ONCE: funnel, both brackets, floor + arrows,
+        lane + nodes all lit = C1-all-base (THE BALANCE: the overview after its pieces were spotlighted one at a time)
+5:53.7  SAY:  "So look at the whole map."
+5:55.0  [DIAGRAM] C1 label pulses 1, 2, 3, 4 (comp spotlight ring, r 22, 2.5 px #00e68a, glow): 1 GROWTH 355.02 · 2 PRODUCT
+        355.32 · 3 PLATFORM 355.62 · 4 GTM 355.92 (fade in 0.12 s, out 0.35 s)
+5:55.0  SAY:  "Four engineers, not one of them is defined"
+5:56.9  SAY:  "by a programming language or framework."
+5:59.1  [DIAGRAM] C1-all cross-fade 0.4 s: the four OWNS lines light together (SIGNUPS, SUBSCRIPTIONS, REVENUE · RETENTION ·
+        SPEED, RELIABILITY, COST · THE SALES PIPELINE), the headline turns to 'Defined by the outcome they own.' on "Each"
+        (359.06); push 1.00 → 1.025 centred (960, 560)
+5:59.1  SAY:  "Each one is defined by the outcome that they own."
+6:01.4  [DIAGRAM] C1-all holds unchanged under the rewatch line (361.40 → 368.28): the J-key line points back at this map
+6:01.4  SAY:  "And if that was a bit complex,"
+6:03.2  SAY:  "feel free to push the J key on your computer"
+6:05.0  SAY:  "to go back a couple times just to watch that over again."
+6:08.3  [TRANSITION] cover swap C1 → D13, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+6:08.3  [CONTAINER] D13 IN (368.28 → 376.29), stat rows card (text rows, no bars, not a chart), slot-1 layout (head + row 1,
+        large), head + row 1 at rest = D13.png `[VERIFY Indeed's 23.8%: it updates monthly]`
+```
+
+## CH5 - WHO FALLS BEHIND (6:08.4-7:22.4, Bed A, card OFF)
+```
+6:08.4  [MUSIC] Bed A continues, CH5 row: pass 2 runs on, file 175.02-249.04 (bars 72-103), sample-continuous, -20.1 dB under
+        VO; the quiet bars 70-75 carry the open
+6:08.4  SAY:  "Now here's what the market says."
+6:10.2  [CONTAINER] D13 head 'SOFTWARE JOBS AREN'T DISAPPEARING' lands (370.16)
+6:10.2  SAY:  "Software jobs aren't disappearing."
+6:12.2  SAY:  "On Indeed, software development postings"
+6:12.4  [CONTAINER] D13-s1 row 1 'SOFTWARE DEVELOPMENT POSTINGS' lit (372.42), source line 'Indeed Hiring Lab, 2026-11-12, data
+        to 2026-10-23'
+6:14.1  SAY:  "are up around 24% in a year."
+6:14.7  [CONTAINER] D13-s2 the figure 'UP 23.8% YEAR OVER YEAR' lands, green (374.72; he says "around 24%"), holds to 6:16.3
+6:16.3  [TRANSITION] cover swap D13 → C9, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+6:16.3  [RECEIPT] C9-chart IN (376.29 → 381.39), Indeed Hiring Lab's own chart 'The Software Development Rebound Is Concentrated in
+        Senior and AI Roles', never restyled, the 71% sentence above it in the same view (chart_rect + sentence_rect) ·
+        treatment: push (a real chart, the figure read off the screen: the push heads for the Senior roles 71% bar from "71%"
+        378.50; no highlight) `[VERIFY live]`
+6:16.4  SAY:  "But look at where the growth went."
+6:18.5  SAY:  "71% of the increase went to senior roles,"
+6:21.4  [TRANSITION] cover swap C9 → D13, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+6:21.4  [CONTAINER] D13-s3 D13 RETURNS (381.39 → 385.88), three-row layout: row 1 at rest, row 2 '71% OF THE INCREASE = SENIOR
+        ROLES (May 2025 to May 2026)' lit as already said
+6:21.5  SAY:  "and entry-level jobs are only 4.5% of software postings."
+6:21.6  [CONTAINER] D13-s4 row 3 'ENTRY LEVEL' lit, row 2 stays white (381.64)
+6:22.9  [CONTAINER] D13-s5 the figure '4.5% OF POSTINGS (2026 Q1)' lands, gold (382.88), holds to 6:25.9 (4.5 s slot,
+        narration-bounded, GATE 3 ruling 8) `[VERIFY any newer entry-level share]`
+6:25.9  [TRANSITION] D13 → C4, quiet cross-fade + scale-in (SPIN candidate: the second animated chart) → hand:xfade-scale (container-xfade, 0.35s)
+6:25.9  [CHART] C4 IN (385.88 → 408.31), ANIMATED chart 2, the BLS split, a real useCurrentFrame component built from
+        C4.geometry.json (never a held PNG): container entrance on the header 'Two jobs, two directions.'; slow push 1.00 →
+        1.02 centred (960, 560) across the whole cover
+6:26.1  [MUSIC] hard hit (MUSIC-PLAN 386.06) the BLS split: the fuller run again (bars 77-83, 378.2-395.0), the shade heavier of
+        CH5; no hit, NO SFX
+6:26.1  [CHART] C4 the zero line draws left to right ('0% · NO CHANGE'), the sub-label 'Projected, U.S. Bureau of Labor
+        Statistics, 2025 to 2035' fades in, the two dashed slots appear (386.06 → 386.56)
+6:26.1  SAY:  "The government's 10-year outlook draws the same line."
+6:28.9  SAY:  "The Bureau of Labor Statistics splits this into two jobs."
+6:31.1  [CHART] C4 both job names fade in MUTED on "two" (391.14) = C4-start
+6:32.4  [CHART] C4 COMPUTER PROGRAMMERS lights (392.38)
+6:32.4  SAY:  "Computer programmers, people who write, modify,"
+6:33.9  [CHART] C4 its quote 'write, modify, and test code...' fades in (393.90)
+6:35.4  SAY:  "and test code, projected to sink 7% by 2035."
+6:36.9  [CHART] C4 the red bar grows DOWN, the value counts to MINUS 7% landing on "7" (396.90 → 397.52) = C4-mid (he says
+        "sink", the chart says -7%)
+6:39.8  [CHART] C4 SOFTWARE DEVELOPERS, QUALITY ASSURANCE ANALYSTS, AND TESTERS lights, the FULL BLS category the +10% covers (399.80)
+6:39.8  SAY:  "Software developers, people who design software,"
+6:41.1  [CHART] C4 its quote 'design computer applications or programs' fades in (401.12)
+6:43.1  SAY:  "projected to grow 10%."
+6:43.2  [CHART] C4 the green bar grows UP, the value counts to PLUS 10% landing on "10%" (403.20 → 404.12), its glow over the last
+        0.2 s = C4-bars
+6:45.2  [CHART] C4 BLS's own sentence types on under the bars: 'some higher skilled programming tasks will likely shift to other
+        workers, such as software developers.' (405.18 → 406.70)
+6:45.2  SAY:  "The demand didn't disappear, it just moved."
+6:47.1  [CHART] C4 the arrow sweeps from the minus bar to the plus bar and the takeaway 'The demand didn't disappear. It moved.'
+        (the folded-in D14, GATE 3 ruling 3) fades in + rises 8 px (407.10 → 407.60) = C4-payoff, holds to 6:48.3
+6:48.3  [TRANSITION] cover swap C4 → D15, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+6:48.3  [CONTAINER] D15 IN (408.31 → 418.07), 'THE NEXT GENERATION', slot-1 layout (two rows, large)
+6:48.5  [CONTAINER] D15 heading + rows 1-2 at rest (408.48) = D15.png
+6:48.5  SAY:  "Now teenagers who haven't entered the market yet,"
+6:51.5  [CONTAINER] D15-s1 row 1 'ARRIVES WITH THE MINDSET' lit (411.54; his view, nothing says it is easier to get in)
+6:51.5  SAY:  "I think they'll come with this mindset already."
+6:54.1  SAY:  "Adapting is easier for them."
+6:55.6  [CONTAINER] D15-s2 row 2 'FEWER JUNIOR OPENINGS' lit with 'ENTRY LEVEL = 4.5% OF SOFTWARE POSTINGS (Indeed, 2026 Q1)'
+        (415.64), holds to 6:58.1
+6:55.6  SAY:  "But they're walking into fewer junior openings."
+6:58.1  [TRANSITION] cover swap D15 → C10, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+6:58.1  [RECEIPT] C10-headline IN (418.07 → 422.08), the Stanford Digital Economy Lab post headline 'No Widespread Displacement,
+        but the AI Employment Gap for Young Workers Has Widened to 19%' with the lab name and date (headline_rect,
+        date_line_rect), shown as an OBJECT on "A Stanford study found", both halves of the headline in frame · treatment: pan
+        · [MOTION] lib:motion-3d-pan-2-left (fitted to the 4.0 s view, no sound) `[VERIFY the 19% headline in the current revision]`
+6:58.2  SAY:  "A Stanford study found that in the jobs most exposed to AI,"
+7:02.1  [RECEIPT] C10-reduced-hiring IN (422.08 → 433.34), the post's 'Our six main facts'; cross-fade on "employment", settling
+        push onto Fact 2 (gap_19_rect: ages 22-25, about 19% below) · treatment: highlight (stage 2 REFINED from the plan's 431.12
+        so no highlight lands on a moving pan; see Open decisions)
+7:02.1  SAY:  "employment for workers aged 22 to 25 is around 19% below"
+7:04.9  [HIGHLIGHT] C10-reduced-hiring Fact 2 'about 19% below' on "19" (424.94); the source's own words only, never
+        "developers down 19%"
+7:06.2  SAY:  "where they would have been if it had kept pace"
+7:08.3  SAY:  "with their peers in less exposed jobs,"
+7:11.1  [HIGHLIGHT] C10-reduced-hiring the camera settles onto Fact 4 (reduced_hiring_rect) and the wipe lands on 'reduced hiring of
+        young workers' from "mostly" (431.12) to "hired" (432.72)
+7:11.1  SAY:  "mostly because fewer of them are getting hired."
+7:13.3  [TRANSITION] cover swap C10 → D15, quiet cross-fade + scale-in → hand:xfade-scale (container-xfade, 0.35s)
+7:13.3  [CONTAINER] D15-s3 D15 RETURNS (433.34 → 437.348), three-row layout: rows 1-2 at rest, row 3 'THE ONES WHO GET HIRED SHOW
+        UP READY TO OWN AN OUTCOME' lit on "the" (433.66), holds to the FACE 8 cut-in (4.0 s slot, GATE 3 ruling 8)
+7:13.5  SAY:  "So the ones who get hired are the ones who show up"
+7:15.9  SAY:  "and are ready to own an outcome."
+7:17.3  [TRANSITION] cover→face cut-in F8 → hand:film-burn (face-cut, 0.76s) (face pick)
+7:17.3  [FACE] F8 IN → 7:22.3 (437.348-442.281, 4.9 s) "If you're already in the market and you refuse to believe this change is
+        real, then you're the one who gets left behind." NO punch, NO leak: no interior join (the seed's punch point 441.633 is
+        the face-out edge join, 442.281 once the drift is added; a punch there would have zoomed inside "left")
+7:17.4  SAY:  "If you're already in the market"
+7:18.2  [MUSIC] hard hit (MUSIC-PLAN 438.2) the one who gets left behind: the dip of the file (bars 102-103) under the face line,
+        the words carry it; no hit, NO SFX
+7:18.7  SAY:  "and you refuse to believe this change is real,"
+7:20.9  SAY:  "then you're the one who gets left behind."
+7:22.3  [TRANSITION] face→cover F8 out → hand:film-burn (face-cut, 0.76s)
+7:22.3  [CONTAINER] D16 IN (442.281 → 460.181), 'WHAT TO DO NOW', three numbered steps lit one at a time (earlier steps dim)
+```
+
+## CH6 - THE CLOSE (7:22.4-7:57.4, Bed A, card OFF, its resolve right-aligned on "later")
+```
+7:22.4  [MUSIC] Bed A continues, CH6 row: the real ending of the file RIGHT-ALIGNED, file 249.04-283.98 (bars 103-118), -20.6 dB
+        under VO (align_end: the bar 118 line lands on "later")
+7:22.4  [CONTAINER] D16 title 'WHAT TO DO NOW', three steps at rest (442.44) = D16.png
+7:22.4  SAY:  "So here's what to do."
+7:23.8  [CONTAINER] D16-s1 step 1 'PICK YOUR PIECE' lit (443.76)
+7:23.8  SAY:  "Pick the piece of the business you wanna own,"
+7:25.8  [CONTAINER] D16-s2 A FUNNEL STEP (445.82)
+7:25.8  SAY:  "a step of the funnel, the sales pipeline,"
+7:27.0  [CONTAINER] D16-s3 THE SALES PIPELINE (447.02)
+7:28.0  [CONTAINER] D16-s4 THE INTERNAL PLATFORM (448.04)
+7:28.0  SAY:  "or the internal platform."
+7:29.6  [CONTAINER] D16-s5 step 2 'LEARN ITS ONE NUMBER' lit, step 1 back to rest (449.62)
+7:29.6  SAY:  "Learn its one number, conversion rate, activation rate,"
+7:31.1  [CONTAINER] D16-s6 CONVERSION (451.08)
+7:32.0  [CONTAINER] D16-s7 ACTIVATION (452.02)
+7:32.9  [CONTAINER] D16-s8 RETENTION (452.94)
+7:32.9  SAY:  "retention, pipeline, or cost."
+7:33.4  [MUSIC] hard hit (MUSIC-PLAN 453.4) Learn its one number / Then ship one experiment: the last peak of the file (top at
+        453.4), the only time the close lifts, 16.6 dB under the voice at its top; settled before the landing line; no hit, NO SFX
+7:33.8  [CONTAINER] D16-s9 PIPELINE (453.82)
+7:34.5  [CONTAINER] D16-s10 COST (454.50)
+7:34.9  SAY:  "Then ship one experiment end to end with AI"
+7:35.5  [CONTAINER] D16-s11 step 3 'SHIP ONE EXPERIMENT, END TO END, WITH AI' lit, step 2 back to rest (455.46)
+7:38.0  SAY:  "and measure what it did to that number."
+7:38.6  [CONTAINER] D16-s12 'MEASURE IT' (458.58), holds to the FACE 9 cut-in (D16 17.9 s, three steps of about 6 s)
+7:40.2  [TRANSITION] cover→face cut-in F9 → hand:film-burn (face-cut, 0.76s) (face pick)
+7:40.2  [FACE] F9 IN → 7:45.1 (460.181-465.148) "Don't be the engineer who only codes. Be the engineer who owns a number." the
+        landing line (the burst before "Don't" removed in d.cleaned, its cut at 460.015 sits before the cut-in). NO punch, NO
+        leak: no interior join (the seed's punch point 464.4 is the face-out edge join, 465.148 once the drift is added; a punch
+        there would have zoomed inside "owns")
+7:40.5  SAY:  "Don't be the engineer who only codes."
+7:42.8  SAY:  "Be the engineer who owns a number."
+7:45.1  [TRANSITION] face→cover F9 out → hand:film-burn (face-cut, 0.76s)
+7:45.1  [CONTAINER] D17 IN (465.148 → 477.38, to the last frame), the END CARD on YouTube's end-screen geometry: subscribe circle
+        (lit) + TWO empty video slots (x 300-920 and 990-1610, y 540-890, about 620x350, 70 px apart) = D17.png; the slots stay
+        EMPTY (YouTube draws its elements), no video title printed (GATE 3 ruling 7)
+7:45.5  SAY:  "So subscribe for more steady content"
+7:46.0  [CONTAINER] D17-s1 the line 'STEADY CONTENT ON HOW TO BECOME AN AI ENGINEER' lands clear of the slots (466.04)
+7:47.2  SAY:  "on how to become an AI engineer."
+7:49.7  SAY:  "And for a deeper look at some of these versions"
+7:51.6  [MUSIC] the last tone of the file sounds (471.6), then the drone only decays
+7:51.7  SAY:  "of software engineers,"
+7:53.5  SAY:  "take a look at these videos right here."
+7:54.0  [CONTAINER] D17-s2 the two video slots light on "these videos right here" (473.98), hold to the last frame
+7:55.3  SAY:  "And I'll catch you guys later."
+7:56.6  [MUSIC] hard hit (MUSIC-PLAN 476.6) the last word, "later": the bar 118 line, the drone 10 dB down and falling; a 0.3 s
+        fade starts as "later" ends (477.06) and closes at 477.38; no hit, NO SFX
+7:57.1  [END] the video ends on the last word "later" (477.06); the spine runs on to 7:57.4 (477.38) under D17: no held still, no
+        end_card_hold, nothing rings past the spine
+```
+
+---
+## Orphan reconciliation (zero orphans, checked against `assets/` on disk 2026-11-14)
+Every renderable file in `assets/` is PLACED above (with its timecode) or marked REJECTED / BENCH here. Source files (.html,
+.css, .py, .json, .md) are exempt (comp-build.md section 10). `assets/vid`, `img`, `title-slides`, `clip-inserts`, `whiteboard`
+and `transitions` hold no files (Mike's zero budgets; the lean transition assets are copied in at comp).
+
+**PLACED (every state is a row above):**
+- Card slides, 17 cards, 87 PNGs: D1 + D1-s1 · D2 + D2-s1..s5 · D3 + D3-s1..s6 (slot 1 = D3, D3-s1, D3-s2; slot 2 = D3-s3..s6) ·
+  D4 + D4-s1..s4 · D5 + D5-s1 · D6 + D6-s1..s4 · D7 + D7-s1..s4 · D8 + D8-s1..s4 · D9 + D9-s1 (slot 1), D9-s2..s4 (slot 2) ·
+  D10 + D10-s1, D10-s2 · D11 + D11-s1, D11-s2 · D12 + D12-s1, D12-s2 · D13 + D13-s1, D13-s2 (slot 1), D13-s3..s5 (slot 2) ·
+  D15 + D15-s1, D15-s2 (slot 1), D15-s3 (slot 2) · D16 + D16-s1..s12 · D17 + D17-s1, D17-s2 · D18 + D18-s1..s8.
+  Explicit list: D1-s1, D2-s1, D2-s2, D2-s3, D2-s4, D2-s5, D3-s1, D3-s2, D3-s3, D3-s4, D3-s5, D3-s6, D4-s1, D4-s2, D4-s3,
+  D4-s4, D5-s1, D6-s1, D6-s2, D6-s3, D6-s4, D7-s1, D7-s2, D7-s3, D7-s4, D8-s1, D8-s2, D8-s3, D8-s4, D9-s1, D9-s2, D9-s3,
+  D9-s4, D10-s1, D10-s2, D11-s1, D11-s2, D12-s1, D12-s2, D13-s1, D13-s2, D13-s3, D13-s4, D13-s5, D15-s1, D15-s2, D15-s3,
+  D16-s1, D16-s2, D16-s3, D16-s4, D16-s5, D16-s6, D16-s7, D16-s8, D16-s9, D16-s10, D16-s11, D16-s12, D17-s1, D17-s2,
+  D18-s1, D18-s2, D18-s3, D18-s4, D18-s5, D18-s6, D18-s7, D18-s8 (plus the 17 base PNGs D1 to D13, D15 to D18).
+- Diagrams, Type 2 system-design stills, comp-level moves only (C1 = 24, C2 = 10): C1-funnel-outline, C1-funnel-title,
+  C1-funnel-letters, C1-funnel-names, C1-funnel, C1-funnel-glow (the GROWTH glow at 3:56.0 + the FUNNEL travelling spotlight),
+  C1-growth-bracket, C1-growth-tags, C1-growth-test, C1-growth, C1-product-bracket, C1-product-overlap, C1-product-customer,
+  C1-product-retention, C1-product, C1-platform-floor, C1-platform-customers, C1-platform-arrows, C1-platform-pm, C1-platform,
+  C1-gtm-lane, C1-gtm, C1-all-base, C1-all · C2-empty, C2-scope, C2-seats, C2-then, C2-now-base, C2-goal, C2-agents, C2-now,
+  C2-dim, C2-final. The comp-drawn customer dot and the four label rings are code, not files.
+- Charts, Type 1 ANIMATED, built in CODE from C3.geometry.json / C4.geometry.json: C3 (one placement, 33.78-68.14) · C4 (one
+  placement, 385.88-408.31).
+- Receipts, 6 receipts in 11 views: C5-sentence, C5-header · C6-sentence, C6-cover · C7-title-sentence, C7-sentence ·
+  C12-title-date, C12-definition · C9-chart · C10-headline, C10-reduced-hiring.
+- Spine layers: spine/ALL.e.enhanced.mp4 (gated face, 9 windows) · 1 punch-in + 1 library light leak (F3) · 17 face transitions
+  (8 cut-ins, 9 cut-outs) · 27 cover swaps (+ the C2 THEN → NOW state swap at 2:33.4, no transition) · 0 captions ·
+  0 title cards · 0 SFX.
+
+**REJECTED (renderables deliberately not placed as comp inputs):**
+- `charts/C3-start.png`, `charts/C3-mid.png`, `charts/C3-payoff.png`, `charts/C4-start.png`, `charts/C4-mid.png`,
+  `charts/C4-bars.png`, `charts/C4-payoff.png`: the chart-builder's DESIGN-SPEC stills for the two animated charts. The comp
+  animates C3 and C4 in code (comp-build section 7 and `lint_animated_charts.py` forbid holding or wiping a chart PNG), so each
+  still is named only on the row whose state it specifies (`= C3-start` etc.), never placed as a picture: REJECTED as comp inputs.
+
+**BENCH (nothing on disk is benched; the plan's bench alternatives are NOT captured and need Mike's word first):**
+- receipt C8 (the BLS Computer Programmers page, a punch inside C4 at 392.38-399.80), C11 (McClure's deck title slide, a 2.5 s
+  punch inside C1 FUNNEL at 203.56), the S-1/A No.2 threshold sentence (under D3 row 3), Indeed's 2026-11-12 rebound chart
+  (under D13 row 1), the PostHog page behind the D10 quote: all BENCH, not captured (GATE 3 ruling 9: receipts stay at six).
+- Layout benches: the C2 fifth state for the FACE 4 line (instead of D18), the D7 / D11 OWNS-row returns (instead of the C1
+  OWNS rows), the D14 own card at 405.18 (instead of C4's takeaway), C7 out at 88.08: all BENCH, none built.
+
+## SFX layer: weighed per type, NONE placed (Mike's ruling)
+Mike's ruling for this video (2026-11-13, PROJECT-LOG + SCREENPLAY OPEN QUESTIONS 11): a calm explainer on a drone bed, NO
+impact, riser or hype SFX, no kinetic-text sounds; the optional "few soft transition sounds at the four chart reveals" was never
+asked for at the gate, so the cuts stay silent. Every catalog type under `video-creation/assets/sfx/` was weighed against the
+beats and left out:
+- impacts (Impacts/library.json, mostly `epic`, a few `neutral` / `hype`): the obvious slots are the four chart reveals (C3
+  33.78, C2 129.92, C1 194.41, C4 385.88); out by the ruling, and the bed already marks C3 and C1 with its own plateau step / fuller run.
+- booms and stings (the root-level kit files + `stings/`, a mariachi sting): same slots, same ruling; a boom under a drone bed
+  would also read as hype, and the sting is the wrong register entirely.
+- risers (`dark` / `tense` / one `hype`): none fit a calm register, and the no-riser ruling is explicit.
+- braams (braam-horn-stinger-02, `epic`): the only braam-worthy beat is the BLS split ("projected to sink 7%"), but a braam needs
+  a spine pause and would turn the explainer into a stakes video; out by the ruling. No braam spine pause is planned.
+- downshifters (`tense`): the "But look at where the growth went" turn (376.40) fits the device; out by the ruling.
+- accents (`tense` / `neutral`): the D6 slot draw-in or the C1 label pulses could take a soft tick; out by the ruling.
+- drones (force-field hum, `tense`): the bed IS a drone; a second one would muddy it.
+- dings and the kinetic-text sounds (`neutral`): no kinetic-text device in the screenplay, and the ruling is no SFX.
+- halloween-2022 (`tense`): wrong theme for this channel and register.
+- transition sounds: the one light leak (F3, 2:04.3) carries a baked whoosh in the library; it rides at sfx_rel_db -60 (inaudible),
+  and every other pick is a silent `hand:` move or a sound-free `lib:motion-*` row.
+If Mike asks for the soft chart-reveal sounds, they are four rows at 0:33.8 / 2:09.9 / 3:14.4 / 6:25.9 (a `neutral` accent from
+`accents/library.json`, picked by measured tail), and they move no picture cue.
+
+## Open decisions that would move a cue
+- **Face joins CORRECTED on the picture (this redo; moves and removes seed cues):** the seed carried 4 punch points (F3 124.067,
+  F7 352.933, F8 441.633, F9 464.4). Measured: F3's join is real and lands at 124.289 (moved +0.22 s, still in the "cheap, | but"
+  pause); F7, F8 and F9's are their face-out edge joins displaced by the coarse map's drift, so they are DROPPED (no interior join
+  = no punch, no leak, overlays.md section 1). Net: ONE punch-in + ONE leak in the whole video. If Mike wants more movement on
+  the longer holds (F4 6.2 s, F8 4.9 s, F9 5.0 s), the rule as written gives none; a punch off a join would need his explicit
+  exception. `list_face_joins.py` should map joins through the REAL cut file times (graph defect, not patched here).
+- **TRANSITIONS redo REQUIRED before reconcile_docs:** TRANSITION-PLAN.json / TRANSITIONS.md still carry the 7 punch-leak rows on
+  the wrong joins and no row for F3 at 124.289; re-drive with `--redo transitions` (then reconcile_docs, lint_docset), or
+  reconcile_docs fails its cross-check. Its other picks (hand:film-burn on the 17 face edges, hand:xfade-scale on the 27 swaps,
+  the three receipt moves, zero MELT / SPIN) need no change.
+- **C10 stage 2 moved EARLIER (author refinement, Mike can revert):** the plan held the headline 418.07 → 431.12 with a pan AND a
+  '19%' highlight on it; a highlight never lands on a moving pan (longform-edited.md section 7), so the headline pans 418.07 →
+  422.08 and C10-reduced-hiring takes over on "employment" (422.08), highlighting Fact 2 '19% below' on "19" (424.94) and Fact 4
+  on "mostly" (431.12). Revert = headline to 431.12 as a settling push (treatment: highlight, no pan) and C10-reduced-hiring
+  for the last 2.2 s.
+- **C7 split into two views (author refinement):** C7-title-sentence 84.94 → 86.30 (push), C7-sentence 86.30 → 90.49 (highlight).
+  Alternative = one view, C7-title-sentence for the whole 5.5 s with the push into its sentence_rect (the body text is small,
+  18 px cap height, so the tight crop reads better); C7-sentence would then be BENCH.
+- **C9 treatment push vs highlight:** the plan's receipt table says push; its beat note allows a highlight on the 71% sentence if
+  it is in the same view (it is). Push is planned (a real chart, the figure is the read); a highlight would add one row at 6:18.5.
+- **MARQUEE candidates (transition-strategist's call, all silent):** 0:33.8 D1 → C3 · 3:14.4 D6 → C1 (THE marquee reveal) ·
+  5:53.5 F7 out → C1 ALL · 6:25.9 D13 → C4. Default is the quiet cross-fade + scale-in; a MELT / SPIN changes the swap length only.
+- **Face pick:** film burn (hand, silent; the strategist's pick in the 17:27 plan) vs Blocks Max glitch (library, carries baked
+  glitch SFX: out under the no-SFX ruling). Recommended: film burn on all 17 face edges. Moves no cue.
+- **Soft chart-reveal sounds** (SCREENPLAY OPEN QUESTIONS 11): none planned; four rows if Mike asks (see the SFX section).
+- **MUSIC-PLAN listens (no cue moves, automation rows only):** LISTEN 1 (the bed is inaudible under the hook for around 7 s: one
+  +5 dB automation window on the CH1 row if Mike wants music under the first line) · LISTEN 2 (the join at 253.4-255.8 under F4,
+  the end 469-477) · the two CH4 lifts (273.4-277.0, 308.6-313.4: two -3 dB dips if Mike wants CH4 level) · the seat (-28.5;
+  -31 if too present).
+- **End card D17:** which two videos fill the slots in YouTube Studio (growth-vs-product is the natural first); a printed title
+  would need a VERIFY of the live title. Moves no cue.
+- **Under-floor slots (ruled OK at GATE 3, ruling 8):** D5 4.7 s, the D13 return 4.5 s, the D15 return 4.0 s.
+- **VERIFY before build (card / chart text only, no cue moves):** no Google figure newer than 75% · the S-1 "over 90% of the
+  contributions" sentence · the S-1/A No.2 threshold sentence · the essay's "more than 80%", "low single digits", "We are not
+  there yet" · Indeed's 23.8% and any newer entry-level share · the Stanford 19% headline · the incident.io sentence as PostHog
+  quotes it · Clay's "coined the term in 2023".
+- **By ear (no cue moves; captions are off):** 69.6-73.0 ("this engineer is" / "direct and review": D2 prints the S-1 verbatim
+  either way) and 340.4-341.3 ("the growth engineer": no on-screen text quotes it).
+
+## Layer tallies (authored)
+- SAY 192 (every seed segment kept, none merged) · CONTAINER 100 · DIAGRAM 46 · CHART 27 (= 173 spotlight rows over 31
+  container / diagram / chart placements) · RECEIPT 11 views of 6 receipts (3 pan, 6 highlight, 2 push) · HIGHLIGHT 8 ·
+  TRANSITION 44 (17 face + 27 cover swaps) · FACE 9 · PUNCH-IN 1 · LIGHTLEAK 1 · MUSIC 18 (9 MUSIC-PLAN hard hits as bed
+  moves) · CAPTION 1 (none) · END 1 · IMPACT / RISER / BRAAM / WHOOSH / ACCENT / KT-* 0.

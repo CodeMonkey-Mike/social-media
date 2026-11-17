@@ -1,0 +1,1 @@
+var e=`/campaigns/discover-agent-type`;function t(e){return e===`active`}function n(e){return e===`active`}export{t as n,n as r,e as t};

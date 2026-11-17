@@ -1,0 +1,101 @@
+{
+ "source_video": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\AI destroying lives\\AI destroying lives-VERTICAL.mp4",
+ "source_audio": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\AI destroying lives\\spine\\ALL.f.paused.mp4",
+ "clock": "final-video seconds",
+ "target_seconds": 30.0,
+ "outro_seconds": 3.0,
+ "claim": "The trades are not safe from AI: a robot does not have to be a better electrician or welder than you, the machines are already on the job or in training, and feeling safe is not the same as being safe.",
+ "why_this_claim": "It is the newest ground in the video (CH3, the jobs nobody believes are at risk) and it needs no numbers, no montage and no earlier chapter to land: one provocative statement, one honest status report with the diagram, one kicker. The CH2 statistics need their charts and sources to mean anything, and the CH1 promise line points at a 68 s montage the short cannot carry.",
+ "spans": [
+  {
+   "role": "hook",
+   "order": 1,
+   "sourced": "FACE",
+   "start": 450.85,
+   "end": 458.95,
+   "seconds": 8.1,
+   "says": "A robot doesn't need to be a better electrician than you. It just needs to be already in the house and receive an expert electrician download.",
+   "on_screen": "F5 face (450.82-456.52, burned captions) for the first 5.7 s, then the film-burn cut-out onto IMG-8 (ChatGPT still: light streaming into a robot's head, slow push-in) for the last 2.4 s. Ends just before receipt C25 (the 1X order page) cross-fades in at about 459.1.",
+   "why": "The hardest standalone line in the video, said to camera: it reframes the whole 'no robot can do my job' objection in one sentence.",
+   "self_contained": "Opens on a full declarative sentence with its own subject, no pronoun or callback. In the longform it follows the Musk clip, but nothing in the words depends on it.",
+   "in_gap": 0.31,
+   "out_gap": 0.24,
+   "clear_of_transitions": true
+  },
+  {
+   "role": "body",
+   "order": 2,
+   "sourced": "COVER",
+   "start": 335.44,
+   "end": 351.08,
+   "seconds": 15.64,
+   "says": "So no, a humanoid robot is not welding in a shipyard today, but the arms already are the humanoid is in training and the industry just cannot hire welders fast enough. So it's early, but it has started.",
+   "on_screen": "F4 face (335.42-340.65, burned captions) for 'So no, a humanoid robot is not welding in a shipyard today,', then the film-burn cut-out onto C11, THE welding system-design diagram, full frame (lanes light on 'arms', 'the humanoid', 'in training', payoff state on 'So it's early'). Ends before C11 cross-fades to C21 at about 351.3. Mixed span: 5.2 s FACE then 10.4 s COVER, marked COVER by majority.",
+   "why": "The proof and the honesty in one breath: what is NOT true yet, what already is, and why the industry wants it. 'It's early, but it has started' is the claim earned.",
+   "self_contained": "'So no,' reads as Mike answering the obvious question the hook raises (is a robot doing this today?), and the sentence names its own subject (a humanoid robot, a shipyard, welders).",
+   "in_gap": 0.19,
+   "out_gap": 0.3,
+   "clear_of_transitions": true
+  },
+  {
+   "role": "kicker",
+   "order": 3,
+   "sourced": "FACE",
+   "start": 563.74,
+   "end": 566.58,
+   "seconds": 2.84,
+   "says": "Feeling safe isn't the same thing as being safe,",
+   "on_screen": "F6 face (563.69-566.62). No burned captions on this window (the longform captions only face holds over 5 s), so it needs the short's caption track. The span stops before 'unfortunately.' and before BR-23.",
+   "why": "The line that turns the status report onto the viewer. Ending on 'being safe' is a harder out than the trailing 'unfortunately'.",
+   "self_contained": "A complete aphorism with no referent.",
+   "in_gap": 0.2,
+   "out_gap": 0.44,
+   "clear_of_transitions": true
+  }
+ ],
+ "assembled_read": "A robot doesn't need to be a better electrician than you. It just needs to be already in the house and receive an expert electrician download. So no, a humanoid robot is not welding in a shipyard today, but the arms already are, the humanoid is in training and the industry just cannot hire welders fast enough. So it's early, but it has started. Feeling safe isn't the same thing as being safe.",
+ "spans_total_seconds": 26.58,
+ "outro": {
+  "line": "Click below to WATCH the full video.",
+  "card_text": "WATCH THE FULL VIDEO",
+  "note": "Shared take video-creation/assets/vo/cta-watch-full.mp3. Hold the last F6 face frame (about 566.2, before the cut-out film burn builds) behind the card."
+ },
+ "rejected": [
+  {
+   "span": "68.0-74.4",
+   "reason": "The opening FACE hook (F1), 'So some of those people say that AI took their work and all of them have been searching for months.' Fails the self-contained rule: 'those people' is the 68 s clip montage, which a 30 s short cannot carry. The one case where the standing rule to use the opening face hook does not serve the claim."
+  },
+  {
+   "span": "74.4-86.65",
+   "reason": "'This is not a warning about the future ... a machine could never do.' The strongest cold thesis line, but 12.3 s, COVER only (the C10 2.0 MILLION chart, which never says AI, then BR-1 and BR-2), its start sits inside the F1 cut-out film burn with only a 0.12 s gap, and it opens the short with no face. With it there is no room for both the proof and the kicker."
+  },
+  {
+   "span": "386.2-389.9",
+   "reason": "'An electrician needs an apprenticeship. A robot needs a download.' (the apprenticeship-vs-download card). Good card, but it says 'download' a second time right after the hook, and adding it forces the body to end at 'fast enough.' on a 0.10 s gap, losing 'it's early, but it has started'."
+  },
+  {
+   "span": "475.8-483.3",
+   "reason": "'Blue collar workers show it the most. Around three in four expect AI to cut jobs and three in four are not worried about theirs.' (chart C33). A second idea (denial polling); it pushes the short to 34 s and 'show it the most' has no referent cold."
+  },
+  {
+   "span": "569.85-583.4",
+   "reason": "'The damage so far is quiet ... your job has changed.' The CH5 close: 13.5 s, a different claim (quiet white-collar damage), and it summarises chapters the short does not show."
+  },
+  {
+   "span": "459.1-462.5",
+   "reason": "'The problem here is that it's just not in the house yet.' An ad-lib that softens the hook; the body span already carries the honest caveat."
+  }
+ ],
+ "risks": [
+  "Spans 1 and 2 each open about 0.03 s after a face cut-in (F5 at 450.82, F4 at 335.42), so the second half of the hand:film-burn (about 0.38 s) is still fading off the face on the first frames. Every face line in this video starts on its burn, so there is no cleaner entry; span 1 also opens on the tail of the CLIP-61 insert-out dissolve (the clip's last frame may ghost for a few frames). I have not seen these frames. If the hook's first frames read dirty, start span 1 at 450.95 (the trough ends there) or hold a clean face frame over them. clear_of_transitions is true for every span END and interior; these two face ENTRIES are the exception.",
+  "Span 3 ends at 566.58, inside the first half of the F6 cut-out film burn (it builds from about 566.24). The word 'safe,' ends at 566.61, so a clean exit before the burn does not exist; the warm build leads into the CTA card. Inferred acceptable, not watched.",
+  "Span 1 ends 0.15 s before C25 enters (about 459.1) and span 2 ends about 0.2 s before C11 cross-fades to C21 (about 351.3). Both times are computed from the CUE-SHEET spine times plus the insert pauses, not measured on the vertical; if either cross-fade is centred on its cue rather than starting on it, pull the end to 458.90 / 350.95 (both still inside their troughs).",
+  "Silence troughs were measured on the paused spine with silencedetect at -50 dB as a planning aid only (450.65-450.95, 458.88-459.12, 335.29-335.48, 350.92-351.22, 563.63-563.83, 566.53-566.97); lint-short-spans.py is the authority and will snap them.",
+  "The paused spine is NOT silent under the CLIP-61 pause before 450.65, so span 1 must not start earlier than about 450.70.",
+  "Span 2 is mixed (FACE 335.44-340.65 with burned captions, then C11 with none) and span 1 is mixed (FACE to 456.52, then IMG-8 with none). The short's captions must cover the non-FACE frames, plus all of span 3: F6 sits inside a FACE window but carries no burned captions in the longform (under 5 s).",
+  "The transcript drops the comma after 'the arms already are'; says is verbatim, assembled_read adds it for reading.",
+  "IMG-8 in span 1 is a ChatGPT still, so the variety rule gives it one alternative asset (a 2.4 s window).",
+  "'So no,' after the hook is a judgment call on flow: it reads as answering 'is that happening today?', but I cannot hear the delivery. Fallback if it lands as a non sequitur: insert the apprenticeship card span (386.2-389.9) before the body and end the body at 347.77.",
+  "Three of the five visuals are the face (three different windows); the variety comes from IMG-8 and the C11 diagram. This video has no whiteboard beat and no chapter-card freeze."
+ ]
+}

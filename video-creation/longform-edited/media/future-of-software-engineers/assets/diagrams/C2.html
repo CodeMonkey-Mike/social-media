@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>C2 · SYSTEM-DESIGN CHART 2 · the pod, then and now (future-of-software-engineers)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET (verbatim copy of
+   skills/container-reference/container-canonical.css). DO NOT CHANGE TOKENS.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+b{color:var(--text-primary);font-weight:700}
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+</style>
+<style>
+/* ---- C2 diagram layer. LIT colour = --accent-green (stylesheet default). ONE canvas, TWO 16:9 panels: the comp's
+   camera sits on the THEN panel, pans to the NOW panel, then pulls back to the full frame (_state-cues.md). Panel text
+   is sized for the 2.21x camera push; the full view carries the header + takeaway at full size. */
+.frame.dg{display:block;padding:0}
+.cv{position:absolute;left:0;top:0;width:1920px;height:1080px}
+.cv .a{position:absolute}
+.cv svg.wires{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible}
+.hdr .ey{position:absolute;left:100px;top:118px;margin:0}
+.hdr h1{position:absolute;left:100px;top:152px;white-space:nowrap}
+.hdr .divider{position:absolute;left:100px;top:244px;margin:0}
+.hide{visibility:hidden}
+.pnl{position:absolute;width:830px;height:467px;border-radius:22px;background:rgba(18,21,28,.78);border:1.5px solid #222938}
+.pnl.dimmed{opacity:.30}
+.ph{position:absolute;left:40px;top:26px;display:flex;align-items:baseline;gap:16px;white-space:nowrap}
+.ph .when{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:16px;letter-spacing:.18em;color:var(--accent-green)}
+.ph .what{font-family:'DM Sans';font-weight:700;font-size:26px;letter-spacing:.09em;text-transform:uppercase;color:var(--text-primary)}
+.cap{position:absolute;left:40px;top:74px;font-family:'DM Sans';font-weight:500;font-size:19px;color:var(--text-secondary);white-space:nowrap}
+.cap .mono{color:var(--text-primary);font-size:18px}
+.scope{position:absolute;left:40px;top:104px;font-family:'DM Sans';font-weight:500;font-size:17px;color:var(--text-muted);white-space:nowrap}
+.seat{position:absolute;width:238px;height:100px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.seat.empty{border:1.6px dashed #2a3346;background:rgba(18,21,28,.35)}
+.seat.filled{border:1.6px solid #2f394d;background:#161a23}
+.seat.lit{border:1.8px solid rgba(0,230,138,.7);background:linear-gradient(135deg,rgba(0,230,138,.10),rgba(0,230,138,.03)),#141820;box-shadow:0 0 18px rgba(0,230,138,.18)}
+.seat .lb{font-family:'DM Sans';font-weight:700;font-size:18px;letter-spacing:.07em;text-transform:uppercase;color:var(--text-primary);white-space:nowrap}
+.seat.empty .lb,.seat.empty svg{visibility:hidden}
+.count{position:absolute;left:40px;top:402px;font-family:'DM Sans';font-weight:700;font-size:24px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-primary);white-space:nowrap}
+.count .mono{color:var(--accent-green);font-size:24px}
+.eng{position:absolute;left:36px;top:125px;width:180px;height:220px;border-radius:18px;border:1.6px solid #2f394d;background:#161a23;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+.eng .lb{font-family:'DM Sans';font-weight:700;font-size:21px;line-height:26px;letter-spacing:.08em;text-transform:uppercase;text-align:center;color:var(--text-primary)}
+.eng.lit{border:2.4px solid var(--accent-green);background:linear-gradient(160deg,rgba(0,230,138,.16),rgba(0,230,138,.04)),#141820;box-shadow:0 0 34px rgba(0,230,138,.38)}
+.eng.lit .lb{color:var(--accent-green)}
+.ag{position:absolute;left:470px;width:324px;height:42px;border-radius:10px;border:1.5px solid #2a3346;background:#12151c;display:flex;align-items:center;gap:12px;padding:0 14px}
+.ag .lb{font-family:'DM Sans';font-weight:700;font-size:17px;letter-spacing:.07em;text-transform:uppercase;color:var(--text-primary);white-space:nowrap}
+.ag.lit{border-color:rgba(0,230,138,.65);background:linear-gradient(90deg,rgba(0,230,138,.10),rgba(0,230,138,.02)),#12151c}
+.ag svg .st{stroke:#8892a4} .ag svg .fl{fill:#8892a4}
+.ag.lit svg .st{stroke:#00e68a} .ag.lit svg .fl{fill:#00e68a}
+.work{position:absolute;left:470px;top:402px;font-family:'DM Sans';font-weight:700;font-size:20px;letter-spacing:.10em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap}
+.work.lit{color:var(--accent-green)}
+.alb{position:absolute;font-family:'DM Sans';font-weight:700;font-size:16px;letter-spacing:.10em;text-transform:uppercase;color:var(--accent-green);white-space:nowrap;transform:translateX(-50%)}
+.take{position:absolute;left:100px;top:832px;font-family:'DM Sans';font-weight:700;font-size:38px;letter-spacing:-.005em;color:var(--text-primary);white-space:nowrap;display:flex}
+.src{position:absolute;left:100px;top:1022px;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:17px;color:var(--text-muted);white-space:nowrap}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script>
+/* ONE LAYOUT, MANY STATES: every element sits at the same pixels in every state; only its level changes. */
+const PL = {x: 100, y: 316}, PR = {x: 990, y: 316};       // panel origins (830 x 467 each, 16:9)
+const PW = 830, PH = 467;
+const CAM = {                                              // comp camera rects on the 1920x1080 stage (16:9 each)
+  LEFT:  {x: 80,  y: 549.5 - 244.7, w: 870, h: 489.4},
+  RIGHT: {x: 970, y: 549.5 - 244.7, w: 870, h: 489.4},
+  FULL:  {x: 0,   y: 0,             w: 1920, h: 1080},
+};
+const SEATS = ['Frontend', 'Backend', 'QA', 'Project manager', 'Designer', 'Marketer'];
+const seatPos = i => ({x: 40 + (i % 3) * 256, y: 150 + Math.floor(i / 3) * 118});       // panel-local
+const agY = k => 84 + k * 52;                                                           // panel-local
+const BUS_X = 446, OUT_Y = 195, BACK_Y = 275;
+const GREEN = '#00e68a';
+
+const person = (sz, col) => `<svg width="${sz}" height="${sz}" viewBox="0 0 40 40"><circle cx="20" cy="12" r="8.5" fill="${col}"/><path d="M5,39 a15,15 0 0 1 30,0 Z" fill="${col}"/></svg>`;
+const bot = () => `<svg width="26" height="26" viewBox="0 0 28 28"><line class="st" x1="14" y1="8" x2="14" y2="3.5" stroke-width="2"/><circle class="fl" cx="14" cy="3" r="2.2"/>` +
+                  `<rect class="st" x="3.5" y="8.5" width="21" height="16" rx="5" fill="none" stroke-width="2"/><circle class="fl" cx="10" cy="16.5" r="2.2"/><circle class="fl" cx="18" cy="16.5" r="2.2"/></svg>`;
+
+const base = () => ({seats: 'empty', scope: [0, 0], count: 0, leftDim: 0, right: 0, eng: 'rest', agents: 'rest', work: 0,
+                     goal: 0, back: 0, take1: 0, take2: 0});
+const S = {};
+S['empty']    = base();
+S['scope']    = Object.assign(base(), {scope: [1, 1]});
+S['seats']    = Object.assign({}, S['scope'], {seats: 'filled'});
+S['then']     = Object.assign({}, S['seats'], {seats: 'lit', count: 1});
+S['now-base'] = Object.assign({}, S['then'], {right: 1});
+S['goal']     = Object.assign({}, S['now-base'], {goal: 1});
+S['agents']   = Object.assign({}, S['goal'], {agents: 'lit', work: 1});
+S['now']      = Object.assign({}, S['agents'], {back: 1});
+S['dim']      = Object.assign({}, S['now'], {seats: 'filled', leftDim: 1, take1: 1});
+S['final']    = Object.assign({}, S['dim'], {eng: 'lit', take2: 1});
+const ORDER = Object.keys(S);
+const vis = on => on ? '' : ' hide';
+
+function frame(name, st) {
+  const h = [], sv = [];
+  // header (only seen in the FULL camera view)
+  h.push(`<div class="hdr"><div class="ey">How software gets built</div><h1 class="sm">The pod, then and <span class="g">now</span></h1><div class="divider"></div></div>`);
+  // ---------------- LEFT panel: THEN
+  let L = `<div class="pnl${st.leftDim ? ' dimmed' : ''}" data-k="panelL" style="left:${PL.x}px;top:${PL.y}px">`;
+  L += `<div class="ph"><span class="when">THEN</span><span class="what">A typical pod</span></div>`;
+  L += `<div class="cap${vis(st.scope[0])}" data-k="caption">cross-functional, typically <span class="mono">10</span> or fewer people (Scrum Guide <span class="mono">2020</span>)</div>`;
+  L += `<div class="scope${vis(st.scope[1])}" data-k="scope">works on funnel steps or product features</div>`;
+  SEATS.forEach((s, i) => {
+    const p = seatPos(i);
+    L += `<div class="seat ${st.seats}" data-k="seat${i}" style="left:${p.x}px;top:${p.y}px">${person(40, st.seats === 'lit' ? '#c9d0dc' : '#8892a4')}<span class="lb">${s}</span></div>`;
+  });
+  L += `<div class="count${vis(st.count)}" data-k="count"><span class="mono">6</span> seats, <span class="mono">6</span> people</div>`;
+  L += `</div>`;
+  h.push(L);
+  // ---------------- RIGHT panel: NOW
+  let R = `<div class="pnl${vis(st.right)}" data-k="panelR" style="left:${PR.x}px;top:${PR.y}px">`;
+  R += `<div class="ph"><span class="when">NOW</span><span class="what">One engineer can fill almost every seat</span></div>`;
+  R += `<div class="eng ${st.eng}" data-k="eng">${person(72, st.eng === 'lit' ? GREEN : '#c9d0dc')}<div class="lb">One<br>engineer</div></div>`;
+  SEATS.forEach((s, k) => {
+    R += `<div class="ag${st.agents === 'lit' ? ' lit' : ''}" data-k="agent${k}" style="top:${agY(k)}px">${bot()}<span class="lb">${s}</span></div>`;
+  });
+  R += `<div class="work${st.work ? ' lit' : ''}" data-k="work">AI agents do the work</div>`;
+  // wires inside the right panel (panel-local svg)
+  let w = `<svg style="position:absolute;left:0;top:0;width:${PW}px;height:${PH}px;overflow:visible">`;
+  const busTop = agY(0) + 21, busBot = agY(5) + 21;
+  w += `<path d="M${BUS_X},${busTop} V${busBot}" stroke="#3a455c" stroke-width="2"/>`;
+  for (let k = 0; k < 6; k++) w += `<path d="M${BUS_X},${agY(k) + 21} H470" stroke="#3a455c" stroke-width="2"/>`;
+  w += `<g class="${vis(st.goal)}" data-k="goalArrow"><path d="M218,${OUT_Y} H${BUS_X - 12}" stroke="${GREEN}" stroke-width="3" stroke-linecap="round"/>` +
+       `<path d="M${BUS_X - 2},${OUT_Y} l-13,-8 l0,16 Z" fill="${GREEN}"/></g>`;
+  w += `<g class="${vis(st.back)}" data-k="backArrow"><path d="M${BUS_X - 2},${BACK_Y} H232" stroke="${GREEN}" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 0"/>` +
+       `<path d="M219,${BACK_Y} l13,-8 l0,16 Z" fill="${GREEN}"/></g>`;
+  w += `</svg>`;
+  R += w;
+  R += `<div class="alb${vis(st.goal)}" data-k="goalLabel" style="left:${(218 + BUS_X) / 2}px;top:${OUT_Y - 34}px">Supplies the goal</div>`;
+  R += `<div class="alb${vis(st.back)}" data-k="backLabel" style="left:${(218 + BUS_X) / 2}px;top:${BACK_Y + 12}px">Reviews</div>`;
+  R += `</div>`;
+  h.push(R);
+  // takeaway (only seen in the FULL camera view)
+  h.push(`<div class="take"><span class="${vis(st.take1)}" data-k="take1">The pod doesn't disappear.&nbsp;</span>` +
+         `<span class="${vis(st.take2)}" data-k="take2"><span class="g">One engineer</span> runs the whole pod.</span></div>`);
+  h.push(`<div class="src">Sources: Scrum Guide (2020) · Anthropic, "When AI builds itself" · Anthropic S-1 (2026-10-26)</div>`);
+  return `<div class="frame dg" id="C2-${name}"><div class="orb" style="width:640px;height:640px;right:-280px;top:-320px;background:#00e68a;opacity:.12"></div>` +
+         `<div class="orb" style="width:560px;height:560px;left:-280px;bottom:-340px;background:#0b3a66;opacity:.35"></div>` +
+         `<div class="cv">${h.join('')}</div></div>`;
+}
+document.getElementById('stage').innerHTML = ORDER.map(n => frame(n, S[n])).join('<div style="height:24px"></div>');
+window.STATES = ORDER;
+window.GEOM = {panel_left: {x: PL.x, y: PL.y, w: PW, h: PH}, panel_right: {x: PR.x, y: PR.y, w: PW, h: PH}, camera: CAM,
+               camera_scale_panel: +(1920 / 870).toFixed(4)};
+</script>
+</body></html>

@@ -1,0 +1,296 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>AI vs ML: card slides, VERTICAL 1080x1920</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&family=Montserrat:ital,wght@0,800;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+</style>
+<style>
+
+/* ===== ENERGETIC layer (kinetic-text-2023, Mike's 005 look; SCREENPLAY VISUAL-PLAN, approved GATE 1 + GATE plan).
+   Adds classes only; every :root token above is untouched. Values from library.json + KT_2023. ===== */
+.frame.kt{display:block;padding:0;background:#3D948E url("../../../../../../assets/effects/themes/kinetic-text-2023/textures/suede-turquoise.jpg") center/cover no-repeat;
+  --kt-yellow:#FCFE40; --kt-green:#1EFF06; --kt-red:#E0151A; --kt-panel:0,52,45;
+  --kt-shadow:5px 6px 10px rgba(0,0,0,.62),2px 3px 3px rgba(0,0,0,.45)}
+.frame.kt.paper{background:#E1DEE0 url("../../slide-sources/paper-crumpled-2s.png") center/cover no-repeat}
+.frame.kt.black{background:#000}
+.kt .vig{position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 75% 70% at 50% 48%,rgba(0,0,0,0) 55%,rgba(0,20,18,.34) 100%)}
+.kt .m{position:absolute;font-family:'Montserrat',sans-serif;font-weight:800;font-style:italic;text-transform:uppercase;
+  letter-spacing:.005em;white-space:nowrap;line-height:1;color:#fff}
+.kt .sh{text-shadow:var(--kt-shadow)}
+.kt .ai{color:var(--kt-yellow)} .kt .ml{color:var(--kt-green)} .kt .rd{color:var(--kt-red)}
+.kt .hide{visibility:hidden}
+
+/* the CARD SLIDE anatomy on the suede: one rounded dark-teal card (the kt-side-panel / band tone), top-accent line in the
+   role colour, eyebrow -> headline -> divider inside it */
+.kt .kcard{position:absolute;border-radius:30px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(var(--kt-panel),.93),rgba(0,38,33,.95));
+  border:1px solid rgba(255,255,255,.07);box-shadow:0 30px 80px rgba(0,0,0,.38)}
+.kt .kcard>.top{position:absolute;top:0;left:0;right:0;height:7px}
+.kt .top.ai{background:linear-gradient(90deg,var(--kt-yellow),var(--kt-yellow) 38%,rgba(252,254,64,0) 92%)}
+.kt .top.ml{background:linear-gradient(90deg,var(--kt-green),var(--kt-green) 38%,rgba(30,255,6,0) 92%)}
+.kt .kdiv{position:absolute;height:7px;width:110px;border-radius:4px}
+.kt .kdiv.ai{background:var(--kt-yellow)} .kt .kdiv.ml{background:var(--kt-green)}
+.kt .kdiv.ink{background:#111}
+
+/* paper panel (kt-side-panel paper variant, as a full-frame card on the suede) */
+.kt .ppanel{position:absolute;border-radius:28px;overflow:hidden;background:#E1DEE0 url("../../slide-sources/paper-crumpled-2s.png") center/cover no-repeat;
+  box-shadow:0 30px 70px rgba(0,0,0,.40),0 4px 10px rgba(0,0,0,.20)}
+.kt .ppanel>.top{position:absolute;top:0;left:0;right:0;height:9px}
+.kt .ink{color:#0B0B0B;text-shadow:2px 3px 4px rgba(0,0,0,.16)}
+.kt .rest{color:#7A7873;text-shadow:none}
+.kt .badge{position:absolute;width:132px;height:132px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.kt .badge.rest{border:7px solid #A3A09A;background:rgba(255,255,255,.18)}
+.kt .badge.tick{background:var(--kt-green);box-shadow:0 8px 18px rgba(0,0,0,.25),inset 0 0 0 5px rgba(0,0,0,.85)}
+.kt .badge.cross{background:#E70001;box-shadow:0 8px 18px rgba(0,0,0,.25),inset 0 0 0 5px rgba(0,0,0,.85)}
+.kt .hair{position:absolute;height:2px;background:rgba(0,0,0,.14)}
+
+/* end-screen slots: empty 16:9 frames the YouTube end-screen elements sit on */
+.kt .slot{position:absolute;width:560px;height:315px;border-radius:16px;background:rgba(0,22,19,.50);
+  border:5px solid rgba(255,255,255,.92);box-shadow:0 18px 40px rgba(0,0,0,.30),inset 0 0 40px rgba(0,0,0,.25)}
+.kt .slot.on{border-color:var(--kt-yellow);box-shadow:0 0 0 6px rgba(252,254,64,.22),0 18px 40px rgba(0,0,0,.34),inset 0 0 40px rgba(0,0,0,.25)}
+.kt .arrow{position:absolute;width:260px;height:172px;background:url("../../../../../../assets/effects/themes/kinetic-text-2023/graphics/arrow-red.png") center/contain no-repeat;
+  filter:drop-shadow(4px 6px 6px rgba(0,0,0,.45))}
+
+</style>
+<style>
+
+/* ===== PORTRAIT layer (vertical 9:16 re-shoot, vertical-repurpose.md section 1). Frame size + end-screen slot size only;
+   every token and class above is untouched. ===== */
+.frame.portrait{width:1080px;height:1920px}
+.kt.portrait .slot{width:480px;height:270px}
+.kt.portrait .arrow{width:230px;height:152px}
+
+</style>
+</head><body>
+<!-- roles-split: CARD SLIDE portrait, CH1@12.367-13.97, one state -->
+<div class="frame kt portrait" id="roles-split">
+<div class="vig"></div>
+<div class="m sh ai" style="left:540px;top:300px;transform:translateX(-50%);font-size:340px">AI</div>
+<div class="m sh ai" style="left:540px;top:654px;transform:translateX(-50%);font-size:136px">ENGINEER</div>
+<div style="position:absolute;left:150px;top:958px;width:250px;height:4px;border-radius:2px;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.55))"></div>
+<div class="m sh" style="left:540px;top:960px;transform:translate(-50%,-50%);font-size:150px">VS</div>
+<div style="position:absolute;left:680px;top:958px;width:250px;height:4px;border-radius:2px;background:linear-gradient(90deg,rgba(255,255,255,.55),rgba(255,255,255,0))"></div>
+<div class="m sh ml" style="left:540px;top:1106px;transform:translateX(-50%);font-size:340px">ML</div>
+<div class="m sh ml" style="left:540px;top:1460px;transform:translateX(-50%);font-size:136px">ENGINEER</div>
+</div>
+<!-- ai-identity: CARD SLIDE portrait, CH2@17.33-19.70, SOMEONE ELSE white (rest) -->
+<div class="frame kt portrait" id="ai-identity">
+<div class="vig"></div>
+<div class="kcard" style="left:56px;top:440px;width:968px;height:986px"><div class="top ai"></div></div>
+<div class="m ai" style="left:136px;top:540px;font-size:50px;letter-spacing:.14em">AI ENGINEER</div>
+<div class="m" style="left:130px;top:646px;font-size:96px;line-height:106px">SHIPS<br>PRODUCTS<br>ON A MODEL<br><span class="">SOMEONE ELSE</span><br>ALREADY<br>TRAINED</div>
+<div class="kdiv ai" style="left:138px;top:1326px"></div>
+</div>
+<!-- ai-identity-s1: CARD SLIDE portrait, CH2@17.33-19.70, SOMEONE ELSE yellow -->
+<div class="frame kt portrait" id="ai-identity-s1">
+<div class="vig"></div>
+<div class="kcard" style="left:56px;top:440px;width:968px;height:986px"><div class="top ai"></div></div>
+<div class="m ai" style="left:136px;top:540px;font-size:50px;letter-spacing:.14em">AI ENGINEER</div>
+<div class="m" style="left:130px;top:646px;font-size:96px;line-height:106px">SHIPS<br>PRODUCTS<br>ON A MODEL<br><span class="ai">SOMEONE ELSE</span><br>ALREADY<br>TRAINED</div>
+<div class="kdiv ai" style="left:138px;top:1326px"></div>
+</div>
+<!-- build-train-deploy: CARD SLIDE portrait, CH2@23.60-26.24, eyebrow only -->
+<div class="frame kt portrait" id="build-train-deploy">
+<div class="vig"></div>
+<div class="m sh ml" style="left:100px;top:520px;font-size:54px;letter-spacing:.14em">ML ENGINEER</div>
+<div class="kdiv ml" style="left:104px;top:598px;box-shadow:var(--kt-shadow)"></div>
+<div class="m sh ml hide" style="left:362px;top:820px;transform:translate(-50%,-50%);font-size:160px">BUILD</div>
+<div class="m sh ml hide" style="left:497px;top:1040px;transform:translate(-50%,-50%);font-size:160px">TRAIN</div>
+<div class="m sh ml hide" style="left:630px;top:1260px;transform:translate(-50%,-50%);font-size:160px">DEPLOY</div>
+</div>
+<!-- build-train-deploy-s1: CARD SLIDE portrait, CH2@23.60-26.24, BUILD -->
+<div class="frame kt portrait" id="build-train-deploy-s1">
+<div class="vig"></div>
+<div class="m sh ml" style="left:100px;top:520px;font-size:54px;letter-spacing:.14em">ML ENGINEER</div>
+<div class="kdiv ml" style="left:104px;top:598px;box-shadow:var(--kt-shadow)"></div>
+<div class="m sh ml" style="left:362px;top:820px;transform:translate(-50%,-50%);font-size:160px">BUILD</div>
+<div class="m sh ml hide" style="left:497px;top:1040px;transform:translate(-50%,-50%);font-size:160px">TRAIN</div>
+<div class="m sh ml hide" style="left:630px;top:1260px;transform:translate(-50%,-50%);font-size:160px">DEPLOY</div>
+</div>
+<!-- build-train-deploy-s2: CARD SLIDE portrait, CH2@23.60-26.24, BUILD, TRAIN -->
+<div class="frame kt portrait" id="build-train-deploy-s2">
+<div class="vig"></div>
+<div class="m sh ml" style="left:100px;top:520px;font-size:54px;letter-spacing:.14em">ML ENGINEER</div>
+<div class="kdiv ml" style="left:104px;top:598px;box-shadow:var(--kt-shadow)"></div>
+<div class="m sh ml" style="left:362px;top:820px;transform:translate(-50%,-50%);font-size:160px">BUILD</div>
+<div class="m sh ml" style="left:497px;top:1040px;transform:translate(-50%,-50%);font-size:160px">TRAIN</div>
+<div class="m sh ml hide" style="left:630px;top:1260px;transform:translate(-50%,-50%);font-size:160px">DEPLOY</div>
+</div>
+<!-- build-train-deploy-s3: CARD SLIDE portrait, CH2@23.60-26.24, BUILD, TRAIN, DEPLOY -->
+<div class="frame kt portrait" id="build-train-deploy-s3">
+<div class="vig"></div>
+<div class="m sh ml" style="left:100px;top:520px;font-size:54px;letter-spacing:.14em">ML ENGINEER</div>
+<div class="kdiv ml" style="left:104px;top:598px;box-shadow:var(--kt-shadow)"></div>
+<div class="m sh ml" style="left:362px;top:820px;transform:translate(-50%,-50%);font-size:160px">BUILD</div>
+<div class="m sh ml" style="left:497px;top:1040px;transform:translate(-50%,-50%);font-size:160px">TRAIN</div>
+<div class="m sh ml" style="left:630px;top:1260px;transform:translate(-50%,-50%);font-size:160px">DEPLOY</div>
+</div>
+<!-- paper-sum-up: CARD SLIDE portrait (paper statement), CH2@58.10-64.39, lines 1-4 -->
+<div class="frame kt portrait paper" id="paper-sum-up">
+<div class="m ink" style="left:540px;top:440px;transform:translateX(-50%);font-size:88px;line-height:105px;text-align:center">AI ENGINEERING<br>IS LESS ABOUT<br>DEVELOPING<br>MODELS<br><span class="hide">AND MORE ABOUT</span><br><span class="hide"><span>ADAPTING</span></span><br><span class="hide">AND <span>EVALUATING</span></span><br><span class="hide">THEM</span></div>
+<div class="kdiv ink" style="left:495px;top:1336px;width:90px;height:6px"></div>
+<div class="m" style="left:540px;top:1380px;transform:translateX(-50%);font-size:44px;letter-spacing:.12em;color:#3A3A3A">CHIP HUYEN, AI ENGINEERING</div>
+</div>
+<!-- paper-sum-up-s1: CARD SLIDE portrait (paper statement), CH2@58.10-64.39, + lines 5-8 black -->
+<div class="frame kt portrait paper" id="paper-sum-up-s1">
+<div class="m ink" style="left:540px;top:440px;transform:translateX(-50%);font-size:88px;line-height:105px;text-align:center">AI ENGINEERING<br>IS LESS ABOUT<br>DEVELOPING<br>MODELS<br><span class="">AND MORE ABOUT</span><br><span class=""><span>ADAPTING</span></span><br><span class="">AND <span>EVALUATING</span></span><br><span class="">THEM</span></div>
+<div class="kdiv ink" style="left:495px;top:1336px;width:90px;height:6px"></div>
+<div class="m" style="left:540px;top:1380px;transform:translateX(-50%);font-size:44px;letter-spacing:.12em;color:#3A3A3A">CHIP HUYEN, AI ENGINEERING</div>
+</div>
+<!-- paper-sum-up-s2: CARD SLIDE portrait (paper statement), CH2@58.10-64.39, + ADAPTING red -->
+<div class="frame kt portrait paper" id="paper-sum-up-s2">
+<div class="m ink" style="left:540px;top:440px;transform:translateX(-50%);font-size:88px;line-height:105px;text-align:center">AI ENGINEERING<br>IS LESS ABOUT<br>DEVELOPING<br>MODELS<br><span class="">AND MORE ABOUT</span><br><span class=""><span class="rd">ADAPTING</span></span><br><span class="">AND <span>EVALUATING</span></span><br><span class="">THEM</span></div>
+<div class="kdiv ink" style="left:495px;top:1336px;width:90px;height:6px"></div>
+<div class="m" style="left:540px;top:1380px;transform:translateX(-50%);font-size:44px;letter-spacing:.12em;color:#3A3A3A">CHIP HUYEN, AI ENGINEERING</div>
+</div>
+<!-- paper-sum-up-s3: CARD SLIDE portrait (paper statement), CH2@58.10-64.39, + EVALUATING red -->
+<div class="frame kt portrait paper" id="paper-sum-up-s3">
+<div class="m ink" style="left:540px;top:440px;transform:translateX(-50%);font-size:88px;line-height:105px;text-align:center">AI ENGINEERING<br>IS LESS ABOUT<br>DEVELOPING<br>MODELS<br><span class="">AND MORE ABOUT</span><br><span class=""><span class="rd">ADAPTING</span></span><br><span class="">AND <span class="rd">EVALUATING</span></span><br><span class="">THEM</span></div>
+<div class="kdiv ink" style="left:495px;top:1336px;width:90px;height:6px"></div>
+<div class="m" style="left:540px;top:1380px;transform:translateX(-50%);font-size:44px;letter-spacing:.12em;color:#3A3A3A">CHIP HUYEN, AI ENGINEERING</div>
+</div>
+<!-- math-not-code: CARD SLIDE portrait (paper panel), CH3@92.02-94.58, both rows at rest -->
+<div class="frame kt portrait" id="math-not-code">
+<div class="vig"></div>
+<div class="ppanel" style="left:56px;top:470px;width:968px;height:900px"><div class="top" style="background:linear-gradient(90deg,var(--kt-green),var(--kt-green) 38%,rgba(30,255,6,0) 92%)"></div></div>
+<div class="m" style="left:112px;top:570px;font-size:48px;letter-spacing:.16em;color:#4A4945">IF YOU HAVE</div>
+<div class="kdiv" style="left:116px;top:642px;background:#16A51C"></div>
+<div class="badge rest" style="left:108px;top:764px"></div>
+<div class="m rest" style="left:284px;top:830px;transform:translateY(-50%);font-size:92px">MATH</div>
+<div class="hair" style="left:108px;top:970px;width:856px"></div>
+<div class="badge rest" style="left:108px;top:1094px"></div>
+<div class="m rest" style="left:284px;top:1160px;transform:translateY(-50%);font-size:92px;line-height:98px">PRODUCTION<br>CODE</div>
+</div>
+<!-- math-not-code-s1: CARD SLIDE portrait (paper panel), CH3@92.02-94.58, MATH tick -->
+<div class="frame kt portrait" id="math-not-code-s1">
+<div class="vig"></div>
+<div class="ppanel" style="left:56px;top:470px;width:968px;height:900px"><div class="top" style="background:linear-gradient(90deg,var(--kt-green),var(--kt-green) 38%,rgba(30,255,6,0) 92%)"></div></div>
+<div class="m" style="left:112px;top:570px;font-size:48px;letter-spacing:.16em;color:#4A4945">IF YOU HAVE</div>
+<div class="kdiv" style="left:116px;top:642px;background:#16A51C"></div>
+<div class="badge tick" style="left:108px;top:764px"><svg width="84" height="84" viewBox="0 0 84 84"><path d="M14 44 L34 64 L70 22" fill="none" stroke="#0B0B0B" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div class="m ink" style="left:284px;top:830px;transform:translateY(-50%);font-size:92px">MATH</div>
+<div class="hair" style="left:108px;top:970px;width:856px"></div>
+<div class="badge rest" style="left:108px;top:1094px"></div>
+<div class="m rest" style="left:284px;top:1160px;transform:translateY(-50%);font-size:92px;line-height:98px">PRODUCTION<br>CODE</div>
+</div>
+<!-- math-not-code-s2: CARD SLIDE portrait (paper panel), CH3@92.02-94.58, + PRODUCTION CODE cross -->
+<div class="frame kt portrait" id="math-not-code-s2">
+<div class="vig"></div>
+<div class="ppanel" style="left:56px;top:470px;width:968px;height:900px"><div class="top" style="background:linear-gradient(90deg,var(--kt-green),var(--kt-green) 38%,rgba(30,255,6,0) 92%)"></div></div>
+<div class="m" style="left:112px;top:570px;font-size:48px;letter-spacing:.16em;color:#4A4945">IF YOU HAVE</div>
+<div class="kdiv" style="left:116px;top:642px;background:#16A51C"></div>
+<div class="badge tick" style="left:108px;top:764px"><svg width="84" height="84" viewBox="0 0 84 84"><path d="M14 44 L34 64 L70 22" fill="none" stroke="#0B0B0B" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div class="m ink" style="left:284px;top:830px;transform:translateY(-50%);font-size:92px">MATH</div>
+<div class="hair" style="left:108px;top:970px;width:856px"></div>
+<div class="badge cross" style="left:108px;top:1094px"><svg width="76" height="76" viewBox="0 0 76 76"><path d="M16 16 L60 60 M60 16 L16 60" fill="none" stroke="#FFFFFF" stroke-width="13" stroke-linecap="round"/></svg></div>
+<div class="m ink" style="left:284px;top:1160px;transform:translateY(-50%);font-size:92px;line-height:98px">PRODUCTION<br>CODE</div>
+</div>
+<!-- end-screen: CARD SLIDE portrait (end screen), CH4@139.533-145.20 + 2.0 s hold, no arrow -->
+<div class="frame kt portrait" id="end-screen">
+<div class="vig"></div>
+<div class="m sh" style="left:540px;top:270px;transform:translateX(-50%);font-size:100px">WATCH <span class="ai">NEXT</span></div>
+<div class="slot" style="left:300px;top:440px"></div>
+<div class="slot" style="left:300px;top:754px"></div>
+<div class="slot" style="left:300px;top:1068px"></div>
+<div class="slot" style="left:300px;top:1382px"></div>
+
+</div>
+<!-- end-screen-s1: CARD SLIDE portrait (end screen), CH4@139.533-145.20 + 2.0 s hold, arrow on slot 1 -->
+<div class="frame kt portrait" id="end-screen-s1">
+<div class="vig"></div>
+<div class="m sh" style="left:540px;top:270px;transform:translateX(-50%);font-size:100px">WATCH <span class="ai">NEXT</span></div>
+<div class="slot on" style="left:300px;top:440px"></div>
+<div class="slot" style="left:300px;top:754px"></div>
+<div class="slot" style="left:300px;top:1068px"></div>
+<div class="slot" style="left:300px;top:1382px"></div>
+<div class="arrow" style="left:68px;top:499px;transform:rotate(-8deg)"></div>
+</div>
+<!-- end-screen-s2: CARD SLIDE portrait (end screen), CH4@139.533-145.20 + 2.0 s hold, arrow on slot 2 -->
+<div class="frame kt portrait" id="end-screen-s2">
+<div class="vig"></div>
+<div class="m sh" style="left:540px;top:270px;transform:translateX(-50%);font-size:100px">WATCH <span class="ai">NEXT</span></div>
+<div class="slot" style="left:300px;top:440px"></div>
+<div class="slot on" style="left:300px;top:754px"></div>
+<div class="slot" style="left:300px;top:1068px"></div>
+<div class="slot" style="left:300px;top:1382px"></div>
+<div class="arrow" style="left:782px;top:813px;transform:scaleX(-1) rotate(-8deg)"></div>
+</div>
+<!-- end-screen-s3: CARD SLIDE portrait (end screen), CH4@139.533-145.20 + 2.0 s hold, arrow on slot 3 -->
+<div class="frame kt portrait" id="end-screen-s3">
+<div class="vig"></div>
+<div class="m sh" style="left:540px;top:270px;transform:translateX(-50%);font-size:100px">WATCH <span class="ai">NEXT</span></div>
+<div class="slot" style="left:300px;top:440px"></div>
+<div class="slot" style="left:300px;top:754px"></div>
+<div class="slot on" style="left:300px;top:1068px"></div>
+<div class="slot" style="left:300px;top:1382px"></div>
+<div class="arrow" style="left:68px;top:1127px;transform:rotate(-8deg)"></div>
+</div>
+<!-- end-screen-s4: CARD SLIDE portrait (end screen), CH4@139.533-145.20 + 2.0 s hold, arrow on slot 4 -->
+<div class="frame kt portrait" id="end-screen-s4">
+<div class="vig"></div>
+<div class="m sh" style="left:540px;top:270px;transform:translateX(-50%);font-size:100px">WATCH <span class="ai">NEXT</span></div>
+<div class="slot" style="left:300px;top:440px"></div>
+<div class="slot" style="left:300px;top:754px"></div>
+<div class="slot" style="left:300px;top:1068px"></div>
+<div class="slot on" style="left:300px;top:1382px"></div>
+<div class="arrow" style="left:782px;top:1441px;transform:scaleX(-1) rotate(-8deg)"></div>
+</div>
+
+</body></html>

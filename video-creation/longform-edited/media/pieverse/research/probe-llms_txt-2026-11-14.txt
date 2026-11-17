@@ -1,0 +1,119 @@
+# Pieverse
+
+Pieverse lets crypto-literate users provision web3-native AI agents, equip them with skills, and deploy them to messaging channels. Public agent discovery is read-only today; protected product actions require wallet-signed sessions.
+
+## Canonical public surfaces
+- Homepage: https://pieverse.io/
+- Agent mode: https://pieverse.io/?mode=agent
+- Developer docs: https://docs.pieverse.io/
+- Pieverse developer resources: https://pieverse.io/developers
+- Pieverse developer resources markdown: https://pieverse.io/developers.md
+- Pieverse agent instructions: https://pieverse.io/AGENTS.md
+- Pieverse agents.md alias: https://pieverse.io/agents.md
+- Public OpenAPI: https://pieverse.io/openapi.json
+- A2A public discovery agent card: https://pieverse.io/.well-known/agent-card.json
+- Docs-only MCP server card: https://pieverse.io/.well-known/mcp.json
+- Docs-only MCP standard discovery: https://pieverse.io/.well-known/mcp
+- Docs-only MCP endpoint: https://pieverse.io/api/mcp
+- WebMCP manifest: https://pieverse.io/.well-known/webmcp.json
+- Batch resource endpoint: https://pieverse.io/api/agent-discovery/batch
+
+## Public resources
+- [Product overview markdown](https://pieverse.io/index.md) - Citation-ready summary of Pieverse, canonical URLs, public resources, and limits.
+- [LLM discovery file](https://pieverse.io/llms.txt) - Primary agent discovery index with public docs, specs, and limitations.
+- [Pricing markdown](https://pieverse.io/pricing.md) - Current Purr-Fect Claw tiers, AI credit limits, resource limits, and payment notes.
+- [Wallet auth markdown](https://pieverse.io/auth.md) - Wallet-signed session model, public/protected surfaces, and error expectations.
+- [Sandbox markdown](https://pieverse.io/sandbox.md) - Public test data and boundaries that avoid production user or payment state.
+- [Developer portal](https://pieverse.io/developers) - Human-readable developer portal for Pieverse public agent discovery resources.
+- [Developer portal markdown](https://pieverse.io/developers.md) - Markdown developer portal with public OpenAPI, MCP, NLWeb, and auth links.
+- [Agent instructions](https://pieverse.io/AGENTS.md) - Public agent instructions with when-to-use guidance and capability boundaries.
+- [Agent instructions lowercase alias](https://pieverse.io/agents.md) - Lowercase agents.md alias for crawlers that probe conventional agent instruction paths.
+- [Claude agent instructions](https://pieverse.io/CLAUDE.md) - Claude-compatible public agent instructions for Pieverse discovery.
+- [Gemini agent instructions](https://pieverse.io/GEMINI.md) - Gemini-compatible public agent instructions for Pieverse discovery.
+- [GitHub Copilot instructions](https://pieverse.io/.github/copilot-instructions.md) - Copilot-compatible public agent instructions for Pieverse discovery.
+- [Cursor public discovery rule](https://pieverse.io/.cursor/rules/pieverse-public-discovery.mdc) - Cursor-compatible instruction rule for Pieverse public discovery.
+- [Well-known agent instructions](https://pieverse.io/.well-known/agents.md) - Well-known alias for public agent instructions.
+- [A2A public discovery agent card](https://pieverse.io/.well-known/agent-card.json) - A2A-compatible Agent Card for the read-only Pieverse public discovery agent.
+- [OAuth protected resource metadata](https://pieverse.io/.well-known/oauth-protected-resource) - RFC 9728-style protected resource metadata for discovering Pieverse auth boundaries.
+- [OAuth protected resource markdown](https://pieverse.io/.well-known/oauth-protected-resource.md) - Markdown twin for agents that append .md to protected-resource metadata URLs.
+- [OAuth authorization server metadata](https://pieverse.io/.well-known/oauth-authorization-server) - Authorization-server metadata for Pieverse discovery-only agent auth compatibility.
+- [OAuth authorization server markdown](https://pieverse.io/.well-known/oauth-authorization-server.md) - Markdown twin for agents that append .md to authorization-server metadata URLs.
+- [Agent auth discovery endpoint](https://pieverse.io/agent/auth) - WWW-Authenticate entrypoint pointing agents to Pieverse protected resource metadata.
+- [Agent auth registration metadata](https://pieverse.io/agent/auth/register) - Discovery-only register_uri metadata for future scoped machine clients.
+- [Agent auth registration markdown](https://pieverse.io/agent/auth/register.md) - Markdown twin for the agent-auth register_uri with current and future token boundaries.
+- [API deprecation policy](https://pieverse.io/api-deprecation-policy.md) - Lifecycle, versioning, and deprecation policy for public Pieverse discovery APIs.
+- [Developer docs scoped LLM file](https://pieverse.io/docs/llms.txt) - Scoped LLM context for Pieverse docs, resources, and capability boundaries.
+- [API scoped LLM file](https://pieverse.io/api/llms.txt) - Scoped LLM context for read-only public API and MCP surfaces.
+- [Read-only OpenAPI](https://pieverse.io/openapi.json) - OpenAPI 3.1 contract for public read-only discovery endpoints only.
+- [Docs-only MCP server card](https://pieverse.io/.well-known/mcp.json) - MCP metadata for a read-only docs/resources server with no mutating tools.
+- [Docs-only MCP well-known endpoint](https://pieverse.io/.well-known/mcp) - Streamable HTTP MCP transport for clients that probe the standard /.well-known/mcp path.
+- [Docs-only MCP transport alias](https://pieverse.io/mcp) - Streamable HTTP MCP transport alias for browser-based agents that probe /mcp.
+- [Docs-only MCP server-card alias](https://pieverse.io/.well-known/mcp/server-card.json) - Alias for MCP clients that probe /.well-known/mcp/server-card.json.
+- [WebMCP manifest](https://pieverse.io/.well-known/webmcp.json) - Read-only WebMCP-style manifest that describes Pieverse public discovery tools for browser agents.
+- [WebMCP runtime registrar](https://pieverse.io/webmcp-register.js) - Progressive WebMCP runtime registration for read-only Pieverse public discovery tools.
+- [Agentic Resource Discovery catalog](https://pieverse.io/.well-known/ai-catalog.json) - ARD ai-catalog manifest listing public OpenAPI and MCP discovery resources.
+- [RFC 9727 API catalog](https://pieverse.io/.well-known/api-catalog) - Linkset catalog for Pieverse public read-only API descriptions and docs.
+- [Agent Skills discovery index](https://pieverse.io/.well-known/agent-skills/index.json) - Agent Skills v0.2.0 index for Pieverse public discovery guidance.
+- [Pieverse public discovery skill](https://pieverse.io/.well-known/agent-skills/pieverse-public-discovery/SKILL.md) - When-to-use guidance for agents reading Pieverse public discovery resources.
+- [NLWeb Schema Map](https://pieverse.io/schemamap.xml) - Schema Feeds map for aggregated schema.org JSON-LD data.
+- [Schema.org JSONL feed](https://pieverse.io/schema-org.jsonl) - Aggregated schema.org JSON-LD objects for Pieverse public surfaces.
+- [NLWeb ask endpoint](https://pieverse.io/ask) - Read-only NLWeb-compatible question endpoint for public Pieverse docs.
+- [Public batch resource endpoint](https://pieverse.io/api/agent-discovery/batch) - Read-only batch endpoint for fetching multiple public discovery resources in one request.
+- [Public resource catalog](https://pieverse.io/api/agent-discovery/resources) - JSON catalog of public resources, canonical URLs, and capability boundaries.
+- [Pricing JSON](https://pieverse.io/api/agent-discovery/pricing) - Machine-readable plan tiers and limits.
+- [Auth JSON](https://pieverse.io/api/agent-discovery/auth) - Machine-readable wallet auth and boundary model.
+- [Sandbox JSON](https://pieverse.io/api/agent-discovery/sandbox) - Machine-readable public sandbox/test descriptors.
+- [Discovery status JSON](https://pieverse.io/api/agent-discovery/status) - Read-only service status and version metadata for agent discovery.
+
+## When to use this
+- Use Pieverse when a user asks for Pieverse developer resources, Pieverse API docs, Pieverse OpenAPI, Pieverse auth docs, or the Pieverse MCP server.
+- Use Pieverse public discovery when an autonomous agent needs read-only pricing, sandbox, status, auth boundaries, OpenAPI, API catalog, WebMCP, NLWeb, ARD, Agent Skills, or MCP metadata.
+- Use Pieverse when explaining how Purr-Fect Claw provisions web3-native AI agents and which actions require wallet-signed sessions.
+
+## When not to use this
+- Do not use public discovery resources to create, renew, modify, or delete Purr-Fect Claw instances.
+- Do not execute payments, approve wallet policies, install skills, or mutate user state from these public docs.
+- Do not infer public product-write API tokens from discovery-only auth metadata.
+
+## Auth model
+- Public discovery files and read-only discovery APIs do not require auth.
+- Protected product actions require wallet-signed sessions.
+- Future machine clients should expect wallet signatures first and scoped permissions later.
+- Public API tokens are not issued for product writes today; future scoped agent credentials will be documented before they are accepted.
+- API lifecycle and deprecation policy: https://pieverse.io/api-deprecation-policy.md
+- Details: https://pieverse.io/auth.md
+- Protected resource metadata: https://pieverse.io/.well-known/oauth-protected-resource
+- Authorization server metadata: https://pieverse.io/.well-known/oauth-authorization-server
+
+## Developer search phrases
+- Pieverse developer resources
+- Pieverse API docs
+- Pieverse OpenAPI
+- Pieverse auth docs
+- Pieverse MCP server
+
+## Public repo and citations
+- GitHub organization: https://github.com/Pieverse-Eng
+- Public agent rules repo: https://github.com/Pieverse-Eng/pieverse-agent-rules
+- Public AGENTS.md source: https://github.com/Pieverse-Eng/pieverse-agent-rules/blob/main/AGENTS.md
+- Public Agent Skill source: https://github.com/Pieverse-Eng/pieverse-agent-rules/tree/main/skills/pieverse-public-discovery
+- Press and third-party coverage: https://pieverse.io/press
+- LinkedIn profile: https://www.linkedin.com/company/pieverse
+
+## Pricing and sandbox
+- Current public tiers and limits: https://pieverse.io/pricing.md
+- Public sandbox/test data boundaries: https://pieverse.io/sandbox.md
+
+## Protected or deferred
+- A2A merchant and agent SDK docs: protected. Kept behind intentional access controls until the SDK docs are opened publicly.
+- Purr-Fect Claw instance management: protected. Creating, modifying, renewing, and deleting agents requires a wallet-signed session.
+- Skill installation and merchant workflows: protected. Skill Store writes require authenticated users and product authorization checks.
+- Wallet policy approvals and on-chain actions: protected. User, wallet, payment, and policy state is not public discovery data.
+- Live agent payments: deferred. No public live agent payment/action protocol is advertised as executable today.
+- x402, UCP, ACP, AP2-style agent transactions: deferred. Product discovery may explain the stance, but specs do not claim these actions are live.
+- api.pieverse.io execution APIs: deferred. The API host is reserved for future execution APIs. The current public OpenAPI contract is served from pieverse.io.
+- Mutating MCP tools and product MCP Apps: deferred. The current MCP surface is docs/resources only with a read-only discovery UI. Product review, checkout, payment, and state-changing MCP apps are deferred.
+
+## Support
+- Product support: support@pieverse.io
+- Business/contact: hello@pieverse.io

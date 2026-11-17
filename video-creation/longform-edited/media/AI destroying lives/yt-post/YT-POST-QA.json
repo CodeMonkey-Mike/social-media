@@ -1,0 +1,74 @@
+{
+  "verdict": "PASS",
+  "root_cause": "Slide 08, the only slide rebuilt since the last round, now uses the recommended rows layout and clears both defects (the 457 px empty band and the dangling 'No'). The other 9 slides are byte-identical to the last stamp, and I re-opened and re-checked each one. All 10 are 1080x1080 RGB. Pixel strip check: no bright px within 48 px of any edge on 02-09; on 01 and 10 only hair touches the edges. Fonts load from Google Fonts (Playfair Display 700/900, DM Sans, JetBrains Mono) and render as such. The accent is the project cyan (about 3,194,254) throughout. No em dash or dollar sign in the spec or on any slide. Progress bars light n of 10 on 01-09, and the n/10 headers on 02-09 are correct. No headline ends on one orphan word. No text sits over the eyes, nose or mouth.",
+  "assets": [
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\AI destroying lives\\yt-post\\slides\\01.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "none. Checked: 'AI's taking jobs / that felt safe' matches the spec, 2 lines, no orphan word; 'felt safe' in the project cyan (Playfair 900). Zoomed: the chin ends about y730 and the headline cap line starts about y770, so the text sits on the shirt, clear of the mouth, nose and eyes. Face whole and right of centre; only the hair crown runs off the top edge and a few strands off the right (pixel strip check: 0 bright px on the left and bottom edges), which is the standard thumbnail crop. 'AI JOBS' label top-left at x64; progress bar lit 1 of 10, x 64-1016; footer link + 'Swipe' inside the margins."
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\AI destroying lives\\yt-post\\slides\\02.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "none. 'They've been / searching for months', 'for months' cyan; body matches the spec word for word, 4 lines of DM Sans, no orphan; header 'AI JOBS 2/10' (n/N in mono) + 'Mike / CodeMonkey Mike' + avatar with a cyan ring, aligned on the 64 px margins; bar 2 of 10. Observation only (not a fail, unchanged from the last round): a 320 px empty band below the body (y 630-950)."
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\AI destroying lives\\yt-post\\slides\\03.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "none. 'Employers named / AI as a reason' ('named AI' cyan across the wrap, 4 words on line 2, no orphan); 121,401 in big JetBrains Mono cyan (sampled 2,194,255) with a glow, centred; 'job cuts, 2026 through October' with 2026 in mono; body 'Since 2023 the total is 193,226. October was the lowest month of the year, only 1,265.' matches, numbers in mono; body ends about y910, clear of the bar; bar 3 of 10."
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\AI destroying lives\\yt-post\\slides\\04.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "none. 'The quiet part', 'quiet part' cyan; C7 crop leaves out the chart's own title and source line, nothing cut mid-element; +14.7% green / -7.5% red (palette) fully inside the card; ENTRY-LEVEL, SENIOR and 0% readable at phone size; caption matches the spec with 7.5% / 14.7% in mono; bar 4 of 10. Observation only: a faint maroon ambient glow in the card's top-right corner (zoomed); it is the source chart's own glow, not a cropped element."
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\AI destroying lives\\yt-post\\slides\\05.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "none. 'The government's / own forecast', 'forecast' cyan, no orphan; the 4 rows match the spec word for word (752,100 / 2035 / 34.4% / 25.5% in mono); highlight index 3 'The reason / automation, including AI' carries the cyan outline; card inside the 64 px margins; bar 5 of 10."
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\AI destroying lives\\yt-post\\slides\\06.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "none. 'The jobs just / stopped showing up' (line 2 all cyan, as the markup says); 30% big mono cyan with a glow; 'less translation work in Western languages' matches; body 'From over 3 million freelance job posts, the first year after ChatGPT. Total freelance demand still went up.' matches, 3 in mono; bar 6 of 10."
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\AI destroying lives\\yt-post\\slides\\07.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "none. 'Jobs nobody / believes are at risk' ('nobody believes' cyan across the wrap, no orphan); rows 'In use / Arms and cobots weld daily', 'Shortage / 320,000+ welders by 2029', 'Humanoid / 11-month pilot at BMW' match, one line each, numbers in mono; highlight index 0 'In use' outlined in cyan; bar 7 of 10."
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\AI destroying lives\\yt-post\\slides\\08.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "none. REBUILT this round (500,106 bytes vs 467,623 before), and last round's FAIL is cleared: it is now a rows slide. Headline 'A robot needs a download' fits on one line (ends about x940, inside the 1016 margin), 'a download' cyan (sampled 3,194,254). Rows match the spec word for word: 'Electrician / needs an apprenticeship', 'Robot / loads an expert's skill', 'Today / just not in the house yet', 'Prediction / one fixes your outlet by 2029' (2029 in JetBrains Mono); highlight index 3 'Prediction' has the cyan outline. Each value is one line with no clipping. The card runs about y380-850 inside the 64 px margins, leaving about 145 px above and 107 px below, the same balance as slide 07. The old empty band (457 px) and the dangling 'No' are gone. The source holds: AS-RECORDED 310.88, 339.67, 353.99 ('my prediction is that by 2029') and 374.63 ('it's just not in the house yet'); the 'Prediction' label keeps guard [!WARNING 3]. Bar lit 8 of 10, header 8/10."
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\AI destroying lives\\yt-post\\slides\\09.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "none. 'Feeling safe isn't being safe' on one line (ends about x980, inside the margin), 'being safe' cyan; C32 crop (zoomed on the bottom edge): the bar labels 'say AI will cut jobs' / 'worry about their own job' are whole with their descenders, and no sliver of the sub-labels shows on the card's bottom edge; 70% / 30% readable at phone size; caption 'One poll in March 2026: most expect AI to cut jobs, only 30% of workers worry about their own.' matches, numbers in mono; bar 9 of 10."
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\AI destroying lives\\yt-post\\slides\\10.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "none. 'Watch the full video', 'full video' cyan, one line, centred; zoomed: the chin ends about y715 and the headline starts about y745, on the neck/shirt, clear of the mouth; 'AI Is Wiping Out All These Jobs' matches the spec sub and the live title (video.json); 'Link in the post' pill in the project cyan with dark text; red play badge top-left, clear of the hair; channel link centred; face centred and whole, only the hair crown at the top edge (0 bright px on the left, right and bottom strips)."
+    }
+  ],
+  "summary": {
+    "checked": 10,
+    "passed": 10,
+    "failed": 0
+  },
+  "must_fix": [],
+  "stamp": "01.png:1392287;02.png:506499;03.png:597249;04.png:745871;05.png:517403;06.png:553149;07.png:480879;08.png:500106;09.png:793921;10.png:1310141",
+  "round": 2
+}

@@ -1,0 +1,711 @@
+[000]    3.62-  10.71 ( 7.1s) gap 3.6  Every time I go live, an AI pipeline turns our live stream into short clips, right? 30 seconds, 60 seconds.
+[001]   11.04-  13.70 ( 2.7s) gap 0.3  90 seconds, up to eight of them per stream.
+[002]   19.11-  23.24 ( 4.1s) gap 5.4  Every time I go live, an AI pipeline takes that livestream and could-
+[003]   28.87-  30.93 ( 2.1s) gap 5.6  Every time I go live, and I, I...
+[004]   32.90-  38.14 ( 5.2s) gap 2.0  Every time I go live, an AI pipeline takes that livestream and turns them into short clips, right?
+[005]   38.64-  41.17 ( 2.5s) gap 0.5  60 seconds, 30 seconds, 90 seconds.
+[006]   41.69-  42.01 ( 0.3s) gap 0.5  and.
+[007]   45.86-  54.68 ( 8.8s) gap 3.8  Every time I go live, an AI pipeline takes that livestream and converts it to short clips, right? 30 seconds, 60 seconds, 90 seconds.
+[008]   55.02-  56.26 ( 1.2s) gap 0.3  up to A of them per string.
+[009]   61.11-  65.63 ( 4.5s) gap 4.9  Every time I go live, an AI pipeline takes that livestream and converts it.
+[010]   68.90-  71.35 ( 2.5s) gap 3.3  And every time I go live, an AI pipeline.
+[011]   74.11-  79.84 ( 5.7s) gap 2.8  Every time I go live, an AI pipeline takes our livestream and converts it into short clips, right?
+[012]   80.22-  83.24 ( 3.0s) gap 0.4  30 seconds, 60 seconds, 90 seconds.
+[013]   83.81-  84.95 ( 1.1s) gap 0.6  up to eight per string.
+[014]   97.99- 100.87 ( 2.9s) gap13.0  An agent reads the transcript and picks the moments.
+[015]  101.41- 102.50 ( 1.1s) gap 0.5  And I watch every clip.
+[016]  102.86- 103.83 ( 1.0s) gap 0.4  and I keep it or kill it.
+[017]  107.33- 111.27 ( 3.9s) gap 3.5  In my last video on evals, I said those verdicts were going nowhere.
+[018]  121.42- 123.78 ( 2.4s) gap10.1  The pipeline had no record of what it...
+[019]  126.43- 127.00 ( 0.6s) gap 2.6  Okay, retake.
+[020]  128.10- 129.89 ( 1.8s) gap 1.1  The pipeline had no record.
+[021]  131.77- 134.21 ( 2.4s) gap 1.9  The pipeline had no record of what I rejected.
+[022]  134.88- 137.81 ( 2.9s) gap 0.7  So it couldn't tell if the next run was any better than the last one.
+[023]  141.77- 143.84 ( 2.1s) gap 4.0  I said the next layer was a data set.
+[024]  144.25- 144.93 ( 0.7s) gap 0.4  and a score.
+[025]  152.12- 153.02 ( 0.9s) gap 7.2  So I built it.
+[026]  153.34- 154.89 ( 1.5s) gap 0.3  and I'm gonna show you all of it here.
+[027]  158.60- 163.91 ( 5.3s) gap 3.7  We're going to start with the harness, which is the code that surrounds the agents and holds them all with the rules.
+[028]  175.65- 178.93 ( 3.3s) gap11.7  Then the whole graph, every step and every agent in the...
+[029]  179.91- 181.92 ( 2.0s) gap 1.0  Then the whole graph, every step.
+[030]  182.25- 183.40 ( 1.1s) gap 0.3  and every agent in it.
+[031]  189.10- 194.42 ( 5.3s) gap 5.7  Then the eviles, how a verter gets recorded, how an old live stream gets replayed.
+[032]  194.73- 196.20 ( 1.5s) gap 0.3  and how a prompt gets a score.
+[033]  212.36- 214.81 ( 2.4s) gap16.2  And we're going to do all of it at the code level.
+[034]  215.15- 216.96 ( 1.8s) gap 0.3  the Python, the JSON.
+[035]  221.41- 223.69 ( 2.3s) gap 4.5  And we're going to do all of it at the code level.
+[036]  224.12- 225.77 ( 1.6s) gap 0.4  the Python, the JSON.
+[037]  226.12- 228.18 ( 2.1s) gap 0.4  what I added and what I changed.
+[038]  256.80- 258.74 ( 1.9s) gap28.6  And stay for the first thing that score
+[039]  260.52- 264.73 ( 4.2s) gap 1.8  And stay for the first thing the scores told me because it wasn't about the prompt at all.
+[040]  274.55- 276.66 ( 2.1s) gap 9.8  So let's start with the word harness.
+[041]  277.14- 279.33 ( 2.2s) gap 0.5  because people use it for two different things.
+[042]  283.56- 284.42 ( 0.9s) gap 4.2  The first one.
+[043]  284.72- 285.89 ( 1.2s) gap 0.3  is the agent harness.
+[044]  291.46- 293.10 ( 1.6s) gap 5.6  Anthropic defines it as...
+[045]  293.59- 296.59 ( 3.0s) gap 0.5  a system that enables a model to act as an agent.
+[046]  299.68- 301.87 ( 2.2s) gap 3.1  A model only produces text.
+[047]  306.85- 307.56 ( 0.7s) gap 5.0  The harness?
+[048]  307.90- 308.60 ( 0.7s) gap 0.3  Runs a loop.
+[049]  309.09- 309.99 ( 0.9s) gap 0.5  handset tools.
+[050]  310.39- 311.06 ( 0.7s) gap 0.4  Carry on.
+[051]  312.80- 314.02 ( 1.2s) gap 1.7  Carries out the corners.
+[052]  315.29- 317.66 ( 2.4s) gap 1.3  It carries out the two coils and returns the result.
+[053]  323.73- 325.91 ( 2.2s) gap 6.1  The second one is evaluation harness.
+[054]  327.36- 329.57 ( 2.2s) gap 1.5  The second one is the evaluation harness.
+[055]  330.13- 330.98 ( 0.9s) gap 0.6  Same source.
+[056]  331.51- 333.88 ( 2.4s) gap 0.5  the infrastructure that runs the evals end to end.
+[057]  339.83- 341.81 ( 2.0s) gap 5.9  He hands out the task. Every.
+[058]  343.39- 344.60 ( 1.2s) gap 1.6  It hands out the task.
+[059]  345.04- 346.27 ( 1.2s) gap 0.4  records every step.
+[060]  346.95- 349.64 ( 2.7s) gap 0.7  grades the output, and adds up the results.
+[061]  356.29- 358.42 ( 2.1s) gap 6.7  And here's why both belong in this video.
+[062]  362.81- 364.46 ( 1.6s) gap 4.4  When you evaluate an agent.
+[063]  364.88- 366.73 ( 1.8s) gap 0.4  You're never grading the model alone.
+[064]  370.02- 372.24 ( 2.2s) gap 3.3  You're great in the model and its harness.
+[065]  372.56- 373.49 ( 0.9s) gap 0.3  working together.
+[066]  379.10- 381.73 ( 2.6s) gap 5.6  Lame chain splits the stack three ways.
+[067]  382.25- 383.01 ( 0.8s) gap 0.5  framework.
+[068]  383.42- 384.29 ( 0.9s) gap 0.4  RUN TIME!
+[069]  384.63- 385.42 ( 0.8s) gap 0.3  and a harness.
+[070]  390.96- 392.15 ( 1.2s) gap 5.5  by their own labels.
+[071]  392.59- 393.33 ( 0.7s) gap 0.4  line graph.
+[072]  393.68- 394.48 ( 0.8s) gap 0.4  Here's the runtime.
+[073]  399.91- 401.56 ( 1.7s) gap 5.4  It gives you durable execution.
+[074]  401.97- 404.25 ( 2.3s) gap 0.4  persistence, and human-in-a-loop support.
+[075]  414.69- 415.92 ( 1.2s) gap10.4  and they sing outright.
+[076]  416.28- 417.66 ( 1.4s) gap 0.4  that the lines are blurry.
+[077]  418.07- 419.51 ( 1.4s) gap 0.4  So don't get stuck on the...
+[078]  437.61- 438.69 ( 1.1s) gap18.1  and they say outright.
+[079]  439.09- 440.40 ( 1.3s) gap 0.4  that the lines are blurry.
+[080]  440.85- 442.78 ( 1.9s) gap 0.5  So don't get stuck on the labels.
+[081]  452.55- 454.24 ( 1.7s) gap 9.8  Here's how I map those words.
+[082]  456.21- 458.05 ( 1.8s) gap 2.0  Here's how those words map into...
+[083]  460.31- 462.43 ( 2.1s) gap 2.3  Here's how those words map onto what I run.
+[084]  471.83- 474.87 ( 3.0s) gap 9.4  Everyone in my agents runs inside Cloud Code.
+[085]  475.28- 477.58 ( 2.3s) gap 0.4  And Cloud Code is an agent harness.
+[086]  479.02- 479.81 ( 0.8s) gap 1.4  It owns a loop?
+[087]  480.27- 481.05 ( 0.8s) gap 0.5  and the tools.
+[088]  486.29- 488.72 ( 2.4s) gap 5.2  Around the agents, sit a line graph.
+[089]  490.76- 493.58 ( 2.8s) gap 2.0  Around the agents sits a Langrath Graf.
+[090]  501.17- 502.24 ( 1.1s) gap 7.6  It decides the order.
+[091]  502.63- 503.70 ( 1.1s) gap 0.4  checks every output.
+[092]  504.21- 505.25 ( 1.0s) gap 0.5  Stuff's for a human.
+[093]  505.61- 506.99 ( 1.4s) gap 0.4  and retries what fails.
+[094]  515.00- 518.52 ( 3.5s) gap 8.0  And right beside the graph sits the evaluation harness.
+[095]  519.13- 520.07 ( 0.9s) gap 0.6  That's the new part.
+[096]  520.58- 521.75 ( 1.2s) gap 0.5  And that's where we're going to end up.
+[097]  547.14- 548.84 ( 1.7s) gap25.4  You hear a lot of people call this
+[098]  549.35- 550.44 ( 1.1s) gap 0.5  Harness Engineering.
+[099]  550.91- 552.98 ( 2.1s) gap 0.5  It's what we build around the model.
+[100]  553.38- 555.99 ( 2.6s) gap 0.4  So you don't have to rely on the agent actually behaving.
+[101]  557.38- 558.05 ( 0.7s) gap 1.4  I'm an agent.
+[102]  567.13- 568.72 ( 1.6s) gap 9.1  You'll hear a lot of people call this...
+[103]  569.05- 570.42 ( 1.4s) gap 0.3  Harness Engineering.
+[104]  570.86- 572.86 ( 2.0s) gap 0.4  is what we build around the model.
+[105]  573.27- 575.22 ( 1.9s) gap 0.4  So the results don't have to depend on.
+[106]  575.89- 578.61 ( 2.7s) gap 0.7  So the result doesn't depend on the model behaving.
+[107]  580.79- 586.73 ( 5.9s) gap 2.2  It's everything we build, it's everything you build around the model so the result doesn't depend on the model behaving.
+[108]  591.62- 592.94 ( 1.3s) gap 4.9  You'll hear people call this.
+[109]  593.38- 593.92 ( 0.5s) gap 0.4  Harness.
+[110]  596.39- 598.16 ( 1.8s) gap 2.5  You'll hear people quarrel all of this.
+[111]  598.80- 601.90 ( 3.1s) gap 0.6  You'll hear people call all of this harness engineering.
+[112]  602.45- 604.62 ( 2.2s) gap 0.6  It's what we build around the model.
+[113]  611.70- 612.30 ( 0.6s) gap 7.1  Yo ho!
+[114]  613.18- 613.75 ( 0.6s) gap 0.9  You hear?
+[115]  615.09- 617.79 ( 2.7s) gap 1.3  You'll hear people call all of this harness engineering.
+[116]  619.40- 621.83 ( 2.4s) gap 1.6  You're a peop- Oh my God dude.
+[117]  623.67- 626.53 ( 2.9s) gap 1.8  You'll hear people call all of this harness engineering.
+[118]  633.32- 636.50 ( 3.2s) gap 6.8  It's everything you build around the model. So you're.
+[119]  639.34- 644.59 ( 5.2s) gap 2.8  It's everything you build around the model, so the result doesn't depend on the model behaving.
+[120]  646.39- 648.99 ( 2.6s) gap 1.8  It's everything you build around the model.
+[121]  649.34- 652.48 ( 3.1s) gap 0.4  so that the result doesn't depend on the model behaving.
+[122]  659.60- 660.04 ( 0.4s) gap 7.1  Now.
+[123]  661.22- 662.24 ( 1.0s) gap 1.2  The system itself.
+[124]  665.57- 666.90 ( 1.3s) gap 3.3  A livestream comes in.
+[125]  667.57- 669.27 ( 1.7s) gap 0.7  and the first step re-encodes it.
+[126]  670.18- 672.23 ( 2.1s) gap 0.9  makes it a vertical version, and transcribes it.
+[127]  675.65- 678.91 ( 3.3s) gap 3.4  A live stream comes in and the first step re-encodes it.
+[128]  679.43- 680.62 ( 1.2s) gap 0.5  makes it a vertical.
+[129]  683.65- 686.96 ( 3.3s) gap 3.0  A live stream comes in and the first step re-encodes it.
+[130]  687.51- 688.91 ( 1.4s) gap 0.6  It makes it a vertical version.
+[131]  689.21- 690.12 ( 0.9s) gap 0.3  and transcribes it.
+[132]  701.90- 702.81 ( 0.9s) gap11.8  from the transcript.
+[133]  704.31- 707.91 ( 3.6s) gap 1.5  From that transcript, the work fans out into three lanes.
+[134]  708.32- 710.52 ( 2.2s) gap 0.4  Lane 1 is for a long form video.
+[135]  720.00- 720.67 ( 0.7s) gap 9.5  Lane 2.
+[136]  721.04- 722.17 ( 1.1s) gap 0.4  is the vertical shorts.
+[137]  722.52- 723.62 ( 1.1s) gap 0.3  And those are the clips.
+[138]  724.50- 728.92 ( 4.4s) gap 0.9  Lane 3 is text and images, such as tweets, threads, and posts.
+[139]  735.77- 737.34 ( 1.6s) gap 6.9  Everything lands in the queues.
+[140]  739.26- 743.04 ( 3.8s) gap 1.9  Everything lands in queues, and separate scripts post those queues.
+[141]  746.82- 748.30 ( 1.5s) gap 3.8  Everything lands in cues.
+[142]  748.61- 750.78 ( 2.2s) gap 0.3  and separate scripts post from those queues.
+[143]  753.39- 755.45 ( 2.1s) gap 2.6  Today, what we care about is lane two.
+[144]  760.39- 761.19 ( 0.8s) gap 4.9  L uwagę.
+[145]  762.71- 765.67 ( 3.0s) gap 1.5  One Langriff graph owns all three lanes.
+[146]  766.10- 767.72 ( 1.6s) gap 0.4  and it has 14 steps.
+[147]  769.97- 773.05 ( 3.1s) gap 2.3  It starts with the intake, and then it registers the batch.
+[148]  780.98- 783.92 ( 2.9s) gap 7.9  Lane 3 gets launched right away as its own process.
+[149]  784.27- 786.90 ( 2.6s) gap 0.3  So the posts are being draft while the clips are being made.
+[150]  791.32- 792.67 ( 1.4s) gap 4.4  Then the clip strategist.
+[151]  812.01- 814.06 ( 2.0s) gap19.3  That's the agent that reads a transcript.
+[152]  814.39- 815.77 ( 1.4s) gap 0.3  and proposes the clips.
+[153]  816.14- 817.84 ( 1.7s) gap 0.4  and it's the one we're going to evaluate.
+[154]  819.17- 820.79 ( 1.6s) gap 1.3  And it's the one we're going to evaluate.
+[155]  826.96- 827.96 ( 1.0s) gap 6.2  The clips get out.
+[156]  828.39- 829.09 ( 0.7s) gap 0.4  And the class.
+[157]  830.28- 832.52 ( 2.2s) gap 1.2  The clips get out and the graph stops.
+[158]  833.84- 835.22 ( 1.4s) gap 1.3  That's the human in the loop game.
+[159]  840.96- 842.25 ( 1.3s) gap 5.7  I watch royal cuts.
+[160]  842.64- 844.03 ( 1.4s) gap 0.4  and I keep or kill each one.
+[161]  872.92- 874.50 ( 1.6s) gap28.9  The survivors get tightened.
+[162]  874.98- 877.42 ( 2.4s) gap 0.5  which means an agent plans which filler to remove.
+[163]  877.95- 879.44 ( 1.5s) gap 0.5  And then there's a second human gait.
+[164]  884.95- 887.06 ( 2.1s) gap 5.5  After that, the graph finishes the clips.
+[165]  887.46- 888.39 ( 0.9s) gap 0.4  Build these short.
+[166]  888.83- 890.27 ( 1.4s) gap 0.4  and publishes them to the queue.
+[167]  898.52- 900.51 ( 2.0s) gap 8.2  The last two steps wait for lane three.
+[168]  900.96- 902.46 ( 1.5s) gap 0.4  and verify the whole batch.
+[169]  909.32- 910.83 ( 1.5s) gap 6.9  The graph refuses report.
+[170]  912.06- 915.62 ( 3.6s) gap 1.2  The graph refuses to report done while any lane is pending.
+[171]  927.76- 930.03 ( 2.3s) gap12.1  six agents work inside this graph.
+[172]  930.71- 933.44 ( 2.7s) gap 0.7  Three of them make judgment calls and hand back a plan.
+[173]  934.50- 936.66 ( 2.2s) gap 1.1  and three of them build or check things.
+[174]  946.64- 949.05 ( 2.4s) gap10.0  And each one sits on the model tier.
+[175]  949.47- 951.11 ( 1.6s) gap 0.4  that matches how much judgment.
+[176]  953.68- 955.65 ( 2.0s) gap 2.6  And each one sits on the model tier.
+[177]  955.97- 958.53 ( 2.6s) gap 0.3  that matches how much judgment its job needs.
+[178]  962.77- 964.37 ( 1.6s) gap 4.2  In code, the graph is short.
+[179]  964.94- 967.69 ( 2.7s) gap 0.6  14 nodes, each one plain Python.
+[180]  969.33- 970.32 ( 1.0s) gap 1.6  14 nodes.
+[181]  970.73- 972.47 ( 1.7s) gap 0.4  each one a plain Python function.
+[182]  972.93- 973.92 ( 1.0s) gap 0.5  Rired in a chain.
+[183]  987.13- 990.26 ( 3.1s) gap13.2  And every edge between two stops is a conditional edge.
+[184] 1001.12-1003.44 ( 2.3s) gap10.9  It has the same small routing function behind it.
+[185] 1008.88-1010.46 ( 1.6s) gap 5.4  If a step report's failed...
+[186] 1010.97-1012.28 ( 1.3s) gap 0.5  The next stop is the end.
+[187] 1015.81-1017.58 ( 1.8s) gap 3.5  The run halts where it broke.
+[188] 1044.38-1045.61 ( 1.2s) gap26.8  So how does it step?
+[189] 1047.09-1048.51 ( 1.4s) gap 1.5  Okay, retake.
+[190] 1051.59-1053.34 ( 1.8s) gap 3.1  So how does this step you as an agent?
+[191] 1054.01-1056.02 ( 2.0s) gap 0.7  Well, it spawns one headless.
+[192] 1056.39-1057.42 ( 1.0s) gap 0.4  just like a command tool.
+[193] 1062.37-1062.84 ( 0.5s) gap 5.0  So.
+[194] 1064.94-1066.65 ( 1.7s) gap 2.1  So how does a step use an agent?
+[195] 1066.99-1068.41 ( 1.4s) gap 0.3  Well, it's bound one.
+[196] 1070.81-1072.48 ( 1.7s) gap 2.4  So how does this stop you as an agent?
+[197] 1072.81-1073.13 ( 0.3s) gap 0.3  Whoa.
+[198] 1073.46-1074.43 ( 1.0s) gap 0.3  His spawns won.
+[199] 1074.80-1075.44 ( 0.6s) gap 0.4  Headless.
+[200] 1075.89-1077.39 ( 1.5s) gap 0.5  the same way you would run a command tool.
+[201] 1078.50-1078.94 ( 0.4s) gap 1.1  Ahem.
+[202] 1084.00-1085.73 ( 1.7s) gap 5.1  So how does a step use an agent?
+[203] 1086.90-1087.92 ( 1.0s) gap 1.2  It spawns one.
+[204] 1088.26-1088.94 ( 0.7s) gap 0.3  Headless.
+[205] 1089.34-1091.37 ( 2.0s) gap 0.4  the same way you would just run a command line tool.
+[206] 1103.63-1104.80 ( 1.2s) gap12.3  The agent gets a prompt.
+[207] 1105.36-1106.35 ( 1.0s) gap 0.6  Does it work?
+[208] 1106.92-1109.24 ( 2.3s) gap 0.6  and everything prints streams into a long file.
+[209] 1112.51-1113.71 ( 1.2s) gap 3.3  The agent gets a prompt.
+[210] 1114.15-1117.48 ( 3.3s) gap 0.4  does its work, and everything prints streams into a long file.
+[211] 1125.22-1126.44 ( 1.2s) gap 7.7  The agent gets a prompt.
+[212] 1126.88-1127.76 ( 0.9s) gap 0.4  Does it work?
+[213] 1128.31-1130.53 ( 2.2s) gap 0.6  and everything prints streams into a log file.
+[214] 1139.30-1141.34 ( 2.0s) gap 8.8  If the API comes back overloaded.
+[215] 1141.98-1144.66 ( 2.7s) gap 0.6  The harness waits 60 seconds and retries it once.
+[216] 1154.98-1157.06 ( 2.1s) gap10.3  And if the top model is out of quota.
+[217] 1157.61-1159.07 ( 1.5s) gap 0.6  Every try is the same agent.
+[218] 1165.17-1166.93 ( 1.8s) gap 6.1  And if the top model is out of quota.
+[219] 1167.61-1170.64 ( 3.0s) gap 0.7  It retries the same agent once on the next model down.
+[220] 1171.42-1173.11 ( 1.7s) gap 0.8  A run never stalls on a quota.
+[221] 1181.21-1183.31 ( 2.1s) gap 8.1  Here's a step that picks the clips.
+[222] 1185.46-1186.95 ( 1.5s) gap 2.2  It spawns a strategist.
+[223] 1187.30-1189.38 ( 2.1s) gap 0.4  and then it doesn't trust a word of the reply.
+[224] 1198.35-1199.92 ( 1.6s) gap 9.0  What a trust is the artifact.
+[225] 1206.71-1208.60 ( 1.9s) gap 6.8  The plan has to exist on an-
+[226] 1209.81-1213.09 ( 3.3s) gap 1.2  The plane has to exist on disk as a JSON file.
+[227] 1213.88-1215.93 ( 2.0s) gap 0.8  And if the agent only answered in the chat...
+[228] 1216.47-1219.00 ( 2.5s) gap 0.5  The harness pulls the JSON out of the text.
+[229] 1224.24-1224.61 ( 0.4s) gap 5.2  
+[230] 1226.18-1226.50 ( 0.3s) gap 1.6  OK.
+[231] 1230.44-1230.79 ( 0.4s) gap 3.9  we take.
+[232] 1232.27-1234.32 ( 2.1s) gap 1.5  And if the agent only answered in the chat.
+[233] 1234.83-1238.89 ( 4.1s) gap 0.5  The harness pulls the JSON out of the text and writes the file itself.
+[234] 1242.56-1244.45 ( 1.9s) gap 3.7  Then the file goes through a validator.
+[235] 1245.38-1248.00 ( 2.6s) gap 0.9  It's the same validator the cutting step uses.
+[236] 1248.43-1248.93 ( 0.5s) gap 0.4  So there's.
+[237] 1251.77-1253.25 ( 1.5s) gap 2.8  So there's one source of truth.
+[238] 1255.52-1257.93 ( 2.4s) gap 2.3  The validator isn't smart, and that's the point.
+[239] 1258.43-1262.04 ( 3.6s) gap 0.5  Every clip needs an ID, a title, and a list of segments.
+[240] 1262.47-1264.79 ( 2.3s) gap 0.4  Every segment has to end after it starts.
+[241] 1265.38-1267.52 ( 2.1s) gap 0.6  and nothing can run past the end of the recording.
+[242] 1283.46-1284.67 ( 1.2s) gap15.9  If the plan fails...
+[243] 1285.15-1288.37 ( 3.2s) gap 0.5  The run stops right there, before a single frame cuts out.
+[244] 1291.24-1296.07 ( 4.8s) gap 2.9  If the plan fails, the run stops right there, before a single frame gets cut.
+[245] 1310.06-1312.54 ( 2.5s) gap14.0  There's a name for deciding what the model sees.
+[246] 1313.11-1314.44 ( 1.3s) gap 0.6  Context Engineering.
+[247] 1322.41-1323.56 ( 1.2s) gap 8.0  Anthropic Closet.
+[248] 1324.18-1325.19 ( 1.0s) gap 0.6  The art on.
+[249] 1327.20-1328.30 ( 1.1s) gap 2.0  Anthropic Closet.
+[250] 1328.71-1333.11 ( 4.4s) gap 0.4  the art and science of curating what will go into the limited context window.
+[251] 1338.31-1338.88 ( 0.6s) gap 5.2  So we're...
+[252] 1340.11-1340.40 ( 0.3s) gap 1.2  at work.
+[253] 1343.15-1343.59 ( 0.4s) gap 2.7  retake.
+[254] 1357.94-1360.94 ( 3.0s) gap14.4  That work matters, and it's one part of a harness.
+[255] 1364.87-1368.01 ( 3.1s) gap 3.9  But a rule that only lives in the context is a request.
+[256] 1374.89-1375.96 ( 1.1s) gap 6.9  The model can mix it.
+[257] 1377.53-1378.63 ( 1.1s) gap 1.6  The model can miss it.
+[258] 1394.31-1396.33 ( 2.0s) gap15.7  So every rule that has to hold...
+[259] 1396.70-1397.89 ( 1.2s) gap 0.4  goes into the code.
+[260] 1407.31-1408.81 ( 1.5s) gap 9.4  The shape of a clip plan.
+[261] 1409.25-1410.48 ( 1.2s) gap 0.4  lives in the validator.
+[262] 1422.44-1424.88 ( 2.4s) gap12.0  Where files are allowed to go, lives a hook.
+[263] 1431.18-1433.01 ( 1.8s) gap 6.3  It runs at the end of every turn.
+[264] 1433.53-1435.03 ( 1.5s) gap 0.5  and again before every commit.
+[265] 1444.77-1446.84 ( 2.1s) gap 9.7  The model fallback lives in the spawner.
+[266] 1448.41-1450.88 ( 2.5s) gap 1.6  And there's a script that proves every spawner has it.
+[267] 1466.98-1467.71 ( 0.7s) gap16.1  And done.
+[268] 1468.10-1470.07 ( 2.0s) gap 0.4  isn't something an agent gets to claim.
+[269] 1470.60-1472.16 ( 1.6s) gap 0.5  The last step of the graph.
+[270] 1480.28-1484.22 ( 3.9s) gap 8.1  The last step of the graph checks the disk and the queues for itself.
+[271] 1492.24-1493.96 ( 1.7s) gap 8.0  The code explains the job.
+[272] 1494.27-1496.10 ( 1.8s) gap 0.3  The code enforces the rules.
+[273] 1501.70-1503.37 ( 1.7s) gap 5.6  The prompt explains the job.
+[274] 1503.76-1505.62 ( 1.9s) gap 0.4  The code enforces the rules.
+[275] 1512.09-1513.22 ( 1.1s) gap 6.5  Next is memory.
+[276] 1513.69-1515.73 ( 2.0s) gap 0.5  And this is the part that trips people up.
+[277] 1517.01-1518.89 ( 1.9s) gap 1.3  My agents don't remember anything.
+[278] 1519.93-1521.58 ( 1.7s) gap 1.0  Every worm starts fresh.
+[279] 1526.12-1529.35 ( 3.2s) gap 4.5  Anthropic described the same problem for long-running agents.
+[280] 1529.76-1533.41 ( 3.6s) gap 0.4  Each new session begins with no memory of what came before.
+[281] 1534.91-1536.69 ( 1.8s) gap 1.5  So the harness holds the state.
+[282] 1539.42-1541.97 ( 2.6s) gap 2.7  The graph checkpoints every step in the x.
+[283] 1543.40-1546.26 ( 2.9s) gap 1.4  The graph checkpoints every step into SQLite.
+[284] 1548.04-1548.49 ( 0.5s) gap 1.8  SQLite.
+[285] 1550.62-1553.36 ( 2.7s) gap 2.1  The graph checkpoints every step into SQLite.
+[286] 1554.58-1555.32 ( 0.7s) gap 1.2  One set.
+[287] 1556.58-1558.01 ( 1.4s) gap 1.3  one thread per batch.
+[288] 1562.48-1565.36 ( 2.9s) gap 4.5  so a run can stop and pick up later.
+[289] 1565.81-1566.45 ( 0.6s) gap 0.5  you
+[290] 1568.70-1569.27 ( 0.6s) gap 2.3  you
+[291] 1571.56-1573.69 ( 2.1s) gap 2.3  The work itself lives in files.
+[292] 1577.47-1578.89 ( 1.4s) gap 3.8  The clip plan and pro-
+[293] 1585.49-1587.61 ( 2.1s) gap 6.6  The clip plan and a progress file.
+[294] 1587.94-1589.96 ( 2.0s) gap 0.3  or the contract between the steps.
+[295] 1590.66-1592.43 ( 1.8s) gap 0.7  And every step checks the disk.
+[296] 1593.87-1596.32 ( 2.5s) gap 1.4  And every step checks to dicks before anything.
+[297] 1598.03-1601.06 ( 3.0s) gap 1.7  And every step checks the disk before it does anything.
+[298] 1606.43-1608.98 ( 2.6s) gap 5.4  And every step checks the disk before it does anything.
+[299] 1617.18-1618.21 ( 1.0s) gap 8.2  rerun a batch.
+[300] 1618.55-1620.18 ( 1.6s) gap 0.3  And it skips whatever's already done.
+[301] 1625.09-1628.09 ( 3.0s) gap 4.9  rerun a batch and it skips whatever's already done.
+[302] 1638.42-1642.61 ( 4.2s) gap10.3  And the knowledge lives in docs that the agents read at the start of every run.
+[303] 1648.11-1651.03 ( 2.9s) gap 5.5  That's what makes a human gate possible. Encode.
+[304] 1651.44-1652.97 ( 1.5s) gap 0.4  The gate is in Langreif interrupt.
+[305] 1657.61-1660.12 ( 2.5s) gap 4.6  In code, the gate is a LandGraph interrupt.
+[306] 1672.93-1673.93 ( 1.0s) gap12.8  The run execs.
+[307] 1675.23-1677.12 ( 1.9s) gap 1.3  to run exits with code two.
+[308] 1677.53-1679.54 ( 2.0s) gap 0.4  print the exact command to resume.
+[309] 1680.18-1682.01 ( 1.8s) gap 0.6  and hands the machine the next job.
+[310] 1687.18-1688.96 ( 1.8s) gap 5.2  I can come back five minutes later.
+[311] 1689.35-1690.25 ( 0.9s) gap 0.4  for the next morning.
+[312] 1697.45-1698.37 ( 0.9s) gap 7.2  When I approve.
+[313] 1698.79-1700.39 ( 1.6s) gap 0.4  That same step runs again.
+[314] 1701.00-1703.15 ( 2.1s) gap 0.6  applies my skills, applies my kills.
+[315] 1703.47-1704.16 ( 0.7s) gap 0.3  Ugh.
+[316] 1706.18-1707.03 ( 0.9s) gap 2.0  When I approve...
+[317] 1707.40-1708.06 ( 0.7s) gap 0.4  That's same.
+[318] 1714.31-1715.19 ( 0.9s) gap 6.3  Would I approve?
+[319] 1715.58-1719.36 ( 3.8s) gap 0.4  That same step runs again, applies my kills, and moves on.
+[320] 1730.37-1733.43 ( 3.1s) gap11.0  So this graph was already great in its own work three ways.
+[321] 1740.77-1741.61 ( 0.8s) gap 7.3  And they're the same.
+[322] 1744.16-1746.34 ( 2.2s) gap 2.6  And they're the same three greater types.
+[323] 1746.66-1747.84 ( 1.2s) gap 0.3  Ananthropic Lists.
+[324] 1748.30-1749.01 ( 0.7s) gap 0.5  code-based.
+[325] 1749.45-1750.28 ( 0.8s) gap 0.4  model-based.
+[326] 1750.68-1751.30 ( 0.6s) gap 0.4  and human.
+[327] 1754.95-1756.31 ( 1.4s) gap 3.7  The validators are code.
+[328] 1760.85-1762.33 ( 1.5s) gap 4.5  The visual QA agent.
+[329] 1762.88-1765.18 ( 2.3s) gap 0.5  is a model judging another model's images.
+[330] 1768.49-1769.70 ( 1.2s) gap 3.3  And the two gates are me.
+[331] 1775.66-1777.71 ( 2.0s) gap 6.0  But every one of them judges a single run.
+[332] 1778.51-1781.17 ( 2.7s) gap 0.8  Nothing compared this week's strategist to last week's.
+[333] 1792.71-1794.56 ( 1.8s) gap11.5  and my verdicts were being thrown away.
+[334] 1796.40-1797.80 ( 1.4s) gap 1.8  Those are human labels.
+[335] 1798.25-1799.90 ( 1.6s) gap 0.4  the best signal in the whole system.
+[336] 1806.58-1807.86 ( 1.3s) gap 6.7  A killed clip cuts it.
+[337] 1809.57-1813.17 ( 3.6s) gap 1.7  A killed clip kept his number and his name, and that was all.
+[338] 1818.44-1822.97 ( 4.5s) gap 5.3  So when I change a strategist prompt, I had no way of knowing. I had no way to know. I forgot.
+[339] 1823.70-1827.53 ( 3.8s) gap 0.7  So when I changed the strategist prompt, I had no way to know if it got better.
+[340] 1828.16-1829.10 ( 0.9s) gap 0.6  I was just guessing.
+[341] 1832.90-1834.51 ( 1.6s) gap 3.8  The Fakes have three parts.
+[342] 1838.98-1841.49 ( 2.5s) gap 4.5  So the fix had three parts. First,
+[343] 1841.99-1843.33 ( 1.3s) gap 0.5  A record of every verdict.
+[344] 1844.20-1844.76 ( 0.6s) gap 0.9  Second
+[345] 1845.40-1847.10 ( 1.7s) gap 0.6  A way to replay an old livestream.
+[346] 1853.26-1853.77 ( 0.5s) gap 6.2  Second.
+[347] 1854.22-1856.71 ( 2.5s) gap 0.5  a way to replay an old livestream through the...
+[348] 1859.85-1861.93 ( 2.1s) gap 3.1  Second, a way to re-play the-
+[349] 1863.50-1864.00 ( 0.5s) gap 1.6  Second.
+[350] 1864.56-1866.26 ( 1.7s) gap 0.6  A way to replay an old livestream.
+[351] 1866.70-1868.58 ( 1.9s) gap 0.4  through the strategist the way it's written today.
+[352] 1869.48-1870.16 ( 0.7s) gap 0.9  And third.
+[353] 1870.88-1873.50 ( 2.6s) gap 0.7  I score the comparison new picks to my old verdicts.
+[354] 1877.40-1878.26 ( 0.9s) gap 3.9  Put that together.
+[355] 1879.19-1880.78 ( 1.6s) gap 0.9  That's an evaluation harness.
+[356] 1891.54-1893.24 ( 1.7s) gap10.8  Here's the whole change on one screen.
+[357] 1894.38-1897.21 ( 2.8s) gap 1.1  Most of the work is new code that sits outside of the graph.
+[358] 1904.88-1907.20 ( 2.3s) gap 7.7  one module of around a thousand lines.
+[359] 1907.86-1908.65 ( 0.8s) gap 0.7  It's Tess.
+[360] 1909.81-1911.27 ( 1.5s) gap 1.2  A one-time backfill script.
+[361] 1911.70-1912.78 ( 1.1s) gap 0.4  and a dashboard page.
+[362] 1914.80-1917.73 ( 2.9s) gap 2.0  Inside the graph, the change is small on purpose.
+[363] 1921.70-1924.25 ( 2.6s) gap 4.0  Inside the graph, the change is small on purpose.
+[364] 1925.63-1927.44 ( 1.8s) gap 1.4  86 lines added to the graph.
+[365] 1927.88-1928.90 ( 1.0s) gap 0.4  at 16.
+[366] 1931.24-1935.13 ( 3.9s) gap 2.3  86 lines added to the graph and 16 to the command that drives it.
+[367] 1940.14-1942.40 ( 2.3s) gap 5.0  An EVO layer should watch production.
+[368] 1942.75-1944.03 ( 1.3s) gap 0.3  It shouldn't be rovin' through it.
+[369] 1961.67-1963.59 ( 1.9s) gap17.6  Let's follow one verdict through the code.
+[370] 1963.90-1964.86 ( 1.0s) gap 0.3  starting at the gate.
+[371] 1967.65-1969.53 ( 1.9s) gap 2.8  This function applies my skills.
+[372] 1975.02-1976.68 ( 1.7s) gap 5.5  and it changed by one line.
+[373] 1986.23-1989.59 ( 3.4s) gap 9.5  A killed clip used to leave the plan with just its IDs.
+[374] 1990.20-1990.86 ( 0.7s) gap 0.6  and it's snug.
+[375] 1993.39-1996.77 ( 3.4s) gap 2.5  A killed clip, used to leave the plan, was just its ID.
+[376] 1997.17-1997.90 ( 0.7s) gap 0.4  and its plug.
+[377] 1998.29-1998.95 ( 0.7s) gap 0.4  Let's go.
+[378] 2001.80-2002.13 ( 0.3s) gap 2.9  Alright.
+[379] 2003.11-2003.96 ( 0.9s) gap 1.0  I killed Clip.
+[380] 2004.41-2007.50 ( 3.1s) gap 0.4  used to leave the plane with just its ID and its slug.
+[381] 2010.45-2012.20 ( 1.8s) gap 2.9  Now the whole proposal goes with it.
+[382] 2012.77-2015.88 ( 3.1s) gap 0.6  the segments, the title, and a strategist's reasoning.
+[383] 2030.22-2031.95 ( 1.7s) gap14.3  Then the gate records its reproach.
+[384] 2033.57-2035.39 ( 1.8s) gap 1.6  then the gate requires its approval.
+[385] 2035.86-2036.94 ( 1.1s) gap 0.5  The way it always did.
+[386] 2037.34-2038.55 ( 1.2s) gap 0.4  and makes new coils.
+[387] 2040.36-2046.39 ( 6.0s) gap 1.8  Then the gate records its approval, the way it always did, and makes one new call into the EVILS module.
+[388] 2056.98-2058.42 ( 1.4s) gap10.6  Look at how the coil is wrapped.
+[389] 2067.60-2069.04 ( 1.4s) gap 9.2  If the record can't be written.
+[390] 2069.62-2070.90 ( 1.3s) gap 0.6  The batch keeps going.
+[391] 2071.50-2074.97 ( 3.5s) gap 0.6  The failure prints loudly, and the repair command prints with it.
+[392] 2091.90-2096.19 ( 4.3s) gap16.9  An EVAL layer that can break production is better than no EVAL layer.
+[393] 2100.00-2104.66 ( 4.7s) gap 3.8  An eval layer that can break production is better than no eval layer.
+[394] 2114.53-2116.60 ( 2.1s) gap 9.9  And this is the function that writes the record.
+[395] 2117.27-2119.63 ( 2.4s) gap 0.7  Every clip still in the plan at this gate.
+[396] 2120.02-2121.60 ( 1.6s) gap 0.4  gets a line that says kept.
+[397] 2127.96-2131.16 ( 3.2s) gap 6.4  Every clip I delete at this gate gets a line that says killed.
+[398] 2153.38-2155.03 ( 1.7s) gap22.2  And if I line up for that clip.
+[399] 2156.08-2158.14 ( 2.1s) gap 1.0  And if I line for that clip at the gate...
+[400] 2158.56-2160.62 ( 2.1s) gap 0.4  is already on record, it skipped.
+[401] 2164.15-2167.18 ( 3.0s) gap 3.5  So I rerun the batch and nothing gets written twice.
+[402] 2181.23-2182.38 ( 1.2s) gap14.1  Here's one real line.
+[403] 2183.19-2184.74 ( 1.5s) gap 0.8  Her format is JSON-like.
+[404] 2190.15-2192.70 ( 2.5s) gap 5.4  The format is JSON, one object per line.
+[405] 2200.13-2201.44 ( 1.3s) gap 7.4  It starts with the batch.
+[406] 2201.77-2202.31 ( 0.5s) gap 0.3  The clip.
+[407] 2202.89-2203.38 ( 0.5s) gap 0.6  The gate.
+[408] 2203.79-2204.36 ( 0.6s) gap 0.4  and the verdict.
+[409] 2215.91-2218.47 ( 2.6s) gap11.6  The segments are the exact seconds of recording.
+[410] 2223.93-2226.46 ( 2.5s) gap 5.5  The segments are the exact seconds of the recording.
+[411] 2226.96-2229.09 ( 2.1s) gap 0.5  and they're what makes scoring possible later.
+[412] 2235.38-2239.14 ( 3.8s) gap 6.3  The prompt version and the model say which strategists made the pick.
+[413] 2253.00-2256.31 ( 3.3s) gap13.9  And the proposal is the full clip exactly as the agent wrote it.
+[414] 2257.18-2259.48 ( 2.3s) gap 0.9  So I can go back and see what kind of clip.
+[415] 2262.53-2266.24 ( 3.7s) gap 3.0  And the proposal is the full clip exactly as the agents wrote it.
+[416] 2270.11-2273.78 ( 3.7s) gap 3.9  And the proposal is the full clip exactly as the agent wrote it.
+[417] 2274.12-2276.93 ( 2.8s) gap 0.3  So I can go back and see what kind of clip I reject.
+[418] 2280.39-2281.92 ( 1.5s) gap 3.5  The file is append only.
+[419] 2290.73-2292.56 ( 1.8s) gap 8.8  Nothing in the code ever relights.
+[420] 2294.07-2295.80 ( 1.7s) gap 1.5  Nothing in the code ever realized.
+[421] 2298.00-2300.06 ( 2.1s) gap 2.2  Nothing in the code ever rewrites a line.
+[422] 2301.35-2302.46 ( 1.1s) gap 1.3  It's committed to good.
+[423] 2312.22-2316.08 ( 3.9s) gap 9.8  And the cleanup tool that recycles old batches refuses to touch that folder.
+[424] 2326.11-2327.83 ( 1.7s) gap10.0  I didn't start from zero either.
+[425] 2332.75-2335.16 ( 2.4s) gap 4.9  The old verdicts were still sitting in those two places.
+[426] 2336.64-2339.07 ( 2.4s) gap 1.5  The old verdicts were still sitting in two places.
+[427] 2345.72-2346.89 ( 1.2s) gap 6.7  The Stratageous Nog.
+[428] 2348.95-2351.00 ( 2.0s) gap 2.1  The strategist long had every plan.
+[429] 2351.58-2353.88 ( 2.3s) gap 0.6  And the checkpoint database had every kill.
+[430] 2356.38-2357.51 ( 1.1s) gap 2.5  The strategist's log.
+[431] 2359.18-2361.21 ( 2.0s) gap 1.7  The strategist's logs had every plan.
+[432] 2361.63-2363.75 ( 2.1s) gap 0.4  And the checkpoint database had every kill.
+[433] 2376.36-2378.25 ( 1.9s) gap12.6  I want time script drawing them into-
+[434] 2384.27-2388.43 ( 4.2s) gap 6.0  A one-time script joined them into 186 lines covering 20 live streams.
+[435] 2394.03-2395.81 ( 1.8s) gap 5.6  A runtime script join them.
+[436] 2396.29-2399.38 ( 3.1s) gap 0.5  into 186 lines covering 20 live streams.
+[437] 2400.58-2402.60 ( 2.0s) gap 1.2  Two of those were too old to match to a kilter.
+[438] 2404.75-2407.33 ( 2.6s) gap 2.2  Two of those were too old to match a kill to a click.
+[439] 2413.13-2414.44 ( 1.3s) gap 5.8  So they're on record, but...
+[440] 2417.18-2419.06 ( 1.9s) gap 2.7  So they're on record but left out of every scope.
+[441] 2428.50-2430.54 ( 2.0s) gap 9.4  Now, which strategist made the pick?
+[442] 2432.17-2435.36 ( 3.2s) gap 1.6  A score per prompt change needs a definition of a prompt change.
+[443] 2446.64-2449.00 ( 2.4s) gap11.3  So the version is a hash of four things.
+[444] 2451.61-2452.81 ( 1.2s) gap 2.6  Three of them are files.
+[445] 2453.88-2455.38 ( 1.5s) gap 1.1  The agent's own definition.
+[446] 2456.01-2458.40 ( 2.4s) gap 0.6  and the two skill docs it reads before the picks.
+[447] 2461.97-2463.27 ( 1.3s) gap 3.6  The agents own definition.
+[448] 2463.84-2466.17 ( 2.3s) gap 0.6  and the two skill docs it reads before it picks.
+[449] 2472.17-2475.10 ( 2.9s) gap 6.0  The last one is the instruction text the graph sends.
+[450] 2475.54-2477.38 ( 1.8s) gap 0.4  where the final paths blanket out.
+[451] 2479.38-2481.10 ( 1.7s) gap 2.0  with the file pass blanked out.
+[452] 2486.94-2488.80 ( 1.9s) gap 5.8  Change any one of those, you get a 12.
+[453] 2489.83-2492.75 ( 2.9s) gap 1.0  Change any one of those and you get a new 12 character version.
+[454] 2503.41-2507.22 ( 3.8s) gap10.7  And it gets stamped the moment the plan passes validation, never at the gate.
+[455] 2512.21-2513.44 ( 1.2s) gap 5.0  On my last livestream...
+[456] 2513.87-2516.08 ( 2.2s) gap 0.4  The plan was written at 920 at night.
+[457] 2516.96-2519.67 ( 2.7s) gap 0.9  and I approved it at 623 the next morning.
+[458] 2520.38-2521.29 ( 0.9s) gap 0.7  That's nine hours.
+[459] 2527.51-2530.10 ( 2.6s) gap 6.2  Say I've edited the prompt during those nine hours.
+[460] 2530.58-2532.69 ( 2.1s) gap 0.5  And I'd stand by the gate, would read the new prompt.
+[461] 2533.37-2534.98 ( 1.6s) gap 0.7  and give it the credit for the clips.
+[462] 2538.89-2541.38 ( 2.5s) gap 3.9  and give it the credit for the clips the old prom picked.
+[463] 2555.20-2556.83 ( 1.6s) gap13.8  That record gives me precision.
+[464] 2557.83-2559.51 ( 1.7s) gap 1.0  One of the clips I propose
+[465] 2560.92-2563.60 ( 2.7s) gap 1.4  Of the clips I propose, how many did I keep?
+[466] 2574.40-2577.71 ( 3.3s) gap10.8  It can't give me recoil because the gate only sees what I...
+[467] 2579.20-2582.83 ( 3.6s) gap 1.5  It can't give me recall because the gate only sees what was proposed.
+[468] 2584.07-2586.97 ( 2.9s) gap 1.2  and never sees the great moment the strategist walks through the path.
+[469] 2588.41-2591.97 ( 3.6s) gap 1.4  It never sees the great moment the strategist walked by past.
+[470] 2601.09-2603.68 ( 2.6s) gap 9.1  So the approval command takes one more option.
+[471] 2604.62-2605.73 ( 1.1s) gap 0.9  When I approve the gate...
+[472] 2606.09-2607.41 ( 1.3s) gap 0.4  I can name what it missed.
+[473] 2624.40-2625.70 ( 1.3s) gap17.0  On the first live.
+[474] 2627.39-2629.37 ( 2.0s) gap 1.7  On the first live one, I...
+[475] 2630.30-2631.63 ( 1.3s) gap 0.9  On the first live run.
+[476] 2631.95-2635.35 ( 3.4s) gap 0.3  I named one, a topic that kept coming back through the stream.
+[477] 2656.06-2657.09 ( 1.0s) gap20.7  And coincidentally...
+[478] 2657.81-2659.90 ( 2.1s) gap 0.7  even though it was a crypto livestream.
+[479] 2660.85-2663.43 ( 2.6s) gap 1.0  I had continuously talked about Anthropix IPO.
+[480] 2674.66-2677.15 ( 2.5s) gap11.2  And there was no clip created about that topic.
+[481] 2708.88-2710.09 ( 1.2s) gap31.7  And that is now stored.
+[482] 2710.60-2713.25 ( 2.6s) gap 0.5  as one miss with four stretches of time.
+[483] 2713.68-2714.45 ( 0.8s) gap 0.4  placera casc
+[484] 2715.81-2721.02 ( 5.2s) gap 1.4  And that's now stored as one miss with four stretches of time. So it counts once.
+[485] 2730.69-2732.01 ( 1.3s) gap 9.7  And when nothing was missed...
+[486] 2733.16-2734.15 ( 1.0s) gap 1.2  I would say that too.
+[487] 2738.91-2739.73 ( 0.8s) gap 4.8  No answer.
+[488] 2740.03-2740.74 ( 0.7s) gap 0.3  and nothing.
+[489] 2741.93-2744.65 ( 2.7s) gap 1.2  No answer and nothing missed are the same data.
+[490] 2774.30-2776.69 ( 2.4s) gap29.6  The record alone only scores the past.
+[491] 2778.65-2779.92 ( 1.3s) gap 2.0  to score prompt change.
+[492] 2780.34-2782.87 ( 2.5s) gap 0.4  I need a strategist to pick again from my livestream.
+[493] 2783.18-2784.18 ( 1.0s) gap 0.3  that I've already judged.
+[494] 2788.12-2789.23 ( 1.1s) gap 3.9  I call that a replay.
+[495] 2791.06-2792.14 ( 1.1s) gap 1.8  It's the same script.
+[496] 2793.03-2795.39 ( 2.4s) gap 0.9  It's the same transcript with today's prompt.
+[497] 2802.53-2805.36 ( 2.8s) gap 7.1  And all that comes back is a new list of proposed crypts.
+[498] 2806.67-2809.58 ( 2.9s) gap 1.3  And all that comes back is a new list of proposed clips.
+[499] 2812.79-2815.11 ( 2.3s) gap 3.2  Nothing gets cut and nothing gets posted.
+[500] 2817.70-2820.46 ( 2.8s) gap 2.6  In eval terms, that's an offline evaluation.
+[501] 2831.01-2835.30 ( 4.3s) gap10.5  So when a plan validates, the harness also saves three strand-swiped files.
+[502] 2839.13-2844.31 ( 5.2s) gap 3.8  So when a plan validates, the harness also saves three transcript files the strategists run.
+[503] 2850.90-2852.79 ( 1.9s) gap 6.6  The batch folder gets cleaned up later.
+[504] 2853.39-2855.18 ( 1.8s) gap 0.6  and the eviles copy stays.
+[505] 2857.03-2858.69 ( 1.7s) gap 1.9  And Evile's copy stays.
+[506] 2860.31-2861.00 ( 0.7s) gap 1.6  Right now.
+[507] 2863.11-2865.60 ( 2.5s) gap 2.1  Right now, five live streams can be replayed.
+[508] 2873.92-2876.96 ( 3.0s) gap 8.3  A replay sends the exact same instructions. A live stream.
+[509] 2881.78-2885.19 ( 3.4s) gap 4.8  A replay sends the exact same instructions a live run sends.
+[510] 2888.23-2890.39 ( 2.2s) gap 3.0  I pulled that task into one function.
+[511] 2891.15-2892.29 ( 1.1s) gap 0.8  So the two can drop the.
+[512] 2895.03-2897.15 ( 2.1s) gap 2.7  I pulled that text into one function.
+[513] 2897.95-2899.34 ( 1.4s) gap 0.8  so the two can't drift apart.
+[514] 2902.83-2903.78 ( 1.0s) gap 3.5  Then it adds a note.
+[515] 2906.56-2908.30 ( 1.7s) gap 2.8  This isn't production.
+[516] 2909.07-2910.14 ( 1.1s) gap 0.8  This isn't production.
+[517] 2910.44-2911.26 ( 0.8s) gap 0.3  Nothing gets cut.
+[518] 2921.16-2921.71 ( 0.5s) gap 9.9  Okay, work.
+[519] 2923.71-2926.29 ( 2.6s) gap 2.0  I work only from these transcript files.
+[520] 2927.31-2929.27 ( 2.0s) gap 1.0  This isn't production, nothing gets cut.
+[521] 2929.68-2932.06 ( 2.4s) gap 0.4  I work only from these transcripts files.
+[522] 2938.67-2940.67 ( 2.0s) gap 6.6  This isn't production, nothing gets cut.
+[523] 2942.40-2944.34 ( 1.9s) gap 1.7  and work only from these transcript files.
+[524] 2959.03-2960.70 ( 1.7s) gap14.7  And don't open the eval's folder.
+[525] 2971.85-2973.48 ( 1.6s) gap11.2  The answer key is in this repo.
+[526] 2974.00-2975.67 ( 1.7s) gap 0.5  and the agent can read the files.
+[527] 3008.44-3009.51 ( 1.1s) gap32.8  This is strange.
+[528] 3012.33-3013.44 ( 1.1s) gap 2.8  Let's cut out this line.
+[529] 3015.81-3017.81 ( 2.0s) gap 2.4  Open eval's folders.
+[530] 3018.85-3019.42 ( 0.6s) gap 1.0  Check that one out.
+[531] 3029.32-3032.50 ( 3.2s) gap 9.9  Let's cut this chapter right here. Let's just cut it.
+[532] 3063.70-3064.76 ( 1.1s) gap31.2  On to chapter 13.
+[533] 3072.72-3074.07 ( 1.3s) gap 8.0  We're going to end chapter 12.
+[534] 3079.74-3080.65 ( 0.9s) gap 5.7  after the line.
+[535] 3081.06-3083.00 ( 1.9s) gap 0.4  then it adds a note, this is in production.
+[536] 3087.66-3088.55 ( 0.9s) gap 4.7  I tried the 13.
+[537] 3091.64-3092.59 ( 0.9s) gap 3.1  Now the hard part.
+[538] 3093.03-3094.12 ( 1.1s) gap 0.4  Score and a replay.
+[539] 3095.13-3097.10 ( 2.0s) gap 1.0  A replay hands me a list of clips.
+[540] 3097.92-3099.90 ( 2.0s) gap 0.8  And I already have a verdict on every clip.
+[541] 3100.88-3101.83 ( 1.0s) gap 1.0  in the old list.
+[542] 3103.43-3105.99 ( 2.6s) gap 1.6  And I already have a verdict on every clip in the old list.
+[543] 3110.24-3112.68 ( 2.4s) gap 4.2  So for every new clip, the code has to find all...
+[544] 3113.77-3114.84 ( 1.1s) gap 1.1  So for every new clip.
+[545] 3115.14-3117.24 ( 2.1s) gap 0.3  The code has to find the old clip and match it.
+[546] 3124.40-3125.93 ( 1.5s) gap 7.2  and the two lists never line up.
+[547] 3127.16-3129.19 ( 2.0s) gap 1.2  And the two lists never line up exactly.
+[548] 3131.33-3132.63 ( 1.3s) gap 2.1  The new prompt might start.
+[549] 3133.87-3136.36 ( 2.5s) gap 1.2  The new prompt might start a clip five seconds later.
+[550] 3138.97-3140.68 ( 1.7s) gap 2.6  or let it run a little longer.
+[551] 3144.02-3146.35 ( 2.3s) gap 3.3  So I need a rule for when the two clips are the same.
+[552] 3161.53-3164.81 ( 3.3s) gap15.2  Every clip is stored as start and end times in the recording.
+[553] 3165.66-3168.87 ( 3.2s) gap 0.9  Every clip is stored as start and end times in the recording.
+[554] 3179.06-3182.46 ( 3.4s) gap10.2  So the code counts how many seconds of the recording two clips share.
+[555] 3193.33-3194.99 ( 1.7s) gap10.9  If the overlap is 50%...
+[556] 3196.90-3199.42 ( 2.5s) gap 1.9  If the overlap is at least 50% shorter.
+[557] 3204.97-3208.73 ( 3.8s) gap 5.5  If the overlap is at least 50% of the shorter clip, that's a match.
+[558] 3215.35-3219.76 ( 4.4s) gap 6.6  There's one complication. A topic you can have two clips on record, a full clip.
+[559] 3220.47-3223.05 ( 2.6s) gap 0.7  and a shorter impact cut taken from inside it.
+[560] 3226.43-3228.59 ( 2.2s) gap 3.4  So a new pick can overlap both.
+[561] 3236.01-3238.44 ( 2.4s) gap 7.4  In that case, it gets matched to a closer fit.
+[562] 3244.97-3246.20 ( 1.2s) gap 6.5  And the measure is the intent.
+[563] 3247.03-3249.44 ( 2.4s) gap 0.8  and the measure is intersection over union.
+[564] 3249.88-3253.43 ( 3.5s) gap 0.4  the seconds they share divided by the seconds of the two clips together.
+[565] 3263.16-3265.11 ( 2.0s) gap 9.7  And code, that's too small a function.
+[566] 3266.24-3268.25 ( 2.0s) gap 1.1  and code that's two small functions.
+[567] 3271.11-3272.10 ( 1.0s) gap 2.9  One Shave's a shit
+[568] 3272.78-3274.62 ( 1.8s) gap 0.7  Run returns a shared portion.
+[569] 3275.78-3277.37 ( 1.6s) gap 1.2  and the intersection over a union.
+[570] 3282.40-3285.59 ( 3.2s) gap 5.0  One returns a shared portion and the intersection over union.
+[571] 3288.37-3292.13 ( 3.8s) gap 2.8  The other rocks the judge clips and keeps the best candidate above the threshold.
+[572] 3298.66-3301.20 ( 2.5s) gap 6.5  Every new clip lands in one of four buckets.
+[573] 3302.22-3303.62 ( 1.4s) gap 1.0  It matches the clip I kept.
+[574] 3304.26-3304.94 ( 0.7s) gap 0.6  And that's a hit.
+[575] 3311.01-3312.41 ( 1.4s) gap 6.1  It matches a clip I killed.
+[576] 3317.11-3319.90 ( 2.8s) gap 4.7  So the new prompt repeat of the choice I already rejected.
+[577] 3328.71-3330.72 ( 2.0s) gap 8.8  It lands on a moment I said was missed.
+[578] 3331.91-3333.14 ( 1.2s) gap 1.2  And that counts in its favor.
+[579] 3339.63-3341.46 ( 1.8s) gap 6.5  Or it's new with no vertical aisle.
+[580] 3345.95-3346.25 ( 0.3s) gap 4.5  That.
+[581] 3346.84-3349.84 ( 3.0s) gap 0.6  That pick is neither right or wrong, so it stays out of the score.
+[582] 3354.37-3355.95 ( 1.6s) gap 4.5  Precision is the good picks.
+[583] 3360.23-3361.72 ( 1.5s) gap 4.3  Precision is the good picks.
+[584] 3362.30-3364.68 ( 2.4s) gap 0.6  over the good picks plus repeated kills.
+[585] 3370.93-3374.65 ( 3.7s) gap 6.2  Precision is a good picks over the good picks plus the repeated kills.
+[586] 3378.49-3380.22 ( 1.7s) gap 3.8  And here's our logic in this score.
+[587] 3380.80-3382.80 ( 2.0s) gap 0.6  Four branchers, four counters.
+[588] 3383.46-3384.54 ( 1.1s) gap 0.7  And at Detail Growing...
+[589] 3385.20-3386.57 ( 1.4s) gap 0.7  and a detailed rope pick.
+[590] 3387.96-3389.57 ( 1.6s) gap 1.4  So I can read exactly why.
+[591] 3390.41-3391.92 ( 1.5s) gap 0.8  How we play scored what is scored.
+[592] 3393.86-3396.66 ( 2.8s) gap 1.9  So I can read exactly where I replayed scored, what it scored.
+[593] 3403.29-3404.98 ( 1.7s) gap 6.6  The screwdriver has its own test.
+[594] 3405.61-3407.64 ( 2.0s) gap 0.6  70 checks on made up clips.
+[595] 3408.73-3412.20 ( 3.5s) gap 1.1  If the matching math is wrong, every score that follows is wrong.
+[596] 3413.45-3414.57 ( 1.1s) gap 1.2  and nothing would tell you.
+[597] 3431.50-3432.99 ( 1.5s) gap16.9  So now that I had a score.
+[598] 3437.00-3438.31 ( 1.3s) gap 4.0  So now I had a score.
+[599] 3440.36-3444.64 ( 4.3s) gap 2.0  And before I touch any prompt, I ran the same prompt on four live streams.
+[600] 3445.70-3448.80 ( 3.1s) gap 1.1  A score means nothing until you know how much it moves itself.
+[601] 3455.01-3458.84 ( 3.8s) gap 6.2  And score means nothing until you know how much it moves all by itself.
+[602] 3462.28-3464.08 ( 1.8s) gap 3.4  That's a run-to-run variance.
+[603] 3465.52-3466.38 ( 0.9s) gap 1.4  on two of them.
+[604] 3466.93-3468.57 ( 1.6s) gap 0.5  Both runs score the same.
+[605] 3469.56-3470.46 ( 0.9s) gap 1.0  On the other two.
+[606] 3470.93-3473.05 ( 2.1s) gap 0.5  The first run scored 100%.
+[607] 3475.47-3480.55 ( 5.1s) gap 2.4  On the other two, the first run scored 100% and the second scored 83.3.
+[608] 3481.35-3483.19 ( 1.8s) gap 0.8  Same prompt, same transcript.
+[609] 3483.70-3484.18 ( 0.5s) gap 0.5  different mo-
+[610] 3485.71-3486.04 ( 0.3s) gap 1.5  Sit.
+[611] 3487.15-3487.48 ( 0.3s) gap 1.1  Same.
+[612] 3487.89-3490.39 ( 2.5s) gap 0.4  Same prompt, same transcript, same model.
+[613] 3493.87-3496.06 ( 2.2s) gap 3.5  And the moments it picked were almost identical.
+[614] 3497.02-3498.72 ( 1.7s) gap 1.0  The difference was one impact cut.
+[615] 3500.54-3502.14 ( 1.6s) gap 1.8  and it happened to be one I killed.
+[616] 3514.38-3516.52 ( 2.1s) gap12.2  All right, let's stop chapter.
+[617] 3517.87-3518.76 ( 0.9s) gap 1.4  14 right there.
+[618] 3519.18-3520.29 ( 1.1s) gap 0.4  Let's go to a child with 15.
+[619] 3532.21-3538.02 ( 5.8s) gap11.9  So here's it all on a dashboard, right? The page is read-only, it has no logic, no score and logic of its own.
+[620] 3558.13-3560.51 ( 2.4s) gap20.1  One function in the EVOPS model builds its data.
+[621] 3565.84-3569.09 ( 3.2s) gap 5.3  Every livestream in a row, when I open one, I get a very...
+[622] 3570.71-3574.19 ( 3.5s) gap 1.6  Every livestream in a row, when I open one, I get every clip.
+[623] 3574.69-3575.92 ( 1.2s) gap 0.5  the verdict at each gate.
+[624] 3578.92-3583.46 ( 4.5s) gap 3.0  every live stream in a row. When I open one, I get every clip, the vertical at each gate.
+[625] 3587.50-3590.55 ( 3.0s) gap 4.0  and the strategist's own reasoning for proposing it.
+[626] 3594.28-3598.02 ( 3.7s) gap 3.7  Under that, every replay of that live stream, pick by pick.
+[627] 3604.83-3606.00 ( 1.2s) gap 6.8  So what's in the record?
+[628] 3606.72-3608.67 ( 2.0s) gap 0.7  184 lines.
+[629] 3609.65-3610.76 ( 1.1s) gap 1.0  So what's in the record?
+[630] 3611.21-3614.46 ( 3.3s) gap 0.5  184 lines covering 21 live streams.
+[631] 3615.62-3618.30 ( 2.7s) gap 1.2  98 clips judged, 81 kept.
+[632] 3619.28-3620.52 ( 1.2s) gap 1.0  and 17 killed.
+[633] 3623.33-3625.60 ( 2.3s) gap 2.8  That's 82.7 precision.
+[634] 3626.85-3629.34 ( 2.5s) gap 1.3  That's 82.7% precision.
+[635] 3633.96-3637.24 ( 3.3s) gap 4.6  Split by model, the top model is 84.1%.
+[636] 3641.04-3644.01 ( 3.0s) gap 3.8  The live streams where it ran out of quota fell back.
+[637] 3646.72-3650.73 ( 4.0s) gap 2.7  The livestream were run out of quota and fell back, or at 75.
+[638] 3652.85-3655.55 ( 2.7s) gap 2.1  That's only two live streams, so it's a lead.
+[639] 3657.94-3659.67 ( 1.7s) gap 2.4  And that was one that I can test.
+[640] 3666.87-3668.82 ( 2.0s) gap 7.2  And here's the finding I didn't expect.
+[641] 3669.31-3671.68 ( 2.4s) gap 0.5  of the 17 kills 11
+[642] 3679.27-3682.56 ( 3.3s) gap 7.6  Of the 17 kills, 11 were one half of a pair.
+[643] 3682.92-3684.75 ( 1.8s) gap 0.4  a full clip and its impact cut.
+[644] 3685.50-3686.70 ( 1.2s) gap 0.8  where I kept the other half.
+[645] 3693.29-3695.23 ( 1.9s) gap 6.6  So full clips get 83.
+[646] 3696.04-3699.33 ( 3.3s) gap 0.8  So full clips get 88.3% of the time.
+[647] 3699.77-3701.02 ( 1.2s) gap 0.4  Impact cuts gets.
+[648] 3701.69-3703.29 ( 1.6s) gap 0.7  Impact cuts get 16 minutes.
+[649] 3704.50-3707.48 ( 3.0s) gap 1.2  Impact cuts get 61.9% of the time.
+[650] 3711.88-3714.12 ( 2.2s) gap 4.4  So most of my kills are on bad topics.
+[651] 3714.89-3717.59 ( 2.7s) gap 0.8  There is a second version of a topic I already said yes to.
+[652] 3718.77-3721.87 ( 3.1s) gap 1.2  That's a specific thing to fix in a prompt, and I'd never seen it.
+[653] 3722.51-3723.36 ( 0.9s) gap 0.6  without the record.
+[654] 3728.32-3731.50 ( 3.2s) gap 5.0  And from here I can attach a reason to kill in a few words.
+[655] 3732.79-3734.21 ( 1.4s) gap 1.3  The pattern tells me where to look.
+[656] 3734.90-3736.51 ( 1.6s) gap 0.7  and their reason tells me what to change.
+[657] 3740.42-3742.34 ( 1.9s) gap 3.9  And recall finally has a number.
+[658] 3743.01-3744.68 ( 1.7s) gap 0.7  on the first livestream recorded.
+[659] 3747.66-3750.81 ( 3.1s) gap 3.0  On the first livestream recorded live, I kept seven.
+[660] 3751.25-3752.44 ( 1.2s) gap 0.4  and name one miss.
+[661] 3752.98-3754.87 ( 1.9s) gap 0.5  So 87.5%.
+[662] 3755.49-3756.64 ( 1.1s) gap 0.6  It's run live stream.
+[663] 3757.53-3758.57 ( 1.0s) gap 0.9  in every stream.
+[664] 3762.21-3763.85 ( 1.6s) gap 3.6  and every stream from here adds to it.
+[665] 3774.01-3775.57 ( 1.6s) gap10.2  One thing this record isn't.
+[666] 3776.10-3776.66 ( 0.6s) gap 0.5  memory.
+[667] 3777.59-3779.10 ( 1.5s) gap 0.9  The strategist never sees it.
+[668] 3779.41-3780.33 ( 0.9s) gap 0.3  It's a measurement.
+[669] 3780.79-3781.53 ( 0.7s) gap 0.5  And it's for me.
+[670] 3785.59-3787.22 ( 1.6s) gap 4.1  It turns into memory the day I...
+[671] 3793.24-3796.52 ( 3.3s) gap 6.0  It turns into memory the day I feed kept and killed examples.
+[672] 3800.44-3804.94 ( 4.5s) gap 3.9  It turns into memory the day I feed kept and killed examples back into the prompt.
+[673] 3820.24-3821.84 ( 1.6s) gap15.3  And now I can measure if that helps.
+[674] 3823.26-3824.65 ( 1.4s) gap 1.4  The same goes for the model.
+[675] 3825.39-3826.38 ( 1.0s) gap 0.7  Kind of cheaper one.
+[676] 3830.49-3832.19 ( 1.7s) gap 4.1  Can a cheaper one pick as well?
+[677] 3832.88-3834.20 ( 1.3s) gap 0.7  That used to be an opinion.
+[678] 3834.83-3835.83 ( 1.0s) gap 0.6  Now it's a replay.
+[679] 3854.79-3855.79 ( 1.0s) gap19.0  So that's the setup.
+[680] 3856.24-3857.22 ( 1.0s) gap 0.4  Can agent model?
+[681] 3859.24-3861.48 ( 2.2s) gap 2.0  So that's a setup. And Agent Harnett.
+[682] 3862.90-3866.74 ( 3.8s) gap 1.4  So that's the setup, an agent harness that holds the model to its rules.
+[683] 3867.14-3867.39 ( 0.3s) gap 0.4  end.
+[684] 3868.10-3870.35 ( 2.2s) gap 0.7  So that's a setup. An agent might.
+[685] 3871.32-3872.67 ( 1.3s) gap 1.0  So that's the setup.
+[686] 3873.94-3879.26 ( 5.3s) gap 1.3  So that's the setup, an agent harness that holds the model to its rules, an evaluation harness.
+[687] 3884.52-3888.27 ( 3.7s) gap 5.3  So that's the setup, an agent harness that holds the model to its rules.
+[688] 3888.73-3891.89 ( 3.2s) gap 0.5  and an evaluation artist to let you know if it's getting any better.
+[689] 3907.51-3910.60 ( 3.1s) gap15.6  If you run agents in production, find a spot where...
+[690] 3912.11-3916.61 ( 4.5s) gap 1.5  If you run agents in production, find a spot where humans already say yes or no.
+[691] 3926.89-3928.41 ( 1.5s) gap10.3  That's a label data set.
+[692] 3930.59-3934.00 ( 3.4s) gap 2.2  That's a labeled data set, and most pipelines throw it away.
+[693] 3934.55-3935.54 ( 1.0s) gap 0.6  So start recording.
+[694] 3944.77-3950.50 ( 5.7s) gap 9.2  And if you like this vid, give it a like, give this channel a subscribe if you're not subscribed yet.
+[695] 3951.14-3958.56 ( 7.4s) gap 0.6  And check out some of my more videos. I got tons of stuff on AI engineering. I'm just getting started. I'm just going through everything that I do.
+[696] 3959.15-3959.85 ( 0.7s) gap 0.6  Just...
+[697] 3962.61-3967.72 ( 5.1s) gap 2.8  And if you like this video, give it a like. And if you're not subscribed, of course, subscribe to the channel.
+[698] 3968.34-3976.57 ( 8.2s) gap 0.6  And check out some other vids that I got. I've got a lot more coming. I've been hard, you know, dead set focused since I'm like producing a whole bunch of these videos.
+[699] 3979.16-3979.63 ( 0.5s) gap 2.6  No.
+[700] 3981.02-3987.95 ( 6.9s) gap 1.4  And if you like this vid, give it a like. And if you like the channel, subscribe to the channel of course, AI Engineering Simplified.
+[701] 3988.45-3990.52 ( 2.1s) gap 0.5  I've been producing a lot of videos just letting...
+[702] 3990.83-3993.65 ( 2.8s) gap 0.3  Everybody know what I do, everything I got going.
+[703] 3994.03-3997.25 ( 3.2s) gap 0.4  So if you want to learn, just come here, comment below.
+[704] 3997.82-4001.53 ( 3.7s) gap 0.6  I just love every minute of this. It's one hell of a journey.
+[705] 4002.14-4005.10 ( 3.0s) gap 0.6  So if you want to learn, I got tons of them.
+[706] 4005.46-4009.89 ( 4.4s) gap 0.4  Playlist like Python playlist and all this stuff and now I got an eval's playlist
+[707] 4010.29-4010.83 ( 0.5s) gap 0.4  Of course.
+[708] 4011.28-4013.77 ( 2.5s) gap 0.4  So I'm gonna keep on diving into all this stuff. So.
+[709] 4014.47-4015.40 ( 0.9s) gap 0.7  Subscribe and I'm gonna...
+[710] 4015.88-4016.95 ( 1.1s) gap 0.5  Catch you guys laters.

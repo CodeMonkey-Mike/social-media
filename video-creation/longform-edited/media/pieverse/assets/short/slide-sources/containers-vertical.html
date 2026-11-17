@@ -1,0 +1,208 @@
+<!doctype html><html><head><meta charset="utf-8"><title>pieverse short: D5 native vertical</title><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,500&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet"><style>/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+</style><style>
+/* ---- this build's components, on the locked tokens. Lit colour = cyan (the stylesheet default accent). ---- */
+.frame{--acc:var(--accent-cyan);--acc-rgb:0,194,255}
+.ey .mono{font-weight:600;color:inherit}
+.hid{visibility:hidden}
+.card{position:relative;width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:28px;
+  padding:60px 88px 56px;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.55)}
+.card>.top{position:absolute;top:0;left:0;right:0;height:5px;
+  background:linear-gradient(90deg,var(--accent-cyan),var(--accent-cyan) 38%,rgba(0,194,255,0) 92%)}
+.card h1{max-width:none}
+.card .divider{margin:28px 0 30px}
+.card p{max-width:none}
+.src{font:500 24px/1.4 'DM Sans';color:var(--text-muted);letter-spacing:.02em;margin-top:28px}
+.src .mono{font-weight:500}
+.go-tx{color:var(--accent-gold)}
+
+/* ---- rows: hairline between rows at rest; the lit row takes the cyan ring ---- */
+.rows{display:flex;flex-direction:column;width:100%}
+.row{display:flex;align-items:center;gap:30px;padding:17px 28px;margin:0 -28px;border:2px solid transparent;
+  border-radius:16px;box-shadow:inset 0 -1px 0 var(--border)}
+.row:last-child{box-shadow:none}
+.row .lb{flex:0 0 330px;font:600 25px/1.25 'DM Sans';letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)}
+.row .v{flex:1 1 auto;min-width:0;font:600 44px/1.22 'DM Sans';color:var(--text-secondary)}
+.row .nt{flex:0 0 auto;font:500 25px/1.3 'DM Sans';color:var(--text-muted);text-align:right}
+.row .nt .mono{font-weight:500}
+.row .big{flex:0 0 auto;font:700 50px/1.1 'JetBrains Mono';color:var(--text-secondary);text-align:right}
+.ic{width:48px;height:48px;flex:0 0 48px;stroke:var(--text-secondary);fill:none;stroke-width:2;stroke-linecap:round;
+  stroke-linejoin:round;opacity:.75}
+.row.done .v,.row.done .big{color:var(--text-primary)}
+.row.done .ic{stroke:var(--text-primary);opacity:.9}
+.frame .row.on{border-color:var(--acc);background:rgba(var(--acc-rgb),.07);
+  box-shadow:0 0 0 4px rgba(var(--acc-rgb),.10),0 12px 28px rgba(0,0,0,.35)}
+.row.on .v{color:var(--text-primary);font-weight:700}
+.row.on .lb{color:var(--text-secondary)}
+.row.on .ic{stroke:var(--acc);opacity:1}
+.row.on .v .mono,.row.on .big{color:var(--acc)}
+.row.lit .v,.row.lit .big{color:var(--text-primary)}
+.row.lit .v .mono,.row.lit .big{color:var(--acc)}
+.row.lit .lb{color:var(--text-secondary)}
+.row.lit .ic{stroke:var(--acc);opacity:1}
+.row.dim .v,.row.dim .big{color:var(--text-muted)}
+.row.dim .ic{opacity:.45}
+
+/* ---- the mono status / date line (the banks card's accent line): rest = readable grey + hollow dot, lit = colour ---- */
+.st{display:flex;align-items:center;gap:20px;font:600 40px/1.2 'JetBrains Mono';letter-spacing:.04em;color:var(--text-secondary)}
+.st i{width:20px;height:20px;border-radius:50%;border:3px solid var(--text-secondary);flex:0 0 20px}
+.st.on{color:var(--acc)} .st.on i{border-color:var(--acc);background:var(--acc);box-shadow:0 0 0 6px rgba(var(--acc-rgb),.14),0 0 22px rgba(var(--acc-rgb),.5)}
+.st.done{color:var(--text-primary)} .st.done i{border-color:var(--text-primary);background:var(--text-primary)}
+.st.g{color:var(--accent-green)} .st.g i{border-color:var(--accent-green);background:var(--accent-green);box-shadow:0 0 0 6px rgba(0,230,138,.14),0 0 22px rgba(0,230,138,.5)}
+.st.gold{color:var(--accent-gold)} .st.gold i{border-color:var(--accent-gold);background:var(--accent-gold);box-shadow:0 0 0 6px rgba(255,215,0,.12),0 0 22px rgba(255,215,0,.45)}
+
+/* ---- pills / tags ---- */
+.pill{display:inline-flex;align-items:center;gap:14px;padding:12px 26px;border-radius:999px;border:2px solid var(--border);
+  font:700 26px/1.1 'DM Sans';letter-spacing:.14em;text-transform:uppercase;color:var(--text-secondary);white-space:nowrap}
+.pill .ic{width:30px;height:30px;flex-basis:30px}
+.pill.on{border-color:var(--acc);color:var(--acc);background:rgba(var(--acc-rgb),.08);box-shadow:0 0 0 4px rgba(var(--acc-rgb),.10)}
+.pill.on .ic{stroke:var(--acc);opacity:1}
+.pill.gold{border-color:var(--accent-gold);color:var(--accent-gold);background:rgba(255,215,0,.07);box-shadow:0 0 0 4px rgba(255,215,0,.08)}
+.pill.gold .ic{stroke:var(--accent-gold);opacity:1}
+.pill.dim{color:var(--text-muted);border-color:var(--border)}
+/* highlighted words inside a quote (a caveat = gold marker) */
+.hl{transition:none;border-radius:8px;padding:0 6px;margin:0 -6px}
+.hl.gold{color:var(--accent-gold);background:rgba(255,215,0,.10);box-shadow:inset 0 -6px 0 rgba(255,215,0,.35)}
+/* .mk = the marker cut to the word's own ink (D4 rebuild, visual-qa 2026-11-14): the inline background above paints the
+   font's whole content area (ascent 128 + descent 30 px at 118 px), which rose into line 1's 'g'. Here the tint is a
+   pseudo-element band from 0.2em below the content-area top (11 px over the 'd' ascender) to 0.1em above its bottom
+   (18 px under the baseline), 7 px clear of the word's ink at each side; the span's 7 px right margin keeps the closing
+   period's ink about 7 px clear of the block (measured off the PNG: no touch, and only about 6 px looser than natural). The class sits on
+   the span in EVERY state (rest = no tint), so the text layout is pixel-identical between D4 and D4-s1. */
+.hl.mk{position:relative;z-index:0;padding:0;margin:0 7px 0 0;border-radius:0}
+.hl.mk::before{content:"";position:absolute;z-index:-1;left:-3px;right:-7px;top:.2em;bottom:.1em;border-radius:10px}
+.hl.mk.gold{background:none;box-shadow:none}
+.hl.mk.gold::before{background:rgba(255,215,0,.10);box-shadow:inset 0 -6px 0 rgba(255,215,0,.35)}
+.q{font-family:'Playfair Display',serif;font-weight:700}
+
+/* ---- title slides (no box) ---- */
+.frame.title h1{font-size:150px;line-height:1.02;letter-spacing:-.025em}
+.frame.title .ey{font-size:30px;margin-bottom:34px}
+.frame.title .divider{width:96px;height:5px;margin:44px 0 0}
+
+/* ---- tiles (D1) ---- */
+.tiles3{display:flex;gap:30px;width:100%}
+.tile3{flex:1 1 0;display:flex;align-items:center;gap:24px;padding:30px 32px;border-radius:20px;border:2px solid var(--border);
+  background:rgba(255,255,255,.012)}
+.tile3 .v{font:700 34px/1.2 'DM Sans';letter-spacing:.06em;text-transform:uppercase;color:var(--text-secondary)}
+.tile3.done .v{color:var(--text-primary)} .tile3.done .ic{stroke:var(--text-primary);opacity:.9}
+.tile3.on{border-color:var(--acc);background:rgba(var(--acc-rgb),.07);box-shadow:0 0 0 4px rgba(var(--acc-rgb),.10),0 12px 28px rgba(0,0,0,.35)}
+.tile3.on .v{color:var(--text-primary)} .tile3.on .ic{stroke:var(--acc);opacity:1}
+
+/* ---- bars (D6, D14, D21, D23) ---- */
+.barrow .bw{flex:1 1 auto;min-width:0;height:34px;display:flex;align-items:center}
+.bar{height:34px;border-radius:8px;background:#2a3142}
+.row.done .bar{background:#6b7486}
+.row.on .bar,.row.lit .bar{background:linear-gradient(90deg,rgba(var(--acc-rgb),.75),var(--acc))}
+.row.dim .bar{background:#1f2533}
+
+/* ---- two halves (D5) ---- */
+.halves{display:flex;gap:44px;width:100%;align-items:stretch}
+.half{flex:1 1 0;min-width:0;border-radius:22px;border:2px solid var(--border);padding:34px 40px 30px;background:rgba(255,255,255,.012)}
+.half .hd{display:flex;align-items:center;gap:16px;font:700 27px/1.2 'DM Sans';letter-spacing:.16em;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:18px}
+.half .hd i{width:16px;height:16px;border-radius:50%;background:var(--text-muted)}
+.half .hd.g{color:var(--accent-green)} .half .hd.g i{background:var(--accent-green);box-shadow:0 0 14px rgba(0,230,138,.6)}
+.half .hd.gold{color:var(--accent-gold)} .half .hd.gold i{background:var(--accent-gold);box-shadow:0 0 14px rgba(255,215,0,.5)}
+.half .row{margin:0 -20px;padding:14px 20px}
+.half .row .v{font-size:40px}
+.half .row .big{font-size:46px}
+
+/* ---- END card (YouTube end-screen geometry) ---- */
+.frame.endc{display:block;padding:0}
+.frame.endc>.slot{position:absolute;width:620px;height:350px;border-radius:18px;border:2px dashed #2a3142;
+  background:rgba(255,255,255,.015)}
+/* words inside a mono chip stay DM Sans; mono spaces tightened inside running text */
+.w{font-family:'DM Sans';font-weight:600;letter-spacing:0}
+.src .mono,.v .mono,p .mono,.ey .mono{word-spacing:-.3em}
+/* sparse cards: taller box, content centred, so the card fills the frame like the reference */
+.card.tall{min-height:660px;display:flex;flex-direction:column;justify-content:center}
+.nw{white-space:nowrap}
+/* one frame at a time while screenshotting (fast; no 100 blurred orbs painted at once) */
+body.solo .frame{display:none!important}
+body.solo .frame.cur{display:flex!important}
+body.solo .frame.endc.cur{display:block!important}
+
+.d9 .row .nt{font-size:28px}
+.d9 .row .nt .mono{word-spacing:-.3em}
+.d2 .row{align-items:flex-start;padding-top:20px;padding-bottom:20px}
+.d2 .row .lb{flex-basis:300px;padding-top:10px;line-height:1.45}
+.d2 .row .v{font-size:40px;font-weight:600}
+.d2 .row.lit .v{color:var(--text-primary)}
+.d18 .row .v{font-size:46px}
+.d22 .row{padding-top:13px;padding-bottom:13px}
+.d22 .row .lb{flex-basis:250px}
+.d22 .row .v{font-size:40px}
+.d6 .row .lb{flex-basis:300px}
+.d15 .row.lit .v span:first-child{color:var(--acc)}
+.d15 .row.on .v span:first-child{color:var(--acc)}
+.row .ic + .v{margin-left:0}
+
+/* ---- PORTRAIT re-shoot (short, 1080x1920): same tokens/components, the halves stack ---- */
+.frame.portrait{width:1080px;height:1920px;padding:110px 60px 520px;justify-content:center}
+.portrait .card{padding:56px 60px 50px}
+.portrait .card .divider{margin:26px 0 30px}
+.portrait h1.sm{font-size:76px;line-height:1.07}
+.portrait .halves{flex-direction:column;gap:28px}
+.portrait .half{padding:30px 36px 26px}
+.portrait .half .hd{margin-bottom:14px}
+</style></head><body>
+<div class="frame portrait" id="D5-v-s4" data-kind="card"><div class="orb" style="width:760px;height:760px;right:-220px;top:-280px;background:#00c2ff"></div><div class="orb" style="width:620px;height:620px;left:-260px;bottom:-300px;background:#00e68a;opacity:.16"></div><div class="card "><div class="top"></div><div class="ey">Its own usage numbers</div><h1 class="sm">What the product <span class="c">publishes</span></h1><div class="divider"></div><div class="halves"><div class="half"><div class="hd g"><i></i>What it publishes</div><div class="st " style="font-family:'DM Sans';font-weight:700;letter-spacing:.02em;margin:4px 0 14px"><i></i>One counter</div><div class="rows"><div class="row "><div class="big">74,195</div><div class="v">skills</div></div><div class="row "><div class="big">25,233</div><div class="v">merchants</div></div></div><div class="src" style="margin-top:16px">Skill Store stats, read <span class="mono">14 Nov 2026</span></div></div><div class="half"><div class="hd gold"><i></i>Not published</div><div class="rows"><div class="row "><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M12 8V4H8"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg><div class="v">Agents running</div></div><div class="row "><svg class="ic" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><div class="v">Paying subscribers</div></div><div class="row "><svg class="ic" viewBox="0 0 24 24"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg><div class="v">Revenue</div></div></div><div class="src hid" style="margin-top:16px;font-size:28px;color:var(--text-secondary);font-style:italic">At least not anywhere I checked.</div></div></div></div></div>
+<div class="frame portrait" id="D5-v-s5" data-kind="card"><div class="orb" style="width:760px;height:760px;right:-220px;top:-280px;background:#00c2ff"></div><div class="orb" style="width:620px;height:620px;left:-260px;bottom:-300px;background:#00e68a;opacity:.16"></div><div class="card "><div class="top"></div><div class="ey">Its own usage numbers</div><h1 class="sm">What the product <span class="c">publishes</span></h1><div class="divider"></div><div class="halves"><div class="half"><div class="hd g"><i></i>What it publishes</div><div class="st " style="font-family:'DM Sans';font-weight:700;letter-spacing:.02em;margin:4px 0 14px"><i></i>One counter</div><div class="rows"><div class="row "><div class="big">74,195</div><div class="v">skills</div></div><div class="row "><div class="big">25,233</div><div class="v">merchants</div></div></div><div class="src" style="margin-top:16px">Skill Store stats, read <span class="mono">14 Nov 2026</span></div></div><div class="half"><div class="hd gold"><i></i>Not published</div><div class="rows"><div class="row on"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M12 8V4H8"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg><div class="v">Agents running</div></div><div class="row "><svg class="ic" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><div class="v">Paying subscribers</div></div><div class="row "><svg class="ic" viewBox="0 0 24 24"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg><div class="v">Revenue</div></div></div><div class="src hid" style="margin-top:16px;font-size:28px;color:var(--text-secondary);font-style:italic">At least not anywhere I checked.</div></div></div></div></div>
+<div class="frame portrait" id="D5-v-s6" data-kind="card"><div class="orb" style="width:760px;height:760px;right:-220px;top:-280px;background:#00c2ff"></div><div class="orb" style="width:620px;height:620px;left:-260px;bottom:-300px;background:#00e68a;opacity:.16"></div><div class="card "><div class="top"></div><div class="ey">Its own usage numbers</div><h1 class="sm">What the product <span class="c">publishes</span></h1><div class="divider"></div><div class="halves"><div class="half"><div class="hd g"><i></i>What it publishes</div><div class="st " style="font-family:'DM Sans';font-weight:700;letter-spacing:.02em;margin:4px 0 14px"><i></i>One counter</div><div class="rows"><div class="row "><div class="big">74,195</div><div class="v">skills</div></div><div class="row "><div class="big">25,233</div><div class="v">merchants</div></div></div><div class="src" style="margin-top:16px">Skill Store stats, read <span class="mono">14 Nov 2026</span></div></div><div class="half"><div class="hd gold"><i></i>Not published</div><div class="rows"><div class="row done"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M12 8V4H8"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg><div class="v">Agents running</div></div><div class="row on"><svg class="ic" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><div class="v">Paying subscribers</div></div><div class="row "><svg class="ic" viewBox="0 0 24 24"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg><div class="v">Revenue</div></div></div><div class="src hid" style="margin-top:16px;font-size:28px;color:var(--text-secondary);font-style:italic">At least not anywhere I checked.</div></div></div></div></div>
+<div class="frame portrait" id="D5-v-s7" data-kind="card"><div class="orb" style="width:760px;height:760px;right:-220px;top:-280px;background:#00c2ff"></div><div class="orb" style="width:620px;height:620px;left:-260px;bottom:-300px;background:#00e68a;opacity:.16"></div><div class="card "><div class="top"></div><div class="ey">Its own usage numbers</div><h1 class="sm">What the product <span class="c">publishes</span></h1><div class="divider"></div><div class="halves"><div class="half"><div class="hd g"><i></i>What it publishes</div><div class="st " style="font-family:'DM Sans';font-weight:700;letter-spacing:.02em;margin:4px 0 14px"><i></i>One counter</div><div class="rows"><div class="row "><div class="big">74,195</div><div class="v">skills</div></div><div class="row "><div class="big">25,233</div><div class="v">merchants</div></div></div><div class="src" style="margin-top:16px">Skill Store stats, read <span class="mono">14 Nov 2026</span></div></div><div class="half"><div class="hd gold"><i></i>Not published</div><div class="rows"><div class="row done"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M12 8V4H8"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg><div class="v">Agents running</div></div><div class="row done"><svg class="ic" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><div class="v">Paying subscribers</div></div><div class="row on"><svg class="ic" viewBox="0 0 24 24"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg><div class="v">Revenue</div></div></div><div class="src hid" style="margin-top:16px;font-size:28px;color:var(--text-secondary);font-style:italic">At least not anywhere I checked.</div></div></div></div></div>
+<div class="frame portrait" id="D5-v-s8" data-kind="card"><div class="orb" style="width:760px;height:760px;right:-220px;top:-280px;background:#00c2ff"></div><div class="orb" style="width:620px;height:620px;left:-260px;bottom:-300px;background:#00e68a;opacity:.16"></div><div class="card "><div class="top"></div><div class="ey">Its own usage numbers</div><h1 class="sm">What the product <span class="c">publishes</span></h1><div class="divider"></div><div class="halves"><div class="half"><div class="hd g"><i></i>What it publishes</div><div class="st " style="font-family:'DM Sans';font-weight:700;letter-spacing:.02em;margin:4px 0 14px"><i></i>One counter</div><div class="rows"><div class="row "><div class="big">74,195</div><div class="v">skills</div></div><div class="row "><div class="big">25,233</div><div class="v">merchants</div></div></div><div class="src" style="margin-top:16px">Skill Store stats, read <span class="mono">14 Nov 2026</span></div></div><div class="half"><div class="hd gold"><i></i>Not published</div><div class="rows"><div class="row done"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M12 8V4H8"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg><div class="v">Agents running</div></div><div class="row done"><svg class="ic" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><div class="v">Paying subscribers</div></div><div class="row done"><svg class="ic" viewBox="0 0 24 24"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg><div class="v">Revenue</div></div></div><div class="src" style="margin-top:16px;font-size:28px;color:var(--text-secondary);font-style:italic">At least not anywhere I checked.</div></div></div></div></div>
+</body></html>

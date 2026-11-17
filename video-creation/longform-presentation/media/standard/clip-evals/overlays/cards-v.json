@@ -1,0 +1,202 @@
+{
+ "deck": "../clip-evals.html",
+ "spine": "../spine/clip-evals EDIT2.painted.mp4",
+ "out": "../clip-evals VERTICAL-v1.mp4",
+ "layout": {
+  "w": 1080,
+  "h": 1920,
+  "bg": "0x0a0c10",
+  "panes": [
+   {
+    "name": "deck",
+    "src": {
+     "x": 0,
+     "y": 0,
+     "w": 1370,
+     "h": 1080
+    },
+    "dst": {
+     "x": 0,
+     "y": 60,
+     "w": 1080,
+     "h": 850
+    }
+   },
+   {
+    "name": "webcam",
+    "src": {
+     "x": 1371,
+     "y": 400,
+     "w": 549,
+     "h": 680
+    },
+    "dst": {
+     "x": 158,
+     "y": 934,
+     "w": 764,
+     "h": 946
+    }
+   }
+  ]
+ },
+ "cards": [
+  {
+   "id": "run-01",
+   "in": 11.3,
+   "out": 51.6,
+   "say": "An agent reads the transcript and picks the moments. Then I watch ever ... ream gets replayed, and how a prompt gets a score.",
+   "kind": "clip",
+   "src": "runs-v/run-01.mp4",
+   "cover_cards": [
+    "the-job",
+    "last-video",
+    "roadmap.harness",
+    "roadmap.graph",
+    "roadmap.evals"
+   ]
+  },
+  {
+   "id": "run-02",
+   "in": 63.32,
+   "out": 157.22,
+   "say": "So let's start with the word harness because people use it for two dif ... the new part and it's where we're going to end up.",
+   "kind": "clip",
+   "src": "runs-v/run-02.mp4",
+   "cover_cards": [
+    "agent-harness",
+    "eval-harness",
+    "harness-plus-model",
+    "three-layers.all",
+    "three-layers.runtime",
+    "three-layers.blurry",
+    "nested.claude-code",
+    "nested.graph",
+    "nested.evals"
+   ]
+  },
+  {
+   "id": "run-03",
+   "in": 166.68,
+   "out": 282.6,
+   "say": "Now, the system itself, a live stream comes in and the first step re-e ... ext stop is the end. The run halts where it broke.",
+   "kind": "clip",
+   "src": "runs-v/run-03.mp4",
+   "cover_cards": [
+    "pipeline.intake",
+    "pipeline.lane-1",
+    "pipeline.lanes-2-3",
+    "pipeline.queues",
+    "batch-graph.start",
+    "batch-graph.lane-3",
+    "batch-graph.strategist",
+    "batch-graph.gate-1",
+    "batch-graph.gate-2",
+    "batch-graph.build",
+    "batch-graph.verify",
+    "six-agents",
+    "wiring-code.nodes",
+    "wiring-code.router"
+   ]
+  },
+  {
+   "id": "run-04",
+   "in": 290.24,
+   "out": 399.86,
+   "say": "The agent gets a prompt, does its work and everything prints streams i ... e graph checks the disk and the queues for itself.",
+   "kind": "clip",
+   "src": "runs-v/run-04.mp4",
+   "cover_cards": [
+    "spawn-code.spawn",
+    "spawn-code.retry",
+    "spawn-code.fallback",
+    "select-code.spawn",
+    "select-code.artifact",
+    "select-code.validate",
+    "validator-code",
+    "context-engineering",
+    "rules-in-code.plan",
+    "rules-in-code.files",
+    "rules-in-code.fallback",
+    "rules-in-code.done"
+   ]
+  },
+  {
+   "id": "run-05",
+   "in": 404.14,
+   "out": 936.8,
+   "say": "Next is memory. And this is the part that trips people up. My agents d ... mpact cut, and it happened to be one I had killed.",
+   "kind": "clip",
+   "src": "runs-v/run-05.mp4",
+   "cover_cards": [
+    "what-survives.nothing",
+    "what-survives.checkpoints",
+    "what-survives.files",
+    "what-survives.docs",
+    "gate-code.interrupt",
+    "gate-code.exit",
+    "gate-code.approve",
+    "three-graders",
+    "score-layer.lost",
+    "score-layer.record",
+    "score-layer.replay",
+    "score-layer.score",
+    "what-changed.added",
+    "what-changed.changed",
+    "kill-code",
+    "record-call-code.call",
+    "record-call-code.guard",
+    "record-code.kept",
+    "record-code.killed",
+    "record-code.skip",
+    "verdict-line.verdict",
+    "verdict-line.segments",
+    "verdict-line.version",
+    "verdict-line.proposal",
+    "record-guarantees",
+    "backfill",
+    "version-code.files",
+    "version-code.template",
+    "version-code.hash",
+    "stamp-code",
+    "precision-recall",
+    "missed-option.command",
+    "missed-option.stored",
+    "saved-transcripts",
+    "replay-prompt.shared",
+    "replay-prompt.note",
+    "match-rule.overlap",
+    "match-rule.half",
+    "match-rule.long-short",
+    "match-code",
+    "four-outcomes.kept",
+    "four-outcomes.killed",
+    "four-outcomes.missed",
+    "four-outcomes.new",
+    "four-outcomes.formula",
+    "scorer-code",
+    "scorer-tests",
+    "noise-table.all",
+    "noise-table.held",
+    "noise-table.moved"
+   ]
+  },
+  {
+   "id": "run-06",
+   "in": 957.74,
+   "out": 1047.32,
+   "say": "So what's in the record? 184 lines covering 21 live streams, 98 clips  ... ll? That used to be an opinion. Now it's a replay.",
+   "kind": "clip",
+   "src": "runs-v/run-06.mp4",
+   "cover_cards": [
+    "record-today",
+    "by-model",
+    "kills.pairs",
+    "kills.rates",
+    "recall",
+    "not-yet.not-memory",
+    "not-yet.feed-back",
+    "not-yet.cheaper-model"
+   ]
+  }
+ ]
+}

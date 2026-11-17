@@ -202,9 +202,9 @@ Total supply 50,000,000,000 JCT. TGE circulating 22.99%.
 
 | Metric | Value | Source |
 |---|---|---|
-| GPUs / nodes on network | NOT FOUND (no public dashboard found) | - |
-| Revenue / compute sold | NOT FOUND | - |
-| TVL | NOT FOUND / n.a. | - |
+| GPUs / nodes on network | **SUPERSEDED 2026-11-11 (see "UPDATE: PRODUCT TELEMETRY" at the end): the Render product publishes 3 GPUs / 5 workers at `/status.json`.** Original entry was "NOT FOUND (no public dashboard found)": we had never opened the product home page. | [S39] |
+| Revenue / compute sold | **SUPERSEDED: 192,258 GPU-seconds since 2026-09-30 = about 19,200 JPY (about $120) at list price; 2,090 renders.** Original entry was "NOT FOUND". | [S39] |
+| TVL | NOT FOUND / n.a. (checked: no staking or TVL entry found; Render bills in JPY, JCT not in the payment) | - |
 | Node-license sales | "exceeding 600 million yen in the first four months" of the managed-node (NFT licence) model (Gate.com via iq.wiki; single-source, secondary) | [S28] |
 | Node sales start | limited sales late Dec 2024; general sales 14 Feb 2025 | [S30] |
 | Live product | JANCTION Render (Tokyo DC, one GPU model listed, JPY billing) | [S33] |
@@ -267,7 +267,7 @@ Valuation vs peers (my calc on the table):
 - JCT market cap ($107.5M) ~= Aethir ($96.9M) and Golem ($105M).
 - JCT's 24h volume ($190.8M) is ~2.4x the COMBINED volume of all nine peers above (~$80M).
 - FDV / market cap = 4.35x (only ~23% of supply circulating).
-- Revenue / usage multiples for the comparison: NOT possible, no JCT network revenue found.
+- Revenue / usage multiples for the comparison: **SUPERSEDED 2026-11-11.** The original line said "NOT possible, no JCT network revenue found"; the product's own stats give a usage-based revenue proxy of about $120 since launch (see "UPDATE: PRODUCT TELEMETRY"). It is a proxy for the Render product only, billed in JPY, not network revenue to JCT holders.
 
 ---
 
@@ -417,3 +417,49 @@ The pump continued after the first snapshot. CoinGecko coin endpoint (last_updat
 Peers at 21:05:50 UTC [S04] (market cap / FDV / 24h volume, $M): Bittensor 2,612.9 / 2,612.9 / 42.6 · Render 828.8 / 872.5 / 17.0 · Akash 185.8 / 185.8 / 2.9 · JASMY 177.7 / 179.7 / 5.3 (1y -64.1%) · Theta 139.7 / 139.7 / 2.0 · Golem 103.0 / 103.0 / 1.3 · Aethir 94.4 / 197.0 / 6.1 · io.net (CG id `io`) 49.2 / 92.1 / 4.75 · Nosana 44.3 / 44.3 / 0.33.
 - JCT FDV = 4.0x JASMY, ~83% of Render, 3.7x Aethir (my calc). JCT volume $320.6M = 3.9x the nine peers combined ($82.3M) (my calc).
 - GitHub repo links on slide 6 (verified via the GitHub API, 2026-11-08 ~21:30 UTC): core node https://github.com/Janction-R-D/janction-node (C, 0 stars, last push 2024-07-07, a separate `Janction-R-D` org) · render https://github.com/JasmyLab-JANCTION/janction-render (3 stars, last push 2026-11-05). The `JasmyLab-JANCTION` org has 7 public repos; `janction-node-binaries` last pushed 2024-06-22.
+
+---
+
+## UPDATE: PRODUCT TELEMETRY (added 2026-11-11 17:05 UTC, per `video-creation/skills/coin-research/coin-research.md`)
+
+**Why this section exists.** The 2026-11-08 pass listed GPUs, revenue and compute sold as "NOT FOUND" and the deck's slide 6
+("What Isn't Public") said "No GPU count, node count, revenue or user numbers, anywhere". Both were wrong: we read the product's
+`/facts` page and its GitHub repo, never its HOME page, `/status.json` or `/v1/stats`. Another creator's video (Bitcoin Strategy,
+10 Nov 2026, `youtu.be/3u985bvacxA`) is built on that live counter. The raw files, saved 2026-11-11, are in `telemetry/`
+(`home.html`, `v1-stats.json`, `status.json`, `v1-health.json`, `facts.json`, `probe-log.txt` = every path tried and its HTTP status). [S39]
+
+**Checked-list (probe-log.txt):** 200: `/`, `/v1/stats`, `/status`, `/status.json`, `/v1/health`, `/facts`, `/facts.json`, `/version.json`, `/changelog`,
+`/changelog.json`, `/llms.txt`, `/llms-full.txt`, `/openapi.json`, `/sitemap.xml`, `/robots.txt`, `/pricing`, `/v1/pricing`, `/.well-known/*`. 404: `/stats`, `/api/stats`, `/metrics`, `/health`.
+
+### Render usage (home page "On the wire", source `/v1/stats`, `updated_at` 2026-11-11 17:03 UTC, external use only; the operator's own tests, benchmarks, monitoring and testers' keys are excluded) [S39]
+| Item | Value |
+|---|---|
+| Since launch (2026-09-30) | 2,090 renders; 192,258 GPU-seconds (3,204 GPU-minutes) |
+| Last 24 h / 7 d / 30 d | 59 / 426 / 1,713 renders; success 100% / 97.9% / 98.5%; median round trip 6-7 s |
+| GPU-seconds, last 30 d | 153,150 |
+| 30-day clients | API 1,207 · Cursor 102 · Claude 100 · "MCP (other apps)" 95 · CLI 57 · Codex 39 · ChatGPT 38 · Sesame 17 · Notion 14 · DeepSeek Harness 13 |
+| Named AI apps over MCP, 30 d | 323 (the page's own "renders sent from AI apps over MCP" figure) |
+- **Usage-based revenue proxy (my calc):** 192,258 GPU-s x 0.1 JPY = **about 19,200 JPY, roughly $120** since launch at list price; 30 days = 15,315 JPY. Upper bound: 100 JPY welcome credits (plus 400 JPY for saving a card) are free, and previews are free up to 2 GPU-min a day. Billed in JPY by card; JCT is not part of the payment (re-confirmed on `/facts` and the pricing page).
+- **Caveat on the AI-app share:** 1,207 of 1,713 renders in 30 days came through the plain HTTP "API" bucket, which the page does not attribute to an app. Do not say "AI apps drive the usage"; say "323 renders in 30 days came from named AI apps".
+- The client breakdown shifts between snapshots (the 10 Nov Bitcoin Strategy video quotes Claude about 110, Cursor about 100, ChatGPT about 60; today's read is Claude 100, Cursor 102, ChatGPT 38). Quote with a read time.
+
+### GPU capacity (`/status.json`, `/v1/health`, 2026-11-11 17:03 UTC) [S39]
+- `gpus: 3`, `workers_online: 5`, queue empty (0 queued / 0 running), `intake: open`, `billing_mode: live`, `gpu_lent_out: false`. So a GPU count IS published for the live product: 3 GPUs behind 5 workers, all in the Tokyo datacenter. (The 8 Nov research says one GPU model, RTX PRO 6000 Blackwell 96 GB.) A node count for the JCT network itself is still not published (checked-list above).
+
+### Package + registry activity [S40]
+- PyPI `janction-render`: version 0.4.269, 132 releases; downloads (pypistats) 307 last day / 1,057 last week / 2,473 last month.
+- GitHub `JasmyLab-JANCTION/janction-render`: 3 stars, 0 forks, 1 open issue, created 2026-09-30, last push 2026-11-11 12:02 UTC.
+- Official MCP registry lists `io.github.JasmyLab-JANCTION/janction-render`.
+- Product changelog: 0.4.269 on 2026-11-11 (Gaussian-splat rendering); the product ships almost daily.
+
+### The one-number gap (my calc)
+- Product sales so far: about $120 (upper bound). New JCT reaching the market: about 1.2B a month from 10 Nov 2026 = about $13M a month at about $0.011 (about $17M at the 8 Nov $0.01442). Ratio: roughly 100,000 to 1 on a monthly basis. The token is not part of the product's payment (yen by card), though the docs say users "can pay with JCT or stablecoins" later and staking has no date.
+- Trigger to watch: renders per day (59 in the last 24 h; 1,713 in 30 days = about 57 a day) around the next unlock (10 Dec 2026).
+
+### What changes in the written material
+- Slide 6 "What Isn't Public" (published video): "No GPU count, node count, revenue or user numbers, anywhere" is wrong for the Render product (GPU count, usage counts, a revenue proxy, package downloads are public). Safe form: "No JCT network node count, no revenue figure from the project itself; the Render product publishes its own usage counter." Needs Mike's call (the video is already up).
+- The notes doc's slide 8 line ("No revenue figure exists for JCT, so a revenue multiple vs the peers cannot be made") needs the same narrowing.
+
+### Source key additions
+- [S39] JANCTION Render live pages, read 2026-11-11 17:03-17:05 UTC: https://render.janction.jp/ (section "On the wire") · https://render.janction.jp/v1/stats · https://render.janction.jp/status.json · https://render.janction.jp/v1/health · https://render.janction.jp/facts.json · https://render.janction.jp/changelog.json
+- [S40] https://pypi.org/pypi/janction-render/json · https://pypistats.org/api/packages/janction-render/recent · https://api.github.com/repos/JasmyLab-JANCTION/janction-render · https://registry.modelcontextprotocol.io/v0/servers?search=janction (all read 2026-11-11 ~17:05 UTC)

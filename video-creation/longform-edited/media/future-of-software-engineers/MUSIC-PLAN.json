@@ -1,0 +1,359 @@
+{
+  "project": "future-of-software-engineers",
+  "authored": "2026-11-14 by music-placement-strategist (read-only plan; the orchestrator renders the listening copy with mix_music.py --plan-preview)",
+  "spine": "video-creation/longform-edited/media/future-of-software-engineers/spine/ALL.e.enhanced.mp4",
+  "spine_duration_sec": 477.38,
+  "ruling": "ONE meditation / drone track for the whole video (Mike, PROJECT-LOG 2026-11-13: only a single meditation/drone music track for the background). Bed A from frame 0 to the last word, no title cards, no second track, no intro sting, no hype section, no drop on a word, no impact or riser. Carved by the ONE TRACK, CARVED method (music.md): the intro swell of the file under CH1, its plateau through the body, ONE bar-aligned jump back (81 bars, cross-faded) to reach the runtime, the real ending of the file right-aligned so its resolve completes on the last word, later.",
+  "track": {
+    "id": "emergence",
+    "title": "Emergence",
+    "artist": "Outside The Sky",
+    "file": "video-creation/assets/music/Emergence/Outside_The_Sky_Emergence_instrumental_5_01.mp3",
+    "files_used": [
+      "video-creation/assets/music/Emergence/Outside_The_Sky_Emergence_instrumental_5_01.mp3"
+    ],
+    "duration_sec": 301.8,
+    "bpm": 100,
+    "bar_sec": 2.4,
+    "section_grid_phase_sec": 0.0,
+    "key": "E major",
+    "mix": "instrumental (no vocal version exists; the 5:01 master is the only full-length file, an mp3)",
+    "license_code": "F3TNRU2B44JSS3FW",
+    "source": "soundstripe 15002",
+    "usage_ledger": "2026-11-14 report (this project excluded): emergence is FRESH (never used). BLOCKED concrete-mazes (AI vs ML) and the avoid list (constant-741-hz-meditation, leatherface) do not apply. It is the recommended pick of the screenplay, so the shortlist stands and nothing is replaced. The catalog carries no mike_note on this track; its tags (drone, calm) and use_case record that Mike picked it on 2026-11-03 as a continuous-tone drone bed under VO."
+  },
+  "levels": {
+    "vo_lufs_integrated": -22.1,
+    "vo_note": "ffmpeg ebur128 on spine/ALL.e.enhanced.mp4 (LRA 2.4 LU). mix_music.py raises the voice +2.0 dB by default (GRAPH-PROGRESS settings carry no voice_db), so the seat is computed against the raised voice at -20.1 LUFS; if voice_db changes, shift remotion_gain_db by the same amount.",
+    "bed_region_lufs": {
+      "intro file 1.0-34.9 (CH1)": -15.8,
+      "intro file 8-15": -20.0,
+      "intro file 15-34.9": -14.4,
+      "plateau file 36-256.8 (pass 1)": -11.6,
+      "plateau file 62.4-258.8 (pass 2)": -11.6,
+      "swell file 79.6-83.8": -8.2,
+      "swell file 115.2-120.0": -8.8,
+      "fuller stretch bars 77-83 file 184.8-201.6": -10.4,
+      "quiet stretch bars 70-75 file 168.6-181.2": -13.3,
+      "dip bars 102-103 file 244.8-249.6": -13.8,
+      "last peak file 258.8-263.2": -8.2,
+      "settle file 264-278.4": -12.9,
+      "resolve file 278.4-284.0": -16.9
+    },
+    "seat_rule": "ONE seat for the whole video, remotion_gain_db -28.5 (linear 0.0376): the plateau (-11.6 LUFS) sits at -40.1 LUFS, 20.0 dB under the raised voice, the quiet end of the house 16 to 22 window as the screenplay asks for a drone. The breathing of the file is the only dynamics: its three loudest moments (the swells at file 80, 115 and 260) reach 16.6 to 17.2 dB under the voice, its quietest plateau bars 22.2 to 22.7 under, so every moment after the intro stays inside 16 to 23 dB under. No automation rows, no seat steps, no clip inserts in this video (COVER-PLAN clip_inserts is empty), no IMPACT or RISER row asked for anywhere.",
+    "remotion_gain_db": -28.5,
+    "linear_gain": 0.0376
+  },
+  "energy_profile": {
+    "video-creation/assets/music/Emergence/Outside_The_Sky_Emergence_instrumental_5_01.mp3": {
+      "low_energy_regions": [
+        [
+          0.0,
+          34.8
+        ],
+        [
+          129.6,
+          136.8
+        ],
+        [
+          168.0,
+          182.4
+        ],
+        [
+          201.6,
+          216.0
+        ],
+        [
+          244.8,
+          256.8
+        ],
+        [
+          278.4,
+          301.8
+        ]
+      ],
+      "high_energy_regions": [
+        [
+          79.2,
+          84.0
+        ],
+        [
+          115.2,
+          120.0
+        ],
+        [
+          184.8,
+          201.6
+        ],
+        [
+          258.8,
+          263.2
+        ]
+      ],
+      "per_bar_read": {
+        "method": "one scratchpad scan of the master (nothing written): RMS per 2.4 s bar and per 0.2 s, onset flux, band energies, chroma per 1.2 s. Bar = 240 / 100 = 2.4 s, bar n starts at file 2.4 n (phase 0.0). The phase comes from the section cuts, cross-correlated to the master: the intro cut is master 0.0 to 28.8 (bars 0-11, ncc 1.00) and the chorus cut starts on master 268.8 (the bar 112 line, ncc 1.00) and is the ending of the master itself; the verse cut starts at master 42.6, a quarter bar off the grid, and is not used. The drone has no audible pulse (the onset autocorrelation shows no peak on the beat or the bar), so the grid belongs to the arrangement, it is not a beat you hear. Chroma: the same three pitch classes lead every window from 0 to 300 s, ONE static chord and no chord cycle, so a jump cannot land on a wrong chord.",
+        "intro_bars_0_14": "file 0.0-34.8: the swell the file opens on. -34 dBFS at 0, -25 at 6 s, -20 at 9 s, a dip to -26 at 12 s, -19 to -14 from 14 to 20 s, then -15 to -19 until the step. Under -20 dBFS (inaudible at the seat) for the first 8 s.",
+        "plateau_step_bar_14": "file 34.8-35.0: -17 to -12 dBFS in 0.4 s, the arrival of the plateau (bar 14 line 33.6, bar 15 line 36.0).",
+        "plateau_bars_15_32": "file 36.0-79.2: -12.3 to -16.2 dBFS, steady (bars 26-31, 62.4-76.8: -13.9, -15.2, -16.2, -14.9, -15.3, -13.8).",
+        "swell_bars_33_34": "file 79.2-84.0: -9.8 and -10.2 per bar, 0.4 s peak -8 at 80.8-81.2. The strongest swell of the body.",
+        "plateau_bars_35_47": "file 84.0-115.2: -12.2 to -15.3.",
+        "swell_bars_48_49": "file 115.2-120.0: -10.4 and -10.3.",
+        "plateau_bars_50_61": "file 120.0-148.8: -12.8 to -15.6; bars 54-56 (129.6-136.8) the low three, -15.3 to -15.6.",
+        "lift_bars_62_63": "file 148.8-153.6: -11.9, then bar 64 falls to -15.3.",
+        "plateau_bars_64_76": "file 153.6-184.8: bars 66-67 -12.4 and -12.1; bars 70-75 (168.0-182.4) the quietest run of the plateau, -13.8 to -16.2.",
+        "fuller_bars_77_83": "file 184.8-201.6: -11.3 to -13.2, the longest fuller run (a brighter tone leads from 192 to 205 s).",
+        "plateau_bars_84_101": "file 201.6-244.8: bars 84-89 -13.6 to -15.5; bar 93 (223.2) a short lift to -11.0; bars 100-101 (240.0-244.8) -12.0 and -12.4.",
+        "dip_bars_102_106": "file 244.8-256.8: -14.4 to -15.8, the settle before the last peak.",
+        "last_peak_bars_107_109": "file 256.8-264.0: the rise starts at 258.8, 0.4 s peak -7 at 260.0, back to -13 by 263.6. The loudest moment of the file.",
+        "settle_bars_110_115": "file 264.0-278.4: -13.5 to -16.5, sinking.",
+        "ending_bars_116_119": "the LAST TONE sounds just before the bar 116 line (file 278.2-278.6, -13 dBFS, bar line 278.4), then the file only decays: -17 at 280.0, -21 at 282.0, -24 at the bar 118 line (283.2), -25 at 284.0, -30 at 285.0, -36 at 286.0, under -40 after 289.6, digital silence by 300. The AUDIBLE resolve is over by file 284 to 285; the last 16 s of the file are silence and are never played."
+      },
+      "notes": "Catalog: aggression 27, opening build, ending resolve, role explainer_bed, tagged drone / calm. The catalog segments alternate high and mid from 34 to 274 s only because the plateau straddles the env boundary between 6 and 7: per bar it is ONE plateau, -11 to -16 dBFS from bar 15 to bar 115, with the two short swells named above. That one plateau is the steady section the jump back stays inside."
+    }
+  },
+  "placement_math": {
+    "grid": "ONE grid for the whole video: video bar lines = 1.4 + 2.4 k (k 0 to 198). Pass 1 (spine 0 to 255.8): file = spine + 1.0, so video bar k is file bar k + 1. Pass 2 (spine 255.8 to the end): file = spine - 193.4, so video bar k is file bar k - 80. The jump back at the join is 194.4 s = 81 bars exactly, so the grid never re-phases.",
+    "pin": "The one pinned landing is the ending: the bar 118 line (file 283.2, the drone 10 dB under its plateau and still falling) on the onset of the last word, later (word JSON 476.56, heard 476.63 with the +69 ms offset of the enhanced track), at spine 476.6. That fixes pass 2. An 81-bar jump back then gives pass 1 its in-point, source_in 1.0, and the plateau step of the file (34.8 to 35.0) falls on spine 33.8 to 34.0 by itself: the first word of CH2, Start (33.92). Both landings the screenplay asked for come out of one parameter.",
+    "join": "Spine 255.8 (video bar k 106): pass 1 leaves at the file bar 107 line (256.8), before the rise into the last peak starts at 258.8; pass 2 enters at the file bar 26 line (62.4). Written as a 2.4 s (one bar) cross-fade, spine 253.4 to 255.8: the outgoing row fades over file 254.4-256.8 (-13.6 LUFS), the incoming row fades in over file 60.0-62.4 (-11.8 LUFS) and is full on 62.4. Same chord, band levels within 2 dB of each other at exit and entry (40-120 Hz -40 against -41, 120-300 Hz -33 against -35, 300-800 Hz -41 against -40). It sits under the second half of FACE window 4 and is complete 1.0 s before Second, the product engineer (real onset 256.83), so the new pass begins with the new role.",
+    "heard_twice": "File 62.4 to 256.8 (bars 26-106) plays in both passes, 194.4 s apart; nothing is heard three times and nothing repeats back to back. File 1.0 to 62.4 and 256.8 to 284.0 play once.",
+    "end": "The spine ends at 477.38 on file 283.98 (-25 dBFS, 11 dB under the plateau); the row closes with a 0.3 s fade that starts as later ends (477.06). No end_card_hold: the video ends on the last word, nothing rings past the spine.",
+    "landings_pass_1": {
+      "7.0-14.0": "the bed becomes audible (file 8-15, -23 to -19 dBFS) under the line about the CEO of Google and the Anthropic line",
+      "22.56-25.96": "FACE window 2 (You just cannot keep your head down): file 23.6-27.0, -19 to -14, still inside the build",
+      "33.9": "the plateau arrives on Start with Google (CH2, chart C3)",
+      "79.0-82.6": "the swell of bars 33-34 under is recursive self-improvement. An AI that designs and builds its own successor (peak on recursive self)",
+      "114.2-119.0": "bars 48-49 under AI systems could be capable of tasks that take humans weeks to do; settled (-13) for FACE window 3, Code got cheap, but outcomes didn't (123.32)",
+      "128.6-135.8": "the low bars 54-56 under the CH3 open, Here's how software has usually been built (130.12)",
+      "147.8-152.6": "bars 62-63 under a project manager, a designer, maybe a marketer, six seats, six people; bar 64 falls 3 dB at 152.6, one second before Now one single engineer (153.58)",
+      "167.0-181.4": "the quietest run, bars 70-75, under the own-proof line I run a whole company this way (167.56-180.16)",
+      "183.8-200.6": "the fuller run, bars 77-83, under more business-minded, So which piece of the business do you own?, four versions, and the CH4 open with the funnel map C1 (194.54)",
+      "200.6-215.0": "bars 84-89, the calm run, under the six stages, McClure and First, the growth engineer (209.90)",
+      "243.8-248.6": "the dip, bars 102-103, enters on Every idea is an experiment (243.76)"
+    },
+    "landings_pass_2": {
+      "255.8-272.6": "bars 26-32, steady, under the product engineer definition",
+      "273.4-277.0": "the swell of bars 33-34 under getting the customer to keep using the product. One company that hires product engineers sums it up (16.6 dB under the voice at its top)",
+      "289.74-292.61": "FACE window 5: file 96.3-99.2, -13 to -12.4, level",
+      "308.6-313.4": "bars 48-49 under A few platform teams serve many product teams, a product manager of its own; settled for FACE window 6 (317.98)",
+      "342.2-347.0": "bars 62-63 under The CRM, which is a sales team's customer database, like Salesforce",
+      "351.8-356.6": "bars 66-67 (-12) under GTM owns the pipeline. So look at the whole map. Four engineers (C1, the ALL state)",
+      "361.4-375.8": "the quietest run, bars 70-75, enters on the rewatch line (361.40) and carries the CH5 open, Now here's what the market says (368.42)",
+      "378.2-395.0": "the fuller run, bars 77-83, under 71% went to senior roles, 4.5% of postings, the 10-year outlook of the government and the BLS split (chart C4)",
+      "395.0-409.4": "bars 84-89, the calm run, under sink 7%, grow 10% and The demand didn't disappear, it just moved (405.18)",
+      "433.4-438.2": "bars 100-101 (-12) under So the ones who get hired are the ones who show up and are ready to own an outcome",
+      "438.2-443.0": "the dip, bars 102-103 (-15 to -16), under you refuse to believe this change is real, then you're the one who gets left behind (FACE window 8) and So here's what to do (CH6)",
+      "452.2-456.6": "the last peak (top at 453.4) under activation rate, retention, pipeline, or cost. Then ship one experiment (16.6 dB under the voice at its top)",
+      "460.18-465.15": "FACE window 9, Don't be the engineer who only codes. Be the engineer who owns a number: file 266.8-271.8, the settle, -14 to -15",
+      "471.6": "the last tone of the file, under versions of software engineers",
+      "476.6": "the bar 118 line on later: the resolve is 10 dB down and falling; the video ends 0.8 s on"
+    }
+  },
+  "beds": [
+    {
+      "chapter": "CH1",
+      "span": [
+        0.0,
+        33.92
+      ],
+      "register": "gear-3, calm and certain: the bed is barely there under the locked hook",
+      "source_file": "video-creation/assets/music/Emergence/Outside_The_Sky_Emergence_instrumental_5_01.mp3",
+      "source_in": 1.0,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -22.8,
+      "remotion_gain_db": -28.5,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "carve": "the intro swell of the file, file 1.0-34.92 (bars 0-14), from frame 0 with no fade (the file is at -35 dBFS there)",
+      "why": "Bed A starts at frame 0 on its own swell. It is inaudible under the hook (FACE window 1, 0.00-5.36), comes up under the line about the CEO of Google and the Anthropic line (7 to 20 s), holds low through FACE window 2 (22.56-25.96) and the question, and the plateau step of the file lands on the first word of CH2. level_db_under_vo is the measured figure for file 15-34.9; the first 14 s sit lower, by design (the rise from silence)."
+    },
+    {
+      "chapter": "CH2",
+      "span": [
+        33.92,
+        130.12
+      ],
+      "register": "gear-2 explainer, steady",
+      "source_file": "video-creation/assets/music/Emergence/Outside_The_Sky_Emergence_instrumental_5_01.mp3",
+      "source_in": 34.92,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -19.7,
+      "remotion_gain_db": -28.5,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "carve": "sample-continuous with the CH1 row (the mixer merges them, no fade, no breath): the first plateau, file 34.92-131.12 (bars 14-54), played straight through",
+      "why": "The plateau arrives on Start with Google (33.92) and stays level under the chart C3 series. The one real swell of the stretch (bars 33-34) falls on is recursive self-improvement. An AI that designs and builds its own successor (79.0-82.6): the big idea of the chapter gets the lift the file already has, no added sound. Bars 48-49 lift under tasks that take humans weeks to do, and the bed is back at -13 for FACE window 3, Code got cheap, but outcomes didn't (123.32-125.26)."
+    },
+    {
+      "chapter": "CH3",
+      "span": [
+        130.12,
+        194.54
+      ],
+      "register": "gear-2 explainer, steady",
+      "source_file": "video-creation/assets/music/Emergence/Outside_The_Sky_Emergence_instrumental_5_01.mp3",
+      "source_in": 131.12,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -20.1,
+      "remotion_gain_db": -28.5,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "carve": "sample-continuous: the plateau continues, file 131.12-195.54 (bars 54-81)",
+      "why": "The low bars 54-56 open the chapter under Here's how software has usually been built (pod chart C2). Bars 62-63 lift under the six seats, six people and bar 64 falls 3 dB one second before Now one single engineer can fill almost all of those seats. The quietest run of the plateau (bars 70-75) sits under the blacked-out own-proof line, I run a whole company this way (167.56-180.16), and the fuller run (bars 77-83) comes in under more business-minded, more entrepreneurial and So which piece of the business do you own?"
+    },
+    {
+      "chapter": "CH4",
+      "span": [
+        194.54,
+        255.8
+      ],
+      "register": "gear-2 explainer, steady",
+      "source_file": "video-creation/assets/music/Emergence/Outside_The_Sky_Emergence_instrumental_5_01.mp3",
+      "source_in": 195.54,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -20.3,
+      "remotion_gain_db": -28.5,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 2.4,
+      "carve": "sample-continuous: the end of pass 1, file 195.54-256.8 (bars 81-106), leaving at the bar 107 line before the last peak; the last bar cross-fades out (2.4 s)",
+      "why": "The fuller run is still up as the funnel map C1 appears (194.54) and settles into the calm bars 84-89 for the six stages and First, the growth engineer. The dip (bars 102-103) enters on Every idea is an experiment (243.76) and holds under the outcome line and FACE window 4 (250.51-256.74). The row never reaches the last peak of the file: that is kept for the close."
+    },
+    {
+      "chapter": "CH4",
+      "span": [
+        255.8,
+        368.42
+      ],
+      "register": "gear-2 explainer, steady",
+      "source_file": "video-creation/assets/music/Emergence/Outside_The_Sky_Emergence_instrumental_5_01.mp3",
+      "source_in": 62.4,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -19.9,
+      "remotion_gain_db": -28.5,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_in_sec": 2.4,
+      "carve": "the REMIX jump back, 81 bars (bar 107 to bar 26, 194.4 s), inside the one plateau: pass 2 starts, file 62.4-175.02 (bars 26-72), cross-fading in over the bar before it (file 60.0-62.4, spine 253.4-255.8)",
+      "why": "The only join of the video, on the role change: full on the bar line 1.0 s before Second, the product engineer. Three roles, one level: bars 26-32 under the product engineer, the swell of bars 33-34 under getting the customer to keep using the product (273.4-277.0), level for FACE window 5 (289.74), bars 48-49 under the platform team line and settled for FACE window 6 (317.98), bars 62-63 under the CRM line, FACE window 7 (350.48) and So look at the whole map on bars 66-67, then the quietest run from the rewatch line (361.40)."
+    },
+    {
+      "chapter": "CH5",
+      "span": [
+        368.42,
+        442.44
+      ],
+      "register": "gear-2 to 3, steady, a shade heavier",
+      "source_file": "video-creation/assets/music/Emergence/Outside_The_Sky_Emergence_instrumental_5_01.mp3",
+      "source_in": 175.02,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -20.1,
+      "remotion_gain_db": -28.5,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "carve": "sample-continuous with the row above (merged): pass 2 runs on, file 175.02-249.04 (bars 72-103)",
+      "why": "The chapter opens on the quiet bars (Now here's what the market says) and the fuller run, bars 77-83, carries the weight: the Indeed numbers and the BLS split with chart C4 (378.2-395.0). The calm bars 84-89 leave The demand didn't disappear, it just moved (405.18) to the words. Bars 100-101 lift under the ones who get hired, and the dip of the file (bars 102-103) sits under you're the one who gets left behind (FACE window 8, 437.35-442.28): no swell on the face line."
+    },
+    {
+      "chapter": "CH6",
+      "span": [
+        442.44,
+        477.38
+      ],
+      "register": "gear-3, resolved, settling",
+      "source_file": "video-creation/assets/music/Emergence/Outside_The_Sky_Emergence_instrumental_5_01.mp3",
+      "source_in": 249.04,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -20.6,
+      "remotion_gain_db": -28.5,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": true,
+      "fade_out_sec": 0.3,
+      "carve": "sample-continuous (merged): the real ending of the file RIGHT-ALIGNED, file 249.04-283.98 (bars 103-118): the settle, the last peak, the sinking plateau, the last tone and its decay. source_in 249.04 puts the bar 118 line (file 283.2) on spine 476.6, the onset of later",
+      "why": "The last peak of the file (452.2-456.6, top at 453.4) rises under Learn its one number and Then ship one experiment, and has settled to -14 for the landing line, Don't be the engineer who only codes. Be the engineer who owns a number (FACE window 9, 460.18-465.15). The last tone sounds at 471.6 under the end-card pointer and the drone only decays from there: 10 dB down on later, closed by a 0.3 s fade as the word ends. The video ends on the last word, no hold."
+    }
+  ],
+  "hard_hits": [
+    {
+      "t": 0.0,
+      "beat": "the locked hook (FACE window 1)",
+      "music_move": "no hit: the swell of the file starts from silence at frame 0 and is audible from around 7 s"
+    },
+    {
+      "t": 33.9,
+      "beat": "CH2 opens, Start with Google (chart C3)",
+      "music_move": "the plateau of the file arrives on the first word (the step at file 34.9), no added sound"
+    },
+    {
+      "t": 79.8,
+      "beat": "recursive self-improvement, the big idea",
+      "music_move": "the swell of bars 33-34 as the file plays it"
+    },
+    {
+      "t": 194.54,
+      "beat": "CH4 opens, the funnel map C1 (the marquee reveal)",
+      "music_move": "the fuller run of the plateau (bars 77-83) is up from 183.8 and holds through the reveal; no hit"
+    },
+    {
+      "t": 255.8,
+      "beat": "Second, the product engineer",
+      "music_move": "the one join: an 81-bar jump back, cross-faded over the bar before it (253.4-255.8)"
+    },
+    {
+      "t": 386.06,
+      "beat": "the BLS split, chart C4",
+      "music_move": "the fuller run again (378.2-395.0), the shade heavier of CH5; no hit"
+    },
+    {
+      "t": 438.2,
+      "beat": "the one who gets left behind (FACE window 8)",
+      "music_move": "the dip of the file under the face line; the words carry it"
+    },
+    {
+      "t": 453.4,
+      "beat": "Learn its one number / Then ship one experiment",
+      "music_move": "the last peak of the file, the only time the close lifts; settled before the landing line at 460.48"
+    },
+    {
+      "t": 476.6,
+      "beat": "the last word, later",
+      "music_move": "the resolve: the last tone sounded at 471.6, the drone is 10 dB down on the word, a 0.3 s fade closes it at 477.38"
+    }
+  ],
+  "notes": "One physical bed in two placements: the mixer merges rows 1-4 (sample-continuous, file 1.0 to 256.8, spine 0 to 255.8, fade out 2.4 s) and rows 5-7 (file 60.0 on, spine 253.4 to the end, fade in 2.4 s), so the only seam is the cross-fade at 253.4-255.8. No inter-bed breath anywhere (one bed, no title cards, no card pauses). No clip inserts (COVER-PLAN clip_inserts is empty), so nothing ducks. No SFX rows are asked for (PROJECT-LOG: no impact, riser or hype SFX). Word times are from the word JSON; AS-RECORDED measures the enhanced audio 30 ms late from 167 s and 69 ms late from 350 s, which moves no landing by more than 0.07 s. The screenplay named the last word next; the take ends on later (AS-RECORDED), and the ending is aligned to later. QA: check the music floor in a no-VO breath of each stretch (33.64-33.92, 129.72-130.12, 187.76-188.18, 258.32-258.78, 362.84-363.20, 369.80-370.16, 459.90-460.48, 472.90-473.50), not integrated LUFS, and expect near silence before 7 s by design.",
+  "open_questions": [
+    "LISTEN 1, the open (0 to 36 s): the drone is inaudible under the hook for around 7 s, rises through the Anthropic line and reaches its plateau on Start with Google (33.9). That is the carve the screenplay wrote. If Mike wants music under the very first line, the fix is one automation window on the CH1 row (+5 dB relative, spine -8 to 16, ramp_sec 8), not a different in-point.",
+    "LISTEN 2, the join and the end: the cross-fade at 253.4-255.8 (under getting the market to say yes, before Second, the product engineer) should not be heard at all; and 469 to 477 s, where the last tone sounds at 471.6 and the drone sinks under the sign-off, 10 dB down on later.",
+    "Departure from the carve sketched in the screenplay, on purpose: it had several jump-backs inside file 2:58 to 4:06 under CH4. The per-bar read shows the whole body is one plateau (-11 to -16 dBFS, one static chord), so this plan uses ONE 81-bar jump instead: every stretch is heard at most twice, 194 s apart, and there is one seam instead of three. The alternative (bars 75-102 heard four times in a row, joins at 243.8, 308.6 and 373.4, the same tail from 438.2) keeps the swell of bars 33-34 out of CH4 and is one re-plan away if Mike prefers it.",
+    "The body is not flat: the drone breathes by 5 dB (16.6 to 22.7 dB under the voice). Two lifts land inside CH4 role beats (273.4-277.0 on keep using the product, 308.6-313.4 on the platform team line). If Mike wants CH4 level, add two relative dips on the second CH4 row (-3 dB, windows 271.9-278.5 and 307.1-314.9, ramp_sec 1.5).",
+    "Seat: 20 dB under the raised voice (remotion_gain_db -28.5, Premiere clip gain around -28). If the preview reads too present for a drone, -31 puts the plateau 22.5 under; the CH1 row would then need its level_db_under_vo restated.",
+    "Variety: nothing on the screenplay shortlist was blocked or recent, so nothing was replaced. The subtle pool still has 35 fresh tracks, but its drone / meditation corner is small: after this video only sacral-i-feel-417-hz, what-we-must and tissue-healing-285-hz are unused (solstice went to quant, constant-741-hz-meditation to canton, theta-rest is the old channel-intro bed). Worth sourcing two or three more drones before the next calm explainer."
+  ]
+}

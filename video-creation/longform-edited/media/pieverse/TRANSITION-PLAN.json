@@ -1,0 +1,443 @@
+{
+ "video": "pieverse",
+ "spine": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\pieverse\\spine\\ALL.d.enhanced.mp4",
+ "aspect": "16:9",
+ "card_pick": {
+  "id": "rmn:flip",
+  "why": "One silent 3D card flip (direction from-right) for all 4 title cards. Flip is a real @remotion/transitions presentation, a Safe CSS-3D pick, and the least recently used Safe move (left-behind, 2026-11-02): slide ran on canton (inside the last three videos), cube is not in the package and ran on quant, book-flip and swap are fresh but need the unverified canvas render flag. A quiet card turn fits a plain presentation-style explainer. Each card is its own pause scene (never the spine in TransitionSeries), flips IN over the outgoing cover, holds through the silent pause, readable for 1 s or more, and does not flip back out. No impact sound.",
+  "fires_at": [
+   {
+    "tc": 35.2,
+    "card": "WHAT IT IS"
+   },
+   {
+    "tc": 115.56,
+    "card": "WHAT'S REAL"
+   },
+   {
+    "tc": 151.56,
+    "card": "THE TOKEN"
+   },
+   {
+    "tc": 319.98,
+    "card": "WHO'S BEHIND IT"
+   }
+  ]
+ },
+ "face_glitch_pick": {
+  "id": "hand:film-burn",
+  "why": "Film burn is the only sanctioned face pick that is SILENT: every Blocks Max row carries a baked glitch sound and the post-mix lays the sound of any library row with no mute, which the no-sound-effects ruling (Mike 2026-11-11) rules out. It also fits the register: a plain, measured explainer, warm flash 0.38 s each side of the cut. Used on all 15 face edges, the 7 gated-face edges and the 8 screen-share edges alike (house rule #1c: a screen share takes the plain face pick). Keep the intensity low: three in/out pairs sit 4 to 6 s apart (F3, F4, F7). Advisory slot: film burn also ran on canton and AI destroying lives, see open questions."
+ },
+ "melt_pick": {
+  "family": "melt-rgb",
+  "why": "held in reserve, NOT deployed (0 melt rows). Every melt row carries a baked sound, so none can run under the no-sound-effects ruling. If Mike lifts it for the one candidate (D2 to C1 at 59.64), the chromatic reform is the pick: MELT/Equidistant is BLOCKED (AI vs ML), MELT/RGB last ran on quant, outside the last three videos"
+ },
+ "spin_pick": {
+  "family": "spin-3d-side-ease",
+  "why": "held in reserve, NOT deployed (0 spin rows). Every spin row carries a baked whoosh. If Mike ever wants one, the 3D side turn echoes the flip card (one 3D language): SPIN/Center Ease is BLOCKED (AI vs ML), 3D Corner Ease ran on canton, 3D Side Ease last ran on reset, outside the last three videos"
+ },
+ "face_leak_set": {
+  "ids": [],
+  "why": "No light leak is picked: spine/jumpcuts-final.json lists punch_points_total 0 (the joins in F1, F4, F7, F8 at 9.667, 145.0, 338.967, 359.9 all sit inside the 0.5 s edge margin; a screen share never takes one). No join = no punch and no leak, so there are no punch-leak rows and the face_leak slot records nothing for this video."
+ },
+ "transitions": [
+  {
+   "tc": 9.689,
+   "bucket": "face",
+   "change": "F1 gated face out to card D1 (the home page line), CH1",
+   "source": "hand",
+   "id": "hand:film-burn",
+   "role": "face-cut",
+   "duration_s": 0.76,
+   "sfx_duck": false,
+   "why": "First face edge of the video (F1 opens ON the face, so there is no cut-in). The warm flash peaks on the cut frame and D1 is already at rest under it. Silent."
+  },
+  {
+   "tc": 19.189,
+   "bucket": "face",
+   "change": "card D1 to F2 SCREEN SHARE in (OBS layout, deck area = card D9)",
+   "source": "hand",
+   "id": "hand:film-burn",
+   "role": "face-cut",
+   "duration_s": 0.76,
+   "sfx_duck": false,
+   "why": "Screen-share cut-in takes the PLAIN face pick (house rule #1c), no face-style move, no punch. The flash hides the jump from a full-frame card to the OBS layout with D9 scaled into the deck area."
+  },
+  {
+   "tc": 28.555,
+   "bucket": "face",
+   "change": "F2 SCREEN SHARE out, card D9 grows from the deck area to full frame",
+   "source": "hand",
+   "id": "hand:film-burn",
+   "role": "face-cut",
+   "duration_s": 0.76,
+   "sfx_duck": false,
+   "why": "Plain face pick on the screen-share cut-out. D9 is one continuous appearance across this edge: the flash covers only the layout snap (webcam and CTA box leave, the stage scales 0.7625 to 1), the card itself never fades or re-enters."
+  },
+  {
+   "tc": 35.2,
+   "bucket": "card",
+   "change": "CH2 title card WHAT IT IS (title-CH2), card D9-s4 to the card, then card D2",
+   "source": "rmn",
+   "id": "rmn:flip",
+   "role": "card",
+   "duration_s": 0.4,
+   "sfx_duck": false,
+   "why": "The ONE card move. The card flips in over the outgoing D9 before the silent pause, holds through it (readable 1 s or more), never flips back out; D2 takes the house scale-in off the held card. No impact sound (Mike 2026-11-11)."
+  },
+  {
+   "tc": 59.64,
+   "bucket": "container",
+   "change": "card D2-s6 to diagram C1-overview full frame (the ONE system-design chart entry)",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "The melt candidate of the cue sheet, NOT taken: every melt row carries a baked sound and the mix has no mute, and the brief is a simple presentation-style video. C1 enters on the quiet house swap (charts.md: same move as containers), then its own 1.00 to 1.03 push."
+  },
+  {
+   "tc": 77.7,
+   "bucket": "container",
+   "change": "diagram C1-wallet-tee to card D17 (the custody quote)",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "Text card over the diagram mid-explanation: the quiet swap keeps the caveat a single line, not an event."
+  },
+  {
+   "tc": 83.22,
+   "bucket": "container",
+   "change": "card D17-s2 to diagram C1 RETURN on C1-chat (new state)",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "C1 returns in a new state, never the overview. Tight join: the swap STARTS on 83.22 (cue on the picture), never centred before it. Quiet swap, no marquee on a return."
+  },
+  {
+   "tc": 98.98,
+   "bucket": "container",
+   "change": "diagram C1-a2a to card D4 (Live agent payments: deferred)",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "The project words land as a plain card straight off the dashed branch; quiet swap."
+  },
+  {
+   "tc": 104.522,
+   "bucket": "face",
+   "change": "card D4-s1 to F3 SCREEN SHARE in (deck area = diagram C1-token)",
+   "source": "hand",
+   "id": "hand:film-burn",
+   "role": "face-cut",
+   "duration_s": 0.76,
+   "sfx_duck": false,
+   "why": "Plain face pick on a screen-share cut-in. The C1 token state appears already placed in the deck area under the flash; no punch, no leak, no glitch inside the window."
+  },
+  {
+   "tc": 108.722,
+   "bucket": "face",
+   "change": "F3 SCREEN SHARE out to card D18 (token jobs per the whitepaper)",
+   "source": "hand",
+   "id": "hand:film-burn",
+   "role": "face-cut",
+   "duration_s": 0.76,
+   "sfx_duck": false,
+   "why": "Plain face pick on the screen-share cut-out; the last syllable spills 0.04 s into the cover, the flash rides over it silently. In and out sit 4.2 s apart: keep the burn intensity low so the pair does not strobe."
+  },
+  {
+   "tc": 115.56,
+   "bucket": "card",
+   "change": "CH3 title card WHAT'S REAL (title-CH3), card D18-s4 to the card, then card D5",
+   "source": "rmn",
+   "id": "rmn:flip",
+   "role": "card",
+   "duration_s": 0.4,
+   "sfx_duck": false,
+   "why": "Same card move as CH2: flip in over D18, hold through the silent pause, D5 scales in off the held card."
+  },
+  {
+   "tc": 125.74,
+   "bucket": "container",
+   "change": "card D5-s3 to card D6 (the Skill Store split)",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "Text card to text card inside one argument; quiet swap."
+  },
+  {
+   "tc": 139.222,
+   "bucket": "face",
+   "change": "card D6-s4 to F4 gated face in (How many agents are actually running?)",
+   "source": "hand",
+   "id": "hand:film-burn",
+   "role": "face-cut",
+   "duration_s": 0.76,
+   "sfx_duck": false,
+   "why": "Gated-face cut-in on the picture edge 139.222 (his first word starts 0.06 s early under the flash). Never a cross-fade to the face. No punch row: the only join in the window (145.0) sits 0.16 s from its out-edge."
+  },
+  {
+   "tc": 145.155,
+   "bucket": "face",
+   "change": "F4 gated face out to card D5 RETURN (D5-s4, the NOT PUBLISHED half)",
+   "source": "hand",
+   "id": "hand:film-burn",
+   "role": "face-cut",
+   "duration_s": 0.76,
+   "sfx_duck": false,
+   "why": "Face out on the question, D5 comes back at the same size and position in its new state under the flash, so the answer reads as the same card completing."
+  },
+  {
+   "tc": 151.56,
+   "bucket": "card",
+   "change": "CH4 title card THE TOKEN (title-CH4), card D5-s8 to the card, then chart C2",
+   "source": "rmn",
+   "id": "rmn:flip",
+   "role": "card",
+   "duration_s": 0.4,
+   "sfx_duck": false,
+   "why": "Same card move: flip in over D5, hold through the silent pause, the C2 axes scale in off the held card and the chart clock starts there."
+  },
+  {
+   "tc": 171.022,
+   "bucket": "face",
+   "change": "chart C2 full frame to F5 SCREEN SHARE in (C2 continues in the deck area, no restart)",
+   "source": "hand",
+   "id": "hand:film-burn",
+   "role": "face-cut",
+   "duration_s": 0.76,
+   "sfx_duck": false,
+   "why": "Plain face pick on a screen-share cut-in. C2 is one continuous component across this edge (same clock, the line keeps drawing): the flash covers only the stage scaling into the deck area and the webcam appearing."
+  },
+  {
+   "tc": 177.755,
+   "bucket": "face",
+   "change": "F5 SCREEN SHARE out (C2 payoff look) to card D21 (Upbit, KRW, two days)",
+   "source": "hand",
+   "id": "hand:film-burn",
+   "role": "face-cut",
+   "duration_s": 0.76,
+   "sfx_duck": false,
+   "why": "Plain face pick on the screen-share cut-out; the chart leaves with the screen share and D21 is at rest under the flash."
+  },
+  {
+   "tc": 190.8,
+   "bucket": "container",
+   "change": "card D21-s3 to card D24 (IN THE COMMUNITY)",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "Topic turn to the firsthand part, said flat and warm: a quiet swap keeps the plug plain, no flourish."
+  },
+  {
+   "tc": 212.58,
+   "bucket": "container",
+   "change": "card D24-s5 to card D25 (MY COMMUNITY)",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "Second plug card, text to text; quiet swap."
+  },
+  {
+   "tc": 225.22,
+   "bucket": "container",
+   "change": "card D25-s2 to card D19 (circulating supply)",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "Back to the token. 225.22 is a desilence join: the swap may sit up to 0.3 s late, settled before 227.80."
+  },
+  {
+   "tc": 234.78,
+   "bucket": "container",
+   "change": "card D19-s2 to card D8 (the allocation, 1B five ways)",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "Supply card to allocation card, same lineage of numbers; quiet swap."
+  },
+  {
+   "tc": 241.669,
+   "bucket": "face",
+   "change": "card D8-s4 to F6 SCREEN SHARE in (deck area = chart C3, the launch step)",
+   "source": "hand",
+   "id": "hand:film-burn",
+   "role": "face-cut",
+   "duration_s": 0.76,
+   "sfx_duck": false,
+   "why": "Plain face pick on a screen-share cut-in (his first word starts 0.03 s early). C3 makes its first appearance inside the deck area under the flash; the window has no join at all, so no punch."
+  },
+  {
+   "tc": 248.669,
+   "bucket": "face",
+   "change": "F6 SCREEN SHARE out (C3 switch look) to card D10 (14 NOV 2026)",
+   "source": "hand",
+   "id": "hand:film-burn",
+   "role": "face-cut",
+   "duration_s": 0.76,
+   "sfx_duck": false,
+   "why": "Plain face pick on the screen-share cut-out; D10 at rest under the flash, sequenced between the two C3 states."
+  },
+  {
+   "tc": 256.68,
+   "bucket": "container",
+   "change": "card D10-s3 to chart C3 RETURN full frame in the C3-switch look (second state)",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "The spin candidate of the cue sheet, NOT taken: this is the same chart resuming, not a new contender, every spin row carries a baked whoosh, and the brief is a simple video. C3 comes back on the quiet swap and its own reveal (months 13 to 36) starts 0.16 s later."
+  },
+  {
+   "tc": 262.44,
+   "bucket": "container",
+   "change": "chart C3 payoff look to card D11 (who holds it)",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "Chart to text card; quiet swap."
+  },
+  {
+   "tc": 275.1,
+   "bucket": "container",
+   "change": "card D11-s3 to card D14 (perps vs spot)",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "Text card to text card; quiet swap."
+  },
+  {
+   "tc": 281.18,
+   "bucket": "container",
+   "change": "card D14-s3 to card D22 (what holding it earns)",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "281.18 is a desilence join: the swap may sit up to 0.3 s late. Quiet swap into the longest card hold of the video."
+  },
+  {
+   "tc": 303.42,
+   "bucket": "container",
+   "change": "card D22-s8 to card D23 (PIP-5)",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "Text card to text card; quiet swap."
+  },
+  {
+   "tc": 319.98,
+   "bucket": "card",
+   "change": "CH5 title card WHO'S BEHIND IT (title-CH5), card D23-s4 to the card, then card D20",
+   "source": "rmn",
+   "id": "rmn:flip",
+   "role": "card",
+   "duration_s": 0.4,
+   "sfx_duck": false,
+   "why": "Same card move, the fourth and last: flip in over D23, hold through the silent pause, D20 scales in off the held card."
+  },
+  {
+   "tc": 327.54,
+   "bucket": "container",
+   "change": "card D20-s2 to card D13 (7M strategic round)",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "Team card to funding card; quiet swap."
+  },
+  {
+   "tc": 334.902,
+   "bucket": "face",
+   "change": "card D13-s3 to F7 gated face in (not for a chat app agent)",
+   "source": "hand",
+   "id": "hand:film-burn",
+   "role": "face-cut",
+   "duration_s": 0.76,
+   "sfx_duck": false,
+   "why": "Gated-face cut-in for the one direct line of CH5. No punch row: the only join (338.967) sits 0.37 s from the out-edge."
+  },
+  {
+   "tc": 339.335,
+   "bucket": "face",
+   "change": "F7 gated face out to card D15 (WHAT TO WATCH)",
+   "source": "hand",
+   "id": "hand:film-burn",
+   "role": "face-cut",
+   "duration_s": 0.76,
+   "sfx_duck": false,
+   "why": "Face out, D15 at rest under the flash (the last syllable spills 0.07 s). In and out sit 4.4 s apart: burn intensity low."
+  },
+  {
+   "tc": 352.669,
+   "bucket": "face",
+   "change": "card D15-s3 to F8 gated face in (the read, CH6 opens here, no card)",
+   "source": "hand",
+   "id": "hand:film-burn",
+   "role": "face-cut",
+   "duration_s": 0.76,
+   "sfx_duck": false,
+   "why": "The landing line of the video, gear 3: the face pick marks it, nothing louder. No punch row: the only join (359.9) sits 0.44 s from the out-edge, so the 7.7 s hold runs clean."
+  },
+  {
+   "tc": 360.335,
+   "bucket": "face",
+   "change": "F8 gated face out to card D15 CALLBACK (D15-s4, all three rows lit)",
+   "source": "hand",
+   "id": "hand:film-burn",
+   "role": "face-cut",
+   "duration_s": 0.76,
+   "sfx_duck": false,
+   "why": "Face out into the one deliberate callback; D15 returns fully lit under the flash."
+  },
+  {
+   "tc": 364.56,
+   "bucket": "container",
+   "change": "card D15-s4 to the END card under the CTA (held to 373.24)",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "Last scene change: the end card scales in quietly and holds to the end of the spine. No outro move, no sound, the video ends on the last word."
+  }
+ ],
+ "melt_spin_budget": {
+  "melt_used": 0,
+  "spin_used": 0,
+  "note": "Zero by design. The brief is a very simple video in the style of a longform presentation with NO sound effects, and every library melt and spin carries a baked sound the mix cannot mute. Both cue-sheet candidates (melt D2 to C1 at 59.64, spin D10 to C3 return at 256.68) stay on the quiet cross-fade + scale-in."
+ },
+ "consistency_check": "ONE card move (rmn:flip) on all 4 title cards. ONE face pick (hand:film-burn) on all 15 face edges, gated face and screen share alike. Zero melt and zero spin rows. All 16 cover-to-cover swaps (text cards, the C1 diagram, the C2 and C3 charts) are the quiet hand:xfade-scale (0.35 s, 0.93 to 1); intra-card and intra-diagram state changes are spotlight states the comp handles, not rows. No AI stills, no Envato video, no clip inserts, no receipts, no punch rows, no light leaks. 35 rows = 4 card + 15 face-cut + 16 container. Zero library rows, so the post-mix lays zero transition sounds (lib_sfx 0), which holds the no-sound-effects ruling. Every move is expressible on the one continuous spine: overlays animate their own in and out, only the 4 self-contained card scenes use a package presentation.",
+ "open_questions": [
+  "Face pick repeats (advisory, not gated): film burn ran on canton and AI destroying lives, two of the last three videos. It is still the pick because it is the only silent sanctioned face move; the Blocks Max glitch would put 15 baked glitch sounds into a video you ruled has no sound effects. Say so if you want the glitch anyway.",
+  "Marquees: both candidates stay quiet (C1 entry at 0:59.6, C3 return at 4:16.7). If you want ONE motion-designed moment, the C1 entry is the one that earns it (the only system-design chart), as a short melt-rgb; it brings one soft baked sound, so it needs your OK against the no-sound-effects ruling.",
+  "Card move: flip is the least recently used Safe move. Slide reads the most like a slide deck but ran on canton (inside the last three videos); book-flip and swap have never been used but need the canvas render flag nobody has verified yet. Overrule if you prefer the deck-style slide.",
+  "No punch-ins anywhere: every join inside a gated-face window sits within 0.5 s of its edge, so by rule F1 (9.7 s, the open) and F8 (7.7 s, the read) hold with no zoom step and no light leak. If the 9.7 s open feels static, that is a re-cut question for the spine, not a transition.",
+  "15 warm flashes in 6:13 with no music under them: the burn intensity is planned low, and 8 of the 15 sit on screen-share edges where the card or chart continues across the cut (0:28.6 D9, 2:51.0 C2). If those read heavy on the draft, the fix is a lower intensity on the screen-share edges, same move."
+ ]
+}

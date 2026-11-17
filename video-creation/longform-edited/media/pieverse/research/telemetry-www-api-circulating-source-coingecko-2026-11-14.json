@@ -1,0 +1,15 @@
+{
+  "code": "NOT_FOUND",
+  "message": "Unknown Pieverse public API resource.",
+  "error": {
+    "code": "NOT_FOUND",
+    "message": "Unknown Pieverse public API resource.",
+    "status": 404,
+    "recoverable": true,
+    "recovery": [
+      "Use /.well-known/api-catalog for the RFC 9727 API catalog.",
+      "Use /api/llms.txt for API-oriented LLM context."
+    ]
+  },
+  "documentation_url": "https://pieverse.io/api/llms.txt"
+}

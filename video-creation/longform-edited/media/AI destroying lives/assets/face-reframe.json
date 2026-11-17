@@ -1,0 +1,118 @@
+{
+  "spine": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\AI destroying lives\\spine\\ALL.e.cut.enhanced.mp4",
+  "scale": 1.334,
+  "x": -534,
+  "y": -265,
+  "centered": true,
+  "css": "transformOrigin: '0 0', transform: 'translate(-534px, -265px) scale(1.334)'",
+  "face_point_out": {
+    "x": 960,
+    "y": 432
+  },
+  "punch_in_note": "scale punch-ins about face_point_out (the face stays put and the frame stays covered)",
+  "targets": {
+    "eye_line": 0.4,
+    "max_headroom": 0.1,
+    "min_scale": 1.0,
+    "max_scale": 1.6
+  },
+  "measured": {
+    "face_cx": 1119.5,
+    "face_cx_pct": 58.3,
+    "eye_y": 522.6,
+    "box_h": 393,
+    "head_top_est": 240.3,
+    "headroom_before_pct": 22.3,
+    "headroom_after_pct": 5.1,
+    "active_area": [
+      88,
+      1839,
+      2,
+      1078
+    ],
+    "face_cx_spread": [
+      1085.0,
+      1156.5
+    ],
+    "scale_needed_by": {
+      "cover_left_right": 1.334,
+      "cover_top": 0.83,
+      "cover_bottom": 1.167,
+      "headroom": 1.148
+    }
+  },
+  "windows": [
+    {
+      "window": [
+        0.0,
+        6.489
+      ],
+      "detections": 5,
+      "face_cx": 1094.5,
+      "eye_y": 519.4,
+      "box_h": 406
+    },
+    {
+      "window": [
+        72.255,
+        75.022
+      ],
+      "detections": 5,
+      "face_cx": 1113.5,
+      "eye_y": 531.4,
+      "box_h": 391
+    },
+    {
+      "window": [
+        139.555,
+        144.122
+      ],
+      "detections": 5,
+      "face_cx": 1147.0,
+      "eye_y": 500.4,
+      "box_h": 401
+    },
+    {
+      "window": [
+        259.922,
+        265.155
+      ],
+      "detections": 5,
+      "face_cx": 1104.5,
+      "eye_y": 559.2,
+      "box_h": 398
+    },
+    {
+      "window": [
+        369.625,
+        375.325
+      ],
+      "detections": 5,
+      "face_cx": 1155.5,
+      "eye_y": 520.8,
+      "box_h": 399
+    },
+    {
+      "window": [
+        435.092,
+        438.025
+      ],
+      "detections": 5,
+      "face_cx": 1085.0,
+      "eye_y": 556.6,
+      "box_h": 373
+    },
+    {
+      "window": [
+        450.725,
+        454.659
+      ],
+      "detections": 5,
+      "face_cx": 1156.5,
+      "eye_y": 517.0,
+      "box_h": 373
+    }
+  ],
+  "previews": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\AI destroying lives\\_previews\\qa\\face-reframe",
+  "note": "ONE global transform for every FACE window; background-swap clips of a face window get the same framing. If face_cx_spread is wider than about 8% of the frame, he moved between takes: QA the previews, a per-window offset may be needed."
+}

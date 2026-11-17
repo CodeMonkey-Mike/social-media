@@ -1,0 +1,167 @@
+{
+ "read": "2026-11-14 19:01:41 UTC",
+ "block": 26415181,
+ "block_time": "2026-11-14 19:01:35 UTC",
+ "calls": [
+  {
+   "label": "multisig()",
+   "data": "0x4783c35b",
+   "result": "0x0000000000000000000000007a37945bf6c4a3a9454c4c808080ba6063304590"
+  },
+  {
+   "label": "owner()",
+   "data": "0x8da5cb5b",
+   "result": "0x0000000000000000000000001b24eea1585375ab78efa5baaf4111b83bdcae2c"
+  },
+  {
+   "label": "MAX_SUPPLY()",
+   "data": "0x32cb6b0c",
+   "result": "0x0000000000000000000000000000000000000000033b2e3c9fd0803ce8000000"
+  },
+  {
+   "label": "approvalRequired()",
+   "data": "0x9f68b964",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "label": "unnamed 0xed8919cf (no args)",
+   "data": "0xed8919cf",
+   "result": "0x0000000000000000000000000000000000000000033aae9971e05b1e171f5000"
+  },
+  {
+   "label": "unnamed 0xb3df317a (no args)",
+   "data": "0xb3df317a",
+   "result": "0x0000000000000000000000000000000000000000000000000000000069170bb0"
+  },
+  {
+   "label": "unnamed 0x8ec3e654 (no args)",
+   "data": "0x8ec3e654",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "label": "unnamed 0x76e82b78 (no args)",
+   "data": "0x76e82b78",
+   "result": "REVERT/ERR all RPCs failed for eth_call: ('https://rpc.mevblocker.io', {'code': 3, 'message': 'execution reverted', 'data': '0x'})"
+  },
+  {
+   "label": "unnamed 0x5062e6db (no args)",
+   "data": "0x5062e6db",
+   "result": "REVERT/ERR all RPCs failed for eth_call: ('https://rpc.mevblocker.io', {'code': 3, 'message': 'execution reverted', 'data': '0x'})"
+  },
+  {
+   "label": "unnamed 0x2639d10f (no args)",
+   "data": "0x2639d10f",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+  },
+  {
+   "label": "isWhitelisted(top1 166M Safe)",
+   "data": "0x3af32abf00000000000000000000000082a4db55e5e2c9820e925a63f539a5d7c8bdb441",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "label": "isMinter(top1 166M Safe)",
+   "data": "0xaa271e1a00000000000000000000000082a4db55e5e2c9820e925a63f539a5d7c8bdb441",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "label": "isWhitelisted(investor-labelled 150M Safe)",
+   "data": "0x3af32abf000000000000000000000000a8bcbb04fdc56929d88b63ee842fc0c9da8d84dd",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "label": "isMinter(investor-labelled 150M Safe)",
+   "data": "0xaa271e1a000000000000000000000000a8bcbb04fdc56929d88b63ee842fc0c9da8d84dd",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "label": "isWhitelisted(team-labelled 150M Safe)",
+   "data": "0x3af32abf000000000000000000000000def63ceee6ce11b75576b460c012136d8fd89ef4",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "label": "isMinter(team-labelled 150M Safe)",
+   "data": "0xaa271e1a000000000000000000000000def63ceee6ce11b75576b460c012136d8fd89ef4",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "label": "isWhitelisted(treasury-labelled 100M Safe)",
+   "data": "0x3af32abf0000000000000000000000000df019931e0c7a6e884a46c8e9852a56a864990e",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "label": "isMinter(treasury-labelled 100M Safe)",
+   "data": "0xaa271e1a0000000000000000000000000df019931e0c7a6e884a46c8e9852a56a864990e",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "label": "isWhitelisted(token owner Safe)",
+   "data": "0x3af32abf0000000000000000000000001b24eea1585375ab78efa5baaf4111b83bdcae2c",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "label": "isMinter(token owner Safe)",
+   "data": "0xaa271e1a0000000000000000000000001b24eea1585375ab78efa5baaf4111b83bdcae2c",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "label": "isWhitelisted(staking contract)",
+   "data": "0x3af32abf000000000000000000000000ae4c8ca1dc8127c380099657774cb09ca8197e78",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "label": "isMinter(staking contract)",
+   "data": "0xaa271e1a000000000000000000000000ae4c8ca1dc8127c380099657774cb09ca8197e78",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "label": "isWhitelisted(Bybit hot wallet)",
+   "data": "0x3af32abf000000000000000000000000f89d7b9c864f589bbf53a82105107622b35eaa40",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "label": "isMinter(Bybit hot wallet)",
+   "data": "0xaa271e1a000000000000000000000000f89d7b9c864f589bbf53a82105107622b35eaa40",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "label": "isWhitelisted(random holder (zero address))",
+   "data": "0x3af32abf0000000000000000000000000000000000000000000000000000000000000001",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "label": "isMinter(random holder (zero address))",
+   "data": "0xaa271e1a0000000000000000000000000000000000000000000000000000000000000001",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "label": "unnamed 0xed8919cf (address arg = investor Safe)",
+   "data": "0xed8919cf000000000000000000000000a8bcbb04fdc56929d88b63ee842fc0c9da8d84dd",
+   "result": "0x0000000000000000000000000000000000000000033aae9971e05b1e171f5000"
+  },
+  {
+   "label": "unnamed 0xb3df317a (address arg = investor Safe)",
+   "data": "0xb3df317a000000000000000000000000a8bcbb04fdc56929d88b63ee842fc0c9da8d84dd",
+   "result": "0x0000000000000000000000000000000000000000000000000000000069170bb0"
+  },
+  {
+   "label": "unnamed 0x8ec3e654 (address arg = investor Safe)",
+   "data": "0x8ec3e654000000000000000000000000a8bcbb04fdc56929d88b63ee842fc0c9da8d84dd",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "label": "unnamed 0x76e82b78 (address arg = investor Safe)",
+   "data": "0x76e82b78000000000000000000000000a8bcbb04fdc56929d88b63ee842fc0c9da8d84dd",
+   "result": "REVERT/ERR all RPCs failed for eth_call: ('https://rpc.mevblocker.io', {'code': 3, 'message': 'execution reverted', 'data': '0x118cdaa70000000000000000"
+  },
+  {
+   "label": "unnamed 0x5062e6db (address arg = investor Safe)",
+   "data": "0x5062e6db000000000000000000000000a8bcbb04fdc56929d88b63ee842fc0c9da8d84dd",
+   "result": "REVERT/ERR all RPCs failed for eth_call: ('https://rpc.mevblocker.io', {'code': 3, 'message': 'execution reverted: Only multisig can set transfer time'"
+  },
+  {
+   "label": "unnamed 0x2639d10f (address arg = investor Safe)",
+   "data": "0x2639d10f000000000000000000000000a8bcbb04fdc56929d88b63ee842fc0c9da8d84dd",
+   "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+  }
+ ]
+}

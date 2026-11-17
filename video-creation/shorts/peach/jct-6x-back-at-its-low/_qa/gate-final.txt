@@ -1,0 +1,8 @@
+gate: constants-peach-jct-6x-back-at-its-low.ts | duration 27.2s | 16 distinct staticFile refs
+  ok  thumbnail: thumb-pch4-jct-roundtrip.png
+  ok  b-roll assets: 4 (>= 1 required)
+  ok  sfx refs: 9
+  ok  WARN unreferenced assets in public-dir (orphans): ['broll-pch2-climax-10x.png', 'broll-pch2-hanging-in-there.png', 'broll-pch2-holy-crap-green.png', 'broll-pch2-hook-crash.png', 'broll-pch2-pieverse-studio.png']
+  ok  zone b-roll: 4 beat(s) in BrollEv[] (coverage present)
+PASS
+frontier: 2 sibling clip(s) not yet built+PASS - publish waits for them, then runs IMMEDIATELY (no render-review gate).

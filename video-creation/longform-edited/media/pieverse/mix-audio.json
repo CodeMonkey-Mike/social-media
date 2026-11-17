@@ -1,0 +1,47 @@
+{
+  "video": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\pieverse\\_previews\\pieverse-final-v1.mp4",
+  "vo": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\pieverse\\assets\\spine.mp4",
+  "out": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\pieverse\\_previews\\pieverse-final-v1-mix.mp4",
+  "plan": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\pieverse\\MUSIC-PLAN.json",
+  "plan_preview": false,
+  "card_t": [
+    34.795,
+    115.525,
+    151.38,
+    319.825
+  ],
+  "pause_s": 1.5,
+  "pauses": [
+    {
+      "at": 34.795,
+      "dur": 1.5,
+      "card": true
+    },
+    {
+      "at": 115.525,
+      "dur": 1.5,
+      "card": true
+    },
+    {
+      "at": 151.38,
+      "dur": 1.5,
+      "card": true
+    },
+    {
+      "at": 319.825,
+      "dur": 1.5,
+      "card": true
+    }
+  ],
+  "beds": [],
+  "sfx": [],
+  "lib_sfx": [],
+  "voice_db": 2.0,
+  "voice_clip_windows": [],
+  "clip_match": [],
+  "peak_ceiling_dbfs": -1.5,
+  "lufs_in": -22.6,
+  "lufs_out": -20.6,
+  "peak_out_dbfs": -7.0,
+  "rerun": "python video-creation/longform-edited/scripts/mix_music.py \"C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\pieverse\" --video \"C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\pieverse\\_previews\\pieverse-final-v1.mp4\""
+}

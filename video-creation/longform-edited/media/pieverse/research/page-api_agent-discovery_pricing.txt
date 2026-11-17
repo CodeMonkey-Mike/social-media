@@ -1,0 +1,81 @@
+{
+  "currency": "USD",
+  "billingPeriod": "month",
+  "paymentMethods": [
+    "Crypto-native checkout for product purchases and renewals.",
+    "Invoice and on-chain payment surfaces exist for human-authenticated flows.",
+    "Live autonomous agent payment protocols are not public or advertised as executable today."
+  ],
+  "plans": [
+    {
+      "id": "starter",
+      "name": "Starter",
+      "priceUsd": 10,
+      "description": "Always-on agent on the free model, or plug in your own API key.",
+      "creditsIncluded": 0,
+      "defaultModel": "pieverse/auto/free",
+      "limits": [
+        "Free LLM (rate limited)",
+        "Bring your own API key",
+        "Up to 1 vCPU / 2 GB RAM"
+      ],
+      "highlight": false
+    },
+    {
+      "id": "basic",
+      "name": "Basic",
+      "priceUsd": 29,
+      "description": "A personal agent with included credits for everyday chats.",
+      "creditsIncluded": 100,
+      "defaultModel": "pieverse/auto/paid",
+      "limits": [
+        "100 AI credits/mo included",
+        "Up to 2 vCPU / 4 GB RAM"
+      ],
+      "highlight": false
+    },
+    {
+      "id": "standard",
+      "name": "Standard",
+      "priceUsd": 49,
+      "description": "Daily companion with more credit and memory headroom.",
+      "creditsIncluded": 150,
+      "defaultModel": "pieverse/auto/paid",
+      "limits": [
+        "150 AI credits/mo included",
+        "Up to 2 vCPU / 6 GB RAM"
+      ],
+      "highlight": true
+    },
+    {
+      "id": "pro",
+      "name": "Pro",
+      "priceUsd": 99,
+      "description": "Heavy usage with a larger credit budget and more compute.",
+      "creditsIncluded": 600,
+      "defaultModel": "pieverse/auto/paid",
+      "limits": [
+        "600 AI credits/mo included",
+        "Up to 4 vCPU / 8 GB RAM"
+      ],
+      "highlight": false
+    },
+    {
+      "id": "ultra",
+      "name": "Ultra",
+      "priceUsd": 279,
+      "description": "Maximum compute and credit budget for demanding workloads.",
+      "creditsIncluded": 2000,
+      "defaultModel": "pieverse/auto/paid",
+      "limits": [
+        "2,000 AI credits/mo included",
+        "Up to 6 vCPU / 16 GB RAM"
+      ],
+      "highlight": false
+    }
+  ],
+  "enterprise": {
+    "available": true,
+    "note": "Contact hello@pieverse.io for custom agent, wallet, skill, compliance, or enterprise deployment needs."
+  }
+}

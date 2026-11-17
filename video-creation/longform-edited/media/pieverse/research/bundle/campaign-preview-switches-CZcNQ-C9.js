@@ -1,0 +1,1 @@
+import{t as e}from"./env-BnsmyVH_.js";function t(){return(e().deployEnv||`production`).trim().toLowerCase()===`preview`}export{t};

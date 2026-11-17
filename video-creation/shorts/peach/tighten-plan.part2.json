@@ -1,0 +1,80 @@
+[
+  {
+    "id": "dumping-and-im-buying",
+    "n": 5,
+    "removals": [
+      {
+        "start": 2800.3,
+        "end": 2802.04,
+        "why": "false start: 'And if you get in like...' plus the pause after it; he restarts as 'now, more or less, you know, you get in kind of low', which now opens the payoff"
+      },
+      {
+        "start": 2729.85,
+        "end": 2731.015,
+        "why": "false start: 'you know, now has' right before the clean take 'now is an optional privacy coin'"
+      },
+      {
+        "start": 2784.75,
+        "end": 2786.97,
+        "why": "stall: 'This is in the, you know, the' before 'tokenized assets narrative' (line now reads 'Arbitrum. Tokenized assets narrative.')"
+      },
+      {
+        "start": 2808.86,
+        "end": 2809.85,
+        "why": "tic: 'right?' after 'good for some good pumps', ends 50 ms before the 900 million peak beat"
+      },
+      {
+        "start": 2747.895,
+        "end": 2748.415,
+        "why": "false start: 'But I think it's...' then he says it again in full: 'I think it's pretty good, especially with that news'"
+      },
+      {
+        "start": 2746.385,
+        "end": 2746.78,
+        "why": "stall: 'you know, I was' inside 'I was, you know, I was shocked' (line now reads 'I was shocked that I was, I did it')"
+      }
+    ],
+    "boundary_relock": [
+      {
+        "segment_index": 4,
+        "new_start": 2781.11
+      }
+    ],
+    "notes": "Hook seg 0 and both peak beats (2754.22-2762.5, 2809.9-2817.2) untouched. Whisper word times drift up to 0.5 s on this stream, so every edge was placed on the measured 10 ms loudness envelope of the master and each side was decoded on its own. RELOCK seg 4: a voiced 'Uh,' (2780.69-2781.02) that Whisper hid opens the segment; in-point moved to the 50 ms trough at 2781.11 so it opens on 'And then we have another one'. Edges in digital silence: removal 1 (both), 2 (start), 3 (start), 4 (both). Edges in short troughs, not silence: 2731.015 (40 ms, -84 dB), 2786.97 (-48 dB, just before the T of 'tokenized'), and all four edges of the last two removals (-34 to -52 dB between words in fast speech). The last two are the riskiest splices: if either sounds clipped drop it. Whisper had 'But the thing is'; the windowed decode is 'But I think it's'. Not cuttable (no gap in running speech), left for 5C: 'Like, I mean,' (2727.2-2727.7), 'Yeah, I mean,' (2740.97-2741.4), 'right,' before 'Arbitrum' (about 2783.6-2783.8), 'more or less, you know,' (2802.6-2803.8, glued to 'now'), a short 'uh' glued to the front of 'Robinhood' (2789.53-2789.7), 'that I was, I did it' (2747.1-2747.8). 'a whole bunch of, a whole bunch of' is inside the hook and stays. Caption fixes: Arbitrum (heard 'Arbitron' / 'Albertson'); he does say '10 million' at 2813.2-2813.9 (he means 10 billion; audio kept, fix in publish copy only)."
+  },
+  {
+    "id": "pengu-flips-pepe-impact",
+    "n": 6,
+    "removals": [
+      {
+        "start": 1984.9,
+        "end": 1985.385,
+        "why": "stutter: the clipped second 'with' (70 ms, 1985.25-1985.31) and the pause before it, so the line lands as 'I'm really serious with Pengu'"
+      }
+    ],
+    "notes": "Low removal is deliberate: three peak beats, 18 s, nothing else to take. Hook seg 0 untouched. The one cut sits wholly in digital silence on both sides (-90 dB at 1984.90, -70 dB at 1985.385) and 'Pengu' decodes whole from 1985.385; without it 5B closes the pause and leaves 'with, w-, Pengu'. This span is a declared peak beat in clip 1 (left whole there by part 1); clip 6 lists no peak beats, but if Mike wants the two Pengu clips identical, drop this removal and the list is empty. Checked and left: 'I always, I've been saying it' (hook, running speech), 'I mean,' at the seg 1 head (works as the bridge from the meme coins line), 'And I'm like,' and '30, 30 billion' (spoken number, no gap), 'But yeah,' at the seg 2 head (no gap before 'I got me'). All six in/out points sit in gated silence. Caption fixes as in clip-plan (Pengu, meme coins, 100x, 300 million's a steal)."
+  },
+  {
+    "id": "kaspa-things-are-gonna-pop-impact",
+    "n": 7,
+    "removals": [
+      {
+        "start": 855.78,
+        "end": 856.69,
+        "why": "restatement: vague 'They keep doing this thing.' right before 'They keep investing'"
+      },
+      {
+        "start": 852.52,
+        "end": 853.3,
+        "why": "false start plus tic: 'There's a lot, you know,' before 'Smart money keeps building'"
+      }
+    ],
+    "boundary_relock": [
+      {
+        "segment_index": 0,
+        "new_start": 3370.865
+      }
+    ],
+    "notes": "FIX NEEDED IN CLIP 3 (part 1): its removal 852.52-853.40 clips the S of 'Smart'. Decoded from 853.38, 853.40 or 853.42 the line reads 'My money keeps building'; from 853.20 to 853.35 it reads 'Smart money keeps building'. The S sits at 853.30-853.37, so the edge here is 853.30; change the end of clip 3's removal to 853.30 as well. RELOCK seg 0: a 60 ms stray burst (decodes as 'Ha', 3370.73-3370.78) before 'We've' is trimmed, same fix as clip 3 seg 3. Peak material untouched: the pain line (seg 0 words) and 858.85-865.45 ('things are just gonna pop... 2027 is gonna be awesome'). Edges: 855.78 is digital silence, 856.69 is a 30 ms trough at -49 dB before 'They keep investing', 853.30 is the onset of the S (-31 dB, no silence there); if 'Smart' still sounds rough drop the last removal. 'as I keep saying' and the 'Yeah,' on the button stay (the button sits on a music bed, no clean gap). Caption fix: Kaspa (heard 'Casper')."
+  }
+]

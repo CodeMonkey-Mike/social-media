@@ -1,0 +1,138 @@
+{
+  "spine": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\future-of-software-engineers\\spine\\ALL.e.enhanced.mp4",
+  "scale": 1.411,
+  "x": -674,
+  "y": -340,
+  "centered": true,
+  "css": "transformOrigin: '0 0', transform: 'translate(-674px, -340px) scale(1.411)'",
+  "face_point_out": {
+    "x": 960,
+    "y": 432
+  },
+  "punch_in_note": "scale punch-ins about face_point_out (the face stays put and the frame stays covered)",
+  "targets": {
+    "eye_line": 0.4,
+    "max_headroom": 0.1,
+    "min_scale": 1.0,
+    "max_scale": 1.6
+  },
+  "measured": {
+    "face_cx": 1158.5,
+    "face_cx_pct": 60.3,
+    "eye_y": 547.4,
+    "box_h": 420,
+    "head_top_est": 247.4,
+    "headroom_before_pct": 22.9,
+    "headroom_after_pct": 0.8,
+    "active_area": [
+      88,
+      1839,
+      2,
+      1078
+    ],
+    "face_cx_spread": [
+      1128.0,
+      1194.5
+    ],
+    "scale_needed_by": {
+      "cover_left_right": 1.411,
+      "cover_top": 0.792,
+      "cover_bottom": 1.221,
+      "headroom": 1.08
+    }
+  },
+  "windows": [
+    {
+      "window": [
+        0.0,
+        5.355
+      ],
+      "detections": 5,
+      "face_cx": 1157.0,
+      "eye_y": 594.0,
+      "box_h": 435
+    },
+    {
+      "window": [
+        22.555,
+        25.955
+      ],
+      "detections": 5,
+      "face_cx": 1141.5,
+      "eye_y": 591.6,
+      "box_h": 394
+    },
+    {
+      "window": [
+        123.322,
+        125.255
+      ],
+      "detections": 5,
+      "face_cx": 1160.5,
+      "eye_y": 591.4,
+      "box_h": 416
+    },
+    {
+      "window": [
+        250.508,
+        256.741
+      ],
+      "detections": 5,
+      "face_cx": 1158.5,
+      "eye_y": 502.2,
+      "box_h": 429
+    },
+    {
+      "window": [
+        289.741,
+        292.608
+      ],
+      "detections": 5,
+      "face_cx": 1128.0,
+      "eye_y": 524.6,
+      "box_h": 425
+    },
+    {
+      "window": [
+        317.975,
+        321.908
+      ],
+      "detections": 5,
+      "face_cx": 1179.5,
+      "eye_y": 528.4,
+      "box_h": 428
+    },
+    {
+      "window": [
+        350.481,
+        353.481
+      ],
+      "detections": 5,
+      "face_cx": 1130.0,
+      "eye_y": 509.2,
+      "box_h": 420
+    },
+    {
+      "window": [
+        437.348,
+        442.281
+      ],
+      "detections": 5,
+      "face_cx": 1185.5,
+      "eye_y": 561.2,
+      "box_h": 431
+    },
+    {
+      "window": [
+        460.181,
+        465.148
+      ],
+      "detections": 5,
+      "face_cx": 1194.5,
+      "eye_y": 552.4,
+      "box_h": 408
+    }
+  ],
+  "previews": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\future-of-software-engineers\\_previews\\qa\\face-reframe",
+  "note": "ONE global transform for every FACE window; background-swap clips of a face window get the same framing. If face_cx_spread is wider than about 8% of the frame, he moved between takes: QA the previews, a per-window offset may be needed."
+}

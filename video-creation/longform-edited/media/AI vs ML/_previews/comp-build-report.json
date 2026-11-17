@@ -1,0 +1,262 @@
+{
+  "project": "AI vs ML",
+  "comp_id": "AIVsML",
+  "comp_file": "video-creation/remotion/src/AIVsML.tsx",
+  "extra_files": [
+    "video-creation/remotion/src/AIVsMLKit.tsx (project-local kinetic-text devices with no shared engine yet: grid zoom-in, push slide, shake cut, spin cut, caption line + sparkle, verdict band, versus stack, boxed words, end-screen arrow pop, camera wobble; shared engine parts imported from ./effects/kinetic-text)",
+    "video-creation/remotion/src/AIVsMLCharts.tsx (C3 money ladder, animated in code to the C3 spec stills)",
+    "video-creation/remotion/src/Root.tsx (Composition AIVsML registered: 1920x1080, fps 30, DUR 4410)",
+    "assets/kt/animated-texture.mp4, subscribe-bar-fill.mp4, subscribe-bar-key.mp4 (copied from the kinetic-text-2023 theme folder)",
+    "assets/kt/end-screen-arrow-s1..s4.png (arrow cut-outs diffed off the end-screen state PNGs, for the arrow pop)",
+    "assets/transitions/lib/leaks/lightleaks-6.mp4 + lightleaks-6a.mp4 + maps/bm6/ (30 PNG) + lib/sfx-lightleaks.mp3, sfx-melt-eq-44.mp3, sfx-spincenterease-44.mp3 (library assets the lint requires; no SFX plays in the comp)",
+    "assets/transitions/cutframes/BR-6-f83..85.jpg + wave-wall-f0..5.jpg (CUTFRAME stills for the 73.05 spin cut, comp-build 6a cost trap)"
+  ],
+  "card_t": [],
+  "pause_s": 1.5,
+  "spine_secs": 145.2,
+  "dur_frames": 4410,
+  "covers": 46,
+  "transitions_wired": [
+    {
+      "tc": 0.0,
+      "id": "hand:kt-grid-zoom-in"
+    },
+    {
+      "tc": 2.567,
+      "id": "hand:kt-whip-cut"
+    },
+    {
+      "tc": 5.25,
+      "id": "hand:kt-whip-cut"
+    },
+    {
+      "tc": 8.267,
+      "id": "hand:kt-whip-cut"
+    },
+    {
+      "tc": 12.367,
+      "id": "hand:kt-whip-cut"
+    },
+    {
+      "tc": 13.97,
+      "id": "hand:kt-push-slide"
+    },
+    {
+      "tc": 17.33,
+      "id": "hand:kt-push-slide"
+    },
+    {
+      "tc": 19.7,
+      "id": "hand:kt-push-slide"
+    },
+    {
+      "tc": 23.6,
+      "id": "hand:kt-push-slide"
+    },
+    {
+      "tc": 26.24,
+      "id": "lib:melt-equidistant-short-3"
+    },
+    {
+      "tc": 33.333,
+      "id": "hand:kt-whip-cut"
+    },
+    {
+      "tc": 39.967,
+      "id": "hand:kt-whip-cut"
+    },
+    {
+      "tc": 42.57,
+      "id": "hand:kt-push-slide"
+    },
+    {
+      "tc": 45.633,
+      "id": "hand:kt-whip-cut"
+    },
+    {
+      "tc": 48.68,
+      "id": "hand:kt-boxed-words"
+    },
+    {
+      "tc": 50.78,
+      "id": "hand:kt-shake-cut"
+    },
+    {
+      "tc": 58.1,
+      "id": "hand:kt-push-slide"
+    },
+    {
+      "tc": 64.39,
+      "id": "hand:kt-push-slide"
+    },
+    {
+      "tc": 67.86,
+      "id": "hand:cut"
+    },
+    {
+      "tc": 70.2,
+      "id": "hand:cut"
+    },
+    {
+      "tc": 73.05,
+      "id": "hand:kt-spin-cut"
+    },
+    {
+      "tc": 75.37,
+      "id": "hand:kt-whip-cut (blur-in)"
+    },
+    {
+      "tc": 77.633,
+      "id": "hand:kt-whip-cut"
+    },
+    {
+      "tc": 82.4,
+      "id": "hand:kt-whip-cut"
+    },
+    {
+      "tc": 82.4,
+      "id": "lib:motion-3d-pan-1-right"
+    },
+    {
+      "tc": 86.78,
+      "id": "hand:cut"
+    },
+    {
+      "tc": 88.6,
+      "id": "hand:kt-push-slide"
+    },
+    {
+      "tc": 92.02,
+      "id": "hand:kt-push-slide"
+    },
+    {
+      "tc": 94.58,
+      "id": "hand:kt-push-slide"
+    },
+    {
+      "tc": 96.06,
+      "id": "hand:cut"
+    },
+    {
+      "tc": 98.05,
+      "id": "hand:cut"
+    },
+    {
+      "tc": 101.7,
+      "id": "lib:spin-center-ease-short-cw"
+    },
+    {
+      "tc": 117.18,
+      "id": "hand:fade"
+    },
+    {
+      "tc": 119.75,
+      "id": "hand:kt-whip-cut"
+    },
+    {
+      "tc": 123.7,
+      "id": "hand:kt-whip-cut"
+    },
+    {
+      "tc": 127.533,
+      "id": "hand:kt-whip-cut"
+    },
+    {
+      "tc": 130.4,
+      "id": "hand:kt-whip-cut"
+    },
+    {
+      "tc": 134.767,
+      "id": "lib:lightleaks-6"
+    },
+    {
+      "tc": 139.533,
+      "id": "hand:kt-whip-cut"
+    }
+  ],
+  "captions_groups": 25,
+  "captions_note": "The kt-caption-highlight line IS the caption (EDIT-PLAN [KT-CAPTION] rows: 25 phrases on F2, F3, F4, F6, F7; overlays.md section 2: the house track is OFF for its spans). ZCAPTIONS + CAPTION_WINDOWS are imported: a build-time check proves every house caption window is carried by the KT line or a planned OFF span, and the house Montserrat track renders only outside the KT spans (nothing in this video). F1 and F5 carry no caption, by plan.",
+  "gates": {
+    "COMP-IMPORTS-LINT": "PASS files=4 fails=0",
+    "COVERS-LINT": "PASS covers=46 fails=0 warns=6 (the 6 GAP warns are the FACE windows)",
+    "DECK-CONTAINERS": "lint-deck-containers: OK, 6 deck refs, all single containers (C1 states declared in DIAGRAM_REFS)",
+    "SLIDE-BALANCE-LINT": "PASS fails=0 warns=0",
+    "ANIMATED-CHARTS-LINT": "PASS charts=1 missing=0",
+    "TRANSITION-ASSETS-LINT": "PASS ids=4 fails=0 warns=0",
+    "SPINE-FPS": "PASS fps=30.000 frames=4356",
+    "FACE-REFRAME-LINT": "PASS scale=1.506 x=-849.0 y=-395.0 measured_scale=1.506 measured_x=-849 measured_y=-395",
+    "BROLL-MOTION": "PASS clips=10 fails=0 (on the full draft)",
+    "TSC": "tsc --noEmit: 0 errors in AIVsML*"
+  },
+  "chunks_qa": [
+    {
+      "frames": "0-2440 (69 stills)",
+      "what": "grid open, role labels, whips, IMG-1 headline, F2 captions + DOOR sparkle, roles-split, side panels, rocket, cards, melt, C1 states, EVALS pop, F3/F4 captions, boxed words, shake, paper push in/out, verdict band, spin cut, wave wall, BR-7 blur-in, versus stack",
+      "verdict": "fixed: the IMG-1 framing line ran off the left edge (block moved to x 535, line 22 px); kt-whip-cut frames took 104-184 s each with the lens on (over the 120 s render timeout), lens switched off (see deviations)"
+    },
+    {
+      "frames": "2473-4409 (72 stills)",
+      "what": "C12 pan + band, C12 entry highlight, BR-8 panel, math-not-code, C9 header / requirements highlight, C6 push, library spin, C3 bars / shake / gap / crash zoom / word-by-word / TRAIN, fade to IMG-4, PhDs headline, F6 pop + sparkle, door headline, subscribe bar, punch + leak, end screen + arrows, END HOLD",
+      "verdict": "fixed: C12-headline crop biased right so the title reads through the 3D pan (full title above the band from about 84.7 s); C12-entry crops widened so the number-1 box stays whole through the settle"
+    },
+    {
+      "frames": "779/780, 3043/3044, 4032/4033, 1742/1743",
+      "what": "comp-build 6a: the frame before vs the first frame inside each engine window (melt, library spin, punch leak) and the face hold under the 2-frame paper push",
+      "verdict": "ok: spin 0.52 mean diff; leak 3.67 = one frame of his own motion, same scale and position; melt 8.39 = sub-pixel canvas resampling, no offset; the face is pixel-identical under the paper push (Freeze hold)"
+    },
+    {
+      "frames": "0-330",
+      "what": "rendered chunk A: the open (grid zoom-in), role labels, whip-out, IMG-1 headline, F2 whip-in, VO level",
+      "verdict": "fixed: the grid ease leapt to about 70 percent in one frame; set to the row's bezier(0, 0, 0, 1) (the grid reads about 5 frames in the full draft); VO present (-24.7 dB mean)"
+    },
+    {
+      "frames": "1440-1960",
+      "what": "rendered chunk B: CAN / SHOULD card, shake cut back to F4, F4 captions, paper push in, states, push out, band up over BR-5",
+      "verdict": "ok"
+    },
+    {
+      "frames": "2180-2350",
+      "what": "rendered chunk C: band cut at the spin, kt-spin-cut vortex, wave wall + blur-out, BR-7 blur-in + both-verdicts band, F5 whip at 130 percent + versus matte",
+      "verdict": "ok (macroblocking on the blur-in and the darkened face is the 200k draft bitrate)"
+    },
+    {
+      "frames": "4020-4110",
+      "what": "rendered chunk D: F7 punch on join frame 4043 + lib:lightleaks-6 under the caption",
+      "verdict": "ok: the leak peaks on the join, the caption stays on top untinted, the face settles at 120 percent; intensity flagged for Mike"
+    },
+    {
+      "frames": "300 (F2) + face-reframe previews F1-F7",
+      "what": "one reframed FACE frame through FACE_REFRAME",
+      "verdict": "ok: the measured transform applied verbatim; F1 sits right of centre as in its measurement preview (F1 face_cx 1242 vs mean 1201.5; spread 3.7 percent, under the 8 percent flag line)"
+    }
+  ],
+  "draft": {
+    "file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\AI vs ML\\_previews\\AI vs ML-draft-v1.mp4",
+    "duration_s": 147.0,
+    "fps": 30,
+    "audio": true,
+    "log": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\AI vs ML\\_previews\\AI vs ML-draft-v1-render.log",
+    "log_full": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\AI vs ML\\_previews\\AI vs ML-draft-render.log",
+    "frames": 4410,
+    "video_bitrate": "200k",
+    "render_comp_exit": "1: its spine-length check printed FATAL because 147.000 s is not spine 145.200 s +-0.3; the extra 1.8 s is the END HOLD (PROJECT-LOG open flag: the comp runs 2.0 s past the last word at 145.00). The render itself is complete (3/3 chunks ok), fps 30, audio yes; VO present to 145.2 s (-25.0 dB mean), the END HOLD silent for the post-mix bed."
+  },
+  "needs_review": [
+    "DURATION: the draft is 147.0 s (spine 145.2 s + the END HOLD to 147.00), so render_comp.py exits 1 on its +-0.3 s spine check although the render is complete. Any graph node that re-checks duration against spine.mp4 will flag it the same way.",
+    "kt-whip-cut runs WITHOUT its lens curvature (the scale 200 -> 100 and the radial shutter blur are in). With the lens, a whip frame took 104-184 s to render (measured), over the 120 s per-frame timeout, across about 150 whip frames.",
+    "Light leak lib:lightleaks-6 at the F7 punch (134.767) whites out about 7 frames (134.63-134.87) over his face before the punched shot settles. That is the library engine's own look; a softer leak from the set (soft-3 / soft-5 / soft-9) is a one-id swap.",
+    "C12 headline (82.40) under lib:motion-3d-pan-1-right: the 3D swivel shows the title partly off the left edge for the first 1.5 s or so; the full title reads above the band from about 84.7 s.",
+    "Captions are the kinetic-text caption line (white + yellow key words, Montserrat ExtraBold Italic caps), not the house lowercase Montserrat track; none over F1 (role labels) or F5 (versus stack), per the EDIT-PLAN.",
+    "F1 (the open) sits right of centre: the measured global reframe (never hand-tuned) centres the mean face, and F1 is the right-most window.",
+    "The rocket icon (16.46) is a code-drawn flat rocket on the grey blob (the 2023 artwork does not survive).",
+    "The F5 versus framing is the device's 130 percent + y 0.585 snap: his face fills the frame under the matte."
+  ],
+  "deviations": [
+    "kt-whip-cut lens curvature OFF (KtWhipCut lens={false}) on every whip, for render cost and the per-frame timeout (see needs_review); everything else in the row is wired.",
+    "[KT-EMOJI] 44.92 clapping-hands emoji DROPPED, as the EDIT-PLAN row itself specifies when no headless After Effects render exists (none in assets/); nothing else moved.",
+    "Verdict band 1 ends at 72.967 (the first frame of the 73.05 kt-spin-cut) instead of on the cut frame, so the band does not sit static over the 3 pre-cut spinning frames.",
+    "End-screen arrows: the state PNGs swap as cued, and the baked arrow is replaced by its own cut-out (assets/kt/end-screen-arrow-sN.png) popping with the kt-subscribe-close 0.217 s elastic (the EDIT-PLAN's 111 percent overshoot), rather than a bare hard swap.",
+    "C3 carries no camera wobble (its spec has none; it carries the reaction shake and the 104 percent crash zoom). The kt-word-by-word phrases and TRAIN render inside the C3 cover so they dissolve with the chart on the 117.18 hand:fade.",
+    "kt-boxed-words is built in Remotion code (two rough black boxes, yellow #FFFB23 caps, the row's 3D rotations, streak-blur whip-in), never After Effects, as the EDIT-PLAN row directs."
+  ]
+}

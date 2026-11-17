@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>C23 VERTICAL · three pieces have to meet inside a house</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+
+/* ---- chart-builder additions (AI destroying lives, 2026-11-10): LAYOUT ONLY, every token above untouched ----
+   Colour roles for this video (do not drift): red = jobs lost / the threat · green = growth / real / in production ·
+   cyan = neutral, the default spotlight, and (CH4) what people believe about their own job · gold = projected / pilot /
+   prediction. Lit = full colour + glow; dim = opacity .3 (same geometry, so states swap without a redraw). */
+.frame.ch{display:block;padding:0}
+.frame .hdr{position:absolute;left:140px;top:78px;width:1640px}
+.hdr .ey{margin-bottom:20px}
+.hdr h1{font-size:74px}
+.hdr .divider{margin:26px 0 0}
+.frame .a{position:absolute}
+.frame .src{position:absolute;left:140px;right:140px;bottom:40px;font-family:'JetBrains Mono',monospace;font-weight:400;
+  font-size:19px;line-height:1.45;color:var(--text-muted)}
+.frame svg.layer{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible}
+.frame .off{opacity:0}
+.frame .dim{opacity:.3}
+.frame .half{opacity:.55}
+.val{font-family:'JetBrains Mono',monospace;font-weight:600;line-height:1;white-space:nowrap}
+.lbl{font-family:'DM Sans';font-size:32px;font-weight:500;line-height:1.25;color:var(--text-secondary)}
+.lbl.pri{color:var(--text-primary);font-weight:700}
+.cat{font-family:'DM Sans';font-size:22px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap}
+.pill{display:inline-block;padding:9px 20px 8px;border-radius:100px;font-family:'DM Sans';font-size:20px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+.pill.gold{background:rgba(255,215,0,.10);color:var(--accent-gold);border:1px solid rgba(255,215,0,.35)}
+.pill.green{background:rgba(0,230,138,.10);color:var(--accent-green);border:1px solid rgba(0,230,138,.35)}
+.pill.cyan{background:rgba(0,194,255,.10);color:var(--accent-cyan);border:1px solid rgba(0,194,255,.35)}
+.pill.red{background:rgba(255,64,96,.10);color:var(--accent-red);border:1px solid rgba(255,64,96,.38)}
+.frame .take{position:absolute;left:140px;right:140px;bottom:92px;padding:28px 40px;border-radius:16px;
+  background:linear-gradient(135deg,rgba(0,230,138,.08),rgba(0,194,255,.05));border:1px solid rgba(0,230,138,.22);
+  font-family:'DM Sans';font-size:38px;font-weight:700;color:var(--text-primary);line-height:1.3}
+.frame .callout{padding:18px 30px 18px 28px;border-left:4px solid var(--accent-red);border-radius:4px 12px 12px 4px;
+  background:rgba(255,64,96,.08);font-family:'DM Sans';font-size:40px;font-weight:700;color:var(--text-primary);white-space:nowrap}
+.frame .chip{padding:16px 28px;border-radius:14px;border:1px solid rgba(0,194,255,.35);background:rgba(0,194,255,.08);
+  font-family:'DM Sans';font-size:38px;font-weight:700;color:var(--text-primary);white-space:nowrap}
+.frame .card2{background:var(--bg-card);border:2px solid var(--border);border-radius:18px}
+.bar{border-radius:8px}
+.bar.red{background:linear-gradient(180deg,#ff4060,#a42c45)}
+.bar.green{background:linear-gradient(0deg,#08935d,#00e68a)}
+.bar.cyan{background:linear-gradient(0deg,#0a7fa8,#00c2ff)}
+.bar.gold{background:linear-gradient(90deg,#b39a12,#ffd700)}
+.bar.hred{background:linear-gradient(90deg,#b52e48,#ff4060)}
+.glow-red{box-shadow:0 0 44px rgba(255,64,96,.45)}
+.glow-green{box-shadow:0 0 44px rgba(0,230,138,.42)}
+.glow-cyan{box-shadow:0 0 44px rgba(0,194,255,.45)}
+.glow-gold{box-shadow:0 0 44px rgba(255,215,0,.35)}
+
+
+/* ---- portrait additions (VERTICAL cut, chart-builder 2026-11-11): LAYOUT ONLY, every token above untouched ----
+   1080x1920 canvas, content x 72-1008, header at top 110, source line bottom 110. Every text sits >= 44 px inside the
+   frame (the comp's 105% camera wobble crops 27 px a side and 48 px top/bottom). */
+.frame{width:1080px;height:1920px}
+.frame .hdr{left:72px;top:110px;width:936px}
+.hdr .ey{font-size:28px;line-height:1.45;margin-bottom:18px}
+.hdr h1{font-size:82px;line-height:1.08;max-width:936px}
+.hdr .divider{margin:26px 0 0}
+.frame .src{left:72px;right:72px;bottom:110px;font-size:21px;line-height:1.5}
+.frame svg.layer{width:1080px;height:1920px}
+.frame .take{left:72px;right:72px;bottom:auto;padding:26px 36px;font-size:40px;line-height:1.3}
+.frame .callout{font-size:44px}
+</style>
+</head><body>
+<!--
+ANIMATION SPEC  C23 VERTICAL  (Type 2 SYSTEM-DESIGN)  beat CH3@342.97-349.97 (s1-s4), then BR-18, then CH3@353.97-364.42 (s4-s6)  ·  chapter accent: stylesheet default
+spoken: The robot already in your house loads the skill of an expert electrician, orders the wire and the parts it needs and does the repair. ... Can it do that today? In 2026? No. Nobody's put those pieces together inside a house yet. But my prediction is that by 2029, it will.
+each .frame below = one state PNG (<id>-<state>.png), 1080x1920 PORTRAIT; comp animates between them with useCurrentFrame() at 30 fps:
+   342.97  [(cover in)]  diagram in at s1: BODY lit, SKILLS and ORDERING dim, arrows dim, node an empty dashed outline
+   344.55  [loads]  SKILLS lights (12f)
+   346.81  [orders]  ORDERING lights (12f)
+   348.93  [does the repair]  the three arrows draw from each card to the node (stroke-dashoffset along the path, 18f, staggered 3f, card 1 first) and turn cyan; node outline turns cyan; '?' fades in
+   349.97  [(cover out)]  BR-18 roof leak (4.0 s)
+   353.97  [Can it do that today?]  diagram RETURNS at s4 (same diagram continuing, not a second diagram)
+   357.07  [No.]  '?' out; 'ALL THREE, IN A HOUSE' + red 'NOT FOUND' stamp in (scale 1.12 to 1, 8f); border turns solid red
+   360.85  [my prediction]  'NOT FOUND' shrinks into the small 'TODAY: NOT FOUND' line; 'MIKE'S PREDICTION' fades in; border to gold
+   362.27  [2029]  '2029' rises 20px + fades in, gold glow
+   364.42  [(cover out)]  S3 / CLIP-61 lead-in
+never: DATA.md 7A rows A3-A7 and A13; 'you press confirm' per the do-not-air row; 2029 labelled as Mike's prediction. Movement comp-level only; box positions, cards, arrows, header and source pixel-identical across all six PNGs. No em dashes on screen.
+-->
+<script type="application/json" id="anim-spec">
+{
+ "id": "C23",
+ "orientation": "portrait",
+ "canvas": [
+  1080,
+  1920
+ ],
+ "type": "Type 2 SYSTEM-DESIGN",
+ "beat": "CH3@342.97-349.97 (s1-s4), then BR-18, then CH3@353.97-364.42 (s4-s6)",
+ "chapter_accent": "stylesheet default",
+ "spoken": "The robot already in your house loads the skill of an expert electrician, orders the wire and the parts it needs and does the repair. ... Can it do that today? In 2026? No. Nobody's put those pieces together inside a house yet. But my prediction is that by 2029, it will.",
+ "twin": "assets/diagrams/C23.html (1920x1080)",
+ "states": {
+  "s1-body": "from 342.97",
+  "s2-skills": "from 344.55",
+  "s3-ordering": "from 346.81",
+  "s4-arrows": "from 348.93 (and the return at 353.97)",
+  "s5-notfound": "from 357.07",
+  "s6-prediction": "from 360.85 ('2029' held back to 362.27: patch rect x290 y1397 345x179, see the geometry JSON)"
+ },
+ "cues": [
+  {
+   "t": 342.97,
+   "word": "(cover in)",
+   "do": "diagram in at s1: BODY lit, SKILLS and ORDERING dim, arrows dim, node an empty dashed outline"
+  },
+  {
+   "t": 344.55,
+   "word": "loads",
+   "do": "SKILLS lights (12f)"
+  },
+  {
+   "t": 346.81,
+   "word": "orders",
+   "do": "ORDERING lights (12f)"
+  },
+  {
+   "t": 348.93,
+   "word": "does the repair",
+   "do": "the three arrows draw from each card to the node (stroke-dashoffset along the path, 18f, staggered 3f, card 1 first) and turn cyan; node outline turns cyan; '?' fades in"
+  },
+  {
+   "t": 349.97,
+   "word": "(cover out)",
+   "do": "BR-18 roof leak (4.0 s)"
+  },
+  {
+   "t": 353.97,
+   "word": "Can it do that today?",
+   "do": "diagram RETURNS at s4 (same diagram continuing, not a second diagram)"
+  },
+  {
+   "t": 357.07,
+   "word": "No.",
+   "do": "'?' out; 'ALL THREE, IN A HOUSE' + red 'NOT FOUND' stamp in (scale 1.12 to 1, 8f); border turns solid red"
+  },
+  {
+   "t": 360.85,
+   "word": "my prediction",
+   "do": "'NOT FOUND' shrinks into the small 'TODAY: NOT FOUND' line; 'MIKE'S PREDICTION' fades in; border to gold"
+  },
+  {
+   "t": 362.27,
+   "word": "2029",
+   "do": "'2029' rises 20px + fades in, gold glow"
+  },
+  {
+   "t": 364.42,
+   "word": "(cover out)",
+   "do": "S3 / CLIP-61 lead-in"
+  }
+ ],
+ "never": "DATA.md 7A rows A3-A7 and A13; 'you press confirm' per the do-not-air row; 2029 labelled as Mike's prediction. Movement comp-level only; box positions, cards, arrows, header and source pixel-identical across all six PNGs. No em dashes on screen."
+}
+</script>
+<script>window.GEOMETRY = {"chart": "C23", "orientation": "portrait", "canvas": [1080, 1920], "beat": "CH3@342.97-349.97 (s1-s4), then BR-18, then CH3@353.97-364.42 (s4-s6)", "twin": "assets/diagrams/C23.html (1920x1080)", "layout": "three source cards STACKED (x72 w780), the centre node BELOW them in the same column; three arrows leave each card's right edge, run DOWN a 3-lane cable run on the right (card 1 outermost) and re-enter the node's right edge, card 1 lowest: no crossings", "cards": [{"x": 72, "y": 440, "w": 780, "h": 176}, {"x": 72, "y": 640, "w": 780, "h": 176}, {"x": 72, "y": 840, "w": 780, "h": 176}], "node": {"x": 72, "y": 1090, "w": 780, "h": 490, "r": 22}, "lanes_x": [980, 940, 900], "entries_y": [1455, 1335, 1215], "corner_r": 26, "arrow_paths": ["M852 528 H954 Q980 528 980 554 V1429 Q980 1455 954 1455 H858", "M852 728 H914 Q940 728 940 754 V1309 Q940 1335 914 1335 H858", "M852 928 H874 Q900 928 900 954 V1189 Q900 1215 874 1215 H858"], "arrow_heads": ["M874 1443 L856 1455 L874 1467", "M874 1323 L856 1335 L874 1347", "M874 1203 L856 1215 L874 1227"], "hold_2029_note": "the comp's 360.85 step shows s6 with '2029' held back: patch rect x 290 y 1397 w 345 h 179 (the glyph box measured['s6-prediction']['c23-2029-glyphs'] + 14 px a side, clamped above the node's bottom border y 1577) with the node fill #13161c and a soft edge, then reveal the s6 crop of that rect rising 20 px + fading in over 12f from 362.27 (as the 16:9 DeckView does with its 1344,664 302x112 patch)"};</script>
+<!-- C23 state "s1-body" -> C23-s1-body.png -->
+<div class="frame ch" id="s1-body" data-state="s1-body"><div class="orb" style="left:640px;top:-360px;width:760px;height:760px;background:rgba(0,194,255,.48)"></div><div class="hdr" data-g="header"><div class="ey">The maintenance job &middot; three pieces</div><h1>Three pieces have to<br>meet <span class="c">inside a house</span></h1><div class="divider"></div></div><div class="a card2" style="left:72px;top:440px;width:780px;height:176px;border-color:rgba(0,194,255,.75);box-shadow:0 0 46px rgba(0,194,255,.18);" data-g="card-body"><div class="cat" style="position:absolute;left:32px;top:30px;font-size:24px;color:var(--accent-cyan)">Body</div><div class="pill gold" style="position:absolute;right:26px;top:22px">on sale, delivery not confirmed</div><div style="position:absolute;left:32px;top:72px;font-family:'DM Sans';font-size:44px;font-weight:700;color:var(--text-primary);white-space:nowrap">home robot</div><div style="position:absolute;left:32px;top:130px;font-family:'DM Sans';font-size:26px;color:var(--text-muted);white-space:nowrap">1X NEO, US deliveries promised for <span class="mono">2026</span></div></div><div class="a card2 dim" style="left:72px;top:640px;width:780px;height:176px;border-color:var(--border);" data-g="card-skills"><div class="cat" style="position:absolute;left:32px;top:30px;font-size:24px;color:var(--text-muted)">Skills</div><div class="pill gold" style="position:absolute;right:26px;top:22px">lab demo</div><div style="position:absolute;left:32px;top:72px;font-family:'DM Sans';font-size:44px;font-weight:700;color:var(--text-primary);white-space:nowrap">learned from demonstrations</div><div style="position:absolute;left:32px;top:130px;font-family:'DM Sans';font-size:26px;color:var(--text-muted);white-space:nowrap">Boston Dynamics and Toyota Research Institute, Atlas</div></div><div class="a card2 dim" style="left:72px;top:840px;width:780px;height:176px;border-color:var(--border);" data-g="card-ordering"><div class="cat" style="position:absolute;left:32px;top:30px;font-size:24px;color:var(--text-muted)">Ordering</div><div class="pill green" style="position:absolute;right:26px;top:22px">live</div><div style="position:absolute;left:32px;top:72px;font-family:'DM Sans';font-size:44px;font-weight:700;color:var(--text-primary);white-space:nowrap">AI completes the purchase</div><div style="position:absolute;left:32px;top:130px;font-family:'DM Sans';font-size:26px;color:var(--text-muted);white-space:nowrap">Amazon Buy for Me: you press confirm</div></div><svg class="layer"><defs><filter id="g23" filterUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1920"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M852 528 H954 Q980 528 980 554 V1429 Q980 1455 954 1455 H858" stroke="#2a3142" stroke-width="3" fill="none" stroke-linejoin="round" /><path d="M874 1443 L856 1455 L874 1467" stroke="#2a3142" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M852 728 H914 Q940 728 940 754 V1309 Q940 1335 914 1335 H858" stroke="#2a3142" stroke-width="3" fill="none" stroke-linejoin="round" /><path d="M874 1323 L856 1335 L874 1347" stroke="#2a3142" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M852 928 H874 Q900 928 900 954 V1189 Q900 1215 874 1215 H858" stroke="#2a3142" stroke-width="3" fill="none" stroke-linejoin="round" /><path d="M874 1203 L856 1215 L874 1227" stroke="#2a3142" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="a" style="left:72px;top:1090px;width:780px;height:490px;border-radius:22px;background:rgba(18,21,28,.85);border:3px dashed #2a3142;" data-g="node"></div><div class="src" data-g="source">Sources: 1X order page (Nov 10, 2026) &middot;<br>Toyota Research Institute (Aug 20, 2025) &middot;<br>Amazon (Mar 11, 2026) &middot; 2029 = a prediction</div></div>
+<!-- C23 state "s2-skills" -> C23-s2-skills.png -->
+<div class="frame ch" id="s2-skills" data-state="s2-skills"><div class="orb" style="left:640px;top:-360px;width:760px;height:760px;background:rgba(0,194,255,.48)"></div><div class="hdr" data-g="header"><div class="ey">The maintenance job &middot; three pieces</div><h1>Three pieces have to<br>meet <span class="c">inside a house</span></h1><div class="divider"></div></div><div class="a card2" style="left:72px;top:440px;width:780px;height:176px;border-color:rgba(0,194,255,.75);box-shadow:0 0 46px rgba(0,194,255,.18);" data-g="card-body"><div class="cat" style="position:absolute;left:32px;top:30px;font-size:24px;color:var(--accent-cyan)">Body</div><div class="pill gold" style="position:absolute;right:26px;top:22px">on sale, delivery not confirmed</div><div style="position:absolute;left:32px;top:72px;font-family:'DM Sans';font-size:44px;font-weight:700;color:var(--text-primary);white-space:nowrap">home robot</div><div style="position:absolute;left:32px;top:130px;font-family:'DM Sans';font-size:26px;color:var(--text-muted);white-space:nowrap">1X NEO, US deliveries promised for <span class="mono">2026</span></div></div><div class="a card2" style="left:72px;top:640px;width:780px;height:176px;border-color:rgba(0,194,255,.75);box-shadow:0 0 46px rgba(0,194,255,.18);" data-g="card-skills"><div class="cat" style="position:absolute;left:32px;top:30px;font-size:24px;color:var(--accent-cyan)">Skills</div><div class="pill gold" style="position:absolute;right:26px;top:22px">lab demo</div><div style="position:absolute;left:32px;top:72px;font-family:'DM Sans';font-size:44px;font-weight:700;color:var(--text-primary);white-space:nowrap">learned from demonstrations</div><div style="position:absolute;left:32px;top:130px;font-family:'DM Sans';font-size:26px;color:var(--text-muted);white-space:nowrap">Boston Dynamics and Toyota Research Institute, Atlas</div></div><div class="a card2 dim" style="left:72px;top:840px;width:780px;height:176px;border-color:var(--border);" data-g="card-ordering"><div class="cat" style="position:absolute;left:32px;top:30px;font-size:24px;color:var(--text-muted)">Ordering</div><div class="pill green" style="position:absolute;right:26px;top:22px">live</div><div style="position:absolute;left:32px;top:72px;font-family:'DM Sans';font-size:44px;font-weight:700;color:var(--text-primary);white-space:nowrap">AI completes the purchase</div><div style="position:absolute;left:32px;top:130px;font-family:'DM Sans';font-size:26px;color:var(--text-muted);white-space:nowrap">Amazon Buy for Me: you press confirm</div></div><svg class="layer"><defs><filter id="g23" filterUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1920"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M852 528 H954 Q980 528 980 554 V1429 Q980 1455 954 1455 H858" stroke="#2a3142" stroke-width="3" fill="none" stroke-linejoin="round" /><path d="M874 1443 L856 1455 L874 1467" stroke="#2a3142" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M852 728 H914 Q940 728 940 754 V1309 Q940 1335 914 1335 H858" stroke="#2a3142" stroke-width="3" fill="none" stroke-linejoin="round" /><path d="M874 1323 L856 1335 L874 1347" stroke="#2a3142" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M852 928 H874 Q900 928 900 954 V1189 Q900 1215 874 1215 H858" stroke="#2a3142" stroke-width="3" fill="none" stroke-linejoin="round" /><path d="M874 1203 L856 1215 L874 1227" stroke="#2a3142" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="a" style="left:72px;top:1090px;width:780px;height:490px;border-radius:22px;background:rgba(18,21,28,.85);border:3px dashed #2a3142;" data-g="node"></div><div class="src" data-g="source">Sources: 1X order page (Nov 10, 2026) &middot;<br>Toyota Research Institute (Aug 20, 2025) &middot;<br>Amazon (Mar 11, 2026) &middot; 2029 = a prediction</div></div>
+<!-- C23 state "s3-ordering" -> C23-s3-ordering.png -->
+<div class="frame ch" id="s3-ordering" data-state="s3-ordering"><div class="orb" style="left:640px;top:-360px;width:760px;height:760px;background:rgba(0,194,255,.48)"></div><div class="hdr" data-g="header"><div class="ey">The maintenance job &middot; three pieces</div><h1>Three pieces have to<br>meet <span class="c">inside a house</span></h1><div class="divider"></div></div><div class="a card2" style="left:72px;top:440px;width:780px;height:176px;border-color:rgba(0,194,255,.75);box-shadow:0 0 46px rgba(0,194,255,.18);" data-g="card-body"><div class="cat" style="position:absolute;left:32px;top:30px;font-size:24px;color:var(--accent-cyan)">Body</div><div class="pill gold" style="position:absolute;right:26px;top:22px">on sale, delivery not confirmed</div><div style="position:absolute;left:32px;top:72px;font-family:'DM Sans';font-size:44px;font-weight:700;color:var(--text-primary);white-space:nowrap">home robot</div><div style="position:absolute;left:32px;top:130px;font-family:'DM Sans';font-size:26px;color:var(--text-muted);white-space:nowrap">1X NEO, US deliveries promised for <span class="mono">2026</span></div></div><div class="a card2" style="left:72px;top:640px;width:780px;height:176px;border-color:rgba(0,194,255,.75);box-shadow:0 0 46px rgba(0,194,255,.18);" data-g="card-skills"><div class="cat" style="position:absolute;left:32px;top:30px;font-size:24px;color:var(--accent-cyan)">Skills</div><div class="pill gold" style="position:absolute;right:26px;top:22px">lab demo</div><div style="position:absolute;left:32px;top:72px;font-family:'DM Sans';font-size:44px;font-weight:700;color:var(--text-primary);white-space:nowrap">learned from demonstrations</div><div style="position:absolute;left:32px;top:130px;font-family:'DM Sans';font-size:26px;color:var(--text-muted);white-space:nowrap">Boston Dynamics and Toyota Research Institute, Atlas</div></div><div class="a card2" style="left:72px;top:840px;width:780px;height:176px;border-color:rgba(0,194,255,.75);box-shadow:0 0 46px rgba(0,194,255,.18);" data-g="card-ordering"><div class="cat" style="position:absolute;left:32px;top:30px;font-size:24px;color:var(--accent-cyan)">Ordering</div><div class="pill green" style="position:absolute;right:26px;top:22px">live</div><div style="position:absolute;left:32px;top:72px;font-family:'DM Sans';font-size:44px;font-weight:700;color:var(--text-primary);white-space:nowrap">AI completes the purchase</div><div style="position:absolute;left:32px;top:130px;font-family:'DM Sans';font-size:26px;color:var(--text-muted);white-space:nowrap">Amazon Buy for Me: you press confirm</div></div><svg class="layer"><defs><filter id="g23" filterUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1920"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M852 528 H954 Q980 528 980 554 V1429 Q980 1455 954 1455 H858" stroke="#2a3142" stroke-width="3" fill="none" stroke-linejoin="round" /><path d="M874 1443 L856 1455 L874 1467" stroke="#2a3142" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M852 728 H914 Q940 728 940 754 V1309 Q940 1335 914 1335 H858" stroke="#2a3142" stroke-width="3" fill="none" stroke-linejoin="round" /><path d="M874 1323 L856 1335 L874 1347" stroke="#2a3142" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M852 928 H874 Q900 928 900 954 V1189 Q900 1215 874 1215 H858" stroke="#2a3142" stroke-width="3" fill="none" stroke-linejoin="round" /><path d="M874 1203 L856 1215 L874 1227" stroke="#2a3142" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="a" style="left:72px;top:1090px;width:780px;height:490px;border-radius:22px;background:rgba(18,21,28,.85);border:3px dashed #2a3142;" data-g="node"></div><div class="src" data-g="source">Sources: 1X order page (Nov 10, 2026) &middot;<br>Toyota Research Institute (Aug 20, 2025) &middot;<br>Amazon (Mar 11, 2026) &middot; 2029 = a prediction</div></div>
+<!-- C23 state "s4-arrows" -> C23-s4-arrows.png -->
+<div class="frame ch" id="s4-arrows" data-state="s4-arrows"><div class="orb" style="left:640px;top:-360px;width:760px;height:760px;background:rgba(0,194,255,.48)"></div><div class="hdr" data-g="header"><div class="ey">The maintenance job &middot; three pieces</div><h1>Three pieces have to<br>meet <span class="c">inside a house</span></h1><div class="divider"></div></div><div class="a card2" style="left:72px;top:440px;width:780px;height:176px;border-color:rgba(0,194,255,.75);box-shadow:0 0 46px rgba(0,194,255,.18);" data-g="card-body"><div class="cat" style="position:absolute;left:32px;top:30px;font-size:24px;color:var(--accent-cyan)">Body</div><div class="pill gold" style="position:absolute;right:26px;top:22px">on sale, delivery not confirmed</div><div style="position:absolute;left:32px;top:72px;font-family:'DM Sans';font-size:44px;font-weight:700;color:var(--text-primary);white-space:nowrap">home robot</div><div style="position:absolute;left:32px;top:130px;font-family:'DM Sans';font-size:26px;color:var(--text-muted);white-space:nowrap">1X NEO, US deliveries promised for <span class="mono">2026</span></div></div><div class="a card2" style="left:72px;top:640px;width:780px;height:176px;border-color:rgba(0,194,255,.75);box-shadow:0 0 46px rgba(0,194,255,.18);" data-g="card-skills"><div class="cat" style="position:absolute;left:32px;top:30px;font-size:24px;color:var(--accent-cyan)">Skills</div><div class="pill gold" style="position:absolute;right:26px;top:22px">lab demo</div><div style="position:absolute;left:32px;top:72px;font-family:'DM Sans';font-size:44px;font-weight:700;color:var(--text-primary);white-space:nowrap">learned from demonstrations</div><div style="position:absolute;left:32px;top:130px;font-family:'DM Sans';font-size:26px;color:var(--text-muted);white-space:nowrap">Boston Dynamics and Toyota Research Institute, Atlas</div></div><div class="a card2" style="left:72px;top:840px;width:780px;height:176px;border-color:rgba(0,194,255,.75);box-shadow:0 0 46px rgba(0,194,255,.18);" data-g="card-ordering"><div class="cat" style="position:absolute;left:32px;top:30px;font-size:24px;color:var(--accent-cyan)">Ordering</div><div class="pill green" style="position:absolute;right:26px;top:22px">live</div><div style="position:absolute;left:32px;top:72px;font-family:'DM Sans';font-size:44px;font-weight:700;color:var(--text-primary);white-space:nowrap">AI completes the purchase</div><div style="position:absolute;left:32px;top:130px;font-family:'DM Sans';font-size:26px;color:var(--text-muted);white-space:nowrap">Amazon Buy for Me: you press confirm</div></div><svg class="layer"><defs><filter id="g23" filterUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1920"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M852 528 H954 Q980 528 980 554 V1429 Q980 1455 954 1455 H858" stroke="#00c2ff" stroke-width="4" fill="none" stroke-linejoin="round" filter="url(#g23)"/><path d="M874 1443 L856 1455 L874 1467" stroke="#00c2ff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M852 728 H914 Q940 728 940 754 V1309 Q940 1335 914 1335 H858" stroke="#00c2ff" stroke-width="4" fill="none" stroke-linejoin="round" filter="url(#g23)"/><path d="M874 1323 L856 1335 L874 1347" stroke="#00c2ff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M852 928 H874 Q900 928 900 954 V1189 Q900 1215 874 1215 H858" stroke="#00c2ff" stroke-width="4" fill="none" stroke-linejoin="round" filter="url(#g23)"/><path d="M874 1203 L856 1215 L874 1227" stroke="#00c2ff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="a" style="left:72px;top:1090px;width:780px;height:490px;border-radius:22px;background:rgba(18,21,28,.85);border:3px dashed rgba(0,194,255,.80);box-shadow:0 0 50px rgba(0,194,255,.18);" data-g="node"><div style="position:absolute;left:0;right:0;top:100px;text-align:center;font-family:'Playfair Display',serif;font-weight:900;font-size:240px;line-height:1;color:var(--text-muted)">?</div></div><div class="src" data-g="source">Sources: 1X order page (Nov 10, 2026) &middot;<br>Toyota Research Institute (Aug 20, 2025) &middot;<br>Amazon (Mar 11, 2026) &middot; 2029 = a prediction</div></div>
+<!-- C23 state "s5-notfound" -> C23-s5-notfound.png -->
+<div class="frame ch" id="s5-notfound" data-state="s5-notfound"><div class="orb" style="left:640px;top:-360px;width:760px;height:760px;background:rgba(0,194,255,.48)"></div><div class="hdr" data-g="header"><div class="ey">The maintenance job &middot; three pieces</div><h1>Three pieces have to<br>meet <span class="c">inside a house</span></h1><div class="divider"></div></div><div class="a card2" style="left:72px;top:440px;width:780px;height:176px;border-color:rgba(0,194,255,.75);box-shadow:0 0 46px rgba(0,194,255,.18);" data-g="card-body"><div class="cat" style="position:absolute;left:32px;top:30px;font-size:24px;color:var(--accent-cyan)">Body</div><div class="pill gold" style="position:absolute;right:26px;top:22px">on sale, delivery not confirmed</div><div style="position:absolute;left:32px;top:72px;font-family:'DM Sans';font-size:44px;font-weight:700;color:var(--text-primary);white-space:nowrap">home robot</div><div style="position:absolute;left:32px;top:130px;font-family:'DM Sans';font-size:26px;color:var(--text-muted);white-space:nowrap">1X NEO, US deliveries promised for <span class="mono">2026</span></div></div><div class="a card2" style="left:72px;top:640px;width:780px;height:176px;border-color:rgba(0,194,255,.75);box-shadow:0 0 46px rgba(0,194,255,.18);" data-g="card-skills"><div class="cat" style="position:absolute;left:32px;top:30px;font-size:24px;color:var(--accent-cyan)">Skills</div><div class="pill gold" style="position:absolute;right:26px;top:22px">lab demo</div><div style="position:absolute;left:32px;top:72px;font-family:'DM Sans';font-size:44px;font-weight:700;color:var(--text-primary);white-space:nowrap">learned from demonstrations</div><div style="position:absolute;left:32px;top:130px;font-family:'DM Sans';font-size:26px;color:var(--text-muted);white-space:nowrap">Boston Dynamics and Toyota Research Institute, Atlas</div></div><div class="a card2" style="left:72px;top:840px;width:780px;height:176px;border-color:rgba(0,194,255,.75);box-shadow:0 0 46px rgba(0,194,255,.18);" data-g="card-ordering"><div class="cat" style="position:absolute;left:32px;top:30px;font-size:24px;color:var(--accent-cyan)">Ordering</div><div class="pill green" style="position:absolute;right:26px;top:22px">live</div><div style="position:absolute;left:32px;top:72px;font-family:'DM Sans';font-size:44px;font-weight:700;color:var(--text-primary);white-space:nowrap">AI completes the purchase</div><div style="position:absolute;left:32px;top:130px;font-family:'DM Sans';font-size:26px;color:var(--text-muted);white-space:nowrap">Amazon Buy for Me: you press confirm</div></div><svg class="layer"><defs><filter id="g23" filterUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1920"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M852 528 H954 Q980 528 980 554 V1429 Q980 1455 954 1455 H858" stroke="#00c2ff" stroke-width="4" fill="none" stroke-linejoin="round" filter="url(#g23)"/><path d="M874 1443 L856 1455 L874 1467" stroke="#00c2ff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M852 728 H914 Q940 728 940 754 V1309 Q940 1335 914 1335 H858" stroke="#00c2ff" stroke-width="4" fill="none" stroke-linejoin="round" filter="url(#g23)"/><path d="M874 1323 L856 1335 L874 1347" stroke="#00c2ff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M852 928 H874 Q900 928 900 954 V1189 Q900 1215 874 1215 H858" stroke="#00c2ff" stroke-width="4" fill="none" stroke-linejoin="round" filter="url(#g23)"/><path d="M874 1203 L856 1215 L874 1227" stroke="#00c2ff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="a" style="left:72px;top:1090px;width:780px;height:490px;border-radius:22px;background:rgba(18,21,28,.85);border:3px solid rgba(255,64,96,.70);box-shadow:0 0 50px rgba(255,64,96,.18);" data-g="node"><div style="position:absolute;left:0;right:0;top:52px;text-align:center;font-family:'Playfair Display',serif;font-weight:900;font-size:66px;line-height:1.08;color:var(--text-primary)">All three,<br>in a house</div><div style="position:absolute;left:0;right:0;top:262px;text-align:center"><span class="pill red" style="font-size:48px;padding:20px 44px 18px;letter-spacing:.14em;box-shadow:0 0 40px rgba(255,64,96,.30)">not found</span></div></div><div class="src" data-g="source">Sources: 1X order page (Nov 10, 2026) &middot;<br>Toyota Research Institute (Aug 20, 2025) &middot;<br>Amazon (Mar 11, 2026) &middot; 2029 = a prediction</div></div>
+<!-- C23 state "s6-prediction" -> C23-s6-prediction.png -->
+<div class="frame ch" id="s6-prediction" data-state="s6-prediction"><div class="orb" style="left:640px;top:-360px;width:760px;height:760px;background:rgba(0,194,255,.48)"></div><div class="hdr" data-g="header"><div class="ey">The maintenance job &middot; three pieces</div><h1>Three pieces have to<br>meet <span class="c">inside a house</span></h1><div class="divider"></div></div><div class="a card2" style="left:72px;top:440px;width:780px;height:176px;border-color:rgba(0,194,255,.75);box-shadow:0 0 46px rgba(0,194,255,.18);" data-g="card-body"><div class="cat" style="position:absolute;left:32px;top:30px;font-size:24px;color:var(--accent-cyan)">Body</div><div class="pill gold" style="position:absolute;right:26px;top:22px">on sale, delivery not confirmed</div><div style="position:absolute;left:32px;top:72px;font-family:'DM Sans';font-size:44px;font-weight:700;color:var(--text-primary);white-space:nowrap">home robot</div><div style="position:absolute;left:32px;top:130px;font-family:'DM Sans';font-size:26px;color:var(--text-muted);white-space:nowrap">1X NEO, US deliveries promised for <span class="mono">2026</span></div></div><div class="a card2" style="left:72px;top:640px;width:780px;height:176px;border-color:rgba(0,194,255,.75);box-shadow:0 0 46px rgba(0,194,255,.18);" data-g="card-skills"><div class="cat" style="position:absolute;left:32px;top:30px;font-size:24px;color:var(--accent-cyan)">Skills</div><div class="pill gold" style="position:absolute;right:26px;top:22px">lab demo</div><div style="position:absolute;left:32px;top:72px;font-family:'DM Sans';font-size:44px;font-weight:700;color:var(--text-primary);white-space:nowrap">learned from demonstrations</div><div style="position:absolute;left:32px;top:130px;font-family:'DM Sans';font-size:26px;color:var(--text-muted);white-space:nowrap">Boston Dynamics and Toyota Research Institute, Atlas</div></div><div class="a card2" style="left:72px;top:840px;width:780px;height:176px;border-color:rgba(0,194,255,.75);box-shadow:0 0 46px rgba(0,194,255,.18);" data-g="card-ordering"><div class="cat" style="position:absolute;left:32px;top:30px;font-size:24px;color:var(--accent-cyan)">Ordering</div><div class="pill green" style="position:absolute;right:26px;top:22px">live</div><div style="position:absolute;left:32px;top:72px;font-family:'DM Sans';font-size:44px;font-weight:700;color:var(--text-primary);white-space:nowrap">AI completes the purchase</div><div style="position:absolute;left:32px;top:130px;font-family:'DM Sans';font-size:26px;color:var(--text-muted);white-space:nowrap">Amazon Buy for Me: you press confirm</div></div><svg class="layer"><defs><filter id="g23" filterUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1920"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M852 528 H954 Q980 528 980 554 V1429 Q980 1455 954 1455 H858" stroke="#00c2ff" stroke-width="4" fill="none" stroke-linejoin="round" filter="url(#g23)"/><path d="M874 1443 L856 1455 L874 1467" stroke="#00c2ff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M852 728 H914 Q940 728 940 754 V1309 Q940 1335 914 1335 H858" stroke="#00c2ff" stroke-width="4" fill="none" stroke-linejoin="round" filter="url(#g23)"/><path d="M874 1323 L856 1335 L874 1347" stroke="#00c2ff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M852 928 H874 Q900 928 900 954 V1189 Q900 1215 874 1215 H858" stroke="#00c2ff" stroke-width="4" fill="none" stroke-linejoin="round" filter="url(#g23)"/><path d="M874 1203 L856 1215 L874 1227" stroke="#00c2ff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="a" style="left:72px;top:1090px;width:780px;height:490px;border-radius:22px;background:rgba(18,21,28,.85);border:3px solid rgba(255,215,0,.70);box-shadow:0 0 56px rgba(255,215,0,.18);" data-g="node"><div style="position:absolute;left:0;right:0;top:52px;text-align:center;font-family:'Playfair Display',serif;font-weight:900;font-size:66px;line-height:1.08;color:var(--text-primary)">All three,<br>in a house</div><div style="position:absolute;left:0;right:0;top:222px;text-align:center;font-family:'DM Sans';font-size:24px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted)">today: not found</div><div style="position:absolute;left:0;right:0;top:280px;text-align:center"><span class="cat" style="color:var(--accent-gold);font-size:27px">Mike’s prediction</span></div><div class="val" data-g="c23-2029" style="position:absolute;left:0;right:0;top:326px;text-align:center;font-size:132px;color:var(--accent-gold);text-shadow:0 0 50px rgba(255,215,0,.30)"><span data-g="c23-2029-glyphs">2029</span></div></div><div class="src" data-g="source">Sources: 1X order page (Nov 10, 2026) &middot;<br>Toyota Research Institute (Aug 20, 2025) &middot;<br>Amazon (Mar 11, 2026) &middot; 2029 = a prediction</div></div>
+</body></html>

@@ -1,0 +1,474 @@
+{
+  "video": "AI vs ML",
+  "spine": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/AI vs ML/spine/ALL.e.enhanced.mp4",
+  "aspect": "16:9",
+  "card_pick": {
+    "id": "rmn:flip",
+    "why": "Standby only: this video has NO title card (one carved bed, no bed change, AS-RECORDED marks every chapter card OFF), so the card move never fires. Flip is a Safe CSS-3D pick and is not the blocked slide; if Mike adds a card later it takes this one move.",
+    "fires_at": []
+  },
+  "face_glitch_pick": {
+    "id": "hand:kt-whip-cut",
+    "why": "the face cut of the Energetic theme (scale 200 to 100 + curvature, 0.37 s, on the INCOMING shot only), the pick both earlier kinetic-text-2023 videos used; film burn ran on the last three videos and is the wrong mood for a 128 bpm aqua head-to-head, and a 0.96 s Blocks Max shatter with its own sound on 13 edges would trample the device sounds and the three tight face joins"
+  },
+  "melt_pick": {
+    "family": "melt-equidistant",
+    "why": "spherical vortex reform, short variant only; MELT/RGB ran on quant (inside the last three videos), Equidistant last ran four videos ago, and its roll shares the rotation of the spin cuts"
+  },
+  "spin_pick": {
+    "family": "spin-center-ease",
+    "why": "flat spin about the frame centre over mirrored padding, the library twin of the theme kt-spin-cut, so the video shows ONE spin look; 3D Corner Ease is blocked (canton), 3D Center Ease ran on quant, Center Ease last ran four videos ago"
+  },
+  "face_leak_set": [
+    "lib:lightleaks-6",
+    "lib:lightleaks-soft-3",
+    "lib:lightleaks-soft-5",
+    "lib:lightleaks-soft-9"
+  ],
+  "transitions": [
+    {
+      "tc": 0.0,
+      "bucket": "face",
+      "change": "frame 0: the signature open, F1 grows out of the 3x3 mirror grid (opens ON face, not a cut)",
+      "source": "hand",
+      "id": "hand:kt-grid-zoom-in",
+      "role": "face-cut",
+      "duration_s": 0.48,
+      "sfx_duck": false,
+      "why": "Confirmed. The signature open owns frame 0 (the 005 open); its swoosh-4 and the AI ENGINEER label punch are already placed, nothing is added."
+    },
+    {
+      "tc": 2.567,
+      "bucket": "face",
+      "change": "F1 out, face to BR-1 two engineers (the whip-out of the open)",
+      "source": "hand",
+      "id": "hand:kt-whip-cut",
+      "role": "face-cut",
+      "duration_s": 0.37,
+      "sfx_duck": false,
+      "why": "Confirmed: the face pick. The whip lands BR-1 on the fast-reverse-5 already placed at 2.57."
+    },
+    {
+      "tc": 5.25,
+      "bucket": "glitch-still",
+      "change": "BR-1 to IMG-1 cash stacks (AI still), the headline whip-zoom landing",
+      "source": "hand",
+      "id": "hand:kt-whip-cut",
+      "role": "glitch-still",
+      "duration_s": 0.37,
+      "sfx_duck": false,
+      "why": "The headline-over-broll landing IS the whip-cut motion, so the still rides the theme cut instead of a library glitch: a VHS or invert strobe with its own sound would fight the cash-register headline 2.4 s later and the aqua 2023 look. Sound stays the placed swoosh-3."
+    },
+    {
+      "tc": 8.267,
+      "bucket": "face",
+      "change": "F2 cut-in, IMG-1 to face (the open loop)",
+      "source": "hand",
+      "id": "hand:kt-whip-cut",
+      "role": "face-cut",
+      "duration_s": 0.37,
+      "sfx_duck": false,
+      "why": "SWAPPED from kt-snap-zoom to the face pick so every face edge moves the same way. Incoming-only move, so it starts on the cut frame; the placed whoosh-4 (-10 dB) stays."
+    },
+    {
+      "tc": 12.367,
+      "bucket": "face",
+      "change": "F2 out, face to roles-split card",
+      "source": "hand",
+      "id": "hand:kt-whip-cut",
+      "role": "face-cut",
+      "duration_s": 0.37,
+      "sfx_duck": false,
+      "why": "SWAPPED from kt-push-slide to the face pick (one move on every face edge). The card whips in over the placed swoosh-4; the handoff line (break it all down) starts 0.05 s later, the whip settles under it and the chorus drop follows at 13.365."
+    },
+    {
+      "tc": 13.97,
+      "bucket": "broll",
+      "change": "roles-split card to BR-2 app UI (framed left under the RIGHT panel)",
+      "source": "hand",
+      "id": "hand:kt-push-slide",
+      "role": "broll-fade",
+      "duration_s": 0.1,
+      "sfx_duck": false,
+      "why": "Confirmed: the cover-to-cover move of this video is the 3-frame push, not the 0.5 s house fade (a dissolve on a 3.4 s clip under a sliding panel reads soft at 128 bpm). Silent, the swoosh-1 of the panel carries it."
+    },
+    {
+      "tc": 17.33,
+      "bucket": "container",
+      "change": "BR-2 to ai-identity card",
+      "source": "hand",
+      "id": "hand:kt-push-slide",
+      "role": "container-xfade",
+      "duration_s": 0.1,
+      "sfx_duck": false,
+      "why": "Confirmed: card entry by push, placed swoosh-4. Text container stays quiet: no melt, no spin."
+    },
+    {
+      "tc": 19.7,
+      "bucket": "broll",
+      "change": "ai-identity card to BR-3 neural network (framed right under the LEFT panel)",
+      "source": "hand",
+      "id": "hand:kt-push-slide",
+      "role": "broll-fade",
+      "duration_s": 0.1,
+      "sfx_duck": false,
+      "why": "Confirmed: silent push, the swoosh-2 of the panel carries it."
+    },
+    {
+      "tc": 23.6,
+      "bucket": "container",
+      "change": "BR-3 to build-train-deploy scatter card",
+      "source": "hand",
+      "id": "hand:kt-push-slide",
+      "role": "container-xfade",
+      "duration_s": 0.1,
+      "sfx_duck": false,
+      "why": "Confirmed: silent push, the pop of word 1 carries it. Text container stays quiet."
+    },
+    {
+      "tc": 26.24,
+      "bucket": "diagram-marquee",
+      "change": "build-train-deploy card to C1 system-design split (the one diagram reveal)",
+      "source": "lib",
+      "id": "lib:melt-equidistant-short-3",
+      "role": "MELT-transform",
+      "duration_s": 0.44,
+      "sfx_duck": true,
+      "why": "TRANSFORM: the three scatter words BUILD, TRAIN, DEPLOY reflow into the ML lane of the diagram (DATA, FEATURES, TRAIN, VALIDATE, DEPLOY) that sits dim under the AI lane, the same lineage in a new structure. Short variant (0.44 s, 26.02 to 26.46) because the gap between the end of the deploying line and Day to day is small; roll clockwise to share the rotation of the two spin cuts. Full-frame warp, cover to cover, the spine never shows. Its baked SFX replaces the whoosh-4 placed at 26.14 for the push and ducks under the VO."
+    },
+    {
+      "tc": 33.333,
+      "bucket": "face",
+      "change": "F3 cut-in, C1 diagram to face (tight join, the first word starts 33.30)",
+      "source": "hand",
+      "id": "hand:kt-whip-cut",
+      "role": "face-cut",
+      "duration_s": 0.37,
+      "sfx_duck": false,
+      "why": "SWAPPED from kt-snap-zoom to the face pick. The whip moves only the incoming face from the cut frame on, so nothing leads the tight join and the diagram holds whole to its last frame; placed whoosh-4 (-10 dB) stays."
+    },
+    {
+      "tc": 39.967,
+      "bucket": "face",
+      "change": "F3 out, face to IMG-2 dev vs machine (AI still, face-owned)",
+      "source": "hand",
+      "id": "hand:kt-whip-cut",
+      "role": "face-cut",
+      "duration_s": 0.37,
+      "sfx_duck": false,
+      "why": "Confirmed: the face pick owns this edge, so the still gets no separate glitch. Placed whoosh-4 at 39.97."
+    },
+    {
+      "tc": 42.57,
+      "bucket": "broll",
+      "change": "IMG-2 to BR-4 leaning back (the reaction clip)",
+      "source": "hand",
+      "id": "hand:kt-push-slide",
+      "role": "broll-fade",
+      "duration_s": 0.1,
+      "sfx_duck": false,
+      "why": "Confirmed: cover-to-cover push on the sentence start (Because the hard part), placed swoosh-4."
+    },
+    {
+      "tc": 45.633,
+      "bucket": "face",
+      "change": "F4 cut-in, BR-4 to face (the CAN / SHOULD turn)",
+      "source": "hand",
+      "id": "hand:kt-whip-cut",
+      "role": "face-cut",
+      "duration_s": 0.37,
+      "sfx_duck": false,
+      "why": "SWAPPED from kt-push-slide to the face pick: a push makes the face read as a card; the whip is the move that belongs to the face. Placed whoosh-4 at 45.63."
+    },
+    {
+      "tc": 48.68,
+      "bucket": "container",
+      "change": "F4 face to the boxed-words card CAN / SHOULD (silent hard cut, the face audio runs on)",
+      "source": "hand",
+      "id": "hand:kt-boxed-words",
+      "role": "container-xfade",
+      "duration_s": 0.0,
+      "sfx_duck": false,
+      "why": "Device-owned: the boxed-words card cuts in silent by its library row; the words whip in on their own cues. No transition added."
+    },
+    {
+      "tc": 50.78,
+      "bucket": "face",
+      "change": "boxed-words card back to the F4 face ON the word host",
+      "source": "hand",
+      "id": "hand:kt-shake-cut",
+      "role": "face-cut",
+      "duration_s": 0.25,
+      "sfx_duck": false,
+      "why": "Confirmed: the shake-cut is the return to a face that belongs to the boxed-words device (the 005 pairing), inside the window, not a face edge. Placed whoosh-4 (-10 dB)."
+    },
+    {
+      "tc": 58.1,
+      "bucket": "face",
+      "change": "F4 out, face to the paper-sum-up statement card (pushes in from the right, 2 frames)",
+      "source": "hand",
+      "id": "hand:kt-push-slide",
+      "role": "face-cut",
+      "duration_s": 0.07,
+      "sfx_duck": false,
+      "why": "The ONE face edge that is not the whip: the paper statement owns a matched push-in here and push-out at 64.39, and the first word of the card line starts on the last face frame, so the 2-frame push is also the tightest cover. Placed fast-swoosh (0.23 s)."
+    },
+    {
+      "tc": 64.39,
+      "bucket": "broll",
+      "change": "paper card pushes out left to BR-5 chalk math, the band rides up with it",
+      "source": "hand",
+      "id": "hand:kt-push-slide",
+      "role": "broll-fade",
+      "duration_s": 0.1,
+      "sfx_duck": false,
+      "why": "Confirmed: the push-out of the paper card, one fast-swoosh shared with the band (the 005 pairing)."
+    },
+    {
+      "tc": 67.86,
+      "bucket": "glitch-still",
+      "change": "BR-5 to IMG-3 grad cap (AI still), hard cut under the persisting band",
+      "source": "hand",
+      "id": "hand:cut",
+      "role": "glitch-still",
+      "duration_s": 0.0,
+      "sfx_duck": false,
+      "why": "Hard cut, silent: the band holds the frame together across the cut and the ML ENGINEER verdict pop 2 s later is the beat. A glitch here would shake the question on the band mid-sentence."
+    },
+    {
+      "tc": 70.2,
+      "bucket": "broll",
+      "change": "IMG-3 to BR-6 developer coding, hard cut under the band",
+      "source": "hand",
+      "id": "hand:cut",
+      "role": "broll-fade",
+      "duration_s": 0.0,
+      "sfx_duck": false,
+      "why": "Hard cut, silent, same rule: under a persisting band the picture swaps and the band text carries the change."
+    },
+    {
+      "tc": 73.05,
+      "bucket": "container",
+      "change": "BR-6 to the wave wall TRAIN / SHIP (the one full-frame interlude)",
+      "source": "hand",
+      "id": "hand:kt-spin-cut",
+      "role": "container-xfade",
+      "duration_s": 0.23,
+      "sfx_duck": false,
+      "why": "Confirmed and device-owned: the spin cut and the wave wall are one catalog effect (the 005 turn). Clockwise, so it and the 101.70 marquee spin read as one look. Not counted in the melt / spin budget: it is a text interlude, not a diagram or chart. Placed whoosh-4 (-10 dB)."
+    },
+    {
+      "tc": 75.37,
+      "bucket": "broll",
+      "change": "wave wall out to BR-7 team celebrating, the both-verdicts band rides back up",
+      "source": "hand",
+      "id": "hand:kt-whip-cut",
+      "role": "broll-fade",
+      "duration_s": 0.17,
+      "sfx_duck": false,
+      "why": "The blur-in variant of the whip-cut (0.17 s): the blur-out built into the wall clip hands straight to BR-7 blurring in, one move, one sound (the placed whoosh-4)."
+    },
+    {
+      "tc": 77.633,
+      "bucket": "face",
+      "change": "F5 cut-in, BR-7 to face at 130 percent (the face under the versus stack)",
+      "source": "hand",
+      "id": "hand:kt-whip-cut",
+      "role": "face-cut",
+      "duration_s": 0.37,
+      "sfx_duck": false,
+      "why": "SWAPPED from kt-snap-zoom to the face pick; the whip LANDS at the 130 percent framing of the versus stack (y 0.585) instead of 100, so the device framing is kept. Placed whoosh-4 (-10 dB); the matte slides down 0.14 s later."
+    },
+    {
+      "tc": 82.4,
+      "bucket": "face",
+      "change": "F5 out, face to C12 LinkedIn Jobs on the Rise headline (receipt)",
+      "source": "hand",
+      "id": "hand:kt-whip-cut",
+      "role": "face-cut",
+      "duration_s": 0.37,
+      "sfx_duck": false,
+      "why": "SWAPPED from kt-push-slide to the face pick. The whip settles (0.37 s) before the pan reads; placed swoosh-4 ON the cut, kept off the last word of the face line."
+    },
+    {
+      "tc": 82.4,
+      "bucket": "container",
+      "change": "C12 headline receipt held 4.38 s: slow perspective pan right across the title block",
+      "source": "lib",
+      "id": "lib:motion-3d-pan-1-right",
+      "role": "receipt-motion",
+      "duration_s": 4.38,
+      "sfx_duck": false,
+      "why": "Confirmed from the EDIT-PLAN: a single-scene camera move, not a cut, no sound. The one receipt long enough to carry a pan; the other four are 1.5 to 3.7 s pushes and highlights."
+    },
+    {
+      "tc": 86.78,
+      "bucket": "container",
+      "change": "C12 headline to C12 entry (same article re-framed), hard cut ON the word is",
+      "source": "hand",
+      "id": "hand:cut",
+      "role": "container-xfade",
+      "duration_s": 0.0,
+      "sfx_duck": false,
+      "why": "Hard cut, silent: a re-frame of the same page under the band; the highlighter wipe and the verdict pop at 87.54 are the beat."
+    },
+    {
+      "tc": 88.6,
+      "bucket": "broll",
+      "change": "C12 entry to BR-8 code scrolling (framed left under the RIGHT panel)",
+      "source": "hand",
+      "id": "hand:kt-push-slide",
+      "role": "broll-fade",
+      "duration_s": 0.1,
+      "sfx_duck": false,
+      "why": "Confirmed: silent push, the swoosh-1 of the panel carries it."
+    },
+    {
+      "tc": 92.02,
+      "bucket": "container",
+      "change": "BR-8 to math-not-code paper card",
+      "source": "hand",
+      "id": "hand:kt-push-slide",
+      "role": "container-xfade",
+      "duration_s": 0.1,
+      "sfx_duck": false,
+      "why": "Confirmed: card entry by push, placed whoosh-4 ON the push. Text container stays quiet."
+    },
+    {
+      "tc": 94.58,
+      "bucket": "container",
+      "change": "math-not-code card to C9 Stripe Radar header (receipt flash)",
+      "source": "hand",
+      "id": "hand:kt-push-slide",
+      "role": "container-xfade",
+      "duration_s": 0.1,
+      "sfx_duck": false,
+      "why": "Confirmed: push in the 94.36 to 94.80 pause, placed swoosh-4. No motion-shake on a 1.48 s flash."
+    },
+    {
+      "tc": 96.06,
+      "bucket": "container",
+      "change": "C9 header to C9 requirements block (same page), hard cut ON the word ML",
+      "source": "hand",
+      "id": "hand:cut",
+      "role": "container-xfade",
+      "duration_s": 0.0,
+      "sfx_duck": false,
+      "why": "Hard cut, silent: same page re-framed; the wipe on the word shipping is the beat."
+    },
+    {
+      "tc": 98.05,
+      "bucket": "container",
+      "change": "C9 requirements to C6 Levels.fyi AI Engineer page, hard cut",
+      "source": "hand",
+      "id": "hand:cut",
+      "role": "container-xfade",
+      "duration_s": 0.0,
+      "sfx_duck": false,
+      "why": "Hard cut, silent: the drum roll of the rise under Now the money carries it and the chorus drop lands at 99.615. Kept bare so the spin 3.65 s later is the only big move of the money run."
+    },
+    {
+      "tc": 101.7,
+      "bucket": "diagram-marquee",
+      "change": "C6 Levels.fyi receipt to C3 money ladder chart (the marquee chart)",
+      "source": "lib",
+      "id": "lib:spin-center-ease-short-cw",
+      "role": "SPIN-newfacet",
+      "duration_s": 0.44,
+      "sfx_duck": true,
+      "why": "NEW FACET: the edit turns from one source page (one role, one number) to the comparison board that stacks both roles, the verdict chart of the video. Short (0.44 s, 101.48 to 101.92) and clockwise like the wave-wall spin; the first bar only starts growing at 102.38, so the spin has settled. Rides mirrored padding, full frame, cover to cover, the spine never shows. Its baked SFX replaces the whoosh-4 placed at 101.60 and ducks under the VO (in the US makes around)."
+    },
+    {
+      "tc": 117.18,
+      "bucket": "glitch-still",
+      "change": "C3 payoff TRAIN to IMG-4 three empty chairs (AI still), in the hush after the vibe cut",
+      "source": "hand",
+      "id": "hand:fade",
+      "role": "glitch-still",
+      "duration_s": 0.33,
+      "sfx_duck": false,
+      "why": "The ONE soft move in the video, on purpose: the bed has dropped to the pad and the line deflates (But those seats are few), so a short silent dissolve marks the gear change where every other cut is hard. No glitch, no sound."
+    },
+    {
+      "tc": 119.75,
+      "bucket": "broll",
+      "change": "IMG-4 to BR-9 research lab, the COMPETING WITH PhDs headline landing",
+      "source": "hand",
+      "id": "hand:kt-whip-cut",
+      "role": "broll-fade",
+      "duration_s": 0.37,
+      "sfx_duck": false,
+      "why": "Confirmed: the headline-over-broll whip-zoom landing, placed swoosh-3."
+    },
+    {
+      "tc": 123.7,
+      "bucket": "face",
+      "change": "F6 cut-in, BR-9 to face (the verdict)",
+      "source": "hand",
+      "id": "hand:kt-whip-cut",
+      "role": "face-cut",
+      "duration_s": 0.37,
+      "sfx_duck": false,
+      "why": "SWAPPED from kt-push-slide to the face pick. Lands 0.28 s before Therefore and 2.2 s before the final drop, so the drop and the AI ENGINEERING pop own the hit. Placed whoosh-4."
+    },
+    {
+      "tc": 127.533,
+      "bucket": "face",
+      "change": "F6 out, face to BR-10 door opening, the THE DOOR IS OPEN headline landing",
+      "source": "hand",
+      "id": "hand:kt-whip-cut",
+      "role": "face-cut",
+      "duration_s": 0.37,
+      "sfx_duck": false,
+      "why": "Confirmed: the face pick and the headline whip-zoom landing are the same move here. Placed swoosh-3."
+    },
+    {
+      "tc": 130.4,
+      "bucket": "face",
+      "change": "F7 cut-in, BR-10 to face (subscribe)",
+      "source": "hand",
+      "id": "hand:kt-whip-cut",
+      "role": "face-cut",
+      "duration_s": 0.37,
+      "sfx_duck": false,
+      "why": "SWAPPED from kt-push-slide to the face pick. The whip is settled by 130.77, the frame the subscribe bar starts to rise. Placed whoosh-4."
+    },
+    {
+      "tc": 134.767,
+      "bucket": "face",
+      "change": "F7 punch-in ON the desilencer join 134.767 (frame 4043) + library light leak",
+      "source": "lib",
+      "id": "lib:lightleaks-6",
+      "role": "punch-leak",
+      "duration_s": 1.12,
+      "sfx_duck": true,
+      "why": "The only interior face join in the video: the desilence-coarse join at 134.767, frame 4043, in the voice trough 134.76 to 134.92 between the end of the subscribe sentence and All my content. The comp steps the ~20 percent punch on that frame and peaks the leak there, screen blend, under the caption. lightleaks-6 is fresh and the one fresh leak with a quick flash (1.12 s, medium energy), which suits the 2-frame snap; first of the set lightleaks-6, soft-3, soft-5, soft-9. Its sound ducks: the next word starts 135.08."
+    },
+    {
+      "tc": 139.533,
+      "bucket": "face",
+      "change": "F7 out, face to the end-screen card (WATCH NEXT, four slots)",
+      "source": "hand",
+      "id": "hand:kt-whip-cut",
+      "role": "face-cut",
+      "duration_s": 0.37,
+      "sfx_duck": false,
+      "why": "SWAPPED from kt-push-slide to the face pick. The card is at rest by 139.90, a second before the first arrow (140.86), so the slots sit still under the YouTube end-screen elements. Placed mouse-click."
+    }
+  ],
+  "melt_spin_budget": {
+    "melt_used": 1,
+    "spin_used": 1,
+    "note": "reserved to the two marquees the cue sheet flags: the one diagram reveal (C1, 26.24) and the money chart (C3, 101.70). Both short variants, both ducked. The wave-wall turn at 73.05 is the theme kt-spin-cut on a text interlude and is not a library spin."
+  },
+  "consistency_check": "No title card, so the card move never fires (rmn:flip is standby only). ONE face pick, hand:kt-whip-cut, on 12 of the 13 face edges; the exception is the 2-frame push that belongs to the paper statement at 58.10, and the two in-window moves are device-owned (the grid zoom of the open, the boxed-words shake-cut). ONE cover-to-cover move, hand:kt-push-slide, on every card / b-roll / receipt change; bare hard cuts only under a persisting band or on a same-page re-frame; the whip also lands the three headlines and takes the blur hand-off out of the wave wall. ONE melt look (MELT/Equidistant, 1 use) and ONE spin look (SPIN/Center Ease, 1 use, clockwise like the theme spin cut at 73.05). Text containers stay quiet: no melt, spin or glitch on any card. No library glitch on the four AI stills (the theme cuts carry them). ONE soft move, the fade into the hush at 117.18. ONE punch point, ONE light leak (fresh). State swaps inside a container (C1 nodes, C3 bars, card -sN states, end-screen arrows) are hard swaps or the 4-frame cross-fade from the asset specs, not transition rows. No clip insert, so no insert rows.",
+  "open_questions": [
+    "Face pick: I kept the face cut of the Energetic theme (hand:kt-whip-cut) instead of film burn or Blocks Max, as on lets-get-rich and growth-scale-up. Film burn ran on the last three videos; Blocks Max would put a 0.96 s shatter with its own sound on 13 face edges in 2:27. If you want the house pair anyway, Blocks Max is the one that fits this register.",
+    "Nine face edges are SWAPPED from the screenplay cut to the one face pick: the cut-ins at 8.27, 33.33, 77.63 (was kt-snap-zoom) and 45.63, 123.70, 130.40 (was kt-push-slide), the cut-outs at 12.37, 82.40, 139.53 (was kt-push-slide). Only the motion changes; every placed sound stays where the EDIT-PLAN has it. Say so if you want the screenplay mix back.",
+    "The two library marquee moves carry their own baked sound, so the whoosh-4 placed at 26.14 (C1) and 101.60 (C3) should come out of the mix or they double. If you would rather keep C1 on the plain push, the melt drops and the budget is spin 1 only.",
+    "No library glitch on the four AI stills (bucket 2 normally gives each one): IMG-1 rides the headline whip, IMG-2 is face-owned, IMG-3 cuts under the band, IMG-4 dissolves in the hush. A VHS or Invert hit (both never used) could go on IMG-1 at 5.25 if you want one.",
+    "B-roll enters on the 3-frame push of the theme, not the 0.5 s house fade, as the approved screenplay has it.",
+    "F5 lands at 130 percent off a whip instead of the 2-frame snap; if the versus stack reads better with the hard snap, that one edge goes back to kt-snap-zoom.",
+    "For the reconcile step, not a creative call: six [TRANSITION] events in EDIT-PLAN.md carry their placeholder on a continuation line (0:00.0, 0:05.2, 0:50.8, 0:58.1, 1:17.6, 1:22.4), so the resolved id lands on line 2 and the cross-check that wants a prefixed id on the event line itself will flag them. Every row here resolves (38 of 38, zero placeholders left in a dry run); those six lines need the id on their first line."
+  ]
+}

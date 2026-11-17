@@ -1,0 +1,46 @@
+{
+  "verdict": "PASS",
+  "asset": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/future-of-software-engineers/_previews/short/future-of-software-engineers-SHORT-30s-v2.mp4",
+  "checked": "all 60 sheet frames (final-sheet-01/02/03) + 32 full-size frames + exact frames 294-307 + per-frame luma of all 900 frames + the 4 raw span intermediates (qa/final-qa-v2/)",
+  "defects": [],
+  "advisories": [
+    {
+      "t": 15.7,
+      "what": "Frame 471 is one fully WHITE frame (luma avg 254, face gone, only the 'got cheap' caption visible), the peak of a 5-frame light-leak flash (frames 468-474). It is baked into the vertical master (span-03 frame 164 = luma 255), not added by the short, and lasts 33 ms.",
+      "fix": "None required (house light-leak on a desilencer join, the approved vertical's look). If Mike flags the flash, splice frames 468-474 with a softer leak peak (re-render that window only)."
+    },
+    {
+      "t": 16.67,
+      "what": "From about 16.67 to 18.8 the D5 card is an empty dark box with only the muted eyebrow 'NOT FOR THE CODE.' (headline reveals at ~18.8 on 'it pays you for'). This is the vertical's staged reveal, reads intentional, but is ~2.1 s of near-empty card.",
+      "fix": "None required. Optional: start the D5 window on the headline-revealed state if Mike wants it denser."
+    },
+    {
+      "t": 10.233,
+      "what": "No captions over the D4 card (10.233-14.767, 4.5 s) or the C5 receipt (5.333-6.833, 1.5 s): deliberate CARD_TEXT_HOLDS. The card prints the spoken question almost verbatim and the receipt's yellow highlight 'approved by engineers' carries 'engineers approve it.' (receipt yield = Mike's earlier visual-qa note). Captions are otherwise continuous, never doubled.",
+      "fix": "None. One-line revert in FutureOfSoftwareEngineersShort.tsx CARD_TEXT_HOLDS if Mike wants captions back."
+    },
+    {
+      "t": 5.4,
+      "what": "C5 receipt header: the pale-grey circular background of the share button touches/clips at the right and top frame edges (page chrome of the mobile capture). The icon glyphs and every line of body text are fully inside (left margin 36 px, right ~44 px).",
+      "fix": "None required (inherited from the approved vertical's mobile-view receipt; no text cut)."
+    },
+    {
+      "t": 0.0,
+      "what": "F1 hook face (0-5.3) and F2 (6.8-10.2) are soft/out of focus in the source camera; F3 and F9 are sharper. Framing is fine: face centred, nothing cut, hook-face 44% (gate 35-65%), captions under the mouth, never on it.",
+      "fix": "None (source recording; nothing a short can fix)."
+    }
+  ],
+  "verified_clean": [
+    "No text, caption or card cut at the left/right edge in any frame (widest caption 'what the code does' ~824 px, centred, >=110 px margins even at the 1.12 pop; edge-text gate 0 px on all 790 non-outro frames).",
+    "No 16:9 asset cropped: D4 + D5 cards are the native 1080x1920 rebuilds (reflowed, whole, inside 48-1032 px); C5 receipt is a native mobile-view capture with a phone line wrap.",
+    "No leftover 16:9 / burned captions: the four span intermediates carry no captions; only the short's Montserrat 900 lowercase, black-stroked track renders, one group at a time.",
+    "No caption on card text: D5 captions sit at y ~1515-1600, below the headline (ends y ~1265); D4 and receipt captions yield.",
+    "No black frames anywhere (no frame below luma 20); no blank frame before the outro.",
+    "Seams clean: 6.833 receipt->F2, 10.233 F2->D4 ('anymore.' holds to frame 306, clears on 307), 21.333 D5->F9, 26.333 F9->outro, all film-burn family, no half-transition hold.",
+    "House style: Playfair Display headlines, JetBrains Mono '2026'/'2027'/'12 MONTHS', DM Sans eyebrow/attribution, muted eyebrows, green->cyan dividers, cyan accent on 'sit there and code' / 'the business.', gold 'could'; no em dashes.",
+    "Outro intact 26.33-30.00: 'WATCH THE' white + 'FULL VIDEO' green #00e68a, Playfair 900 caps ~110-970 px, divider + green down arrow, no caption on it, last frame (29.95) clean."
+  ],
+  "sheet_timing_note": "The contact-sheet labels run ~0.2 s AHEAD of the frame shown (sheet '10.000' already shows the D4 card that starts at 10.233; sheet '15.500' is the 15.70 white flash; 'anymore.' at 9.75-10.24 appears on no sheet). Times in this report are measured on the short itself (ffmpeg select by frame).",
+  "frames_dir": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/future-of-software-engineers/_previews/short/qa/final-qa-v2",
+  "short": "future-of-software-engineers-SHORT-30s-v2.mp4:21650752"
+}

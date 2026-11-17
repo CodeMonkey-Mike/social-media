@@ -1,0 +1,2188 @@
+{
+ "id": "C2",
+ "stage": [
+  1080,
+  1920
+ ],
+ "png_scale": 1,
+ "states": [
+  "empty",
+  "scope",
+  "seats",
+  "then",
+  "now-base",
+  "goal",
+  "agents",
+  "now",
+  "dim",
+  "final"
+ ],
+ "geom": {
+  "stage": [
+   1080,
+   1920
+  ],
+  "panel_then": {
+   "x": 72,
+   "y": 240,
+   "w": 936,
+   "h": 560
+  },
+  "panel_now": {
+   "x": 72,
+   "y": 830,
+   "w": 936,
+   "h": 580
+  },
+  "grid_cols_panel_local": [
+   40,
+   332,
+   624
+  ],
+  "seat_w": 272,
+  "seats_panel_local": [
+   {
+    "label": "Frontend",
+    "x": 40,
+    "y": 176,
+    "w": 272,
+    "h": 130
+   },
+   {
+    "label": "Backend",
+    "x": 332,
+    "y": 176,
+    "w": 272,
+    "h": 130
+   },
+   {
+    "label": "QA",
+    "x": 624,
+    "y": 176,
+    "w": 272,
+    "h": 130
+   },
+   {
+    "label": "Project manager",
+    "x": 40,
+    "y": 322,
+    "w": 272,
+    "h": 130
+   },
+   {
+    "label": "Designer",
+    "x": 332,
+    "y": 322,
+    "w": 272,
+    "h": 130
+   },
+   {
+    "label": "Marketer",
+    "x": 624,
+    "y": 322,
+    "w": 272,
+    "h": 130
+   }
+  ],
+  "agents_panel_local": [
+   {
+    "label": "Frontend",
+    "x": 40,
+    "y": 336,
+    "w": 272,
+    "h": 58
+   },
+   {
+    "label": "Backend",
+    "x": 332,
+    "y": 336,
+    "w": 272,
+    "h": 58
+   },
+   {
+    "label": "QA",
+    "x": 624,
+    "y": 336,
+    "w": 272,
+    "h": 58
+   },
+   {
+    "label": "Project manager",
+    "x": 40,
+    "y": 412,
+    "w": 272,
+    "h": 58
+   },
+   {
+    "label": "Designer",
+    "x": 332,
+    "y": 412,
+    "w": 272,
+    "h": 58
+   },
+   {
+    "label": "Marketer",
+    "x": 624,
+    "y": 412,
+    "w": 272,
+    "h": 58
+   }
+  ],
+  "engineer_panel_local": {
+   "x": 298,
+   "y": 88,
+   "w": 340,
+   "h": 132
+  },
+  "goal_arrow_x": 404,
+  "back_arrow_x": 532,
+  "bus_y": 306,
+  "takeaway_tops": [
+   1458,
+   1516
+  ],
+  "camera": {
+   "TOP": {
+    "x": 25,
+    "y": 0,
+    "w": 1030,
+    "h": 1831.1
+   },
+   "BOTTOM": {
+    "x": 25,
+    "y": 88.9,
+    "w": 1030,
+    "h": 1831.1
+   },
+   "FULL": {
+    "x": 0,
+    "y": 0,
+    "w": 1080,
+    "h": 1920
+   }
+  },
+  "camera_scale_panel": 1.0485
+ },
+ "elements": {
+  "empty": {
+   "panelL": {
+    "x": 72,
+    "y": 240,
+    "w": 936,
+    "h": 560,
+    "visible": true,
+    "opacity": 1
+   },
+   "caption": {
+    "x": 113,
+    "y": 329,
+    "w": 683.6,
+    "h": 29,
+    "visible": false,
+    "opacity": 1
+   },
+   "scope": {
+    "x": 113,
+    "y": 365,
+    "w": 393.9,
+    "h": 26,
+    "visible": false,
+    "opacity": 1
+   },
+   "seat0": {
+    "x": 113,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat1": {
+    "x": 405,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat2": {
+    "x": 697,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat3": {
+    "x": 113,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat4": {
+    "x": 405,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat5": {
+    "x": 697,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "count": {
+    "x": 113,
+    "y": 727,
+    "w": 308,
+    "h": 40,
+    "visible": false,
+    "opacity": 1
+   },
+   "panelR": {
+    "x": 72,
+    "y": 830,
+    "w": 936,
+    "h": 580,
+    "visible": true,
+    "opacity": 1
+   },
+   "eng": {
+    "x": 371,
+    "y": 919,
+    "w": 340,
+    "h": 132,
+    "visible": false,
+    "opacity": 1
+   },
+   "goalArrow": {
+    "x": 469,
+    "y": 1053,
+    "w": 16,
+    "h": 82,
+    "visible": false,
+    "opacity": 1
+   },
+   "backArrow": {
+    "x": 597,
+    "y": 1053,
+    "w": 16,
+    "h": 82,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent0": {
+    "x": 113,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent1": {
+    "x": 405,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent2": {
+    "x": 697,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent3": {
+    "x": 113,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent4": {
+    "x": 405,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent5": {
+    "x": 697,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "goalLabel": {
+    "x": 242.7,
+    "y": 1082,
+    "w": 216.3,
+    "h": 24,
+    "visible": false,
+    "opacity": 1
+   },
+   "backLabel": {
+    "x": 623,
+    "y": 1082,
+    "w": 96.7,
+    "h": 24,
+    "visible": false,
+    "opacity": 1
+   },
+   "work": {
+    "x": 113,
+    "y": 1331,
+    "w": 331.6,
+    "h": 30,
+    "visible": false,
+    "opacity": 1
+   },
+   "take1": {
+    "x": 72,
+    "y": 1458,
+    "w": 601.4,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "take2": {
+    "x": 72,
+    "y": 1516,
+    "w": 747.8,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   }
+  },
+  "scope": {
+   "panelL": {
+    "x": 72,
+    "y": 240,
+    "w": 936,
+    "h": 560,
+    "visible": true,
+    "opacity": 1
+   },
+   "caption": {
+    "x": 113,
+    "y": 329,
+    "w": 683.6,
+    "h": 29,
+    "visible": true,
+    "opacity": 1
+   },
+   "scope": {
+    "x": 113,
+    "y": 365,
+    "w": 393.9,
+    "h": 26,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat0": {
+    "x": 113,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat1": {
+    "x": 405,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat2": {
+    "x": 697,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat3": {
+    "x": 113,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat4": {
+    "x": 405,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat5": {
+    "x": 697,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "count": {
+    "x": 113,
+    "y": 727,
+    "w": 308,
+    "h": 40,
+    "visible": false,
+    "opacity": 1
+   },
+   "panelR": {
+    "x": 72,
+    "y": 830,
+    "w": 936,
+    "h": 580,
+    "visible": true,
+    "opacity": 1
+   },
+   "eng": {
+    "x": 371,
+    "y": 919,
+    "w": 340,
+    "h": 132,
+    "visible": false,
+    "opacity": 1
+   },
+   "goalArrow": {
+    "x": 469,
+    "y": 1053,
+    "w": 16,
+    "h": 82,
+    "visible": false,
+    "opacity": 1
+   },
+   "backArrow": {
+    "x": 597,
+    "y": 1053,
+    "w": 16,
+    "h": 82,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent0": {
+    "x": 113,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent1": {
+    "x": 405,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent2": {
+    "x": 697,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent3": {
+    "x": 113,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent4": {
+    "x": 405,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent5": {
+    "x": 697,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "goalLabel": {
+    "x": 242.7,
+    "y": 1082,
+    "w": 216.3,
+    "h": 24,
+    "visible": false,
+    "opacity": 1
+   },
+   "backLabel": {
+    "x": 623,
+    "y": 1082,
+    "w": 96.7,
+    "h": 24,
+    "visible": false,
+    "opacity": 1
+   },
+   "work": {
+    "x": 113,
+    "y": 1331,
+    "w": 331.6,
+    "h": 30,
+    "visible": false,
+    "opacity": 1
+   },
+   "take1": {
+    "x": 72,
+    "y": 1458,
+    "w": 601.4,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "take2": {
+    "x": 72,
+    "y": 1516,
+    "w": 747.8,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   }
+  },
+  "seats": {
+   "panelL": {
+    "x": 72,
+    "y": 240,
+    "w": 936,
+    "h": 560,
+    "visible": true,
+    "opacity": 1
+   },
+   "caption": {
+    "x": 113,
+    "y": 329,
+    "w": 683.6,
+    "h": 29,
+    "visible": true,
+    "opacity": 1
+   },
+   "scope": {
+    "x": 113,
+    "y": 365,
+    "w": 393.9,
+    "h": 26,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat0": {
+    "x": 113,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat1": {
+    "x": 405,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat2": {
+    "x": 697,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat3": {
+    "x": 113,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat4": {
+    "x": 405,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat5": {
+    "x": 697,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "count": {
+    "x": 113,
+    "y": 727,
+    "w": 308,
+    "h": 40,
+    "visible": false,
+    "opacity": 1
+   },
+   "panelR": {
+    "x": 72,
+    "y": 830,
+    "w": 936,
+    "h": 580,
+    "visible": true,
+    "opacity": 1
+   },
+   "eng": {
+    "x": 371,
+    "y": 919,
+    "w": 340,
+    "h": 132,
+    "visible": false,
+    "opacity": 1
+   },
+   "goalArrow": {
+    "x": 469,
+    "y": 1053,
+    "w": 16,
+    "h": 82,
+    "visible": false,
+    "opacity": 1
+   },
+   "backArrow": {
+    "x": 597,
+    "y": 1053,
+    "w": 16,
+    "h": 82,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent0": {
+    "x": 113,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent1": {
+    "x": 405,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent2": {
+    "x": 697,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent3": {
+    "x": 113,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent4": {
+    "x": 405,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent5": {
+    "x": 697,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "goalLabel": {
+    "x": 242.7,
+    "y": 1082,
+    "w": 216.3,
+    "h": 24,
+    "visible": false,
+    "opacity": 1
+   },
+   "backLabel": {
+    "x": 623,
+    "y": 1082,
+    "w": 96.7,
+    "h": 24,
+    "visible": false,
+    "opacity": 1
+   },
+   "work": {
+    "x": 113,
+    "y": 1331,
+    "w": 331.6,
+    "h": 30,
+    "visible": false,
+    "opacity": 1
+   },
+   "take1": {
+    "x": 72,
+    "y": 1458,
+    "w": 601.4,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "take2": {
+    "x": 72,
+    "y": 1516,
+    "w": 747.8,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   }
+  },
+  "then": {
+   "panelL": {
+    "x": 72,
+    "y": 240,
+    "w": 936,
+    "h": 560,
+    "visible": true,
+    "opacity": 1
+   },
+   "caption": {
+    "x": 113,
+    "y": 329,
+    "w": 683.6,
+    "h": 29,
+    "visible": true,
+    "opacity": 1
+   },
+   "scope": {
+    "x": 113,
+    "y": 365,
+    "w": 393.9,
+    "h": 26,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat0": {
+    "x": 113,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat1": {
+    "x": 405,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat2": {
+    "x": 697,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat3": {
+    "x": 113,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat4": {
+    "x": 405,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat5": {
+    "x": 697,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "count": {
+    "x": 113,
+    "y": 727,
+    "w": 308,
+    "h": 40,
+    "visible": true,
+    "opacity": 1
+   },
+   "panelR": {
+    "x": 72,
+    "y": 830,
+    "w": 936,
+    "h": 580,
+    "visible": true,
+    "opacity": 1
+   },
+   "eng": {
+    "x": 371,
+    "y": 919,
+    "w": 340,
+    "h": 132,
+    "visible": false,
+    "opacity": 1
+   },
+   "goalArrow": {
+    "x": 469,
+    "y": 1053,
+    "w": 16,
+    "h": 82,
+    "visible": false,
+    "opacity": 1
+   },
+   "backArrow": {
+    "x": 597,
+    "y": 1053,
+    "w": 16,
+    "h": 82,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent0": {
+    "x": 113,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent1": {
+    "x": 405,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent2": {
+    "x": 697,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent3": {
+    "x": 113,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent4": {
+    "x": 405,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent5": {
+    "x": 697,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "goalLabel": {
+    "x": 242.7,
+    "y": 1082,
+    "w": 216.3,
+    "h": 24,
+    "visible": false,
+    "opacity": 1
+   },
+   "backLabel": {
+    "x": 623,
+    "y": 1082,
+    "w": 96.7,
+    "h": 24,
+    "visible": false,
+    "opacity": 1
+   },
+   "work": {
+    "x": 113,
+    "y": 1331,
+    "w": 331.6,
+    "h": 30,
+    "visible": false,
+    "opacity": 1
+   },
+   "take1": {
+    "x": 72,
+    "y": 1458,
+    "w": 601.4,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "take2": {
+    "x": 72,
+    "y": 1516,
+    "w": 747.8,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   }
+  },
+  "now-base": {
+   "panelL": {
+    "x": 72,
+    "y": 240,
+    "w": 936,
+    "h": 560,
+    "visible": true,
+    "opacity": 1
+   },
+   "caption": {
+    "x": 113,
+    "y": 329,
+    "w": 683.6,
+    "h": 29,
+    "visible": true,
+    "opacity": 1
+   },
+   "scope": {
+    "x": 113,
+    "y": 365,
+    "w": 393.9,
+    "h": 26,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat0": {
+    "x": 113,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat1": {
+    "x": 405,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat2": {
+    "x": 697,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat3": {
+    "x": 113,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat4": {
+    "x": 405,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat5": {
+    "x": 697,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "count": {
+    "x": 113,
+    "y": 727,
+    "w": 308,
+    "h": 40,
+    "visible": true,
+    "opacity": 1
+   },
+   "panelR": {
+    "x": 72,
+    "y": 830,
+    "w": 936,
+    "h": 580,
+    "visible": true,
+    "opacity": 1
+   },
+   "eng": {
+    "x": 371,
+    "y": 919,
+    "w": 340,
+    "h": 132,
+    "visible": true,
+    "opacity": 1
+   },
+   "goalArrow": {
+    "x": 469,
+    "y": 1053,
+    "w": 16,
+    "h": 82,
+    "visible": false,
+    "opacity": 1
+   },
+   "backArrow": {
+    "x": 597,
+    "y": 1053,
+    "w": 16,
+    "h": 82,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent0": {
+    "x": 113,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent1": {
+    "x": 405,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent2": {
+    "x": 697,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent3": {
+    "x": 113,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent4": {
+    "x": 405,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent5": {
+    "x": 697,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "goalLabel": {
+    "x": 242.7,
+    "y": 1082,
+    "w": 216.3,
+    "h": 24,
+    "visible": false,
+    "opacity": 1
+   },
+   "backLabel": {
+    "x": 623,
+    "y": 1082,
+    "w": 96.7,
+    "h": 24,
+    "visible": false,
+    "opacity": 1
+   },
+   "work": {
+    "x": 113,
+    "y": 1331,
+    "w": 331.6,
+    "h": 30,
+    "visible": true,
+    "opacity": 1
+   },
+   "take1": {
+    "x": 72,
+    "y": 1458,
+    "w": 601.4,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "take2": {
+    "x": 72,
+    "y": 1516,
+    "w": 747.8,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   }
+  },
+  "goal": {
+   "panelL": {
+    "x": 72,
+    "y": 240,
+    "w": 936,
+    "h": 560,
+    "visible": true,
+    "opacity": 1
+   },
+   "caption": {
+    "x": 113,
+    "y": 329,
+    "w": 683.6,
+    "h": 29,
+    "visible": true,
+    "opacity": 1
+   },
+   "scope": {
+    "x": 113,
+    "y": 365,
+    "w": 393.9,
+    "h": 26,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat0": {
+    "x": 113,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat1": {
+    "x": 405,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat2": {
+    "x": 697,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat3": {
+    "x": 113,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat4": {
+    "x": 405,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat5": {
+    "x": 697,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "count": {
+    "x": 113,
+    "y": 727,
+    "w": 308,
+    "h": 40,
+    "visible": true,
+    "opacity": 1
+   },
+   "panelR": {
+    "x": 72,
+    "y": 830,
+    "w": 936,
+    "h": 580,
+    "visible": true,
+    "opacity": 1
+   },
+   "eng": {
+    "x": 371,
+    "y": 919,
+    "w": 340,
+    "h": 132,
+    "visible": true,
+    "opacity": 1
+   },
+   "goalArrow": {
+    "x": 469,
+    "y": 1053,
+    "w": 16,
+    "h": 82,
+    "visible": true,
+    "opacity": 1
+   },
+   "backArrow": {
+    "x": 597,
+    "y": 1053,
+    "w": 16,
+    "h": 82,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent0": {
+    "x": 113,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent1": {
+    "x": 405,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent2": {
+    "x": 697,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent3": {
+    "x": 113,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent4": {
+    "x": 405,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent5": {
+    "x": 697,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "goalLabel": {
+    "x": 242.7,
+    "y": 1082,
+    "w": 216.3,
+    "h": 24,
+    "visible": true,
+    "opacity": 1
+   },
+   "backLabel": {
+    "x": 623,
+    "y": 1082,
+    "w": 96.7,
+    "h": 24,
+    "visible": false,
+    "opacity": 1
+   },
+   "work": {
+    "x": 113,
+    "y": 1331,
+    "w": 331.6,
+    "h": 30,
+    "visible": true,
+    "opacity": 1
+   },
+   "take1": {
+    "x": 72,
+    "y": 1458,
+    "w": 601.4,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "take2": {
+    "x": 72,
+    "y": 1516,
+    "w": 747.8,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   }
+  },
+  "agents": {
+   "panelL": {
+    "x": 72,
+    "y": 240,
+    "w": 936,
+    "h": 560,
+    "visible": true,
+    "opacity": 1
+   },
+   "caption": {
+    "x": 113,
+    "y": 329,
+    "w": 683.6,
+    "h": 29,
+    "visible": true,
+    "opacity": 1
+   },
+   "scope": {
+    "x": 113,
+    "y": 365,
+    "w": 393.9,
+    "h": 26,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat0": {
+    "x": 113,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat1": {
+    "x": 405,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat2": {
+    "x": 697,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat3": {
+    "x": 113,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat4": {
+    "x": 405,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat5": {
+    "x": 697,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "count": {
+    "x": 113,
+    "y": 727,
+    "w": 308,
+    "h": 40,
+    "visible": true,
+    "opacity": 1
+   },
+   "panelR": {
+    "x": 72,
+    "y": 830,
+    "w": 936,
+    "h": 580,
+    "visible": true,
+    "opacity": 1
+   },
+   "eng": {
+    "x": 371,
+    "y": 919,
+    "w": 340,
+    "h": 132,
+    "visible": true,
+    "opacity": 1
+   },
+   "goalArrow": {
+    "x": 469,
+    "y": 1053,
+    "w": 16,
+    "h": 82,
+    "visible": true,
+    "opacity": 1
+   },
+   "backArrow": {
+    "x": 597,
+    "y": 1053,
+    "w": 16,
+    "h": 82,
+    "visible": false,
+    "opacity": 1
+   },
+   "agent0": {
+    "x": 113,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent1": {
+    "x": 405,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent2": {
+    "x": 697,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent3": {
+    "x": 113,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent4": {
+    "x": 405,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent5": {
+    "x": 697,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "goalLabel": {
+    "x": 242.7,
+    "y": 1082,
+    "w": 216.3,
+    "h": 24,
+    "visible": true,
+    "opacity": 1
+   },
+   "backLabel": {
+    "x": 623,
+    "y": 1082,
+    "w": 96.7,
+    "h": 24,
+    "visible": false,
+    "opacity": 1
+   },
+   "work": {
+    "x": 113,
+    "y": 1331,
+    "w": 331.6,
+    "h": 30,
+    "visible": true,
+    "opacity": 1
+   },
+   "take1": {
+    "x": 72,
+    "y": 1458,
+    "w": 601.4,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "take2": {
+    "x": 72,
+    "y": 1516,
+    "w": 747.8,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   }
+  },
+  "now": {
+   "panelL": {
+    "x": 72,
+    "y": 240,
+    "w": 936,
+    "h": 560,
+    "visible": true,
+    "opacity": 1
+   },
+   "caption": {
+    "x": 113,
+    "y": 329,
+    "w": 683.6,
+    "h": 29,
+    "visible": true,
+    "opacity": 1
+   },
+   "scope": {
+    "x": 113,
+    "y": 365,
+    "w": 393.9,
+    "h": 26,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat0": {
+    "x": 113,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat1": {
+    "x": 405,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat2": {
+    "x": 697,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat3": {
+    "x": 113,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat4": {
+    "x": 405,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "seat5": {
+    "x": 697,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 1
+   },
+   "count": {
+    "x": 113,
+    "y": 727,
+    "w": 308,
+    "h": 40,
+    "visible": true,
+    "opacity": 1
+   },
+   "panelR": {
+    "x": 72,
+    "y": 830,
+    "w": 936,
+    "h": 580,
+    "visible": true,
+    "opacity": 1
+   },
+   "eng": {
+    "x": 371,
+    "y": 919,
+    "w": 340,
+    "h": 132,
+    "visible": true,
+    "opacity": 1
+   },
+   "goalArrow": {
+    "x": 469,
+    "y": 1053,
+    "w": 16,
+    "h": 82,
+    "visible": true,
+    "opacity": 1
+   },
+   "backArrow": {
+    "x": 597,
+    "y": 1053,
+    "w": 16,
+    "h": 82,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent0": {
+    "x": 113,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent1": {
+    "x": 405,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent2": {
+    "x": 697,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent3": {
+    "x": 113,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent4": {
+    "x": 405,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent5": {
+    "x": 697,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "goalLabel": {
+    "x": 242.7,
+    "y": 1082,
+    "w": 216.3,
+    "h": 24,
+    "visible": true,
+    "opacity": 1
+   },
+   "backLabel": {
+    "x": 623,
+    "y": 1082,
+    "w": 96.7,
+    "h": 24,
+    "visible": true,
+    "opacity": 1
+   },
+   "work": {
+    "x": 113,
+    "y": 1331,
+    "w": 331.6,
+    "h": 30,
+    "visible": true,
+    "opacity": 1
+   },
+   "take1": {
+    "x": 72,
+    "y": 1458,
+    "w": 601.4,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "take2": {
+    "x": 72,
+    "y": 1516,
+    "w": 747.8,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   }
+  },
+  "dim": {
+   "panelL": {
+    "x": 72,
+    "y": 240,
+    "w": 936,
+    "h": 560,
+    "visible": true,
+    "opacity": 0.3
+   },
+   "caption": {
+    "x": 113,
+    "y": 329,
+    "w": 683.6,
+    "h": 29,
+    "visible": true,
+    "opacity": 0.3
+   },
+   "scope": {
+    "x": 113,
+    "y": 365,
+    "w": 393.9,
+    "h": 26,
+    "visible": true,
+    "opacity": 0.3
+   },
+   "seat0": {
+    "x": 113,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 0.3
+   },
+   "seat1": {
+    "x": 405,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 0.3
+   },
+   "seat2": {
+    "x": 697,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 0.3
+   },
+   "seat3": {
+    "x": 113,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 0.3
+   },
+   "seat4": {
+    "x": 405,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 0.3
+   },
+   "seat5": {
+    "x": 697,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 0.3
+   },
+   "count": {
+    "x": 113,
+    "y": 727,
+    "w": 308,
+    "h": 40,
+    "visible": true,
+    "opacity": 0.3
+   },
+   "panelR": {
+    "x": 72,
+    "y": 830,
+    "w": 936,
+    "h": 580,
+    "visible": true,
+    "opacity": 1
+   },
+   "eng": {
+    "x": 371,
+    "y": 919,
+    "w": 340,
+    "h": 132,
+    "visible": true,
+    "opacity": 1
+   },
+   "goalArrow": {
+    "x": 469,
+    "y": 1053,
+    "w": 16,
+    "h": 82,
+    "visible": true,
+    "opacity": 1
+   },
+   "backArrow": {
+    "x": 597,
+    "y": 1053,
+    "w": 16,
+    "h": 82,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent0": {
+    "x": 113,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent1": {
+    "x": 405,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent2": {
+    "x": 697,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent3": {
+    "x": 113,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent4": {
+    "x": 405,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent5": {
+    "x": 697,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "goalLabel": {
+    "x": 242.7,
+    "y": 1082,
+    "w": 216.3,
+    "h": 24,
+    "visible": true,
+    "opacity": 1
+   },
+   "backLabel": {
+    "x": 623,
+    "y": 1082,
+    "w": 96.7,
+    "h": 24,
+    "visible": true,
+    "opacity": 1
+   },
+   "work": {
+    "x": 113,
+    "y": 1331,
+    "w": 331.6,
+    "h": 30,
+    "visible": true,
+    "opacity": 1
+   },
+   "take1": {
+    "x": 72,
+    "y": 1458,
+    "w": 601.4,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "take2": {
+    "x": 72,
+    "y": 1516,
+    "w": 747.8,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   }
+  },
+  "final": {
+   "panelL": {
+    "x": 72,
+    "y": 240,
+    "w": 936,
+    "h": 560,
+    "visible": true,
+    "opacity": 0.3
+   },
+   "caption": {
+    "x": 113,
+    "y": 329,
+    "w": 683.6,
+    "h": 29,
+    "visible": true,
+    "opacity": 0.3
+   },
+   "scope": {
+    "x": 113,
+    "y": 365,
+    "w": 393.9,
+    "h": 26,
+    "visible": true,
+    "opacity": 0.3
+   },
+   "seat0": {
+    "x": 113,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 0.3
+   },
+   "seat1": {
+    "x": 405,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 0.3
+   },
+   "seat2": {
+    "x": 697,
+    "y": 417,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 0.3
+   },
+   "seat3": {
+    "x": 113,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 0.3
+   },
+   "seat4": {
+    "x": 405,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 0.3
+   },
+   "seat5": {
+    "x": 697,
+    "y": 563,
+    "w": 272,
+    "h": 130,
+    "visible": true,
+    "opacity": 0.3
+   },
+   "count": {
+    "x": 113,
+    "y": 727,
+    "w": 308,
+    "h": 40,
+    "visible": true,
+    "opacity": 0.3
+   },
+   "panelR": {
+    "x": 72,
+    "y": 830,
+    "w": 936,
+    "h": 580,
+    "visible": true,
+    "opacity": 1
+   },
+   "eng": {
+    "x": 371,
+    "y": 919,
+    "w": 340,
+    "h": 132,
+    "visible": true,
+    "opacity": 1
+   },
+   "goalArrow": {
+    "x": 469,
+    "y": 1053,
+    "w": 16,
+    "h": 82,
+    "visible": true,
+    "opacity": 1
+   },
+   "backArrow": {
+    "x": 597,
+    "y": 1053,
+    "w": 16,
+    "h": 82,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent0": {
+    "x": 113,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent1": {
+    "x": 405,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent2": {
+    "x": 697,
+    "y": 1167,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent3": {
+    "x": 113,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent4": {
+    "x": 405,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "agent5": {
+    "x": 697,
+    "y": 1243,
+    "w": 272,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "goalLabel": {
+    "x": 242.7,
+    "y": 1082,
+    "w": 216.3,
+    "h": 24,
+    "visible": true,
+    "opacity": 1
+   },
+   "backLabel": {
+    "x": 623,
+    "y": 1082,
+    "w": 96.7,
+    "h": 24,
+    "visible": true,
+    "opacity": 1
+   },
+   "work": {
+    "x": 113,
+    "y": 1331,
+    "w": 331.6,
+    "h": 30,
+    "visible": true,
+    "opacity": 1
+   },
+   "take1": {
+    "x": 72,
+    "y": 1458,
+    "w": 601.4,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "take2": {
+    "x": 72,
+    "y": 1516,
+    "w": 747.8,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   }
+  }
+ }
+}

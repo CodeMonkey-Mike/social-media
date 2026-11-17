@@ -1,0 +1,81 @@
+{
+ "src": "ALL.a.defumbled.mp4",
+ "out": "ALL.b.blackout.mp4",
+ "duration": 356.37,
+ "cover_spans": [
+  {
+   "start": 13.302,
+   "end": 26.519,
+   "chunks": "1-3"
+  },
+  {
+   "start": 39.647,
+   "end": 81.769,
+   "chunks": "5-9"
+  },
+  {
+   "start": 99.516,
+   "end": 113.948,
+   "chunks": "12"
+  },
+  {
+   "start": 132.751,
+   "end": 174.355,
+   "chunks": "16-20"
+  },
+  {
+   "start": 188.871,
+   "end": 290.918,
+   "chunks": "22-35"
+  },
+  {
+   "start": 303.575,
+   "end": 311.434,
+   "chunks": "37"
+  },
+  {
+   "start": 341.642,
+   "end": 356.37,
+   "chunks": "40-43"
+  }
+ ],
+ "face_beats": [
+  {
+   "chunks": "0",
+   "text": "AI engineer versus ML engineer."
+  },
+  {
+   "chunks": "4",
+   "text": "One of these rolls gets the big checks..."
+  },
+  {
+   "chunks": "10-11",
+   "text": "That's my side. I've run Cloud agents... never actually trained a model."
+  },
+  {
+   "chunks": "13-15",
+   "text": "But as soon as that API bill gets too big, you can and should / Post and tune your own model. / which is something that I've been thinking about lately. Hmm, how to cut those costs. (ad-lib, FACE per Mike 2026-11-10)"
+  },
+  {
+   "chunks": "21",
+   "text": "Think of shipping a support chatbot on Claude versus training a fraud model."
+  },
+  {
+   "chunks": "36",
+   "text": "Therefore, for most developers, AI engineering is the key."
+  },
+  {
+   "chunks": "38-39",
+   "text": "So subscribe... / All my content on this channel..."
+  }
+ ],
+ "blacked_seconds": 236.01,
+ "blacked_pct": 66,
+ "drift_ms": 9,
+ "flags": [
+  "chunk 35 'Something to ponder.' ad-lib (COVER)",
+  "chunks 41-43 end-screen retake tail (COVER)",
+  "head 0-13.302 left unblacked: 7.8s leading silence + face beat 0",
+  "2026-11-10 Mike's spine_review fixes (hand repair: remove_spans.py + blackout_spans.py): chunk 15 ad-lib is FACE (face 13-15); '$340,000 gap... train the models' (now chunks 31-32) recorded as a cover read, now COVER; 'My god, dude.' (chunk 30, recording 598.03-601.73) RESTORED (Mike: deliberate amazement), COVER (eyes off camera, between two cover money lines). Frame QA: 8 face midpoints lit (YAVG 77-80), 10 cover midpoints pure black (YAVG 16)."
+ ]
+}

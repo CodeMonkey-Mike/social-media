@@ -1,0 +1,421 @@
+{
+  "product": {
+    "name": "Pieverse",
+    "description": "Pieverse lets crypto-literate users provision web3-native AI agents, equip them with skills, and deploy them to messaging channels. Public agent discovery is read-only today; protected product actions require wallet-signed sessions.",
+    "category": "Web3 AI agent platform",
+    "publicSurface": "https://pieverse.io",
+    "docsSurface": "https://docs.pieverse.io",
+    "executionApiHost": "https://api.pieverse.io"
+  },
+  "canonical": {
+    "homepage": "https://pieverse.io/",
+    "agentMode": "https://pieverse.io/?mode=agent",
+    "llms": "https://pieverse.io/llms.txt",
+    "agentsMd": "https://pieverse.io/agents.md",
+    "agentInstructions": "https://pieverse.io/AGENTS.md",
+    "markdownIndex": "https://pieverse.io/index.md",
+    "pricing": "https://pieverse.io/pricing.md",
+    "auth": "https://pieverse.io/auth.md",
+    "sandbox": "https://pieverse.io/sandbox.md",
+    "docsLlms": "https://pieverse.io/docs/llms.txt",
+    "apiLlms": "https://pieverse.io/api/llms.txt",
+    "openapi": "https://pieverse.io/openapi.json",
+    "apiCatalog": "https://pieverse.io/.well-known/api-catalog",
+    "a2aAgentCard": "https://pieverse.io/.well-known/agent-card.json",
+    "mcpServerCard": "https://pieverse.io/.well-known/mcp.json",
+    "mcpTransport": "https://pieverse.io/.well-known/mcp",
+    "webmcpManifest": "https://pieverse.io/.well-known/webmcp.json",
+    "aiCatalog": "https://pieverse.io/.well-known/ai-catalog.json",
+    "apiDeprecationPolicy": "https://pieverse.io/api-deprecation-policy.md",
+    "schemaMap": "https://pieverse.io/schemamap.xml",
+    "nlwebAsk": "https://pieverse.io/ask",
+    "batch": "https://pieverse.io/api/agent-discovery/batch",
+    "mcpEndpoint": "https://pieverse.io/api/mcp",
+    "github": "https://github.com/Pieverse-Eng",
+    "publicRepo": "https://github.com/Pieverse-Eng/pieverse-agent-rules",
+    "agentRulesRepo": "https://github.com/Pieverse-Eng/pieverse-agent-rules",
+    "press": "https://pieverse.io/press",
+    "linkedIn": "https://www.linkedin.com/company/pieverse",
+    "support": "mailto:support@pieverse.io",
+    "contact": "mailto:hello@pieverse.io"
+  },
+  "resources": [
+    {
+      "title": "Product overview markdown",
+      "path": "/index.md",
+      "mimeType": "text/markdown",
+      "description": "Citation-ready summary of Pieverse, canonical URLs, public resources, and limits.",
+      "url": "https://pieverse.io/index.md"
+    },
+    {
+      "title": "LLM discovery file",
+      "path": "/llms.txt",
+      "mimeType": "text/plain",
+      "description": "Primary agent discovery index with public docs, specs, and limitations.",
+      "url": "https://pieverse.io/llms.txt"
+    },
+    {
+      "title": "Pricing markdown",
+      "path": "/pricing.md",
+      "mimeType": "text/markdown",
+      "description": "Current Purr-Fect Claw tiers, AI credit limits, resource limits, and payment notes.",
+      "url": "https://pieverse.io/pricing.md"
+    },
+    {
+      "title": "Wallet auth markdown",
+      "path": "/auth.md",
+      "mimeType": "text/markdown",
+      "description": "Wallet-signed session model, public/protected surfaces, and error expectations.",
+      "url": "https://pieverse.io/auth.md"
+    },
+    {
+      "title": "Sandbox markdown",
+      "path": "/sandbox.md",
+      "mimeType": "text/markdown",
+      "description": "Public test data and boundaries that avoid production user or payment state.",
+      "url": "https://pieverse.io/sandbox.md"
+    },
+    {
+      "title": "Developer portal",
+      "path": "/developers",
+      "mimeType": "text/html",
+      "description": "Human-readable developer portal for Pieverse public agent discovery resources.",
+      "url": "https://pieverse.io/developers"
+    },
+    {
+      "title": "Developer portal markdown",
+      "path": "/developers.md",
+      "mimeType": "text/markdown",
+      "description": "Markdown developer portal with public OpenAPI, MCP, NLWeb, and auth links.",
+      "url": "https://pieverse.io/developers.md"
+    },
+    {
+      "title": "Agent instructions",
+      "path": "/AGENTS.md",
+      "mimeType": "text/markdown",
+      "description": "Public agent instructions with when-to-use guidance and capability boundaries.",
+      "url": "https://pieverse.io/AGENTS.md"
+    },
+    {
+      "title": "Agent instructions lowercase alias",
+      "path": "/agents.md",
+      "mimeType": "text/markdown",
+      "description": "Lowercase agents.md alias for crawlers that probe conventional agent instruction paths.",
+      "url": "https://pieverse.io/agents.md"
+    },
+    {
+      "title": "Claude agent instructions",
+      "path": "/CLAUDE.md",
+      "mimeType": "text/markdown",
+      "description": "Claude-compatible public agent instructions for Pieverse discovery.",
+      "url": "https://pieverse.io/CLAUDE.md"
+    },
+    {
+      "title": "Gemini agent instructions",
+      "path": "/GEMINI.md",
+      "mimeType": "text/markdown",
+      "description": "Gemini-compatible public agent instructions for Pieverse discovery.",
+      "url": "https://pieverse.io/GEMINI.md"
+    },
+    {
+      "title": "GitHub Copilot instructions",
+      "path": "/.github/copilot-instructions.md",
+      "mimeType": "text/markdown",
+      "description": "Copilot-compatible public agent instructions for Pieverse discovery.",
+      "url": "https://pieverse.io/.github/copilot-instructions.md"
+    },
+    {
+      "title": "Cursor public discovery rule",
+      "path": "/.cursor/rules/pieverse-public-discovery.mdc",
+      "mimeType": "text/markdown",
+      "description": "Cursor-compatible instruction rule for Pieverse public discovery.",
+      "url": "https://pieverse.io/.cursor/rules/pieverse-public-discovery.mdc"
+    },
+    {
+      "title": "Well-known agent instructions",
+      "path": "/.well-known/agents.md",
+      "mimeType": "text/markdown",
+      "description": "Well-known alias for public agent instructions.",
+      "url": "https://pieverse.io/.well-known/agents.md"
+    },
+    {
+      "title": "A2A public discovery agent card",
+      "path": "/.well-known/agent-card.json",
+      "mimeType": "application/a2a+json",
+      "description": "A2A-compatible Agent Card for the read-only Pieverse public discovery agent.",
+      "url": "https://pieverse.io/.well-known/agent-card.json"
+    },
+    {
+      "title": "OAuth protected resource metadata",
+      "path": "/.well-known/oauth-protected-resource",
+      "mimeType": "application/json",
+      "description": "RFC 9728-style protected resource metadata for discovering Pieverse auth boundaries.",
+      "url": "https://pieverse.io/.well-known/oauth-protected-resource"
+    },
+    {
+      "title": "OAuth protected resource markdown",
+      "path": "/.well-known/oauth-protected-resource.md",
+      "mimeType": "text/markdown",
+      "description": "Markdown twin for agents that append .md to protected-resource metadata URLs.",
+      "url": "https://pieverse.io/.well-known/oauth-protected-resource.md"
+    },
+    {
+      "title": "OAuth authorization server metadata",
+      "path": "/.well-known/oauth-authorization-server",
+      "mimeType": "application/json",
+      "description": "Authorization-server metadata for Pieverse discovery-only agent auth compatibility.",
+      "url": "https://pieverse.io/.well-known/oauth-authorization-server"
+    },
+    {
+      "title": "OAuth authorization server markdown",
+      "path": "/.well-known/oauth-authorization-server.md",
+      "mimeType": "text/markdown",
+      "description": "Markdown twin for agents that append .md to authorization-server metadata URLs.",
+      "url": "https://pieverse.io/.well-known/oauth-authorization-server.md"
+    },
+    {
+      "title": "Agent auth discovery endpoint",
+      "path": "/agent/auth",
+      "mimeType": "application/json",
+      "description": "WWW-Authenticate entrypoint pointing agents to Pieverse protected resource metadata.",
+      "url": "https://pieverse.io/agent/auth"
+    },
+    {
+      "title": "Agent auth registration metadata",
+      "path": "/agent/auth/register",
+      "mimeType": "application/json",
+      "description": "Discovery-only register_uri metadata for future scoped machine clients.",
+      "url": "https://pieverse.io/agent/auth/register"
+    },
+    {
+      "title": "Agent auth registration markdown",
+      "path": "/agent/auth/register.md",
+      "mimeType": "text/markdown",
+      "description": "Markdown twin for the agent-auth register_uri with current and future token boundaries.",
+      "url": "https://pieverse.io/agent/auth/register.md"
+    },
+    {
+      "title": "API deprecation policy",
+      "path": "/api-deprecation-policy.md",
+      "mimeType": "text/markdown",
+      "description": "Lifecycle, versioning, and deprecation policy for public Pieverse discovery APIs.",
+      "url": "https://pieverse.io/api-deprecation-policy.md"
+    },
+    {
+      "title": "Developer docs scoped LLM file",
+      "path": "/docs/llms.txt",
+      "mimeType": "text/plain",
+      "description": "Scoped LLM context for Pieverse docs, resources, and capability boundaries.",
+      "url": "https://pieverse.io/docs/llms.txt"
+    },
+    {
+      "title": "API scoped LLM file",
+      "path": "/api/llms.txt",
+      "mimeType": "text/plain",
+      "description": "Scoped LLM context for read-only public API and MCP surfaces.",
+      "url": "https://pieverse.io/api/llms.txt"
+    },
+    {
+      "title": "Read-only OpenAPI",
+      "path": "/openapi.json",
+      "mimeType": "application/json",
+      "description": "OpenAPI 3.1 contract for public read-only discovery endpoints only.",
+      "url": "https://pieverse.io/openapi.json"
+    },
+    {
+      "title": "Docs-only MCP server card",
+      "path": "/.well-known/mcp.json",
+      "mimeType": "application/json",
+      "description": "MCP metadata for a read-only docs/resources server with no mutating tools.",
+      "url": "https://pieverse.io/.well-known/mcp.json"
+    },
+    {
+      "title": "Docs-only MCP well-known endpoint",
+      "path": "/.well-known/mcp",
+      "mimeType": "application/json",
+      "description": "Streamable HTTP MCP transport for clients that probe the standard /.well-known/mcp path.",
+      "url": "https://pieverse.io/.well-known/mcp"
+    },
+    {
+      "title": "Docs-only MCP transport alias",
+      "path": "/mcp",
+      "mimeType": "application/json",
+      "description": "Streamable HTTP MCP transport alias for browser-based agents that probe /mcp.",
+      "url": "https://pieverse.io/mcp"
+    },
+    {
+      "title": "Docs-only MCP server-card alias",
+      "path": "/.well-known/mcp/server-card.json",
+      "mimeType": "application/json",
+      "description": "Alias for MCP clients that probe /.well-known/mcp/server-card.json.",
+      "url": "https://pieverse.io/.well-known/mcp/server-card.json"
+    },
+    {
+      "title": "WebMCP manifest",
+      "path": "/.well-known/webmcp.json",
+      "mimeType": "application/json",
+      "description": "Read-only WebMCP-style manifest that describes Pieverse public discovery tools for browser agents.",
+      "url": "https://pieverse.io/.well-known/webmcp.json"
+    },
+    {
+      "title": "WebMCP runtime registrar",
+      "path": "/webmcp-register.js",
+      "mimeType": "application/javascript",
+      "description": "Progressive WebMCP runtime registration for read-only Pieverse public discovery tools.",
+      "url": "https://pieverse.io/webmcp-register.js"
+    },
+    {
+      "title": "Agentic Resource Discovery catalog",
+      "path": "/.well-known/ai-catalog.json",
+      "mimeType": "application/json",
+      "description": "ARD ai-catalog manifest listing public OpenAPI and MCP discovery resources.",
+      "url": "https://pieverse.io/.well-known/ai-catalog.json"
+    },
+    {
+      "title": "RFC 9727 API catalog",
+      "path": "/.well-known/api-catalog",
+      "mimeType": "application/linkset+json",
+      "description": "Linkset catalog for Pieverse public read-only API descriptions and docs.",
+      "url": "https://pieverse.io/.well-known/api-catalog"
+    },
+    {
+      "title": "Agent Skills discovery index",
+      "path": "/.well-known/agent-skills/index.json",
+      "mimeType": "application/json",
+      "description": "Agent Skills v0.2.0 index for Pieverse public discovery guidance.",
+      "url": "https://pieverse.io/.well-known/agent-skills/index.json"
+    },
+    {
+      "title": "Pieverse public discovery skill",
+      "path": "/.well-known/agent-skills/pieverse-public-discovery/SKILL.md",
+      "mimeType": "text/markdown",
+      "description": "When-to-use guidance for agents reading Pieverse public discovery resources.",
+      "url": "https://pieverse.io/.well-known/agent-skills/pieverse-public-discovery/SKILL.md"
+    },
+    {
+      "title": "NLWeb Schema Map",
+      "path": "/schemamap.xml",
+      "mimeType": "application/xml",
+      "description": "Schema Feeds map for aggregated schema.org JSON-LD data.",
+      "url": "https://pieverse.io/schemamap.xml"
+    },
+    {
+      "title": "Schema.org JSONL feed",
+      "path": "/schema-org.jsonl",
+      "mimeType": "application/x-jsonlines",
+      "description": "Aggregated schema.org JSON-LD objects for Pieverse public surfaces.",
+      "url": "https://pieverse.io/schema-org.jsonl"
+    },
+    {
+      "title": "NLWeb ask endpoint",
+      "path": "/ask",
+      "mimeType": "application/json",
+      "description": "Read-only NLWeb-compatible question endpoint for public Pieverse docs.",
+      "url": "https://pieverse.io/ask"
+    },
+    {
+      "title": "Public batch resource endpoint",
+      "path": "/api/agent-discovery/batch",
+      "mimeType": "application/json",
+      "description": "Read-only batch endpoint for fetching multiple public discovery resources in one request.",
+      "url": "https://pieverse.io/api/agent-discovery/batch"
+    },
+    {
+      "title": "Public resource catalog",
+      "path": "/api/agent-discovery/resources",
+      "mimeType": "application/json",
+      "description": "JSON catalog of public resources, canonical URLs, and capability boundaries.",
+      "url": "https://pieverse.io/api/agent-discovery/resources"
+    },
+    {
+      "title": "Pricing JSON",
+      "path": "/api/agent-discovery/pricing",
+      "mimeType": "application/json",
+      "description": "Machine-readable plan tiers and limits.",
+      "url": "https://pieverse.io/api/agent-discovery/pricing"
+    },
+    {
+      "title": "Auth JSON",
+      "path": "/api/agent-discovery/auth",
+      "mimeType": "application/json",
+      "description": "Machine-readable wallet auth and boundary model.",
+      "url": "https://pieverse.io/api/agent-discovery/auth"
+    },
+    {
+      "title": "Sandbox JSON",
+      "path": "/api/agent-discovery/sandbox",
+      "mimeType": "application/json",
+      "description": "Machine-readable public sandbox/test descriptors.",
+      "url": "https://pieverse.io/api/agent-discovery/sandbox"
+    },
+    {
+      "title": "Discovery status JSON",
+      "path": "/api/agent-discovery/status",
+      "mimeType": "application/json",
+      "description": "Read-only service status and version metadata for agent discovery.",
+      "url": "https://pieverse.io/api/agent-discovery/status"
+    }
+  ],
+  "publicCapabilities": [
+    {
+      "title": "Product and developer discovery",
+      "status": "public",
+      "description": "Machine-readable Pieverse developer resources: docs, pricing, auth, sandbox, status, OpenAPI, and MCP resources."
+    },
+    {
+      "title": "Docs-only MCP resources",
+      "status": "public",
+      "description": "Public read-only resources; no mutating tools, payments, or protected product actions."
+    }
+  ],
+  "protectedCapabilities": [
+    {
+      "title": "A2A merchant and agent SDK docs",
+      "status": "protected",
+      "description": "Kept behind intentional access controls until the SDK docs are opened publicly."
+    },
+    {
+      "title": "Purr-Fect Claw instance management",
+      "status": "protected",
+      "description": "Creating, modifying, renewing, and deleting agents requires a wallet-signed session."
+    },
+    {
+      "title": "Skill installation and merchant workflows",
+      "status": "protected",
+      "description": "Skill Store writes require authenticated users and product authorization checks."
+    },
+    {
+      "title": "Wallet policy approvals and on-chain actions",
+      "status": "protected",
+      "description": "User, wallet, payment, and policy state is not public discovery data."
+    }
+  ],
+  "deferredCapabilities": [
+    {
+      "title": "Live agent payments",
+      "status": "deferred",
+      "description": "No public live agent payment/action protocol is advertised as executable today."
+    },
+    {
+      "title": "x402, UCP, ACP, AP2-style agent transactions",
+      "status": "deferred",
+      "description": "Product discovery may explain the stance, but specs do not claim these actions are live."
+    },
+    {
+      "title": "api.pieverse.io execution APIs",
+      "status": "deferred",
+      "description": "The API host is reserved for future execution APIs. The current public OpenAPI contract is served from pieverse.io."
+    },
+    {
+      "title": "Mutating MCP tools and product MCP Apps",
+      "status": "deferred",
+      "description": "The current MCP surface is docs/resources only with a read-only discovery UI. Product review, checkout, payment, and state-changing MCP apps are deferred."
+    }
+  ],
+  "pagination": {
+    "cursor": null,
+    "hasMore": false,
+    "limit": 45,
+    "nextCursor": null
+  }
+}

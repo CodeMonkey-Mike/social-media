@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>C1 VERTICAL (1080x1920) · system-design split · AI ENGINEER lane vs ML ENGINEER lane (AI vs ML, CH2@26.24-33.333)</title>
+<!-- PORTRAIT twin of ../../diagrams/C1.html: same locked stylesheet, same strings, same roles/colours, same 6 states.
+     The two LANES (rows that flow left -> right) become two COLUMNS that flow top -> bottom: AI ENGINEER left, ML ENGINEER
+     right, step i of each lane on the same row. Only geometry + type sizes changed (phone reading size). -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ===== LOCKED STYLESHEET (skills/container-reference/container-canonical.css), pasted verbatim, tokens untouched ===== */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+b{color:var(--text-primary);font-weight:700}
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* ===== PORTRAIT frame (1080x1920): the canonical .frame at the vertical canvas ===== */
+.frame.v{width:1080px;height:1920px;padding:0 72px}
+
+/* ===== C1 diagram layer (geometry is absolute so every state shares identical pixels) ===== */
+.frame.dg{display:block;padding:0}
+.frame.dg>.abs{position:absolute}
+.hdr{left:72px;top:112px}
+.hdr .ey{font-size:28px;margin-bottom:22px}
+.hdr h1{font-size:82px;max-width:936px}
+.hdr .divider{margin:28px 0 0}
+
+.lane{border:1px solid var(--border);border-radius:20px;background:rgba(255,255,255,.012)}
+.lane-hd{display:flex;flex-direction:column;gap:8px}
+.role{font-family:'DM Sans';font-weight:700;font-size:30px;letter-spacing:.14em;text-transform:uppercase;line-height:1.1}
+.role.ai{color:var(--accent-gold)}
+.role.ml{color:var(--accent-green)}
+.desc{font-family:'DM Sans';font-weight:400;font-size:25px;color:var(--text-secondary);line-height:1.15}
+.ml-dim{opacity:.38}          /* the ML lane nodes + arrows: DIM the whole hold */
+.ml-hd{opacity:.72}           /* its header stays legible so the viewer knows what the dim lane is */
+
+.node{background:var(--bg-card);border:1.5px solid #262c3b;border-radius:14px;
+  display:flex;flex-direction:column;justify-content:center;padding:0 20px 0 30px;overflow:hidden}
+.node::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
+.node.ai::before{background:rgba(255,215,0,.45)}
+.node.ml::before{background:rgba(0,230,138,.70)}
+.node .lb{font-family:'DM Sans';font-weight:700;font-size:34px;line-height:1.12;letter-spacing:.03em;
+  text-transform:uppercase;color:var(--text-primary)}
+.node .sb{font-family:'DM Sans';font-weight:400;font-size:25px;line-height:1.28;color:var(--text-secondary);margin-top:8px}
+
+/* LIT (traced) = gold border + gold label; CURRENT (the word being spoken) = + glow */
+.node.lit{border-color:rgba(255,215,0,.60);
+  background:linear-gradient(180deg,rgba(255,215,0,.075),rgba(255,215,0,.02)),var(--bg-card)}
+.node.lit::before{background:var(--accent-gold)}
+.node.lit .lb{color:var(--accent-gold)}
+.node.lit .sb{color:#b9bfcc}
+.node.cur{border-color:var(--accent-gold);
+  box-shadow:0 0 0 1px rgba(255,215,0,.35),0 0 46px rgba(255,215,0,.32);
+  background:linear-gradient(180deg,rgba(255,215,0,.14),rgba(255,215,0,.045)),var(--bg-card)}
+.node.cur .sb{color:var(--text-primary)}
+
+svg.wires{left:0;top:0;width:1080px;height:1920px;overflow:visible}
+.src{left:72px;width:936px;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:19px;line-height:1.5;color:var(--text-muted)}
+</style>
+</head>
+<body>
+<div id="frames"></div>
+<script>
+/* ---------- the ONE geometry every state is built from (also exported as window.GEOMETRY) ---------- */
+const W = 1080, H = 1920;
+const LANE_TOP = 432, LANE_W = 456, LANE_H = 1130, PAD = 28;
+const LANES = { ai: { x: 72 }, ml: { x: 552 } };          // AI column left, ML column right, 24 px gutter
+const NODE_INSET = 24, NODE_W = LANE_W - 2 * NODE_INSET;   // 408
+const NODE_TOP_OFF = 116, NODE_H = 148, NODE_STEP = 210;   // 62 px between nodes carries the down arrow
+const SRC_TOP = 1748;
+const POP_BAND = { y0: 1580, y1: 1724 };                   // no diagram ink: the comp's EVALS kt-keyword-pop lands here
+
+const AI = [
+  { lb: 'Model someone else trained', sb: 'like Claude' },
+  { lb: 'API',        sb: 'glue code' },
+  { lb: 'Your data',  sb: 'RAG' },
+  { lb: 'Product',    sb: 'what ships' },
+  { lb: 'Evals',      sb: 'are the answers any good?' },
+];
+const ML = [
+  { lb: 'Data',     sb: 'datasets' },
+  { lb: 'Features', sb: 'feature engineering' },
+  { lb: 'Train',    sb: 'your own model' },
+  { lb: 'Validate', sb: 'test sets' },
+  { lb: 'Deploy',   sb: 'to production' },
+];
+
+/* state k = number of AI nodes lit; the newest lit node is CURRENT. Cue = the spoken word that lights it (same as 16:9). */
+const STATES = [
+  { id: 'C1-s0-base',    lit: 0, cue: 26.24, word: '(melt in, nothing lit)' },
+  { id: 'C1-s1-model',   lit: 1, cue: 28.18, word: 'model' },
+  { id: 'C1-s2-api',     lit: 2, cue: 28.70, word: 'Claude' },
+  { id: 'C1-s3-data',    lit: 3, cue: 29.64, word: 'data' },
+  { id: 'C1-s4-product', lit: 4, cue: 30.46, word: 'product' },
+  { id: 'C1-s5-evals',   lit: 5, cue: 31.40, word: 'testing (EVALS pop on "any" 32.76)' },
+];
+
+function nodeRect(lane, i) {
+  return { x: LANES[lane].x + NODE_INSET, y: LANE_TOP + NODE_TOP_OFF + i * NODE_STEP, w: NODE_W, h: NODE_H };
+}
+function arrowSeg(lane, j) {            // arrow j runs node j -> node j+1, straight DOWN the column
+  const a = nodeRect(lane, j), b = nodeRect(lane, j + 1);
+  const x = a.x + a.w / 2;
+  return { x, y1: a.y + a.h + 12, y2: b.y - 12 };
+}
+function arrowSVG(seg, color) {
+  const { x, y1, y2 } = seg, hy = y2 - 14;
+  return `<line x1="${x}" y1="${y1}" x2="${x}" y2="${hy}" stroke="${color}" stroke-width="3" stroke-linecap="round"/>` +
+         `<path d="M ${x - 8} ${hy - 2} L ${x} ${y2} L ${x + 8} ${hy - 2} Z" fill="${color}"/>`;
+}
+const ARROW_IDLE = '#3a4256', ARROW_LIT = '#ffd700', ARROW_ML = '#00e68a';
+
+function frameHTML(st) {
+  const k = st.lit;
+  let h = `<div class="frame v dg" id="${st.id}">`;
+  h += `<div class="orb" style="width:640px;height:640px;right:-300px;top:-300px;background:var(--accent-cyan);opacity:.13"></div>`;
+  // headline: the same words, broken so line 1 = the AI lane's verb (gold) and line 2 = the ML lane's verb (green)
+  h += `<div class="abs hdr"><div class="ey">Day to day · two pipelines</div>` +
+       `<h1 class="sm"><span class="go">Wire</span> a model in,<br>or <span class="g">train</span> your own.</h1>` +
+       `<div class="divider"></div></div>`;
+  for (const lane of ['ai', 'ml']) {
+    const L = LANES[lane];
+    h += `<div class="abs lane" style="left:${L.x}px;top:${LANE_TOP}px;width:${LANE_W}px;height:${LANE_H}px"></div>`;
+    const hd = lane === 'ai'
+      ? `<span class="role ai">AI engineer</span><span class="desc">ships products</span>`
+      : `<span class="role ml">ML engineer</span><span class="desc">the model itself</span>`;
+    h += `<div class="abs lane-hd ${lane === 'ml' ? 'ml-hd' : ''}" data-lane-hd="${lane}" style="left:${L.x + PAD}px;top:${LANE_TOP + 26}px">${hd}</div>`;
+  }
+  // AI nodes
+  AI.forEach((n, i) => {
+    const r = nodeRect('ai', i);
+    const cls = ['node', 'ai'];
+    if (i < k) cls.push('lit');
+    if (i === k - 1) cls.push('cur');
+    h += `<div class="abs ${cls.join(' ')}" data-node="ai-${i}" style="left:${r.x}px;top:${r.y}px;width:${r.w}px;height:${r.h}px">` +
+         `<div class="lb">${n.lb}</div><div class="sb">${n.sb}</div></div>`;
+  });
+  // ML nodes (dim group)
+  ML.forEach((n, i) => {
+    const r = nodeRect('ml', i);
+    h += `<div class="abs node ml ml-dim" data-node="ml-${i}" style="left:${r.x}px;top:${r.y}px;width:${r.w}px;height:${r.h}px">` +
+         `<div class="lb">${n.lb}</div><div class="sb">${n.sb}</div></div>`;
+  });
+  // wires
+  let sv = `<svg class="abs wires" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+  for (let j = 0; j < 4; j++) sv += arrowSVG(arrowSeg('ai', j), (j + 1) < k ? ARROW_LIT : ARROW_IDLE);
+  sv += `<g opacity=".38">`;
+  for (let j = 0; j < 4; j++) sv += arrowSVG(arrowSeg('ml', j), ARROW_ML);
+  sv += `</g></svg>`;
+  h += sv;
+  h += `<div class="abs src" style="top:${SRC_TOP}px">Sources: Chip Huyen, AI Engineering, ch. 1 · Andrej Karpathy on X, 2023-06-30 · Stripe, Machine Learning Engineer, Radar posting · read 2026-11-09</div>`;
+  h += `</div>`;
+  return h;
+}
+
+document.getElementById('frames').innerHTML = STATES.map(frameHTML).join('\n');
+
+window.GEOMETRY = {
+  chart: 'C1', orientation: 'portrait', canvas: [W, H], beat: 'CH2@26.24-33.333', twin: 'assets/diagrams/C1.html (1920x1080)',
+  layout: 'two COLUMNS (AI left, ML right), each flowing top -> bottom; step i of both lanes on the same row',
+  lanes: Object.fromEntries(['ai', 'ml'].map(l => [l, { x: LANES[l].x, y: LANE_TOP, w: LANE_W, h: LANE_H }])),
+  nodes: {
+    ai: AI.map((n, i) => ({ label: n.lb.toUpperCase(), sub: n.sb, ...nodeRect('ai', i) })),
+    ml: ML.map((n, i) => ({ label: n.lb.toUpperCase(), sub: n.sb, ...nodeRect('ml', i) })),
+  },
+  arrows: { ai: [0, 1, 2, 3].map(j => arrowSeg('ai', j)), ml: [0, 1, 2, 3].map(j => arrowSeg('ml', j)), direction: 'down' },
+  states: STATES,
+  kt_keyword_pop_band_clear: { y0: POP_BAND.y0, y1: POP_BAND.y1, pop_x: 540, pop_y: Math.round((POP_BAND.y0 + POP_BAND.y1) / 2),
+    note: 'no diagram ink between the lanes bottom (1562) and the source line (1748): centre the EVALS kt-keyword-pop at (540, 1652) in portrait px; keep its glyph box inside y 1580-1724' },
+  source_line: { top: SRC_TOP, lines: 2 },
+};
+</script>
+</body>
+</html>

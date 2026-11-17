@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>C3 · money ladder · Levels.fyi US total comp (AI vs ML, CH3@101.7-117.18)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&family=Montserrat:ital,wght@1,800&display=swap" rel="stylesheet">
+<style>
+/* ===== LOCKED STYLESHEET (skills/container-reference/container-canonical.css), pasted verbatim, tokens untouched ===== */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+b{color:var(--text-primary);font-weight:700}
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* ===== C3 chart layer (absolute geometry; every state built from ONE template) ===== */
+.frame.ch{display:block;padding:0}
+.frame.ch>.abs{position:absolute}
+.hdr{left:140px;top:60px}
+.hdr .ey{margin-bottom:22px}
+.hdr .divider{margin:24px 0 0}
+svg.plot{left:0;top:0;width:1920px;height:1080px;overflow:visible}
+.src{left:140px;bottom:46px;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:19px;color:var(--text-muted);letter-spacing:.02em}
+.src .cav{color:var(--text-secondary)}
+/* payoff dim = the SCRIM rect in the SVG (see svgFor), not CSS opacity */
+/* PREVIEW-ONLY layer: the comp's KtWordByWord payoff word, mocked so the payoff composite can be reviewed */
+.kt-preview{left:0;top:0;width:1920px;height:1080px;display:flex;align-items:center;justify-content:center}
+.kt-preview span{font-family:'Montserrat',sans-serif;font-style:italic;font-weight:800;font-size:195px;line-height:1;
+  color:#00e68a;text-transform:uppercase;text-shadow:0 0 18px rgba(0,230,138,.85),0 0 42px rgba(0,230,138,.55)}
+</style>
+</head>
+<body>
+<div id="frames"></div>
+<script>
+/* ---------- DATA: every number from DATA.md (section 2 Pillar 2 + section 5), Levels.fyi US total comp, read 2026-11-09 [VERIFY at render] ---------- */
+const BARS = [
+  { key: 'ai_median',  v: 155.5, value: '$155.5K', role: 'AI engineer', qual: 'Median',  n: '330 data points',   tone: 'gold'  },
+  { key: 'ml_median',  v: 287.5, value: '$287.5K', role: 'ML engineer', qual: 'Median',  n: '1,012 data points', tone: 'gdim'  },
+  { key: 'ml_top10',   v: 495.0, value: '$495K',   role: 'ML engineer', qual: 'Top 10%', n: '1,012 data points', tone: 'green' },
+];
+const GAP = { from: 'ai_median', to: 'ml_top10', v: 339.5, value: '$339.5K' };   // 495,000 - 155,500 = 339,500 (DATA T4a, section 5)
+console.assert(Math.abs((BARS[2].v - BARS[0].v) - GAP.v) < 1e-9, 'gap must equal top10 - AI median');
+const SOURCE = 'LEVELS.FYI · UNITED STATES · TOTAL COMP · READ 2026-11-09 · ';
+const CAVEAT = 'THE AI ENGINEER TITLE SKEWS JUNIOR';
+
+/* ---------- GEOMETRY ---------- */
+const BASE_Y = 712, PX_PER_K = 0.84;                 // linear, zero-based: $500K = 420 px
+const Y = v => BASE_Y - v * PX_PER_K;
+const PLOT_X0 = 282, PLOT_X1 = 1310;
+const BAR_W = 240, BAR_X = [350, 700, 1050], R = 12;
+const TICKS = [0, 100, 200, 300, 400, 500];
+const BRACKET_X = 1336, BRACKET_TICK_X = 1306, GAP_LABEL_X = 1370;
+const SCRIM = { x: 100, y: 30, w: 1245, h: 820, a: .72, feather_x0: 1296, feather_x1: 1345 };   // header + plot + bar labels; right edge feathers to 0 under the bracket (drawn above it)
+const COL = { gold: '#ffd700', green: '#00e68a', text: '#e8eaf0', sec: '#8892a4', muted: '#505a6e', grid: '#222937', axis: '#2a3142', bg: '#0a0c10' };
+
+function barPath(x, v) {
+  const y = Y(v), w = BAR_W;
+  return `M ${x} ${BASE_Y} V ${y + R} Q ${x} ${y} ${x + R} ${y} H ${x + w - R} Q ${x + w} ${y} ${x + w} ${y + R} V ${BASE_Y} Z`;
+}
+
+/* states: how many bars are up, whether the gap is drawn, whether the payoff dim is on, preview word */
+const STATES = [
+  { id: 'C3-s0-start',      bars: 0, gap: false, dim: false, cue: 101.70, note: 'kt-spin-cut in; chrome only' },
+  { id: 'C3-s1-ai-median',  bars: 1, gap: false, dim: false, cue: 102.38, note: 'bar 1 grown + counted (lands 103.24)' },
+  { id: 'C3-s2-ml-median',  bars: 2, gap: false, dim: false, cue: 105.94, note: 'bar 2 dim context bar (lands 106.74)' },
+  { id: 'C3-s3-ml-top10',   bars: 3, gap: false, dim: false, cue: 108.12, note: 'bar 3 grown + counted (lands 109.22)' },
+  { id: 'C3-s4-gap',        bars: 3, gap: true,  dim: false, cue: 112.48, note: 'bracket + $339.5K (lands 112.93)' },
+  { id: 'C3-s5-payoff',     bars: 3, gap: true,  dim: true,  cue: 116.06, note: 'chart steps back; the comp KtWordByWord draws TRAIN' },
+  { id: 'C3-preview-payoff-with-word', bars: 3, gap: true, dim: true, preview: true, cue: 116.06, note: 'REVIEW ONLY: s5 + a mock of the comp payoff word' },
+];
+
+function svgFor(st) {
+  const u = st.id.replace(/[^a-z0-9]/gi, '_');   // per-state def ids: duplicate ids across frames resolve to a hidden copy
+  const dimA = '';   // the payoff dim is a SCRIM (below), never group opacity: opacity groups re-rasterize the never-dimmed ink
+  let s = `<svg class="abs plot" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">`;
+  s += `<defs>
+    <linearGradient id="fGold_${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${COL.gold}"/><stop offset="1" stop-color="${COL.gold}" stop-opacity=".5"/></linearGradient>
+    <linearGradient id="fGreen_${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${COL.green}"/><stop offset="1" stop-color="${COL.green}" stop-opacity=".5"/></linearGradient>
+    <linearGradient id="gapGrad_${u}" gradientUnits="userSpaceOnUse" x1="0" y1="${Y(BARS[0].v)}" x2="0" y2="${Y(BARS[2].v)}"><stop offset="0" stop-color="${COL.gold}"/><stop offset="1" stop-color="${COL.green}"/></linearGradient>
+    <filter id="glow_${u}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>`;
+  // chrome: gridlines, ticks, axis
+  s += `<g${dimA}>`;
+  for (const t of TICKS) {
+    if (t > 0) s += `<line x1="${PLOT_X0}" y1="${Y(t)}" x2="${PLOT_X1}" y2="${Y(t)}" stroke="${COL.grid}" stroke-width="1.5" stroke-dasharray="3 9"/>`;
+    s += `<text x="258" y="${Y(t) + 7}" text-anchor="end" font-family="JetBrains Mono" font-weight="400" font-size="19" fill="${COL.muted}">${t === 0 ? '$0' : '$' + t + 'K'}</text>`;
+  }
+  s += `<line x1="${PLOT_X0}" y1="${BASE_Y}" x2="${PLOT_X1}" y2="${BASE_Y}" stroke="${COL.axis}" stroke-width="2"/>`;
+  s += `</g>`;
+  // gap reference line BEHIND the bars (shows in the gaps between bars, and through the dim bar 2)
+  if (st.gap) s += `<line${dimA} x1="${BAR_X[0] + BAR_W + 8}" y1="${Y(BARS[0].v)}" x2="${BRACKET_TICK_X - 2}" y2="${Y(BARS[0].v)}" stroke="${COL.gold}" stroke-opacity=".8" stroke-width="2.5" stroke-dasharray="10 8"/>`;
+  // bars
+  s += `<g${dimA}>`;
+  BARS.forEach((b, i) => {
+    if (i >= st.bars) return;
+    const x = BAR_X[i], p = barPath(x, b.v);
+    if (b.tone === 'gold')  s += `<path d="${p}" fill="${COL.gold}" opacity=".28" filter="url(#glow_${u})"/><path d="${p}" fill="url(#fGold_${u})"/>`;
+    if (b.tone === 'green') s += `<path d="${p}" fill="${COL.green}" opacity=".30" filter="url(#glow_${u})"/><path d="${p}" fill="url(#fGreen_${u})"/>`;
+    if (b.tone === 'gdim')  s += `<path d="${p}" fill="${COL.green}" fill-opacity=".16" stroke="${COL.green}" stroke-opacity=".55" stroke-width="2"/>`;
+  });
+  // the gap on bar 3: the part BELOW the AI-median line steps back, the part above it is the gap
+  if (st.gap) {
+    const y0 = Y(BARS[0].v), x = BAR_X[2];
+    s += `<rect x="${x}" y="${y0}" width="${BAR_W}" height="${BASE_Y - y0}" fill="${COL.bg}" fill-opacity=".45"/>`;
+    s += `<line x1="${x}" y1="${y0}" x2="${x + BAR_W}" y2="${y0}" stroke="${COL.gold}" stroke-width="3" stroke-dasharray="10 8"/>`;
+  }
+  s += `</g>`;
+  // value labels above bars + role labels below
+  s += `<g${dimA}>`;
+  BARS.forEach((b, i) => {
+    if (i >= st.bars) return;
+    const cx = BAR_X[i] + BAR_W / 2;
+    const tone = b.tone === 'gold' ? COL.gold : COL.green;
+    const op = b.tone === 'gdim' ? ' opacity=".62"' : '';
+    s += `<g${op}>`;
+    s += `<text x="${cx}" y="${Y(b.v) - 22}" text-anchor="middle" font-family="JetBrains Mono" font-weight="600" font-size="52" fill="${tone}">${b.value}</text>`;
+    s += `<text x="${cx}" y="760" text-anchor="middle" font-family="DM Sans" font-weight="700" font-size="30" letter-spacing="2" fill="${tone}">${b.role.toUpperCase()}</text>`;
+    s += `<text x="${cx}" y="796" text-anchor="middle" font-family="DM Sans" font-weight="600" font-size="22" letter-spacing="3" fill="${COL.text}">${b.qual.toUpperCase()}</text>`;
+    s += `<text x="${cx}" y="828" text-anchor="middle" font-family="JetBrains Mono" font-weight="400" font-size="18" fill="${COL.muted}">${b.n.toUpperCase()}</text>`;
+    s += `</g>`;
+  });
+  s += `</g>`;
+  // payoff scrim: bg colour at 72% over header + plot (= everything at 28%), UNDER the bracket + gap label; the source line (HTML) sits above it
+  if (st.dim) s += `<linearGradient id="scrim_${u}" gradientUnits="userSpaceOnUse" x1="${SCRIM.feather_x0}" y1="0" x2="${SCRIM.feather_x1}" y2="0"><stop offset="0" stop-color="${COL.bg}" stop-opacity="${SCRIM.a}"/><stop offset="1" stop-color="${COL.bg}" stop-opacity="0"/></linearGradient>` +
+                    `<rect x="${SCRIM.x}" y="${SCRIM.y}" width="${SCRIM.w}" height="${SCRIM.h}" fill="url(#scrim_${u})"/>`;
+  // bracket + gap label (never dimmed)
+  if (st.gap) {
+    const yb = Y(BARS[0].v), yt = Y(BARS[2].v), mid = (yb + yt) / 2;
+    s += `<path d="M ${BRACKET_TICK_X} ${yb} H ${BRACKET_X} V ${yt} H ${BRACKET_TICK_X}" fill="none" stroke="url(#gapGrad_${u})" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`;
+    s += `<text x="${GAP_LABEL_X}" y="${mid - 44}" font-family="DM Sans" font-weight="600" font-size="19" letter-spacing="3.4" fill="${COL.sec}">THE GAP</text>`;
+    s += `<text x="${GAP_LABEL_X - 3}" y="${mid + 22}" font-family="JetBrains Mono" font-weight="600" font-size="66" fill="${COL.text}">${GAP.value}</text>`;
+    s += `<text x="${GAP_LABEL_X}" y="${mid + 64}" font-family="DM Sans" font-weight="700" font-size="20" letter-spacing="2.4" fill="${COL.green}">TOP 10% ML ENGINEER</text>`;
+    s += `<text x="${GAP_LABEL_X}" y="${mid + 94}" font-family="DM Sans" font-weight="700" font-size="20" letter-spacing="2.4"><tspan fill="${COL.sec}">VS </tspan><tspan fill="${COL.gold}">AI ENGINEER MEDIAN</tspan></text>`;
+  }
+  s += `</svg>`;
+  return s;
+}
+
+function frameHTML(st) {
+  let h = `<div class="frame ch" id="${st.id}">`;
+  h += `<div class="orb" style="width:640px;height:640px;right:-240px;top:-260px;background:var(--accent-green);opacity:.12"></div>`;
+  h += `<div class="abs hdr"><div class="ey">The money · total pay per year</div>` +
+       `<h1 class="sm">Who gets the <span class="c">biggest</span> checks?</h1><div class="divider"></div></div>`;
+  h += svgFor(st);
+  h += `<div class="abs src">${SOURCE}<span class="cav">${CAVEAT}</span></div>`;
+  if (st.preview) h += `<div class="abs kt-preview"><span>Train</span></div>`;
+  h += `</div>`;
+  return h;
+}
+
+document.getElementById('frames').innerHTML = STATES.map(frameHTML).join('\n');
+
+window.GEOMETRY = {
+  chart: 'C3', canvas: [1920, 1080], beat: 'CH3@101.7-117.18',
+  data_source: 'DATA.md section 2 Pillar 2 + section 5 (Levels.fyi US total comp, read 2026-11-09) [VERIFY at render]',
+  scale: { base_y: BASE_Y, px_per_k: PX_PER_K, formula: 'y = 712 - 0.84 * valueK', zero_based: true },
+  plot: { x0: PLOT_X0, x1: PLOT_X1, ticks_k: TICKS, tick_label_x: 258, grid: { stroke: COL.grid, width: 1.5, dash: '3 9' }, axis: { stroke: COL.axis, width: 2 } },
+  bars: BARS.map((b, i) => ({ ...b, x: BAR_X[i], w: BAR_W, top_y: +Y(b.v).toFixed(2), h: +(b.v * PX_PER_K).toFixed(2), corner_r: R,
+        value_label: { x: BAR_X[i] + BAR_W / 2, y: +(Y(b.v) - 22).toFixed(2), font: 'JetBrains Mono 600 52px' },
+        under_labels: [{ y: 760, font: 'DM Sans 700 30px ls 2', text: b.role.toUpperCase() }, { y: 796, font: 'DM Sans 600 22px ls 3', text: b.qual.toUpperCase() }, { y: 828, font: 'JetBrains Mono 400 18px', text: b.n.toUpperCase() }] })),
+  gap: { ...GAP, bracket: { x: BRACKET_X, tick_x: BRACKET_TICK_X, y_bottom: +Y(BARS[0].v).toFixed(2), y_top: +Y(BARS[2].v).toFixed(2), gradient: 'gold at the AI-median end -> green at the top-10% end', width: 4 },
+         ref_line: { x0: BAR_X[0] + BAR_W + 8, x1: BRACKET_TICK_X - 2, y: +Y(BARS[0].v).toFixed(2), dash: '10 8', note: 'drawn BEHIND the bars' },
+         bar3_lower_shade: { x: BAR_X[2], y: +Y(BARS[0].v).toFixed(2), w: BAR_W, h: +(BASE_Y - Y(BARS[0].v)).toFixed(2), fill: COL.bg, opacity: .45 },
+         label_x: GAP_LABEL_X, label_mid_y: +((Y(BARS[0].v) + Y(BARS[2].v)) / 2).toFixed(2) },
+  payoff_scrim: { ...SCRIM, fill: '#0a0c10', note: 'equivalent to the header + plot + labels at 28% opacity; bracket, gap label and source line stay at 100%' },
+  source_line: SOURCE + CAVEAT,
+  colors: COL,
+  kt_word_by_word: { phrase_band_clear: { y0: 856, y1: 984, note: 'no chart ink between 856 and 984 (KtWordByWord phrases centre at 0.85*1080 = 918)' }, payoff: { x: 960, y: 540, color: '#00e68a' } },
+  states: STATES,
+};
+</script>
+</body>
+</html>

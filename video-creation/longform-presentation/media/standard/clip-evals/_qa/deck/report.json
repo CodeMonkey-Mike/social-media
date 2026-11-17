@@ -1,0 +1,690 @@
+{
+  "deck": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-presentation\\media\\standard\\clip-evals\\clip-evals.html",
+  "viewport": [
+    1920,
+    1080
+  ],
+  "slides": [
+    {
+      "id": "ch1",
+      "scrollY": 0,
+      "top": 0,
+      "height": 1080,
+      "headline": "The harness and the evals behind my clips",
+      "eyebrow": "CHAPTER 1",
+      "points": [
+        "1 The harness The code around the agents that holds them to the rules",
+        "2 The whole graph Every step and every agent in it",
+        "3 The evals Record a verdict, replay a livestream, score a prompt",
+        "All of it at the code level: the Python, the JSON, what I added and what I changed"
+      ],
+      "textBox": [
+        80,
+        236,
+        1248,
+        820
+      ],
+      "limitX": 1306,
+      "pip": {
+        "left": 1400,
+        "top": 770,
+        "right": 1880,
+        "bottom": 1040
+      },
+      "pastLimit": [],
+      "underCam": [],
+      "offSlide": [],
+      "clipped": [],
+      "fades": 4,
+      "notShown": 0,
+      "activeDot": 0,
+      "fonts": [
+        "DM Sans",
+        "Playfair Display"
+      ],
+      "key": null
+    },
+    {
+      "id": "ch2",
+      "scrollY": 1080,
+      "top": 0,
+      "height": 1080,
+      "headline": "Two Kinds of Harness",
+      "eyebrow": "CHAPTER 2",
+      "points": [
+        "The agent harness runs the loop and hands the model its tools",
+        "The evaluation harness hands out the tasks and grades the output",
+        "You never grade the model alone. You grade it with its harness",
+        "Harness engineering: everything you build around the model"
+      ],
+      "textBox": [
+        80,
+        261,
+        1176,
+        798
+      ],
+      "limitX": 1306,
+      "pip": {
+        "left": 1400,
+        "top": 770,
+        "right": 1880,
+        "bottom": 1040
+      },
+      "pastLimit": [],
+      "underCam": [],
+      "offSlide": [],
+      "clipped": [],
+      "fades": 7,
+      "notShown": 0,
+      "activeDot": 1,
+      "fonts": [
+        "DM Sans",
+        "Playfair Display"
+      ],
+      "key": "ArrowRight"
+    },
+    {
+      "id": "ch3",
+      "scrollY": 2160,
+      "top": 0,
+      "height": 1080,
+      "headline": "The Pipeline and the Graph",
+      "eyebrow": "CHAPTER 3",
+      "points": [
+        "A livestream fans out into 3 lanes. Lane 2 is the clips",
+        "One LangGraph graph owns all 3 lanes: 14 steps, 2 human gates",
+        "6 agents inside it: 3 make judgment calls, 3 build or check"
+      ],
+      "textBox": [
+        80,
+        311,
+        1138,
+        747
+      ],
+      "limitX": 1306,
+      "pip": {
+        "left": 1400,
+        "top": 770,
+        "right": 1880,
+        "bottom": 1040
+      },
+      "pastLimit": [],
+      "underCam": [],
+      "offSlide": [],
+      "clipped": [],
+      "fades": 6,
+      "notShown": 0,
+      "activeDot": 2,
+      "fonts": [
+        "DM Sans",
+        "Playfair Display",
+        "JetBrains Mono"
+      ],
+      "key": "ArrowDown"
+    },
+    {
+      "id": "ch4",
+      "scrollY": 3240,
+      "top": 0,
+      "height": 1080,
+      "headline": "How the Harness Holds an Agent",
+      "eyebrow": "CHAPTER 4",
+      "points": [
+        "Spawn: a step runs its agent headless, output to a log file",
+        "Retry: once on an overload, once on the next model down",
+        "Trust the artifact: the plan has to exist on disk as JSON",
+        "Validate: a failed plan stops the run before a frame gets cut"
+      ],
+      "textBox": [
+        80,
+        261,
+        1054,
+        798
+      ],
+      "limitX": 1306,
+      "pip": {
+        "left": 1400,
+        "top": 770,
+        "right": 1880,
+        "bottom": 1040
+      },
+      "pastLimit": [],
+      "underCam": [],
+      "offSlide": [],
+      "clipped": [],
+      "fades": 7,
+      "notShown": 0,
+      "activeDot": 3,
+      "fonts": [
+        "DM Sans",
+        "Playfair Display"
+      ],
+      "key": " "
+    },
+    {
+      "id": "ch5",
+      "scrollY": 4320,
+      "top": 0,
+      "height": 1080,
+      "headline": "Rules in Code, Not in the Prompt",
+      "eyebrow": "CHAPTER 5",
+      "points": [
+        "The shape of a clip plan: in the validator",
+        "Where files may go: in a hook, every turn and every commit",
+        "The model fallback: in the spawner, with a script that proves it",
+        "\"Done\": checked by the last step of the graph"
+      ],
+      "textBox": [
+        80,
+        261,
+        1104,
+        798
+      ],
+      "limitX": 1306,
+      "pip": {
+        "left": 1400,
+        "top": 770,
+        "right": 1880,
+        "bottom": 1040
+      },
+      "pastLimit": [],
+      "underCam": [],
+      "offSlide": [],
+      "clipped": [],
+      "fades": 7,
+      "notShown": 0,
+      "activeDot": 4,
+      "fonts": [
+        "DM Sans",
+        "Playfair Display"
+      ],
+      "key": "ArrowRight"
+    },
+    {
+      "id": "ch6",
+      "scrollY": 5400,
+      "top": 0,
+      "height": 1080,
+      "headline": "State and Memory",
+      "eyebrow": "CHAPTER 6",
+      "points": [
+        "The agents remember nothing. Every run starts fresh",
+        "The harness holds the state: SQLite checkpoints, files, docs",
+        "A human gate is a LangGraph interrupt: stop now, resume later"
+      ],
+      "textBox": [
+        80,
+        311,
+        1123,
+        747
+      ],
+      "limitX": 1306,
+      "pip": {
+        "left": 1400,
+        "top": 770,
+        "right": 1880,
+        "bottom": 1040
+      },
+      "pastLimit": [],
+      "underCam": [],
+      "offSlide": [],
+      "clipped": [],
+      "fades": 6,
+      "notShown": 0,
+      "activeDot": 5,
+      "fonts": [
+        "DM Sans",
+        "Playfair Display"
+      ],
+      "key": "ArrowDown"
+    },
+    {
+      "id": "ch7",
+      "scrollY": 6480,
+      "top": 0,
+      "height": 1080,
+      "headline": "What Was Missing",
+      "eyebrow": "CHAPTER 7",
+      "points": [
+        "3 graders already ran: code-based, model-based and human",
+        "Each one judged a single run. My verdicts were thrown away",
+        "The fix has 3 parts: a record, a replay, a score"
+      ],
+      "textBox": [
+        80,
+        311,
+        1093,
+        747
+      ],
+      "limitX": 1306,
+      "pip": {
+        "left": 1400,
+        "top": 770,
+        "right": 1880,
+        "bottom": 1040
+      },
+      "pastLimit": [],
+      "underCam": [],
+      "offSlide": [],
+      "clipped": [],
+      "fades": 6,
+      "notShown": 0,
+      "activeDot": 6,
+      "fonts": [
+        "DM Sans",
+        "Playfair Display",
+        "JetBrains Mono"
+      ],
+      "key": " "
+    },
+    {
+      "id": "ch8",
+      "scrollY": 7560,
+      "top": 0,
+      "height": 1080,
+      "headline": "What Changed in the Repo",
+      "eyebrow": "CHAPTER 8",
+      "points": [
+        "Outside the graph: a module of around 1,000 lines and its tests",
+        "Inside the graph: small on purpose, 86 lines added",
+        "An eval layer should watch production, not be woven through it"
+      ],
+      "textBox": [
+        80,
+        311,
+        1132,
+        747
+      ],
+      "limitX": 1306,
+      "pip": {
+        "left": 1400,
+        "top": 770,
+        "right": 1880,
+        "bottom": 1040
+      },
+      "pastLimit": [],
+      "underCam": [],
+      "offSlide": [],
+      "clipped": [],
+      "fades": 6,
+      "notShown": 0,
+      "activeDot": 7,
+      "fonts": [
+        "DM Sans",
+        "Playfair Display",
+        "JetBrains Mono"
+      ],
+      "key": "ArrowRight"
+    },
+    {
+      "id": "ch9",
+      "scrollY": 8640,
+      "top": 0,
+      "height": 1080,
+      "headline": "Recording a Verdict",
+      "eyebrow": "CHAPTER 9",
+      "points": [
+        "One new call at the gate records every verdict",
+        "If the record can't be written, the batch keeps going",
+        "Every clip gets a line: kept or killed",
+        "The file is append-only, and it's committed to Git"
+      ],
+      "textBox": [
+        80,
+        261,
+        949,
+        798
+      ],
+      "limitX": 1306,
+      "pip": {
+        "left": 1400,
+        "top": 770,
+        "right": 1880,
+        "bottom": 1040
+      },
+      "pastLimit": [],
+      "underCam": [],
+      "offSlide": [],
+      "clipped": [],
+      "fades": 7,
+      "notShown": 0,
+      "activeDot": 8,
+      "fonts": [
+        "DM Sans",
+        "Playfair Display"
+      ],
+      "key": "ArrowDown"
+    },
+    {
+      "id": "ch10",
+      "scrollY": 9720,
+      "top": 0,
+      "height": 1080,
+      "headline": "The Prompt Version",
+      "eyebrow": "CHAPTER 10",
+      "points": [
+        "A hash of 4 things: 3 files and the instruction text",
+        "Change any one of them and you get a new 12 character version",
+        "Stamped when the plan passes validation, never at the gate"
+      ],
+      "textBox": [
+        80,
+        311,
+        1141,
+        747
+      ],
+      "limitX": 1306,
+      "pip": {
+        "left": 1400,
+        "top": 770,
+        "right": 1880,
+        "bottom": 1040
+      },
+      "pastLimit": [],
+      "underCam": [],
+      "offSlide": [],
+      "clipped": [],
+      "fades": 6,
+      "notShown": 0,
+      "activeDot": 9,
+      "fonts": [
+        "DM Sans",
+        "Playfair Display",
+        "JetBrains Mono"
+      ],
+      "key": " "
+    },
+    {
+      "id": "ch11",
+      "scrollY": 10800,
+      "top": 0,
+      "height": 1080,
+      "headline": "Recall",
+      "eyebrow": "CHAPTER 11",
+      "points": [
+        "Precision: of the clips it proposed, how many did I keep?",
+        "No recall from a gate: it only sees what was proposed",
+        "So when I approve the gate, I name what it missed"
+      ],
+      "textBox": [
+        80,
+        311,
+        1006,
+        747
+      ],
+      "limitX": 1306,
+      "pip": {
+        "left": 1400,
+        "top": 770,
+        "right": 1880,
+        "bottom": 1040
+      },
+      "pastLimit": [],
+      "underCam": [],
+      "offSlide": [],
+      "clipped": [],
+      "fades": 6,
+      "notShown": 0,
+      "activeDot": 10,
+      "fonts": [
+        "DM Sans",
+        "Playfair Display"
+      ],
+      "key": "ArrowRight"
+    },
+    {
+      "id": "ch12",
+      "scrollY": 11880,
+      "top": 0,
+      "height": 1080,
+      "headline": "Replay",
+      "eyebrow": "CHAPTER 12",
+      "points": [
+        "A replay: the same transcript with today's prompt",
+        "Nothing gets cut and nothing gets posted",
+        "The same instructions a live run sends, plus a note",
+        "The note's last line: don't open the evals folder"
+      ],
+      "textBox": [
+        80,
+        261,
+        930,
+        798
+      ],
+      "limitX": 1306,
+      "pip": {
+        "left": 1400,
+        "top": 770,
+        "right": 1880,
+        "bottom": 1040
+      },
+      "pastLimit": [],
+      "underCam": [],
+      "offSlide": [],
+      "clipped": [],
+      "fades": 7,
+      "notShown": 0,
+      "activeDot": 11,
+      "fonts": [
+        "DM Sans",
+        "Playfair Display"
+      ],
+      "key": "ArrowDown"
+    },
+    {
+      "id": "ch13",
+      "scrollY": 12960,
+      "top": 0,
+      "height": 1080,
+      "headline": "Matching and Scoring",
+      "eyebrow": "CHAPTER 13",
+      "points": [
+        "A match: the overlap is at least 50% of the shorter clip",
+        "4 buckets for a new pick: kept, killed, missed, or new",
+        "Precision: good picks over good picks plus repeated kills"
+      ],
+      "textBox": [
+        80,
+        311,
+        1007,
+        747
+      ],
+      "limitX": 1306,
+      "pip": {
+        "left": 1400,
+        "top": 770,
+        "right": 1880,
+        "bottom": 1040
+      },
+      "pastLimit": [],
+      "underCam": [],
+      "offSlide": [],
+      "clipped": [],
+      "fades": 6,
+      "notShown": 0,
+      "activeDot": 12,
+      "fonts": [
+        "DM Sans",
+        "Playfair Display",
+        "JetBrains Mono"
+      ],
+      "key": " "
+    },
+    {
+      "id": "ch14",
+      "scrollY": 14040,
+      "top": 0,
+      "height": 1080,
+      "headline": "Noise",
+      "eyebrow": "CHAPTER 14",
+      "points": [
+        "The same prompt, twice, on 4 livestreams",
+        "2 scored the same. 2 went from 100% to 83.3%",
+        "On one livestream, a swing of around 17 points is noise"
+      ],
+      "textBox": [
+        80,
+        311,
+        991,
+        747
+      ],
+      "limitX": 1306,
+      "pip": {
+        "left": 1400,
+        "top": 770,
+        "right": 1880,
+        "bottom": 1040
+      },
+      "pastLimit": [],
+      "underCam": [],
+      "offSlide": [],
+      "clipped": [],
+      "fades": 6,
+      "notShown": 0,
+      "activeDot": 13,
+      "fonts": [
+        "DM Sans",
+        "Playfair Display",
+        "JetBrains Mono"
+      ],
+      "key": "ArrowRight"
+    },
+    {
+      "id": "ch15",
+      "scrollY": 15120,
+      "top": 0,
+      "height": 1080,
+      "headline": "What the Record Shows",
+      "eyebrow": "CHAPTER 15",
+      "points": [
+        "Switch to the browser: the Evals dashboard http://localhost:8766/evals.html",
+        "Every livestream is a row",
+        "Open one: every clip, the verdict at each gate, the strategist's reasoning",
+        "Under that: every replay of that livestream, pick by pick"
+      ],
+      "textBox": [
+        80,
+        247,
+        1120,
+        805
+      ],
+      "limitX": 1306,
+      "pip": {
+        "left": 1400,
+        "top": 770,
+        "right": 1880,
+        "bottom": 1040
+      },
+      "pastLimit": [],
+      "underCam": [],
+      "offSlide": [],
+      "clipped": [],
+      "fades": 7,
+      "notShown": 0,
+      "activeDot": 14,
+      "fonts": [
+        "DM Sans",
+        "Playfair Display",
+        "JetBrains Mono"
+      ],
+      "key": "ArrowDown"
+    },
+    {
+      "id": "ch16",
+      "scrollY": 16200,
+      "top": 0,
+      "height": 1080,
+      "headline": "What It Isn't Yet",
+      "eyebrow": "CHAPTER 16",
+      "points": [
+        "The record isn't memory. The strategist never sees it",
+        "Next: feed kept and killed examples back into the prompt",
+        "A cheaper model? That used to be an opinion. Now it's a replay"
+      ],
+      "textBox": [
+        80,
+        311,
+        1114,
+        747
+      ],
+      "limitX": 1306,
+      "pip": {
+        "left": 1400,
+        "top": 770,
+        "right": 1880,
+        "bottom": 1040
+      },
+      "pastLimit": [],
+      "underCam": [],
+      "offSlide": [],
+      "clipped": [],
+      "fades": 6,
+      "notShown": 0,
+      "activeDot": 15,
+      "fonts": [
+        "DM Sans",
+        "Playfair Display"
+      ],
+      "key": " "
+    },
+    {
+      "id": "ch17",
+      "scrollY": 17280,
+      "top": 0,
+      "height": 1080,
+      "headline": "Find where a human already says yes or no. Record it.",
+      "eyebrow": "CHAPTER 17",
+      "points": [
+        "An agent harness holds the model to the rules",
+        "An evaluation harness tells you if it's getting any better",
+        "Like · Comment: what would you score in your own pipeline? · Subscribe"
+      ],
+      "textBox": [
+        80,
+        249,
+        1197,
+        807
+      ],
+      "limitX": 1306,
+      "pip": {
+        "left": 1400,
+        "top": 770,
+        "right": 1880,
+        "bottom": 1040
+      },
+      "pastLimit": [],
+      "underCam": [],
+      "offSlide": [],
+      "clipped": [],
+      "fades": 6,
+      "notShown": 0,
+      "activeDot": 16,
+      "fonts": [
+        "DM Sans",
+        "Playfair Display"
+      ],
+      "key": "ArrowRight"
+    }
+  ],
+  "title": "The harness and the evals behind my clips",
+  "fonts_loaded": [
+    [
+      "Playfair Display",
+      true
+    ],
+    [
+      "DM Sans",
+      true
+    ],
+    [
+      "JetBrains Mono",
+      true
+    ]
+  ],
+  "slide_count": 17,
+  "back_keys_ok": true,
+  "guide_key_ok": true,
+  "fullscreen_requests": 1,
+  "page_errors": [],
+  "problems": []
+}

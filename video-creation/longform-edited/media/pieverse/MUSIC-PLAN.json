@@ -1,0 +1,33 @@
+{
+  "project": "pieverse",
+  "authored": "2026-11-14",
+  "spine": "spine/ALL.d.enhanced.mp4",
+  "spine_duration_sec": 373.24,
+  "no_music": true,
+  "no_sfx": true,
+  "ruling": "NO music, NO background bed, NO sound effects: Mike, 2026-11-11 (PROJECT-LOG.md 'Hard constraints', CONSTRAINTS.md, SCREENPLAY.md section MUSIC-MOOD-PLAN = 'NONE, by Mike's call (2026-11-11): this video has no music'; every chapter header in AS-RECORDED.md carries 'Bed: none'). PROJECT-LOG.md records no later reversal and no usage waiver, so no bed is placed.",
+  "track": null,
+  "energy_profile": {},
+  "beds": [],
+  "hard_hits": [],
+  "chapters_without_bed_by_ruling": [
+    {"chapter": "CH1", "span": [0.0, 34.76], "register": "gear-2-explainer", "bed": "none (Mike 2026-11-11)"},
+    {"chapter": "CH2", "span": [35.2, 115.24], "register": "gear-2-explainer", "bed": "none (Mike 2026-11-11)"},
+    {"chapter": "CH3", "span": [115.56, 151.3], "register": "gear-2-explainer", "bed": "none (Mike 2026-11-11)"},
+    {"chapter": "CH4", "span": [151.56, 319.74], "register": "gear-2-explainer", "bed": "none (Mike 2026-11-11)"},
+    {"chapter": "CH5", "span": [319.98, 352.58], "register": "gear-2-explainer", "bed": "none (Mike 2026-11-11)"},
+    {"chapter": "CH6", "span": [352.72, 372.88], "register": "gear-3-one-landing-line", "bed": "none (Mike 2026-11-11)"}
+  ],
+  "notes": [
+    "This file is deliberately a NO-MUSIC plan. The music_plan node's verifier (_music_plan_check: 'beds is empty', house rule #10) will reject it. That rejection is the correct stop: the graph has no no-music branch, and the only way to pass it would be to lay beds Mike ruled out.",
+    "Downstream readers checked from the code: mix_music.py and usage_ledger.py both read `plan.get('beds') or []`, so an empty list lays zero beds and records no track against this video. lint_docset.py only needs the file to exist and parse.",
+    "No end_card_hold: the video ends on the last word 'similar.' at 372.88 s (spine runs to 373.24 s), no music tail to position.",
+    "No clip inserts in this video (SCREENPLAY section CLIP-INSERTS = NONE), so there is no duck window to respect.",
+    "Usage ledger report was run (2026-11-14, --exclude-project pieverse): BLOCKED concrete-mazes; avoid constant-741-hz-meditation, leatherface. No track is picked here, so no pool is drawn down."
+  ],
+  "open_questions": [
+    "GRAPH CONFLICT for the orchestrator / Mike: the music_plan node asked for beds over all 6 chapters, but Mike's hard constraint for pieverse is no music. Pick one: (a) add a no-music branch to the music_plan verifier (accept `no_music: true` with empty beds when PROJECT-LOG records the ruling), or (b) pass the node by hand for this video. I did not author beds, because that would put music in the draft against his ruling and mark a track as used in the variety ledger.",
+    "If Mike reverses the ruling and wants a bed after all, record it in PROJECT-LOG.md and re-run the strategist (--redo music_plan). The fit would be ONE subtle gear-2 explainer bed, carved, around -20 dB under the VO, softest under the 4 face lines, with the ending right-aligned to 'similar.' at 372.88 s. The subtle pool has 35 fresh beds, so variety is not a constraint.",
+    "The mix_audio node will still run on this video: with zero beds and no SFX rows it only applies the voice gain and the peak limiter. Confirm that is wanted for a no-music, no-SFX video."
+  ]
+}

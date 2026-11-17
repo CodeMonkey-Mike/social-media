@@ -1,0 +1,770 @@
+{
+ "id": "C3",
+ "stage": [
+  1080,
+  1920
+ ],
+ "png_scale": 1,
+ "states": [
+  "start",
+  "mid",
+  "payoff"
+ ],
+ "geom": {
+  "note": "PORTRAIT. panel-local px: add the panel origin for stage px. x is linear in UTC date, y linear in percent.",
+  "stage": [
+   1080,
+   1920
+  ],
+  "panels": {
+   "google": {
+    "x": 72,
+    "y": 232,
+    "w": 936,
+    "h": 640
+   },
+   "anthropic": {
+    "x": 72,
+    "y": 900,
+    "w": 936,
+    "h": 640
+   }
+  },
+  "plot": {
+   "x0": 96,
+   "x1": 896,
+   "y0_pct0": 552,
+   "y_pct100": 212,
+   "date0": "2024-10-01",
+   "date1": "2026-10-01",
+   "px_per_day": 1.09589,
+   "px_per_pct": 3.4
+  },
+  "type_px": {
+   "val": 34,
+   "band": 25,
+   "what": 19,
+   "when": 18,
+   "src": 19,
+   "lineVal": 27,
+   "lineWhat": 25,
+   "axisY": 18,
+   "month": 17,
+   "year": 19,
+   "cc": 17,
+   "ccWhen": 16
+  },
+  "colors": {
+   "google": "#00c2ff",
+   "anthropic": "#00e68a"
+  },
+  "points": {
+   "g1": {
+    "series": "google",
+    "k": "g1",
+    "kind": "floor",
+    "date": "2024-10-29",
+    "v": 25,
+    "val": "MORE THAN 25%",
+    "what": "",
+    "when": "OCT 2024",
+    "src": "Pichai, Q3 2024 earnings remarks",
+    "call": {
+     "anchor": "start",
+     "x": 112,
+     "y": 508
+    },
+    "x": 126.7,
+    "y": 467
+   },
+   "g2": {
+    "series": "google",
+    "k": "g2",
+    "kind": "season",
+    "from": "2025-09-01",
+    "to": "2025-11-30",
+    "date": "2025-10-15",
+    "v": 50,
+    "val": "50%",
+    "what": "",
+    "when": "FALL 2025",
+    "src": "per Pichai, 2026-04-22",
+    "call": {
+     "anchor": "start",
+     "x": 522,
+     "y": 424
+    },
+    "x": 511.3,
+    "y": 382,
+    "x_from": 463.1,
+    "x_to": 561.8
+   },
+   "g3": {
+    "series": "google",
+    "k": "g3",
+    "kind": "exact",
+    "date": "2026-04-22",
+    "v": 75,
+    "val": "75%",
+    "what": "",
+    "when": "APR 2026",
+    "src": "Pichai, Cloud Next '26",
+    "call": {
+     "anchor": "end",
+     "x": 688,
+     "y": 252
+    },
+    "x": 718.5,
+    "y": 297
+   },
+   "a1": {
+    "series": "anthropic",
+    "k": "a1",
+    "kind": "band",
+    "from": "2024-10-01",
+    "to": "2025-02-15",
+    "date": "2025-02-15",
+    "v": 2.5,
+    "top": 5,
+    "val": "LOW SINGLE DIGITS",
+    "what": "",
+    "when": "BEFORE FEB 2025",
+    "src": "Anthropic Institute essay",
+    "call": {
+     "anchor": "start",
+     "x": 430,
+     "y": 506
+    },
+    "x": 246.1,
+    "y": 543.5,
+    "x_from": 96,
+    "x_to": 246.1,
+    "y_top": 535
+   },
+   "a2": {
+    "series": "anthropic",
+    "k": "a2",
+    "kind": "floor",
+    "date": "2026-05-15",
+    "v": 80,
+    "val": "MORE THAN 80%",
+    "what": "OF MERGED CODE",
+    "when": "MAY 2026",
+    "src": "Anthropic Institute essay",
+    "call": {
+     "anchor": "end",
+     "x": 700,
+     "y": 238
+    },
+    "x": 743.7,
+    "y": 280
+   },
+   "a3": {
+    "series": "anthropic",
+    "k": "a3",
+    "kind": "floor",
+    "date": "2026-09-15",
+    "v": 90,
+    "val": "OVER 90%",
+    "what": "OF CODEBASE CONTRIBUTIONS",
+    "when": "SEP 2026",
+    "src": "Anthropic S-1",
+    "call": {
+     "anchor": "end",
+     "x": 896,
+     "y": 140
+    },
+    "x": 878.5,
+    "y": 246
+   }
+  },
+  "links": [
+   {
+    "k": "gL1",
+    "series": "google",
+    "from": "g1",
+    "to": "g2",
+    "style": "solid",
+    "a": {
+     "x": 126.7,
+     "y": 467
+    },
+    "b": {
+     "x": 511.3,
+     "y": 382
+    },
+    "d": "M126.7,467 L511.3,382"
+   },
+   {
+    "k": "gL2",
+    "series": "google",
+    "from": "g2",
+    "to": "g3",
+    "style": "solid",
+    "a": {
+     "x": 511.3,
+     "y": 382
+    },
+    "b": {
+     "x": 718.5,
+     "y": 297
+    },
+    "d": "M511.3,382 L718.5,297"
+   },
+   {
+    "k": "aL1",
+    "series": "anthropic",
+    "from": "a1",
+    "to": "a2",
+    "style": "solid",
+    "a": {
+     "x": 246.1,
+     "y": 543.5
+    },
+    "b": {
+     "x": 743.7,
+     "y": 280
+    },
+    "d": "M246.1,543.5 L743.7,280"
+   },
+   {
+    "k": "aL2",
+    "series": "anthropic",
+    "from": "a2",
+    "to": "a3",
+    "style": "dashed",
+    "why": "two different measures (merged code vs codebase contributions)",
+    "a": {
+     "x": 743.7,
+     "y": 280
+    },
+    "b": {
+     "x": 878.5,
+     "y": 246
+    },
+    "d": "M743.7,280 L878.5,246"
+   }
+  ],
+  "claude_code_marker": {
+   "date": "2025-02-15",
+   "label": "CLAUDE CODE",
+   "when": "FEB 2025",
+   "v": 30,
+   "x": 246.1,
+   "y_top": 450,
+   "y_bottom": 552
+  }
+ },
+ "elements": {
+  "start": {
+   "panel-google": {
+    "x": 72,
+    "y": 232,
+    "w": 936,
+    "h": 640,
+    "visible": true,
+    "opacity": 1
+   },
+   "title-google": {
+    "x": 113,
+    "y": 257,
+    "w": 179.4,
+    "h": 44,
+    "visible": true,
+    "opacity": 1
+   },
+   "gL1": {
+    "x": 199.7,
+    "y": 615,
+    "w": 384.6,
+    "h": 85,
+    "visible": false,
+    "opacity": 1
+   },
+   "gL2": {
+    "x": 584.3,
+    "y": 530,
+    "w": 207.2,
+    "h": 85,
+    "visible": false,
+    "opacity": 1
+   },
+   "g1": {
+    "x": 179.7,
+    "y": 664,
+    "w": 40,
+    "h": 36,
+    "visible": false,
+    "opacity": 1
+   },
+   "g1Call": {
+    "x": 185,
+    "y": 706,
+    "w": 398.4,
+    "h": 68,
+    "visible": false,
+    "opacity": 1
+   },
+   "g2": {
+    "x": 536.1,
+    "y": 607,
+    "w": 98.7,
+    "h": 16,
+    "visible": false,
+    "opacity": 1
+   },
+   "g2Call": {
+    "x": 595,
+    "y": 622,
+    "w": 323,
+    "h": 68,
+    "visible": false,
+    "opacity": 1
+   },
+   "g3": {
+    "x": 767.5,
+    "y": 506,
+    "w": 48,
+    "h": 48,
+    "visible": false,
+    "opacity": 1
+   },
+   "g3Call": {
+    "x": 468.3,
+    "y": 450,
+    "w": 293.3,
+    "h": 68,
+    "visible": false,
+    "opacity": 1
+   },
+   "panel-anthropic": {
+    "x": 72,
+    "y": 900,
+    "w": 936,
+    "h": 640,
+    "visible": true,
+    "opacity": 1
+   },
+   "title-anthropic": {
+    "x": 113,
+    "y": 925,
+    "w": 247.3,
+    "h": 44,
+    "visible": true,
+    "opacity": 1
+   },
+   "claudeCode": {
+    "x": 313.1,
+    "y": 1308,
+    "w": 133.3,
+    "h": 145,
+    "visible": false,
+    "opacity": 1
+   },
+   "aL1": {
+    "x": 319.1,
+    "y": 1181,
+    "w": 497.6,
+    "h": 263.5,
+    "visible": false,
+    "opacity": 1
+   },
+   "aL2": {
+    "x": 816.7,
+    "y": 1147,
+    "w": 134.8,
+    "h": 34,
+    "visible": false,
+    "opacity": 1
+   },
+   "a1": {
+    "x": 169,
+    "y": 1436,
+    "w": 150.1,
+    "h": 17,
+    "visible": false,
+    "opacity": 1
+   },
+   "a1Call": {
+    "x": 503,
+    "y": 1382,
+    "w": 401.3,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "a2": {
+    "x": 796.7,
+    "y": 1145,
+    "w": 40,
+    "h": 36,
+    "visible": false,
+    "opacity": 1
+   },
+   "a2Call": {
+    "x": 447.4,
+    "y": 1104,
+    "w": 326.2,
+    "h": 91,
+    "visible": false,
+    "opacity": 1
+   },
+   "a3": {
+    "x": 931.5,
+    "y": 1111,
+    "w": 40,
+    "h": 36,
+    "visible": false,
+    "opacity": 1
+   },
+   "a3Call": {
+    "x": 647.5,
+    "y": 1006,
+    "w": 322.1,
+    "h": 91,
+    "visible": false,
+    "opacity": 1
+   }
+  },
+  "mid": {
+   "panel-google": {
+    "x": 72,
+    "y": 232,
+    "w": 936,
+    "h": 640,
+    "visible": true,
+    "opacity": 1
+   },
+   "title-google": {
+    "x": 113,
+    "y": 257,
+    "w": 179.4,
+    "h": 44,
+    "visible": true,
+    "opacity": 1
+   },
+   "gL1": {
+    "x": 199.7,
+    "y": 615,
+    "w": 384.6,
+    "h": 85,
+    "visible": true,
+    "opacity": 1
+   },
+   "gL2": {
+    "x": 584.3,
+    "y": 530,
+    "w": 207.2,
+    "h": 85,
+    "visible": true,
+    "opacity": 1
+   },
+   "g1": {
+    "x": 179.7,
+    "y": 664,
+    "w": 40,
+    "h": 36,
+    "visible": true,
+    "opacity": 1
+   },
+   "g1Call": {
+    "x": 185,
+    "y": 706,
+    "w": 398.4,
+    "h": 68,
+    "visible": true,
+    "opacity": 1
+   },
+   "g2": {
+    "x": 536.1,
+    "y": 607,
+    "w": 98.7,
+    "h": 16,
+    "visible": true,
+    "opacity": 1
+   },
+   "g2Call": {
+    "x": 595,
+    "y": 622,
+    "w": 323,
+    "h": 68,
+    "visible": true,
+    "opacity": 1
+   },
+   "g3": {
+    "x": 767.5,
+    "y": 506,
+    "w": 48,
+    "h": 48,
+    "visible": true,
+    "opacity": 1
+   },
+   "g3Call": {
+    "x": 468.3,
+    "y": 450,
+    "w": 293.3,
+    "h": 68,
+    "visible": true,
+    "opacity": 1
+   },
+   "panel-anthropic": {
+    "x": 72,
+    "y": 900,
+    "w": 936,
+    "h": 640,
+    "visible": true,
+    "opacity": 1
+   },
+   "title-anthropic": {
+    "x": 113,
+    "y": 925,
+    "w": 247.3,
+    "h": 44,
+    "visible": true,
+    "opacity": 1
+   },
+   "claudeCode": {
+    "x": 313.1,
+    "y": 1308,
+    "w": 133.3,
+    "h": 145,
+    "visible": false,
+    "opacity": 1
+   },
+   "aL1": {
+    "x": 319.1,
+    "y": 1181,
+    "w": 497.6,
+    "h": 263.5,
+    "visible": false,
+    "opacity": 1
+   },
+   "aL2": {
+    "x": 816.7,
+    "y": 1147,
+    "w": 134.8,
+    "h": 34,
+    "visible": false,
+    "opacity": 1
+   },
+   "a1": {
+    "x": 169,
+    "y": 1436,
+    "w": 150.1,
+    "h": 17,
+    "visible": false,
+    "opacity": 1
+   },
+   "a1Call": {
+    "x": 503,
+    "y": 1382,
+    "w": 401.3,
+    "h": 58,
+    "visible": false,
+    "opacity": 1
+   },
+   "a2": {
+    "x": 796.7,
+    "y": 1145,
+    "w": 40,
+    "h": 36,
+    "visible": false,
+    "opacity": 1
+   },
+   "a2Call": {
+    "x": 447.4,
+    "y": 1104,
+    "w": 326.2,
+    "h": 91,
+    "visible": false,
+    "opacity": 1
+   },
+   "a3": {
+    "x": 931.5,
+    "y": 1111,
+    "w": 40,
+    "h": 36,
+    "visible": false,
+    "opacity": 1
+   },
+   "a3Call": {
+    "x": 647.5,
+    "y": 1006,
+    "w": 322.1,
+    "h": 91,
+    "visible": false,
+    "opacity": 1
+   }
+  },
+  "payoff": {
+   "panel-google": {
+    "x": 72,
+    "y": 232,
+    "w": 936,
+    "h": 640,
+    "visible": true,
+    "opacity": 1
+   },
+   "title-google": {
+    "x": 113,
+    "y": 257,
+    "w": 179.4,
+    "h": 44,
+    "visible": true,
+    "opacity": 1
+   },
+   "gL1": {
+    "x": 199.7,
+    "y": 615,
+    "w": 384.6,
+    "h": 85,
+    "visible": true,
+    "opacity": 1
+   },
+   "gL2": {
+    "x": 584.3,
+    "y": 530,
+    "w": 207.2,
+    "h": 85,
+    "visible": true,
+    "opacity": 1
+   },
+   "g1": {
+    "x": 179.7,
+    "y": 664,
+    "w": 40,
+    "h": 36,
+    "visible": true,
+    "opacity": 1
+   },
+   "g1Call": {
+    "x": 185,
+    "y": 706,
+    "w": 398.4,
+    "h": 68,
+    "visible": true,
+    "opacity": 1
+   },
+   "g2": {
+    "x": 536.1,
+    "y": 607,
+    "w": 98.7,
+    "h": 16,
+    "visible": true,
+    "opacity": 1
+   },
+   "g2Call": {
+    "x": 595,
+    "y": 622,
+    "w": 323,
+    "h": 68,
+    "visible": true,
+    "opacity": 1
+   },
+   "g3": {
+    "x": 767.5,
+    "y": 506,
+    "w": 48,
+    "h": 48,
+    "visible": true,
+    "opacity": 1
+   },
+   "g3Call": {
+    "x": 468.3,
+    "y": 450,
+    "w": 293.3,
+    "h": 68,
+    "visible": true,
+    "opacity": 1
+   },
+   "panel-anthropic": {
+    "x": 72,
+    "y": 900,
+    "w": 936,
+    "h": 640,
+    "visible": true,
+    "opacity": 1
+   },
+   "title-anthropic": {
+    "x": 113,
+    "y": 925,
+    "w": 247.3,
+    "h": 44,
+    "visible": true,
+    "opacity": 1
+   },
+   "claudeCode": {
+    "x": 313.1,
+    "y": 1308,
+    "w": 133.3,
+    "h": 145,
+    "visible": true,
+    "opacity": 1
+   },
+   "aL1": {
+    "x": 319.1,
+    "y": 1181,
+    "w": 497.6,
+    "h": 263.5,
+    "visible": true,
+    "opacity": 1
+   },
+   "aL2": {
+    "x": 816.7,
+    "y": 1147,
+    "w": 134.8,
+    "h": 34,
+    "visible": true,
+    "opacity": 1
+   },
+   "a1": {
+    "x": 169,
+    "y": 1436,
+    "w": 150.1,
+    "h": 17,
+    "visible": true,
+    "opacity": 1
+   },
+   "a1Call": {
+    "x": 503,
+    "y": 1382,
+    "w": 401.3,
+    "h": 58,
+    "visible": true,
+    "opacity": 1
+   },
+   "a2": {
+    "x": 796.7,
+    "y": 1145,
+    "w": 40,
+    "h": 36,
+    "visible": true,
+    "opacity": 1
+   },
+   "a2Call": {
+    "x": 447.4,
+    "y": 1104,
+    "w": 326.2,
+    "h": 91,
+    "visible": true,
+    "opacity": 1
+   },
+   "a3": {
+    "x": 931.5,
+    "y": 1111,
+    "w": 40,
+    "h": 36,
+    "visible": true,
+    "opacity": 1
+   },
+   "a3Call": {
+    "x": 647.5,
+    "y": 1006,
+    "w": 322.1,
+    "h": 91,
+    "visible": true,
+    "opacity": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,552 @@
+{
+  "project": "AI destroying lives",
+  "authored": "2026-11-10 by music-placement-strategist (read-only plan; the orchestrator renders the listening copy with mix_music.py --plan-preview)",
+  "spine": "video-creation/longform-edited/media/AI destroying lives/spine/ALL.e.cut.enhanced.mp4",
+  "spine_duration_sec": 475.30,
+  "ruling": "ONE song for the whole video (Mike, PROJECT-LOG 2026-11-09/10): leatherface, Bed A from frame 0 to the last word, carved by the ONE TRACK, CARVED method (music.md). No second track, no title cards, no added boom, riser or impact stack.",
+  "track": {
+    "id": "leatherface",
+    "title": "Leatherface",
+    "artist": "Wicked Cinema",
+    "duration_sec": 262.4,
+    "bpm": 68,
+    "bar_sec": 3.5294,
+    "section_grid_phase_sec": 0.105,
+    "key": "G minor",
+    "mix": "instrumental (no vocal version exists)",
+    "license_code": "APWZNQ3HC2L0MB6P",
+    "file": "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_4_22.wav",
+    "files_used": [
+      "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_4_22.wav",
+      "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_intro_1_24-2.wav"
+    ],
+    "usage_ledger": "2026-11-10 report (this project excluded): leatherface is NOT blocked (blocked: solstice, from quant) and is not among the tracks of the last three videos (get-it, kitsune, lightheart). It is not fresh: used once, 2026-10-27, only-18-months-left, four videos back. The one-song ruling names it and no rule is broken, so no waiver is needed. The catalog carries no mike_note on this track."
+  },
+  "levels": {
+    "vo_lufs_integrated": -23.0,
+    "vo_note": "ffmpeg ebur128 on spine/ALL.d.enhanced.mp4, LRA 2.5 LU. mix_music.py raises the voice +2 dB by default (GRAPH-PROGRESS has no settings.voice_db), so every seat is computed against the RAISED voice at -21.0 LUFS; if voice_db changes, shift every remotion_gain_db by the same amount.",
+    "region_lufs": {
+      "intro bars 0-7": -25.5,
+      "mid bed A bars 8-15": -19.2,
+      "section B bars 16-23": -14.9,
+      "plateau C bars 24-31": -16.6,
+      "breakdown bars 32-39": -21.3,
+      "heavy verse bars 40-55": -14.2,
+      "chorus bars 56-71": -10.3
+    },
+    "seat_rule": "Three seats. Verse rows (intro, A, B, C, heavy verse) remotion_gain_db -25.5: heavy verse 18.7 dB under the voice, B 19.4, C 21.1, A 23.7; the dynamics of the track are the carve. Breakdown rows -23.0 (2.5 dB of make-up, 23.3 dB under: still the thinnest thing in the video, but inside the 16 to 24 dB window). Chorus row -27.0: 16.3 dB under, the most weight in the video and still under the voice. Clip inserts duck a further 14 dB automatically.",
+    "montage_window": "Row 1 carries one automation window over the montage (+16 dB relative, spine -1.0 to 0.1 = delivered 0 to 68.5 s). With the automatic -14 dB clip duck the low intro sits around 28 dB under the clip voices (the house level for a ducked bed) instead of 44 dB under, which would be silence. When the window and the duck end together on the first word Mike says, the bed changes by 2 dB only."
+  },
+  "energy_profile": {
+    "Wicked_Cinema_Leatherface_instrumental_4_22.wav": {
+      "low_energy_regions": [
+        [
+          0.105,
+          28.34
+        ],
+        [
+          113.046,
+          141.281
+        ]
+      ],
+      "high_energy_regions": [
+        [
+          141.281,
+          197.752
+        ],
+        [
+          197.752,
+          254.223
+        ]
+      ],
+      "per_bar_read": {
+        "method": "one scratchpad scan of the master: RMS per bar and per beat, bar = 240/68 = 3.5294 s, file bar n starts at 0.105 + 3.5294 n. The phase comes from the section cuts (cross-correlated to the master, r 0.995 to 1.000: intro cut = master 0.000 on, verse cut = master 84.812 on, chorus cut = master 197.753 on; both boundaries are bar lines of this grid, bars 24 and 56). Bar-level chroma shows ONE 4-bar chord cycle through the whole track (bar n matches bar n+4 at 0.97 to 1.00 inside a section, and bars 16, 24 and 40 match each other at 0.96 to 0.98), so every jump in this plan keeps the bar number modulo 4.",
+        "intro_bars_0_7": "file 0.105-28.340: -24 to -26 dBFS, two identical 4-bar phrases (bars 1 and 5 are sparse, -33). The subtlest region.",
+        "mid_bed_A_bars_8_15": "file 28.340-56.576: -18.4 to -20.6, steady.",
+        "section_B_bars_16_23": "file 56.576-84.811: -14.6 to -16.1, the fuller verse.",
+        "plateau_C_bars_24_31": "file 84.811-113.046: -16.8 to -18.3, the flattest 8 bars of the file.",
+        "breakdown_bars_32_39": "file 113.046-141.281: two 4-bar phrases, each a first-beat accent (-17) that decays, a sparse bar (33 and 37, -25, beats 3 and 4 at -28), then two thin bars (-23). No rise at its end: the lift is the first beat of bar 40.",
+        "heavy_verse_bars_40_55": "file 141.281-197.752: -13.5 to -16.8, 7 dB above the breakdown, a first-beat accent every 4 bars. The LAST BEAT of bar 55 (file 197.1-197.75, -10) is the pickup into the chorus.",
+        "chorus_bars_56_71": "file 197.752-254.223: -8.6 to -10.3, hits on beats 1 and 3 of every bar.",
+        "ending_bar_72": "the BANG is ON the bar line: 20 ms energy peak at file 254.250 (bar 72 line 254.223). It holds to 254.6, is 10 dB down by 255.2, -22 dBFS at 257.0, gone by 258.6. Digital silence after 259."
+      },
+      "notes": "Catalog: aggression 41, opening build, ending epic_hit, env low 0-28, mid 28-116, low 116-138, mid 138-196, high 196-262. The per-bar read moves those edges onto bar lines."
+    },
+    "Wicked_Cinema_Leatherface_instrumental_intro_1_24-2.wav": {
+      "low_energy_regions": [
+        [
+          0.105,
+          28.34
+        ]
+      ],
+      "high_energy_regions": [],
+      "notes": "Sample-identical to the master from 0.0 to 80 s (difference -120 dB), then its own fade. Used for row 1 only, because the remix loop of the mixer fires when the FILE is shorter than what the row has to fill (84.8 s of file against 106.3 s delivered); the row leaves it at 74.22, before the fade of the cut starts."
+    }
+  },
+  "placement_math": {
+    "delivered_time": "Every clip insert is a spine pause and the bed keeps playing through it, so the file is consumed in DELIVERED time. Pauses assumed (COVER-PLAN clip_inserts): montage 67.9 s at spine 0.1 (68.4 before the CLIP-24 window fix; every delivered figure below is 0.5 s less after 0.1), CLIP-21 7.6 s at 128.68, CLIP-61 6.0 s at 369.59, the CLIP-42 / 40 / 51 run 23.8 s at 403.41, CLIP-44 23.6 s at 416.91. Delivered = spine + 68.4 (0.1 to 128.68), + 76.0 (to 369.59), + 82.0 (to 403.41), + 105.8 (to 416.91), + 129.4 after; the delivered video is 604.7 s.",
+    "movement_1": "Pinned by bar 40 on the first word of CH3 (spine 139.72, delivered 215.72). Bar lines sit at delivered 215.72 - 3.5294 n before it and at spine 139.72 + 3.5294 m after it (to 369.59). Counted back: n 2 = spine 132.661 (bar 38), n 8 = 119.085 (bar 32, second pass), n 12 = 104.967 (bar 32, first pass), n 20 = 76.732 (bar 24, the repeat), n 28 = 48.496 (bar 24), n 31 = 37.908 (bar 21, the hand-off from the intro cut), n 36 = spine 20.261 (bar 16), n 44 = delivered 60.426 (bar 8, inside the montage). 44 grid bars for 32 file bars: 12 looped intro bars before bar 8, then plateau C heard twice (8 bars) and the first breakdown phrase heard twice (4 bars), with the intro shortened at its head to fit. Forward: m 12 = 182.073, m 24 = 224.426, m 36 = 266.779, m 48 = 309.132 (each back to bar 40), m 64 = 365.602 (bar 40 after the full 16 bars).",
+    "row_1_loop": "source_in 10.767 (was 10.267 for a 68.4 s montage; CLIP-24's window fix made it 67.9 s, so per if_a_clip_length_changes 78.667 - 67.9), loop region bars 4-7 (14.223-28.340, 4 bars = 14.118 s). The mixer gets 74.545 s of file from the in-point against 105.808 s delivered: 3 extra passes, 10.59 s shed from the tail, the row ends at file 74.222 (the bar 21 line). Bar 8 lands at delivered 59.926 (still 1.03 s into CLIP-6, as before).",
+    "movement_2": "A fresh grid, counted back from the ending: the BANG (file 254.250) on the onset of the last word this (475.07), so the bar 72 line is spine 475.040 and bar lines are delivered 604.440 - 3.5294 k. k 7 = spine 450.334 (chorus bar 65), k 8 = 446.805, k 16 = 418.570, k 26 = 406.876, k 34 = 402.440, k 40 = 381.264 (CH4 in, 0.14 s before And yet). The two grids are 0.32 bar apart; the re-phase is the 1.2 s fade of the heavy verse into the sparse first bar of the breakdown at 381.27, where the screenplay asks for a soft change with no hit.",
+    "if_a_clip_length_changes": "Row starts are exact whatever the clips measure; only what plays AFTER a clip inside the row that carries it moves. Montage: set row 1 source_in = 78.667 - montage seconds (valid 64.5 to 78.6 s; the 3 passes do not change). CLIP-21: the bar 38 row re-anchors 4 s after it. CLIP-61: nothing to fix (the row ends in a fade). The run and CLIP-44: the next row re-anchors on a bar line 3.5 s and 1.7 s after Mike resumes; a clip longer by more than about 2 s wants the source_in of the carrying row moved back by the difference. The close (418.57 on) has no clip after it and is exact.",
+    "preview_caveat": "mix_music.py --plan-preview lays the beds on the UNPAUSED spine. Exact in the listening copy: every row START (the fall into the breakdown at 104.97, bar 40 at 139.72, the CH4 entry at 381.27), the pickup at 364.9 and everything from 418.57 to the end. Not what the mix will be: the first 38 s (with no montage the loop does not fire and the low intro plays under the first lines), and the seconds after each clip splice inside the rows that carry one."
+  },
+  "beds": [
+    {
+      "chapter": "CH1",
+      "span": [
+        0.0,
+        37.908
+      ],
+      "register": "gear-2 dread under the montage, gear 3 for the promise line",
+      "source_file": "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_intro_1_24-2.wav",
+      "source_in": 10.767,
+      "cover": "loop",
+      "intensity": "subtle",
+      "level_db_under_vo": -23.7,
+      "remotion_gain_db": -25.5,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": 14.223,
+      "loop_in_sec": 14.223,
+      "loop_out_sec": 28.34,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "automation": [
+        {
+          "window": [
+            -1.0,
+            0.1
+          ],
+          "gain_db": 16.0,
+          "relative": true,
+          "ramp_sec": 0.4,
+          "why": "the montage (the pause at spine 0.1): lifts the low intro against the automatic -14 dB clip duck, net +2 dB"
+        }
+      ],
+      "carve": "intro cut (sample-identical to the master up to 80 s): file 10.267 to the bar 8 line, with bars 4-7 (14.223-28.340) heard 4 times in all (3 extra passes), then bars 8-20 (mid bed A, then section B) out to the bar 21 line (74.223)",
+      "why": "Frame 0 = the low intro (bars at -24 to -33 dBFS, the subtlest region of the file), remix-looped on its own 4-bar phrase under the 68.4 s montage and ducked under every clip (automatic -14 dB; the +16 dB montage window keeps it around 28 dB under the clip voices instead of inaudible). The mid bed (bar 8, 4 dB up) comes in under the last two clips at 60.4 s of the montage, so the un-duck on the first word Mike says (So some of those people say that AI took their work) reveals it. Section B (bar 16, another 4 dB) steps in at spine 20.26, in the pause between So let's unpack all of this and I covered the first wave, and carries the Elegant Promo fact cards (121,401 / 193,226)."
+    },
+    {
+      "chapter": "CH2",
+      "span": [
+        37.908,
+        76.732
+      ],
+      "register": "gear-2 explainer, cold and measured",
+      "source_file": "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_4_22.wav",
+      "source_in": 74.223,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -19.4,
+      "remotion_gain_db": -25.5,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "carve": "master bars 21-31 (74.223-113.046): the last 3 bars of section B, then plateau C (bars 24-31)",
+      "why": "The same audio as the intro cut at the splice (bar 21 line, heard as no splice). Plateau C, 2 dB under B, arrives at 48.50 between the loud part and The quiet part is the job that never gets posted, and sits under the entry-level numbers and FACE window 2 (Now look at what the government itself expects)."
+    },
+    {
+      "chapter": "CH2",
+      "span": [
+        76.732,
+        104.967
+      ],
+      "register": "gear-2 explainer",
+      "source_file": "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_4_22.wav",
+      "source_in": 84.811,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -21.1,
+      "remotion_gain_db": -25.5,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "carve": "jump back 8 bars (31 to 24, same place in the 4-bar chord cycle): plateau C again, bars 24-31 (84.811-113.046)",
+      "why": "The remix repeat that extends the verse plateau through Beat 3: the BLS projection, the occupation ladder and That's a forecast, not jobs gone already. Level and steady, nothing leads."
+    },
+    {
+      "chapter": "CH2",
+      "span": [
+        104.967,
+        119.085
+      ],
+      "register": "gear-2, the bed thins",
+      "source_file": "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_4_22.wav",
+      "source_in": 113.046,
+      "cover": "section",
+      "intensity": "dip",
+      "level_db_under_vo": -23.3,
+      "remotion_gain_db": -23.0,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "carve": "sample-continuous with the row above (the mixer merges them, +2.5 dB seat step over 0.5 s): the low breakdown, bars 32-35 (113.046-127.164)",
+      "why": "The fall the file itself makes from the plateau into the breakdown lands 0.29 s after Then there's freelance work where nobody announces anything (104.68). The thin bars sit under the 3 million job posts study."
+    },
+    {
+      "chapter": "CH2",
+      "span": [
+        119.085,
+        132.661
+      ],
+      "register": "gear-2, thin around the translator",
+      "source_file": "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_4_22.wav",
+      "source_in": 113.046,
+      "cover": "section",
+      "intensity": "dip",
+      "level_db_under_vo": -23.3,
+      "remotion_gain_db": -23.0,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "carve": "jump back 4 bars (35 to 32): the breakdown again, bars 32-37 in delivered time (113.046-134.222, the 7.6 s CLIP-21 pause included)",
+      "why": "This row carries CLIP-21 (splice 128.68, ducked automatically, file 122.6-130.2 under her voice). The sparse bar 33 falls under fell by 50 percent and the set-up line, so the translator speaks over the thinnest bars of the chapter."
+    },
+    {
+      "chapter": "CH2",
+      "span": [
+        132.661,
+        139.72
+      ],
+      "register": "gear-2, the last thin bars",
+      "source_file": "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_4_22.wav",
+      "source_in": 134.223,
+      "cover": "section",
+      "intensity": "dip",
+      "level_db_under_vo": -23.3,
+      "remotion_gain_db": -23.0,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "carve": "the last two bars of the breakdown, 38-39 (134.223-141.281), re-anchored on a bar line after the clip so a different captured clip length cannot move the drop",
+      "why": "Under Total freelance demand went up over that same year. It just moves away from them. Runs sample-continuous into the CH3 row (the mixer merges them), so the heavy verse arrives as the section change of the file itself, no splice on it."
+    },
+    {
+      "chapter": "CH3",
+      "span": [
+        139.72,
+        182.073
+      ],
+      "register": "gear-2 climbing",
+      "source_file": "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_4_22.wav",
+      "source_in": 141.281,
+      "cover": "section",
+      "intensity": "aggressive",
+      "level_db_under_vo": -18.7,
+      "remotion_gain_db": -25.5,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "carve": "the heavy second half of the verse, bars 40-51 (141.281-183.634), pass 1; bar 40 pinned on the first word of the chapter",
+      "why": "The one landing of the first movement: bar 40 (7 dB above the breakdown, the first beat its accent) on Now we get to the jobs that nobody believes are at risk (139.72, FACE window 3). A step heavier, made by the file, no added hit. Under the welders, the arms and cobots and the HD Hyundai numbers."
+    },
+    {
+      "chapter": "CH3",
+      "span": [
+        182.073,
+        224.426
+      ],
+      "register": "gear-2, unchanged under the plug",
+      "source_file": "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_4_22.wav",
+      "source_in": 141.281,
+      "cover": "section",
+      "intensity": "aggressive",
+      "level_db_under_vo": -18.7,
+      "remotion_gain_db": -25.5,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "carve": "jump back 12 bars (51 to 40): bars 40-51, pass 2",
+      "why": "Same section, same seat through the shortage numbers and the whole mid-roll plug (189.40-225.04): no bed change for the plug, as ruled. The repeat lands mid-sentence at 182.07, the next one on Now let's get back to the data."
+    },
+    {
+      "chapter": "CH3",
+      "span": [
+        224.426,
+        266.779
+      ],
+      "register": "gear-2 climbing",
+      "source_file": "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_4_22.wav",
+      "source_in": 141.281,
+      "cover": "section",
+      "intensity": "aggressive",
+      "level_db_under_vo": -18.7,
+      "remotion_gain_db": -25.5,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "carve": "bars 40-51, pass 3",
+      "why": "The accent of bar 40 at 224.43, 0.6 s before So next, the robot with a human body. Under Figure at BMW, Digit, the humanoid welder and FACE window 4 (So no, a humanoid robot is not welding in a shipyard today)."
+    },
+    {
+      "chapter": "CH3",
+      "span": [
+        266.779,
+        309.132
+      ],
+      "register": "gear-2 climbing",
+      "source_file": "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_4_22.wav",
+      "source_in": 141.281,
+      "cover": "section",
+      "intensity": "aggressive",
+      "level_db_under_vo": -18.7,
+      "remotion_gain_db": -25.5,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "carve": "bars 40-51, pass 4",
+      "why": "Under So it's early, but it has started, the 1.6 million maintenance workers, the BLS duty list and the Literally Every Job Is at Risk callback."
+    },
+    {
+      "chapter": "CH3",
+      "span": [
+        309.132,
+        365.602
+      ],
+      "register": "gear-2 climbing, the peak held back",
+      "source_file": "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_4_22.wav",
+      "source_in": 141.281,
+      "cover": "section",
+      "intensity": "aggressive",
+      "level_db_under_vo": -18.7,
+      "remotion_gain_db": -25.5,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "carve": "bars 40-55 (141.281-197.752), the full 16 bars this once: the last beat of bar 55 is the pickup the file plays into the chorus, and the chorus is NOT played",
+      "why": "Under the download line, Atlas, the Amazon purchase and So picture it. The pickup (file 197.1-197.75, the only swell in the chapter) falls on spine 364.9-365.6, right after But my prediction is that by 2029, it will (ends about 364.27 since the 2026-11-10 'humanoid' cut; the pickup stays on the bar grid, about 0.6 s after the line), and resolves back to bar 40 instead of the chorus: tension up, the peak kept for the close."
+    },
+    {
+      "chapter": "CH3",
+      "span": [
+        365.602,
+        381.264
+      ],
+      "register": "gear-2, landing",
+      "source_file": "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_4_22.wav",
+      "source_in": 141.281,
+      "cover": "section",
+      "intensity": "aggressive",
+      "level_db_under_vo": -18.7,
+      "remotion_gain_db": -25.5,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 1.2,
+      "carve": "bars 40-46 in delivered time (141.281-163.58, the 6.0 s CLIP-61 pause included), then a 1.2 s fade under the last words of the chapter",
+      "why": "This row carries CLIP-61 (splice 369.59, ducked automatically). The heavy verse holds under the Musk set-up, FACE window 5 (A robot doesn't need to be a better electrician than you) and the ad-lib, and fades out over 380.07-381.27 under it's just not in the house yet. The fade is where the beat grid re-phases for the second movement."
+    },
+    {
+      "chapter": "CH4",
+      "span": [
+        381.264,
+        402.440
+      ],
+      "register": "gear-2, quiet and uneasy",
+      "source_file": "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_4_22.wav",
+      "source_in": 113.046,
+      "cover": "section",
+      "intensity": "dip",
+      "level_db_under_vo": -23.3,
+      "remotion_gain_db": -23.0,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "carve": "the low breakdown, bars 32-37 (113.046-134.222), entering hard on its own first-beat accent as the heavy verse finishes fading",
+      "why": "The accent and decay of bar 32 in the gap before And yet people ask about their own job (381.41). The thinnest region of the track under the 70 / 30 poll and the blue-collar split; the sparse bars 33 and 37 fall on 384.8-388.4 and 398.9-402.5."
+    },
+    {
+      "chapter": "CH4",
+      "span": [
+        402.440,
+        406.876
+      ],
+      "register": "gear-2, thin under the clip run",
+      "source_file": "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_4_22.wav",
+      "source_in": 105.987,
+      "cover": "section",
+      "intensity": "dip",
+      "level_db_under_vo": -21.1,
+      "remotion_gain_db": -25.5,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "carve": "bars 30-37 in delivered time (105.987-134.223, the 23.8 s CLIP-42 / 40 / 51 pause included); chord-cycle continuous with the row before (37 into 30)",
+      "why": "This row carries the three-clip run (splice 403.41, ducked automatically). 0.97 s of plateau C lifts under what it sounds like, the fall into the breakdown and the thin bars play under the clips, and Mike comes back (I get why people say it) on bar 37, the sparsest bar of the breakdown."
+    },
+    {
+      "chapter": "CH4",
+      "span": [
+        406.876,
+        418.570
+      ],
+      "register": "gear-2, thin under the long clip",
+      "source_file": "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_4_22.wav",
+      "source_in": 105.987,
+      "cover": "section",
+      "intensity": "dip",
+      "level_db_under_vo": -21.1,
+      "remotion_gain_db": -25.5,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "carve": "bars 30-39 in delivered time (105.987-141.281, the 23.6 s CLIP-44 pause included)",
+      "why": "This row carries CLIP-44 (splice 416.91, ducked automatically). Two bars of plateau C under Nobody wants to believe and notice the pattern; the fall into the breakdown lands at 413.94, between somebody else and Listen to how this woman in a trade program puts it; the breakdown plays under her 23.6 s."
+    },
+    {
+      "chapter": "CH4",
+      "span": [
+        418.570,
+        446.805
+      ],
+      "register": "gear-2, the thinnest, into CH5",
+      "source_file": "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_4_22.wav",
+      "source_in": 113.046,
+      "cover": "section",
+      "intensity": "dip",
+      "level_db_under_vo": -23.3,
+      "remotion_gain_db": -23.0,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "carve": "the breakdown once more, bars 32-39 (113.046-141.281), exact (no clip after 416.91), counted back from the ending",
+      "why": "Under the German study and the 15 years of the translator. The sparse bar 37 (file 130.7-134.2) falls on 436.22-439.75: Feeling safe isn't the same thing as being safe (FACE window 6) and unfortunately play over the quietest bar. Bars 38-39 under So what does this mean for you? The damage so far is quiet."
+    },
+    {
+      "chapter": "CH5",
+      "span": [
+        446.805,
+        450.334
+      ],
+      "register": "gear-3, the dip before the close",
+      "source_file": "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_4_22.wav",
+      "source_in": 127.164,
+      "cover": "section",
+      "intensity": "dip",
+      "level_db_under_vo": -23.3,
+      "remotion_gain_db": -23.0,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 1.2,
+      "carve": "jump back 4 bars (39 to 36, chord-cycle continuous): bar 36 alone (127.164-130.693), its accent and decay, cross-fading into the chorus",
+      "why": "One more thin bar under the freelance work that stops coming, the office job already expected to shrink, so the chorus has a dip to rise out of."
+    },
+    {
+      "chapter": "CH5",
+      "span": [
+        450.334,
+        475.30
+      ],
+      "register": "gear-3, grave and final",
+      "source_file": "video-creation/assets/music/Leatherface/Wicked_Cinema_Leatherface_instrumental_4_22.wav",
+      "source_in": 229.517,
+      "cover": "section",
+      "intensity": "aggressive",
+      "level_db_under_vo": -16.3,
+      "remotion_gain_db": -27.0,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": true,
+      "fade_in_sec": 1.2,
+      "carve": "the chorus tail RIGHT-ALIGNED: bars 65-71 (229.517-254.223) and the ending stroke of bar 72; source_in 229.517 puts the BANG of the file (254.250) on spine 475.07, the onset of the last word",
+      "why": "The only place the track is allowed to feel big. It swells in over 1.2 s (no riser, no hit) and is full at 450.34 on shrink, half a second before Don't wait for a layoff announcement (FACE window 7, 450.73). Seven bars of chorus under the two video pointers and the comment / like / subscribe asks, seated 16 dB under the voice. The ending stroke lands on this (475.07) and the video ends on the word at 475.30; the ring is cut by the end fade of the mixer."
+    }
+  ],
+  "hard_hits": [
+    {
+      "t": 0.1,
+      "beat": "the cut from the montage to Mike (the locked promise line)",
+      "music_move": "no hit: the mid bed has been in since 60.4 s of the montage; the un-duck on his first word reveals it"
+    },
+    {
+      "t": 104.97,
+      "beat": "the freelance beat",
+      "music_move": "the fall from the verse plateau into the breakdown, as the file plays it"
+    },
+    {
+      "t": 139.72,
+      "beat": "CH3 opens: the jobs that nobody believes are at risk (FACE window 3)",
+      "music_move": "bar 40, the heavy verse, lands on the first word (the section change of the file, 7 dB)"
+    },
+    {
+      "t": 364.9,
+      "beat": "my prediction is that by 2029, it will",
+      "music_move": "the pickup at the end of bar 55 swells right after the line and resolves to the verse, not the chorus"
+    },
+    {
+      "t": 381.3,
+      "beat": "CH4 opens: And yet people ask about their own job",
+      "music_move": "the heavy verse fades over 1.2 s; the breakdown enters on its own accent"
+    },
+    {
+      "t": 450.34,
+      "beat": "Don't wait for a layoff announcement (FACE window 7)",
+      "music_move": "the chorus swells in over 1.2 s, full on shrink, no riser"
+    },
+    {
+      "t": 475.1,
+      "beat": "the last word: this",
+      "music_move": "the ending BANG of the file on the word; the video ends 0.23 s later"
+    }
+  ],
+  "end_card_hold": {"after_last_word_sec": 3.0, "hold_until_sec": 478.27, "why": "Mike, plan gate 2026-11-10: hold the end card about 3 s past the last word 'this.' so the closing BANG (on the onset of 'this.') rings out instead of being cut. No trim: the comp runs past the spine by the hold, the VO is padded with silence."},
+  "notes": "Clip inserts and the row that carries each (all ducked automatically, no automation row, no bed change, hit or riser inside any window): the CH1 montage (spine 0.1, 68.4 s) = row 1; CLIP-21 (128.68, 7.6 s) = the CH2 row from 119.085; CLIP-61 (369.59, 6.0 s) = the CH3 row from 365.602; CLIP-42 / 40 / 51 (403.41, 23.8 s) = the CH4 row from 402.440; CLIP-44 (416.91, 23.6 s) = the CH4 row from 406.876. Row 1 needs the montage pause to sit AFTER spine 0.0 (COVER-PLAN says 0.1): a pause snapped to exactly 0.0 would start the bed in the wrong place. The CH5 chorus row is the last bed, so the mixer runs it to the end of the video and closes it with its 0.25 s fade. This plan asks for no IMPACT and no RISER row anywhere. QA: check the music floor in a no-VO breath of each region (20.4-20.7, 48.3-48.8, 104.1-104.6, 133.4-133.9, 153.2-153.7, 259.3-259.9, 401.7-402.2, 439.1-439.4, 450.5-450.8), not integrated LUFS.",
+  "open_questions": [
+    "LISTEN FOR 1 (exact in the listening copy): 2:19 (139.72). The heavy verse comes in on Now we get to the jobs that nobody believes are at risk. The screenplay asked for a step heavier, never a hit; this is the 7 dB section change of the file with a first-beat accent. If it reads as a hit, the fix is a 1.5 s fade_in_sec on that row.",
+    "RESOLVED (Mike, plan gate 2026-11-10): yes, hold the end card about 3 s so the hit rings out: end_card_hold = 3.0 s after the last word (hold_until_sec 478.27, no trim). Was: LISTEN FOR 2 (exact in the listening copy): the close from 7:30 (450.34). The chorus swells in on shrink and the ending BANG lands on this at 7:55.1, with the video ending 0.23 s later, so the ring is cut. If you want the hit to ring out, that is a held end card of about 3 s (end_card_hold), your call only.",
+    "The screenplay says no earlier video used leatherface. The ledger now shows one use: only-18-months-left, 2026-10-27, four videos back. It is not blocked and not in the last three, so the pick stands under your one-song ruling; it just is not fresh. No shortlisted track had to be replaced.",
+    "Chorus length: the screenplay asked for the last 40 s or so, entered on the face line. As recorded, the face line is 24.7 s before the last word, so the chorus is its last 7 bars (24.7 s). Entering earlier would put it under The damage so far is quiet.",
+    "CH3 is 4:07 delivered on a 16-bar section, so the heavy verse is heard five and a half times (12-bar passes, jumps on bar lines). The one variation is the pickup after by 2029, it will. If it wears, the option that keeps the plug unchanged is plateau C (2.5 dB lighter, same chords) for the pass from 266.78 to 309.13.",
+    "The montage level is a judgment: +16 dB against the automatic duck puts the low intro around 28 dB under the clip voices. The listening copy cannot show it (no montage on the unpaused spine); judge it in the draft.",
+    "The montage pause point (0.1) and every clip length are taken from COVER-PLAN before capture. placement_math.if_a_clip_length_changes gives the one-number fix per clip; the montage one (row 1 source_in = 78.667 - montage seconds) should be applied before the mix.",
+    "Subtle pool: 36 fresh beds remain, so it is not running out. This video draws nothing new from it."
+  ]
+}

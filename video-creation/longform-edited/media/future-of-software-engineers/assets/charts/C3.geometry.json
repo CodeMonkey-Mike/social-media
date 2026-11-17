@@ -1,0 +1,752 @@
+{
+ "id": "C3",
+ "stage": [
+  1920,
+  1080
+ ],
+ "png_scale": 1,
+ "states": [
+  "start",
+  "mid",
+  "payoff"
+ ],
+ "geom": {
+  "note": "panel-local px: add the panel origin for stage px. x is linear in UTC date, y linear in percent.",
+  "panels": {
+   "google": {
+    "x": 120,
+    "y": 222,
+    "w": 810,
+    "h": 700
+   },
+   "anthropic": {
+    "x": 990,
+    "y": 222,
+    "w": 810,
+    "h": 700
+   }
+  },
+  "plot": {
+   "x0": 90,
+   "x1": 780,
+   "y0_pct0": 620,
+   "y_pct100": 170,
+   "date0": "2024-10-01",
+   "date1": "2026-10-01",
+   "px_per_day": 0.94521,
+   "px_per_pct": 4.5
+  },
+  "colors": {
+   "google": "#00c2ff",
+   "anthropic": "#00e68a"
+  },
+  "points": {
+   "g1": {
+    "series": "google",
+    "k": "g1",
+    "kind": "floor",
+    "date": "2024-10-29",
+    "v": 25,
+    "val": "MORE THAN 25%",
+    "what": "",
+    "when": "OCT 2024",
+    "src": "Pichai, Q3 2024 earnings remarks",
+    "call": {
+     "anchor": "start",
+     "x": 104,
+     "y": 538
+    },
+    "x": 116.5,
+    "y": 507.5
+   },
+   "g2": {
+    "series": "google",
+    "k": "g2",
+    "kind": "season",
+    "from": "2025-09-01",
+    "to": "2025-11-30",
+    "date": "2025-10-15",
+    "v": 50,
+    "val": "50%",
+    "what": "",
+    "when": "FALL 2025",
+    "src": "per Pichai, 2026-04-22",
+    "call": {
+     "anchor": "start",
+     "x": 470,
+     "y": 426
+    },
+    "x": 448.2,
+    "y": 395,
+    "x_from": 406.6,
+    "x_to": 491.7
+   },
+   "g3": {
+    "series": "google",
+    "k": "g3",
+    "kind": "exact",
+    "date": "2026-04-22",
+    "v": 75,
+    "val": "75%",
+    "what": "",
+    "when": "APR 2026",
+    "src": "Pichai, Cloud Next '26",
+    "call": {
+     "anchor": "end",
+     "x": 606,
+     "y": 232
+    },
+    "x": 626.9,
+    "y": 282.5
+   },
+   "a1": {
+    "series": "anthropic",
+    "k": "a1",
+    "kind": "band",
+    "from": "2024-10-01",
+    "to": "2025-02-15",
+    "date": "2025-02-15",
+    "v": 2.5,
+    "top": 5,
+    "val": "LOW SINGLE DIGITS",
+    "what": "",
+    "when": "BEFORE FEB 2025",
+    "src": "Anthropic Institute essay",
+    "call": {
+     "anchor": "start",
+     "x": 366,
+     "y": 572
+    },
+    "x": 219.5,
+    "y": 608.8,
+    "x_from": 90,
+    "x_to": 219.5,
+    "y_top": 597.5
+   },
+   "a2": {
+    "series": "anthropic",
+    "k": "a2",
+    "kind": "floor",
+    "date": "2026-05-15",
+    "v": 80,
+    "val": "MORE THAN 80%",
+    "what": "OF MERGED CODE",
+    "when": "MAY 2026",
+    "src": "Anthropic Institute essay",
+    "call": {
+     "anchor": "end",
+     "x": 624,
+     "y": 210
+    },
+    "x": 648.6,
+    "y": 260
+   },
+   "a3": {
+    "series": "anthropic",
+    "k": "a3",
+    "kind": "floor",
+    "date": "2026-09-15",
+    "v": 90,
+    "val": "OVER 90%",
+    "what": "OF CODEBASE CONTRIBUTIONS",
+    "when": "SEP 2026",
+    "src": "Anthropic S-1",
+    "call": {
+     "anchor": "end",
+     "x": 778,
+     "y": 118
+    },
+    "x": 764.9,
+    "y": 215
+   }
+  },
+  "links": [
+   {
+    "k": "gL1",
+    "series": "google",
+    "from": "g1",
+    "to": "g2",
+    "style": "solid",
+    "a": {
+     "x": 116.5,
+     "y": 507.5
+    },
+    "b": {
+     "x": 448.2,
+     "y": 395
+    },
+    "d": "M116.5,507.5 L448.2,395"
+   },
+   {
+    "k": "gL2",
+    "series": "google",
+    "from": "g2",
+    "to": "g3",
+    "style": "solid",
+    "a": {
+     "x": 448.2,
+     "y": 395
+    },
+    "b": {
+     "x": 626.9,
+     "y": 282.5
+    },
+    "d": "M448.2,395 L626.9,282.5"
+   },
+   {
+    "k": "aL1",
+    "series": "anthropic",
+    "from": "a1",
+    "to": "a2",
+    "style": "solid",
+    "a": {
+     "x": 219.5,
+     "y": 608.8
+    },
+    "b": {
+     "x": 648.6,
+     "y": 260
+    },
+    "d": "M219.5,608.8 L648.6,260"
+   },
+   {
+    "k": "aL2",
+    "series": "anthropic",
+    "from": "a2",
+    "to": "a3",
+    "style": "dashed",
+    "why": "two different measures (merged code vs codebase contributions)",
+    "a": {
+     "x": 648.6,
+     "y": 260
+    },
+    "b": {
+     "x": 764.9,
+     "y": 215
+    },
+    "d": "M648.6,260 L764.9,215"
+   }
+  ],
+  "claude_code_marker": {
+   "date": "2025-02-15",
+   "label": "CLAUDE CODE",
+   "when": "FEB 2025",
+   "v": 30,
+   "x": 219.5,
+   "y_top": 485,
+   "y_bottom": 620
+  }
+ },
+ "elements": {
+  "start": {
+   "panel-google": {
+    "x": 120,
+    "y": 222,
+    "w": 810,
+    "h": 700,
+    "visible": true,
+    "opacity": 1
+   },
+   "title-google": {
+    "x": 161,
+    "y": 245,
+    "w": 149.5,
+    "h": 39,
+    "visible": true,
+    "opacity": 1
+   },
+   "gL1": {
+    "x": 237.5,
+    "y": 618,
+    "w": 331.7,
+    "h": 112.5,
+    "visible": false,
+    "opacity": 1
+   },
+   "gL2": {
+    "x": 569.2,
+    "y": 505.5,
+    "w": 178.7,
+    "h": 112.5,
+    "visible": false,
+    "opacity": 1
+   },
+   "g1": {
+    "x": 219.5,
+    "y": 696.5,
+    "w": 36,
+    "h": 34,
+    "visible": false,
+    "opacity": 1
+   },
+   "g1Call": {
+    "x": 225,
+    "y": 732,
+    "w": 313.7,
+    "h": 57,
+    "visible": false,
+    "opacity": 1
+   },
+   "g2": {
+    "x": 527.6,
+    "y": 611,
+    "w": 85.1,
+    "h": 14,
+    "visible": false,
+    "opacity": 1
+   },
+   "g2Call": {
+    "x": 591,
+    "y": 620,
+    "w": 254.2,
+    "h": 57,
+    "visible": false,
+    "opacity": 1
+   },
+   "g3": {
+    "x": 725.9,
+    "y": 483.5,
+    "w": 44,
+    "h": 44,
+    "visible": false,
+    "opacity": 1
+   },
+   "g3Call": {
+    "x": 496.9,
+    "y": 426,
+    "w": 231.3,
+    "h": 57,
+    "visible": false,
+    "opacity": 1
+   },
+   "panel-anthropic": {
+    "x": 990,
+    "y": 222,
+    "w": 810,
+    "h": 700,
+    "visible": true,
+    "opacity": 1
+   },
+   "title-anthropic": {
+    "x": 1031,
+    "y": 245,
+    "w": 206,
+    "h": 39,
+    "visible": true,
+    "opacity": 1
+   },
+   "claudeCode": {
+    "x": 1204.5,
+    "y": 670,
+    "w": 111.2,
+    "h": 173,
+    "visible": false,
+    "opacity": 1
+   },
+   "aL1": {
+    "x": 1210.5,
+    "y": 483,
+    "w": 429.1,
+    "h": 348.8,
+    "visible": false,
+    "opacity": 1
+   },
+   "aL2": {
+    "x": 1639.6,
+    "y": 438,
+    "w": 116.3,
+    "h": 45,
+    "visible": false,
+    "opacity": 1
+   },
+   "a1": {
+    "x": 1081,
+    "y": 820.5,
+    "w": 129.5,
+    "h": 22.5,
+    "visible": false,
+    "opacity": 1
+   },
+   "a1Call": {
+    "x": 1357,
+    "y": 773,
+    "w": 315.3,
+    "h": 50,
+    "visible": false,
+    "opacity": 1
+   },
+   "a2": {
+    "x": 1621.6,
+    "y": 449,
+    "w": 36,
+    "h": 34,
+    "visible": false,
+    "opacity": 1
+   },
+   "a2Call": {
+    "x": 1359,
+    "y": 404,
+    "w": 257.2,
+    "h": 81,
+    "visible": false,
+    "opacity": 1
+   },
+   "a3": {
+    "x": 1737.9,
+    "y": 404,
+    "w": 36,
+    "h": 34,
+    "visible": false,
+    "opacity": 1
+   },
+   "a3Call": {
+    "x": 1513.3,
+    "y": 312,
+    "w": 256.9,
+    "h": 81,
+    "visible": false,
+    "opacity": 1
+   }
+  },
+  "mid": {
+   "panel-google": {
+    "x": 120,
+    "y": 222,
+    "w": 810,
+    "h": 700,
+    "visible": true,
+    "opacity": 1
+   },
+   "title-google": {
+    "x": 161,
+    "y": 245,
+    "w": 149.5,
+    "h": 39,
+    "visible": true,
+    "opacity": 1
+   },
+   "gL1": {
+    "x": 237.5,
+    "y": 618,
+    "w": 331.7,
+    "h": 112.5,
+    "visible": true,
+    "opacity": 1
+   },
+   "gL2": {
+    "x": 569.2,
+    "y": 505.5,
+    "w": 178.7,
+    "h": 112.5,
+    "visible": true,
+    "opacity": 1
+   },
+   "g1": {
+    "x": 219.5,
+    "y": 696.5,
+    "w": 36,
+    "h": 34,
+    "visible": true,
+    "opacity": 1
+   },
+   "g1Call": {
+    "x": 225,
+    "y": 732,
+    "w": 313.7,
+    "h": 57,
+    "visible": true,
+    "opacity": 1
+   },
+   "g2": {
+    "x": 527.6,
+    "y": 611,
+    "w": 85.1,
+    "h": 14,
+    "visible": true,
+    "opacity": 1
+   },
+   "g2Call": {
+    "x": 591,
+    "y": 620,
+    "w": 254.2,
+    "h": 57,
+    "visible": true,
+    "opacity": 1
+   },
+   "g3": {
+    "x": 725.9,
+    "y": 483.5,
+    "w": 44,
+    "h": 44,
+    "visible": true,
+    "opacity": 1
+   },
+   "g3Call": {
+    "x": 496.9,
+    "y": 426,
+    "w": 231.3,
+    "h": 57,
+    "visible": true,
+    "opacity": 1
+   },
+   "panel-anthropic": {
+    "x": 990,
+    "y": 222,
+    "w": 810,
+    "h": 700,
+    "visible": true,
+    "opacity": 1
+   },
+   "title-anthropic": {
+    "x": 1031,
+    "y": 245,
+    "w": 206,
+    "h": 39,
+    "visible": true,
+    "opacity": 1
+   },
+   "claudeCode": {
+    "x": 1204.5,
+    "y": 670,
+    "w": 111.2,
+    "h": 173,
+    "visible": false,
+    "opacity": 1
+   },
+   "aL1": {
+    "x": 1210.5,
+    "y": 483,
+    "w": 429.1,
+    "h": 348.8,
+    "visible": false,
+    "opacity": 1
+   },
+   "aL2": {
+    "x": 1639.6,
+    "y": 438,
+    "w": 116.3,
+    "h": 45,
+    "visible": false,
+    "opacity": 1
+   },
+   "a1": {
+    "x": 1081,
+    "y": 820.5,
+    "w": 129.5,
+    "h": 22.5,
+    "visible": false,
+    "opacity": 1
+   },
+   "a1Call": {
+    "x": 1357,
+    "y": 773,
+    "w": 315.3,
+    "h": 50,
+    "visible": false,
+    "opacity": 1
+   },
+   "a2": {
+    "x": 1621.6,
+    "y": 449,
+    "w": 36,
+    "h": 34,
+    "visible": false,
+    "opacity": 1
+   },
+   "a2Call": {
+    "x": 1359,
+    "y": 404,
+    "w": 257.2,
+    "h": 81,
+    "visible": false,
+    "opacity": 1
+   },
+   "a3": {
+    "x": 1737.9,
+    "y": 404,
+    "w": 36,
+    "h": 34,
+    "visible": false,
+    "opacity": 1
+   },
+   "a3Call": {
+    "x": 1513.3,
+    "y": 312,
+    "w": 256.9,
+    "h": 81,
+    "visible": false,
+    "opacity": 1
+   }
+  },
+  "payoff": {
+   "panel-google": {
+    "x": 120,
+    "y": 222,
+    "w": 810,
+    "h": 700,
+    "visible": true,
+    "opacity": 1
+   },
+   "title-google": {
+    "x": 161,
+    "y": 245,
+    "w": 149.5,
+    "h": 39,
+    "visible": true,
+    "opacity": 1
+   },
+   "gL1": {
+    "x": 237.5,
+    "y": 618,
+    "w": 331.7,
+    "h": 112.5,
+    "visible": true,
+    "opacity": 1
+   },
+   "gL2": {
+    "x": 569.2,
+    "y": 505.5,
+    "w": 178.7,
+    "h": 112.5,
+    "visible": true,
+    "opacity": 1
+   },
+   "g1": {
+    "x": 219.5,
+    "y": 696.5,
+    "w": 36,
+    "h": 34,
+    "visible": true,
+    "opacity": 1
+   },
+   "g1Call": {
+    "x": 225,
+    "y": 732,
+    "w": 313.7,
+    "h": 57,
+    "visible": true,
+    "opacity": 1
+   },
+   "g2": {
+    "x": 527.6,
+    "y": 611,
+    "w": 85.1,
+    "h": 14,
+    "visible": true,
+    "opacity": 1
+   },
+   "g2Call": {
+    "x": 591,
+    "y": 620,
+    "w": 254.2,
+    "h": 57,
+    "visible": true,
+    "opacity": 1
+   },
+   "g3": {
+    "x": 725.9,
+    "y": 483.5,
+    "w": 44,
+    "h": 44,
+    "visible": true,
+    "opacity": 1
+   },
+   "g3Call": {
+    "x": 496.9,
+    "y": 426,
+    "w": 231.3,
+    "h": 57,
+    "visible": true,
+    "opacity": 1
+   },
+   "panel-anthropic": {
+    "x": 990,
+    "y": 222,
+    "w": 810,
+    "h": 700,
+    "visible": true,
+    "opacity": 1
+   },
+   "title-anthropic": {
+    "x": 1031,
+    "y": 245,
+    "w": 206,
+    "h": 39,
+    "visible": true,
+    "opacity": 1
+   },
+   "claudeCode": {
+    "x": 1204.5,
+    "y": 670,
+    "w": 111.2,
+    "h": 173,
+    "visible": true,
+    "opacity": 1
+   },
+   "aL1": {
+    "x": 1210.5,
+    "y": 483,
+    "w": 429.1,
+    "h": 348.8,
+    "visible": true,
+    "opacity": 1
+   },
+   "aL2": {
+    "x": 1639.6,
+    "y": 438,
+    "w": 116.3,
+    "h": 45,
+    "visible": true,
+    "opacity": 1
+   },
+   "a1": {
+    "x": 1081,
+    "y": 820.5,
+    "w": 129.5,
+    "h": 22.5,
+    "visible": true,
+    "opacity": 1
+   },
+   "a1Call": {
+    "x": 1357,
+    "y": 773,
+    "w": 315.3,
+    "h": 50,
+    "visible": true,
+    "opacity": 1
+   },
+   "a2": {
+    "x": 1621.6,
+    "y": 449,
+    "w": 36,
+    "h": 34,
+    "visible": true,
+    "opacity": 1
+   },
+   "a2Call": {
+    "x": 1359,
+    "y": 404,
+    "w": 257.2,
+    "h": 81,
+    "visible": true,
+    "opacity": 1
+   },
+   "a3": {
+    "x": 1737.9,
+    "y": 404,
+    "w": 36,
+    "h": 34,
+    "visible": true,
+    "opacity": 1
+   },
+   "a3Call": {
+    "x": 1513.3,
+    "y": 312,
+    "w": 256.9,
+    "h": 81,
+    "visible": true,
+    "opacity": 1
+   }
+  }
+ }
+}

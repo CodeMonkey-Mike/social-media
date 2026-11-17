@@ -1,0 +1,110 @@
+{
+  "verdict": "PASS",
+  "assets": [
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\pieverse\\yt-post\\slides\\01.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": [
+        "Hook: 'From 12 cents / to 2 dollars' in Playfair 900, '2 dollars' in the cyan accent, two lines with 3 words on the second (no orphan). The headline sits at y 765 to 920, under the chin and left of the neck, clear of the eyes, nose and mouth. The logo, the PIEVERSE label, the channel link, 'Swipe ->' and the progress bar (1 of 10 lit) are inside the 63 px margin. The forehead, both eyes and the right ear are inside the frame; only the hair runs off the top and right edges, which is normal for a big right-of-centre portrait. At 390 px phone width the headline and face read well.",
+        "Face source: see flag_for_orchestrator. Judged on framing only, as the dispatch asks."
+      ]
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\pieverse\\yt-post\\slides\\02.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": [
+        "Header 2/10, bar 2 lit. Headline on one line, 'AI agents' in the accent. All 3 rows match the spec word for word; HOMEPAGE (index 2) has the accent outline. The longest value, 'A payment stack for AI agents', ends at x 970, inside the card (x 1015). Content stays inside x 64 to 1017, y 52 to 1021."
+      ]
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\pieverse\\yt-post\\slides\\03.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": [
+        "Header 3/10, bar 3 lit. All 4 rows match the spec; TOKEN (index 3) is highlighted. '10' (dotted zero) and '279' are in JetBrains Mono. It says 'dollars a month', with no dollar sign. 'Pieverse's' is spelled right."
+      ]
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\pieverse\\yt-post\\slides\\04.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": [
+        "Header 4/10, bar 4 lit. '30' is the big JetBrains Mono stat (dotted zero) with the cyan glow, and 'skills published on Pieverse itself' sits under it. The note matches the spec, '74,000' is in mono, 'ClawHub' is spelled right, and the note ends about 45 px above the bar."
+      ]
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\pieverse\\yt-post\\slides\\05.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": [
+        "Header 5/10, bar 5 lit. 'The number I couldn't find' fits on one line (ends at x 978) with the accent on 'I couldn't find'. The 3-line body matches the spec: no em dash, no number.",
+        "Advisory, carried over from round 1: the body is anchored under the headline on purpose (build_yt_post.py PLACE: 'a text body stays anchored under the headline'), so y 490 to 950 is empty. This is the same layout as the text slides of the posted canton carousel, so it is not a defect. It reads top-heavy next to the centred stat and rows slides."
+      ]
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\pieverse\\yt-post\\slides\\06.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": [
+        "Header 6/10, bar 6 lit. In the C2-payoff crop, the all-time low 0.119, the Upbit listing 1.184, the all-time high 2.23 (9 Nov 2026) and AT RECORDING 1.78 are all inside the image slot; 'AT RECORDING' ends at about x 1000, inside the slot edge at 1016 (checked at 3x). The caption matches the spec, and 62, 1.18, 2.23 and 'November 9th, 2026' are all in JetBrains Mono (canonical CSS: 'EVERY number/date'). No dollar sign.",
+        "Phone check at 390 px: the line shape and the big callouts (2.23, 1.78, 1.184, 0.119) are readable. The axis and the small tag labels are not, but the caption repeats every number, so the slide still works."
+      ]
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\pieverse\\yt-post\\slides\\07.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": [
+        "Round 1 FAIL fixed: CIRCULATING now reads 'Around 27 to 40% of supply', the same as card D19 and DATA.md line 544 (27.5% CoinGecko, 30.0% CoinMarketCap, 39.6% project API after the 14 Nov unlock).",
+        "Header 7/10, bar 7 lit. LOCK ENDS (index 1) has the accent outline. The other rows match the spec: 'Team and investors, 14 Nov', 'Around 33M to 86M tokens', 'Hold around 57% of supply' (DATA: 56.6%). The numbers are in JetBrains Mono (the dotted zero in '40', checked at 2x). Nothing is clipped; the longest value ends at x 918."
+      ]
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\pieverse\\yt-post\\slides\\08.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": [
+        "Header 8/10, bar 8 lit. '7M' is the mono stat. The unit line reads 'dollar round, October 2025' (no dollar sign, date in mono). The body matches the spec ('Animoca Brands', 'UOB Ventures' spelled right) and ends about 45 px above the bar."
+      ]
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\pieverse\\yt-post\\slides\\09.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": [
+        "Header 9/10, bar 9 lit. Nothing in the D15 crop is clipped: the WHAT TO WATCH eyebrow, 'Three numbers I'm watching' and all 3 list rows are inside the slot, and they read at 390 px phone width. The caption matches the spec.",
+        "Nit carried over from round 1 (not a fail): the card sits about 9 px from the slot's left and right edges but about 54 px from the top and bottom, and two Playfair headlines stack ('Priced way ahead' over the card's 'Three numbers I'm watching')."
+      ]
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\pieverse\\yt-post\\slides\\10.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": [
+        "CTA: the face is centred and the whole head is inside the frame (hair top at about y 30, both sides clear). 'Watch the full video' is on one line with 'full video' in the accent, at y 745 to 815, below the chin and clear of the mouth. The subtitle 'Pieverse: Here's What It Actually Is' matches the spec (no dollar sign). The cyan 'Link in the post' pill, the red play badge top-left, the logo top-right (clears the hair, checked at 3x) and the channel link are all inside the margins. No progress bar on the CTA, by design."
+      ]
+    }
+  ],
+  "summary": {
+    "checked": 10,
+    "passed": 10,
+    "failed": 0
+  },
+  "must_fix": [],
+  "global_checks": "Round 2. I opened all 10 slides at full size, plus 2x and 3x crops (07 rows, 06 caption, 06 right callouts, 10 logo, 04 and 08 notes) and 390 px phone previews of 01, 06, 09 and 10 (media/pieverse/_previews/ytpost-qa/r2/). A pixel scan puts all bright content on slides 02 to 10 inside x 62 to 1017 and y 52 to 1021; only the photo on 01 reaches the frame edge. No clipped text. No orphan word on a headline's last line. No em dash or dollar sign. No blank or broken image. Header, footer and bar sit at the same positions on 02 to 09, and n/N and the lit-segment count are right on every slide. Playfair 900 headlines carry the cyan highlight, the body is DM Sans and the numbers are JetBrains Mono. Only 07.png changed since round 1 (515323 -> 515458 bytes).",
+  "flag_for_orchestrator": "Not a framing defect, and the dispatch says to judge framing only, so it does not change any verdict. The dispatch calls Mike's face a REAL frame with no AI, but video.json face = thumbnail/takes/gen/gen-2.png, a Higgsfield nano_banana_pro outfit edit (thumbnail/README.md take E). PROJECT-LOG line 120 records it as the orchestrator's call, not Mike's, while yt-post.md says 'never generated'. To use a real frame: run.py ytpost --project pieverse --face thumbnail/fine/f1618.8-13.png --redo y_build. Mike should know before the row posts.",
+  "stamp": "01.png:1380105;02.png:481821;03.png:497206;04.png:499499;05.png:469068;06.png:823973;07.png:515458;08.png:487446;09.png:796646;10.png:1302183",
+  "round": 2
+}

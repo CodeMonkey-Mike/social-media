@@ -1,0 +1,32 @@
+{
+  "assets": [
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\pieverse\\assets\\short\\vertical-cards\\C1-agent-v.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "none",
+      "notes": [
+        "1080x1920. Dark theme (GRAPH-PROGRESS sets no container_theme); locked stylesheet tokens: headline accent 'works' #03c2fe (= #00c2ff), eyebrow muted #515b6f (= #505a6e, not colored), divider a real green->cyan gradient (#02e293 -> #03c5f4), DOCUMENTED, DEFERRED badge dim gold, PIEVERSE ticker dim teal (the video's fixed ticker role).",
+        "Fonts: Playfair Display 900 headline, DM Sans node titles/body/italics, JetBrains Mono on '10 to 279', 'IN A TEE', 'PIEVERSE' and the source line. _shoot.py refuses to shoot unless all three web fonts load.",
+        "Edges: 0 bright pixels in the 40 px strip on every side; text bbox x 72-1006, y 92-1720. Zoomed every node: no clipped first/last glyph, wrapped 'Agent-to-agent / payment' and 'keys locked inside / secure hardware' sit inside their boxes, badge sits on the dashed card's top edge as in the 16:9.",
+        "Content matches the 16:9 C1-agent state word for word (eyebrow, headline, all 7 nodes, price pill, source line). Topology kept: chat and Skill Store feed the agent, agent -> wallet -> on-chain, dashed agent -> agent-to-agent branch, token standing apart with no wire. No em dashes.",
+        "State: Purr-Fect Claw lit with cyan glow, every other node dim. This is the state SHORT-CUT-PLAN.snapped.json native_vertical_rebuilds names for C1 ('C1-agent ... the rest dim; the 0.28 s of overview before it does not need its own rebuild'). The dispatch line quoting the 59.64 overview ('every node dim') is the 16:9 COVER-PLAN row; the short's window 62.44-64.20 shows the agent state, so the lit node is correct.",
+        "Composition: one spotlight, fills the width. The empty band y ~1380-1668 is the short's caption safe zone (block y ~1420-1600, longform-to-short.md), so captions will not land on card text."
+      ]
+    },
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\pieverse\\assets\\short\\vertical-cards\\D5-not-published-v.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "none",
+      "notes": [
+        "1080x1920, the D5-s8 final state (states.json main_state; the plan says 'if one still, D5-s8'). CARD SLIDE anatomy reflowed vertically: cyan top-accent line fading right, muted eyebrow ITS OWN USAGE NUMBERS, Playfair headline 'What the product / publishes' with 'publishes' #03c2fe, green->cyan gradient divider (#04d88e -> #04bbea), then the two sub-cards stacked (the 16:9 left/right halves become top/bottom).",
+        "Colors match the approved 16:9 D5-s8 exactly: WHAT IT PUBLISHES green #02ed8f (= #00e68a), NOT PUBLISHED gold #ffdb02 (= #ffd700); those status labels are colored in the 16:9 master too, so this is not eyebrow drift.",
+        "Content complete and spelled as the 16:9: One counter / 74,195 skills / 25,233 merchants / 'Skill Store stats, read 14 Nov 2026' (dim, at rest); NOT PUBLISHED lit: Agents running, Paying subscribers, Revenue (with icons), footer 'At least not anywhere I checked.' No em dashes.",
+        "Fonts: Playfair Display headline, DM Sans labels/rows/italic footer, mono numerals. Edges: 0 bright pixels in the 40 px strips; card spans x 60-1020, y 153-1357; zoomed headline descenders (p in 'product'/'publishes') and the footer italics are whole.",
+        "Composition: one card, large, left-aligned anatomy. The space below the card (y 1357-1920) holds the caption safe zone (y ~1420-1600), so captions sit clear of card text.",
+        "Scope: only the main file was judged, as dispatched; the state stills s4-s7 the comp steps through were not in the list."
+      ]
+    }
+  ]
+}

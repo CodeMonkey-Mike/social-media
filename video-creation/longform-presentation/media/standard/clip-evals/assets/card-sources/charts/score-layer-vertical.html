@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>clip-evals chart, 9:16: score-layer (lost, record, replay, score)</title>
+<!--
+  The 9:16 cut of score-layer.html: the same chart, states, text and lit parts, re-composed for a 1080x1920 phone
+  frame. Two inputs flow down and meet at THE SCORE: on the left the 2 gates (side by side, their verdicts merging in
+  a bracket) feed THE RECORD; on the right the replay runs down, SAVED TRANSCRIPT to THE CLIP STRATEGIST to NEW
+  PICKS. Both drop into THE SCORE, which drops into THE DECISION. In `lost` the verdicts arrow ends in the dashed red
+  stub, "thrown away", short of the record. Text 28px and up, nothing below y 1450, 72px side margins.
+  Shoot (from assets/card-sources/): python shoot.py charts/score-layer-vertical.html --out ../vertical/diagrams --size 1080x1920
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chart.css">
+<style>
+.portrait .node.flex{padding:12px 8px}
+.portrait .tt{font-size:30px}
+.gt{font-family:'DM Sans';font-weight:700;font-size:30px;line-height:1.16;letter-spacing:.02em;text-transform:uppercase;white-space:nowrap}
+.node .st{margin-top:8px}
+.file{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:30px;line-height:1.2;margin-top:10px;color:var(--rest-title)}
+.on .file{color:var(--accent-cyan)}
+.dec{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:24px}
+.dec .st{margin-top:0}
+.stub{fill:none;stroke:var(--accent-red);stroke-width:3.5;stroke-dasharray:9 9;stroke-linecap:round}
+.thrown{color:var(--accent-red)}
+</style>
+</head>
+<body>
+<template id="chart">
+<div class="stage">
+  <div class="orb" style="width:620px;height:620px;background:var(--accent-cyan);opacity:.12;left:-300px;top:-300px"></div>
+  <div class="orb" style="width:620px;height:620px;background:var(--accent-green);opacity:.06;left:620px;top:1460px"></div>
+
+  <div class="head"><h1>Record, replay, score</h1><div class="divider"></div></div>
+
+  <svg class="wires" width="1080" height="1920" viewBox="0 0 1080 1920">
+    <!-- the gates' verdicts: two branches merge into one arrow down to the record -->
+    <path class="wr nohead" data-k="vbracket" d="M199,422 C199,462 332,446 332,486"/>
+    <path class="wr nohead" data-k="vbracket" d="M465,422 C465,462 332,446 332,486"/>
+    <path class="wr" data-k="vtrunk" d="M332,484 L332,576"/>
+    <!-- lost: the arrow ends in a dashed stub, short of the record -->
+    <path class="stub ap" data-k="stub" d="M332,494 L332,548"/>
+    <!-- the replay, down the right -->
+    <path class="wr" data-k="w-st-cs" d="M820,422 L820,476"/>
+    <path class="wr" data-k="w-cs-np" d="M820,622 L820,676"/>
+    <!-- into the score, and on to the decision -->
+    <path class="wr" data-k="w-rec-sc" d="M332,762 L332,896"/>
+    <path class="wr" data-k="w-np-sc" d="M820,822 L820,896"/>
+    <path class="wr" data-k="w-sc-dec" d="M540,1042 L540,1116"/>
+  </svg>
+
+  <!-- left: the 2 human gates, then the record -->
+  <div class="node flex gate" data-k="gates" style="left:72px;top:300px;width:254px;height:120px">
+    <div class="gt gl">HUMAN GATE 1</div><div class="st"><span class="kp">keep</span> / <span class="kl">kill</span></div>
+  </div>
+  <div class="node flex gate" data-k="gates" style="left:338px;top:300px;width:254px;height:120px">
+    <div class="gt gl">HUMAN GATE 2</div><div class="st"><span class="kp">keep</span> / <span class="kl">kill</span></div>
+  </div>
+  <div class="wl" data-k="vlabel" style="left:352px;top:478px">verdicts</div>
+  <div class="wl thrown ap" data-k="thrown" style="left:352px;top:522px">thrown away</div>
+
+  <div class="node flex" data-k="rec" style="left:72px;top:580px;width:520px;height:180px">
+    <div class="tt">THE RECORD</div>
+    <div class="file">clip-verdicts.jsonl</div>
+    <div class="st">one line per clip per gate</div>
+  </div>
+
+  <!-- right: the replay -->
+  <div class="node flex" data-k="st" style="left:632px;top:300px;width:376px;height:120px">
+    <div class="tt">SAVED TRANSCRIPT</div>
+  </div>
+  <div class="node flex" data-k="cs" style="left:632px;top:480px;width:376px;height:140px">
+    <div class="tt">THE CLIP STRATEGIST</div><div class="st">today's prompt</div>
+  </div>
+  <div class="node flex" data-k="np" style="left:632px;top:680px;width:376px;height:140px">
+    <div class="tt">NEW PICKS</div><div class="st">the replay</div>
+  </div>
+
+  <!-- bottom: the score and the decision -->
+  <div class="node flex" data-k="sc" style="left:250px;top:900px;width:580px;height:140px">
+    <div class="tt">THE SCORE</div><div class="st">precision · recall</div>
+  </div>
+  <div class="node dec" data-k="dec" style="left:140px;top:1120px;width:800px;height:110px">
+    <div class="tt">THE DECISION</div><div class="st">did the prompt change help?</div>
+  </div>
+</div>
+</template>
+<script src="chart.js"></script>
+<script>
+buildChart({
+  "score-layer-lost":   { on: ["gates", "vbracket", "vlabel"], show: ["stub", "thrown"], cls: { vtrunk: "ap" } },
+  "score-layer-record": { on: ["gates", "vbracket", "vtrunk", "vlabel", "rec"] },
+  "score-layer-replay": { on: ["st", "cs", "np", "w-st-cs", "w-cs-np"] },
+  "score-layer-score":  { on: ["sc", "dec", "w-rec-sc", "w-np-sc", "w-sc-dec"] }
+}, { portrait: true });
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>C4 · ANIMATED CHART 2 · the BLS split (future-of-software-engineers)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET (verbatim copy of
+   skills/container-reference/container-canonical.css). DO NOT CHANGE TOKENS.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+b{color:var(--text-primary);font-weight:700}
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+</style>
+<style>
+/* ---- C4 chart layer. The LIVE bar (plus 10%) = --accent-green (stylesheet default); the shrinking bar = --accent-red
+   (the stylesheet's negative role). Scale: 24 px per percentage point, both bars on one scale from one zero line. */
+.frame.ch{display:block;padding:0}
+.cv{position:absolute;left:0;top:0;width:1920px;height:1080px}
+.cv .a{position:absolute}
+.cv svg{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible}
+.hdr .ey{position:absolute;left:120px;top:46px;margin:0}
+.hdr h1{position:absolute;left:120px;top:80px;white-space:nowrap}
+.hdr .divider{position:absolute;left:120px;top:168px;margin:0}
+.sublbl{position:absolute;left:120px;top:194px;font-family:'DM Sans';font-weight:500;font-size:25px;color:var(--text-secondary);white-space:nowrap}
+.sublbl .mono{color:var(--text-primary);font-size:24px}
+.hide{visibility:hidden}
+.nm{font-family:'DM Sans';font-weight:700;font-size:28px;line-height:34px;letter-spacing:.07em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap}
+.nm.lit{color:var(--text-primary)}
+.qt{font-family:'DM Sans';font-style:italic;font-weight:500;font-size:24px;color:var(--text-secondary);white-space:nowrap}
+.val{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:66px;line-height:70px;white-space:nowrap;text-align:center;width:300px}
+.val.neg{color:var(--accent-red)} .val.pos{color:var(--accent-green)}
+.bls{position:absolute;left:120px;top:850px;font-family:'DM Sans';font-style:italic;font-weight:500;font-size:25px;color:var(--text-secondary);white-space:nowrap;display:flex;align-items:baseline;gap:14px}
+.bls .who{font-family:'JetBrains Mono',monospace;font-style:normal;font-weight:600;font-size:16px;letter-spacing:.14em;color:var(--text-muted)}
+.take{position:absolute;left:120px;top:910px;font-family:'DM Sans';font-weight:700;font-size:40px;color:var(--text-primary);white-space:nowrap}
+.src{position:absolute;left:120px;top:1022px;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:16px;color:var(--text-muted);white-space:nowrap}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script>
+/* ============================ the data: DATA.md pillar 4 Dataset A + CHART-SOURCE INDEX C4 ============================
+   BLS Occupational Outlook Handbook (pages last modified 2026-08-27; re-read live 2026-11-14):
+   Computer programmers: "projected to decline 7 percent from 2025 to 2035".
+   Software developers, quality assurance analysts, and testers: "projected to grow 10 percent from 2025 to 2035". */
+const ZERO_Y = 560, PX_PER_PT = 24;
+const BARS = [
+  {k: 'prog', label: ['Computer programmers'], quote: '“write, modify, and test code…”', v: -7, txt: '<span style="margin-right:-.24em">−</span>7%', cls: 'neg',
+   x: 340, w: 220, col: '#ff4060', label_at: {x: 340, y: 444}, quote_at: {x: 340, y: 486}},
+  {k: 'dev', label: ['Software developers, quality', 'assurance analysts, and testers'], quote: '“design computer applications or programs”', v: 10, txt: '+10%', cls: 'pos',
+   x: 1000, w: 220, col: '#00e68a', label_at: {x: 1000, y: 582}, quote_at: {x: 1000, y: 662}},
+];
+const barRect = b => b.v < 0 ? {x: b.x, y: ZERO_Y, w: b.w, h: -b.v * PX_PER_PT} : {x: b.x, y: ZERO_Y - b.v * PX_PER_PT, w: b.w, h: b.v * PX_PER_PT};
+const ARROW = {d: 'M572,700 C 800,700 780,402 980,402', head: {x: 992, y: 402}};
+
+const S = {
+  start:  {labels: [0, 0], quotes: [0, 0], bars: [0, 0], vals: [0, 0], bls: 0, arrow: 0, take: 0},
+  mid:    {labels: [1, 0], quotes: [1, 0], bars: [1, 0], vals: [1, 0], bls: 0, arrow: 0, take: 0},
+  bars:   {labels: [1, 1], quotes: [1, 1], bars: [1, 1], vals: [1, 1], bls: 0, arrow: 0, take: 0},
+  payoff: {labels: [1, 1], quotes: [1, 1], bars: [1, 1], vals: [1, 1], bls: 1, arrow: 1, take: 1},
+};
+const ORDER = Object.keys(S);
+const vis = on => on ? '' : ' hide';
+
+function frame(name, st) {
+  const h = [], sv = [];
+  sv.push(`<defs>` +
+    `<linearGradient id="gNeg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff4060" stop-opacity=".55"/><stop offset="1" stop-color="#ff4060" stop-opacity=".95"/></linearGradient>` +
+    `<linearGradient id="gPos" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#00e68a" stop-opacity=".55"/><stop offset="1" stop-color="#00e68a" stop-opacity=".95"/></linearGradient>` +
+    `<linearGradient id="gArr" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff4060" stop-opacity=".85"/><stop offset="1" stop-color="#00e68a"/></linearGradient>` +
+    `<filter id="gl" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>`);
+  // zero line + its label
+  sv.push(`<line data-k="zero" x1="120" y1="${ZERO_Y}" x2="1800" y2="${ZERO_Y}" stroke="#3a4357" stroke-width="2.5"/>`);
+  sv.push(`<text x="1800" y="${ZERO_Y - 14}" text-anchor="end" font-family="JetBrains Mono" font-weight="600" font-size="16" fill="#505a6e">0%  ·  NO CHANGE</text>`);
+  BARS.forEach((b, i) => {
+    // the empty slot: a dashed footprint on the zero line
+    if (!st.bars[i]) sv.push(`<rect data-k="slot-${b.k}" x="${b.x}" y="${ZERO_Y - 7}" width="${b.w}" height="14" rx="5" fill="none" stroke="#3a4357" stroke-width="1.6" stroke-dasharray="5 5"/>`);
+    const r = barRect(b);
+    sv.push(`<g class="${vis(st.bars[i])}" data-k="bar-${b.k}"><rect x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}" rx="6" fill="url(#${b.v < 0 ? 'gNeg' : 'gPos'})"${b.v > 0 ? ' filter="url(#gl)"' : ''}/>` +
+            `<line x1="${r.x}" y1="${b.v < 0 ? r.y + r.h : r.y}" x2="${r.x + r.w}" y2="${b.v < 0 ? r.y + r.h : r.y}" stroke="${b.col}" stroke-width="4"/></g>`);
+    h.push(`<div class="a nm${st.labels[i] ? ' lit' : ''}" data-k="label-${b.k}" style="left:${b.label_at.x}px;top:${b.label_at.y}px">${b.label.join('<br>')}</div>`);
+    h.push(`<div class="a qt${vis(st.quotes[i])}" data-k="quote-${b.k}" style="left:${b.quote_at.x}px;top:${b.quote_at.y}px">${b.quote}</div>`);
+    const vy = b.v < 0 ? r.y + r.h + 14 : r.y - 84;
+    h.push(`<div class="a val ${b.cls}${vis(st.vals[i])}" data-k="val-${b.k}" style="left:${b.x + b.w / 2 - 150}px;top:${vy}px">${b.txt}</div>`);
+  });
+  sv.push(`<g class="${vis(st.arrow)}" data-k="arrow"><path d="${ARROW.d}" fill="none" stroke="url(#gArr)" stroke-width="4.5" stroke-linecap="round"/>` +
+          `<path d="M${ARROW.head.x},${ARROW.head.y} l-17,-10 l0,20 Z" fill="#00e68a"/></g>`);
+  h.push(`<div class="hdr"><div class="ey">The 10-year outlook</div><h1 class="sm">Two jobs, two <span class="g">directions</span>.</h1><div class="divider"></div></div>`);
+  h.push(`<div class="sublbl" data-k="sublabel">Projected, U.S. Bureau of Labor Statistics, <span class="mono">2025</span> to <span class="mono">2035</span></div>`);
+  h.push(`<div class="bls${vis(st.bls)}" data-k="bls"><span class="who">BLS</span><span>“some higher skilled programming tasks will likely shift to other workers, such as software developers.”</span></div>`);
+  h.push(`<div class="take${vis(st.take)}" data-k="take">The demand didn't disappear. <span class="g">It moved.</span></div>`);
+  h.push(`<div class="src">Source: U.S. Bureau of Labor Statistics, Occupational Outlook Handbook, both occupations' pages (last modified 2026-08-27)</div>`);
+  return `<div class="frame ch" id="C4-${name}"><div class="orb" style="width:620px;height:620px;right:-260px;top:-300px;background:#00e68a;opacity:.12"></div>` +
+         `<div class="orb" style="width:520px;height:520px;left:-280px;bottom:-320px;background:#0b3a66;opacity:.35"></div>` +
+         `<div class="cv"><svg viewBox="0 0 1920 1080">${sv.join('')}</svg>${h.join('')}</div></div>`;
+}
+document.getElementById('stage').innerHTML = ORDER.map(n => frame(n, S[n])).join('<div style="height:24px"></div>');
+window.STATES = ORDER;
+window.GEOM = {zero_y: ZERO_Y, px_per_point: PX_PER_PT, zero_line: {x1: 120, x2: 1800},
+  bars: BARS.map(b => Object.assign({}, b, {rect: barRect(b)})), arrow: ARROW};
+</script>
+</body></html>

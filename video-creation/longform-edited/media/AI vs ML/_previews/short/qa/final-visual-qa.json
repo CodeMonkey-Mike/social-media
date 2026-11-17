@@ -1,0 +1,54 @@
+{
+  "verdict": "PASS",
+  "defects": [],
+  "advisories": [
+    {
+      "t": 24.4,
+      "severity": "minor",
+      "what": "Door beat (about 24.4 to 25.6 s): the vertical's baked headline THE DOOR IS OPEN (top) and the short's own caption 'the door is open' (bottom) are on screen together, so the same four words read twice for about 1.2 s. Not overlapping, not cut, not a doubled caption track (span-03 source carries no burned caption there), just redundant.",
+      "fix": "Optional: suppress that one caption group while the headline is up (the same treatment s_captions already gives the other burned-text windows), letting 'you already / have the / skills.' carry on. Or keep as is; Mike's call."
+    },
+    {
+      "t": 8.3,
+      "severity": "cosmetic",
+      "what": "Seam 1 whip (frames 250 to 252): 'my god, dude' pops in while the 2x whip-blurred chart labels (MEDIAN / TOP 10% / DATA POINTS rows) are still settling and briefly touch the caption top. 3 frames of motion blur, not visible at speed; from frame 253 the caption sits clear below the labels.",
+      "fix": "None needed. If ever re-cut: start the caption group 3 frames later."
+    },
+    {
+      "t": 0.0,
+      "severity": "note",
+      "what": "Frame 0 is the vertical's baked F1 mirror-tile open (mirrored copies of Mike's face). Intended effect, resolves by frame 3; only matters if a platform auto-picks frame 0 as the cover.",
+      "fix": "Pick a clean face frame (e.g. 1.0 s) as the cover where the platform allows."
+    },
+    {
+      "t": 9.0,
+      "severity": "note",
+      "what": "C3 chart footer reads 'LEVELS.FYI . UNITED STATES . TOTAL COMP . READ 2026-11-09 .' with a dangling trailing separator. Inherited from the vertical / longform chart asset (present in span-02 source), not introduced by the short; sits well inside the frame.",
+      "fix": "None for the short; fix in the chart source if the chart is ever rebuilt."
+    },
+    {
+      "t": null,
+      "severity": "tooling",
+      "what": "The final-sheet-0N.jpg time labels run about 0.2 s BEHIND the real frame times (sheet '8.000' = frame 247 / 8.233 s seam-1 whip; sheet '20.000' = frames 605-608 / 20.17 s seam-2 whip; sheet '27.000' = outro fully up, frame 815+). All timestamps in this report are real frame times from ffmpeg frame-exact extraction.",
+      "fix": "s_qa_final contact-sheet sampler: select by frame number (n mod 15) and label from n/fps."
+    }
+  ],
+  "checked": {
+    "sheets": [
+      "final-sheet-01.jpg",
+      "final-sheet-02.jpg",
+      "final-sheet-03.jpg"
+    ],
+    "sheet_frames_judged": 60,
+    "full_res_frames_judged": "58 frame-exact extracts (0,3,6,15,45,60,225-257 around seam 1,270-445 chart + IMG-4 fade,525-612 BR-9 + seam 2,640-745 F6 face + door,790-899 outro entrance + hold) in qa/final-qa/, plus span-01/02/03 source frames (pre-caption) in qa/final-qa/src/",
+    "edge_cut_text": "PASS: no caption, label, headline or card text sliced at left/right on any frame; edge-text.json 0 of 804 bad, max 20 px (room b-roll light strip at 15.67 s, not text). Widest caption 'with phds for them' about 105 px margin each side.",
+    "cropped_16x9_assets": "PASS: the C3 chart is the vertical's NATIVE vertical layout (3 bars full-width, axis, header, footer all inside); the only cropped-looking chart frames are the seam-1 kt-whip-cut 2x zoom (frames 247 to 252, motion-blurred, settles by 253). IMG-1, IMG-4, BR-9 variants and BR-1 / BR-10 are native vertical.",
+    "leftover_16x9_captions": "PASS: none. Uppercase italic text (AI ENGINEER / ML ENGINEER, AND IT GOES TO / THE PEOPLE WHO, THEREFORE, FOR MOST DEVELOPERS, AI ENGINEERING, THE DOOR IS OPEN, AT THE TOP: A $340K GAP) is the vertical's own baked kinetic text, and the short's caption is correctly suppressed under each; no doubled caption anywhere (checked against span sources).",
+    "caption_on_card_text": "PASS: over the chart every caption sits in the band between the axis labels and the source footer; TRAIN is the vertical's deliberate payoff over a dimmed chart.",
+    "captions_style": "PASS: Montserrat 900 lowercase, heavy black stroke, bottom block about y 1420 to 1600, 2 to 4 word phrase groups ('skills.' single = sentence end).",
+    "face_framing": "PASS: hook face (0.5 to 2.5 s) and kicker face (20.4 to 23.7 s) centred, eyes about 45 to 50 percent down, head fully in frame; 0.0 to 0.2 s mirror open and 20.17 to 20.3 s whip are transition frames.",
+    "black_blank_frames": "PASS: blackdetect finds none; freezes only on deliberate holds (chart 10.3 to 12.07 s during '$340,000 gap.', 12.9 to 13.57 s, outro 27.17 s to end).",
+    "outro": "PASS: WATCH THE / FULL VIDEO (Playfair 900, FULL VIDEO in #00e68a), cyan-green divider, green down arrow, dark ground with green orb; 11-frame cross-fade + scale-in over the held door frame (26.8 to 27.17 s), clean hold to 30.0 s, text ends about x 925, nothing clipped."
+  },
+  "short": "AI vs ML-SHORT-30s-v1.mp4:27007804"
+}
