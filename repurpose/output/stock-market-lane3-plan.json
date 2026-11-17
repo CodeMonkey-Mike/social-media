@@ -1,0 +1,828 @@
+{
+  "batch": "stock-market",
+  "date": "2026-11-09",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/stock-market LOW BPS VERTICAL/stock-market LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-11-09",
+  "brief": "Double the X tweets: 8 multi-line X tweets (3 to 4 lines) and 4 single-line X tweets instead of the default 4 + 2. Make MOST of them (at least 2 of every 3) about Kaspa. Every Kaspa tweet still gets its IG companion per the default rule. Everything else at defaults.",
+  "fact_check": [
+    {
+      "claim": "'the biggest single-day drop in the stock market like $3 trillion wiped out' (transcript)",
+      "verdict": "verified: on Nov 5 2026 the S&P 500 lost around $3T (Reuters; Dow Jones Market Data ~$2.9T), the largest one-day dollar loss in its history; S&P -4.36% to 7,353.73. Not a record in percent terms, so copy says 'dollar drop' and dates it 'November 5'.",
+      "source": "finance.yahoo.com (Reuters); whatthefact.app fact check 2026-11-06; searched 2026-11-09"
+    },
+    {
+      "claim": "Selloff cause: AI regulation fears after the midterms (transcript links the Dems' AI stance to TAO)",
+      "verdict": "verified: Nasdaq-100 -~5.8% (~$1.9T), PHLX Semiconductor index -12%, on fears of an AI crackdown after Democrats won Congress. Copy says 'fear of an AI crackdown after the midterms', non-partisan. The TAO link is framed as Mike's opinion.",
+      "source": "NPR via wamc.org / stlpr.org 2026-11-05; scmp.com"
+    },
+    {
+      "claim": "'Bitcoin hanging in there above the 50-week moving average' (transcript)",
+      "verdict": "UPDATED: the week from Oct 29 closed $80,441 vs a 50-week SMA of $75,979 (above); the week in progress (Kraken candle from Nov 5) is at $74,487 vs an SMA of $75,658, slightly under; CoinGecko spot $74,447. Copy says 'still fighting for its 50-week SMA around $75K', not 'above'.",
+      "source": "api.kraken.com OHLC XBTUSD 10080 + api.coingecko.com, computed 2026-11-09"
+    },
+    {
+      "claim": "'I don't think there's gonna be a new bottom for Bitcoin below 57K'",
+      "verdict": "opinion; context verified: the 2026 low is July's ~$58.6K (CoinGecko). Copy: 'July's $58K low', 'I still don't see a new low under $57K'.",
+      "source": "kaspa-cocktails-lane3-plan.json fact_check (CoinGecko daily history), 2026-11-02"
+    },
+    {
+      "claim": "Kaspa below its 50-week SMA, good time to buy (transcript)",
+      "verdict": "verified: the KAS week from Oct 29 closed $0.03219 vs a 50-week SMA of $0.03555; the week in progress is at $0.02917 vs $0.03497 (~17% under). Spot $0.02914, market cap ~$810M; ATH $0.207 (Jul 2024), so ~86% under.",
+      "source": "api.kraken.com OHLC KASUSD 10080 + api.coingecko.com, 2026-11-09"
+    },
+    {
+      "claim": "Kaspa stayed above its 50-week SMA from launch until December 2024 (transcript)",
+      "verdict": "accepted as Mike's chart read (the same claim is in the 2026-11-02 ledger); long-form copy keeps 'on my chart'.",
+      "source": "Mike on stream; kaspa-cocktails-lane3-plan.json"
+    },
+    {
+      "claim": "'$100 trillion in crypto... Kaspa under a hundred billion... well above $3' and '$3.33 is going to be the start'",
+      "verdict": "math verified: circulating supply ~27.8B (CoinGecko market cap / price), so $100B = ~$3.60 a coin. The target is framed as Mike's prediction.",
+      "source": "api.coingecko.com, 2026-11-09"
+    },
+    {
+      "claim": "Kaspa is a PoW blockDAG at 10 blocks per second; mainnet November 2021; fair launch with no premine, presale or insider allocation",
+      "verdict": "verified: mainnet Nov 7 2021, fair launch, no premine; 10 BPS since the Crescendo hard fork (May 2025).",
+      "source": "kaspa.org/lore; kaspa.org/developments"
+    },
+    {
+      "claim": "'Silverscript is launched'",
+      "verdict": "verified: Silverscript v1.0.0 is tagged and live (covenant compiler); the Toccata hard fork activated 2026-06-30 per several outlets.",
+      "source": "kaspa.org/developments; kaspahub.github.io Toccata post; tapbit 2026-10-19"
+    },
+    {
+      "claim": "'DagKnight... 100 blocks per second... targeted for a 2027 hard fork'",
+      "verdict": "partially verified: DagKnight is a planned consensus upgrade, not deployed; 100 BPS and the 2027 timing are roadmap projections. Copy says 'next on the roadmap... aimed at taking Kaspa from 10 toward 100 blocks per second', with NO date.",
+      "source": "cointribune.com (es) Kaspa 100 BPS / DagKnight; tapbit (de)"
+    },
+    {
+      "claim": "'Kaspa sells speed to normies and war grade money to cypherpunks'",
+      "verdict": "a community line Mike endorsed on stream ('I approve of that'); used as his take, rephrased as 'hard money', no attribution or quote marks.",
+      "source": "Mike on stream"
+    },
+    {
+      "claim": "ETH flips BTC and Bitcoin maxis eventually move to Kaspa",
+      "verdict": "opinion; persona core thesis. Framed as 'it'll take years'.",
+      "source": "persona.json core_theses"
+    },
+    {
+      "claim": "JOLTS 7.5M vs 7.1M expected; ADP 86K vs 69K; initial claims 189K vs 196K; ISM PMI expansionary",
+      "verdict": "verified: JOLTS (September data, released Nov 3) 7.52M vs ~7.15M est; ADP 86K vs ~67K est (Schwab; Sigmanomics shows a 69K consensus); claims 189K vs 196K est. ISM PMI not checked independently, so not used.",
+      "source": "schwab.com weekly trader's outlook; sigmanomics.com; investing.com calendar"
+    },
+    {
+      "claim": "'interest rates went up a month ago, only 25 basis points'",
+      "verdict": "verified: 25 bp hike in September 2026 (the first since July 2023); the October 28 FOMC held at 3.75-4.00%. Copy: 'hiked 25 basis points in September and held in October'.",
+      "source": "cnbc.com 2026-10-28; foxbusiness.com; advisorperspectives.com"
+    },
+    {
+      "claim": "QT ended and QE began; M2 is rising",
+      "verdict": "accepted as Mike's macro read (M2 chart shown on stream); copy stays general ('QE is running and M2 is rising again'), with no figures.",
+      "source": "Mike on stream"
+    },
+    {
+      "claim": "Fear & Greed down into fear",
+      "verdict": "verified: the alternative.me index read 29 (Fear) on 2026-11-09 and 25 (Extreme Fear) two days earlier.",
+      "source": "api.alternative.me/fng, 2026-11-09"
+    },
+    {
+      "claim": "The Clearing House partners with Quant on its On-Chain Money Initiative",
+      "verdict": "verified: announced 2026-09-24; Quant provides the interoperability / orchestration layer for TCH's tokenized-deposit network, live for participants in H1 2027. QNT is ~$202 now.",
+      "source": "pymnts.com 2026; ledgerinsights.com; fintechfutures.com; api.coingecko.com"
+    },
+    {
+      "claim": "Base volume overtaking Solana",
+      "verdict": "UNVERIFIED (Mike could not find the source on stream); dropped.",
+      "source": "n/a"
+    },
+    {
+      "claim": "Strait of Hormuz supply crunch",
+      "verdict": "Mike's macro read on stream; used once in YT post 2 as a general line with no figures and no war framing.",
+      "source": "Mike on stream"
+    },
+    {
+      "claim": "Skipped topics",
+      "verdict": "political tangents (Georgia recount, Epstein / JPMorgan), the IQ tangent, Naka / Hellhound gaming, Arrow, and the Linea / Canton deep-dive teasers: not drafted (persona avoid_in_drafts, off-thesis or unverified). No Zcash in this transcript.",
+      "source": "persona.json avoid_in_drafts"
+    }
+  ],
+  "carousel_versions": {
+    "yt-post-2026-11-09-kaspa-first-real-bear-market": "version4 (the extra V4 weight applies: images/reference/kaspa-logo.png, the 3D Kaspa coin render, IS the subject, so slide 1 cites BOTH kaspa-logo.png and version4/hook.png as an array and slides 2 to 5 cite version4/slide.png. The post is a data walk (born in a bull, where it sits against the 50-week SMA, the $100 trillion math, an A/B/C question), which is what the V4 data-slide format does best. V2 was the runner-up; V1 rejected (not a news flash).)",
+    "yt-post-2026-11-09-3-trillion-day-bitcoin-holds": "version2 (analytical / editorial: an argument chain made of the record drop, the trigger, the jobs data, the money supply and the question. V4 was weighed first, but there is no usable topic photo (no S&P / Wall Street / Bitcoin reference in images/reference/), so V4 cannot be anchored; V1 rejected because the tone is analysis, not hype. Each slide cites its role-matched version2 exemplar.)"
+  },
+  "missing_references": [
+    "Bitcoin logo: no reference file; Bitcoin appears as a plain unmarked gold coin.",
+    "No S&P 500 / Wall Street topic photo, so YT post 2 could not use Version 4 (used Version 2)."
+  ],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "3a29b9e4",
+      "slug": "kaspa-below-50-week-sma",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A small determined Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, calmly filling a glass jar with smaller greenish cyan Kaspa coins while standing just beneath a long glowing horizontal beam of light that hangs above it like a ceiling. Behind it, frightened grey crowds run away into the dark. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin and the jar. Calm, patient, hungry: buying while everyone else runs. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "3a29b9e4",
+      "slug": "kaspa-below-50-week-sma",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A small determined Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, calmly filling a glass jar with smaller greenish cyan Kaspa coins while standing just beneath a long glowing horizontal beam of light that hangs above it like a ceiling. Behind it, frightened grey crowds run away into the dark. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin and the jar. Calm, patient, hungry: buying while everyone else runs. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "3f2c5024",
+      "slug": "tao-decentralized-ai-hedge",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A glowing TAO coin character with arms and legs, its face showing the TAO logo exactly as shown in the attached reference image, standing defiant on a dark hilltop while below it a cluster of giant data-center towers is being wrapped in heavy chains and padlocks. From the TAO coin, hundreds of thin luminous threads fan out to small glowing nodes scattered across the dark landscape, none of them chained. Deep navy near-black background. Dramatic cinematic lighting. Cool white rim light on the TAO coin, warm amber light on the chained towers. Defiant and unstoppable. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\bittensor-tao.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "8c2a6bef",
+      "slug": "kaspa-100-trillion-math",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, standing on the edge of a vast glowing ocean of floating coins that stretches to the horizon. It looks tiny against the ocean, a small greenish cyan glow at the shoreline, and it is cracking its knuckles before diving in. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin, the ocean glowing softly to the horizon. Hungry and confident: the size of the opportunity. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "8c2a6bef",
+      "slug": "kaspa-100-trillion-math",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, standing on the edge of a vast glowing ocean of floating coins that stretches to the horizon. It looks tiny against the ocean, a small greenish cyan glow at the shoreline, and it is cracking its knuckles before diving in. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin, the ocean glowing softly to the horizon. Hungry and confident: the size of the opportunity. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "5150e09d",
+      "slug": "eth-flip-maxis-find-kaspa",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A weathered old gold coin character with arms and legs, its face completely plain with no symbol, no logo, no lettering or marking of any kind, slowly stepping down from a tall stone throne. Behind it, a crowd of small loyal gold coin followers turn their heads toward a doorway where a younger Kaspa coin character stands, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, lit from within. Deep navy near-black background. Dramatic cinematic lighting. Warm gold light on the throne, greenish cyan light spilling from the doorway. Inevitable and knowing. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "5150e09d",
+      "slug": "eth-flip-maxis-find-kaspa",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A weathered old gold coin character with arms and legs, its face completely plain with no symbol, no logo, no lettering or marking of any kind, slowly stepping down from a tall stone throne. Behind it, a crowd of small loyal gold coin followers turn their heads toward a doorway where a younger Kaspa coin character stands, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, lit from within. Deep navy near-black background. Dramatic cinematic lighting. Warm gold light on the throne, greenish cyan light spilling from the doorway. Inevitable and knowing. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "b1cc9ac1",
+      "slug": "sp500-3-trillion-bitcoin-holds",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A giant crumbling marble stock-exchange column cracking apart and falling in slow motion, red dust and debris flying, while in the foreground a sturdy plain gold coin character with arms and legs, its face completely plain with no symbol, no logo, no lettering or marking of any kind, stands planted with its feet wide and arms crossed, untouched by the falling stone. Deep navy near-black background. Dramatic cinematic lighting. Red light from the collapse behind, warm gold rim light on the coin. Defiant and steady. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "989a3a29",
+      "slug": "kaspa-fair-launch-lore",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A newborn Kaspa coin character, small and glowing, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, rising out of a humming mining rig on a dark workbench in an otherwise empty room: no vault, no investors, no velvet rope, just the machine and the coin. Thin streams of greenish cyan light braid out of it like branches of a graph. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light, soft workshop glow. Proud and pure: born fair. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "989a3a29",
+      "slug": "kaspa-fair-launch-lore",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A newborn Kaspa coin character, small and glowing, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, rising out of a humming mining rig on a dark workbench in an otherwise empty room: no vault, no investors, no velvet rope, just the machine and the coin. Thin streams of greenish cyan light braid out of it like branches of a graph. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light, soft workshop glow. Proud and pure: born fair. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "b5d09224",
+      "slug": "silverscript-live-dagknight-next",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, wearing a small engineer's tool belt, tightening the last bolt on a sleek silver engine while a second, bigger engine glows under a tarp behind it, light leaking from the edges. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the coin and the engines, cool silver highlights. Focused and confident: the builders keep shipping. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "b5d09224",
+      "slug": "silverscript-live-dagknight-next",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, wearing a small engineer's tool belt, tightening the last bolt on a sleek silver engine while a second, bigger engine glows under a tarp behind it, light leaking from the edges. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the coin and the engines, cool silver highlights. Focused and confident: the builders keep shipping. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "4d4348cd",
+      "slug": "kaspa-born-in-a-bull",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A young Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, standing at the bottom of a steep dark valley for the first time, looking up at a long climb ahead, sleeves rolled up. Far up the opposite slope, a faint trail of its own glowing footprints from an earlier climb is still visible. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the coin and the footprints. Determined and hungry: its first real test. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "4d4348cd",
+      "slug": "kaspa-born-in-a-bull",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A young Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, standing at the bottom of a steep dark valley for the first time, looking up at a long climb ahead, sleeves rolled up. Far up the opposite slope, a faint trail of its own glowing footprints from an earlier climb is still visible. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the coin and the footprints. Determined and hungry: its first real test. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "968a18b3",
+      "slug": "kaspa-speed-and-hard-money",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A single Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, split down the middle by lighting: its left side streaks forward in a blur of speed lines like a race car, its right side is solid, armored and heavy like a bank vault door. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on both halves. Confident and dual-natured. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "968a18b3",
+      "slug": "kaspa-speed-and-hard-money",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A single Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, split down the middle by lighting: its left side streaks forward in a blur of speed lines like a race car, its right side is solid, armored and heavy like a bank vault door. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on both halves. Confident and dual-natured. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "bed16fe1",
+      "slug": "kaspa-under-three-cents",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, sitting cross-legged and perfectly calm on a small glowing island while a violent red storm of falling shards rages all around it. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan glow on the island and the coin, harsh red light in the storm. Calm in chaos. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "bed16fe1",
+      "slug": "kaspa-under-three-cents",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, sitting cross-legged and perfectly calm on a small glowing island while a violent red storm of falling shards rages all around it. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan glow on the island and the coin, harsh red light in the storm. Calm in chaos. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "a38eef83",
+      "slug": "banks-picked-quant",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A towering old-fashioned bank building at night with its heavy vault doors swinging open, and from inside a river of glowing blue digital tokens, each one stamped with the Quant logo exactly as in the attached reference image, flowing out along a lit bridge toward other bank buildings in the distance, each one lighting up as the river reaches it. Deep navy near-black background. Dramatic cinematic lighting. Cool electric blue rim light, warm stone highlights on the banks. Momentous and quietly powerful. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\Quant.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "adb7a459",
+      "slug": "kaspa-fear-is-the-sale",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, wearing sunglasses and pushing an empty shopping cart into a dark store while everyone else runs out the exit in a panic. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the coin, the fleeing crowd lit in cold grey. Cool, relaxed, hungry. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "adb7a459",
+      "slug": "kaspa-fear-is-the-sale",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, wearing sunglasses and pushing an empty shopping cart into a dark store while everyone else runs out the exit in a panic. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the coin, the fleeing crowd lit in cold grey. Cool, relaxed, hungry. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "6c1ede01",
+      "slug": "01-hook",
+      "prompt": "Single editorial hook image for a carousel, 1:1 square. TWO REFERENCE IMAGES ARE ATTACHED. Use the FIRST attached reference (the dark 3D Kaspa coin with the glowing greenish cyan backwards-K logo bursting with greenish cyan light on a black background) as the full-bleed background image, keeping the coin and its backwards-K logo faithful, cropped to a square with the coin centred in the upper two thirds of the frame. Use the SECOND attached reference ONLY as the layout and typography key: match its bold all-caps bottom text treatment, its small circular chart bubble overlay and its bottom SWIPE FOR MORE bar. In the top right corner place a small circular bubble overlay containing one simple green line chart that rises, falls and dips under a dashed horizontal line, with no numbers or axis labels. Bold all-caps text across the bottom: 'KASPA IS ON SALE' in white on the first line, then 'ITS FIRST REAL BEAR MARKET' in bright green on the second line. Small white all-caps 'SWIPE FOR MORE' text at the very bottom. No pagination dots, no carousel indicators. Keep every line of text inside a margin of at least 8 percent of the frame width. Render NO watermark, no @handle, no username, no shield badge, no artist signature and no initials anywhere in the frame or in any corner; the second attached reference carries a small badge and page dots and they must NOT be reproduced. No em dashes anywhere in the rendered text, use colons or commas instead. Do not invent any numbers, tickers, logos or lettering beyond the exact text specified above.",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\hook.png"
+      ]
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "705d0306",
+      "slug": "02-born-in-a-bull",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Kaspa was born in a bull market'. Stat boxes: 'MAINNET: NOVEMBER 2021', '2022: STILL ABOVE THE 50-WEEK SMA', 'DEC 2024: FIRST BEAR BEGINS'. Centre panel: one horizontal timeline bar headed 'KASPA', shaded green for most of its length and red for the last part, no dates, numbers or other labels on the bar. Bottom green box labelled 'THE DEFINITION' with two bullets: 'A bear market is weekly closes under the 50-week SMA.' and 'Kaspa never had one until December 2024, on my chart.'. Page number 2 in a circle at the top right. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and no text beyond what is listed here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "35e85a84",
+      "slug": "03-where-it-sits",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Where Kaspa sits right now'. Stat boxes: 'PRICE: 2.9 CENTS', '17% UNDER THE 50-WEEK SMA', '86% UNDER THE HIGH'. Centre panel: a single line chart with a horizontal dashed grey line across the middle and a green price line that rides above it, crosses below it, pokes back above it briefly and finishes below it at the right edge, no numbers, dates or axis labels. Bottom green box labelled 'WHAT I AM DOING' with two bullets: 'Half in now, half saved for the next red week.' and 'If it rips instead, at least half is already in.'. Page number 3 in a circle at the top right. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and no text beyond what is listed here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "e83a2473",
+      "slug": "04-the-math",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'The math behind $3.33'. Stat boxes: 'CRYPTO: 100 TRILLION', 'KASPA: 100 BILLION CAP', 'PER COIN: ABOVE $3'. Centre panel: two simple vertical bars side by side, a short green bar headed 'NOW' and a very tall green bar headed 'THEN', no numbers or axis labels. Bottom green box labelled 'THE GAP' with two bullets: 'Kaspa is around an 810 million market cap right now.' and '$3.33 is the start, not the ceiling.'. Page number 4 in a circle at the top right. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and no text beyond what is listed here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "a214cbf2",
+      "slug": "05-question",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Where do you buy Kaspa?'. Stat boxes: 'A: UNDER 2 CENTS', 'B: RIGHT HERE', 'C: BACK ABOVE THE LINE'. Centre panel: three plain rounded panels side by side, each headed A, B and C, otherwise empty. Bottom green box labelled 'TELL ME IN THE COMMENTS' with one bullet: 'Are you adding this month, or waiting?'. Page number 5 in a circle at the top right. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and no text beyond what is listed here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "761df2cd",
+      "slug": "01-hook",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '1 OF 5'. Large bold white title: 'THE S&P LOST 3 TRILLION IN ONE DAY'. Below, a teal accent line: 'Bitcoin is still fighting for its 50-week SMA'. At the bottom a dark rounded box with teal label 'THE SETUP' and white body text: 'The biggest one-day dollar drop in S&P history, and crypto did not collapse with it.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. The counter label '1 OF 5' appears exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. Do not copy any words, numbers or tickers from the attached reference; use it for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-9611992a-01-hook.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "c1fb3895",
+      "slug": "02-the-drop",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '2 OF 5'. Large bold white title: 'NOVEMBER 5: THE RECORD DAY'. Below, a teal accent line: 'S&P 500 down 4.36%, Nasdaq-100 down around 5.8%, chips down 12%'. At the bottom a dark rounded box with teal label 'THE TRIGGER' and white body text: 'Fear of an AI crackdown, not a broken economy.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. The counter label '2 OF 5' appears exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. Do not copy any words, numbers or tickers from the attached reference; use it for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-4a9a572c-02-btc-failure.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "917a2384",
+      "slug": "03-the-economy",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '3 OF 5'. Large bold white title: 'THE ECONOMY IS NOT BREAKING'. Below, a teal accent line: 'Job openings 7.5 million, jobless claims 189K, ADP 86K: all beats'. At the bottom a dark rounded box with teal label 'THE DIFFERENCE' and white body text: 'Earlier this year there were not enough new jobs. Now there are.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. The counter label '3 OF 5' appears exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. Do not copy any words, numbers or tickers from the attached reference; use it for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-44d02f9a-03-the-problem.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "cb6ab9cb",
+      "slug": "04-the-money",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '4 OF 5'. Large bold white title: 'THE MONEY SUPPLY IS STILL CLIMBING'. Below, a teal accent line: 'QE is running and the Fed held in October after one 25 bp hike'. At the bottom a dark rounded box with teal label 'WHY IT MATTERS' and white body text: '2022 had dollars being destroyed. This drop has more dollars in the system.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. The counter label '4 OF 5' appears exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. Do not copy any words, numbers or tickers from the attached reference; use it for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-074be0dc-04-the-solution.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "43ae4ea2",
+      "slug": "05-question",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '5 OF 5'. Large bold white title: 'DOES BITCOIN HOLD?'. Below, a teal accent line: 'Holds the 50-week SMA, retests 58K, or a new low under 57K'. At the bottom a dark rounded box with teal label 'TELL ME IN THE COMMENTS' and white body text: 'If the S&P drops 20%, where does Bitcoin go?'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. The counter label '5 OF 5' appears exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. Do not copy any words, numbers or tickers from the attached reference; use it for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-81abb2d9-06-question.png"
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "Kaspa closed back under its 50-week SMA, and the timeline is panicking.\n\n$KAS at 2.9 cents is around 17% under that line and 86% under its high. Fear & Greed is sitting in Fear.\n\nI'm not chasing a bottom. I'm doing what I always say: put half in now, keep the other half for the next red week. 💪\n\n#kaspa #kas #crypto",
+      "hook": "Kaspa closed back under its 50-week SMA, and the timeline is panicking.",
+      "image_id": "3a29b9e4",
+      "notes": "Kaspa subject; IG companion shares the image. No Follow line (Kaspa). Price and SMA from Kraken weekly candles, 2026-11-09."
+    },
+    {
+      "tweet": "Fear of an AI crackdown knocked around $1.9 trillion off the Nasdaq-100 in one session, with chip stocks down 12%.\n\nYou can regulate a data center. You can't regulate thousands of miners spread across the planet.\n\nThe harder anyone squeezes centralized AI, the stronger the case for $TAO and its subnets.\n\n#bittensor #tao #decentralizedai",
+      "hook": "Fear of an AI crackdown knocked around $1.9 trillion off the Nasdaq-100 in one session, with chip stocks down 12%.",
+      "image_id": "3f2c5024",
+      "notes": "TAO subject; project_handles tao = null, so no Follow line; no IG (not Kaspa). Nov 5 2026 selloff figures from NPR/Reuters coverage."
+    },
+    {
+      "tweet": "If crypto grows into a market the size of global stocks, you're talking around $100 trillion.\n\nIn that world, I can't imagine $KAS under a $100 billion market cap. That's well above $3.\n\nIt's sitting around $810 million right now. $3.33 is not my ceiling, it's the start. 🚀\n\n#kaspa #kas #crypto",
+      "hook": "If crypto grows into a market the size of global stocks, you're talking around $100 trillion.",
+      "image_id": "8c2a6bef",
+      "notes": "Kaspa subject; IG companion. Circulating supply ~27.8B (CoinGecko mcap / price), so $100B = ~$3.60. Engagement note: correction-bait technique #5 (provocative prediction): THE deliberate 1-in-10 bait item for this batch."
+    },
+    {
+      "tweet": "The day a proof-of-stake chain flips Bitcoin, the BTC maxis are going to need a new home.\n\nThey won't move to staking. They'll go looking for proof of work that actually scales.\n\nFair launch. No premine. 10 blocks per second. That's $KAS. It'll take years, but it's coming. 😎\n\n#kaspa #kas #bitcoin",
+      "hook": "The day a proof-of-stake chain flips Bitcoin, the BTC maxis are going to need a new home.",
+      "image_id": "5150e09d",
+      "notes": "Kaspa subject; IG companion. Persona core thesis (ETH flips BTC, maxis seek PoW alt, find KAS). Bitcoin has no reference file, so the image renders a plain gold coin."
+    },
+    {
+      "tweet": "The S&P 500 lost around $3 trillion in one session on November 5, the biggest one-day dollar drop in its history.\n\nBitcoin is still fighting for its 50-week SMA around $75K, nowhere near July's $58K low.\n\nJob openings beat at 7.5 million. Jobless claims beat at 189K. The money supply is still climbing. This is not 2022.\n\n#bitcoin #btc #crypto",
+      "hook": "The S&P 500 lost around $3 trillion in one session on November 5, the biggest one-day dollar drop in its history.",
+      "image_id": "b1cc9ac1",
+      "notes": "Macro/BTC subject; no Follow line (no project), no IG. BTC thesis commentary only, not a stacking pick."
+    },
+    {
+      "tweet": "November 2021: Kaspa mainnet goes live.\n\nNo premine. No presale. No insider allocation. Just proof of work, open to anyone with a miner.\n\nFive years on, $KAS runs 10 blocks per second on a blockDAG, and it's still the cleanest launch in crypto.\n\n#kaspa #kas #proofofwork",
+      "hook": "November 2021: Kaspa mainnet goes live.",
+      "image_id": "989a3a29",
+      "notes": "Kaspa subject; IG companion. Mainnet Nov 7 2021, fair launch, 10 BPS since Crescendo (May 2025)."
+    },
+    {
+      "tweet": "Silverscript is live on Kaspa: smart contract logic written straight onto the L1.\n\nNext on the roadmap is DagKnight, the consensus upgrade aimed at taking $KAS from 10 to 100 blocks per second.\n\nThe price is under its 50-week SMA. The builders didn't notice. 🔥\n\n#kaspa #kas #crypto",
+      "hook": "Silverscript is live on Kaspa: smart contract logic written straight onto the L1.",
+      "image_id": "b5d09224",
+      "notes": "Kaspa subject; IG companion. Silverscript v1.0.0 live (kaspa.org developments); DagKnight is a roadmap item, not shipped, framed as 'next on the roadmap'. No date claimed for the DagKnight fork."
+    },
+    {
+      "tweet": "Kaspa was born above its 50-week SMA and stayed there through the 2022 bear market that crushed everything else.\n\nIt only lost that line in December 2024. This is the first real bear market $KAS has ever had.\n\nBitcoin's first bear market was the best buy of its life...\n\n#kaspa #kas #bitcoin",
+      "hook": "Kaspa was born above its 50-week SMA and stayed there through the 2022 bear market that crushed everything else.",
+      "image_id": "4d4348cd",
+      "notes": "Kaspa subject; IG companion. Mike's own chart read (stream); trailing-ellipsis device."
+    },
+    {
+      "tweet": "Kaspa sells speed to normies and hard money to cypherpunks. 🧠\n\n#kaspa #kas",
+      "hook": "Kaspa sells speed to normies and hard money to cypherpunks.",
+      "image_id": "968a18b3",
+      "notes": "Single-line image-first. Kaspa subject; IG companion. A community line Mike endorsed on stream ('I approve of that'), rephrased as his take."
+    },
+    {
+      "tweet": "$KAS under 3 cents while Wall Street loses $3 trillion in a day... I'm stacking.\n\n#kaspa #kas",
+      "hook": "$KAS under 3 cents while Wall Street loses $3 trillion in a day... I'm stacking.",
+      "image_id": "bed16fe1",
+      "notes": "Single-line image-first. Kaspa subject; IG companion. Mike on stream: buying a little more, DCA."
+    },
+    {
+      "tweet": "The Clearing House didn't pick a stablecoin for tokenized deposits. It picked Quant. $QNT\n\n#quant #qnt #crypto",
+      "hook": "The Clearing House didn't pick a stablecoin for tokenized deposits. It picked Quant.",
+      "image_id": "a38eef83",
+      "notes": "Single-line image-first. Quant subject; no handle in project_handles, so no Follow line; no IG. No Quant logo reference exists: prompt is entity-free (listed in missing_references)."
+    },
+    {
+      "tweet": "Fear & Greed in Fear and $KAS under its 50-week SMA. This is the sale, not the end. 😎\n\n#kaspa #kas",
+      "hook": "Fear & Greed in Fear and $KAS under its 50-week SMA. This is the sale, not the end.",
+      "image_id": "adb7a459",
+      "notes": "Single-line image-first. Kaspa subject; IG companion."
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-11-09-kaspa-first-real-bear-market",
+      "topic": "Kaspa's first real bear market: born in a bull, the $100 trillion math, the DCA plan (built from YT post 1)",
+      "variation_label": "A (reframe, then data, then the plan)",
+      "tweets": [
+        {
+          "text": "Kaspa just closed back under its 50-week SMA, and the timeline is panicking.\n\nBut there's one thing about this Kaspa bear market almost nobody is talking about...",
+          "hook": "Kaspa just closed back under its 50-week SMA, and the timeline is panicking."
+        },
+        {
+          "text": "Kaspa was born in a bull market.\n\nMainnet went live in November 2021 and $KAS stayed above its 50-week SMA straight through 2022, while Bitcoin was in a full bear market.\n\nOn my chart it only lost that line in December 2024."
+        },
+        {
+          "text": "So this is the first real bear market $KAS has ever had.\n\nRight now it's around 2.9 cents: around 17% under the 50-week SMA and 86% under its all-time high.\n\nBitcoin's first real bear market was the best buy of its life."
+        },
+        {
+          "text": "Now the math.\n\nIf crypto grows to the size of global stocks, that's around $100 trillion. I can't see $KAS under a $100 billion market cap in that world. That's well above $3 a coin.\n\nIt's around $810 million right now."
+        },
+        {
+          "text": "And the chain keeps shipping.\n\nSilverscript is live: smart contract logic straight on the L1. DagKnight is next on the roadmap, aimed at taking Kaspa from 10 toward 100 blocks per second.\n\nOnly the price got cheaper."
+        },
+        {
+          "text": "How I'm playing it: no bottom calls.\n\nGot $200? Put $100 in now, keep $100 for the next red week. If it drops, you buy cheaper. If it rips, half is already in. 💪"
+        },
+        {
+          "text": "If this changed how you see the Kaspa chart...\n\nFollow me for Kaspa and macro takes without the four-year cycle noise.\n\n😎"
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-11-09-3-trillion-day-bitcoin-holds",
+      "topic": "The S&P's record $3 trillion day versus Bitcoin: why this is not 2022 (built from YT post 2)",
+      "variation_label": "B (stat shock, then the macro case)",
+      "tweets": [
+        {
+          "text": "The S&P 500 lost around $3 trillion in one session on November 5, the biggest one-day dollar drop in its history.\n\nBitcoin is still fighting for its 50-week SMA.\n\nHere's why I don't think this turns into 2022:",
+          "hook": "The S&P 500 lost around $3 trillion in one session on November 5, the biggest one-day dollar drop in its history."
+        },
+        {
+          "text": "The trigger wasn't a broken economy.\n\nS&P down 4.36%, Nasdaq-100 down around 5.8%, chips down around 12%, all on fear of an AI crackdown after the midterms.\n\nThat's a regulation scare, not a recession."
+        },
+        {
+          "text": "The jobs data says the opposite of a breakdown.\n\nJob openings: 7.5M vs around 7.15M expected.\nADP: 86K vs around 67K.\nJobless claims: 189K vs 196K.\n\nMore jobs created, fewer jobs lost."
+        },
+        {
+          "text": "The money supply is still climbing.\n\n2022 into late 2023 was the rare stretch where dollars were actually destroyed, and that's when crypto had its worst bear. Now QE is running and M2 is rising again."
+        },
+        {
+          "text": "Here's the thing: if the S&P slides into a full 20% drawdown, Bitcoin probably doesn't hang in there.\n\nBut so far it has held up much better than people expected, and I still don't see a new low under $57K."
+        },
+        {
+          "text": "And the four-year cycle zombies moved the goalposts again.\n\nThe bottom was supposed to be October. Now it's supposed to be a few weeks out because of the midterms.\n\nThe cycle never set the bottom. Liquidity does."
+        },
+        {
+          "text": "If this gave you a clearer read on the selloff...\n\nFollow me for macro and crypto threads that ignore the four-year cycle echo chamber.\n\n🧠 + 😎"
+        }
+      ]
+    }
+  ],
+  "x_polls": [
+    {
+      "id": "poll-2026-11-09-where-do-you-buy-kas",
+      "topic": "Kaspa under its 50-week SMA: where do you buy",
+      "eligible_topic": "kaspa",
+      "tweet_text": "$KAS is around 2.9 cents, 17% under its 50-week SMA, in the first real bear market it has ever had.\n\nWhere are you buying?",
+      "hook": "$KAS is around 2.9 cents, 17% under its 50-week SMA.",
+      "options": [
+        "Under 2 cents",
+        "Right here, DCA",
+        "Back above the line",
+        "Already full bag"
+      ],
+      "duration": "1d"
+    },
+    {
+      "id": "poll-2026-11-09-ai-crackdown-tao",
+      "topic": "AI crackdown fears versus decentralized AI ($TAO)",
+      "eligible_topic": "tao",
+      "tweet_text": "Fear of an AI crackdown knocked around $1.9 trillion off the Nasdaq-100 in one session.\n\nIf Washington clamps down on AI, $TAO...",
+      "hook": "Fear of an AI crackdown knocked around $1.9 trillion off the Nasdaq-100 in one session.",
+      "options": [
+        "Surges",
+        "Nothing changes",
+        "Gets dragged down"
+      ],
+      "duration": "1d"
+    }
+  ],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-11-09-where-do-you-buy-kas",
+      "topic": "Kaspa under its 50-week SMA: where do you buy",
+      "source_post": "yt-post-2026-11-09-kaspa-first-real-bear-market",
+      "question_text": "Kaspa is around 2.9 cents, about 17% under its 50-week SMA, in the first real bear market it has ever had.\n\nWhere are you buying $KAS?",
+      "hook": "Kaspa is around 2.9 cents, about 17% under its 50-week SMA.",
+      "options": [
+        "Under 2 cents",
+        "Right here, DCA",
+        "Back above the 50-week SMA",
+        "Already full bag"
+      ]
+    },
+    {
+      "id": "yt-text-poll-2026-11-09-ai-crackdown-tao",
+      "topic": "AI crackdown fears versus decentralized AI ($TAO)",
+      "source_post": null,
+      "question_text": "Fear of an AI crackdown knocked around $1.9 trillion off the Nasdaq-100 in one session.\n\nIf Washington clamps down on AI, what happens to decentralized AI like $TAO?",
+      "hook": "Fear of an AI crackdown knocked around $1.9 trillion off the Nasdaq-100 in one session.",
+      "options": [
+        "It surges",
+        "Nothing changes",
+        "It gets dragged down too"
+      ]
+    }
+  ],
+  "yt_posts": [
+    {
+      "id": "yt-post-2026-11-09-kaspa-first-real-bear-market",
+      "topic": "Kaspa under its 50-week SMA: born in a bull market, its first real bear market, the $100 trillion math, the DCA plan",
+      "variation_label": "A + CTA1",
+      "body_style": "reframe (first-ever bear market) then data walk then the plan",
+      "cta_target": "subscribe_youtube",
+      "body": "Kaspa is on sale, and most people are too scared to notice. It just closed back under its 50-week SMA, the Fear & Greed Index is sitting in Fear, and the S&P 500 had the biggest one-day dollar drop in its history. But there's one thing about this Kaspa bear market that almost nobody is talking about, and it changes how I look at the whole chart.\n\nKaspa was born in a bull market. Mainnet went live in November 2021, and by the usual crypto definition (weekly closes above the 50-week SMA) it stayed in a bull market straight through 2022. Bitcoin was in a full bear market that whole year. Kaspa wasn't. On my chart, Kaspa only lost its 50-week SMA in December 2024.\n\nSo this is the first real bear market $KAS has ever had. Since December 2024 it has made a few attempts back above the line, a handful of weekly closes above it, then slipped back under. Right now it's around 2.9 cents, about 17% under the 50-week SMA and around 86% under its all-time high.\n\nThink about what Bitcoin's first real bear market was. It was the best buy of its life. The people who sat through the boring part, the part where nobody wanted it, got paid.\n\nNow the math. If crypto grows into a market the size of global stocks, you're talking around $100 trillion. In that world I can't imagine Kaspa under a $100 billion market cap. With around 27.8 billion coins out, that's well above $3 a coin. Kaspa is around an $810 million market cap right now. That's why I keep saying $3.33 is the start, not the ceiling.\n\nAnd the chain isn't standing still. Silverscript is live, so smart contract logic can be written straight onto the L1. DagKnight is next on the roadmap, the consensus upgrade aimed at taking Kaspa from 10 blocks per second toward 100. Nothing about the chain got worse. Only the price got cheaper.\n\nHere's how I'm playing it. I'm not trying to nail the exact bottom. If you have $200 to put in, put $100 in now and keep $100 for the next red week. If it drops, you buy cheaper. If it rips, at least you got half in. The next week or two could be red if the stock market keeps sliding, and I'm fine with that.\n\nSo where are you buying? Under 2 cents, right here, or are you waiting until it's back above the 50-week SMA? Tell me in the comments.\n\nIf this changed how you see the Kaspa chart, hit like and subscribe so you catch the next one before the crowd does.",
+      "engagement_question": "Where are you buying Kaspa: under 2 cents, right here, or back above the 50-week SMA?",
+      "images": [
+        {
+          "image_id": "6c1ede01",
+          "slide_text": "KASPA IS ON SALE / ITS FIRST REAL BEAR MARKET"
+        },
+        {
+          "image_id": "705d0306",
+          "slide_text": "Born above the 50-week SMA, it only lost the line in December 2024"
+        },
+        {
+          "image_id": "35e85a84",
+          "slide_text": "2.9 cents, 17% under the 50-week SMA, 86% under the high"
+        },
+        {
+          "image_id": "e83a2473",
+          "slide_text": "$100 trillion crypto, $100 billion Kaspa, well above $3"
+        },
+        {
+          "image_id": "a214cbf2",
+          "slide_text": "Under 2 cents, right here, or back above the line?"
+        }
+      ]
+    },
+    {
+      "id": "yt-post-2026-11-09-3-trillion-day-bitcoin-holds",
+      "topic": "The S&P's record $3 trillion day versus Bitcoin: the trigger, the jobs data, the money supply, why this is not 2022",
+      "variation_label": "B + CTA1",
+      "body_style": "stat shock then three-part macro case then the risk line",
+      "cta_target": "subscribe_youtube",
+      "body": "The S&P 500 lost around $3 trillion in a single session on November 5. That's the biggest one-day dollar drop in the index's history. And Bitcoin? It's still fighting for its 50-week SMA around $75K, nowhere near the $58K low it put in back in July. Here's why I don't think this turns into a 2022.\n\nFirst, what actually happened. The S&P fell 4.36% that day, the Nasdaq-100 fell around 5.8%, and the chip stocks got hit hardest, down around 12%. The trigger wasn't a broken economy. It was fear of an AI crackdown after the midterms. That's a regulation scare, not a recession.\n\nSecond, the economy. Earlier this year my big worry was that there weren't enough new jobs being created, so if layoffs hit, nobody would get rehired. That's not where we are now. Job openings came in at 7.5 million against around 7.15 million expected. ADP came in at 86K against around 67K expected. Jobless claims came in at 189K against 196K expected. More jobs created, fewer jobs lost.\n\nThird, the money. The money supply almost never shrinks. The big exception was 2022 into late 2023, when dollars were actually being destroyed, and that's exactly when crypto had its worst bear market. Now QE is running and M2 is climbing again. The Fed did hike 25 basis points in September and held in October, but one small hike doesn't undo more dollars in the system.\n\nSo my read: this drop has a lot more liquidity underneath it than the drops before it. The biggest wrench is still the supply squeeze around the Strait of Hormuz, which pushes prices up without being real money-supply inflation.\n\nHere's the thing. If the S&P keeps sliding and we get a full 20% drawdown, Bitcoin probably doesn't hang in there. A real bear market in stocks drags everything down with it. But so far Bitcoin has held up much better than most people expected, and I still don't think it goes below $57K.\n\nAnd notice the four-year cycle zombies moved the goalposts again. The bottom was supposed to be October. Now it's supposed to be a few weeks out because of the midterms. The cycle never set the bottom. Liquidity does.\n\nSo what do you think: does Bitcoin hold the 50-week SMA, retest July's $58K, or break to a new low? Tell me in the comments.\n\nIf this gave you a clearer read on the selloff, hit like and subscribe for more macro and crypto without the four-year cycle noise.",
+      "engagement_question": "Does Bitcoin hold the 50-week SMA, retest July's $58K, or break to a new low?",
+      "images": [
+        {
+          "image_id": "761df2cd",
+          "slide_text": "THE S&P LOST 3 TRILLION IN ONE DAY / Bitcoin is still fighting for its 50-week SMA"
+        },
+        {
+          "image_id": "c1fb3895",
+          "slide_text": "November 5: S&P down 4.36%, Nasdaq-100 down around 5.8%"
+        },
+        {
+          "image_id": "917a2384",
+          "slide_text": "Job openings 7.5 million, claims 189K, ADP 86K: all beats"
+        },
+        {
+          "image_id": "cb6ab9cb",
+          "slide_text": "The money supply is still climbing"
+        },
+        {
+          "image_id": "43ae4ea2",
+          "slide_text": "Does Bitcoin hold the 50-week SMA, retest 58K, or break under 57K?"
+        }
+      ]
+    }
+  ],
+  "ig_single": [
+    {
+      "id": "ig-2026-11-09-kaspa-below-50-week-sma",
+      "kaspa_subject": true,
+      "image_id": "3a29b9e4",
+      "aspect_ratio": "4:5",
+      "hook": "Kaspa closed back under its 50-week SMA, and the timeline is panicking.",
+      "caption": "Kaspa closed back under its 50-week SMA, and the timeline is panicking.\n\n$KAS at 2.9 cents is around 17% under that line and 86% under its all-time high. The Fear & Greed Index is sitting in Fear, and the S&P just had the biggest one-day dollar drop in its history.\n\nI'm not trying to call the exact bottom. I'm doing what I always tell my community: if you have $200 to put in, put $100 in now and keep the other $100 for the next red week. If it rips instead, at least you got half in.\n\nSame proof of work, same fair launch, same 10 blocks per second. Only the price changed.\n\nSave this for the next time someone tells you Kaspa is done.",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#krc20",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Kaspa closed back under its 50-week SMA, and the timeline is panicking."
+    },
+    {
+      "id": "ig-2026-11-09-kaspa-100-trillion-math",
+      "kaspa_subject": true,
+      "image_id": "8c2a6bef",
+      "aspect_ratio": "4:5",
+      "hook": "If crypto grows into a market the size of global stocks, you're talking around $100 trillion.",
+      "caption": "If crypto grows into a market the size of global stocks, you're talking around $100 trillion.\n\nIn that world, I can't imagine $KAS sitting under a $100 billion market cap. With around 27.8 billion coins out there, that is well above $3 a coin.\n\nRight now Kaspa is around an $810 million market cap. That's the gap.\n\n$3.33 is not my ceiling. It's the start.\n\nTag the friend who still thinks $3 is crazy.",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#krc20",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "If crypto grows into a market the size of global stocks, you're talking around $100 trillion."
+    },
+    {
+      "id": "ig-2026-11-09-eth-flip-maxis-find-kaspa",
+      "kaspa_subject": true,
+      "image_id": "5150e09d",
+      "aspect_ratio": "4:5",
+      "hook": "The day a proof-of-stake chain flips Bitcoin, the BTC maxis are going to need a new home.",
+      "caption": "The day a proof-of-stake chain flips Bitcoin, the BTC maxis are going to need a new home.\n\nThey won't move to staking. Everything they believe in is proof of work, fair distribution, no insiders. So they'll go looking for proof of work that actually scales.\n\nKaspa: fair launch in November 2021, no premine, no presale, a blockDAG running 10 blocks per second. Same values as Bitcoin, a much better engine.\n\nIt'll take years. But when it happens, $KAS moves up the ranks fast.\n\nSave this one.",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#krc20",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "The day a proof-of-stake chain flips Bitcoin, the BTC maxis are going to need a new home."
+    },
+    {
+      "id": "ig-2026-11-09-kaspa-fair-launch-lore",
+      "kaspa_subject": true,
+      "image_id": "989a3a29",
+      "aspect_ratio": "4:5",
+      "hook": "November 2021: Kaspa mainnet goes live.",
+      "caption": "November 2021: Kaspa mainnet goes live.\n\nNo premine. No presale. No insider allocation. Nobody got coins before you could mine them. Just proof of work, open to anyone with a miner.\n\nFive years on, $KAS runs 10 blocks per second on a blockDAG, where parallel blocks are not thrown away; they get ordered into the graph.\n\nIt's still the cleanest launch in crypto.\n\nTag someone who still thinks every coin is a VC dump.",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#krc20",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "November 2021: Kaspa mainnet goes live."
+    },
+    {
+      "id": "ig-2026-11-09-silverscript-live-dagknight-next",
+      "kaspa_subject": true,
+      "image_id": "b5d09224",
+      "aspect_ratio": "4:5",
+      "hook": "Silverscript is live on Kaspa: smart contract logic written straight onto the L1.",
+      "caption": "Silverscript is live on Kaspa: smart contract logic written straight onto the L1.\n\nNext on the roadmap is DagKnight, the consensus upgrade aimed at taking $KAS from 10 blocks per second toward 100 blocks per second.\n\nThe price is under its 50-week SMA. The builders didn't notice. They keep shipping through every red week, and that's exactly the kind of chain I want to be stacking when the market is scared.\n\nSave this for when the upgrades are priced in and the dip is gone.",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#krc20",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Silverscript is live on Kaspa: smart contract logic written straight onto the L1."
+    },
+    {
+      "id": "ig-2026-11-09-kaspa-born-in-a-bull",
+      "kaspa_subject": true,
+      "image_id": "4d4348cd",
+      "aspect_ratio": "4:5",
+      "hook": "Kaspa was born above its 50-week SMA and stayed there through the 2022 bear market that crushed everything else.",
+      "caption": "Kaspa was born above its 50-week SMA and stayed there through the 2022 bear market that crushed everything else.\n\nOn my chart it only lost that line in December 2024. Since then it's had a few weekly closes back above it, and now it's under it again.\n\nThat makes this the first real bear market $KAS has ever had.\n\nBitcoin's first bear market was the best buy of its life. Everyone who sat through the boring part got paid.\n\nSave this one.",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#krc20",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Kaspa was born above its 50-week SMA and stayed there through the 2022 bear market that crushed everything else."
+    },
+    {
+      "id": "ig-2026-11-09-kaspa-speed-and-hard-money",
+      "kaspa_subject": true,
+      "image_id": "968a18b3",
+      "aspect_ratio": "4:5",
+      "hook": "Kaspa sells speed to normies and hard money to cypherpunks.",
+      "caption": "Kaspa sells speed to normies and hard money to cypherpunks.\n\nThe normies see 10 blocks per second and confirmations that feel instant. The cypherpunks see proof of work, a fair launch with no premine, and a capped supply.\n\nSame chain. Two completely different reasons to fall in love with $KAS.\n\nWhich one got you?",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#krc20",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Kaspa sells speed to normies and hard money to cypherpunks."
+    },
+    {
+      "id": "ig-2026-11-09-kaspa-under-three-cents",
+      "kaspa_subject": true,
+      "image_id": "bed16fe1",
+      "aspect_ratio": "4:5",
+      "hook": "$KAS under 3 cents while Wall Street loses $3 trillion in a day... I'm stacking.",
+      "caption": "$KAS under 3 cents while Wall Street loses $3 trillion in a day... I'm stacking.\n\nThe S&P 500 just had the biggest one-day dollar drop in its history. Kaspa is sitting around 2.9 cents, under its 50-week SMA.\n\nI'm adding a little at a time, not all at once. Half now, half for the next red week.\n\nTag someone who's buying with you.",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#krc20",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "$KAS under 3 cents while Wall Street loses $3 trillion in a day... I'm stacking."
+    },
+    {
+      "id": "ig-2026-11-09-kaspa-fear-is-the-sale",
+      "kaspa_subject": true,
+      "image_id": "adb7a459",
+      "aspect_ratio": "4:5",
+      "hook": "Fear & Greed in Fear and $KAS under its 50-week SMA. This is the sale, not the end.",
+      "caption": "Fear & Greed in Fear and $KAS under its 50-week SMA. This is the sale, not the end.\n\nKaspa is still proof of work, still fair launched, still running 10 blocks per second, and Silverscript is live on the L1. Nothing about the chain got worse. Only the price got cheaper.\n\nSave this for the day everyone's greedy again.",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#krc20",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Fear & Greed in Fear and $KAS under its 50-week SMA. This is the sale, not the end."
+    }
+  ]
+}

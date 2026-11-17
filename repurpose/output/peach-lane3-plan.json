@@ -1,0 +1,648 @@
+{
+  "batch": "peach",
+  "date": "2026-11-15",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/peach LOW BPS VERTICAL/peach LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-11-15",
+  "brief": null,
+  "fact_check": [
+    {
+      "claim": "'we got the weekly close... gonna close below the 50-week moving average, gonna close below the 200-week moving average... a red weekly candle closing below the 200-week' (transcript)",
+      "verdict": "verified and made precise: on Bitstamp daily candles (Monday to Sunday UTC weeks) the week of Nov 9 2026 opened $74,761, closed $65,312 (-12.64%), low $61,947 on Nov 15; 200-week SMA of weekly closes $67,977 and 50-week SMA $74,991 (my calc), so the close is under both. It is the fourth weekly close under the 200-week SMA in 2026 (weeks of June 22, July 27, Aug 10, Nov 9; my calc; coverage counted three between late June and mid-August and framed a sub-$68K close as the fourth). Copy: 'lost 12.6% in the week of November 9', 'open near $74.8K, close near $65.3K, low under $62K', '200-week SMA around $68K', 'the fourth weekly close under that line this year'. CoinGecko spot at drafting $64,645 (-13.9% 7d rolling), not printed.",
+      "source": "bitstamp.net/api/v2/ohlc/btcusd (daily, 2000 days, computed 2026-11-16 02:10 UTC); api.kraken.com OHLC XBTUSD; coinmarketcap.com/academy bitcoin-price-200-week-average; cryptobriefing.com bitcoin-200-week-moving-average-breakdown; api.coingecko.com"
+    },
+    {
+      "claim": "'bottom at 48 to 58... that would make the official bottom on June 30th... it was on 57... if it goes below 57 it's a new bottom' (transcript)",
+      "verdict": "verified: the 2026 low is $57,734.63 (Bitstamp daily low dated July 1 UTC, the evening of June 30 US time; Kraken weekly low $57,740 in the candle of June 25); lowest daily close $58,526 on June 30. The earlier ledgers' 'July ~$58.6K' was the CoinGecko daily snapshot of the same low. Copy says 'its low of the year near $57.7K' and 'that summer low'; the 48K scenario is not drafted.",
+      "source": "bitstamp.net daily OHLC; api.kraken.com OHLC XBTUSD interval=10080; computed 2026-11-16"
+    },
+    {
+      "claim": "'the four-year cycle zombies... saying the bottom wasn't in October, it's gonna be in November' (transcript)",
+      "verdict": "Mike's own observation, drafted as his in YT post 2 only ('moved their bottom from October to November'); consistent with persona core_theses item 9 (never written as the zombies causing an October bottom).",
+      "source": "transcript; persona.json core_theses"
+    },
+    {
+      "claim": "'some people are saying it's related to the midterms... the Dems won the midterms, the House and the Senate, and typically Democrats are not very pro business' (transcript)",
+      "verdict": "verified in the non-partisan form used: on Nov 5 2026 the S&P 500 lost around $3T, its largest one-day dollar loss ever, on fear of an AI crackdown after the midterms (stock-market ledger, NPR / Reuters). Copy says 'the midterms' and 'fear of an AI crackdown after the elections'; no party is named and no political take is drafted.",
+      "source": "repurpose/output/stock-market-lane3-plan.json fact_check (NPR via wamc.org 2026-11-05; finance.yahoo.com Reuters)"
+    },
+    {
+      "claim": "'the Anthropic IPO is going to be on the 19th, right?... people take a million dollars out of Bitcoin and rotate it over to buy into the new IPO' (transcript)",
+      "verdict": "verified with the timing kept conditional: outlets expect pricing on Nov 18 and a Nasdaq debut on Nov 19 2026 under ANT (Polymarket around 93% on Nov 13; one aggregator floats Nov 26), 825 million Class A shares at $70 to $78, up to $64.35B raised; not yet priced at drafting. Copy says 'slated to list on Nasdaq on November 19' and 'up to around $64 billion'. The rotation out of Bitcoin is Mike's theory and is written as 'the theory is'. OPERATOR NOTE: if the listing slips or prices outside the range before these items post, edit YT post 2, thread 2 tweet 4 and V2 slide 3.",
+      "source": "finextra.com blogposting 33468; startupfortune.com anthropics-64-billion-ipo; decodethefuture.org anthropic-s1-ipo-filing-explained; uk.finance.yahoo.com week-stock-market-anthropic-ipo (searched 2026-11-16)"
+    },
+    {
+      "claim": "'This was during the time of the SpaceX IPO... the SpaceX was a couple months back' (transcript)",
+      "verdict": "verified and dated: SpaceX began trading on Nasdaq (SPCX) on June 12 2026, priced at $135, closed around $160.95 (+19%), raised around $75B, reported as the largest IPO ever. Bitcoin's low of the year printed 18 to 19 days later (June 30 / July 1). 'A couple months back' is corrected to the date. Copy: 'SpaceX listed on June 12, the largest IPO ever... low of the year near $57.7K less than three weeks later'. No causation is asserted beyond 'there's a precedent'.",
+      "source": "npr.org/2026/06/12 spacex-ipo; fortune.com/2026/06/12 spacex-ipo-trading-first-day; nasdaq.com spacex-opened-150; bitstamp daily OHLC"
+    },
+    {
+      "claim": "'the whole economy, the business cycle in general has been expansionary for the entire year... what follows that is usually a good crypto market' (transcript)",
+      "verdict": "verified: ISM Manufacturing PMI 55.5 for October 2026 (from 54.5), the tenth straight month above 50 after ten months of contraction. Trading Economics shows 54.9; the ISM release is authoritative. The 'good crypto market follows' link is Mike's thesis and is written as 'usually'. Copy: 'ISM PMI at 55.5, the tenth straight month of expansion'.",
+      "source": "prnewswire.com manufacturing-pmi-at-55-5-october-2026; ismworld.org October 2026 report roundup; kcc20-live ledger (September 54.5, ninth month)"
+    },
+    {
+      "claim": "'We don't need QE. We need the regular money supply expansion based on fractional reserves... inflation goes down, rates go down, more loans, businesses hire, people buy crypto' (transcript)",
+      "verdict": "Mike's macro thesis, drafted in first person in YT post 2, its thread and V2 slide 4 with no figures. Context from the prior ledger: the Fed hiked 25 bp in September 2026 and held at 3.75% to 4.00% on Oct 28; no rate level is printed here.",
+      "source": "transcript; repurpose/output/stock-market-lane3-plan.json fact_check"
+    },
+    {
+      "claim": "'How's Kaspa's price? 2.7, it was 2.5' and 'there's a bright future for Kaspa, just a lot of pain right now... 2027 is probably gonna be a good year' (transcript)",
+      "verdict": "verified: $KAS $0.0269 at drafting (CoinGecko, market cap $747M, rank 80, -8.0% 7d, -25.9% 30d); Kraken KASUSD low $0.02536 on Nov 14 2026 versus the 2026 low of $0.02504 (Aug 6 and Aug 18), so 'right back near its August low' holds (1.3% above). The 2027 view is Mike's and is written as 'I think'. '10 blocks per second' and 'fair launch' per the prior ledgers.",
+      "source": "api.coingecko.com/api/v3/coins/markets (2026-11-16 02:02 UTC); api.kraken.com OHLC KASUSD interval=1440"
+    },
+    {
+      "claim": "'the decentralized Kaspa Dollar, a stablecoin issued against Kaspa... why not just have USDT and USDC... somebody please tell me why this makes sense, drop a comment... miner voted oracles, pretty interesting... the core dev gave his reasons' (transcript)",
+      "verdict": "verified against the project's community site and three write-ups: KaspaDollar is an initiative introduced around Oct 24 2026 by Kaspa core developer Alexander Safstrom (@asaefstroem, author of KIP-16's ZK verification opcodes) to build a decentralized, overcollateralized stablecoin on Kaspa; KAS is the only collateral, minted from vaults (covenants, Toccata, June 30 2026); the price comes from miners voting the KAS price inside their blocks with the median taken, no third-party oracle; no admin key and no developer fee; 'KSD is a working label'; working whitepaper out in early November (one report says Nov 3, the community PDF is v1.1 dated Nov 9, so copy says 'early November' and the slide says 'NOV 2026'); testnet May 2027 and mainnet September 2027 are 'development targets and may change'; audits still ahead. The developer is not named in copy ('a Kaspa core developer'). The 150% example ratio is one outlet's illustration and is not printed. The 'issuer can freeze' argument is the supporters' stated case and is attributed ('the answer I keep hearing'); Mike's own position stays the open question he asked on stream. The fundraiser (5,000,000 KAS by Jan 1 2027) is not printed.",
+      "source": "kdollar.space (fetched 2026-11-16); cryptonews.net/news/altcoins/33723755 (bsc.news, Nov 9); captainaltcoin.com kaspa-dollar-raises-a-tough-question-about-mining-pool-centralization (Nov 10); kucoin.com/news/insight/KAS/6adc78b9b1e8a7000772254d (Oct 24); publish0x.com defiant-pathfinder decentralized native stablecoins"
+    },
+    {
+      "claim": "'there's something called K-Dollar... it's a meme coin' (transcript)",
+      "verdict": "verified on the token's own page: '$KDOLLAR is a community meme token supporting KaspaDollar'; 'Holding it does not give you a dollar peg, a stablecoin balance, or a right to future stablecoin tokens.' Copy: '$KDOLLAR is a community meme coin raising funds for the project. It is not the stablecoin.' The Star Trek remark about its mascot is not drafted.",
+      "source": "kdollar.space (fetched 2026-11-16); cryptonews.net/news/altcoins/33723755"
+    },
+    {
+      "claim": "'there's a KCC-20 token called then' and 'Bridge USDT live on Kaspa L1 through Tresley... testnet' (transcript, both garbled)",
+      "verdict": "UNVERIFIED and dropped: neither name could be resolved from the Whisper text and no source surfaced; no copy names a KCC-20 token or a USDT bridge, and no copy claims USDT is or is not on Kaspa.",
+      "source": "web search 2026-11-16 (nothing primary)"
+    },
+    {
+      "claim": "'the malware wallet has started to receive Kaspa deposits... turning on mining machines again' (transcript, reading a post; likely the Marathon wallet)",
+      "verdict": "UNVERIFIED and dropped: only 2024 coverage of MARA's Kaspa mining surfaced (93 million KAS mined by June 2024); nothing on wallet activity in November 2026. Not drafted in any form.",
+      "source": "ir.mara.com press release 1360 (2024); web search 2026-11-16"
+    },
+    {
+      "claim": "'I wanted TAO to go below 180... I'm looking for a TAO that's like 165 dollars more or less... below 175' (transcript)",
+      "verdict": "verified and updated: $TAO $190.20 at drafting (CoinGecko, market cap $2.23B, -13.5% 7d); Kraken TAOUSD low $177.64 on Nov 14 2026; ATH $757.60 (Mar 7 2024), so the low is 76.6% under it. It is NOT the low of the year (Kraken low $143.48 on Feb 6 2026), so copy says 'wicked down to $177 on November 14', never 'yearly low'. 21,000,000 max supply per the 30x-tao ledger. The $165 to $175 zone is Mike's own level, with 'Never financial advice'.",
+      "source": "api.coingecko.com (2026-11-16 02:02 UTC); api.kraken.com OHLC TAOUSD interval=1440; repurpose/output/30x-tao-lane3-plan.json"
+    },
+    {
+      "claim": "'Kaspa will lead this bull run. So Kaspa. Hopefully TAO. Or maybe Kaspa and TAO, right?' (transcript, agreeing with a viewer)",
+      "verdict": "Mike's own conviction, drafted as a first-person prediction in the single-line tweet, its IG companion and both polls. The 'neutral networks nobody owns' framing in the IG caption is persona core_theses. No statistic asserted.",
+      "source": "transcript; persona.json core_theses"
+    },
+    {
+      "claim": "'I bought a little bit more Pengu... 300 million market cap... it could be like a hundred X, I could get to 30 billion... Pengu is gonna flip Pepe' (transcript)",
+      "verdict": "verified: $PENGU market cap $306.7M (price $0.00488, rank 122, -21.6% 7d); $PEPE market cap $1.61B (rank 51); 100x from $306.7M is $30.7B. Kraken PENGUUSD low $0.004613 on Nov 14 2026 is the lowest print of 2026. The flip and the $30B figure are Mike's predictions, written as 'I can see' with 'Never financial advice'. The 'insider intense VC backed' aside is not drafted.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=pudgy-penguins,pepe (2026-11-16 02:02 UTC); api.kraken.com OHLC PENGUUSD"
+    },
+    {
+      "claim": "'I talked about the DTCC and how there's like a partnership now with Solana... DTCC, like a hundred trillion dollars of securities' and 'Canton is in the settlements narrative' (transcript)",
+      "verdict": "verified: DTCC announced on Nov 12 2026 that its Tokenization Service will connect to Solana in the second half of 2027 (the third connected network). The service went live on Oct 28 2026 on the Canton Network and DTCC's own private Besu network, with 34 eligible securities and 20 participants; an eligible subset of around $30T sits inside DTCC's $114T base. Copy: 'put its tokenization service live on Canton first, with Solana lined up for the second half of 2027'. No dollar figure printed. $CC $0.085, market cap $3.40B, rank 25; $SOL $71.39 (not printed).",
+      "source": "cryptobriefing.com/dtcc-tokenized-assets-solana-2027 (fetched 2026-11-16); manilatimes.net PR Newswire 2026-11-12; solanacompass.com; marketsmedia.com dtcc-digital-asset-partner-to-tokenize-u-s-treasuries; api.coingecko.com"
+    },
+    {
+      "claim": "'I decided to go with Canton rather than Quant... Linea's partnered with Swift... only one will survive?... Quant is up 131% from this low' (transcript)",
+      "verdict": "NOT drafted: choosing one coin over another is trader-portfolio framing (persona no_rotation_framing), and the Quant 131% figure could not be re-pulled (CoinGecko rate limit); $QNT is $156.38, -21.1% 7d. The Canton angle ships once, as the structural DTCC one-liner; Mike's first Canton buy is not announced in copy.",
+      "source": "api.coingecko.com (2026-11-16); persona.json brand_voice_patterns"
+    },
+    {
+      "claim": "'Pieverse... a dollar 91... almost unaffected from the dumps... if you were in my group you'd be up 10x on this' (transcript)",
+      "verdict": "NOT drafted: $PIEVERSE is $1.84 (ATH $2.23 on Nov 9 2026, +28.6% Nov 9 to Nov 16 while Bitcoin fell 13.3%), but the earlier queued tweet put the call at around 8x at $1.98, so '10x' does not hold at this price (around 7.4x), and Pieverse already shipped three tweets plus a full video. The line also sits inside the membership pitch.",
+      "source": "api.coingecko.com market_chart pieverse / bitcoin (2026-11-16); schedule-tweets/data/x-tweets.json (earlier Pieverse tweets)"
+    },
+    {
+      "claim": "'Litecoin right now is an optional privacy coin... a $45 Litecoin' and 'Arbitrum... Robinhood is using the Arbitrum tech... 900 million' (transcript)",
+      "verdict": "prices verified ($LTC $44.68; $ARB market cap $921M) but NOT drafted: the 'what I got into recently' list is trader-portfolio framing, and the new Litecoin privacy claim was not independently checked.",
+      "source": "api.coingecko.com (2026-11-16 02:02 UTC)"
+    },
+    {
+      "claim": "'JCT... a six X overnight last week... it returned to its low, good time for you guys to get in' (transcript)",
+      "verdict": "NOT drafted: $JCT is $0.00212, down 80% in 7 days from its Nov 8 ATH ($0.0185), with monthly unlocks running since Nov 10 (coin-research worked example). A 'good time to get in' post would be a buy call on a coin in freefall.",
+      "source": "api.coingecko.com (2026-11-16); video-creation/skills/coin-research/coin-research.md (JCT worked example)"
+    },
+    {
+      "claim": "'I have to bridge my Nacho coins... they're leaving Gate' (transcript)",
+      "verdict": "verified, not drafted (already shipped in the kaspa-cocktails batch): the NACHO move to KCC-20 opened Oct 30 2026, one way, and the window closes Jan 31 2027; Coindar lists Gate ending NACHO trading on Nov 11. The project page lists the three routes and one official covenant ID.",
+      "source": "nachothekat.xyz/nacho/migration (fetched 2026-11-16); coindar.org nacho-the-kat calendar; repurpose/output/kaspa-cocktails-lane3-plan.json"
+    },
+    {
+      "claim": "'Kraken listed Kaspa without a fee... Kraken is a top notch platform' (transcript, reading chat)",
+      "verdict": "verified in the general form, not drafted: Kraken opened KAS spot trading on Nov 19 2024, and its get-listed page says it never charges a fee to list an asset. No KAS-specific statement exists, so no listing-fee copy was written.",
+      "source": "blog.kraken.com kas-now-available-for-trading; kraken.com/get-listed (searched 2026-11-16)"
+    },
+    {
+      "claim": "'the Binance hack probably contributed', 'Iran has sent drones striking a US base', the Nvidia CEO story, government outage warnings, the 14-hour power cut (transcript)",
+      "verdict": "skipped: the Binance hack (Oct 29, verified in the kaspa-cocktails ledger) is not needed for the argument; the Iran strike is dark-register geopolitics (tweet-tier only, and not verified here); the Nvidia CEO story and the outage warnings are personal / political tangents (persona avoid_in_drafts).",
+      "source": "persona.json avoid_in_drafts; repurpose/SKILL.md (geopolitical content stays tweet-tier)"
+    },
+    {
+      "claim": "Robinhood-chain and other memes (Cooper at 6.4K, What If at 180K, Swole, Golden Kitty, Hellhound, GTA 6 coins), C-Bucks, 'CG doesn't talk too good about Kaspa nowadays', the courses pitch (transcript)",
+      "verdict": "skipped: dead-play recaps and the Cooper position are self-deprecating / already-announced (persona avoid_in_drafts); the remarks about another creator are never drafted (no calling out a creator); C-Bucks is an unverified project Mike knew nothing about; the GTA 6 release-date coincidence was not verified; the membership pitch is excluded by the lane 3 rules. No Golden Kitty item, so no golden-kitty X poll.",
+      "source": "persona.json avoid_in_drafts; lane 3 instructions"
+    },
+    {
+      "claim": "Zcash / zKAS audit",
+      "verdict": "no 'Zcash', 'ZEC' or 'zKAS' occurrence in this transcript; nothing to raise with Mike.",
+      "source": "transcript grep (2026-11-16)"
+    },
+    {
+      "claim": "Whisper mishears audited: 'Caspians' / 'CASP' / 'cast' = Kaspa; 'towel' / 'chow' = TAO; 'Pangoo' / 'pengo' = Pengu; 'pie verse' / 'Piber' = Pieverse; 'salt' = SOL; 'Vaughn' = Quant; 'Linnea' = Linea; 'Ithropic' / 'fabric' = Anthropic; 'JC's tea' = JCT; 'fifth that we move an average' = 50-week SMA; 'Peach Minimates' = Peach Minute Maid",
+      "verdict": "corrected everywhere in copy (Kaspa, TAO, Pengu, Solana, Anthropic); moving averages are written '200-week SMA'. Toncoin and Housecoin were not discussed on this stream, so the weighting runs Kaspa (three tweets, three IG companions, YT post 1, thread 1, both polls), then TAO (one tweet, plus the Kaspa-and-TAO one-liner and poll), then Pengu (one tweet), then what the stream discussed (the DTCC / Canton one-liner and the midterms-or-IPO macro post and thread).",
+      "source": "transcript; persona.json terminology_rules, ticker_corrections"
+    },
+    {
+      "claim": "Image references",
+      "verdict": "ls of schedule-tweets/images/reference/ done live on 2026-11-16. kaspa-logo.png is cited on all three Kaspa X images and their IG companions as the backwards-K source, and it is the V4 hook topic photo for YT post 1 together with version4/hook.png; version4/slide.png anchors V4 slides 2 to 5; bittensor-tao.png is cited on the TAO image and (as the second of two refs) on the Kaspa-and-TAO image. YT post 2 is Version 2, code-rendered from specs (no prompt, no ref). The Pengu and DTCC images are entity-free: no Pudgy Penguins, Pepe, Canton or Solana reference exists.",
+      "source": "schedule-tweets/images/reference (ls 2026-11-16); repurpose/SKILL.md; persona.json image_generation"
+    }
+  ],
+  "carousel_versions": {
+    "yt-post-2026-11-15-kaspa-dollar-why-not-usdt": "version4 (the extra V4 weight applies: images/reference/kaspa-logo.png, the 3D Kaspa coin render, is a usable topic photo and Kaspa is the subject, so slide 1 cites BOTH kaspa-logo.png and version4/hook.png as an array and slides 2 to 5 cite version4/slide.png. The post is a fact card walk (three design properties, three milestones, an issuer-versus-no-issuer comparison, an A/B/C question), which maps cleanly onto V4's three stat boxes plus insight box; the centre panels are simple diagrams with no figures for the model to override. V2 was the runner-up; V1 rejected because it is an open question, not a news flash.)",
+    "yt-post-2026-11-15-midterms-or-the-ipo-both": "version2 (analytical / editorial: an argument chain made of the weekly numbers, two competing theories, the SpaceX precedent, the economy and a question. It is number-dense and V2 is code-rendered, so every figure is exactly the ledger's. V4 was weighed first but no usable topic photo exists (no Bitcoin, Anthropic or Wall Street reference in images/reference/); V1 rejected because the tone is analysis, not hype. Five code-v2 specs, no prompt and no ref.)"
+  },
+  "missing_references": [
+    "Pudgy Penguins ($PENGU) mascot and Pepe: no reference files; the Pengu tweet image renders two plain unmarked coins (ice blue and green), with no penguin and no frog.",
+    "Canton ($CC) and Solana logos: no reference files; the DTCC one-liner image is entity-free (no coins, no logos).",
+    "No Bitcoin / Anthropic / Wall Street topic photo, so YT post 2 could not be anchored as Version 4 (it is Version 2, code-rendered, which needs no exemplar)."
+  ],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "34835f3f",
+      "slug": "kaspa-dollar-question",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, standing in front of a heavy open vault filled with stacked greenish cyan Kaspa coins. In one raised hand it holds up a single freshly minted pale silver coin whose face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind, and it studies that coin with one eyebrow raised and its other hand on its chin. Small sparks drift from a minting press beside the vault. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin and the vault, a soft white glow on the new coin. Curious and questioning: is this what we need? Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "34835f3f",
+      "slug": "kaspa-dollar-question",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, standing in front of a heavy open vault filled with stacked greenish cyan Kaspa coins. In one raised hand it holds up a single freshly minted pale silver coin whose face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind, and it studies that coin with one eyebrow raised and its other hand on its chin. Small sparks drift from a minting press beside the vault. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin and the vault, a soft white glow on the new coin. Curious and questioning: is this what we need? Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "e399e643",
+      "slug": "tao-wick-buy-zone",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A TAO coin character with arms and legs, a clean white coin whose face shows the dark tau-shaped TAO emblem exactly as shown in the attached reference image, standing calm and unbothered at the bottom of a deep icy ravine it has just slid down, brushing snow off its shoulder. High above it, stretched across the dark sky, a web of small glowing nodes joined by thin luminous threads keeps humming, completely untouched by the fall. Deep navy near-black background. Dramatic cinematic lighting. Cool white rim light on the TAO coin, a soft violet glow in the network above. Calm and patient: same network, lower price. Use the attached reference only as the source for the emblem; do not reproduce the reference image itself. The coin carries no other symbol or lettering. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\bittensor-tao.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "4539c067",
+      "slug": "pengu-flips-pepe",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A tall two-step winners podium at night under drifting snowflakes. A small ice-blue coin character with arms and legs, wearing a tiny knitted scarf, is caught mid-leap from the lower step up onto the top step, arms thrown wide, beaming. On the top step a larger green coin character with arms and legs leans back and looks down at it in wide-eyed surprise. Both coin faces are completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No penguin, no frog, no mascot of any kind. Deep navy near-black background. Dramatic cinematic lighting. Icy blue rim light on the leaping coin, a green glow on the coin above. Triumphant and cheeky: the flip. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "acfc49f0",
+      "slug": "kaspa-pain-now-bright-future",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A small tough Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, leaning forward and climbing a steep dark mountain path through driving rain and wind, scuffed but determined, jaw set. Ahead of it, over the ridge, the storm clouds are breaking and a wide warm sunrise is starting to spill across a valley of lit factories and cranes at work. Deep navy near-black background in the storm half of the frame. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin, warm gold light from the break in the clouds. Defiant and determined: pain now, a bright road ahead. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "acfc49f0",
+      "slug": "kaspa-pain-now-bright-future",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A small tough Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, leaning forward and climbing a steep dark mountain path through driving rain and wind, scuffed but determined, jaw set. Ahead of it, over the ridge, the storm clouds are breaking and a wide warm sunrise is starting to spill across a valley of lit factories and cranes at work. Deep navy near-black background in the storm half of the frame. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin, warm gold light from the break in the clouds. Defiant and determined: pain now, a bright road ahead. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "2816776b",
+      "slug": "dtcc-plumbing-on-chain",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. The vast vaulted basement of an old marble stock-exchange building at night. Rows of huge tarnished brass pipes and valve wheels are being swapped out for sleek conduits of flowing electric-blue light. In the foreground one small cheerful robot plumber character tightens the last coupling with a wrench as the first streams of light begin to race through the new lines and up into the building above. No coins, no logos, no signage, no screens. Deep navy near-black background. Dramatic cinematic lighting. Electric blue rim light from the conduits, warm brass highlights on the old pipes. Calm and momentous: the plumbing is being replaced. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "def74728",
+      "slug": "kaspa-tao-lead-the-run",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. TWO REFERENCE IMAGES ARE ATTACHED and both must be used exactly. Two coin characters with arms and legs sprint side by side out of a dark canyon onto open ground, grinning, kicking up dust. In front by half a step is a Kaspa coin character, a dark coin whose face shows the GREENISH CYAN BACKWARDS-K Kaspa logo shown in the FIRST attached reference image, glowing greenish cyan. Right at its shoulder is a TAO coin character, a clean white coin whose face shows the DARK TAU-SHAPED TAO emblem shown in the SECOND attached reference image. Neither coin carries any other symbol, lettering or marking. Far behind them in the canyon shadows, a crowd of small grey coins whose faces are completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind is only just starting to move. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin, cool white rim light on the TAO coin. Triumphant: the two that lead the run. Use the attached references only as the sources for the two logos; do not reproduce either reference image itself. No text or words anywhere in the image.",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\bittensor-tao.png"
+      ]
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "def74728",
+      "slug": "kaspa-tao-lead-the-run",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. TWO REFERENCE IMAGES ARE ATTACHED and both must be used exactly. Two coin characters with arms and legs sprint side by side out of a dark canyon onto open ground, grinning, kicking up dust. In front by half a step is a Kaspa coin character, a dark coin whose face shows the GREENISH CYAN BACKWARDS-K Kaspa logo shown in the FIRST attached reference image, glowing greenish cyan. Right at its shoulder is a TAO coin character, a clean white coin whose face shows the DARK TAU-SHAPED TAO emblem shown in the SECOND attached reference image. Neither coin carries any other symbol, lettering or marking. Far behind them in the canyon shadows, a crowd of small grey coins whose faces are completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind is only just starting to move. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin, cool white rim light on the TAO coin. Triumphant: the two that lead the run. Use the attached references only as the sources for the two logos; do not reproduce either reference image itself. No text or words anywhere in the image.",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\bittensor-tao.png"
+      ]
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "b98367d5",
+      "slug": "01-hook",
+      "prompt": "Single editorial hook image for a carousel, 1:1 square. TWO REFERENCE IMAGES ARE ATTACHED. Use the FIRST attached reference (the dark 3D Kaspa coin with the glowing greenish cyan backwards-K logo bursting with greenish cyan light on a black background) as the full-bleed background image, keeping the coin and its backwards-K logo faithful, cropped to a square with the coin centred in the upper two thirds of the frame. Use the SECOND attached reference ONLY as the layout and typography key: match its bold all-caps bottom text treatment, its small circular chart bubble overlay and its bottom SWIPE FOR MORE bar. In the top right corner place a small circular bubble overlay containing one simple green line chart that runs flat and level along a dashed horizontal line, with no numbers or axis labels. Bold all-caps text across the bottom: 'KASPA IS GETTING ITS OWN DOLLAR' in white on the first line, then 'DOES IT NEED ONE?' in bright green on the second line. Small white all-caps 'SWIPE FOR MORE' text at the very bottom. No pagination dots, no carousel indicators. Keep every line of text inside a margin of at least 8 percent of the frame width. Render NO watermark, no @handle, no username, no shield badge, no artist signature and no initials anywhere in the frame or in any corner; the second attached reference carries a small badge and page dots and they must NOT be reproduced. No em dashes anywhere in the rendered text, use colons or commas instead. Do not invent any numbers, tickers, logos or lettering beyond the exact text specified above; render no text other than the text specified here.",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\hook.png"
+      ]
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "53b2c0d3",
+      "slug": "02-how-it-works",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'How Kaspa Dollar works'. Stat boxes: 'COLLATERAL: KAS ONLY', 'PRICE FEED: THE MINERS', 'ADMIN KEY: NONE'. Centre panel: a simple left-to-right flow of three plain rounded boxes joined by two arrows, the boxes labelled 'LOCK KAS', 'VAULT' and 'MINT KSD', with no numbers and no other labels. Bottom green box labelled 'THE IDEA' with two bullets: 'Every dollar is backed by more than a dollar of KAS.' and 'Miners vote the price inside the blocks they mine.'. Page number 2 in a circle at the top right. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. The page number 2 appears exactly once and nowhere else. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "5eb21d2e",
+      "slug": "03-where-it-stands",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Where it stands'. Stat boxes: 'WHITEPAPER: NOV 2026', 'TESTNET: MAY 2027', 'MAINNET TARGET: SEPT 2027'. Centre panel: one horizontal timeline line with three evenly spaced round markers, the first marker filled green and the other two hollow, with no dates, numbers or labels on the line. Bottom green box labelled 'STILL A DRAFT' with two bullets: 'A working whitepaper, with audits still ahead.' and 'KDOLLAR is a fundraising meme coin, not the stablecoin.'. Page number 3 in a circle at the top right. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. The page number 3 appears exactly once and nowhere else. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "afb34efc",
+      "slug": "04-the-debate",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Why not just USDT and USDC?'. Stat boxes: 'USDT AND USDC: AN ISSUER', 'KASPA DOLLAR: NO ADMIN KEY', 'MY WORRY: ADOPTION'. Centre panel: two plain rounded columns side by side, the left one headed 'ISSUED' and the right one headed 'MINTED', each otherwise empty, with no numbers or other labels. Bottom green box labelled 'MY QUESTION' with two bullets: 'Deviate from what the market uses and you need a very good reason.' and 'Otherwise fewer people adopt it.'. Page number 4 in a circle at the top right. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. The page number 4 appears exactly once and nowhere else. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "1f22cba6",
+      "slug": "05-question",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Does Kaspa need its own dollar?'. Stat boxes: 'A: A KAS-BACKED DOLLAR', 'B: JUST USDT AND USDC', 'C: BOTH'. Centre panel: three plain rounded panels side by side, each headed A, B and C, otherwise empty. Bottom green box labelled 'TELL ME IN THE COMMENTS' with one bullet: 'What am I missing?'. Page number 5 in a circle at the top right. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. The page number 5 appears exactly once and nowhere else. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "ddc5f0c6",
+      "slug": "01-hook",
+      "render": "code-v2",
+      "spec": {
+        "label": "1 OF 5",
+        "title": "Midterms or\nthe IPO?",
+        "accent": "Bitcoin lost 12.6% in a week. What if it's both?",
+        "box_label": "THE SETUP",
+        "box": [
+          "Bitcoin closed the week of November 9 below its 200-week SMA.",
+          "Two theories are fighting on the timeline."
+        ]
+      }
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "abe91550",
+      "slug": "02-the-week",
+      "render": "code-v2",
+      "spec": {
+        "label": "2 OF 5",
+        "title": "The week\nof Nov 9",
+        "accent": "Open near $74.8K, close near $65.3K, low under $62K",
+        "box_label": "THE LINE",
+        "box": [
+          "The 200-week SMA sits around $68K.",
+          "It is the fourth weekly close under it this year."
+        ]
+      }
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "0eb231d8",
+      "slug": "03-the-ipo",
+      "render": "code-v2",
+      "spec": {
+        "label": "3 OF 5",
+        "title": "$64 billion\nhas to come\nfrom somewhere",
+        "accent": "Anthropic: 825 million shares at $70 to $78, slated for Nov 19",
+        "box_label": "THE PRECEDENT",
+        "box": [
+          "SpaceX listed on June 12, the largest IPO ever.",
+          "Bitcoin's low of the year, near $57.7K, came less than three weeks later."
+        ]
+      }
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "3116882e",
+      "slug": "04-the-economy",
+      "render": "code-v2",
+      "spec": {
+        "label": "4 OF 5",
+        "title": "The economy\nis not broken",
+        "accent": "ISM PMI at 55.5: ten straight months of expansion",
+        "box_label": "WHAT WE NEED",
+        "box": [
+          "Not QE.",
+          "Lower rates, more loans, more hiring.",
+          "People with paychecks buy crypto."
+        ]
+      }
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "e17f0ac5",
+      "slug": "05-question",
+      "render": "code-v2",
+      "spec": {
+        "label": "5 OF 5",
+        "title": "Midterms,\nthe IPO,\nor both?",
+        "accent": "And does Bitcoin hold its summer low near $57.7K?",
+        "box_label": "TELL ME IN THE COMMENTS",
+        "box": [
+          "What is really behind this dump?"
+        ]
+      }
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "Kaspa is getting its own dollar.\n\nThe Kaspa Dollar whitepaper is out: lock $KAS in a vault, mint a stablecoin against it, and the miners vote the price in. No admin key in the design.\n\nMy first reaction: why not just bring USDT and USDC to Kaspa?\n\nTell me what I'm missing. 🤔\n\n#kaspa #kas #stablecoins",
+      "hook": "Kaspa is getting its own dollar.",
+      "image_id": "34835f3f",
+      "notes": "Kaspa subject; IG companion shares the image. No Follow line (Kaspa). Engagement note: correction-bait technique #3 ('What am I missing?' closer): THE deliberate 1-in-10 bait item for this batch. Mike asked this exact question on stream and asked viewers to drop a comment."
+    },
+    {
+      "tweet": "$TAO wicked down to $177 on November 14. That's 76% under its all-time high.\n\nSame subnets. Same 21 million cap. Same decentralized AI thesis. Only the price changed.\n\nI'm watching $165 to $175 to add more. If the market takes one more leg down, I think we get it. Never financial advice.\n\n#bittensor #tao #decentralizedai",
+      "hook": "$TAO wicked down to $177 on November 14. That's 76% under its all-time high.",
+      "image_id": "e399e643",
+      "notes": "TAO subject; project_handles tao = null, so no Follow line; no IG (not Kaspa). Kraken TAOUSD low on Nov 14 was $177.64; ATH $757.60. The $165 to $175 zone is Mike's own level from the stream."
+    },
+    {
+      "tweet": "I've been saying it, and I'll keep saying it: $PENGU flips $PEPE. 🐧\n\nPengu is around a $300 million market cap after printing its low of the year on November 14. Pepe is at $1.6 billion.\n\nI added more this week. In the next real run I can see $PENGU at $30 billion. That's 100x from here. Never financial advice.\n\nFollow: @pudgypenguins\n\n#pengu #pudgypenguins #memecoins",
+      "hook": "I've been saying it, and I'll keep saying it: $PENGU flips $PEPE.",
+      "image_id": "4539c067",
+      "notes": "Pengu subject; Follow: @pudgypenguins per project_handles; no IG (not Kaspa). No Pengu or Pepe reference file, so the image is two plain unmarked coins (listed in missing_references)."
+    },
+    {
+      "tweet": "Kaspa touched 2.5 cents on November 14, right back near its August low, in the same week Bitcoin closed below its 200-week SMA.\n\nMeanwhile the ISM PMI just printed its tenth straight month of expansion. A growing economy is usually what comes before a good crypto market.\n\nA lot of pain right now. I still see a bright future for $KAS, and I think 2027 is a good year. 💪\n\n#kaspa #kas #crypto",
+      "hook": "Kaspa touched 2.5 cents on November 14, right back near its August low, in the same week Bitcoin closed below its 200-week SMA.",
+      "image_id": "acfc49f0",
+      "notes": "Kaspa subject; IG companion shares the image. No Follow line (Kaspa). Kraken KASUSD low $0.02536 on Nov 14 versus the 2026 low of $0.02504 in August."
+    },
+    {
+      "tweet": "The DTCC put its tokenization service live on Canton first, with Solana lined up for the second half of 2027. Wall Street's plumbing is moving on-chain. $CC $SOL\n\n#canton #solana #rwa",
+      "hook": "The DTCC put its tokenization service live on Canton first, with Solana lined up for the second half of 2027.",
+      "image_id": "2816776b",
+      "notes": "Single-line image-first. Canton subject (settlement narrative); no handle in project_handles for Canton or Solana, so no Follow line; no IG. No Canton or Solana reference file: the image is entity-free (listed in missing_references)."
+    },
+    {
+      "tweet": "Kaspa leads the next bull run, and $TAO is right there with it. $KAS 😎\n\n#kaspa #kas #bittensor",
+      "hook": "Kaspa leads the next bull run, and $TAO is right there with it.",
+      "image_id": "def74728",
+      "notes": "Single-line image-first. Kaspa-plus-TAO conviction post, so it qualifies for the IG companion. No Follow line (Kaspa). Mike on stream agreeing with a viewer: Kaspa leads, hopefully TAO, maybe both."
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-11-15-kaspa-dollar-why-not-usdt",
+      "topic": "Kaspa Dollar: how the KAS-backed stablecoin proposal works and Mike's question, why not just USDT and USDC (built from YT post 1)",
+      "variation_label": "A (hook and thesis first, then the mechanics, then the question)",
+      "tweets": [
+        {
+          "text": "Kaspa is getting its own dollar.\n\nNot USDT. Not USDC. A stablecoin backed only by $KAS, priced by the miners, with no admin key in the design.\n\nHere's how it works, and the one question I still have:",
+          "hook": "Kaspa is getting its own dollar."
+        },
+        {
+          "text": "The Kaspa Dollar whitepaper landed in early November, led by a Kaspa core developer.\n\nYou lock $KAS in a vault and mint dollars against it. KAS is the only collateral, and every dollar is backed by more than a dollar of it."
+        },
+        {
+          "text": "The part I find really interesting is the oracle.\n\nNo outside price feed. Kaspa miners vote the KAS price right inside the blocks they mine, and the protocol takes the median.\n\nThe same proof of work that secures the chain prices the dollar."
+        },
+        {
+          "text": "No admin key. No developer fee.\n\nAnd it only became possible this year: covenants went live on Kaspa with the Toccata hard fork on June 30."
+        },
+        {
+          "text": "It's early. This is a working draft with audits still ahead.\n\nTestnet is planned for May 2027 and mainnet is targeted for September 2027.\n\nAlso: $KDOLLAR is a community meme coin raising funds for the project. It is not the stablecoin."
+        },
+        {
+          "text": "My first reaction: why not just bring USDT and USDC to Kaspa?\n\nThe answer I keep hearing: those have an issuer who can freeze them. This one doesn't.\n\nFair. But when you deviate from what the market already uses, you need a damn good reason.\n\nWhat am I missing?"
+        },
+        {
+          "text": "If this helped you make sense of Kaspa Dollar...\n\nFollow me for Kaspa takes that ask the hard questions out loud.\n\n🧠 + 😎"
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-11-15-midterms-or-the-ipo-both",
+      "topic": "Bitcoin's 12.6% week and the close under its 200-week SMA: the midterms, the Anthropic IPO, and why it's both (built from YT post 2)",
+      "variation_label": "B (stat shock, two theories, the precedent, what the economy needs)",
+      "tweets": [
+        {
+          "text": "Bitcoin lost 12.6% in the week of November 9 and closed below its 200-week SMA.\n\nHalf the timeline blames the midterms. The other half blames the Anthropic IPO.\n\nMy revolutionary thought: what if it's just both?",
+          "hook": "Bitcoin lost 12.6% in the week of November 9 and closed below its 200-week SMA."
+        },
+        {
+          "text": "The numbers first.\n\n$BTC opened that week near $74.8K and closed near $65.3K, with a low under $62K.\n\nThe 200-week SMA sits around $68K. That's the fourth weekly close under that line this year."
+        },
+        {
+          "text": "Theory one: the midterms.\n\nOn November 5 the S&P 500 had its biggest one-day dollar drop ever, on fear of an AI crackdown after the elections. Risk came off everywhere.\n\nThat's one cause for a dump."
+        },
+        {
+          "text": "Theory two: the IPO.\n\nAnthropic is slated to list on Nasdaq on November 19, selling 825 million shares at $70 to $78. That's up to around $64 billion that has to come from somewhere.\n\nThe theory is that some of it comes out of Bitcoin."
+        },
+        {
+          "text": "There's a precedent.\n\nSpaceX listed on June 12, the largest IPO ever. Bitcoin printed its low of the year near $57.7K less than three weeks later.\n\nAnd some people sell early just because they know others will sell to buy the IPO."
+        },
+        {
+          "text": "What's not broken: the economy.\n\nThe ISM PMI came in at 55.5 for October, the tenth straight month of expansion.\n\nWe don't need QE. We need rates to come down, loans to flow, businesses to hire, and people with paychecks buying crypto."
+        },
+        {
+          "text": "So I'm not expecting a giant green candle right away. A few more weeks of this wouldn't surprise me.\n\nIf $BTC holds above that summer low, there's no new bottom. I've been buying plays at really low prices, and I don't touch leverage."
+        },
+        {
+          "text": "If this gave you a clearer read on the dump...\n\nFollow me for macro and crypto threads that ignore the four-year cycle echo chamber.\n\n🧠 + 😎"
+        }
+      ]
+    }
+  ],
+  "x_polls": [
+    {
+      "id": "poll-2026-11-15-kaspa-dollar-or-usdt",
+      "topic": "Kaspa Dollar versus bringing USDT and USDC to Kaspa",
+      "eligible_topic": "kaspa",
+      "tweet_text": "The Kaspa Dollar proposal: a stablecoin minted against locked $KAS, priced by the miners, no admin key.\n\nMy first reaction: why not just bring USDT and USDC over?\n\nWhat does Kaspa need?",
+      "hook": "The Kaspa Dollar proposal: a stablecoin minted against locked $KAS, priced by the miners, no admin key.",
+      "options": [
+        "A KAS-backed dollar",
+        "Just USDT and USDC",
+        "Both",
+        "Neither, KAS is money"
+      ],
+      "duration": "1d"
+    },
+    {
+      "id": "poll-2026-11-15-what-leads-the-next-run",
+      "topic": "What leads the next bull run: Kaspa, TAO, Solana or Bitcoin",
+      "eligible_topic": "kaspa",
+      "tweet_text": "Bitcoin closed the week of November 9 below its 200-week SMA and almost everything is on sale.\n\nI say Kaspa leads the next bull run, with $TAO right there with it.\n\nWhat runs first when this turns?",
+      "hook": "Bitcoin closed the week of November 9 below its 200-week SMA and almost everything is on sale.",
+      "options": [
+        "$KAS",
+        "$TAO",
+        "$SOL",
+        "$BTC"
+      ],
+      "duration": "1d"
+    }
+  ],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-11-15-kaspa-dollar-or-usdt",
+      "topic": "Kaspa Dollar versus bringing USDT and USDC to Kaspa",
+      "source_post": "yt-post-2026-11-15-kaspa-dollar-why-not-usdt",
+      "question_text": "The Kaspa Dollar whitepaper is out: a stablecoin minted against locked $KAS, priced by a miner-voted oracle, with no admin key in the design. Mainnet is targeted for September 2027.\n\nMy first reaction was: why not just bring USDT and USDC to Kaspa?\n\nWhat does Kaspa actually need?",
+      "hook": "The Kaspa Dollar whitepaper is out: a stablecoin minted against locked $KAS, priced by a miner-voted oracle, with no admin key in the design.",
+      "options": [
+        "Its own decentralized dollar, backed by KAS",
+        "USDT and USDC on Kaspa, and that's enough",
+        "Both, and let the market pick",
+        "Neither: Kaspa is money, not a DeFi chain"
+      ]
+    },
+    {
+      "id": "yt-text-poll-2026-11-15-what-leads-the-next-run",
+      "topic": "What leads the next bull run: Kaspa, TAO, Solana or Bitcoin",
+      "source_post": null,
+      "question_text": "Bitcoin closed the week of November 9 below its 200-week SMA, and almost everything is on sale.\n\nI say Kaspa leads the next bull run, with $TAO right there with it.\n\nWhen this market turns, what runs first?",
+      "hook": "Bitcoin closed the week of November 9 below its 200-week SMA, and almost everything is on sale.",
+      "options": [
+        "Kaspa",
+        "TAO",
+        "Solana",
+        "Bitcoin leads, like it always does"
+      ]
+    }
+  ],
+  "yt_posts": [
+    {
+      "id": "yt-post-2026-11-15-kaspa-dollar-why-not-usdt",
+      "topic": "Kaspa Dollar: a KAS-backed stablecoin proposal with a miner-voted oracle and no admin key, and Mike's question (why not just USDT and USDC?)",
+      "variation_label": "A + CTA1",
+      "body_style": "open question, then how it works, the timeline, the debate, the comment ask",
+      "cta_target": "subscribe_youtube",
+      "body": "Kaspa is getting its own dollar. Not USDT. Not USDC. A stablecoin minted against locked KAS, priced by the miners themselves, with no admin key anywhere in the design. And my first reaction when I saw it was a question I still haven't fully answered.\n\nFirst, what it is. Kaspa Dollar is an initiative led by a Kaspa core developer to build the first decentralized, overcollateralized stablecoin on Kaspa. The whitepaper landed in early November, and the ticker people are using for it, KSD, is still a working label.\n\nHere's how it works. You lock $KAS in a vault and mint dollars against it. KAS is the only collateral, and every dollar is backed by more than a dollar of it. This only became possible this year, when covenants went live on Kaspa with the Toccata hard fork on June 30.\n\nNow the part I find really interesting: the oracle. There's no outside price feed. Kaspa miners vote the KAS price right inside the blocks they mine, and the protocol takes the median. Miner-voted oracles. The same proof of work that secures the chain prices the dollar.\n\nIt's early, though. This is a working draft with audits still ahead. Testnet is planned for May 2027 and mainnet is targeted for September 2027, and those are development targets that can move. One more thing so nobody gets confused: $KDOLLAR is a community meme coin raising funds for the project. It is not the stablecoin, and holding it doesn't give you a dollar peg.\n\nSo here's my question. If you want a stablecoin on Kaspa, why not just bring USDT and USDC over? When you deviate from what the whole market already uses, you want a damn good reason, because otherwise it comes across as weird and fewer people adopt it.\n\nThe answer I keep hearing: USDT and USDC have an issuer who can freeze them, and a dollar with no admin key doesn't. I get that argument. I'm still working through whether it's enough.\n\nSo tell me: does Kaspa need its own decentralized dollar, or should it just bring USDT and USDC over? Drop a comment and tell me what I'm missing.\n\nIf this helped you make sense of Kaspa Dollar, hit like and subscribe so you catch the next one.",
+      "engagement_question": "Does Kaspa need its own decentralized dollar, or should it just bring USDT and USDC over?",
+      "images": [
+        {
+          "image_id": "b98367d5",
+          "slide_text": "KASPA IS GETTING ITS OWN DOLLAR / DOES IT NEED ONE?"
+        },
+        {
+          "image_id": "53b2c0d3",
+          "slide_text": "Collateral: KAS only. Price feed: the miners. Admin key: none."
+        },
+        {
+          "image_id": "5eb21d2e",
+          "slide_text": "Whitepaper out, testnet May 2027, mainnet target September 2027"
+        },
+        {
+          "image_id": "afb34efc",
+          "slide_text": "Why not just USDT and USDC?"
+        },
+        {
+          "image_id": "1f22cba6",
+          "slide_text": "A KAS-backed dollar, just USDT and USDC, or both?"
+        }
+      ]
+    },
+    {
+      "id": "yt-post-2026-11-15-midterms-or-the-ipo-both",
+      "topic": "Bitcoin's 12.6% week and the close under its 200-week SMA: the midterms, the Anthropic IPO, why it's both, and what the economy actually needs",
+      "variation_label": "B + CTA1",
+      "body_style": "stat shock, two theories, the precedent, the synthesis, the macro line, the comment ask",
+      "cta_target": "subscribe_youtube",
+      "body": "Bitcoin lost 12.6% in the week of November 9 and closed below its 200-week SMA. Half the timeline says it's the midterms. The other half says it's the Anthropic IPO. Here's my revolutionary thought: what if it's just both?\n\nThe numbers first. Bitcoin opened that week near $74.8K and closed near $65.3K, with a low under $62K. The 200-week SMA sits around $68K. That's the fourth weekly close under that line this year.\n\nTheory one is the midterms. On November 5 the S&P 500 had its biggest one-day dollar drop ever, on fear of an AI crackdown after the elections, and risk came off everywhere. That's one cause for a dump.\n\nTheory two is the IPO. Anthropic is slated to list on Nasdaq on November 19, selling 825 million shares at $70 to $78. That's up to around $64 billion that has to come from somewhere, and the theory is that some of it comes out of Bitcoin. This is relatively new for crypto: smart money pulling a million dollars out of Bitcoin to buy into the hot new listing. Then you get the people who say, I know they're going to sell, so I'm selling first.\n\nThere's a precedent. SpaceX listed on June 12, the largest IPO ever, and Bitcoin printed its low of the year near $57.7K less than three weeks later.\n\nSo put the two together. One reason to dump, one reason to raise cash, and a crowd front-running both. That's how you get candles like these.\n\nHere's what isn't broken: the economy. The ISM PMI came in at 55.5 for October, the tenth straight month of expansion. It's just not explosive yet. And we don't need QE to get there. We need rates to come down so loans get plentiful, businesses spend, new jobs get created, and people with paychecks go buy crypto.\n\nWhat do I expect? I doubt we get a giant green candle right away. Another few weeks of this wouldn't surprise me. If Bitcoin holds above that summer low, there's no new bottom. Meanwhile the four-year cycle zombies moved their bottom from October to November. I've been buying a bunch of plays at really low prices, and I don't touch leverage.\n\nSo what do you think is really behind this dump: the midterms, the Anthropic IPO, or both? Tell me in the comments.\n\nIf this gave you a clearer read on the selloff, hit like and subscribe for more macro and crypto without the four-year cycle noise.",
+      "engagement_question": "What's really behind this dump: the midterms, the Anthropic IPO, or both?",
+      "images": [
+        {
+          "image_id": "ddc5f0c6",
+          "slide_text": "Midterms or the IPO? Bitcoin lost 12.6% in a week. What if it's both?"
+        },
+        {
+          "image_id": "abe91550",
+          "slide_text": "The week of Nov 9: open near $74.8K, close near $65.3K, low under $62K"
+        },
+        {
+          "image_id": "0eb231d8",
+          "slide_text": "$64 billion has to come from somewhere"
+        },
+        {
+          "image_id": "3116882e",
+          "slide_text": "The economy is not broken: ISM PMI at 55.5, ten straight months of expansion"
+        },
+        {
+          "image_id": "e17f0ac5",
+          "slide_text": "Midterms, the IPO, or both?"
+        }
+      ]
+    }
+  ],
+  "ig_single": [
+    {
+      "id": "ig-2026-11-15-kaspa-dollar-question",
+      "kaspa_subject": true,
+      "image_id": "34835f3f",
+      "aspect_ratio": "4:5",
+      "hook": "Kaspa is getting its own dollar.",
+      "caption": "Kaspa is getting its own dollar.\n\nThe Kaspa Dollar whitepaper is out. The idea: you lock $KAS in a vault and mint a stablecoin against it. KAS is the only collateral. There is no outside price feed either: Kaspa miners vote the price in, right inside the blocks they mine. And the design has no admin key.\n\nIt's still a working draft. Testnet is planned for May 2027 and mainnet is targeted for September 2027.\n\nMy first reaction was simple: why not just bring USDT and USDC to Kaspa? The answer I keep hearing is that those have an issuer who can freeze them, and this one doesn't.\n\nSo tell me what I'm missing. Does Kaspa need its own dollar?",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#stablecoin",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Kaspa is getting its own dollar."
+    },
+    {
+      "id": "ig-2026-11-15-kaspa-pain-now-bright-future",
+      "kaspa_subject": true,
+      "image_id": "acfc49f0",
+      "aspect_ratio": "4:5",
+      "hook": "Kaspa touched 2.5 cents on November 14, right back near its August low, in the same week Bitcoin closed below its 200-week SMA.",
+      "caption": "Kaspa touched 2.5 cents on November 14, right back near its August low, in the same week Bitcoin closed below its 200-week SMA.\n\nThat's the pain. Here's the other side.\n\nThe ISM PMI just printed its tenth straight month of expansion. The business cycle has been expansionary all year. It's not explosive yet, but a growing economy is usually what comes before a good crypto market.\n\nNothing about Kaspa changed: same proof of work, same fair launch, same 10 blocks per second. Only the price got cheaper.\n\nI still see a bright future for $KAS, and I think 2027 is a good year.\n\nSave this for the next green month.",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#krc20",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Kaspa touched 2.5 cents on November 14, right back near its August low, in the same week Bitcoin closed below its 200-week SMA."
+    },
+    {
+      "id": "ig-2026-11-15-kaspa-tao-lead-the-run",
+      "kaspa_subject": true,
+      "image_id": "def74728",
+      "aspect_ratio": "4:5",
+      "hook": "Kaspa leads the next bull run, and $TAO is right there with it.",
+      "caption": "Kaspa leads the next bull run, and $TAO is right there with it.\n\n$KAS is the proof-of-work money layer: fair launch, no premine, 10 blocks per second. $TAO is the decentralized AI layer: a 21 million cap and subnets competing to produce the best intelligence.\n\nTwo neutral networks nobody owns. When this market turns, those are the two I want to be holding.\n\nWhich one runs first?",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#tao",
+        "#bittensor",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Kaspa leads the next bull run, and $TAO is right there with it."
+    }
+  ]
+}

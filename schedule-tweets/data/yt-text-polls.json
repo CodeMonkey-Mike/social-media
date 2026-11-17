@@ -2963,12 +2963,13 @@
       ],
       "capture_results_after_days": 7,
       "created_at": "2026-10-17T01:20:04",
-      "status": "failed",
+      "status": "posting",
       "posted_at": null,
       "post_url": null,
       "results": null,
       "results_captured_at": null,
-      "error": "locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#contenteditable-root[contenteditable=\"true\"]').first() to be visible\u001b[22m\n\u001b[2m    20 × locator resolved to hidden <div dir=\"auto\" contenteditable=\"true\" id=\"contenteditable-root\" class=\"style-scope yt-formatted-string\" aria-label=\"Post an update to your fans\"></div>\u001b[22m\n"
+      "prev_error": "locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#contenteditable-root[contenteditable=\"true\"]').first() to be visible\u001b[22m\n\u001b[2m    20 × locator resolved to hidden <div dir=\"auto\" contenteditable=\"true\" id=\"contenteditable-root\" class=\"style-scope yt-formatted-string\" aria-label=\"Post an update to your fans\"></div>\u001b[22m\n",
+      "retry_note": "reset failed->pending 2026-11-17: clean pre-post failure, retried on Mike request"
     },
     {
       "id": "yt-text-poll-2026-10-17-bear-market-mindset-where-is-your-next-dollar-going",
@@ -3193,6 +3194,90 @@
       "status": "posted",
       "posted_at": "2026-11-04T11:01:08.863Z",
       "post_url": "https://www.youtube.com/post/Ugkx2x-aqhl-o-Xn5f-SW45atLrwKBJiSgiR",
+      "results": null,
+      "results_captured_at": null
+    },
+    {
+      "id": "yt-text-poll-2026-11-09-where-do-you-buy-kas",
+      "topic": "Kaspa under its 50-week SMA: where do you buy",
+      "source_post": "yt-post-2026-11-09-kaspa-first-real-bear-market",
+      "source_transcript": "video-creation/livestream-repurpose/transcripts/stock-market LOW BPS VERTICAL/stock-market LOW BPS VERTICAL_plain.txt",
+      "question_text": "Kaspa is around 2.9 cents, about 17% under its 50-week SMA, in the first real bear market it has ever had.\n\nWhere are you buying $KAS?",
+      "hook": "Kaspa is around 2.9 cents, about 17% under its 50-week SMA.",
+      "options": [
+        "Under 2 cents",
+        "Right here, DCA",
+        "Back above the 50-week SMA",
+        "Already full bag"
+      ],
+      "capture_results_after_days": 7,
+      "created_at": "2026-11-09T09:14:22",
+      "status": "posted",
+      "posted_at": "2026-11-10T02:39:56.163Z",
+      "post_url": "https://www.youtube.com/post/UgkxKEk9XCwcXQG6hd9bj6mm09TGEiD4x5lH",
+      "results": null,
+      "results_captured_at": null
+    },
+    {
+      "id": "yt-text-poll-2026-11-09-ai-crackdown-tao",
+      "topic": "AI crackdown fears versus decentralized AI ($TAO)",
+      "source_post": null,
+      "source_transcript": "video-creation/livestream-repurpose/transcripts/stock-market LOW BPS VERTICAL/stock-market LOW BPS VERTICAL_plain.txt",
+      "question_text": "Fear of an AI crackdown knocked around $1.9 trillion off the Nasdaq-100 in one session.\n\nIf Washington clamps down on AI, what happens to decentralized AI like $TAO?",
+      "hook": "Fear of an AI crackdown knocked around $1.9 trillion off the Nasdaq-100 in one session.",
+      "options": [
+        "It surges",
+        "Nothing changes",
+        "It gets dragged down too"
+      ],
+      "capture_results_after_days": 7,
+      "created_at": "2026-11-09T09:14:22",
+      "status": "posted",
+      "posted_at": "2026-11-10T12:46:44.056Z",
+      "post_url": "https://www.youtube.com/post/Ugkx95pgopeV0EyGa5FaUH8B-yUpUPgW5lXq",
+      "results": null,
+      "results_captured_at": null
+    },
+    {
+      "id": "yt-text-poll-2026-11-15-kaspa-dollar-or-usdt",
+      "topic": "Kaspa Dollar versus bringing USDT and USDC to Kaspa",
+      "source_post": "yt-post-2026-11-15-kaspa-dollar-why-not-usdt",
+      "source_transcript": "video-creation/livestream-repurpose/transcripts/peach LOW BPS VERTICAL/peach LOW BPS VERTICAL_plain.txt",
+      "question_text": "The Kaspa Dollar whitepaper is out: a stablecoin minted against locked $KAS, priced by a miner-voted oracle, with no admin key in the design. Mainnet is targeted for September 2027.\n\nMy first reaction was: why not just bring USDT and USDC to Kaspa?\n\nWhat does Kaspa actually need?",
+      "hook": "The Kaspa Dollar whitepaper is out: a stablecoin minted against locked $KAS, priced by a miner-voted oracle, with no admin key in the design.",
+      "options": [
+        "Its own decentralized dollar, backed by KAS",
+        "USDT and USDC on Kaspa, and that's enough",
+        "Both, and let the market pick",
+        "Neither: Kaspa is money, not a DeFi chain"
+      ],
+      "capture_results_after_days": 7,
+      "created_at": "2026-11-15T22:12:47",
+      "status": "posted",
+      "posted_at": "2026-11-16T17:03:39.506Z",
+      "post_url": "https://www.youtube.com/post/UgkxdQO8rfNk-C1PxmG_s2sdboHUsiZf41Y5",
+      "results": null,
+      "results_captured_at": null,
+      "url_note": "Script hit a 30s goto timeout on the posts page AFTER the composer cleared; URL recovered from the public posts page and verified by text match."
+    },
+    {
+      "id": "yt-text-poll-2026-11-15-what-leads-the-next-run",
+      "topic": "What leads the next bull run: Kaspa, TAO, Solana or Bitcoin",
+      "source_post": null,
+      "source_transcript": "video-creation/livestream-repurpose/transcripts/peach LOW BPS VERTICAL/peach LOW BPS VERTICAL_plain.txt",
+      "question_text": "Bitcoin closed the week of November 9 below its 200-week SMA, and almost everything is on sale.\n\nI say Kaspa leads the next bull run, with $TAO right there with it.\n\nWhen this market turns, what runs first?",
+      "hook": "Bitcoin closed the week of November 9 below its 200-week SMA, and almost everything is on sale.",
+      "options": [
+        "Kaspa",
+        "TAO",
+        "Solana",
+        "Bitcoin leads, like it always does"
+      ],
+      "capture_results_after_days": 7,
+      "created_at": "2026-11-15T22:12:47",
+      "status": "posted",
+      "posted_at": "2026-11-17T11:55:33.345Z",
+      "post_url": "https://www.youtube.com/post/Ugkxi0P9kivKFH1m8hEPkdsbZ7y4lz6F4rCP",
       "results": null,
       "results_captured_at": null
     }

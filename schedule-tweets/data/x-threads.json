@@ -4790,7 +4790,7 @@
       "variation_label": "A",
       "thread_style": "contrarian-debunk",
       "created_at": "2026-07-29T13:51:56.084Z",
-      "status": "failed",
+      "status": "pending",
       "posted_at": null,
       "thread_root_url": null,
       "tweets": [
@@ -4850,7 +4850,8 @@
           "is_cta": true
         }
       ],
-      "error": "page.waitForSelector: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"tweetTextarea_5\"]') to be visible\u001b[22m\n"
+      "prev_error": "page.waitForSelector: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"tweetTextarea_5\"]') to be visible\u001b[22m\n",
+      "retry_note": "reset failed->pending 2026-11-17: clean pre-post failure, retried on Mike request"
     },
     {
       "id": "thread-2026-08-02-whatif-vs-pepe",
@@ -6173,7 +6174,7 @@
       "source_transcript": "video-creation/livestream-repurpose/transcripts/back-in-ny LOW BPS VERTICAL/back-in-ny LOW BPS VERTICAL_plain.txt",
       "variation_label": "B",
       "created_at": "2026-08-25T15:57:52",
-      "status": "failed",
+      "status": "pending",
       "posted_at": null,
       "thread_root_url": null,
       "tweets": [
@@ -6241,7 +6242,8 @@
           "views_captured_at": null
         }
       ],
-      "error": "Page.wait_for_selector: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"[data-testid=\\\"tweetTextarea_5\\\"]\")\n"
+      "prev_error": "Page.wait_for_selector: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"[data-testid=\\\"tweetTextarea_5\\\"]\")\n",
+      "retry_note": "reset failed->pending 2026-11-17: clean pre-post failure, retried on Mike request"
     },
     {
       "id": "thread-2026-08-26-kaspa-has-not-exploded-yet",
@@ -8115,7 +8117,7 @@
       "source_transcript": "video-creation/livestream-repurpose/transcripts/grapes LOW BPS VERTICAL/grapes LOW BPS VERTICAL_plain.txt",
       "variation_label": "A (numbered-breakdown, rules first)",
       "created_at": "2026-10-05T08:41:02",
-      "status": "failed",
+      "status": "pending",
       "posted_at": null,
       "thread_root_url": null,
       "tweets": [
@@ -8183,7 +8185,8 @@
           "views_captured_at": null
         }
       ],
-      "error": "Page.wait_for_selector: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"[data-testid=\\\"tweetTextarea_5\\\"]\")\n"
+      "prev_error": "Page.wait_for_selector: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"[data-testid=\\\"tweetTextarea_5\\\"]\")\n",
+      "retry_note": "reset failed->pending 2026-11-17: clean pre-post failure, retried on Mike request"
     },
     {
       "id": "thread-2026-10-05-bitcoin-best-q3-since-2017-cycle-history",
@@ -9232,6 +9235,315 @@
           "hook": null,
           "char_count": 134,
           "posted_url": "https://x.com/mikeneder/status/2117942113312862228",
+          "views": null,
+          "views_captured_at": null
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-11-09-kaspa-first-real-bear-market",
+      "topic": "Kaspa's first real bear market: born in a bull, the $100 trillion math, the DCA plan (built from YT post 1)",
+      "source_transcript": "video-creation/livestream-repurpose/transcripts/stock-market LOW BPS VERTICAL/stock-market LOW BPS VERTICAL_plain.txt",
+      "variation_label": "A (reframe, then data, then the plan)",
+      "created_at": "2026-11-09T09:14:22",
+      "status": "posted",
+      "posted_at": "2026-11-10T03:06:43.036Z",
+      "thread_root_url": "https://x.com/mikeneder/status/2119990056089739564",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "Kaspa just closed back under its 50-week SMA, and the timeline is panicking.\n\nBut there's one thing about this Kaspa bear market almost nobody is talking about...",
+          "hook": "Kaspa just closed back under its 50-week SMA, and the timeline is panicking.",
+          "char_count": 162,
+          "posted_url": "https://x.com/mikeneder/status/2119990056089739564",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 2,
+          "text": "Kaspa was born in a bull market.\n\nMainnet went live in November 2021 and $KAS stayed above its 50-week SMA straight through 2022, while Bitcoin was in a full bear market.\n\nOn my chart it only lost that line in December 2024.",
+          "hook": null,
+          "char_count": 224,
+          "posted_url": "https://x.com/mikeneder/status/2119990058761461874",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 3,
+          "text": "So this is the first real bear market $KAS has ever had.\n\nRight now it's around 2.9 cents: around 17% under the 50-week SMA and 86% under its all-time high.\n\nBitcoin's first real bear market was the best buy of its life.",
+          "hook": null,
+          "char_count": 220,
+          "posted_url": "https://x.com/mikeneder/status/2119990061576114188",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 4,
+          "text": "Now the math.\n\nIf crypto grows to the size of global stocks, that's around $100 trillion. I can't see $KAS under a $100 billion market cap in that world. That's well above $3 a coin.\n\nIt's around $810 million right now.",
+          "hook": null,
+          "char_count": 219,
+          "posted_url": "https://x.com/mikeneder/status/2119990064616997148",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 5,
+          "text": "And the chain keeps shipping.\n\nSilverscript is live: smart contract logic straight on the L1. DagKnight is next on the roadmap, aimed at taking Kaspa from 10 toward 100 blocks per second.\n\nOnly the price got cheaper.",
+          "hook": null,
+          "char_count": 216,
+          "posted_url": "https://x.com/mikeneder/status/2119990067515261232",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 6,
+          "text": "How I'm playing it: no bottom calls.\n\nGot $200? Put $100 in now, keep $100 for the next red week. If it drops, you buy cheaper. If it rips, half is already in. 💪",
+          "hook": null,
+          "char_count": 161,
+          "posted_url": "https://x.com/mikeneder/status/2119990070585577505",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 7,
+          "text": "If this changed how you see the Kaspa chart...\n\nFollow me for Kaspa and macro takes without the four-year cycle noise.\n\n😎",
+          "hook": null,
+          "char_count": 121,
+          "posted_url": "https://x.com/mikeneder/status/2119990072590184522",
+          "views": null,
+          "views_captured_at": null
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-11-09-3-trillion-day-bitcoin-holds",
+      "topic": "The S&P's record $3 trillion day versus Bitcoin: why this is not 2022 (built from YT post 2)",
+      "source_transcript": "video-creation/livestream-repurpose/transcripts/stock-market LOW BPS VERTICAL/stock-market LOW BPS VERTICAL_plain.txt",
+      "variation_label": "B (stat shock, then the macro case)",
+      "created_at": "2026-11-09T09:14:22",
+      "status": "posted",
+      "posted_at": "2026-11-10T13:15:17.041Z",
+      "thread_root_url": "https://x.com/mikeneder/status/2120143198115000614",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "The S&P 500 lost around $3 trillion in one session on November 5, the biggest one-day dollar drop in its history.\n\nBitcoin is still fighting for its 50-week SMA.\n\nHere's why I don't think this turns into 2022:",
+          "hook": "The S&P 500 lost around $3 trillion in one session on November 5, the biggest one-day dollar drop in its history.",
+          "char_count": 209,
+          "posted_url": "https://x.com/mikeneder/status/2120143198115000614",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 2,
+          "text": "The trigger wasn't a broken economy.\n\nS&P down 4.36%, Nasdaq-100 down around 5.8%, chips down around 12%, all on fear of an AI crackdown after the midterms.\n\nThat's a regulation scare, not a recession.",
+          "hook": null,
+          "char_count": 201,
+          "posted_url": "https://x.com/mikeneder/status/2120143202045026779",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 3,
+          "text": "The jobs data says the opposite of a breakdown.\n\nJob openings: 7.5M vs around 7.15M expected.\nADP: 86K vs around 67K.\nJobless claims: 189K vs 196K.\n\nMore jobs created, fewer jobs lost.",
+          "hook": null,
+          "char_count": 184,
+          "posted_url": "https://x.com/mikeneder/status/2120143204565533076",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 4,
+          "text": "The money supply is still climbing.\n\n2022 into late 2023 was the rare stretch where dollars were actually destroyed, and that's when crypto had its worst bear. Now QE is running and M2 is rising again.",
+          "hook": null,
+          "char_count": 201,
+          "posted_url": "https://x.com/mikeneder/status/2120143208898539999",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 5,
+          "text": "Here's the thing: if the S&P slides into a full 20% drawdown, Bitcoin probably doesn't hang in there.\n\nBut so far it has held up much better than people expected, and I still don't see a new low under $57K.",
+          "hook": null,
+          "char_count": 206,
+          "posted_url": "https://x.com/mikeneder/status/2120143212811866157",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 6,
+          "text": "And the four-year cycle zombies moved the goalposts again.\n\nThe bottom was supposed to be October. Now it's supposed to be a few weeks out because of the midterms.\n\nThe cycle never set the bottom. Liquidity does.",
+          "hook": null,
+          "char_count": 212,
+          "posted_url": "https://x.com/mikeneder/status/2120143215869460493",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 7,
+          "text": "If this gave you a clearer read on the selloff...\n\nFollow me for macro and crypto threads that ignore the four-year cycle echo chamber.\n\n🧠 + 😎",
+          "hook": null,
+          "char_count": 142,
+          "posted_url": "https://x.com/mikeneder/status/2120143219635958158",
+          "views": null,
+          "views_captured_at": null
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-11-15-kaspa-dollar-why-not-usdt",
+      "topic": "Kaspa Dollar: how the KAS-backed stablecoin proposal works and Mike's question, why not just USDT and USDC (built from YT post 1)",
+      "source_transcript": "video-creation/livestream-repurpose/transcripts/peach LOW BPS VERTICAL/peach LOW BPS VERTICAL_plain.txt",
+      "variation_label": "A (hook and thesis first, then the mechanics, then the question)",
+      "created_at": "2026-11-15T22:12:47",
+      "status": "posted",
+      "posted_at": "2026-11-16T17:31:15.715Z",
+      "thread_root_url": "https://x.com/mikeneder/status/2122381958743539893",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "Kaspa is getting its own dollar.\n\nNot USDT. Not USDC. A stablecoin backed only by $KAS, priced by the miners, with no admin key in the design.\n\nHere's how it works, and the one question I still have:",
+          "hook": "Kaspa is getting its own dollar.",
+          "char_count": 199,
+          "posted_url": "https://x.com/mikeneder/status/2122381958743539893",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 2,
+          "text": "The Kaspa Dollar whitepaper landed in early November, led by a Kaspa core developer.\n\nYou lock $KAS in a vault and mint dollars against it. KAS is the only collateral, and every dollar is backed by more than a dollar of it.",
+          "hook": null,
+          "char_count": 223,
+          "posted_url": "https://x.com/mikeneder/status/2122381961347965373",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 3,
+          "text": "The part I find really interesting is the oracle.\n\nNo outside price feed. Kaspa miners vote the KAS price right inside the blocks they mine, and the protocol takes the median.\n\nThe same proof of work that secures the chain prices the dollar.",
+          "hook": null,
+          "char_count": 241,
+          "posted_url": "https://x.com/mikeneder/status/2122381964279972234",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 4,
+          "text": "No admin key. No developer fee.\n\nAnd it only became possible this year: covenants went live on Kaspa with the Toccata hard fork on June 30.",
+          "hook": null,
+          "char_count": 139,
+          "posted_url": "https://x.com/mikeneder/status/2122381967610335315",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 5,
+          "text": "It's early. This is a working draft with audits still ahead.\n\nTestnet is planned for May 2027 and mainnet is targeted for September 2027.\n\nAlso: $KDOLLAR is a community meme coin raising funds for the project. It is not the stablecoin.",
+          "hook": null,
+          "char_count": 235,
+          "posted_url": "https://x.com/mikeneder/status/2122381969967231455",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 6,
+          "text": "My first reaction: why not just bring USDT and USDC to Kaspa?\n\nThe answer I keep hearing: those have an issuer who can freeze them. This one doesn't.\n\nFair. But when you deviate from what the market already uses, you need a damn good reason.\n\nWhat am I missing?",
+          "hook": null,
+          "char_count": 261,
+          "posted_url": "https://x.com/mikeneder/status/2122381973197140098",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 7,
+          "text": "If this helped you make sense of Kaspa Dollar...\n\nFollow me for Kaspa takes that ask the hard questions out loud.\n\n🧠 + 😎",
+          "hook": null,
+          "char_count": 120,
+          "posted_url": "https://x.com/mikeneder/status/2122381975625343404",
+          "views": null,
+          "views_captured_at": null
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-11-15-midterms-or-the-ipo-both",
+      "topic": "Bitcoin's 12.6% week and the close under its 200-week SMA: the midterms, the Anthropic IPO, and why it's both (built from YT post 2)",
+      "source_transcript": "video-creation/livestream-repurpose/transcripts/peach LOW BPS VERTICAL/peach LOW BPS VERTICAL_plain.txt",
+      "variation_label": "B (stat shock, two theories, the precedent, what the economy needs)",
+      "created_at": "2026-11-15T22:12:47",
+      "status": "posted",
+      "posted_at": "2026-11-17T12:26:09.697Z",
+      "thread_root_url": "https://x.com/mikeneder/status/2122667562215539141",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "Bitcoin lost 12.6% in the week of November 9 and closed below its 200-week SMA.\n\nHalf the timeline blames the midterms. The other half blames the Anthropic IPO.\n\nMy revolutionary thought: what if it's just both?",
+          "hook": "Bitcoin lost 12.6% in the week of November 9 and closed below its 200-week SMA.",
+          "char_count": 211,
+          "posted_url": "https://x.com/mikeneder/status/2122667562215539141",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 2,
+          "text": "The numbers first.\n\n$BTC opened that week near $74.8K and closed near $65.3K, with a low under $62K.\n\nThe 200-week SMA sits around $68K. That's the fourth weekly close under that line this year.",
+          "hook": null,
+          "char_count": 194,
+          "posted_url": "https://x.com/mikeneder/status/2122667564689989857",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 3,
+          "text": "Theory one: the midterms.\n\nOn November 5 the S&P 500 had its biggest one-day dollar drop ever, on fear of an AI crackdown after the elections. Risk came off everywhere.\n\nThat's one cause for a dump.",
+          "hook": null,
+          "char_count": 198,
+          "posted_url": "https://x.com/mikeneder/status/2122667566975881413",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 4,
+          "text": "Theory two: the IPO.\n\nAnthropic is slated to list on Nasdaq on November 19, selling 825 million shares at $70 to $78. That's up to around $64 billion that has to come from somewhere.\n\nThe theory is that some of it comes out of Bitcoin.",
+          "hook": null,
+          "char_count": 235,
+          "posted_url": "https://x.com/mikeneder/status/2122667569257525455",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 5,
+          "text": "There's a precedent.\n\nSpaceX listed on June 12, the largest IPO ever. Bitcoin printed its low of the year near $57.7K less than three weeks later.\n\nAnd some people sell early just because they know others will sell to buy the IPO.",
+          "hook": null,
+          "char_count": 230,
+          "posted_url": "https://x.com/mikeneder/status/2122667571908395206",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 6,
+          "text": "What's not broken: the economy.\n\nThe ISM PMI came in at 55.5 for October, the tenth straight month of expansion.\n\nWe don't need QE. We need rates to come down, loans to flow, businesses to hire, and people with paychecks buying crypto.",
+          "hook": null,
+          "char_count": 235,
+          "posted_url": "https://x.com/mikeneder/status/2122667575096316057",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 7,
+          "text": "So I'm not expecting a giant green candle right away. A few more weeks of this wouldn't surprise me.\n\nIf $BTC holds above that summer low, there's no new bottom. I've been buying plays at really low prices, and I don't touch leverage.",
+          "hook": null,
+          "char_count": 234,
+          "posted_url": "https://x.com/mikeneder/status/2122667578124591592",
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 8,
+          "text": "If this gave you a clearer read on the dump...\n\nFollow me for macro and crypto threads that ignore the four-year cycle echo chamber.\n\n🧠 + 😎",
+          "hook": null,
+          "char_count": 139,
+          "posted_url": "https://x.com/mikeneder/status/2122667580414464118",
           "views": null,
           "views_captured_at": null
         }

@@ -1537,7 +1537,7 @@
     {
       "batch": "kaspa-cocktails",
       "track": "livestream-repurpose",
-      "status": "active",
+      "status": "completed",
       "date": "2026-11-02",
       "livestream_title": "kaspa-cocktails LOW BPS VERTICAL",
       "title": "Kaspa's Chart Looks Just Like Early Bitcoin",
@@ -1559,6 +1559,59 @@
       "briefs": {
         "lane3": "Make this batch Kaspa-centric: there is a lot of Kaspa content in this stream, so the tweets, threads, polls, quizzes and YT/IG posts should lean on the Kaspa topics first (KCC20 / Nacho migration deadline January 31, Kaspa chart vs early Bitcoin, Kaspa's first bear market vs Bitcoin's 50 week MA, the 3.33 dollar target, GHOSTDAG / blockDAG, Bitcoin maxis rotating to Kaspa, the Kaspa conference cruise).",
         "clips": "Make this batch Kaspa-centric: there is a lot of Kaspa content in this stream (KCC20 / Nacho migration, Kaspa chart vs early Bitcoin, Kaspa's first bear market and the 50 week MA, the 3.33 dollar target and 100 trillion crypto market cap, GHOSTDAG / blockDAG lanes, Bitcoin maxis moving to Kaspa, the Kaspa conference cruise), so favor Kaspa clips over everything else. Prefer longer clips, but if the content cannot support a much longer clip, make the clips shorter instead of padding them."
+      }
+    },
+    {
+      "batch": "stock-market",
+      "track": "livestream-repurpose",
+      "status": "completed",
+      "date": "2026-11-09",
+      "livestream_title": "stock-market LOW BPS VERTICAL",
+      "title": null,
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/stock-market/stock-market LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/stock-market LOW BPS VERTICAL/stock-market LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/stock-market LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/stock-market/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/stock-market",
+        "video-creation/shorts/stock-market"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done",
+        "longform": "skip"
+      },
+      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-11-09.",
+      "briefs": {
+        "lane3": "Double the X tweets: 8 multi-line X tweets (3 to 4 lines) and 4 single-line X tweets instead of the default 4 + 2. Make MOST of them (at least 2 of every 3) about Kaspa. Every Kaspa tweet still gets its IG companion per the default rule. Everything else at defaults.",
+        "clips": "Keep every clip UNDER 50 seconds (hard cap, after tighten)."
+      }
+    },
+    {
+      "batch": "peach",
+      "track": "livestream-repurpose",
+      "status": "active",
+      "date": "2026-11-15",
+      "livestream_title": "peach LOW BPS VERTICAL",
+      "title": null,
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/peach/peach LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/peach LOW BPS VERTICAL/peach LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/peach LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/peach/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/peach",
+        "video-creation/shorts/peach"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done",
+        "longform": "skip"
+      },
+      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-11-15.",
+      "briefs": {
+        "clips": "Every clip must be UNDER 70 seconds final length. Mike: limit the clips to under 70 seconds."
       }
     }
   ]
