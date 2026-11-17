@@ -39,6 +39,10 @@ import { LeftBehind, DUR as LB_DUR, FPS as LB_FPS } from './LeftBehind';
 import { LeftBehindShort, DUR as LBS_DUR, FPS as LBS_FPS } from './LeftBehindShort';
 // longform-edited quant (2026-11-05): What Is Quant?, 16:9, screen-share face mode (comp-builder).
 import { Quant, DUR as QNT_DUR, FPS as QNT_FPS } from './Quant';
+// longform-edited canton (2026-11-10): What Is Canton?, 16:9, MIXED face mode (gated faces + screen shares), comp-builder.
+import { Canton, DUR as CANTON_DUR, FPS as CANTON_FPS } from './Canton';
+// longform-edited canton SHORT (16:9-sourced mode, comp-builder SHORT mode 2026-11-10): 1080x1920 @30, 3 span intermediates (26.6 s) + 3.4 s outro = 900; public dir _previews/short/work
+import { CantonShort, DUR as CANTONS_DUR, FPS as CANTONS_FPS } from './CantonShort';
 // longform-edited quant SHORT (comp-builder SHORT mode 2026-11-06): 1080x1920 @30, 6 span intermediates + 3.467 s outro; public dir _previews/short/work.
 import { QuantShort, DUR as QNTS_DUR, FPS as QNTS_FPS } from './QuantShort';
 import { EveryJob, DUR as EJ_DUR, FPS as EJ_FPS } from './EveryJob';
@@ -65,6 +69,41 @@ import { GrowthVsProduct, DUR as GVP_DUR, FPS as GVP_FPS } from './GrowthVsProdu
 import { GrowthScaleUp, DUR as GSU_DUR, FPS as GSU_FPS } from './GrowthScaleUp';
 import { LetsGetRich, DUR as LGR_DUR, FPS as LGR_FPS } from './LetsGetRich';
 import { LetsGetRichShort, DUR as LGRS_DUR, FPS as LGRS_FPS } from './LetsGetRichShort';
+// AI vs ML (longform-edited, comp-builder 2026-11-11): AI Engineer or ML Engineer?, 16:9, DUR = the spine + the 2.0 s END HOLD.
+import { AIVsML, DUR as AIVSML_DUR, FPS as AIVSML_FPS } from './AIVsML';
+import { AIVsMLVertical, DUR as AIVSMLV_DUR, FPS as AIVSMLV_FPS } from './AIVsMLVertical';
+// longform-edited AI vs ML SHORT (comp-builder SHORT mode 2026-11-11): 1080x1920 @30, 3 span intermediates + 3.200 s outro; public dir _previews/short/work.
+import { AIVsMLShort, DUR as AIVSMLS_DUR, FPS as AIVSMLS_FPS } from './AIVsMLShort';
+// longform-edited AI destroying lives (2026-11-11): the paused spine 603.9 s (17 clip inserts) + the 3.0 s end-card hold, comp-builder.
+import { AIDestroyingLives, DUR as AIDL_DUR, FPS as AIDL_FPS } from './AIDestroyingLives';
+import { AIDestroyingLivesVertical, DUR as AIDLV_DUR, FPS as AIDLV_FPS } from './AIDestroyingLivesVertical';
+// longform-edited AI destroying lives SHORT (comp-builder SHORT mode 2026-11-11): 1080x1920 @30, 3 span intermediates off the VERTICAL + 3.433 s outro; public dir _previews/short/work.
+import { AIDestroyingLivesShort, DUR as AIDLS_DUR, FPS as AIDLS_FPS } from './AIDestroyingLivesShort';
+// longform-edited pieverse (2026-11-14): What Is Pieverse?, 16:9, mixed face mode, 4 silent title cards, no captions / music / SFX (comp-builder).
+import { Pieverse, DUR as PIEV_DUR, FPS as PIEV_FPS } from './Pieverse';
+// longform-edited pieverse SHORT (2026-11-14): 30.3 s 1080x1920 off the 16:9-sourced span intermediates, no audio (comp-builder, short lane).
+import { PieverseShort, DUR as PIEVS_DUR, FPS as PIEVS_FPS } from './PieverseShort';
+// longform-edited future-of-software-engineers (comp-builder 2026-11-14): 16:9 draft build, DUR = the paused spine (14322 f).
+import { FutureOfSoftwareEngineers, DUR as FOSE_DUR, FPS as FOSE_FPS } from './FutureOfSoftwareEngineers';
+import { FutureOfSoftwareEngineersVertical, DUR as FOSEV_DUR, FPS as FOSEV_FPS } from './FutureOfSoftwareEngineersVertical';
+// future-of-software-engineers SHORT (comp-builder SHORT mode 2026-11-15): 1080x1920 @30, 4 span intermediates + 3.667 s outro; public dir _previews/short/work.
+import { FutureOfSoftwareEngineersShort, DUR as FOSES_DUR, FPS as FOSES_FPS } from './FutureOfSoftwareEngineersShort';
+// clip-evals SHORT (longform-presentation standard, comp-builder SHORT mode 2026-11-17): 1080x1920 @30, 3 span intermediates + 3.267 s outro; public dir _previews/short/work.
+import { ClipEvalsShort, DUR as CES_DUR, FPS as CES_FPS } from './ClipEvalsShort';
+// batch peach / clip #2 calls-still-up-after-the-dump FULL (livestream short, 2026-11-16). Flat-namespace check: no existing PeachCallsStillUp / PCH2_ / broll-pch2 / thumb-pch2 / ovl-pch2.
+import { PeachCallsStillUp, PCH2_FPS, PCH2_DURATION } from './PeachCallsStillUp';
+// batch peach / clip #3 kaspa-things-are-gonna-pop FULL (livestream short, 2026-11-16). Flat-namespace check: no existing PeachKaspaThingsPop / PCH3_.
+import { PeachKaspaThingsPop, PCH3_FPS, PCH3_DURATION } from './PeachKaspaThingsPop';
+// batch peach / clip #1 pengu-flips-pepe FULL (livestream short, 2026-11-16). Flat-namespace check: no existing PeachPenguFlipsPepe / PCH1_.
+import { PeachPenguFlipsPepe, PCH1_FPS, PCH1_DURATION } from './PeachPenguFlipsPepe';
+// batch peach / clip #4 jct-6x-back-at-its-low FULL (livestream short, 2026-11-16). Flat-namespace check: no existing PeachJct6xLow / PCH4_ / broll-pch4 / thumb-pch4 / ovl-pch4.
+import { PeachJct6xLow, PCH4_FPS, PCH4_DURATION } from './PeachJct6xLow';
+// batch peach / clip #5 dumping-and-im-buying FULL (livestream short, 2026-11-16). Flat-namespace check: no existing PeachDumpingImBuying / PCH5_ / broll-pch5 / thumb-pch5.
+import { PeachDumpingImBuying, PCH5_FPS, PCH5_DURATION } from './PeachDumpingImBuying';
+// batch peach / clip #7 kaspa-things-are-gonna-pop-impact IMPACT (livestream short, 2026-11-16). Flat-namespace check: no existing PeachKaspaPopImpact / PCH7_ / broll-pch7 / thumb-pch7 / ovl-broll-pch7.
+import { PeachKaspaPopImpact, PCH7_FPS, PCH7_DURATION } from './PeachKaspaPopImpact';
+// batch peach / clip #6 pengu-flips-pepe-impact IMPACT (livestream short, 2026-11-16). Flat-namespace check: no existing PeachPenguImpact / PCH6_ / broll-pch6 / thumb-pch6.
+import { PeachPenguImpact, PCH6_FPS, PCH6_DURATION } from './PeachPenguImpact';
 import { GrowthScaleUpVertical, DUR as GSUV_DUR, FPS as GSUV_FPS } from './GrowthScaleUpVertical';
 import { GrowthScaleUpShort, DUR as GSUS_DUR, FPS as GSUS_FPS } from './GrowthScaleUpShort';
 // longform-edited growth-vs-product SHORT (comp-builder SHORT mode 2026-10-23): 1080x1920 @30, 5 span intermediates + 3 s outro; public dir _previews/short/work.
@@ -77,27 +116,6 @@ import { Kcc20Short, DUR as KCC20S_DUR, FPS as KCC20S_FPS } from './Kcc20Short';
 import { Only18MonthsLeftShort, DUR as O18S_DUR, FPS as O18S_FPS } from './Only18MonthsLeftShort';
 import { ResetShort, DUR as RESETS_DUR, FPS as RESETS_FPS } from './ResetShort';
 
-// livestream-repurpose best-time clip 2 ton-billion-users-at-1-26 (2026-10-27): 1080x1920 @30, 1122 f; public dir shorts/best-time/render-assets.
-import { BestTimeTonBillionUsers, BT2_FPS, BT2_DURATION_FRAMES } from './BestTimeTonBillionUsers';
-import { BestTimeLastChanceAssets, BT3_FPS, BT3_DURATION_FRAMES } from './BestTimeLastChanceAssets';
-// 30x-tao clip 6 (livestream short, 2026-10-28)
-import { ThirtyXTaoArenaImpact, XT6_FPS, XT6_DURATION_FRAMES } from './ThirtyXTaoArenaImpact';
-// 30x-tao clip 4 kaspa-tokens-are-official-kcc20-live (livestream short, 2026-10-28): 1080x1920 @30, 607 f; public dir shorts/30x-tao/render-assets.
-import { ThirtyXTaoKaspaTokensOfficial, XT4_FPS, XT4_DURATION_FRAMES } from './ThirtyXTaoKaspaTokensOfficial';
-import { ThirtyXTaoHundredDollars350x, XT3_FPS, XT3_DURATION_FRAMES } from './ThirtyXTaoHundredDollars350x';
-// 30x-tao clip 7 get-into-assets-now-last-chance-impact (livestream short, 2026-10-28): 1080x1920 @30, 681 f; public dir shorts/30x-tao/render-assets.
-import { ThirtyXTaoLastChanceImpact, XT7_FPS, XT7_DURATION_FRAMES } from './ThirtyXTaoLastChanceImpact';
-import { ThirtyXTaoLastChanceFull, XT2_FPS, XT2_DURATION_FRAMES } from './ThirtyXTaoLastChanceFull';
-// 30x-tao clip 5 no-2029-top-new-ath-every-year (livestream short, 2026-10-28): 1080x1920 @30, 927 f; public dir shorts/30x-tao/render-assets.
-import { ThirtyXTaoNo2029Top, XT5_FPS, XT5_DURATION_FRAMES } from './ThirtyXTaoNo2029Top';
-// kaspa-cocktails clip 1 kaspa-3-dollars-is-bearish (livestream short, 2026-11-02): 1080x1920 @30, 1875 f; public dir shorts/kaspa-cocktails/render-assets.
-import { KaspaCocktailsKaspa3DollarsBearish, KC1_FPS, KC1_DURATION_FRAMES } from './KaspaCocktailsKaspa3DollarsBearish';
-// kaspa-cocktails clip 2 bitcoin-maxis-will-move-to-kaspa (livestream short, 2026-11-02): 1080x1920 @30, 1358 f; public dir shorts/kaspa-cocktails/render-assets.
-import { KaspaCocktailsBitcoinMaxisToKaspa, KC2_FPS, KC2_DURATION_FRAMES } from './KaspaCocktailsBitcoinMaxisToKaspa';
-import { KaspaCocktailsKaspaFirstBearMarket, KC3_FPS, KC3_DURATION_FRAMES } from './KaspaCocktailsKaspaFirstBearMarket';
-import { KaspaCocktailsKcc20NachoMigration, KC4_FPS, KC4_DURATION_FRAMES } from './KaspaCocktailsKcc20NachoMigration';
-import { KaspaCocktailsKaspa3DollarsBearishImpact, KC6_FPS, KC6_DURATION_FRAMES } from './KaspaCocktailsKaspa3DollarsBearishImpact';
-import { KaspaCocktailsBitcoinMaxisImpact, KC7_FPS, KC7_DURATION_FRAMES } from './KaspaCocktailsBitcoinMaxisImpact';
 // whiteboard track (2026-10-30): the first 15 s demo, hand-drawn vocabulary through the paper-pastel pen; 1920x1080 @30, no audio; public dir ../whiteboard/demo/pub
 import { WhiteboardDemo, DUR as WBD_DUR, FPS as WBD_FPS } from './WhiteboardDemo';
 // whiteboard test 2 (2026-10-30): the beats of 0:15-0:38 of Shapiro's horse video re-drawn in our vocabulary + pen; 23.5 s, no audio
@@ -144,6 +162,14 @@ import { QuantWB8, DUR as QWB8_DUR, FPS as QWB8_FPS } from './whiteboard/beats/Q
 import { QuantWB10, DUR as QWB10_DUR, FPS as QWB10_FPS } from './whiteboard/beats/QuantWB10';
 // whiteboard BEAT (2026-11-05): quant WB11 (longform-edited, the full frame 1920x1080 @30, 772 f, paper-quant, no audio): my read, the islands connected through the layer
 import { QuantWB11, DUR as QWB11_DUR, FPS as QWB11_FPS } from './whiteboard/beats/QuantWB11';
+// whiteboard BEAT (2026-11-10): canton WB1 (longform-edited, the full frame 1920x1080 @30, 476 f, neon-canton, no audio): two books, two systems, the gap is the risk
+import { CantonWB1, DUR as CWB1_DUR, FPS as CWB1_FPS } from './whiteboard/beats/CantonWB1';
+// whiteboard BEAT (2026-11-10): canton WB2 (longform-edited, the full frame 1920x1080 @30, 581 f, neon-canton, no audio): the synchronizer hub, both legs settle together or not at all
+import { CantonWB2, DUR as CWB2_DUR, FPS as CWB2_FPS } from './whiteboard/beats/CantonWB2';
+// whiteboard BEAT (2026-11-10): canton WB3 (longform-edited, the full frame 1920x1080 @30, 452 f, neon-canton, no audio): privacy, three views of one trade
+import { CantonWB3, DUR as CWB3_DUR, FPS as CWB3_FPS } from './whiteboard/beats/CantonWB3';
+// whiteboard BEAT (2026-11-10): canton WB4 (longform-edited, the full frame 1920x1080 @30, 657 f, neon-canton, no audio): the fee is burned, three roles mint, the open-ended minting timeline
+import { CantonWB4, DUR as CWB4_DUR, FPS as CWB4_FPS } from './whiteboard/beats/CantonWB4';
 import { Reset, DUR as RESET_DUR, FPS as RESET_FPS } from './Reset';
 
 export const RemotionRoot: React.FC = () => {
@@ -298,20 +324,6 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="Only18MonthsLeft" component={Only18MonthsLeft} durationInFrames={O18_DUR} fps={O18_FPS} width={1920} height={1080} />
       <Composition id="LeftBehind" component={LeftBehind} durationInFrames={LB_DUR} fps={LB_FPS} width={1920} height={1080} />
       <Composition id="LeftBehindShort" component={LeftBehindShort} durationInFrames={LBS_DUR} fps={LBS_FPS} width={1080} height={1920} />
-      <Composition id="BestTimeTonBillionUsers" component={BestTimeTonBillionUsers} durationInFrames={BT2_DURATION_FRAMES} fps={BT2_FPS} width={1080} height={1920} />
-      <Composition id="BestTimeLastChanceAssets" component={BestTimeLastChanceAssets} durationInFrames={BT3_DURATION_FRAMES} fps={BT3_FPS} width={1080} height={1920} />
-      <Composition id="ThirtyXTaoArenaImpact" component={ThirtyXTaoArenaImpact} durationInFrames={XT6_DURATION_FRAMES} fps={XT6_FPS} width={1080} height={1920} />
-      <Composition id="ThirtyXTaoHundredDollars350x" component={ThirtyXTaoHundredDollars350x} durationInFrames={XT3_DURATION_FRAMES} fps={XT3_FPS} width={1080} height={1920} />
-      <Composition id="ThirtyXTaoKaspaTokensOfficial" component={ThirtyXTaoKaspaTokensOfficial} durationInFrames={XT4_DURATION_FRAMES} fps={XT4_FPS} width={1080} height={1920} />
-      <Composition id="ThirtyXTaoLastChanceImpact" component={ThirtyXTaoLastChanceImpact} durationInFrames={XT7_DURATION_FRAMES} fps={XT7_FPS} width={1080} height={1920} />
-      <Composition id="ThirtyXTaoLastChanceFull" component={ThirtyXTaoLastChanceFull} durationInFrames={XT2_DURATION_FRAMES} fps={XT2_FPS} width={1080} height={1920} />
-      <Composition id="ThirtyXTaoNo2029Top" component={ThirtyXTaoNo2029Top} durationInFrames={XT5_DURATION_FRAMES} fps={XT5_FPS} width={1080} height={1920} />
-      <Composition id="KaspaCocktailsKaspa3DollarsBearish" component={KaspaCocktailsKaspa3DollarsBearish} durationInFrames={KC1_DURATION_FRAMES} fps={KC1_FPS} width={1080} height={1920} />
-      <Composition id="KaspaCocktailsBitcoinMaxisToKaspa" component={KaspaCocktailsBitcoinMaxisToKaspa} durationInFrames={KC2_DURATION_FRAMES} fps={KC2_FPS} width={1080} height={1920} />
-      <Composition id="KaspaCocktailsKaspaFirstBearMarket" component={KaspaCocktailsKaspaFirstBearMarket} durationInFrames={KC3_DURATION_FRAMES} fps={KC3_FPS} width={1080} height={1920} />
-      <Composition id="KaspaCocktailsKcc20NachoMigration" component={KaspaCocktailsKcc20NachoMigration} durationInFrames={KC4_DURATION_FRAMES} fps={KC4_FPS} width={1080} height={1920} />
-      <Composition id="KaspaCocktailsKaspa3DollarsBearishImpact" component={KaspaCocktailsKaspa3DollarsBearishImpact} durationInFrames={KC6_DURATION_FRAMES} fps={KC6_FPS} width={1080} height={1920} />
-      <Composition id="KaspaCocktailsBitcoinMaxisImpact" component={KaspaCocktailsBitcoinMaxisImpact} durationInFrames={KC7_DURATION_FRAMES} fps={KC7_FPS} width={1080} height={1920} />
       <Composition id="WhiteboardDemo" component={WhiteboardDemo} durationInFrames={WBD_DUR} fps={WBD_FPS} width={1920} height={1080} />
       <Composition id="WhiteboardHorseTest" component={WhiteboardHorseTest} durationInFrames={WBH_DUR} fps={WBH_FPS} width={1920} height={1080} />
       {/* whiteboard demo in the neon-ink pen (Mike, 2026-10-31, for the Binance video) */}
@@ -354,13 +366,51 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="QuantWB10" component={QuantWB10} durationInFrames={QWB10_DUR} fps={QWB10_FPS} width={1920} height={1080} />
       {/* whiteboard beat: quant WB11 (2026-11-05), the full frame 1920x1080, 772 f, paper-quant */}
       <Composition id="QuantWB11" component={QuantWB11} durationInFrames={QWB11_DUR} fps={QWB11_FPS} width={1920} height={1080} />
+      {/* whiteboard beat: canton WB1 (2026-11-10), the full frame 1920x1080, 476 f, neon-canton */}
+      <Composition id="CantonWB1" component={CantonWB1} durationInFrames={CWB1_DUR} fps={CWB1_FPS} width={1920} height={1080} />
+      <Composition id="CantonWB2" component={CantonWB2} durationInFrames={CWB2_DUR} fps={CWB2_FPS} width={1920} height={1080} />
+      <Composition id="CantonWB3" component={CantonWB3} durationInFrames={CWB3_DUR} fps={CWB3_FPS} width={1920} height={1080} />
+      <Composition id="CantonWB4" component={CantonWB4} durationInFrames={CWB4_DUR} fps={CWB4_FPS} width={1920} height={1080} />
       {/* quant (longform-edited, 2026-11-05): the paused spine 581.7 s, 5 cards + CLIP-1, screen-share face mode, light + quant accent */}
       <Composition id="Quant" component={Quant} durationInFrames={QNT_DUR} fps={QNT_FPS} width={1920} height={1080} />
+      {/* canton (longform-edited, 2026-11-10): the paused spine 305.6 s (9168 frames), 3 cards + CLIP-2 + CLIP-3, mixed face mode, dark + canton accent */}
+      <Composition id="Canton" component={Canton} durationInFrames={CANTON_DUR} fps={CANTON_FPS} width={1920} height={1080} />
+      {/* longform-edited canton SHORT (16:9-sourced mode): 1080x1920 @30, DUR = round((26.6 s spans + 3.4 s outro) x 30) = 900; public dir = _previews/short/work */}
+      <Composition id="CantonShort" component={CantonShort} durationInFrames={CANTONS_DUR} fps={CANTONS_FPS} width={1080} height={1920} />
       {/* longform-edited quant SHORT (16:9-sourced mode): 1080x1920 @30, DUR = round((26.533 s spans + 3.467 s outro) x 30) = 900; public dir = _previews/short/work */}
       <Composition id="QuantShort" component={QuantShort} durationInFrames={QNTS_DUR} fps={QNTS_FPS} width={1080} height={1920} />
       {/* lets-get-rich (longform-edited, 2026-11-01): the paused spine 315.2 s, 4 clip inserts, kinetic-text-2023 */}
       <Composition id="LetsGetRich" component={LetsGetRich} durationInFrames={LGR_DUR} fps={LGR_FPS} width={1920} height={1080} />
       <Composition id="LetsGetRichShort" component={LetsGetRichShort} durationInFrames={LGRS_DUR} fps={LGRS_FPS} width={1080} height={1920} />
+      {/* AI vs ML (longform-edited, 2026-11-11): the final spine 145.2 s (no card pause, no insert) + the 2.0 s END HOLD = 147.0 s, kinetic-text-2023 */}
+      <Composition id="AIVsML" component={AIVsML} durationInFrames={AIVSML_DUR} fps={AIVSML_FPS} width={1920} height={1080} />
+      <Composition id="AIVsMLVertical" component={AIVsMLVertical} durationInFrames={AIVSMLV_DUR} fps={AIVSMLV_FPS} width={1080} height={1920} />
+      <Composition id="AIVsMLShort" component={AIVsMLShort} durationInFrames={AIVSMLS_DUR} fps={AIVSMLS_FPS} width={1080} height={1920} />
+      {/* AI destroying lives (longform-edited, 2026-11-11): paused spine 18118 f + 89 f end-card hold = 18207 f, 17 clip inserts, elegant-promo-2022 */}
+      <Composition id="AIDestroyingLives" component={AIDestroyingLives} durationInFrames={AIDL_DUR} fps={AIDL_FPS} width={1920} height={1080} />
+      <Composition id="AIDestroyingLivesVertical" component={AIDestroyingLivesVertical} durationInFrames={AIDLV_DUR} fps={AIDLV_FPS} width={1080} height={1920} />
+      <Composition id="AIDestroyingLivesShort" component={AIDestroyingLivesShort} durationInFrames={AIDLS_DUR} fps={AIDLS_FPS} width={1080} height={1920} />
+      {/* pieverse (longform-edited, 2026-11-14): the paused spine 379.267 s (11378 f), 4 x 1.5 s card pauses, mixed face mode, dark house look */}
+      <Composition id="Pieverse" component={Pieverse} durationInFrames={PIEV_DUR} fps={PIEV_FPS} width={1920} height={1080} />
+      <Composition id="PieverseShort" component={PieverseShort} durationInFrames={PIEVS_DUR} fps={PIEVS_FPS} width={1080} height={1920} />
+      {/* future-of-software-engineers (longform-edited, 2026-11-14, AI Engineering Simplified): the paused spine 477.381 s = 14322 f
+          (no card pause, no insert), gated face, captions OFF, comp-builder */}
+      <Composition id="FutureOfSoftwareEngineers" component={FutureOfSoftwareEngineers} durationInFrames={FOSE_DUR} fps={FOSE_FPS} width={1920} height={1080} />
+      <Composition id="FutureOfSoftwareEngineersVertical" component={FutureOfSoftwareEngineersVertical} durationInFrames={FOSEV_DUR} fps={FOSEV_FPS} width={1080} height={1920} />
+      <Composition id="FutureOfSoftwareEngineersShort" component={FutureOfSoftwareEngineersShort} durationInFrames={FOSES_DUR} fps={FOSES_FPS} width={1080} height={1920} />
+      {/* clip-evals SHORT (longform-presentation standard, AI Engineering Simplified, 2026-11-17): 802 span frames + 98 outro = 900 f */}
+      <Composition id="ClipEvalsShort" component={ClipEvalsShort} durationInFrames={CES_DUR} fps={CES_FPS} width={1080} height={1920} />
+      {/* batch peach / clip #2 calls-still-up-after-the-dump FULL: 1080x1920 @30, 1180 f = 39.333 s; public dir shorts/peach/render-assets */}
+      <Composition id="PeachCallsStillUp" component={PeachCallsStillUp} durationInFrames={PCH2_DURATION} fps={PCH2_FPS} width={1080} height={1920} />
+      {/* batch peach / clip #1 pengu-flips-pepe FULL: 1080x1920 @30, 1059 f = 35.300 s; public dir shorts/peach/render-assets */}
+      <Composition id="PeachKaspaThingsPop" component={PeachKaspaThingsPop} durationInFrames={PCH3_DURATION} fps={PCH3_FPS} width={1080} height={1920} />
+      <Composition id="PeachKaspaPopImpact" component={PeachKaspaPopImpact} durationInFrames={PCH7_DURATION} fps={PCH7_FPS} width={1080} height={1920} />
+      <Composition id="PeachPenguFlipsPepe" component={PeachPenguFlipsPepe} durationInFrames={PCH1_DURATION} fps={PCH1_FPS} width={1080} height={1920} />
+      {/* batch peach / clip #4 jct-6x-back-at-its-low FULL: 1080x1920 @30, 817 f = 27.233 s; public dir shorts/peach/render-assets */}
+      <Composition id="PeachJct6xLow" component={PeachJct6xLow} durationInFrames={PCH4_DURATION} fps={PCH4_FPS} width={1080} height={1920} />
+      <Composition id="PeachDumpingImBuying" component={PeachDumpingImBuying} durationInFrames={PCH5_DURATION} fps={PCH5_FPS} width={1080} height={1920} />
+      {/* batch peach / clip #6 pengu-flips-pepe-impact IMPACT: 1080x1920 @30, 457 f = 15.233 s; public dir shorts/peach/render-assets */}
+      <Composition id="PeachPenguImpact" component={PeachPenguImpact} durationInFrames={PCH6_DURATION} fps={PCH6_FPS} width={1080} height={1920} />
     </>
   );
 };

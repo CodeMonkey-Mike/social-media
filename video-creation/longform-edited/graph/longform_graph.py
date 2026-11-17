@@ -189,6 +189,24 @@ The graph also verifies the file from disk and halts if it is missing its sectio
 
 def _face_mode_prompt(proj: Path) -> str:
     """The per-video FACE MODE clause for the screenplay strategist (GRAPH-PROGRESS.json settings.face_mode)."""
+    if C.face_mode(proj) == "mixed":
+        return ("FACE MODE = MIXED (Mike's per-video ruling, 2026-11-09; GRAPH-PROGRESS.json settings.face_mode): this video has TWO "
+                "kinds of on-screen beat and the screenplay tags them apart. (1) \U0001F464 `[FACE]` = the NORMAL gated face scene, "
+                "Mike full-screen on camera, exactly as in every longform-edited video (Convention 3: ONE sentence, a tight pair "
+                "allowed; captions follow the caption scope). (2) \U0001F5A5️ `[SCREENSHARE]` = a SCREEN-SHARE face scene: "
+                "Mike sharing his screen, his webcam bottom-right, the CTA box top-right, and the BODY of the shared screen (the "
+                "deck area, left of the webcam column) shows content WE put there: a deck card, a system-design chart, an animated "
+                "chart or a whiteboard beat, cued to his words. EVERY `[SCREENSHARE]` beat carries a \U0001F3AC `[SHOW]` line "
+                "right next to it starting `BODY:` + the content (e.g. `BODY: card ...`, `BODY: chart C2 ...`, `BODY: whiteboard "
+                "WBn ...`); the lint FAILS one without it. A screen-share beat has the SAME length as a face beat (one sentence, a "
+                "tight pair allowed; Mike 2026-11-04) and the next spoken line is an explicit [COVER]. A locked line is written "
+                "\U0001F512 `[SAY-EXACT]` then its gate (`[FACE]`, `[SCREENSHARE]` or `[COVER]`). Use screen shares where Mike "
+                "REACTS to something on his screen (a chart, the price, a card he walks through); use normal faces for the "
+                "personal, direct-to-camera lines (the open's promise, the thesis, the close). Both kinds count toward the face "
+                "cap and are spread through the video, never clustered. Add a `| \U0001F5A5️ `[SCREENSHARE]` | ... |` row to "
+                "the tag legend, and write the RECORDING NOTE in the header: Mike switches OBS scenes, the camera scene for "
+                "`[FACE]` beats, the screen-share layout (webcam bottom-right, CTA top-right; the deck area may show anything, it "
+                "is painted over) for `[SCREENSHARE]` beats.\n")
     if C.face_mode(proj) != "screenshare":
         return ""
     return ("FACE MODE = SCREEN SHARE (Mike's per-video ruling, GRAPH-PROGRESS.json settings.face_mode; longform-edited.md house rule "
@@ -526,7 +544,12 @@ def cover_blackout(state: LongformState) -> LongformState:
     prompt = (f"Cover-blackout the defumbled spine for project `{proj.name}` (a gated-face video).\n"
               f"INPUT: `{sp['a']}`\nFACE/COVER tags: `{C.doc(proj, 'screenplay')}` (Convention 5 tagged beats; "
               "every line tagged 👤 `[FACE]` is a face window, however many this video has; everything else is COVER).\n"
-              f"OUTPUT (fixed 13a path): `{sp['b']}` plus its FACE/COVER map `{cover_json}`.\n"
+              + ("FACE MODE = mixed (Mike, 2026-11-09): every line tagged 🖥️ `[SCREENSHARE]` is ALSO a visible window (Mike "
+                 "screen sharing; the picture stays as recorded, never blacked). In the FACE/COVER map give EVERY visible window "
+                 "a `kind` of `face` or `screenshare` from its tag, and frame-QA that a screenshare window's picture really is the "
+                 "screen-share layout (webcam bottom-right) and a face window's the full camera; report any mismatch.\n"
+                 if C.face_mode(proj) == "mixed" else "")
+              + f"OUTPUT (fixed 13a path): `{sp['b']}` plus its FACE/COVER map `{cover_json}`.\n"
               "Follow video-creation/skills/cover-blackout/cover-blackout.md exactly: paint black under every COVER "
               "span, audio untouched, duration identical to the input, frame-QA every window midpoint. Foreground only.")
     return _agent_step(state, node, "cover-blackout", prompt, sp["b"],
@@ -848,9 +871,37 @@ def _lint_as_recorded(state, node, dest: Path, spine: Path):
         args += ["--duration", f"{d:.3f}"]
     if state.get("face_max") is not None:
         args += ["--face-max", str(state["face_max"])]
+    if C.face_mode(_proj(state)) == "mixed":   # house rule #1c: every FACE-windows row names its kind
+        args += ["--face-mode", "mixed"]
     rc, out = C.run_streaming(args, state, node)
     m = AR_LINT_RE.search(out or "")
-    return (rc == 0 and bool(m) and m.group(1) == "PASS"), (int(m.group(2)) if m else -1), out
+    ok = rc == 0 and bool(m) and m.group(1) == "PASS"
+    if ok and C.face_mode(_proj(state)) == "mixed":
+        # the ONE window-kind source (scripts/window_kinds.py): AS-RECORDED's kinds, in order, against the cover-blackout map
+        try:
+            wins = C.visible_windows(_proj(state), state.get("scope", "ALL"))
+            print("[longform] visible windows: " + ", ".join(f"F{w['n']} {w['a']:.2f}-{w['z']:.2f} {w['kind']}" for w in wins), flush=True)
+        except C.WindowKindError as e:
+            ok, out = False, (out or "") + f"\nFAIL  window kinds (FACE MODE = mixed): {e}\n"
+            print(f"FAIL  window kinds (FACE MODE = mixed): {e}", flush=True)
+    return ok, (int(m.group(2)) if m else -1), out
+
+
+def _as_recorded_mixed_clause(proj: Path, scope: str) -> str:
+    """FACE MODE = mixed (house rule #1c): the FACE-windows table lists BOTH kinds and names each row's kind."""
+    if C.face_mode(proj) != "mixed":
+        return ""
+    sp = C.spine_paths(proj, scope)
+    return ("FACE MODE = MIXED (Mike, 2026-11-09; longform-edited.md house rule #1c): the picture has TWO kinds of visible window, "
+            "both non-black, so blackdetect finds both: 👤 `[FACE]` beats (the full camera) and 🖥️ `[SCREENSHARE]` beats (Mike's "
+            "screen-share layout: webcam bottom-right, CTA box top-right). List EVERY visible window in `## FACE windows` and name its "
+            "kind in the scripted-beat cell: `CH2 Beat 3 [FACE]` or `CH2 Beat 4 [SCREENSHARE]`, exactly ONE kind per row. Where a "
+            "FACE beat and a SCREENSHARE beat run back to back with no black between them, blackdetect returns ONE window: split it "
+            "into two rows at the OBS scene-switch frame (find the frame from the picture, where the webcam layout appears or "
+            "leaves). The graph reads the kinds with scripts/window_kinds.py and checks them, IN ORDER, against the cover-blackout "
+            f"map `{Path(str(sp['b']) + '.cover.json').name}` in spine/ (it tagged each window from the screenplay); a count or order "
+            "mismatch halts the node. Run `python video-creation/longform-edited/scripts/window_kinds.py \"" + str(proj)
+            + "\"` before you finish: it must print WINDOW-KINDS PASS.\n")
 
 
 def as_recorded(state: LongformState) -> LongformState:
@@ -880,6 +931,7 @@ def as_recorded(state: LongformState) -> LongformState:
               "video-creation/longform-edited/screenplay.md § AS-RECORDED. Measure the FACE windows from the picture "
               "(blackdetect), list the timecode chain from spine/, quote the words as SPOKEN, mark every beat row KEPT / "
               "CHANGED / AD-LIB / DROPPED, put the Whisper mishears in their own section, and carry the flags.\n"
+              + _as_recorded_mixed_clause(proj, scope) +
               f"Write EXACTLY this file: `{dest}`. The graph runs lint_as_recorded.py on it and halts on a format failure. "
               "No em dashes. Finish by printing: AS-RECORDED-OK path=" + str(dest))
     rc, out = C.spawn_agent(state, node, "as-recorded-author", prompt, f"agent-as_recorded-{proj.name}.log")
@@ -941,10 +993,28 @@ def _wb_on_screen(plan: dict) -> dict:
     return out
 
 
-def _face_body_check(plan: dict, faces, duration: float):
+def _face_body_check(plan: dict, faces, duration: float, kinds=None):
     """SCREEN-SHARE face mode (house rule #1b): `face_body[]` rows, one or more per FACE window, each naming a declared asset
-    (receipts[] / containers[] / whiteboards[] id) painted into the deck area. Returns a reason or None."""
+    (receipts[] / containers[] / whiteboards[] id) painted into the deck area. Returns a reason or None.
+    MIXED (house rule #1c): `kinds` = each window's kind, in `faces` order (scripts/window_kinds.py); the rows go on the
+    SCREENSHARE windows only (every one needs a row) and a row inside a FACE-kind window fails (a gated face has no deck area)."""
     rows = plan.get("face_body")
+    if kinds is not None:
+        if not isinstance(rows, list):
+            return "face_body must be a list (FACE MODE = mixed: one row per SCREENSHARE window naming its deck-area content)"
+        gated = [(w, i + 1) for i, (w, k) in enumerate(zip(faces, kinds)) if k == "face"]
+        for r in rows:
+            try:
+                a, z = float(r["tIn"]), float(r["tOut"])
+            except (KeyError, TypeError, ValueError):
+                continue   # the shared checks below name it
+            for (fa, fz), n in gated:
+                if a < fz and fa < z:
+                    return (f"face_body {r.get('id')}: {a}-{z} lands in FACE window F{n} ({fa:.2f}-{fz:.2f}s), a GATED face scene "
+                            "(kind face): face_body rows go on SCREENSHARE windows only (house rule #1c)")
+        faces = [w for w, k in zip(faces, kinds) if k == "screenshare"]
+        if not faces:
+            return None if not rows else "face_body rows exist but the spine has no SCREENSHARE window (FACE MODE = mixed)"
     if not isinstance(rows, list):
         return "face_body must be a list (FACE MODE = screenshare: one row per FACE window naming its deck-area content)"
     if not faces:
@@ -1003,8 +1073,33 @@ def _face_body_check(plan: dict, faces, duration: float):
         per_window[win[0]].append((a, z))
     for i, (fa, fz) in enumerate(faces):
         if not per_window[i]:
+            if kinds is not None:
+                return f"SCREENSHARE window {fa:.2f}-{fz:.2f}s has no face_body row (every screen share needs its deck-area content)"
             return f"FACE window {i + 1} ({fa:.2f}-{fz:.2f}s) has no face_body row (every screen share needs its deck-area content)"
     return None
+
+
+def _visible_windows_check(plan: dict, faces):
+    """FACE MODE = mixed: COVER-PLAN `visible_windows` (stamped by the coverage node from scripts/window_kinds.py) is one row
+    per FACE window, same order and times, each with a kind. Returns (reason, kinds)."""
+    vw = plan.get("visible_windows")
+    if not isinstance(vw, list) or not vw:
+        return ("FACE MODE = mixed but COVER-PLAN.json carries no `visible_windows` (the coverage node stamps it from "
+                "scripts/window_kinds.py; re-drive coverage)"), None
+    if len(vw) != len(faces):
+        return f"visible_windows lists {len(vw)} window(s), AS-RECORDED.md {len(faces)}", None
+    kinds = []
+    for i, (w, (fa, fz)) in enumerate(zip(vw, faces), 1):
+        try:
+            a, z = float(w["tIn"]), float(w["tOut"])
+        except (KeyError, TypeError, ValueError):
+            return f"visible_windows row {i} needs numeric tIn / tOut", None
+        if abs(a - fa) > 0.05 or abs(z - fz) > 0.05:
+            return f"visible_windows row {i} {a}-{z} is not AS-RECORDED window {i} {fa}-{fz}", None
+        if w.get("kind") not in C.WINDOW_KINDS:
+            return f"visible_windows row {i} kind {w.get('kind')!r} is not face | screenshare", None
+        kinds.append(w["kind"])
+    return None, kinds
 
 
 def _whiteboard_check(plan: dict, faces, duration: float, wb_share=None, card_pause: float = 1.5):
@@ -1186,6 +1281,11 @@ def _cover_plan_check(plan: dict, face_windows, duration: float, wb_share=None, 
         why = _face_body_check(plan, faces, duration)
         if why:
             return why
+    elif face_mode == "mixed":       # house rule #1c: the deck-area content of every SCREENSHARE window, none on a face window
+        why, kinds = _visible_windows_check(plan, faces)
+        why = why or _face_body_check(plan, faces, duration, kinds=kinds)
+        if why:
+            return why
     elif plan.get("face_body"):
         return "face_body rows are only for FACE MODE = screenshare (this video is gated-face)"
     # CHAPTER THEMES (optional, Mike 2026-10-10): the per-chapter visual differential that mirrors the per-chapter beds.
@@ -1225,8 +1325,29 @@ def _insert_troughs(plan: dict, spine: Path):
     return bad
 
 
-def _face_body_prompt(proj: Path, faces) -> str:
-    """The FACE BODY clause of the coverage prompt (screen-share face mode, house rule #1b)."""
+def _face_body_prompt(proj: Path, faces, wins=None) -> str:
+    """The FACE BODY clause of the coverage prompt (screen-share face mode, house rule #1b; mixed, #1c: `wins` = the
+    visible windows with their kind from scripts/window_kinds.py)."""
+    if C.face_mode(proj) == "mixed":
+        ss = [w for w in wins or [] if w["kind"] == "screenshare"]
+        fc = [w for w in wins or [] if w["kind"] == "face"]
+        return ("FACE MODE = MIXED (Mike's per-video ruling 2026-11-09; longform-edited.md house rule #1c): the visible windows above "
+                "are of TWO kinds. FACE windows (kind face, the normal gated full-screen face: nothing covers them, no face_body) = "
+                + (", ".join(f"F{w['n']} {w['a']:.2f}-{w['z']:.2f}" for w in fc) or "none")
+                + ". SCREENSHARE windows (kind screenshare: Mike SHARING HIS SCREEN, webcam bottom-right + CTA box top-right as "
+                "recorded; the comp PAINTS the deck area x 0 to 1464 of 1920 with content WE choose, cued to his words) = "
+                + (", ".join(f"F{w['n']} {w['a']:.2f}-{w['z']:.2f}" for w in ss) or "none")
+                + ". So the plan carries `face_body[]` for the SCREENSHARE windows ONLY (your definition, section 'Screen-share face "
+                "mode', applied to those windows): one row (or more, consecutive, never overlapping) per SCREENSHARE window: id FB<n>, "
+                "face (the window's F number above), tIn / tOut INSIDE that window (final-spine seconds from the word JSON), cover_type "
+                "one of " + " | ".join(FB_TYPES) + " (never envato-video, never chatgpt-image), `asset` = the id of a receipts[] / "
+                "containers[] / whiteboards[] row (declare it there like any other asset; a whiteboard row also carries `from` = tIn "
+                f"minus the beat's tIn), `state` where a container state applies, canvas '{FB_DECK_AREA}' (the comp scales the normal "
+                "1920x1080 stage into the deck area), spoken, what, notes. The screenplay's `BODY:` line beside each 🖥️ [SCREENSHARE] "
+                "beat says what Mike planned there (AS-RECORDED tells you which beat each window is); keep it unless he dropped the "
+                "line. A face_body row on a FACE window FAILS the graph's check; every SCREENSHARE window MUST have one. Neither "
+                "kind is ever a cover_beats row or a gap problem. The graph stamps `visible_windows` (each window's kind) into the "
+                "file after you save it; do not write that key yourself.\n")
     if C.face_mode(proj) != "screenshare":
         return ""
     return ("FACE MODE = SCREEN SHARE (Mike's per-video ruling; longform-edited.md house rule #1b; your definition, section "
@@ -1253,6 +1374,9 @@ def coverage(state: LongformState) -> LongformState:
     dest = C.doc(proj, "cover_plan")
     if state.get("stub"):
         return {"steps": C._step(state, node, "stub")}
+    if C.face_mode(proj) == "mixed" and not C.MIXED_PLAN_SUPPORT:
+        return C._fail(state, node, "FACE MODE = mixed (canton, Mike 2026-11-09) is supported through the screenplay and the spine "
+                       "only; build the plan / build support (graph/common.py FACE MODE comment) before this node runs")
     fs = C.final_spine(proj, scope)
     wj = C.words_json(proj, scope)
     if not fs or not wj:
@@ -1264,6 +1388,14 @@ def coverage(state: LongformState) -> LongformState:
     if ar.is_file():
         for m in re.finditer(r"^\|\s*\d+\s*\|\s*(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)\s*\|", ar.read_text(encoding="utf-8"), re.M):
             faces.append((float(m.group(1)), float(m.group(2))))
+    wins = None
+    if C.face_mode(proj) == "mixed":   # house rule #1c: each visible window's kind, from the ONE source (scripts/window_kinds.py)
+        try:
+            wins = C.visible_windows(proj, scope)
+        except C.WindowKindError as e:
+            return C._fail(state, node, f"FACE MODE = mixed: the visible windows' kinds cannot be read: {e} (fix AS-RECORDED.md's "
+                                        "FACE windows rows, then --redo coverage)")
+        faces = [(w["a"], w["z"]) for w in wins]
     wb_share = C.whiteboard_share(proj)
     card_pause = float(state.get("card_pause") or DEFAULT_CARD_PAUSE)
     if not (dest.is_file() and not _redo(state, node)):
@@ -1319,7 +1451,7 @@ def coverage(state: LongformState) -> LongformState:
                      "counted): the graph holds the whiteboard ON-SCREEN seconds (the cover rows) to it in code. Put "
                      "`whiteboard_check` (total seconds, share of the runtime, the target) next to budget_check.\n"
                      if wb_share else "No whiteboard target is set for this video: use a beat only where the screenplay names one.\n")
-                  + _face_body_prompt(proj, faces)
+                  + _face_body_prompt(proj, faces, wins)
                   + "cover_type must be one of: receipt | real-chart | animated-chart | container | diagram | timeline | envato-video | "
                   "chatgpt-image | whiteboard | clip-insert (a chapter title card is a zero-length beat tIn == tOut with cover_type 'title', a clip insert a "
                   "zero-length beat with cover_type 'clip-insert'; both pauses are edit-time inserts). EVERY chatgpt_list row carries a `reference` key: a path under "
@@ -1337,6 +1469,13 @@ def coverage(state: LongformState) -> LongformState:
         plan = json.loads(dest.read_text(encoding="utf-8"))
     except Exception as e:
         return C._fail(state, node, f"COVER-PLAN.json invalid JSON: {e}")
+    if wins is not None:
+        # MIXED: stamp every visible window's kind into the plan (from scripts/window_kinds.py, never the strategist) so
+        # render_cover_plan, gen_editplan and lint_covers read one record
+        stamp = [{"n": w["n"], "tIn": w["a"], "tOut": w["z"], "kind": w["kind"]} for w in wins]
+        if plan.get("visible_windows") != stamp:
+            plan["visible_windows"] = stamp
+            C._write_json_atomic(dest, plan)
     why = _cover_plan_check(plan, faces, duration, wb_share, card_pause, face_mode=C.face_mode(proj))
     if why:
         return C._fail(state, node, f"COVER-PLAN.json failed verification: {why} (fix COVER-PLAN.json and resume; "
@@ -1481,6 +1620,21 @@ def _music_plan_check(plan: dict, chapters, duration: float):
     return None
 
 
+NO_MUSIC_RE = re.compile(r"\bno\s+(?:background\s+)?(?:music|bed)\b", re.I)
+
+
+def _no_music_ruled(proj: Path) -> bool:
+    """True when the project's own PROJECT-LOG.md / CONSTRAINTS.md records Mike's "no music" ruling for this video."""
+    for name in ("project_log", "constraints"):
+        try:
+            p = C.doc(proj, name)
+        except Exception:
+            continue
+        if p.is_file() and NO_MUSIC_RE.search(p.read_text(encoding="utf-8", errors="replace")):
+            return True
+    return False
+
+
 def music_plan(state: LongformState) -> LongformState:
     """Wave C node 3 (2026-09-28): the music-placement-strategist (Fable/max, read-only) carves the beds
     against the FINAL spine's chapter map + the catalog's waveform analysis; the node persists MUSIC-PLAN.json
@@ -1530,6 +1684,18 @@ def music_plan(state: LongformState) -> LongformState:
         plan = json.loads(dest.read_text(encoding="utf-8"))
     except Exception as e:
         return C._fail(state, node, f"MUSIC-PLAN.json invalid JSON: {e}")
+    if plan.get("no_music") is True:
+        # A video Mike ruled NO MUSIC (pieverse, 2026-11-11): the strategist saves an explicit `no_music: true` plan with empty
+        # beds instead of inventing beds. Accepted ONLY when the ruling is on record in the project's own docs; an empty plan
+        # with no recorded ruling still fails (an empty `beds` otherwise means the strategist skipped the job).
+        if not _no_music_ruled(proj):
+            return C._fail(state, node, "MUSIC-PLAN.json says no_music but neither PROJECT-LOG.md nor CONSTRAINTS.md records Mike's "
+                                        "no-music ruling: record it there, or re-run with --redo music_plan to get beds")
+        ok, warns, out = run_lint_docset(state, node, "plan")
+        if not ok:
+            return C._fail(state, node, "plan-stage document set incomplete (see FAIL lines above)", out)
+        return {"steps": C._step(state, node, "ran", f"MUSIC-PLAN.json = NO MUSIC (Mike's ruling is on record), no bed over "
+                                                     f"{len(chapters)} chapters, no ledger entry, plan-stage docset PASS")}
     why = _music_plan_check(plan, chapters, duration)
     if why:
         return C._fail(state, node, f"MUSIC-PLAN.json failed verification: {why} (fix MUSIC-PLAN.json and re-drive; "
@@ -2259,7 +2425,24 @@ def _lint_edit_plan(state, node, proj: Path, duration: float):
 
 
 def _edit_plan_face_mode_clause(proj: Path) -> str:
-    """Screen-share face mode (house rule #1b): the seed carries no punch / leak rows; the FACE rows name their deck-area body."""
+    """Screen-share face mode (house rule #1b): the seed carries no punch / leak rows; the FACE rows name their deck-area body.
+    Mixed (#1c): the same for the SCREENSHARE windows only; the gated FACE windows keep the normal face treatment."""
+    if C.face_mode(proj) == "mixed":
+        try:
+            plan = json.loads(C.doc(proj, "cover_plan").read_text(encoding="utf-8"))
+        except Exception:
+            plan = {}
+        vw = plan.get("visible_windows") or []
+        fbs = plan.get("face_body") or []
+        return ("FACE MODE = MIXED (house rule #1c): the visible windows are of two kinds (COVER-PLAN visible_windows: "
+                + ", ".join(f"F{w.get('n')} {float(w.get('tIn') or 0):.2f}-{float(w.get('tOut') or 0):.2f} {w.get('kind')}" for w in vw)
+                + "). Each SCREENSHARE window is Mike's OBS screen share played verbatim, its deck area painted by the comp with "
+                "COVER-PLAN face_body[]: " + "; ".join(f"{r.get('id')} F{r.get('face')} {float(r.get('tIn') or 0):.2f}-{float(r.get('tOut') or 0):.2f} s "
+                                                     f"{r.get('cover_type')} {r.get('asset')}" for r in fbs)
+                + ". Write that body (id, asset, state) into each SCREENSHARE FACE row's text; NO [PUNCH-IN], [LIGHTLEAK], [GLITCH] or "
+                "caption row inside a SCREENSHARE window (the seed carries none there). The `kind: face` windows are the gated face: "
+                "keep their punch-in, leak / glitch and caption rows exactly as for any gated video. Keep the `[SCREEN SHARE ...]` / "
+                "`[kind: face ...]` tag on every FACE row, and name the kind on each FACE span row of the CUE-SHEET.\n")
     if C.face_mode(proj) != "screenshare":
         return ""
     try:
@@ -2410,8 +2593,21 @@ def _face_style_prompt(proj: Path) -> str:
                 "so there are NO punch rows of any kind (no `punch-leak`, no `punch-glitch`, nothing on a join inside a FACE window). The "
                 "cover->face CUT-IN and face->cover CUT-OUT rows are written as usual (the face pick); the deck-area body changes inside a "
                 "window are container entrances handled by the comp, not transition rows.\n")
+    mixed = ""
+    if C.face_mode(proj) == "mixed":
+        try:
+            ss = [w for w in C.visible_windows(proj) if w["kind"] == "screenshare"]
+        except C.WindowKindError:
+            ss = []
+        mixed = ("FACE MODE = MIXED (house rule #1c, this video): the SCREENSHARE windows "
+                 + (", ".join(f"F{w['n']} {w['a']:.2f}-{w['z']:.2f}" for w in ss) or "(none)")
+                 + " are Mike's OBS screen share played verbatim (the jumpcuts file lists NO punch candidate in them, `kind: "
+                 "screenshare`): NO punch row of any kind inside one; their cover->screenshare CUT-IN and CUT-OUT rows take the plain "
+                 "face pick (face_glitch_pick), never the face-style cut-in below; their deck-area body changes are container entrances "
+                 "the comp handles, not transition rows. Every other FACE window (`kind: face`) is the gated face and follows the rules "
+                 "below exactly.\n")
     if C.face_style(proj) == "glitch":
-        return (joins + "FACE STYLE = glitch (Mike 2026-10-16, this video's setting; it overrides the light-leak default and the face-pick "
+        return (joins + mixed + "FACE STYLE = glitch (Mike 2026-10-16, this video's setting; it overrides the light-leak default and the face-pick "
                 "rule for CUT-INS): (1) every cover->face CUT-IN `face-cut` row takes a RANDOM `lib:split-swinging-offset-*` id (long or short; "
                 "vary them, never the same id twice in a row); the face->cover CUT-OUT rows keep the face_glitch_pick. (2) At EVERY punch point "
                 "write one bucket `face` row with role `punch-glitch`, source `lib`, id a RANDOM `lib:glitchoffset-*` or `lib:blocks-*` id (mix "
@@ -2425,7 +2621,7 @@ def _face_style_prompt(proj: Path) -> str:
                   + " (use all 6 before repeating one, never the same id twice in a row), its `duration_s` = that id's library "
                   "durationSeconds, its `tc` = the face window's first frame. A face that opens the video has no cut-in. The face->cover "
                   "CUT-OUT rows keep the face_glitch_pick. Punch-ins stay light leaks as below.\n")
-    return (joins + optics + "At EVERY punch point write one bucket `face` row with role `punch-leak`, source `lib`, id one of the "
+    return (joins + mixed + optics + "At EVERY punch point write one bucket `face` row with role `punch-leak`, source `lib`, id one of the "
             "video's 3-4 chosen LIGHT LEAKS ids (`lib:lightleaks-*`, cycle them, the previous video's ids are BLOCKED), `why` naming the "
             "join: the comp steps the ~15-20% punch-in and peaks the leak on that frame (overlays.md section 1, Mike 2026-10-07). "
             "No other punch-in rows, no synthetic light leak.\n")
@@ -2441,6 +2637,16 @@ def _face_style_check(plan: dict, proj: Path):
             return (f"face mode is screenshare (house rule #1b) but the plan carries {len(bad)} punch row(s) at "
                     f"{[r.get('tc') for r in bad][:6]} (a screen share is never zoomed)")
         return None
+    if C.face_mode(proj) == "mixed":   # house rule #1c: no punch row inside a SCREENSHARE window
+        try:
+            ss = C.windows_of(C.visible_windows(proj), "screenshare")
+        except C.WindowKindError as e:
+            return f"face mode is mixed but the window kinds cannot be read: {e}"
+        bad = [r for r in plan.get("transitions") or [] if str(r.get("role")) in ("punch-leak", "punch-glitch")
+               and any(a - 0.05 <= float(r.get("tc", -99)) <= z + 0.05 for a, z in ss)]
+        if bad:
+            return (f"face mode is mixed but {len(bad)} punch row(s) at {[r.get('tc') for r in bad][:6]} land in a SCREENSHARE window "
+                    f"{ss} (a screen share is never zoomed; punch rows go on the gated FACE windows only)")
     if C.face_style(proj) == "optics":
         return _optics_face_check(plan, proj)
     if C.face_style(proj) != "glitch":
@@ -2469,6 +2675,8 @@ def _optics_face_check(plan: dict, proj: Path):
     for w in windows:
         start = float(w["window_s"][0])
         if start <= 0.05:   # opens ON the face: no cut-in
+            continue
+        if w.get("kind") == "screenshare":   # FACE MODE = mixed: a screen share's cut-in is the plain face pick
             continue
         hit = [r for r in rows if abs(float(r.get("tc", -99)) - start) <= 0.5 and str(r.get("id", "")) in allowed]
         if not hit:
@@ -2842,9 +3050,18 @@ def captions(state: LongformState) -> LongformState:
     if not rows or int(meta.get("groups", 0)) != len(rows):
         return C._fail(state, node, f"captions file carries {len(rows)} groups, sidecar says {meta.get('groups')}")
     wins = [(float(a), float(b)) for a, b in meta.get("windows") or []]
+    ssw = None
+    if C.face_mode(proj) == "mixed":   # house rule #1c: never a caption on a screen share
+        if "screenshare_windows" not in meta:
+            return C._fail(state, node, "FACE MODE = mixed but assets/captions.json predates the mixed build (no screenshare_windows): "
+                                        "--redo captions")
+        ssw = [(float(a), float(b)) for a, b in meta["screenshare_windows"]]
     for t, h in rows:
         if not any(a - 0.05 <= float(t) <= b for a, b in wins):
             return C._fail(state, node, f"caption group at {t}s lies outside every caption window")
+        if ssw and any(a + 0.05 < float(t) < b - 0.05 for a, b in ssw):
+            return C._fail(state, node, f"caption group at {t}s lands in a SCREENSHARE window (FACE MODE = mixed: captions on the gated "
+                                        "FACE windows only)")
         if re.search(r"\bcasper\b|\u2014", h, re.I):
             return C._fail(state, node, f"caption text still carries a brand mishear / em dash: {h!r}")
     covers = meta.get("cover_windows") or []
@@ -2901,6 +3118,9 @@ def comp_build(state: LongformState) -> LongformState:
     # FACE REFRAME (comp-build §3a, Mike 2026-10-01): measured in code, never eyeballed by the builder.
     reframe_p = proj / "assets" / "face-reframe.json"
     screenshare = C.face_mode(proj) == "screenshare"
+    mixed = C.face_mode(proj) == "mixed"
+    if mixed and reframe_p.is_file() and "screenshare_windows" not in json.loads(reframe_p.read_text(encoding="utf-8")):
+        reframe_p.unlink()   # measured before the mixed build: re-measure on the FACE windows only
     if screenshare:
         # house rule #1b: a FACE window is the OBS screen share, played VERBATIM (never re-centred, never punched); the comp
         # declares the identity reframe and the waiver comment, and lint_face_reframe.py passes on the waiver
@@ -2929,6 +3149,25 @@ def comp_build(state: LongformState) -> LongformState:
                   "fade + 0.97 -> 1 scale-in); a whiteboard row plays assets/whiteboard/<id>.mp4 from its `from` offset. The layer sits "
                   "above the spine and below the transitions and overlays; lint_covers.py checks the rows against the plan.\n")
                  if screenshare else "")
+    if mixed:
+        ssw = [list(w) for w in reframe.get("screenshare_windows") or []]
+        fb_clause = ("FACE MODE = MIXED (longform-edited.md house rule #1c; comp-build.md section 4c-mixed): the visible windows are of "
+                     "TWO kinds (COVER-PLAN visible_windows). The gated FACE windows (kind face) are the normal face: FACE_REFRAME, "
+                     "punch-ins + their leaks, the face transitions and the captions, exactly as any gated comp. The SCREENSHARE "
+                     "windows are Mike's OBS screen share played VERBATIM (webcam bottom-right, CTA box top-right): declare "
+                     f"`export const SCREENSHARE_WINDOWS: [number, number][] = {json.dumps(ssw)};` (SOURCE-spine seconds, from "
+                     f"`{reframe_p}`; route through sh() like every cue) and inside them keep the spine (and every SpineStill of a "
+                     "frame inside them) at the IDENTITY transform: no FACE_REFRAME, punch scale 1, no light leak, no caption "
+                     "(lint_face_reframe.py checks the declaration and its use, lint_covers.py the captions and punches). Paint the "
+                     "deck area (x 0 to 1464, y 0 to 1080) over the spine during the SCREENSHARE windows with the `FACE_BODY` rows from "
+                     "COVER-PLAN face_body[]: "
+                     + "; ".join(f"{r.get('id')} F{r.get('face')} {float(r.get('tIn') or 0):.2f}-{float(r.get('tOut') or 0):.2f} s -> "
+                                 f"{r.get('cover_type')} {r.get('asset')}" + (f" state {r.get('state')}" if r.get('state') else "")
+                                 + (f" from {r.get('from')}" if r.get('cover_type') == 'whiteboard' else "") for r in fbs)
+                     + ". Each row renders the SAME element a COVERS row of that kind would (CoverEl), inside a clipped deck-area box, "
+                     "the 1920x1080 stage scaled by 1464/1920 and vertically centred on the page colour, with the container entrance "
+                     "(0.35 s fade + 0.97 -> 1 scale-in); a whiteboard row plays assets/whiteboard/<id>.mp4 from its `from` offset. "
+                     "The layer sits above the spine and below the transitions and overlays. No FACE_BODY row on a FACE window.\n")
     draft = _latest_draft(proj)
     try:
         wbs = json.loads(C.doc(proj, "cover_plan").read_text(encoding="utf-8")).get("whiteboards") or []
@@ -2977,7 +3216,9 @@ def comp_build(state: LongformState) -> LongformState:
                      f"FACE REFRAME (comp-build.md section 3a, measured, do not hand-tune): `{reframe_p}` -> declare exactly "
                      f"`export const FACE_REFRAME = {{ scale: {reframe.get('scale')}, x: {reframe.get('x')}, y: {reframe.get('y')} }};` and apply it to the "
                      f"spine and to every SpineStill (a background-swap clip `assets/face-swap/F<n>-higgsfield-bg-swap.mp4`, if the project has one, is PRE-FRAMED: play it full-frame WITHOUT FACE_REFRAME from its JSON's window_starts_at_clip_s, comp-build.md section 3b); punch-ins scale about the face point "
-                     f"{reframe.get('face_point_out')}. Previews of each FACE window through the transform: `{proj / '_previews' / 'qa' / 'face-reframe'}`.\n")
+                     f"{reframe.get('face_point_out')}. Previews of each FACE window through the transform: `{proj / '_previews' / 'qa' / 'face-reframe'}`.\n"
+                     + ("FACE MODE = mixed: the transform and the punch-ins apply OUTSIDE SCREENSHARE_WINDOWS only (identity inside "
+                        "them, see above); the measurement used the gated FACE windows only.\n" if mixed else ""))
                   +
                   f"Draft output: `{proj / '_previews' / (proj.name + '-draft-v1.mp4')}` (bump the N if it exists) with the render log beside it; "
                   f"chunk QA into `{proj / '_previews' / 'qa'}`. Save your JSON report to EXACTLY `{report}`.\n"

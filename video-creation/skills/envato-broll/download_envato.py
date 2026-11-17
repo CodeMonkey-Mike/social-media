@@ -47,6 +47,20 @@ def log(msg):
     print(msg, file=sys.stderr, flush=True)
 
 
+def dismiss_promo(page):
+    """Close any visible promo modal (2026-11-10: the "You asked, a lot. Now you choose." AI-models dialog
+    overlays the page and would intercept the Download click). Close = [role=dialog] button[aria-label=Close]."""
+    closes = page.locator('[role="dialog"] button[aria-label="Close"]')
+    try:
+        for i in range(closes.count()):
+            b = closes.nth(i)
+            if b.is_visible():
+                b.click()
+                time.sleep(0.8)
+    except Exception:
+        pass
+
+
 def probe(path, entries, select=None):
     cmd = ["ffprobe", "-v", "error"] + (["-select_streams", select] if select else []) + ["-show_entries", entries, "-of", "csv=p=0", str(path)]
     return subprocess.run(cmd, capture_output=True, text=True).stdout.strip()
@@ -98,6 +112,7 @@ def main():
                 got_it.click()
         except Exception:
             pass
+        dismiss_promo(page)
         if a.debug:
             page.screenshot(path=str(cache_path("envato-broll", "shots", "envato-item-debug.png")))
         dl = page.locator('button[data-cy="idp-download-button"], button:has-text("Download"), a[role="button"]:has-text("Download")').first

@@ -14,6 +14,8 @@ clip or a ChatGPT image, ONE alternative asset is sourced/generated for the shor
   -> s_mix -> s_verify_final -> gate_short (Mike) -> s_deliver (<project>-SHORT-<N>s.mp4 at the project root)
 
 Invocation: python video-creation/longform-edited/graph/run.py short --project <name> [--seconds 30] [--brief "..."]
+A longform-PRESENTATION project (scripted, with a delivered vertical) runs the same lane by its folder PATH as --project
+(Mike 2026-11-17): the nodes read its equivalents (see "a longform-PRESENTATION project" below); one lane, a mode inside it.
 """
 import hashlib
 import json
@@ -83,10 +85,118 @@ def _comp_id(proj: Path) -> str:
     return G._pascal(proj.name) + "Short"
 
 
+# ── a longform-PRESENTATION project (Mike 2026-11-17; longform-to-short.md "A presentation project") ─────────────────
+# The lane runs on a scripted presentation project by its folder path. Its equivalents of the longform-edited files:
+# vertical master = the newest `<p> VERTICAL-vN.mp4`; VO = the spine overlays/cues.json names (no paused spine: no chapter
+# cards, no clip inserts, so sh() is the identity); words = that spine's medium-words JSON; what is on screen =
+# overlays/cues.json (COVER / SCREENSHARE lines); the vertical's layout = overlays/cards-v.json. Nothing is burned in the
+# vertical, and its cards are already native vertical, so no 16:9 painting, no variants, no card rebuild.
+PRES = C.is_presentation
+CAPTION_BAND_H = 185   # one line of the house caption block (clip-evals 2026-11-17: y 740-925 over a webcam pane at y 934)
+CAPTION_BAND_GAP = 9   # px kept clear above the webcam pane
+
+
+def _pres_cues(proj: Path) -> dict:
+    p = proj / "overlays" / "cues.json"
+    return json.loads(p.read_text(encoding="utf-8")) if p.is_file() else {}
+
+
+def _pres_path(proj: Path, v) -> Optional[Path]:
+    """A path a presentation spec names: absolute, or relative to overlays/ (cards-v.json writes `../spine/...`)."""
+    if not v:
+        return None
+    p = Path(str(v))
+    return p if p.is_absolute() else (proj / "overlays" / p).resolve()
+
+
+def _vertical_master(proj: Path) -> Path:
+    """The delivered vertical: `<p>-VERTICAL.mp4` (longform-edited), or the newest `<p> VERTICAL-vN.mp4` (presentation)."""
+    if PRES(proj):
+        c = [(int(m.group(1)), p) for p in proj.glob(f"{proj.name} VERTICAL-v*.mp4")
+             for m in [re.fullmatch(re.escape(proj.name) + r" VERTICAL-v(\d+)\.mp4", p.name)] if m]
+        if c:
+            return max(c)[1]
+        return proj / f"{proj.name} VERTICAL-v1.mp4"
+    return proj / f"{proj.name}-VERTICAL.mp4"
+
+
+def _vo_spine(proj: Path, scope: str) -> Optional[Path]:
+    """The VO source on the vertical's clock: the paused spine (longform-edited), or the spine cues.json names
+    (presentation: the enhanced spine; a painted spine's audio is the same)."""
+    if PRES(proj):
+        p = _pres_path(proj, _pres_cues(proj).get("spine"))
+        return p if p and p.is_file() else None
+    return C.paused_spine(proj, scope)
+
+
+def _words(proj: Path, scope: str) -> Optional[Path]:
+    """The word JSON of the VO spine: C.words_json, or (presentation) the one cues.json names, else the newest
+    `spine/<spine stem>.medium-words.json`."""
+    if not PRES(proj):
+        return C.words_json(proj, scope)
+    p = _pres_path(proj, _pres_cues(proj).get("words"))
+    if p and p.is_file():
+        return p
+    sp = _vo_spine(proj, scope)
+    hits = sorted((proj / "spine").glob(f"{sp.stem}*.medium-words.json"), key=lambda x: x.stat().st_mtime) if sp else []
+    return hits[-1] if hits else None
+
+
+def _pres_windows(proj: Path, tag: str):
+    """cues.json lines of one tag (COVER / SCREENSHARE) as merged (a, b) windows, spine seconds == final seconds."""
+    rows = sorted((float(l["tIn"]), float(l["tOut"])) for l in _pres_cues(proj).get("lines") or []
+                  if str(l.get("tag", "")).upper() == tag and l.get("tIn") is not None and l.get("tOut") is not None)
+    out = []
+    for a, b in rows:
+        if out and a <= out[-1][1] + 0.05:
+            out[-1] = (out[-1][0], max(out[-1][1], b))
+        else:
+            out.append((a, b))
+    return [(round(a, 2), round(b, 2)) for a, b in out]
+
+
+def _pres_whiteboard_windows(proj: Path):
+    """A whiteboard beat in a presentation project (none in a scripted video yet): a cue line whose card is a whiteboard
+    (card kind `whiteboard*`, or a card id naming one), or a cards.json / cards-v.json card of that kind."""
+    cues = _pres_cues(proj)
+    cards = cues.get("cards") or {}
+    is_wb = lambda cid, kind: "whiteboard" in str(kind).lower() or "whiteboard" in str(cid or "").lower()
+    rows = [(float(l["tIn"]), float(l["tOut"])) for l in cues.get("lines") or []
+            if l.get("card") and is_wb(l["card"], (cards.get(l["card"]) or {}).get("kind")) and l.get("tIn") is not None]
+    for name in ("cards.json", "cards-v.json"):
+        f = proj / "overlays" / name
+        try:
+            spec = json.loads(f.read_text(encoding="utf-8")) if f.is_file() else {}
+        except ValueError:
+            spec = {}
+        rows += [(float(c["in"]), float(c["out"])) for c in spec.get("cards") or []
+                 if c.get("in") is not None and (is_wb(c.get("id"), c.get("kind")) or "whiteboard" in str(c.get("src", "")).lower())]
+    return sorted((round(a, 2), round(b, 2)) for a, b in rows)
+
+
+def _pres_caption_band(proj: Path):
+    """(top, bottom) px of the caption band for a SCREENSHARE span of the stacked vertical: the usual bottom block sits on
+    Mike's mouth in the webcam pane, so the caption goes in the strip just above that pane (derived from the layout the cover
+    render recorded, overlays/cards-v.json). None when the layout has no webcam pane."""
+    f = proj / "overlays" / "cards-v.json"
+    try:
+        panes = (json.loads(f.read_text(encoding="utf-8")).get("layout") or {}).get("panes") or [] if f.is_file() else []
+    except ValueError:
+        return None
+    cam = next((p for p in panes if str(p.get("name", "")).lower() in ("webcam", "cam", "face")), None)
+    if not cam or "dst" not in cam:
+        return None
+    bottom = int(cam["dst"]["y"]) - CAPTION_BAND_GAP
+    return (bottom - CAPTION_BAND_H, bottom)
+
+
 def _sh_fn(proj: Path, scope: str):
     """source -> final seconds through EVERY pause's OWN `dur` (the comp's sh()). A clip insert's pause is the clip's length,
     not pause_s: retire-early 2026-10-11 mapped CLIP-2 / CLIP-3 as 1.5 s each and put every word after 94.7 s up to 17.8 s
-    early (caught by the short-cut-strategist). card_t lists the chapter CARDS only (clip inserts are not card freezes)."""
+    early (caught by the short-cut-strategist). card_t lists the chapter CARDS only (clip inserts are not card freezes).
+    A presentation project has no paused spine: the identity."""
+    if PRES(proj):
+        return (lambda t: t), [], 0.0
     meta, _ = G._paused_meta(proj, scope)
     pause = float(meta.get("pause_s") or 0)
     pauses = [(float(p["at"]), float(p.get("dur") or pause)) for p in meta.get("pauses") or []]
@@ -99,6 +209,8 @@ def _sh_end_fn(proj: Path, scope: str):
     end (a clip insert spliced in the trough right after the word) plays AFTER the word. Mapping the end with `at <= t` stretched
     "market." over the 5.6 s CLIP-7 insert on lets-get-rich (2026-11-01): its midpoint fell outside its span and the short lost
     the word's caption ("in a bear" with no "market.")."""
+    if PRES(proj):
+        return lambda t: t
     meta, _ = G._paused_meta(proj, scope)
     pause = float(meta.get("pause_s") or 0)
     pauses = [(float(p["at"]), float(p.get("dur") or pause)) for p in meta.get("pauses") or []]
@@ -107,6 +219,24 @@ def _sh_end_fn(proj: Path, scope: str):
 
 FACE_ROW_RE = re.compile(r"^\|\s*\d+\s*\|\s*(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)\s*\|", re.M)
 MISHEAR_RE = re.compile(r'"([^"]+)"\s*->\s*"([^"]+)"')
+MISHEAR_TC_RE = re.compile(r"(?<![\w.])(\d+(?:\.\d+)?)(?![\w.])")
+MISHEAR_TOL_S = 0.3
+
+
+def _mishear_fixes(ar: str, sh):
+    """AS-RECORDED mishear fixes as [(wrong, right, [final-video seconds] | None)]. A fix written with timecodes (`- 115.08 "and"
+    -> "in"`, FINAL-spine seconds, mapped through sh) applies ONLY to the caption group holding one of those moments; a fix with
+    no timecode applies everywhere. canton 2026-11-10 (final visual-qa): the one-word fix 115.08 "and" -> "in" ("a 6x in three
+    weeks") was applied as plain text, so every "and" in the short read "in" ("in canton", "dtcc, broadridge in nasdaq")."""
+    sec = re.search(r"^##\s+Whisper mishears.*?(?=^##\s|\Z)", ar, re.M | re.S)
+    out = []
+    for line in (sec.group(0) if sec else ar).splitlines():
+        pos = 0
+        for m in MISHEAR_RE.finditer(line):
+            tcs = [sh(float(x)) for x in MISHEAR_TC_RE.findall(line[pos:m.start()])]
+            out.append((m.group(1), m.group(2), tcs or None))
+            pos = m.end()
+    return out
 
 
 def _burned_final(proj: Path, scope: str):
@@ -114,6 +244,8 @@ def _burned_final(proj: Path, scope: str):
     captions node output (assets/captions.json `windows`, source-spine seconds through sh). Only these are exempt from
     the short's caption track. NOT every FACE window: the house rule burns captions on face holds over 5 s only, so a
     short face beat (golden-kitty F9, the kicker, 4.4 s) arrives bare (caught at the short gate, 2026-10-02)."""
+    if PRES(proj):   # a presentation vertical burns no captions (the track ships none): the short captions every span
+        return []
     sh, _, _ = _sh_fn(proj, scope)
     # 16:9-SOURCED mode (every-job, 2026-10-08: Mike skipped the full vertical): the span pictures are re-framed from the 16:9
     # comp WITHOUT its burned captions, so nothing is exempt and every span gets the short's caption track.
@@ -130,11 +262,28 @@ def _burned_final(proj: Path, scope: str):
 
 
 def _faces_final(proj: Path, scope: str):
-    """AS-RECORDED FACE windows in FINAL-video seconds (sh applied)."""
+    """AS-RECORDED FACE windows in FINAL-video seconds (sh applied). Face mode `mixed`: the `face` kind only (the screen-share
+    windows are in the same table; window_kinds.py reads the kind per row, canton 2026-11-10). A presentation project: the
+    SCREENSHARE lines of overlays/cues.json (Mike's webcam is visible there; there is no FACE table)."""
+    if PRES(proj):
+        return _pres_windows(proj, "SCREENSHARE")
     sh, _, _ = _sh_fn(proj, scope)
+    if C.face_mode(proj) == "mixed":
+        return [(sh(a), sh(z)) for a, z in C.windows_of(C.visible_windows(proj, scope), "face")]
     ar = C.doc(proj, "as_recorded").read_text(encoding="utf-8")
     sec = re.search(r"^##\s+FACE windows.*?(?=^##\s|\Z)", ar, re.M | re.S)
     return [(sh(float(m.group(1))), sh(float(m.group(2)))) for m in FACE_ROW_RE.finditer(sec.group(0) if sec else "")]
+
+
+def _screenshare_final(proj: Path, scope: str):
+    """Face mode `mixed` only: the SCREENSHARE windows in FINAL-video seconds, else []. A short may not use one (canton
+    2026-11-10, the default until Mike rules otherwise): the OBS layout (deck area + webcam bottom-right + CTA box) has no
+    608 px face crop and the lane has no native-vertical rebuild of a painted deck area. Pick the gated FACE windows.
+    A presentation project: [] (its vertical already stacks the slide over the webcam, so a SCREENSHARE span is allowed)."""
+    if PRES(proj) or C.face_mode(proj) != "mixed":
+        return []
+    sh, _, _ = _sh_fn(proj, scope)
+    return [(round(sh(a), 2), round(sh(z), 2)) for a, z in C.windows_of(C.visible_windows(proj, scope), "screenshare")]
 
 
 # ── nodes ────────────────────────────────────────────────────────────────────────────
@@ -171,20 +320,45 @@ def s_preflight(state: ShortState) -> ShortState:
     proj, scope = _proj(state), state.get("scope", "ALL")
     if state.get("stub"):
         return {"steps": C._step(state, node, "stub")}
-    vert = proj / f"{proj.name}-VERTICAL.mp4"
-    paused = C.paused_spine(proj, scope)
-    if not vert.is_file():   # Mike skipped the full vertical: set up 16:9-SOURCED MODE here (reset, 2026-10-30)
-        why = _setup_16x9_mode(proj, scope, vert)
-        if why:
-            return C._fail(state, node, why)
-    wj = C.words_json(proj, scope)
-    missing = [str(p) for p in (vert, CTA, C.doc(proj, "cue_sheet"), C.doc(proj, "transitions"), C.doc(proj, "music_plan")) if not p.is_file()]
+    pres = PRES(proj)
+    vert = _vertical_master(proj)
+    paused = _vo_spine(proj, scope)
+    if pres:
+        cues = proj / "overlays" / "cues.json"
+        if not cues.is_file():
+            return C._fail(state, node, f"presentation project without {cues.relative_to(proj)}: the short lane runs on a SCRIPTED "
+                           "presentation project (free talk has no cue table yet)")
+        if not vert.is_file():
+            return C._fail(state, node, f"no `{proj.name} VERTICAL-vN.mp4`: build the vertical cut first (cover_runs.py ... --vertical); "
+                           "a presentation short is cut from the delivered vertical")
+        mp = C.doc(proj, "music_plan")
+        if not mp.is_file():   # a presentation project without a music plan has no music and no SFX: the default, written down
+            C._write_json_atomic(mp, {"project": proj.name, "authored": time.strftime("%Y-%m-%d"), "no_music": True, "no_sfx": True,
+                                      "ruling": "written by the short lane (s_preflight): a presentation project without a MUSIC-PLAN.json "
+                                                "has no music and no SFX, so its short has none either (the VO spans + the shared CTA take)."})
+            print(f"[longform] {node}: wrote the no-music default {mp.name}", flush=True)
+        need = (vert, CTA, cues, mp)
+    else:
+        if not vert.is_file():   # Mike skipped the full vertical: set up 16:9-SOURCED MODE here (reset, 2026-10-30)
+            why = _setup_16x9_mode(proj, scope, vert)
+            if why:
+                return C._fail(state, node, why)
+        need = (vert, CTA, C.doc(proj, "cue_sheet"), C.doc(proj, "transitions"), C.doc(proj, "music_plan"))
+    wj = _words(proj, scope)
+    missing = [str(p) for p in need if not p.is_file()]
     if missing or not paused or not wj:
         return C._fail(state, node, "short needs the delivered vertical, the paused spine, the word JSON and the shared CTA take; missing: "
-                       + ", ".join(missing + ([] if paused else ["paused spine"]) + ([] if wj else ["word json"])))
+                       + ", ".join(missing + ([] if paused else ["paused spine" if not pres else "the spine cues.json names"])
+                                   + ([] if wj else ["word json"])))
     dv, dp = G._duration(vert) or 0.0, G._duration(paused) or 0.0
-    if abs(dv - dp) > 0.2:
-        return C._fail(state, node, f"vertical ({dv:.2f}s) and paused spine ({dp:.2f}s) are not on one clock")
+    # the vertical runs to the paused spine + the approved end-card hold, or ends EARLY where Mike trimmed it
+    # (`vertical_end_sec` setting; AI vs ML 2026-11-11: cut at the last word before the end-screen lines).
+    # A presentation vertical runs on the final spine's clock, end to end.
+    trim = None if pres else C.setting(proj, "vertical_end_sec")
+    want = dp if pres else (float(trim) if trim else dp + G._end_hold_extra(proj, scope))
+    if abs(dv - want) > 0.2:
+        return C._fail(state, node, f"vertical ({dv:.2f}s) and paused spine ({dp:.2f}s) are not on one clock (expected {want:.2f}s"
+                       + (" = the vertical_end_sec trim" if trim else "") + ")")
     sh, _, _ = _sh_fn(proj, scope)
     sh_end = _sh_end_fn(proj, scope)   # ENDS through the pauses strictly before them (see _sh_end_fn)
     d = json.loads(wj.read_text(encoding="utf-8"))
@@ -202,7 +376,7 @@ def s_preflight(state: ShortState) -> ShortState:
     return {"steps": C._step(state, node, "ran", f"vertical {dv:.2f}s == spine {dp:.2f}s; FINAL-TIME transcript written ({len(segs)} segments)")}
 
 
-def _plan_check(plan: dict, target: float, total: float, faces):
+def _plan_check(plan: dict, target: float, total: float, faces, sourced=("FACE", "COVER")):
     for k in ("claim", "spans", "assembled_read", "outro"):
         if k not in plan:
             return f"missing key {k}"
@@ -221,8 +395,8 @@ def _plan_check(plan: dict, target: float, total: float, faces):
             return f"span {a}-{b} outside the video ({total:.2f}s)"
         if not s.get("says"):
             return f"span {a}-{b} has no verbatim `says`"
-        if str(s.get("sourced", "")).upper() not in ("FACE", "COVER"):
-            return f"span {a}-{b} lacks `sourced: FACE|COVER` (the hook-face check and the caption windows depend on it)"
+        if str(s.get("sourced", "")).upper() not in sourced:
+            return f"span {a}-{b} lacks `sourced: {'|'.join(sourced)}` (the hook-face check and the caption windows depend on it)"
         sum_s += b - a
     budget = target - OUTRO_S
     # 0.05 s slack: span ends are 2-decimal floats, so a plan AT the edge sums to 28.019999 (left-behind 2026-11-03:
@@ -240,13 +414,42 @@ def s_cut_plan(state: ShortState) -> ShortState:
     if state.get("stub"):
         return {"steps": C._step(state, node, "stub")}
     target = _target(state)
-    vert, paused = proj / f"{proj.name}-VERTICAL.mp4", C.paused_spine(proj, scope)
+    pres = PRES(proj)
+    vert, paused = _vertical_master(proj), _vo_spine(proj, scope)
     plan_p, snapped_p = proj / "SHORT-CUT-PLAN.json", proj / "SHORT-CUT-PLAN.snapped.json"
     faces = _faces_final(proj, scope)
     total = G._duration(paused) or 0.0
+    if not pres and C.setting(proj, "vertical_end_sec"):   # the vertical was trimmed: no span may run past its end
+        total = min(total, float(C.setting(proj, "vertical_end_sec")))
     sh, card_t, pause = _sh_fn(proj, scope)
     wb_windows = _whiteboard_windows_final(proj, scope)
-    if not (plan_p.is_file() and not _redo(state, node)):
+    ss_windows = _screenshare_final(proj, scope)
+    if not (plan_p.is_file() and not _redo(state, node)) and pres:
+        brief = state.get("brief") or ""
+        band = _pres_caption_band(proj)
+        prompt = (f"Author the cut plan for a {target:.0f}-second short condensed from the DELIVERED vertical of the longform-PRESENTATION "
+                  f"project `{proj.name}` (folder `{proj}`), per your agent definition and longform-to-short.md §2/§3 + its section "
+                  "\"A presentation project\".\n"
+                  f"Sources on ONE clock (the final spine's seconds; there is no paused spine, no chapter card, no clip insert): video `{vert}`, "
+                  f"audio `{paused}` ({total:.2f}s). Transcript: `{proj / 'spine' / 'FINAL-TIME-words.json'}` + "
+                  f"`{proj / 'spine' / 'FINAL-TIME-transcript.txt'}`.\n"
+                  f"What is on screen: `{proj / 'overlays' / 'cues.json'}` (`lines`: each script line's tIn/tOut, `tag` COVER = a full-frame "
+                  "card / chart still, SCREENSHARE = the slide stacked over Mike's webcam; `card` + `state` name the card), the vertical card "
+                  f"stills in `{proj / 'assets' / 'vertical' / 'cards'}` and `{proj / 'assets' / 'vertical' / 'diagrams'}`, the vertical layout in "
+                  f"`{proj / 'overlays' / 'cards-v.json'}`. Docs: `{proj / 'SCRIPT.md'}`, `{proj / 'overlays' / 'CUE-REPORT.md'}`.\n"
+                  f"SCREENSHARE windows (Mike's webcam visible; the caption must stay off his mouth): {faces}. Mark every span `sourced`: "
+                  "COVER or SCREENSHARE"
+                  + (f"; a SCREENSHARE span's caption sits in the band y {band[0]}-{band[1]} (between the slide and the webcam pane)" if band else "")
+                  + ". Nothing is burned in the vertical, so the short is captioned end to end.\n"
+                  f"Target: {target:.0f} s DELIVERED, with a {OUTRO_S:.0f} s outro INSIDE it, so {target - OUTRO_S:.0f} s of spans (+-1 s). "
+                  "Prefer visual variety (name the card / state on screen in `on_screen`); never cut inside a card's own cross-fade.\n"
+                  + (f"HARD RULE (Mike, 2026-11-06): NO WHITEBOARD BEAT under any span; whiteboard windows: {wb_windows}.\n" if wb_windows else "")
+                  + (f"Per-run brief from Mike: {brief}\n" if brief else "")
+                  + f"Return the JSON per your definition AND save it to EXACTLY `{plan_p}` with Bash (a quoted heredoc).")
+        rc, out = C.spawn_agent(state, node, "short-cut-strategist", prompt, f"agent-short-plan-{proj.name}.log")
+        if not C.persist_agent_json(out, plan_p, want_key="spans"):
+            return C._fail(state, node, f"short-cut-strategist returned no usable plan (rc {rc})", out)
+    if not (plan_p.is_file() and not _redo(state, node)) and not pres:
         brief = state.get("brief") or ""
         prompt = (f"Author the cut plan for a {target:.0f}-second short condensed from the DELIVERED vertical of the longform-edited project "
                   f"`{proj.name}` (folder `{proj}`), per your agent definition and longform-to-short.md §2/§3.\n"
@@ -263,19 +466,26 @@ def s_cut_plan(state: ShortState) -> ShortState:
                   f"HARD RULE (Mike, 2026-11-06): NO WHITEBOARD BEAT under any span. A hand-drawn whiteboard scene cannot be rebuilt for 9:16 and "
                   f"a crop slices it, so a span may not overlap any of these whiteboard windows (final time): {wb_windows}. The node FAILS the "
                   "plan otherwise. Pick FACE spans, cards, charts and receipts instead.\n"
+                  + (f"HARD RULE (face mode mixed, 2026-11-10): NO SCREEN-SHARE window under any span. The OBS screen-share layout has no "
+                     f"9:16 face crop, so a span may not overlap any of these screen-share windows (final time): {ss_windows}. The node FAILS "
+                     "the plan otherwise; FACE spans come from the FACE windows listed above only.\n" if ss_windows else "")
                   + (f"Per-run brief from Mike: {brief}\n" if brief else "")
                   + f"Return the JSON per your definition AND save it to EXACTLY `{plan_p}` with Bash (a quoted heredoc).")
         rc, out = C.spawn_agent(state, node, "short-cut-strategist", prompt, f"agent-short-plan-{proj.name}.log")
         if not C.persist_agent_json(out, plan_p, want_key="spans"):
             return C._fail(state, node, f"short-cut-strategist returned no usable plan (rc {rc})", out)
     plan = json.loads(plan_p.read_text(encoding="utf-8"))
-    why = _plan_check(plan, target, total, faces)
+    why = _plan_check(plan, target, total, faces, ("COVER", "SCREENSHARE") if pres else ("FACE", "COVER"))
     if why:
         return C._fail(state, node, f"SHORT-CUT-PLAN.json failed verification: {why} (fix the plan and re-drive; --redo s_cut_plan re-runs the strategist)")
     bad = _whiteboard_overlaps(plan, wb_windows)
     if bad:
         return C._fail(state, node, "SHORT-CUT-PLAN.json puts a span over a WHITEBOARD beat (NO whiteboard in a short, Mike 2026-11-06): "
                                     + "; ".join(bad) + " (re-plan with --redo s_cut_plan; longform-to-short.md section 3 rule 8)")
+    bad = [b.replace("whiteboard", "screen-share") for b in _whiteboard_overlaps(plan, ss_windows)]
+    if bad:
+        return C._fail(state, node, "SHORT-CUT-PLAN.json puts a span over a SCREEN-SHARE window (face mode mixed: no 9:16 face crop): "
+                                    + "; ".join(bad) + " (re-plan with --redo s_cut_plan; longform-to-short.md 16:9-SOURCED MODE)")
     rc, out = C.run_streaming([sys.executable, "-u", str(LINT_SPANS), str(plan_p), str(paused), "--write-snapped", str(snapped_p)], state, node)
     if rc != 0 or not snapped_p.is_file():
         return C._fail(state, node, "lint-short-spans GATE FAILED: a boundary sits mid-vowel; move that span edge in SHORT-CUT-PLAN.json and re-drive", out)
@@ -288,6 +498,21 @@ def gate_short_plan(state: ShortState) -> ShortState:
     # rejected a short's cut; he reviews the FINISHED short at the `short` gate and asks for a second or two of change there.
     # The node stays so the plan is still logged (and an old thread's checkpoint still resolves); it never interrupts.
     return {"steps": C._step(state, "gate_short_plan", "ran", "auto-approved (no plan gate: Mike reviews the finished short)")}
+
+
+def _comp_renders_without_captions(proj: Path):
+    """(ok, comp file name). The 16:9 comp can be rendered with NO captions: it declares `captions?: boolean` and gates its
+    caption track on it, or the video's caption scope is `none` and its generated captions file is EMPTY, so there is no
+    caption layer to switch off (pieverse 2026-11-14: captions OFF by Mike's ruling, the comp carries no captions prop)."""
+    src16 = G.REMOTION / "src" / f"{G._pascal(proj.name)}.tsx"
+    body = src16.read_text(encoding="utf-8", errors="replace") if src16.is_file() else ""
+    if re.search(r"captions\s*\??\s*:\s*boolean", body) and re.search(r"\{\s*captions\s*&&\s*<", body):
+        return True, src16.name
+    cap = G.REMOTION / "src" / f"{G._pascal(proj.name)}Captions.ts"
+    cap_body = cap.read_text(encoding="utf-8", errors="replace") if cap.is_file() else ""
+    if C.captions_off(proj) and re.search(r"ZCAPTIONS[^=]*=\s*\[\s*\]", cap_body):
+        return True, src16.name
+    return False, src16.name
 
 
 PAINT_16X9 = C.SCRIPTS / "short_spans_from_16x9.py"
@@ -315,14 +540,15 @@ def s_paint_16x9(state: ShortState) -> ShortState:
     # the 16:9 comp must honor {captions: false} BEFORE its spans are painted (left-behind 2026-11-03: the prop was only added
     # by s_comp 30 min AFTER this node painted, so the burned captions rode into the slices and s_verify_final caught it
     # after the whole build; the same regex as s_verify_final, run where it can still prevent the bad paint)
-    src16 = G.REMOTION / "src" / f"{G._pascal(proj.name)}.tsx"
-    body = src16.read_text(encoding="utf-8", errors="replace") if src16.is_file() else ""
-    if not (re.search(r"captions\s*\??\s*:\s*boolean", body) and re.search(r"\{\s*captions\s*&&\s*<", body)):
-        return C._fail(state, node, f"{src16.name} does not honor inputProps.captions: declare `captions?: boolean` on the "
+    ok16, name16 = _comp_renders_without_captions(proj)
+    if not ok16:
+        return C._fail(state, node, f"{name16} does not honor inputProps.captions: declare `captions?: boolean` on the "
                        "exported comp and render `{captions && <Captions />}`, then re-drive (its burned captions would ride "
                        "into every 9:16 span)")
+    # --track-face always (canton 2026-11-10, final visual-qa): it only engages on a FACE span whose sampled face centres spread
+    # more than 8 percent; a static median crop cut Mike's face at the right edge when he leaned at the end of span 2 (spread 20)
     rc, out = C.run_streaming([sys.executable, "-u", str(PAINT_16X9), str(proj), "--plan", str(plan_p), "--scope", scope,
-                               "--face-from-render"], state, node)
+                               "--face-from-render", "--track-face"], state, node)
     m = re.search(r"^MASTER-PAINTED .* spans=(\d+)", out or "", re.M)
     if rc != 0 or not m:
         return C._fail(state, node, "short_spans_from_16x9.py failed (see above)", out)
@@ -364,6 +590,8 @@ def s_variants(state: ShortState) -> ShortState:
     proj, scope = _proj(state), state.get("scope", "ALL")
     if state.get("stub"):
         return {"steps": C._step(state, node, "stub")}
+    if PRES(proj):
+        return {"steps": C._step(state, node, "skipped", "presentation project: no Envato / ChatGPT covers, its cards are already native vertical")}
     plan = json.loads((proj / "SHORT-CUT-PLAN.snapped.json").read_text(encoding="utf-8"))
     covers = _cover_windows_final(proj, scope)
     sdir = proj / "assets" / "short"
@@ -504,7 +732,10 @@ SLIVER_S = 0.5   # a cover overlap this short at a span edge is a burn sliver: a
 
 
 def _whiteboard_windows_final(proj: Path, scope: str):
-    """COVER-PLAN whiteboard rows (cover beats AND screen-share bodies) as (a, b) windows in FINAL seconds."""
+    """COVER-PLAN whiteboard rows (cover beats AND screen-share bodies) as (a, b) windows in FINAL seconds (a presentation
+    project: its cue table's whiteboard cards)."""
+    if PRES(proj):
+        return _pres_whiteboard_windows(proj)
     sh, _, _ = _sh_fn(proj, scope)
     plan = json.loads(C.doc(proj, "cover_plan").read_text(encoding="utf-8"))
     rows = [r for r in (plan.get("cover_beats") or []) if str(r.get("cover_type", "")) == "whiteboard"]
@@ -666,8 +897,8 @@ def s_extract(state: ShortState) -> ShortState:
     work = _work(proj)
     if (work / "spans.json").is_file() and not _redo(state, node):
         return {"steps": C._step(state, node, "skipped", "spans.json present")}
-    rc, out = C.run_streaming([sys.executable, "-u", str(EXTRACT), str(proj / "SHORT-CUT-PLAN.snapped.json"), str(proj / f"{proj.name}-VERTICAL.mp4"),
-                               str(C.paused_spine(proj, scope)), str(work)], state, node)
+    rc, out = C.run_streaming([sys.executable, "-u", str(EXTRACT), str(proj / "SHORT-CUT-PLAN.snapped.json"), str(_vertical_master(proj)),
+                               str(_vo_spine(proj, scope)), str(work)], state, node)
     if rc != 0 or not (work / "spans.json").is_file():
         return C._fail(state, node, "short_extract_spans.py failed (frame-count mismatch?)", out)
     t = json.loads((work / "spans.json").read_text(encoding="utf-8"))
@@ -684,6 +915,13 @@ def s_captions(state: ShortState) -> ShortState:
         return {"steps": C._step(state, node, "stub")}
     work = _work(proj)
     table = json.loads((work / "spans.json").read_text(encoding="utf-8"))
+    name = _comp_id(proj) + "Captions.ts"
+    dest = G.REMOTION / "src" / name
+    pres = PRES(proj)
+    # a presentation short's captions file is kept once generated for this span table (clip-evals 2026-11-17: the delivered
+    # short was rendered off a hand-run captions file; regenerating it under a finished render would desync the two)
+    if pres and dest.is_file() and dest.stat().st_mtime >= (work / "spans.json").stat().st_mtime and not _redo(state, node):
+        return {"steps": C._step(state, node, "skipped", f"{name} present (newer than spans.json); --redo s_captions regenerates it")}
     faces = _burned_final(proj, scope)            # the frames that already carry burned captions (not every FACE window)
     raw = work / "captions.raw.ts"
     # Group ONLY the words the short keeps: the builder groups 2 words at a time, and a group formed on the full transcript can
@@ -712,13 +950,20 @@ def s_captions(state: ShortState) -> ShortState:
     # the captured h is still JS-escaped (they\'re): unescape it, or the re-escape at write time doubles it and the short
     # shows a literal backslash (growth-vs-product 2026-10-23)
     rows = sorted((float(t), re.sub(r"\\(.)", r"\1", h)) for t, h in re.findall(r"\{\s*t:\s*([\d.]+)\s*,\s*h:\s*'((?:[^'\\]|\\.)*)'\s*\}", raw.read_text(encoding="utf-8")))
-    ar = C.doc(proj, "as_recorded").read_text(encoding="utf-8")
-    fixes = [(w, rr) for w, rr in MISHEAR_RE.findall(ar)]
-    kept, windows = [], []
+    fixes = _mishear_fixes(_mishear_source(proj), _sh_fn(proj, scope)[0])
+    fps = float(table.get("fps") or 30)
+    band = _pres_caption_band(proj) if pres else None
+    ss_wins = _pres_windows(proj, "SCREENSHARE") if band else []
+    kept, windows, wins_f, bands = [], [], [], []
     for s in table["spans"]:
         if s.get("silent"):
             continue
         a, b, o = float(s["src_start"]), float(s["src_end"]), float(s["out_start"])
+        # caption windows in WHOLE FRAMES (clip-evals 2026-11-17: a window end written as 4.367 s ran one frame past the seam at
+        # 131/30 = 4.36667 s and the caption sat on the next span's card): the span's frames come from the frame table
+        f0 = int(round(o * fps))
+        f1 = f0 + int(s.get("frames") or round((b - a) * fps))
+        to_f = lambda t: min(f1, max(f0, int(round((o + t - a) * fps))))
         # the part(s) of this span with NO burned captions = the span minus the burned-caption windows
         segs = [(a, b)]
         for fa, fz in faces:
@@ -733,7 +978,13 @@ def s_captions(state: ShortState) -> ShortState:
                         nxt.append((fz, y))
             segs = nxt
         for x, y in segs:
-            windows.append([round(o + (x - a), 3), round(o + (y - a), 3)])
+            fu, fv = (f0 if x <= a + 1e-6 else to_f(x)), (f1 if y >= b - 1e-6 else to_f(y))
+            windows.append([_fsec(fu, fps), _fsec(fv, fps)])
+            wins_f.append([fu, fv])
+            for sa, sb in ss_wins:   # a SCREENSHARE stretch: the caption goes in the band above the webcam pane
+                ba, bb = max(fu, to_f(sa)), min(fv, to_f(sb))
+                if bb > ba:
+                    bands.append((ba, bb))
             for i, (t, h) in enumerate(rows):
                 t0, t_next = t, (rows[i + 1][0] if i + 1 < len(rows) else float("inf"))
                 # a group whose first word's onset Whisper stamped just BEFORE the span start (its token absorbed the pause:
@@ -742,11 +993,13 @@ def s_captions(state: ShortState) -> ShortState:
                 if x - 0.6 <= t < x - 0.05 and not any(float(o2["src_start"]) <= t < float(o2["src_end"]) for o2 in table["spans"]):
                     t = x
                 if x - 0.05 <= t < y:
-                    for w, rr in fixes:
+                    e = min(y, max([we for ws_, we in wl if t0 - 0.05 <= ws_ < t_next] or [t]))
+                    for w, rr, tcs in fixes:
+                        if tcs and not any(t0 - MISHEAR_TOL_S <= tc <= e + MISHEAR_TOL_S for tc in tcs):
+                            continue  # a timecoded fix touches only the group said at its moment
                         # whole words only: a bare substring turned "accountABle" into "accounta/ble" via "AB" -> "A/B"
                         h = re.sub(r"(?<!\w)" + re.escape(w) + r"(?!\w)", lambda m, rr=rr: rr, h, flags=re.I)
-                    e = min(y, max([we for ws_, we in wl if t0 - 0.05 <= ws_ < t_next] or [t]))
-                    kept.append((round(o + (t - a), 3), h.lower(), round(o + (e - a), 3)))
+                    kept.append((round(o + (t - a), 3), h.lower(), min(round(o + (e - a), 3), _fsec(fv, fps))))
     kept.sort()
     # a group on screen under 0.3 s reads as a flash ('group.' for 4 frames, quant 2026-11-06, final visual-qa): when the group before it
     # runs straight into it, the word joins that group, which then holds until this word ends
@@ -758,19 +1011,46 @@ def s_captions(state: ShortState) -> ShortState:
         else:
             merged.append((t, h, e))
     kept = merged
-    name = _comp_id(proj) + "Captions.ts"
-    dest = G.REMOTION / "src" / name
     body = [f"// {name}: GENERATED by the longform graph's short lane (build_captions.py montserrat 2/4 on FINAL-TIME words, COVER-sourced frames only). NEVER hand-edit.",
             "// Times are SHORT seconds (already remapped through the span table).",
-            "export const CAPTION_WINDOWS: [number, number][] = [" + ", ".join(f"[{x:.3f}, {y:.3f}]" for x, y in windows) + "];",
-            "// e = the group's last word's END (short seconds): the comp holds the group until e (at least 1.3 s, never past the next group)",
+            "// Window edges are whole frames written as seconds rounded DOWN (so `t < end` in seconds stops on the seam frame);",
+            "// compare caption times in WHOLE FRAMES (Math.round(s * CAPTION_FPS), or CAPTION_WINDOWS_F), never in raw seconds.",
+            "export const CAPTION_WINDOWS: [number, number][] = [" + ", ".join(f"[{x:.4f}, {y:.4f}]" for x, y in windows) + "];",
+            f"export const CAPTION_FPS = {fps:g};",
+            "export const CAPTION_WINDOWS_F: [number, number][] = [" + ", ".join(f"[{x}, {y}]" for x, y in wins_f) + "];",
+            *([f"// SCREENSHARE frames (short frames, end exclusive): the caption sits in the band y {band[0]}-{band[1]}, between the "
+               "slide and the webcam pane (overlays/cards-v.json), never on his mouth",
+               f"export const CAPTION_BAND = {{ top: {band[0]}, bottom: {band[1]} }};",
+               "export const CAPTION_BAND_F: [number, number][] = [" + ", ".join(f"[{x}, {y}]" for x, y in bands) + "];"] if pres and band else []),
+            "// e = the group's last word's END (short seconds): the comp holds the group until e (at least 1.3 s, never past the next group",
+            "//     and never past the end of the CAPTION_WINDOWS window that holds its t)",
             "export const ZCAPTIONS: { t: number; h: string; e: number }[] = ["]
     body += [f"  {{ t: {t:7.2f}, h: '{h.replace(chr(92), chr(92) * 2).replace(chr(39), chr(92) + chr(39))}', e: {e:7.2f} }}," for t, h, e in kept]
     body += ["];", ""]
     dest.write_text("\n".join(body), encoding="utf-8", newline="\n")
+    (proj / "assets" / "short").mkdir(parents=True, exist_ok=True)
     (proj / "assets" / "short" / "captions.json").write_text(json.dumps({"file": str(dest), "groups": len(kept), "cover_windows_short": windows,
                                                                         "style": "montserrat 900 lowercase, 12px black stroke, bottom-center, topmost"}, indent=1), encoding="utf-8")
     return {"steps": C._step(state, node, "ran", f"{len(kept)} caption groups over {len(windows)} COVER-sourced window(s) -> {name}")}
+
+
+def _fsec(f: int, fps: float) -> float:
+    """Frame f as seconds, rounded DOWN to 4 decimals: a window edge then sits on its own frame in a seconds comparison
+    (`t >= a`, `t < b`) AND in a frame one (Math.round(s * fps))."""
+    import math
+    return math.floor(f / fps * 1e4 + 1e-6) / 1e4
+
+
+def _mishear_source(proj: Path) -> str:
+    """The text the mishear fixes come from: AS-RECORDED.md, or (presentation) the `## Whisper mishears` sections of SCRIPT.md /
+    overlays/CUE-REPORT.md (the section only: those files quote "x" -> "y" pairs elsewhere)."""
+    if not PRES(proj):
+        return C.doc(proj, "as_recorded").read_text(encoding="utf-8")
+    out = []
+    for f in (proj / "SCRIPT.md", proj / "overlays" / "CUE-REPORT.md"):
+        body = f.read_text(encoding="utf-8", errors="replace") if f.is_file() else ""
+        out += [m.group(0) for m in re.finditer(r"^##\s+Whisper mishears.*?(?=^##\s|\Z)", body, re.M | re.S)]
+    return "\n".join(out)
 
 
 def s_comp(state: ShortState) -> ShortState:
@@ -790,7 +1070,36 @@ def s_comp(state: ShortState) -> ShortState:
     # 2026-10-02: 26.53 s of spans + 3.0 = 29.53 s failed the 30 s target by construction)
     outro = max(OUTRO_S, round(_target(state) - float(table["spans_total_seconds"]), 3))
     total = float(table["spans_total_seconds"]) + outro
-    if not (comp.is_file() and report.is_file() and not _redo(state, node)):
+    frames_rule = ("Compare EVERY caption time in whole FRAMES (Math.round(s * FPS), or the generated CAPTION_WINDOWS_F), never in raw "
+                   "seconds: a seconds comparison let a caption ride one frame past a span seam onto the next card (clip-evals 2026-11-17).\n")
+    if not (comp.is_file() and report.is_file() and not _redo(state, node)) and PRES(proj):
+        band = _pres_caption_band(proj)
+        prompt = (f"Build the SHORT composition for the longform-PRESENTATION project `{proj.name}` (folder `{proj}`) per "
+                  "`video-creation/longform-edited/skills/longform-to-short/longform-to-short.md` §5 Stage B + its section \"A presentation "
+                  "project\", and your SHORT section. The source is the delivered presentation VERTICAL (already native vertical, nothing burned "
+                  "in): no variants, no rebuilt cards, captions over EVERY span.\n"
+                  f"Composition id + file: `{comp_id}` -> `{comp}`, 1080x1920, fps 30, DUR = round({total:.3f} * 30) "
+                  f"(spans {table['spans_total_seconds']}s + {outro:.3f}s outro). Register in Root.tsx.\n"
+                  f"Span table + intermediates (the render's public dir is THIS folder): `{work}` -> spans.json (out_start/frames per span; "
+                  "one muted OffthreadVideo per span-NN.mp4 laid end to end in Sequences, NEVER seeking into the master). Seams: a plain cut "
+                  "between two settled card states, else a fast ~0.3 s hand-rolled hit.\n"
+                  f"Captions: import ZCAPTIONS + CAPTION_WINDOWS (+ CAPTION_WINDOWS_F, CAPTION_BAND, CAPTION_BAND_F when present) from "
+                  f"`{G.REMOTION / 'src' / (comp_id + 'Captions.ts')}` (SHORT seconds). Montserrat house style. Over a full-frame card: the "
+                  "SAFE ZONE block (bottom pad ~320 px, maxWidth <= 860, never on card text). "
+                  + (f"Inside CAPTION_BAND_F (a SCREENSHARE stretch: the slide stacked over Mike's webcam) the caption sits in the band y "
+                     f"{band[0]}-{band[1]}, between the slide and the webcam pane, one line, the pop scaled about the band's centre: the usual "
+                     "block would sit on his mouth. " if band else "")
+                  + "\n" + frames_rule
+                  + f"Outro: the last {outro:.3f} s hold the last span's final frame and bring in a full-frame card reading exactly "
+                  "\"WATCH THE FULL VIDEO\" in the video's OWN card look (assets/card-sources/ tokens, the portrait reflow), no em dash, with a "
+                  "downward arrow glyph; the CTA voice is mixed later, the comp has no audio.\n"
+                  "Run lint_comp_imports.py + lint_covers.py on the comp, bundle once and smoke-test one still per span, each seam frame and the "
+                  f"outro, LOOK at them, then save your JSON report to EXACTLY `{report}` (draft may be null). Do NOT run the full render. "
+                  "Never end your turn mid-command.")
+        rc, out = C.spawn_agent(state, node, "comp-builder", prompt, f"agent-short-comp-{proj.name}.log")
+        if not report.is_file():
+            C.persist_agent_json(out, report, want_key="comp_file")
+    if not (comp.is_file() and report.is_file() and not _redo(state, node)) and not PRES(proj):
         prompt = (f"Build the SHORT composition for the longform-edited project `{proj.name}` (folder `{proj}`) per "
                   f"`video-creation/longform-edited/skills/longform-to-short/longform-to-short.md` §5 Stage B and your SHORT section.\n"
                   f"Composition id + file: `{comp_id}` -> `{comp}`, 1080x1920, fps 30, DUR = round({total:.3f} * 30) "
@@ -803,7 +1112,7 @@ def s_comp(state: ShortState) -> ShortState:
                   "inside CAPTION_WINDOWS, exactly as generated: s_captions already removed the frames that carry burned captions, and in 16:9-sourced "
                   "mode NOTHING is burned so the windows cover every span; never clip them further). Montserrat house style, in the SAFE ZONE: "
                   "bottom pad ~320 px so the block sits below a fit_window letterbox (y 656-1264) and above the platform UI, maxWidth <= 860 so "
-                  "the pop overshoot + stroke stay inside 1080 px; a caption never sits on card text.\n"
+                  "the pop overshoot + stroke stay inside 1080 px; a caption never sits on card text.\n" + frames_rule +
                   f"Variant overlays (Mike's variety rule): `{proj / 'assets' / 'short' / 'variants.json'}`; for each entry overlay the file full-frame over "
                   "its `overlay_short` window (copy the file into the public dir under variants/ first), with the same ingress the vertical used.\n"
                   f"Native-vertical cards (16:9-sourced mode only): `{proj / 'assets' / 'short' / 'vertical-cards.json'}` when it exists; overlay "
@@ -844,6 +1153,11 @@ def _latest_short_video(proj: Path, secs: int):
     d = _sdir(proj)
     c = [(int(m.group(1)), p) for p in (d.glob(f"{proj.name}-SHORT-{secs}s-v*-video.mp4") if d.is_dir() else [])
          for m in [re.search(r"-v(\d+)-video\.mp4$", p.name)] if m]
+    if not c and PRES(proj):
+        # the first presentation short (clip-evals 2026-11-17) was rendered by hand as `<p>-SHORT-video.mp4`: adopt it as v0
+        legacy = d / f"{proj.name}-SHORT-video.mp4"
+        if legacy.is_file():
+            return legacy
     return max(c)[1] if c else None
 
 
@@ -856,7 +1170,8 @@ def s_render(state: ShortState) -> ShortState:
     latest = _latest_short_video(proj, secs)
     if latest and not _redo(state, node):
         return {"steps": C._step(state, node, "skipped", f"{latest.name} present")}
-    n = (int(re.search(r"-v(\d+)-video", latest.name).group(1)) + 1) if latest else 1
+    mv = re.search(r"-v(\d+)-video", latest.name) if latest else None
+    n = (int(mv.group(1)) + 1) if mv else 1
     out = _sdir(proj) / f"{proj.name}-SHORT-{secs}s-v{n}-video.mp4"
     work = _work(proj)
     rc, res = C.run_streaming([sys.executable, "-u", str(G.RENDER_COMP), str(proj), "--mode", "final", "--comp", _comp_id(proj),
@@ -1007,10 +1322,9 @@ def s_verify_final(state: ShortState) -> ShortState:
     # (2) every short: no stroked / dark-on-light text sliced by the left or right 2 percent margin (CTA card excluded).
     edge = None
     if (proj / "assets" / "short" / "from-16x9.json").is_file():
-        src16 = G.REMOTION / "src" / f"{G._pascal(proj.name)}.tsx"
-        body = src16.read_text(encoding="utf-8", errors="replace") if src16.is_file() else ""
-        if not (re.search(r"captions\s*\??\s*:\s*boolean", body) and re.search(r"\{\s*captions\s*&&\s*<", body)):
-            probs.append(f"16:9-sourced: {src16.name} does not honor inputProps.captions (declare `captions?: boolean` and render "
+        ok16, name16 = _comp_renders_without_captions(proj)
+        if not ok16:
+            probs.append(f"16:9-sourced: {name16} does not honor inputProps.captions (declare `captions?: boolean` and render "
                          "`{captions && <Captions />}`), so its burned captions ride into the 9:16 spans")
         unc = _uncovered_16x9_covers(proj, scope)
         if unc:

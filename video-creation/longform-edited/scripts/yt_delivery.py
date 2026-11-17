@@ -39,6 +39,8 @@ pause before it (card pauses AND clip inserts). Its name is, in order: `yt-deliv
 else the EDIT-PLAN `## CHn - NAME` heading, title-cased. YouTube's rules are checked (first at 0:00, at least 3, each at
 least 10 s). Codes: `yt_license_code` of each MUSIC-PLAN track_id in `video-creation/assets/music/library.json`, in play
 order, a track used twice listed once; a missing code FAILS.
+A NO-MUSIC plan (`"no_music": true`, no beds; pieverse 2026-11-14) takes its chapters from the EDIT-PLAN `## CHn - NAME (M:SS.s-`
+headings instead, timed and named by the same rules, and prints no music line.
 A project with NO MUSIC-PLAN.json (a longform-presentation format) names its chapters in yt-delivery.json as
 `"chapter_stamps": [["0:00", "Intro"], ["1:25", "..."]]` (none = no chapter block) and its music as
 `"music_track_ids": ["..."]` (resolved through the same library; none = no music line).
@@ -186,8 +188,12 @@ def main():
         # chapter, and each starts where the MUSIC lands (a splice before the chapter, a right-aligned climb), not where the
         # chapter does: one chapter per distinct chapter, timed by its EDIT-PLAN heading span (`## CHn - NAME (M:SS.s-...`).
         # A one-bed-per-chapter plan keeps its bed's span start, exactly as before.
-        carved = any(b.get("cover") == "section" for b in plan["beds"])
-        for b in plan["beds"]:
+        beds = plan.get("beds") or []
+        carved = any(b.get("cover") == "section" for b in beds)
+        if not beds and plan.get("no_music") is True:
+            # a NO-MUSIC plan (pieverse, 2026-11-14) has no bed rows: one chapter per EDIT-PLAN `## CHn - NAME (M:SS.s-` heading
+            beds = [{"chapter": ch, "span": [s, s]} for ch, s in sorted(starts.items(), key=lambda kv: kv[1])]
+        for b in beds:
             if b["chapter"] in done:
                 continue
             done.add(b["chapter"])
@@ -226,7 +232,7 @@ def main():
             src = str(b.get("source_file") or b.get("file") or "").replace("\\", "/").lower()
             hit = next((k for k in known if k and (f"/{k}/" in src or f"_{k}_" in src)), None)
             return hit or (plan.get("track") or {}).get("id")
-        tids = [_tid(b) for b in plan["beds"]]
+        tids = [_tid(b) for b in plan.get("beds") or []]
     else:
         tids = list(judg.get("music_track_ids") or [])
     codes, seen = [], set()

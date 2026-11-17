@@ -13,7 +13,9 @@ one is an EDIT of that image, never a fresh generation: the face stays a likenes
    after upload, so the live thumbnail is the only durable copy):
    `curl.exe -fsSL -o media/vscode-coding/<p>/thumbnail/reference-<videoId>.jpg https://i.ytimg.com/vi/<videoId>/maxresdefault.jpg`
    (1280x720). The "Learning Python" chain so far: `lgZNH_F3Iuo` ("Running Python for the first time", play-icon
-   tile) -> print-function (printer-icon tile, "10 Uses of the Python print Function").
+   tile) -> print-function (printer-icon tile, "10 Uses of the Python print Function") -> comments (`zaZ0DGfgzqQ`,
+   "#" speech-bubble tile, "Python Has No Comment Blocks") -> variables (2026-11-09, open-box-with-x tile,
+   "How to Use Variables in Python"; the rejected icons were `x = 5` and a label tag). Every episode's icon differs.
 2. **Three takes in parallel** with Higgsfield `nano_banana_2` (`video-creation/skills/higgsfield-generate/`),
    `--image <reference> --aspect_ratio 16:9 --resolution 2k --wait --json > takes/take-<x>.json`; the full-res PNG is
    the `result_url` in that JSON (`min_result_url` is a webp preview). About 2752x1536 each, ~1 min.

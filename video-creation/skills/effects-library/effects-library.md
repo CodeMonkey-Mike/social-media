@@ -13,11 +13,13 @@ they are just effects, regardless of sound or not."_
   source fired SILENT, as most of `halloween-2022`, stays silent unless the screenplay pairs a catalog sound with it.)
 - **Devices belong to a THEME.** A theme is the set of devices, palette, textures, graphics and sounds that make one
   look (first theme: `kinetic-text-2023`, Mike's 2023 "Growth Marketer vs Growth Hacker" video; second: `halloween-2022`,
-  his 2022 "Bear Markets" video). **A video picks ONE theme and declares which of its devices it uses; a longer video may
+  his 2022 "Bear Markets" video; third: `elegant-promo-2022`, the "Elegant Promo" AE montage in his 2022 "European Energy
+  Crisis" video). **A video picks ONE theme and declares which of its devices it uses; a longer video may
   pick a theme per CHAPTER.** Flourishes inside a theme (the icons, the scatter words) are a per-video decision written in
   the screenplay, never sprinkled across every video by default.
 - **Which theme:** `kinetic-text-2023` for a bright head-to-head / straight-to-the-point explainer; **`halloween-2022` for
-  a horror / Halloween register** (a scary, high-stakes explainer). One theme per video or per chapter, never two themes
+  a horror / Halloween register** (a scary, high-stakes explainer); **`elegant-promo-2022` for a serious news-promo run of
+  2 to 4 dated or labelled fact cards** over photos or footage (cool and measured, never loud). One theme per video or per chapter, never two themes
   mixed inside one chapter. Each theme row's `rule` says how it is used whole.
 - **The catalog of record is `video-creation/assets/effects/library.json`**: `devices` (keyed by id, the motion numbers at
   1920x1080, the sound ids and offsets, the asset paths, the source-video cues) + `themes` (keyed by id: source, look,
@@ -64,7 +66,7 @@ adding a device, a `browse_cues` window or a demo render (it skips excerpts alre
   `halloween-2022`); the id is the stable key every engine, doc and screenplay names, the label is what the dashboard, the reports and
   new screenplays say. A theme's `sources` are its source videos keyed by a short name (`main`, `skills`, `hw`) with the video path, the
   duration and the project; a device's `browse_cues` are `[{src, t0, t1, label}]` windows of those videos = what the dashboard plays
-  as "source". A theme can have MORE THAN ONE source video (Energetic has 004 and 007): the later source adds devices and variants to
+  as "source". A theme can have MORE THAN ONE source video (Energetic has 004, 005 and 007): the later source adds devices and variants to
   the same theme, it never starts a second theme (Mike, 2026-10-31: "it's all the same theme").
 
 ## 3. Picking (the screenplay step)
@@ -79,6 +81,14 @@ adding a device, a `browse_cues` window or a demo render (it skips excerpts alre
    was silent in its source stays silent unless the [SHOW] line pairs a catalog sound (written there, by id).
 4. The edit-plan author places every named device at the spoken word's onset (overlays.md section 2); an unplaced
    device is an orphan, exactly like an unplaced asset.
+5. **An After Effects template device is OPTIONAL and never blocks a run (Mike, 2026-11-10, AI vs ML: "if there is any issue
+   with using that effect, I don't want that to become a blocker. The effect is not worth it").** This covers `kt-wave-wall`,
+   `kt-text-wall`, `kt-boxed-words`, `kt-emoji-pop`, `hw-subscribe-like-bell` and any later device whose `build` says render the
+   template. Builders render with headless `aerender` only. Never open the After Effects app (`AfterFX.exe` / `AfterFX.com -r`,
+   which pops the UI on Mike's screen), and never iterate on a template. If the one headless render fails or the template
+   misbehaves, drop the device and use the COVER-PLAN `bench` for that beat, say so in the builder's report, and move on.
+   Put a rendered template clip under `assets/kt-renders/`, not in a reconciled asset folder (an mp4 in `card-slides/` is
+   an orphan for `verify_assets`).
 
 ## 4. Adding a device or a theme
 
@@ -93,7 +103,46 @@ adding a device, a `browse_cues` window or a demo render (it skips excerpts alre
 3. A NEW ENGINE: `remotion/src/effects/<theme>/<Device>.tsx`, parametric (every number from the row is a prop with the
    row's value as default), plus a row in the theme's demo comp; set `engine` on the device row; `check` must PASS.
 
-## 5. State (2026-10-31)
+## 5. State (2026-11-09)
+
+- **NEW THEME `elegant-promo-2022` (label "Elegant promo", Mike's to rename) captured 2026-11-09: the "Elegant Promo" After Effects
+  montage (a Motion Array template, 3 of its 12 scene slots) in Mike's CodeMonkey 043 "European Energy Crisis in 2022 Explained" at
+  1:07.200-1:27.020, ONE clip on V4 of `energy-crisis-final.prproj`. FIVE devices, NO ENGINE YET (the comp-builder builds them to the
+  row): `ep-elegant-promo` (the composite: one picture per 7.007 s slot, slow push-in, white accents) and its parts `ep-iris-open` (a
+  pinpoint circle opens the first picture out of a navy field), `ep-circle-burst` (six staggered circles carry the next picture in: the
+  scene change), `ep-disc-sweep` (two translucent magenta discs scale in from beyond a corner or the top edge) and `ep-label-title`
+  (teal-to-blue bar wipe, Roboto Black title tracking in, Roboto Regular caps sub-line). As for halloween-2022's templates, the AE
+  keyframes live in the binary .aep, so every motion number was MEASURED on the clean render (`_source/render/Main-avi-crf6.mp4`:
+  radial profiles, circle fits, colour masks, feature tracking) at the template's own pace; the Premiere placement (scale 201 percent,
+  speed 118.96 percent, no transitions) and the bed level were read from the .prproj; text, fonts and the 8 Control colours from the
+  .aep strings (Mike kept the template palette: magenta #C3264B, plum #1C0924, teal #38C1A9, blue #135FB5, navy field #04090F as
+  rendered). Two facts the brief had wrong: the clip is rate-stretched, so the whole 23.657 s render plays (only its last 0.079 s is
+  unused), and the 4K excerpt starts at main 57.057, not 58.0. SILENT in its source (no SFX in the window; `_source/sfx/` is reference
+  only, nothing added to the SFX catalog); the 043 bed is `leatherface` (intro cut) at 0 dB clip level, ~7 dB under the voice. Time map
+  `themes/elegant-promo-2022/CUE-SHEET.md`; sources `themes/elegant-promo-2022/_source/` (copied from the E: drive, now unplugged: the
+  only local copies, gitignored); browse page `browse/elegant-promo/gallery.html` (14 source excerpts). Pick it for a serious
+  news-promo run of 2 to 4 dated or labelled fact cards; first use planned: a serious, slow-paced AI-jobs video on the crypto channel.
+
+## 5c. State (2026-11-09)
+
+- **THIRD source of `kinetic-text-2023` ("Energetic") captured 2026-11-09: Mike's 2023 "How to choose between Growth Marketing and Growth
+  Hacking" (GrowthMarketingMike 005, 1:09), decoded from `Delivery/Copied_choose revision/choose revision.prproj` (8 video + 6 audio tracks,
+  16 nested sequences; the named Transform presets carry their own keyframes, all read). ELEVEN new devices, NO ENGINE YET (the
+  comp-builder builds them to the row): `kt-versus-stack` (A / VS / B dropping in over the face under a dark-teal matte, whoosh-4 each),
+  `kt-spin-cut` (the 0:27 "vortex": a full 360 in 5 to 8 frames, mirror-tiled, shutter 260), `kt-wave-wall` (the Scene_22 MOGRT, two phrases
+  in alternating outlined / green rows: RENDER the template like `kt-text-wall`), `kt-meme-inset`, `kt-emoji-pop` (Smiles.aegraphic),
+  `kt-boxed-words` (the Scene_11 MOGRT: CAN / SHOULD), `kt-camera-wobble` (a modifier: the 13-key 8.6 s drift every held card floats on),
+  `kt-snap-zoom` (face jump cuts 100 <-> 120 / 130 in 2 frames), `kt-shake-cut`, `kt-grid-zoom-in` (the open) and `kt-topic-backdrop`
+  (DOCUMENTATION ONLY: it keys the face). SIX variants: `kt-statement-over-broll.paper`, `kt-lower-third-band.verdict_pop`,
+  `kt-side-panel.snap_reframe`, `kt-whip-cut.offset_pan`, `kt-caption-highlight.payoff_120`, `kt-icon-pop.cutout_sticker`. ONE new sound:
+  `punch-2-2023` ("Punch 2.mp3", shared by 004 and 005; the catalog had logged it as a byte-twin of Punch 1 because the sizes match,
+  but it is a different, louder hit, so 004's TECHNICAL SKILLS pop now names it too); every other 005 sound byte-matches the catalog. The bed
+  was `concrete-mazes` at -15 -> -23 dB. "The aqua background" Mike asked about is the
+  turquoise suede already in `textures/` (the 004 file): in a house video it backs the cards, panels and the versus stack, never a keyed face.
+  Time map: the third section of `themes/kinetic-text-2023/CUE-SHEET.md`. The three template / texture files (the glitch-noise texture, Scene_11's .aep, the Smiles
+  pack) were copied from D: once it was back, and the browse page carries the 005 excerpts. First video to pick from it: `longform-edited/media/AI vs ML` (AI Engineering channel).
+
+## 5b. State (2026-10-31)
 
 - **Second source of `kinetic-text-2023` ("Energetic") captured 2026-10-31: Mike's 2023 "Skills of a Growth Engineer" (GrowthMarketingMike
   007, 1:13), decoded from `Delivery2/Skills GM_1_1.prproj` (9 video + 5 audio tracks, 13 nested sequences; the AE templates measured on

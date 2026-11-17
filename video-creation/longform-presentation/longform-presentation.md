@@ -17,7 +17,7 @@ exists because these are much less effort than longform-edited, so never run a p
 | **1. Slide-deck lecture** (a deck `.html` in the folder, "Section N · Lecture M" eyebrow) | `media/deck-lecture/` | history-of-crypto 2026-10-13, QE 2026-06-06 | 1 defumble -> 2 desilence -> 3 transcribe -> 4 spotlight | the EDIT's own track; Mike runs his own Enhance Speech pass after acceptance | his Whop course (`whop.com/cryptorich`), uploaded by him |
 | **2. Crypto-chart screen share** (TradingView / DexScreener, webcam PiP, no deck) | `media/desilence-only/` | what-to-buy 2026-10-13 | 1 (only if the take has retakes) -> 2 desilence; the EDIT is the deliverable, crf 18 | the EDIT's own track | his public uploads, by him |
 | **3. VS Code coding screen share** (single take, coding live while talking) | `media/vscode-coding/` | print-function 2026-10-16 | **NO edit at all**: no defumble, no desilence, no transcribe. Music only: `skills/music-bed/` + a series thumbnail `skills/thumbnail/` | intro sting + elevator bed mixed under the untouched voice; no Enhance Speech | the **AI Engineering Simplified** YouTube channel ("Learning Python" series), uploaded by him |
-| **4. Standard presentation** (deck screen share with card overlays; a deck `.html` + a notes doc (never redundant with the slides) in the folder, master in `raw/`, webcam PiP + the Premium Membership box, free talk) | `media/standard/` | near-vs-tao 2026-10-24 | 1 defumble (if retakes) -> 2 desilence -> **Mike's Enhance Speech pass** on the EDIT's audio (remuxed in `spine/`) -> 3 transcribe it -> a few overlays INSIDE the deck area (deck cards, a system-design chart, an animated chart, a whiteboard beat; webcam + CTA never covered, 2026-10-31), ONE render, no draft, no video comp: `skills/card-overlays/` | his enhanced track, stream-copied | YouTube by him + the longform queue (rumble / bitchute / facebook) |
+| **4. Standard presentation** (deck screen share with card overlays; a deck `.html` + a notes doc (never redundant with the slides) in the folder, master in `raw/`, webcam PiP + the Premium Membership box, free talk; or SCRIPTED, chosen at the start: "Scripted option" below, `skills/script/script.md`) | `media/standard/` | near-vs-tao 2026-10-24 | 1 defumble (if retakes) -> 2 desilence -> **Mike's Enhance Speech pass** on the EDIT's audio (remuxed in `spine/`) -> 3 transcribe it -> a few overlays INSIDE the deck area (deck cards, a system-design chart, an animated chart, a whiteboard beat; webcam + CTA never covered, 2026-10-31), ONE render, no draft, no video comp: `skills/card-overlays/` | his enhanced track, stream-copied | YouTube by him + the longform queue (rumble / bitchute / facebook) |
 
 Format 3 is expected to be the MOST common (many Python coding videos). Why no edit: it is one deliberate take,
 fumbles are fine, and the silences are content: Mike may be typing code without speaking and the viewer must not
@@ -155,7 +155,8 @@ python skills/music-bed/music_bed.py "media/vscode-coding/<p>/raw/<timestamp>.mk
 ```
 Mike speaks levels as **Premiere clip gain** (keyframe dB on the clip), never absolute dBFS. Ask for the cue line if
 he has not named it. Thumbnail: **`skills/thumbnail/thumbnail.md`** (edit the previous episode's published
-thumbnail with nano_banana_2, three takes, he picks).
+thumbnail with nano_banana_2, three takes, he picks). LinkedIn version (the channel standard, any format on AI
+Engineering Simplified): **`../skills/linkedin-cut/linkedin-cut.md`** when the FINAL is over 10:00.
 
 ## Format 4 (standard) — deck cards, charts and a whiteboard beat INSIDE the deck area
 
@@ -165,8 +166,28 @@ whole time. Four overlay kinds: a deck card, a system-design chart still (shared
 chart clip, and a whiteboard beat clip (`video-creation/skills/whiteboard-beat/`, shared `whiteboard-builder`
 agent). Still one ffmpeg final render, no video comp, no draft. Spec + rules: `skills/card-overlays/card-overlays.md`.
 
+**Scripted option (Mike, 2026-11-14; v1, not yet run on a real recording): `skills/script/script.md`.** A standard
+video is FREE TALK (everything in this section, unchanged) or SCRIPTED, chosen when the video is started, together
+with the silence definition and the Enhance Speech choice. Scripted =
+Mike reads a light `SCRIPT.md`, written like a longform-edited screenplay (the same tags, `[SHOW]` lines naming each card), whose lines are `[COVER]` (a deck card, a chart still or an animated chart fills
+the whole frame and hides the recording, webcam and CTA included) or `[SCREENSHARE]` (the
+recording as filmed); most of the runtime is covered, the cards are built BEFORE he records, the spine is this
+format's spine (no blackout, no face scenes), and after the transcript three commands finish it: `lint_script.py`,
+`cue_script.py` (windows + the number check), `cover_runs.py` (one clip per run of covers, the same single ffmpeg
+render, a leak check). Everything else about that option lives in the skill, not here.
+
+**The extras (Mike, 2026-11-15): a vertical cut, a short, a YT post.** Each is optional and on its own: he names the
+ones he wants when he starts the video, or asks for one after it is delivered; none is ever built unasked and none is
+a question. A scripted video names them in the `SCRIPT.md` header. The vertical cut is built
+(`cover_runs.py --vertical`: the same cues, a vertical card set, screen-share scenes re-stacked as slide over webcam;
+a free-talk FINAL is re-stacked whole), the YT post is built (`run.py ytpost --project "<the project folder>"`), the
+short is not built on this track yet. Rules + status: `skills/script/script.md`, "The extras".
+
 **Pre-production (before Mike records): `RESEARCH.md` -> the deck `<p>.html` -> the notes doc `<p>-notes.docx`.**
-`RESEARCH.md` is the only number source (every fact sourced, a timestamped market snapshot, a do-not-air list). The
+`RESEARCH.md` is the only number source (every fact sourced, a timestamped market snapshot, a do-not-air list).
+**For any coin it is written to `video-creation/skills/coin-research/coin-research.md` (2026-11-11, after JCT):** the
+14-row dossier (incl. what holding the token earns and the project's recent posts), the event window rule (flows around a recent high), the product-telemetry sweep (the product's HOME page + `/v1/stats`-style endpoints, not just its docs),
+a checked-list on every "NOT FOUND", and proof behind any "not public" slide. The
 deck reuses the previous standard deck's stylesheet + recording helpers verbatim (`media/standard/binance/binance.html`:
 content in `.wrap`, the left 68vw, so the webcam corner stays clear; F = fullscreen, G = webcam guide box, arrows /
 Space = next slide). **The notes doc is NEVER redundant with the slides (Mike, 2026-11-08, for every standard video):**

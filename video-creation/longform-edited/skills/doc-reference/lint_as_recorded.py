@@ -14,8 +14,10 @@ Enforces:
   3. TIMECODES: every leading table timecode is a number at or below the spine duration (--duration)
   4. FACE WINDOWS: at least one row, `start-end` seconds; with --face-max N, at most N rows
   5. NO EM DASHES (persona)
+  6. --face-mode mixed (house rule #1c): every FACE-windows row names exactly ONE kind, `[FACE]` or `[SCREENSHARE]`
+     (scripts/window_kinds.py row_kind, the one parser); a row naming both is two beats merged into one window
 Usage:
-  python video-creation/longform-edited/skills/doc-reference/lint_as_recorded.py <AS-RECORDED.md> [--duration S] [--face-max N]
+  python video-creation/longform-edited/skills/doc-reference/lint_as_recorded.py <AS-RECORDED.md> [--duration S] [--face-max N] [--face-mode mixed]
 Exit: 0 = PASS · 1 = FAIL · 2 = usage. Machine line: AS-RECORDED-LINT PASS|FAIL faces=N fails=N
 """
 import argparse
@@ -24,6 +26,8 @@ import sys
 from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts"))
+from window_kinds import WindowKindError, ar_rows, row_kind  # noqa: E402
 
 REQUIRED = [
     (r"\*\*Final spine:\*\*", "the **Final spine:** line"),
@@ -92,17 +96,35 @@ def lint(text, duration=None, face_max=None):
     return fails, faces
 
 
+def lint_kinds(text):
+    """FACE MODE = mixed: every FACE-windows row names exactly one kind (the window_kinds.row_kind parser)."""
+    fails = []
+    for n, a, z, cells in ar_rows(text):
+        try:
+            k = row_kind(cells)
+        except WindowKindError as e:
+            fails.append(f"FACE window {n} ({a:.2f}-{z:.2f}s) {e}")
+            continue
+        if k is None:
+            fails.append(f"FACE window {n} ({a:.2f}-{z:.2f}s) names no kind: FACE MODE = mixed, so its scripted-beat cell carries "
+                         "`[FACE]` (the full camera) or `[SCREENSHARE]` (the screen-share layout)")
+    return fails
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("doc")
     ap.add_argument("--duration", type=float, default=None, help="final spine duration (s)")
     ap.add_argument("--face-max", type=int, default=None)
+    ap.add_argument("--face-mode", default=None, help="mixed = every FACE-windows row names its kind (house rule #1c)")
     a = ap.parse_args()
     p = Path(a.doc)
     if not p.is_file():
         print(f"usage: no such file {p}", file=sys.stderr)
         sys.exit(2)
     fails, faces = lint(p.read_text(encoding="utf-8"), a.duration, a.face_max)
+    if a.face_mode == "mixed":
+        fails += lint_kinds(p.read_text(encoding="utf-8"))
     for f in fails:
         print(f"FAIL  {f}")
     print(f"AS-RECORDED-LINT {'FAIL' if fails else 'PASS'} faces={faces} fails={len(fails)} file={p}")

@@ -1,0 +1,46 @@
+/* ============================================================================
+   accents/canton.css: the CANTON ACCENT (Mike, 2026-11-10, the `canton` video: "a combination of yellow, blue, and black
+   that they use, so maybe we need dark mode. Perhaps we should style a lot of our slides and charts like that").
+   A per-video THIRD stylesheet, loaded after container-canonical.css (run.py --container-theme dark --container-accent
+   canton; GRAPH-PROGRESS.json settings.container_accent). It re-maps ONLY the page / card / text / accent tokens to
+   canton.foundation's own look (measured on the live site 2026-11-10, screenshots + its theme CSS): a deep navy-indigo
+   page (#020247 / #030144) with a warm mauve glow in the middle (#3B1E3A to #493048) that falls to near-black #030206,
+   white uppercase headlines whose SECOND line / key word is the brand lime #F3FF97 ("CANTON" white, "FOUNDATION" lime),
+   lime pill buttons, near-black cards with a thin violet outline (#875CFF family), violet / lilac as the secondary
+   colours (#875CFF, #4E22C9, #D5A5E3). Anatomy, type, sizes and every rule of the locked stylesheet stay untouched.
+   Contrast on the navy page: lime #F3FF97 ~ 17:1, white ~ 19:1, violet text #A98BFF ~ 7:1, violet stroke #875CFF ~ 4.6:1.
+   ============================================================================ */
+:root{
+  --bg-deep:#030226; --bg-card:#0B0820; --bg-card-hover:#120D2E;
+  /* the ONE accent: Canton lime (every "positive / key word / brand" role); violet is the second, supporting colour */
+  --accent-gold:#F3FF97; --accent-green:#F3FF97; --accent-teal:#F3FF97;
+  --accent-cyan:#875CFF; --accent-purple:#A98BFF;
+  --accent-red:#FF5C7A;
+  --accent-text:#F3FF97;                 /* lime for highlighted headline words, like every canton.foundation heading */
+  --text-primary:#FFFFFF; --text-secondary:#C3BEDF; --text-muted:#8A84B0;
+  --border:#33286E;
+  --grid:#1A1544; --axis:#6F68A0; --wire:#F3FF97; --ink:#FFFFFF;
+}
+body{background:#030206}
+/* the page (Mike, 2026-11-10: "Backgrounds look primarily black, with secondary blue and maybe tertiary purple"):
+   the site's black #030206 as the base, a navy-blue glow from the top-left (#020247), a smaller purple / mauve glow
+   lower-right (#4E22C9 / #3B1E3A) */
+.frame{--acc-rgb:135,92,255;
+  background:
+    radial-gradient(ellipse 62% 58% at 14% 8%, rgba(2,2,71,.95) 0%, rgba(2,2,71,.55) 40%, rgba(2,2,71,0) 75%),
+    radial-gradient(ellipse 42% 40% at 86% 88%, rgba(78,34,201,.30) 0%, rgba(59,30,58,.30) 45%, rgba(59,30,58,0) 78%),
+    #030206}
+/* numbers in purple (Mike: "purple, light purple, and dark purple colors for numbers"): every .mono number is light
+   purple; a .mono inside a lime highlight keeps the lime */
+.mono{color:#B9A3FF}
+.hl .mono,.accent-word .mono,.g .mono,.go .mono{color:inherit}
+/* cards: near-black glass with the thin violet outline the site's ecosystem cards use */
+.card,.col,.panel,.ecard,.nd,.node,.box{background:rgba(6,4,22,.78);border-color:#3D2D8A;
+  box-shadow:0 0 0 1px rgba(135,92,255,.18),0 18px 40px rgba(0,0,0,.45)}
+/* headline highlight word: lime ("CANTON" white + "FOUNDATION" lime) */
+.hl,.accent-word,em.hl{color:var(--accent-text);font-style:normal}
+.divider{background:linear-gradient(90deg,#F3FF97,#875CFF)}
+/* diagrams / charts: LIME wires and lit nodes on navy, violet resting wires; one series = lime, a second = violet */
+svg .wire,svg line.wire,svg path.wire{stroke:var(--wire)}
+svg .wire.rest{stroke:#4A3C9A}
+svg .series-2{stroke:#875CFF;fill:#875CFF}

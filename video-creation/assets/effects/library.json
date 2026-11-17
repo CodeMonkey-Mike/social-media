@@ -4,15 +4,16 @@
  "themes": {
   "kinetic-text-2023": {
    "name": "The 2023 head-to-head look (GrowthMarketingMike 004, Growth Marketer vs Growth Hacker)",
-   "source": "D:\\Dropbox\\mikeneder.me\\videos\\GrowthMarketingMike\\004 Differences between Growth Marketer and Hacker\\main-sequence.mp4 (2:05) + its Premiere project differences revision_1.prproj · SECOND SOURCE (2026-10-31): D:\\Dropbox\\mikeneder.me\\videos\\GrowthMarketingMike\\007 Skills of a Growth Engineer\\main-sequence.mp4 (1:13) + its Premiere project Delivery2/Skills GM_1_1.prproj",
+   "source": "D:\\Dropbox\\mikeneder.me\\videos\\GrowthMarketingMike\\004 Differences between Growth Marketer and Hacker\\main-sequence.mp4 (2:05) + its Premiere project differences revision_1.prproj · SECOND SOURCE (2026-10-31): D:\\Dropbox\\mikeneder.me\\videos\\GrowthMarketingMike\\007 Skills of a Growth Engineer\\main-sequence.mp4 (1:13) + its Premiere project Delivery2/Skills GM_1_1.prproj + THIRD SOURCE (2026-11-09): D:\\Dropbox\\mikeneder.me\\videos\\GrowthMarketingMike\\005 How to choose between Growth Marketing and Growth Hacking\\main-sequence.mp4 (1:09) + its Premiere project Delivery/Copied_choose revision/choose revision.prproj",
    "cue_sheet": "themes/kinetic-text-2023/CUE-SHEET.md",
-   "look_2023": "Montserrat ExtraBold Italic, ALL CAPS, key words yellow #FCFE40 over white, accent red #E0151A, payoff green #20F91A, Mike keyed over a turquoise suede texture (textures/suede-turquoise.jpg), dark bands and panels #003C33 textured; bright explainer, every line lands with a device. A house video keeps the MOTION + SOUND pairing and uses the house display font + the chapter accent. SKILLS (007) LOOK: the same Montserrat ExtraBold Italic ALL CAPS; the key words LIME #BEFF09 over white (the 004 yellow #FCFE40 is kept for the list items and chips as #FEFF3E), the paper card's words blue #0427F5 and dark grey #2A2B29 on the crumpled paper #E5E5E4, the punch word red #E80001; Mike keyed over a GREY 3D-chevron backdrop (textures/chevron-gray.webp, Gaussian blur 48 px at 1080p, avg #545251) instead of the suede; a running caption line on every face shot.",
+   "look_2023": "Montserrat ExtraBold Italic, ALL CAPS, key words yellow #FCFE40 over white, accent red #E0151A, payoff green #20F91A, Mike keyed over a turquoise suede texture (textures/suede-turquoise.jpg), dark bands and panels #003C33 textured; bright explainer, every line lands with a device. A house video keeps the MOTION + SOUND pairing and uses the house display font + the chapter accent. SKILLS (007) LOOK: the same Montserrat ExtraBold Italic ALL CAPS; the key words LIME #BEFF09 over white (the 004 yellow #FCFE40 is kept for the list items and chips as #FEFF3E), the paper card's words blue #0427F5 and dark grey #2A2B29 on the crumpled paper #E5E5E4, the punch word red #E80001; Mike keyed over a GREY 3D-chevron backdrop (textures/chevron-gray.webp, Gaussian blur 48 px at 1080p, avg #545251) instead of the suede; a running caption line on every face shot. CHOOSE (005) LOOK: the same Montserrat ExtraBold Italic ALL CAPS, key words yellow #FCFE40 (one lime #BEFF09 lead word, 'THINK'), Mike keyed over the turquoise suede the WHOLE video (textures/suede-turquoise.jpg, the same file 004 used: THE AQUA Mike asked about; measured #4AA293 on the render), dark-teal bands and side panels = the animated-texture clip (#053F39 measured), the paper card black + red #E0151A, the boxed words yellow #FFFB23 on black boxes over #BABABA, the wave wall white outline + green #13EF20 on black. In a house video the aqua backs the CARDS, PANELS and the versus stack, never a keyed face (house rule: never key or matte Mike's face).",
    "sfx_folder": "video-creation/assets/sfx/kinetic-text/ (23 sounds, every row carries `device`)",
    "textures": {
     "paper-crumpled": "themes/kinetic-text-2023/textures/paper-crumpled.mp4 (1280x720, 32 s loop; the list card and the paper side panel)",
     "suede-turquoise": "themes/kinetic-text-2023/textures/suede-turquoise.jpg (the 2023 backdrop behind the keyed face)",
     "animated-texture": "themes/kinetic-text-2023/textures/animated-texture.mp4 (the 2023 project's animated texture loop)",
-    "chevron-gray": "themes/kinetic-text-2023/textures/chevron-gray.webp (1920x1200 still, the 007 backdrop behind the keyed face: Motion scale 237 percent in the 4K sequence = 118.5 percent at 1080p = 2275x1422 px centred, never moves, Gaussian Blur (Legacy) 97 in 4K units = 48 px at 1080p on every placement; on-screen avg #545251)"
+    "chevron-gray": "themes/kinetic-text-2023/textures/chevron-gray.webp (1920x1200 still, the 007 backdrop behind the keyed face: Motion scale 237 percent in the 4K sequence = 118.5 percent at 1080p = 2275x1422 px centred, never moves, Gaussian Blur (Legacy) 97 in 4K units = 48 px at 1080p on every placement; on-screen avg #545251)",
+    "noise-glitch-4k": "themes/kinetic-text-2023/textures/noise-glitch-4k.mp4 (005 'Noise 4_4K.mp4', 3840x2160 25 fps 5.04 s loop: sparse white horizontal glitch dashes on black; 005 looped it in a nested sequence over the open's photo backdrop 0.8-3.8 s at opacity 100 with a lighten-type blend, Gaussian blur 3: a barely visible signal crackle)"
    },
    "graphics": {
     "arrow-red": "themes/kinetic-text-2023/graphics/arrow-red.png",
@@ -21,7 +22,10 @@
     "subscribe-bar-fill": "themes/kinetic-text-2023/graphics/subscribe-bar-fill.mp4 (the 007 'LIKE And SUBSCRIBE Green Screen Video.mp4' media 2.0-6.3 s, keyed once with ffmpeg chromakey 0x00FF00 0.28/0.08 and PREMULTIPLIED over black; 1920x1080 29.97 fps; pair with the key)",
     "subscribe-bar-key": "themes/kinetic-text-2023/graphics/subscribe-bar-key.mp4 (the same clip's alpha as luma: white where the bar is; composite fill + key like the halloween-2022 plates, HwAlphaPlate)",
     "thinking-brain-sticker": "themes/kinetic-text-2023/graphics/thinking-brain-sticker.gif (600x600, 5 fps, 19 frames, 4.9 s; 'Thinking' by Idil Keysan, Wikimedia Giphy stickers 2019, CC BY-SA 4.0: ATTRIBUTION REQUIRED in the description if it is ever reused; the 007 edit cut it at 3.07 s and restarted it twice)",
-    "_source": "themes/kinetic-text-2023/graphics/_source/ (reference only, not placeable: Flash FX Element 01.aegraphic.zip + mogrt_TEMP.aep = the keyword sparkle; Scene_22 / Scene_23.aegraphic.zip + MOGRT.aep / MOGRT(1).aep = the two Monument Extended text-wall MOGRTs (Scene_23 is the one used); the pngwing speech-bubble PNG was NOT kept: licence unknown, a per-video image)"
+    "_source": "themes/kinetic-text-2023/graphics/_source/ (reference only, not placeable: Flash FX Element 01.aegraphic.zip + mogrt_TEMP.aep = the keyword sparkle; Scene_22 / Scene_23.aegraphic.zip + MOGRT.aep / MOGRT(1).aep = the two Monument Extended text-wall MOGRTs (Scene_23 is the one used); the pngwing speech-bubble PNG was NOT kept: licence unknown, a per-video image)",
+    "scene-22-wave-wall": "themes/kinetic-text-2023/graphics/_source/Scene_22.aegraphic.zip (in _source since 2026-10-31, catalogued 2026-11-09 as kt-wave-wall; 005's 'MOGRT(1).aep' is byte-identical to the MOGRT.aep inside it)",
+    "scene-11-boxed-words-aep": "themes/kinetic-text-2023/graphics/_source/Scene_11-MOGRT.aep (005 'MOGRT.aep', 542149 bytes: the Scene_11 .aegraphic's AE project, comps with Box_1 / Box_2, Pos/Rot X Y Z, Shadow_*, Noise, Bkur_Radius controls on a CONTROL PANEL layer; the template behind kt-boxed-words)",
+    "smiles-emoji-pack": "themes/kinetic-text-2023/graphics/_source/Smiles.aegraphic.zip (005 'Smiles.aegraphic': Emoticon.aep, one comp per animated emoji: Face with Tears of Joy, Winking Face, Star-Struck, Money-Mouth Face, ... ; the template behind kt-emoji-pop)"
    },
    "devices": [
     "kt-side-panel",
@@ -40,7 +44,18 @@
     "kt-statement-over-broll",
     "kt-text-wall",
     "kt-keyword-sparkle",
-    "kt-push-slide"
+    "kt-push-slide",
+    "kt-versus-stack",
+    "kt-spin-cut",
+    "kt-wave-wall",
+    "kt-meme-inset",
+    "kt-emoji-pop",
+    "kt-boxed-words",
+    "kt-camera-wobble",
+    "kt-snap-zoom",
+    "kt-shake-cut",
+    "kt-grid-zoom-in",
+    "kt-topic-backdrop"
    ],
    "used_in": [
     "GrowthMarketingMike 004 (2023, every device)",
@@ -48,9 +63,10 @@
     "kcc20 (2026-10: kt-side-panel + kt-keyword-pop)",
     "GrowthMarketingMike 007 Skills of a Growth Engineer (2023) (every device of the video; the second source)",
     "growth-scale-up (2026-10-28: the full theme)",
-    "inference (2026-10-27: the full theme)"
+    "inference (2026-10-27: the full theme)",
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023) (every device of the video; the third source)"
    ],
-   "rule": "a head-to-head or straight-to-the-point explainer picks this theme whole: the signature open on the hook, pops on the verdict words, bands for the 4 s statements, the list card for enumerations, headline pops over b-roll, the subscribe close. Longer house videos may pick it for ONE chapter. The 007 additions widen the same theme: the running caption line (kt-caption-highlight) on the face lines, the typewriter card for a summary / definition, the stacked list over b-roll for an enumeration that rides on footage, the statement over b-roll for a 4 to 6 s sentence, the text wall for the ONE biggest idea of the video, the sparkle on a caption's key word, and 0.1 s push-slide cuts between cards and b-roll where 004 used whip-zooms. A video picks per line; one theme, two source dialects.",
+   "rule": "a head-to-head or straight-to-the-point explainer picks this theme whole: the signature open on the hook, pops on the verdict words, bands for the 4 s statements, the list card for enumerations, headline pops over b-roll, the subscribe close. Longer house videos may pick it for ONE chapter. The 007 additions widen the same theme: the running caption line (kt-caption-highlight) on the face lines, the typewriter card for a summary / definition, the stacked list over b-roll for an enumeration that rides on footage, the statement over b-roll for a 4 to 6 s sentence, the text wall for the ONE biggest idea of the video, the sparkle on a caption's key word, and 0.1 s push-slide cuts between cards and b-roll where 004 used whip-zooms. A video picks per line; one theme, two source dialects. The 005 additions (a HOW-TO-CHOOSE head-to-head): the VERSUS STACK (kt-versus-stack) for the one concrete A-vs-B example, the bands with a VERDICT POP (kt-lower-third-band verdict_pop) for each 'if X, go for A' criterion, the PAPER statement (kt-statement-over-broll paper) for the 'to sum it up' answer, the BOXED WORDS (kt-boxed-words) for a two-word turn (CAN / SHOULD), the SPIN CUT into the WAVE WALL (kt-spin-cut + kt-wave-wall) for the one idea that deserves a full-frame interlude (one per video, like the text wall), the SNAP ZOOM on face jump cuts, the CAMERA WOBBLE on every held card, meme insets and emoji pops sparingly (copyright: never a TV / cartoon clip in a house video).",
    "textures_decoded": {
     "name": "2023 TEXTURES (backdrop and dark band / panel)",
     "trigger": "backdrop behind every face shot; the dark band and dark side panel",
@@ -89,10 +105,18 @@
      "duration_sec": 73.37,
      "project": "D:\\Dropbox\\mikeneder.me\\videos\\GrowthMarketingMike\\007 Skills of a Growth Engineer\\Delivery2\\Skills GM_1_1.prproj",
      "note": "the second source (Mike, 2026-10-31): the same look two videos later; its NEW devices are the running caption line, the typewriter paper card, the stacked list over b-roll, the statement over b-roll, the text wall (MOGRT), the keyword sparkle, the push-slide cut, plus variants of the pop, the icon pop and the subscribe close. Its cue sheet is the second section of themes/kinetic-text-2023/CUE-SHEET.md"
+    },
+    "choose": {
+     "video": "D:\\Dropbox\\mikeneder.me\\videos\\GrowthMarketingMike\\005 How to choose between Growth Marketing and Growth Hacking\\main-sequence.mp4",
+     "duration_sec": 69.17,
+     "project": "D:\\Dropbox\\mikeneder.me\\videos\\GrowthMarketingMike\\005 How to choose between Growth Marketing and Growth Hacking\\Delivery\\Copied_choose revision\\choose revision.prproj",
+     "note": "the third source (Mike, 2026-11-09: 'do a thorough review of any elements, any effects, or any sound effects that we haven't captured before'): the same look between 004 and 007; decoded from choose revision.prproj (gunzipped XML, 8 video + 6 audio tracks, 16 nested sequences, main sequence 'grammar1-greenscreen-audio-color' 3840x2160 @ 30). Its NEW devices are the versus stack, the spin cut, the wave wall (Scene_22), the meme insets, the emoji pop (Smiles.aegraphic), the boxed words (Scene_11), the camera wobble, the snap zoom, the shake cut and the grid zoom-in, plus variants of the statement (paper), the band (verdict pop), the side panel (snap reframe), the whip (offset pan), the caption line (payoff 120) and the image sticker (cutout). Every SOUND but one was already in assets/sfx/kinetic-text/ (byte-checked 2026-11-09); the new one is punch-2-2023 ('Punch 2.mp3', shared with 004 and wrongly logged as a Punch 1 twin before). Its cue sheet is the third section of themes/kinetic-text-2023/CUE-SHEET.md"
     }
    },
    "decode_doc_skills": "Decoded 2026-10-31 from Delivery2/Skills GM_1_1.prproj (main-sequence 3840x2160 @ 29.97, 9 video + 5 audio tracks, 13 nested sequences) + frame reads of main-sequence.mp4. Graphic keyframe times are relative to the Essential Graphics origin (3600 s): kf 3599.963 = 1 frame before the clip's first frame.",
-   "bed_level_2023_skills": "the 007 music bed (Raw Lew, Get It, background-vocals mix, catalog get-it) ran at -20 dB under the open and the typewriter card (0-13.4 s) and ramped to -25 dB by 13.4 s, flat to the end (Premiere Volume Level 0.01778 -> 0.01000, 0 dB = 0.17783); the bed never stops for a pop"
+   "bed_level_2023_skills": "the 007 music bed (Raw Lew, Get It, background-vocals mix, catalog get-it) ran at -20 dB under the open and the typewriter card (0-13.4 s) and ramped to -25 dB by 13.4 s, flat to the end (Premiere Volume Level 0.01778 -> 0.01000, 0 dB = 0.17783); the bed never stops for a pop",
+   "bed_level_2023_choose": "005 bed: PALA 'Concrete Mazes' (background-vocals mix, catalog `concrete-mazes`) from frame 0, -15 dB to 13.8 s, ramping to -19 dB by 16.2 s and -23 dB by 27.8 s, held to the end; SFX at 0 dB except whoosh-4 at -10 dB (Premiere level dB = 20 log10(level) + 15)",
+   "decode_doc_choose": "Decoded 2026-11-09 from choose revision.prproj (Delivery/Copied_choose revision; the Jan 20 2023 save that matches the Jan 21 render; choose revision_1.prproj is a later May 2023 re-save). Main sequence 'grammar1-greenscreen-audio-color' 3840x2160 @ 30, 8 video + 6 audio tracks, 16 nested sequences (the face shots are nested with their backdrop). All px at 1920x1080 (4K / 2), all times seconds in main-sequence.mp4 (frame-checked: the 26.700 cut lands on frame 801). Keyframe time = item start + (kf - clip in-point); the named Transform presets (Slide UP / DOWN / LEFT / RIGHT (IN) / (OUT), 110, 120, Transform 360, Smooth Camera Wobble, Spin Left / Right, Shake Intense In, Whip, Simple Smooth In, Smooth_Shake) carry their own keyframes, read here. One placed clip is NOT in the delivered render: a 'there is no choice' reaction GIF (V5 3.8-5.3, Slide DOWN in / out) does not appear in main-sequence.mp4 (an outtake; not catalogued)."
   },
   "halloween-2022": {
    "name": "The 2022 horror explainer look (CodeMonkey 044 'Bear Markets', studied 0:00-1:50 only)",
@@ -160,6 +184,82 @@
      "note": "0:00-1:50 ONLY (Mike's hard rule): no browse excerpt may cross 110 s"
     }
    }
+  },
+  "elegant-promo-2022": {
+   "name": "The 2022 news-promo look (CodeMonkey 043 'European Energy Crisis in 2022 Explained', the 'Elegant Promo' After Effects montage at 1:07.2-1:27.0)",
+   "label": "Elegant promo",
+   "label_note": "Proposed 2026-11-09 by the capture, Mike's to rename: the id elegant-promo-2022 stays the stable key every doc and screenplay names; the label is what the browse dashboard, the reports and new screenplays say.",
+   "source": "CodeMonkey 043 'European Energy Crisis in 2022 Explained' (rendered 2022-10-21, 3840x2160 29.97 fps, 10:35): main sequence 67.200-87.020 = ONE clip on V4, final\\Main.avi, the render of the comp 'Main' of the Motion Array template 'Elegant Promo' (Elegant Promo (converted).aep, 3 of its 12 scene slots filled). Timeline of record: energy-crisis-final.prproj (saved 2022-10-21 00:29, the render's project; energy-crisis-final_1 / _1_1.prproj are later re-saves, identical in 66-88 s; energy-crisis.prproj (2022-10-31) is a later re-cut shifted +0.2 s without the montage). Local copies only: themes/elegant-promo-2022/_source/ (source_inventory)",
+   "cue_sheet": "themes/elegant-promo-2022/CUE-SHEET.md",
+   "look_2022": "a cool, serious news promo: each picture opens out of a dark navy field (#04090F, a faint blue leak at the left edge) or bursts in through staggered circles, pushes in slowly (+3.8 percent a second), two translucent magenta discs (Slide 01 #C3264B ramping toward plum Slide 02 #1C0924; #B24261 / #84354D as rendered over a grey photo) scale into one corner or hang from the top edge, a teal-to-blue label bar (Line 02 #38C1A9 -> Line 01 #135FB5; #36C0A7 -> #1871B0 as rendered) wipes on under a white Roboto Black title whose tracking closes in, and a small white Roboto Regular caps sub-line sweeps on under it; thin white line / ring accents; NO sound effects (the Leatherface bed and the narration carry it). These fonts and colours ARE the theme's look (the template's own Control colours, which Mike kept): an Elegant promo video keeps them, like halloween-2022.",
+   "palette_2022": {
+    "navy_field": "#04090F (render frame 0, centre); the left-edge leak #0B1623 to #0F1C2D within ~250 px of x 0",
+    "slide_01_magenta": "#C3264B (template Control 'Slide 01'): the discs' bright end",
+    "slide_02_plum": "#1C0924 (Control 'Slide 02'): the discs' ramp end",
+    "discs_as_rendered": "inner disc #B24261 / #9D3B5D, outer ring #84354D over a grey photo; #B94362 / #8E3B59 / #70344F over the pale G7 map",
+    "line_02_teal": "#38C1A9 (Control 'Line 02'): the bar's left end, #34B7A9 to #36C0A7 as rendered",
+    "line_01_blue": "#135FB5 (Control 'Line 01'): the bar's right end, #1F83AF to #1871B0 as rendered",
+    "text": "#FFFFFF (Controls 'Text 01', 'Text 02', 'Small Text')",
+    "leaks": "#4378BB (Control 'Leaks'): the tint of the LEAK comp (the faint blue at the field's left edge)",
+    "iris_halo": "#2F3337 just outside the iris edge, fading into the field"
+   },
+   "fonts_2022": "Roboto Black (every title, 'Text 01'), Roboto Regular (every sub-line, 'Text 02'), read from the 6 text documents of the render's .aep; Myriad-Roman and AdobeInvisFont sit in every document's font set as After Effects defaults and are not rendered. Both are free Google fonts.",
+   "sfx_folder": "none: every device was SILENT in the source (no SFX fires in 67.200-87.020). The 2022 project's sound files sit in themes/elegant-promo-2022/_source/sfx/ as REFERENCE ONLY (not in the SFX catalog, no device names one); a screenplay pairs a catalog sound by id on the [SHOW] line",
+   "bed_level_2022": "the 043 bed under the montage: Leatherface (Wicked Cinema, Soundstripe 15092, catalog `leatherface`, the instrumental INTRO cut Wicked_Cinema_Leatherface_instrumental_intro_1_24-2.wav) on A3 42.075-105.872, file 20.988-84.785 (46.11-65.93 s of it under the montage, its building 'bed' segment), at 0.0 dB clip level (Volume keys +10 -> 0 dB both sit before the in-point; track fader default). Verified on the published mix: least-squares gain of the repo's file -0.06 dB over 67.2-87.02; bed RMS -18.8 dBFS vs the voice -11.9 dBFS = ~7 dB under the narration, NOT ducked for the montage",
+   "textures": {},
+   "graphics": {},
+   "assets_note": "no plates extracted: every element is a flat shape, a ramp, a circle mask or Roboto text, so the comp-builder draws it to the rows' numbers. The template project (with its 12 slots) is in _source/ae/ if a remake re-renders it in After Effects",
+   "devices": [
+    "ep-elegant-promo",
+    "ep-iris-open",
+    "ep-circle-burst",
+    "ep-disc-sweep",
+    "ep-label-title"
+   ],
+   "used_in": [
+    "CodeMonkey 043 European Energy Crisis in 2022 Explained (2022), 1:07.2-1:27.0 (every device)"
+   ],
+   "rule": "pick it for a serious / news-promo register: a run of 2 to 4 dated or labelled fact cards over photos or footage (one picture each, a short title = a date, a name or a key phrase, plus one sub-line), the narration running under it; cool and measured, never loud. One theme per video or per chapter (never mixed with kinetic-text-2023 or halloween-2022 inside one chapter). Use it as the whole ep-elegant-promo montage (an act break or a timeline run), or by its parts: ep-iris-open on the first picture out of black, ep-circle-burst on every picture change, ep-disc-sweep + ep-label-title on each picture (the corner alternates top-left, bottom-right, top-centre), ~6 to 7 s a picture (the template pace is 7.007 s; 043 ran 1.1896x = 5.89 s to fit its narration). Silent in its source: a screenplay may pair a catalog sound by id. Mike's first use (planned 2026-11): a serious, slightly scary, slow-paced AI-jobs video on the crypto channel.",
+   "decode_doc": "Decoded 2026-11-09 from energy-crisis-final.prproj (main-sequence 3840x2160 @ 29.97, 254016000000 ticks a second) + the three .aep saves read as RIFX chunks (comp tree, layer names, effect match names, the 6 text documents and their fonts, the Control layer's 8 static Color Control values; keyframes NOT decoded) + MEASUREMENTS of the clean render render/Main-avi-crf6.mp4 (the iris and circle radii by radial profiles and connected components, the discs by circle fits to their edges along rays (residual < 1 px in scenes 1-3), the bar / title / sub-line by colour masks frame by frame, the photo push by feature tracking, LK flow + RANSAC similarity). All px at 1920x1080 (the render's own size), all motion times at TEMPLATE PACE (render seconds; scene k starts at render 7.007 x (k - 1)); main-sequence t = 67.200 + render t / 1.18960 (verified by matching the excerpt's frames to the render); excerpt t = main t - 57.057. Premiere audio level dB = 20 log10(level) + 15.",
+   "sources": {
+    "ep": {
+     "video": "video-creation/assets/effects/themes/elegant-promo-2022/_source/video/043-main-sequence-4k-0058-0132.mp4",
+     "duration_sec": 34.98,
+     "project": "energy-crisis-final.prproj (themes/elegant-promo-2022/_source/prproj/)",
+     "note": "4K excerpt of the main sequence: its frame 0 is main 57.057 s, NOT 58.0 (the 60.834 and 87.020 hard cuts land at 3.770 / 29.963), so excerpt t = main t - 57.057; the montage is 10.143-29.963 here. Repo-relative path: run effects_gallery.py from the repo root"
+    },
+    "render": {
+     "video": "video-creation/assets/effects/themes/elegant-promo-2022/_source/render/Main-avi-crf6.mp4",
+     "duration_sec": 23.657,
+     "project": "Elegant Promo (converted).aep (themes/elegant-promo-2022/_source/ae/Elegant Promo/)",
+     "note": "the clean AE render (from the uncompressed final\\Main.avi, x264 crf 6, 709 frames, NO audio): the template's own pace, where every motion number was measured; render t = (main t - 67.200) x 1.18960"
+    },
+    "full": {
+     "video": "video-creation/assets/effects/themes/elegant-promo-2022/_source/video/043-energy-crisis-low-res-full.mp4",
+     "duration_sec": 635.47,
+     "project": "energy-crisis-final.prproj",
+     "note": "the whole published video at 854x480, main-sequence time base (no browse cue uses it; the excerpt is sharper)"
+    }
+   },
+   "source_inventory": {
+    "$note": "themes/elegant-promo-2022/_source/ was copied 2026-11-09 from the E: drive, which Mike has since unplugged: these copies are the ONLY local source (never read E: or D: for this theme). The project's own media paths point at D:\\Dropbox\\mikeneder.me\\videos\\CodeMonkey\\043 European Engery Crisis in 2022 Explained\\ (the .aep's at ...\\044 European Engery Crisis in 2022 Explained\\Ae\\Elegant Promo\\, the folder's number at the time). Everything under _source/ is gitignored (assets/**), ~1.3 GB",
+    "prproj/energy-crisis-final.prproj": "THE timeline of record (gzipped XML, saved 2022-10-21 00:29)",
+    "prproj/energy-crisis-final_1.prproj": "re-save 2023-02-12, identical in 66-88 s",
+    "prproj/energy-crisis-final_1_1.prproj": "re-save 2023-11-11, identical in 66-88 s",
+    "prproj/energy-crisis.prproj": "2022-10-31, a later re-cut (+0.2 s, no Main.avi in this window): not the render's",
+    "prproj/energy-crisis_1.prproj": "2023-11-11 re-save of a re-cut: not used",
+    "prproj/energy-crisis-mid-section-2022-10-18_15-20-37.prproj": "an earlier partial save: not used",
+    "ae/Elegant Promo/Elegant Promo.aep": "the template as first opened (Control colours identical)",
+    "ae/Elegant Promo/Elegant Promo (converted).aep": "the project Mike filled (3 of 12 slots) and rendered, 2022-10-14",
+    "ae/Elegant Promo/Elegant Promo (converted)_AME/": "tmpAEtoAMEProject-Main.aep + -Main_1.aep (Media Encoder's copies of the queued comp: text, fonts and colours read here) + Main_1.mp4 (Media Encoder's h264 render, 23.657 s, its audio SILENT)",
+    "ae/Elegant Promo/Assets/": "the scene inputs: nintchdbpict000074711876.webp (scene 1, armoured column, 1920x1279), 6739g7.png (scene 2, G7 map + flags, 838x486), russian-ruble-money-banknote-pile-packs-2022-01-19-00-19-09-utc.mov (scene 3, 3840x2160 MJPEG 15 s), main-sequence.mp3 (a 19.7 s mixdown of main 67.19-86.9: the narration guide); group-seven-...-135503996.jpg is a WATERMARKED stock picture NOT in the render: never reuse",
+    "ae/Elegant Promo/(Footage)/Motion Array/03. Other/Envato Logo Flat 2.psd": "the template's logo placeholder (its Logo layer is not visible in the render)",
+    "render/Main-avi-crf6.mp4": "the clean render, source `render`",
+    "video/043-main-sequence-4k-0058-0132.mp4": "4K excerpt main 57.057-92.036, source `ep`",
+    "video/043-energy-crisis-low-res-full.mp4": "the whole video at 480p, source `full`",
+    "sfx/": "15 sound files of the 2022 project (swooshes, whooshes, paper, chalk, fire, a sonic boom, a reversed accent, T2 / T7): reference only, none fires in the window, none catalogued"
+   },
+   "placement_043": "V4 67.200-87.020 final\\Main.avi: Motion scale 201 percent (a 1 percent overscan in the 4K sequence), centred, rotation 0, Opacity default (no keys), NO transition at either end (hard cut in from Mike's face, hard cut out to b-roll + keyed Mike), speed 118.96 percent (709 / 596: rate-stretched, then 2 frames trimmed), source in 0 -> out 23.578 s: the whole render plays except its last 0.079 s. The a-roll runs on underneath on V1-V3 (hidden)."
   }
  },
  "devices": {
@@ -196,7 +296,8 @@
     "8.10 left panel 'GROWTH MARKETER IS MORE BRAND ORIENTED'"
    ],
    "used_in": [
-    "GrowthMarketingMike 004 (2023)"
+    "GrowthMarketingMike 004 (2023)",
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023) (snap_reframe)"
    ],
    "texture_variants": {
     "dark": "the default: the dark textured panel beside Mike's FACE (2023 #003C33 texture)",
@@ -263,7 +364,41 @@
      "t1": 80.0,
      "label": "paper panels with cards + icons (whoosh-4)"
     }
-   ]
+   ],
+   "snap_reframe": {
+    "name": "SIDE PANEL WITH A SNAP REFRAME (005: the face snaps to 130 percent and slides aside as the panel comes in; two statements swap on it)",
+    "trigger": "a two-part line ('if you have a clearly superior product / but don't have a ton of competitors yet') held 3 to 5 s beside the face",
+    "motion": {
+     "face": "kt-snap-zoom reframe_for_panel: 100 -> 130 percent + x 0.500 -> 0.636 (left panel) or 0.347 (right panel) in 2 frames on the cut",
+     "panel": "the dark-teal animated-texture clip at Motion scale 402 percent, ~1/3 of the frame wide; slides in from its side over 0.500 s (x -0.5 -> 0.5 for a left panel, 1.375 -> 0.5 for a right one; ease out-speed 0 / influence 32.5 -> in-speed 0 / influence 100)",
+     "text": "4 to 6 short lines, centred in the panel (x 0.226 left / 0.780 right of the frame), white with yellow key words, caps ~50 px; slides in from the panel's side over 0.262 s, 0.27 s after the panel, floats with kt-camera-wobble; the second statement replaces it by sliding in again (+1.70 s left, +2.63 s right), silent",
+     "exit": "cut with the shot; the next face shot snaps back 130 -> 100 (whoosh-4)"
+    },
+    "sound": [
+     {
+      "id": "swoosh-1",
+      "when": "the panel: file start 0.17 s before the cut (51.733 for 51.900) or ON it (44.333), 2.13 s used; 005 used swoosh-1 for BOTH sides (004 paired swoosh-1 right / swoosh-2 left)"
+     }
+    ],
+    "reference_cues_choose": [
+     "44.333 left panel (face pushed right) 'IF YOU HAVE A CLEARLY SUPERIOR PRODUCT' · 46.300 'BUT DON'T HAVE A TON OF COMPETITORS YET' · 48.000 back",
+     "51.900 right panel (face pushed left) 'HOWEVER AS SOON AS COMPETITORS START SHOWING UP' · 54.733 'YOU BETTER MAKE SURE ... PRICE DOWN' · 57.167 back"
+    ],
+    "browse_cues": [
+     {
+      "src": "choose",
+      "t0": 44.0,
+      "t1": 48.3,
+      "label": "left panel with a text swap, face snapped right"
+     },
+     {
+      "src": "choose",
+      "t0": 51.6,
+      "t1": 57.4,
+      "label": "right panel with a text swap, face snapped left"
+     }
+    ]
+   }
   },
   "kt-keyword-pop": {
    "name": "KEYWORD POP on the face",
@@ -309,7 +444,8 @@
    ],
    "used_in": [
     "GrowthMarketingMike 004 (2023)",
-    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)"
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)",
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023)"
    ],
    "punch": {
     "name": "PUNCH WORD (keyword / headline pop on a punch sound)",
@@ -326,8 +462,8 @@
       "when": "CONVERSIONS: file start 53.367 (clip in 0.100), onset 53.526 = ON the item's first frame, peak 53.611 = on the 111 percent overshoot (0.044 s after the first visible frame)"
      },
      {
-      "id": "punch-1-2023",
-      "when": "TECHNICAL SKILLS: file start 97.767, onset 97.924 / peak 97.933 = ON the text's first frame. Punch 2.mp3 is NOT punch-sound-effect: it is a 0.81 s punch with the same length and onset as Punch 1 (different encode / mix, peak at 0.166 s)",
+      "id": "punch-2-2023",
+      "when": "TECHNICAL SKILLS: file start 97.767, onset 97.924 / peak 97.933 = ON the text's first frame. Punch 2.mp3 is NOT punch-sound-effect: it is its own 0.81 s punch (punch-2-2023): the same length and onset as Punch 1 but a different, louder hit (decoded correlation 0.12, 2026-11-09)",
       "note": "as 'Punch 2.mp3'"
      },
      {
@@ -344,7 +480,7 @@
      "GrowthMarketingMike 004 (2023)"
     ],
     "corrections": [
-     "2023-CUE-SHEET 97.77 'punch-sound-effect (as Punch 2)': the file is Punch 2.mp3, a punch-1 twin, not punch-sound-effect",
+     "2023-CUE-SHEET 97.77 'punch-sound-effect (as Punch 2)': the file is Punch 2.mp3 = punch-2-2023 (2026-11-09: NOT a punch-1 twin, same size only), not punch-sound-effect",
      "library kt-keyword-pop implies punch-1 rides the 110 jiggle pop; on CONVERSIONS it rides the Zoom Bounce elastic"
     ],
     "confidence": "read from keyframes",
@@ -413,6 +549,13 @@
      "t1": 27.8,
      "label": "TECHNICAL / PRODUCT RELATED SUBJECTS red pops"
     }
+   ],
+   "reference_cues_choose": [
+    "0.000 GROWTH HACKING role label on the open (110, y 0.794, swoosh-4 on frame 0) + 0.933 / 2.500 the sub-line slides in from the left (0.262 s)",
+    "42.700 HOW SATURATED IS YOUR MARKET? (knock-pop)",
+    "48.000 FEEL FREE TO LAY LOW (knock-pop)",
+    "60.900 GROWTH MARKETING + 61.500 IS THE KEY slides in under it (the verdict line)",
+    "67.233 THE FUNDAMENTALS OF GROWTH MARKETING (cash-register)"
    ]
   },
   "kt-headline-over-broll": {
@@ -449,7 +592,8 @@
    ],
    "used_in": [
     "GrowthMarketingMike 004 (2023)",
-    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)"
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)",
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023) (top verdict pops over b-roll)"
    ],
    "zoom_drop": {
     "name": "ZOOM DROP headline (the 007 entrance: falls from 250 percent in 3 frames)",
@@ -504,6 +648,10 @@
      "t1": 20.0,
      "label": "'GOOD COMMUNICATION SKILLS' after a push-in (cash-register)"
     }
+   ],
+   "reference_cues_choose": [
+    "31.800 GROWTH HACKING (punch-1-2023, file start 31.633) at the TOP of the b-roll (y 0.133, Vector Motion scale 144), the 110 pop",
+    "35.067 GROWTH MARKETING (punch-2-2023, file start 34.900: the pair's second punch), same placement"
    ]
   },
   "kt-word-by-word": {
@@ -577,7 +725,8 @@
     "40.50 mirrored band"
    ],
    "used_in": [
-    "GrowthMarketingMike 004 (2023)"
+    "GrowthMarketingMike 004 (2023)",
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023) (verdict_pop + the face band)"
    ],
    "text_swap": {
     "name": "LOWER-THIRD BAND: second statement swaps in inside the same band",
@@ -631,7 +780,45 @@
      "t1": 113.5,
      "label": "the closing run of bands"
     }
-   ]
+   ],
+   "verdict_pop": {
+    "name": "BAND WITH A VERDICT POP (a decision criterion: the 'if X' question in the band, the answer pops under it on the spoken verdict)",
+    "trigger": "each 'if <condition>, go for <A>' criterion of a how-to-choose video, over b-roll: the condition sits in the band for 2 to 3 s, then the verdict word pops beneath it ON the word; the next criterion replaces the question in the same band",
+    "motion": {
+     "band": "the dark-teal animated-texture clip (textures/animated-texture.mp4) at Motion scale 402 percent in 4K, position (0.543, 1.324) so its top edge sits at ~66 percent of the frame height; SLIDES UP in: y 1.481 -> 0.5 over 0.267 s (ease, out-speed 0 / influence 32.5 percent -> in-speed 0 / influence 100), no exit (cut with the shot)",
+     "question": "2 white lines, caps ~42 px, centred, y ~74 percent; slides in from the LEFT: x -0.347 -> 0.5 over 0.262 s; the second question replaces the first by sliding in again 3.37 s later (silent)",
+     "verdict": "one yellow line (the role name), caps ~55 px, y ~79 percent, the kt-keyword-pop pop: scale 100 -> 110 over 0.233 s (ease, out-speed 29 / influence 4.8 percent -> in-speed 1.6 / influence 100) with the rotation jiggle 0 -> +2 -> -2 -> +1 -> -0.5 -> 0 degrees at 0 / 0.033 / 0.083 / 0.133 / 0.200 / 0.267 s; held to the next question / the cut"
+    },
+    "face_variant": "on the FACE (5.200-8.233): the same band slides up while the two-size statement ('THEY DON'T HAVE' small white over 'HISTORICAL DATA' big yellow) pops with the 110 pop and floats with kt-camera-wobble; the second statement swaps in at +1.83 s",
+    "sound": [
+     {
+      "id": "fast-swoosh",
+      "when": "the band slide-up: file start ON it (19.667), with swoosh-4 (the wav twin) under it on the other track"
+     },
+     {
+      "id": "knock-pop",
+      "when": "EACH verdict: file start ON the pop (22.233 GROWTH HACKING, 25.733 GROWTH MARKETING), 1.5 s used"
+     }
+    ],
+    "reference_cues_choose": [
+     "19.667 band up + 'IF YOU DON'T HAVE A PRODUCT MARKET FIT YET' · 22.233 GROWTH HACKING (knock-pop) · 23.033 'IF THERE IS A CLEAR MARKET AND DEMAND' · 25.733 GROWTH MARKETING (knock-pop) · 26.700 spin cut out",
+     "5.200 face band 'THEY DON'T HAVE / HISTORICAL DATA' · 7.033 'THEY HAVE / EVERYTHING TO PROVE'"
+    ],
+    "browse_cues": [
+     {
+      "src": "choose",
+      "t0": 19.4,
+      "t1": 26.8,
+      "label": "two criteria, two verdict pops"
+     },
+     {
+      "src": "choose",
+      "t0": 5.0,
+      "t1": 8.3,
+      "label": "the band on the face with the two-size statement"
+     }
+    ]
+   }
   },
   "kt-whip-cut": {
    "name": "WHIP-ZOOM cut (a transition, bucket 3, listed here only because its sounds live in this folder)",
@@ -673,7 +860,8 @@
     "11.37, 14.37, 23.67, 26.37 (0.37 s whips)"
    ],
    "used_in": [
-    "GrowthMarketingMike 004 (2023)"
+    "GrowthMarketingMike 004 (2023)",
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023) (offset_pan)"
    ],
    "browse_cues": [
     {
@@ -688,7 +876,29 @@
      "t1": 15.2,
      "label": "0.37 s whips into the b-roll"
     }
-   ]
+   ],
+   "offset_pan": {
+    "name": "OFFSET WHIP (the 'Whip' preset: the frame wraps one full width sideways with a horizontal blur and a posterize crunch)",
+    "trigger": "a face -> b-roll cut that should feel like a fast pan (005: into the sticky-note footage at 8.133)",
+    "motion": "an adjustment layer, 0.267 s: Offset shift-centre x 0.5 -> -0.5 (the picture wraps one full frame width to the LEFT), directional blur 90 degrees length 0 -> 250 (4K; 125 px at 1080p) at +0.120 s -> 0, posterize levels 255 -> 20 at +0.120 s -> 255 (a one-frame colour crunch at the peak); ease in and out",
+    "sound": [
+     {
+      "id": "whoosh-4",
+      "when": "file start ON the whip (8.133), 0.6 s used"
+     }
+    ],
+    "reference_cues_choose": [
+     "8.133 whip from the face into the sticky-note b-roll"
+    ],
+    "browse_cues": [
+     {
+      "src": "choose",
+      "t0": 7.8,
+      "t1": 8.8,
+      "label": "offset whip into the b-roll"
+     }
+    ]
+   }
   },
   "kt-list-card": {
    "name": "LIST CARD on crumpled paper",
@@ -792,7 +1002,8 @@
    ],
    "used_in": [
     "GrowthMarketingMike 004 (2023)",
-    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)"
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)",
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023) (cutout_sticker)"
    ],
    "artwork": "the five .aegraphic files are ZIPs holding only mogrt_TEMP.aep (RIFX After Effects project, 390-540 KB) + mogrt_TEMPReport.txt ('Number of collected files: 0'); no PNG / JPG / PSD / SVG / AI / PDF inside, the art is AE shape layers. Nothing extracted; no icon folders created",
    "confidence": "read from keyframes",
@@ -852,7 +1063,30 @@
      "t1": 61.2,
      "label": "growth chart slides up onto the chest (whoosh-4)"
     }
-   ]
+   ],
+   "cutout_sticker": {
+    "name": "CUTOUT STICKER (a cut-out person PNG with a drop shadow jumps in beside the head)",
+    "trigger": "a 'think of...' line: a cut-out photo of a pondering person appears beside Mike for ~1 s, as if a second person joined the shot",
+    "motion": "the PNG (820x1036) at Motion scale 103 percent in its nested sequence, bottom right of the head (~x 0.85, y 0.62); a Transform jumps it from far off-frame bottom-right into place in 0.083 s (2.5 frames) with full motion blur, rotation -26 degrees on that transform; then 'Smooth_Shake' drifts the whole nest ~12 px over 3.5 s; drop shadow opacity ~69 percent, direction 135, distance 20, softness 25",
+    "sound": [
+     {
+      "id": "cartoon-accent",
+      "when": "file start ON the jump (35.633, media in 0.5 s), 0.63 s used"
+     }
+    ],
+    "in_transition": "kt-spin-cut (spin left) on the same cut",
+    "reference_cues_choose": [
+     "35.533 spin left · 35.633 the thinking-man cutout jumps in beside the head (cartoon-accent) with 'THINK OF WEARABLE TECH'"
+    ],
+    "browse_cues": [
+     {
+      "src": "choose",
+      "t0": 35.3,
+      "t1": 36.9,
+      "label": "thinking-man cutout beside the head"
+     }
+    ]
+   }
   },
   "kt-subscribe-close": {
    "name": "SUBSCRIBE button on the chest + playlist arrow (end card)",
@@ -890,7 +1124,8 @@
    ],
    "used_in": [
     "GrowthMarketingMike 004 (2023)",
-    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023) (bar variant)"
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023) (bar variant)",
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023) (bar)"
    ],
    "confidence": "read from keyframes",
    "unknowns": [
@@ -941,6 +1176,10 @@
      "t1": 125.0,
      "label": "button on the chest, then the playlist arrow"
     }
+   ],
+   "reference_cues_choose": [
+    "62.167 the like / SUBSCRIBE / bell bar (the same keyed clip, media 2.43-5.90 s at speed 1.3, Motion scale 147) slides UP in (y 1.177 -> 0.5, 0.262 s) and DOWN out (y 0.5 -> 1.503, 0.200 s at 65.706); its own click track plays (subscribe-bar-clicks); 'SUBSCRIBE TO MY CHANNEL FOR MORE VIDEOS ABOUT GROWTH MARKETING' is spoken over it",
+    "64.833 snap zoom in (whoosh-4) · 65.767 'AT THIS PLAYLIST' · 67.233 THE FUNDAMENTALS OF GROWTH MARKETING (cash-register): the playlist close"
    ]
   },
   "kt-scatter-words": {
@@ -1524,12 +1763,34 @@
     }
    ],
    "used_in": [
-    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)"
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)",
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023) (the running line on every face and b-roll shot + payoff_120)"
    ],
    "confidence": "read from keyframes (the Text component has none: a hard cut; the open_stretch and the pops are keyframed); sizes measured on the render",
    "unknowns": [
     "the exact font size: Essential Graphics stores it in a blob the decoder does not read; 52 px caps measured"
-   ]
+   ],
+   "payoff_120": {
+    "name": "PAYOFF WORD at 120 (the caption line's key word REPLACES the line, bigger, on its spoken word)",
+    "trigger": "the caption line over footage reaches its payoff word ('as soon as you have a bunch of' -> HAPPY CUSTOMERS): the line is cut and the payoff pops alone, bigger and higher, then the line resumes with the next phrase",
+    "motion": "the 120 preset = the 110 pop going to 120: scale 100 -> 120 over 0.233 s with the same rotation jiggle; nested at Motion scale 122 percent, y 0.411 of the nested frame, so the payoff sits ~1.5x the caption size, ~18 percent above the caption line; held 0.5 to 1.2 s; the caption phrases between them are the normal running line at y 0.888",
+    "sound_by_meaning": {
+     "knock-pop": "neutral payoff (HAPPY CUSTOMERS 9.400)",
+     "cash-register": "money (MONEY 10.900)",
+     "wooden-rattle-whoosh": "the last of a run (ACQUIRE AND SERVE 12.167)"
+    },
+    "reference_cues_choose": [
+     "8.233 'AS SOON AS YOU HAVE A BUNCH OF' · 9.400 HAPPY CUSTOMERS (knock-pop) · 10.433 'WHO BRING IN MORE' · 10.967 MONEY (cash-register) · 11.433 'THEN THEY COST' · 12.133 ACQUIRE AND SERVE (wooden-rattle 12.167)"
+    ],
+    "browse_cues": [
+     {
+      "src": "choose",
+      "t0": 8.2,
+      "t1": 13.4,
+      "label": "caption line with three payoff pops at 120"
+     }
+    ]
+   }
   },
   "kt-typewriter-card": {
    "name": "TYPEWRITER CARD on crumpled paper (a summary / definition typed in line by line)",
@@ -1670,12 +1931,43 @@
     }
    ],
    "used_in": [
-    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)"
+    "GrowthMarketingMike 007 Skills of a Growth Engineer (2023)",
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023) (paper variant)"
    ],
    "confidence": "read from keyframes (the 14-key hover loop and the rotation cycle, the matte opacity); sizes measured on the render",
    "unknowns": [
     "the matte colour is not stored as a readable value; white judged from the render"
-   ]
+   ],
+   "paper": {
+    "name": "PAPER STATEMENT (the 'to sum it up' card: the statement on crumpled paper, black + red, floating)",
+    "trigger": "the ONE summary sentence a video's argument lands on, said over 4 to 5 s ('adopt a more strategic marketing model, but you need those customers first. To sum it up'): whole block at once, no typing (that is kt-typewriter-card)",
+    "motion": {
+     "card": "the crumpled-paper loop (textures/paper-crumpled.mp4) at Motion scale 306 in the nested 4K sequence = full frame; the whole card PUSHES IN from the RIGHT: x 1.375 -> 0.5 over 0.067 s (2 frames), and pushes OUT to the LEFT: x 0.5 -> -0.528 over 0.100 s",
+     "text": "4 lines centred, block centre y ~40 percent, caps ~60 px, kt-camera-wobble with its rotation (+-0.5 degrees, ~3 s cycle) and uniform 105 percent; appears with the card, holds 4.73 s"
+    },
+    "text_look_2023": "Montserrat ExtraBold Italic ALL CAPS, black with the key phrases red #E0151A",
+    "sound": [
+     {
+      "id": "fast-swoosh",
+      "when": "in: file start 0.067 s before the push (14.967 for 15.033), 0.23 s used"
+     },
+     {
+      "id": "fast-swoosh",
+      "when": "out: file start ON the push-out (19.667), shared with the next band's slide-up"
+     }
+    ],
+    "reference_cues_choose": [
+     "15.033 paper card in (fast-swoosh 14.967) · 19.667 out left (fast-swoosh)"
+    ],
+    "browse_cues": [
+     {
+      "src": "choose",
+      "t0": 14.8,
+      "t1": 20.0,
+      "label": "paper statement: ADOPT A MORE STRATEGIC MARKETING MODEL"
+     }
+    ]
+   }
   },
   "kt-text-wall": {
    "name": "TEXT WALL (the Monument Extended MOGRT: a 3D wall of one repeated phrase, a red headline pops on top)",
@@ -1817,6 +2109,663 @@
    ],
    "confidence": "read from keyframes (every slide is a 3-frame Transform position move with the same bezier)",
    "unknowns": []
+  },
+  "kt-versus-stack": {
+   "name": "VERSUS STACK over the dimmed face (contender A, VS, contender B drop in one by one)",
+   "trigger": "the ONE concrete A-vs-B example of a head-to-head video ('think of a GAMING SOCIAL APP versus A COMPANY THAT SELLS ELECTRICAL FURNACES'): the face stays under a dark-teal matte while the two contenders and the VS between them land one per spoken phrase",
+   "motion": {
+    "face": "the face shot snaps in to 130 percent on the cut (kt-snap-zoom: 2 frames, position y 0.50 -> 0.585) and stays under the matte",
+    "matte": "a full-frame dark-teal Color Matte at opacity 79 percent (a darken-type blend: the turquoise #4AA293 reads #335C55 under it), Motion scale 200 in 4K = full frame, slides DOWN in from above: position y -0.183 -> 0.5 over 0.262 s (ease, out-speed 2.41 / influence 33 percent -> in-speed 0 / influence 100), 0.333 s before the first contender",
+    "lines": "each line slides DOWN in with the same 0.262 s ease and then HOVERS with the camera wobble (kt-camera-wobble); contender A at y ~31 percent (+0.33 s after the matte), VS at y ~39 percent (+1.30 s), contender B at y ~56 / 64 percent (2 lines, +2.67 s), each on its spoken words; all stay to the cut; caps ~80 px",
+    "exit": "kt-shake-cut on the cut back to the face (whoosh-4); the matte and the lines are cut with the shot",
+    "hold": "4.40 s (37.100-41.500)"
+   },
+   "text_look_2023": "Montserrat ExtraBold Italic ALL CAPS, contenders yellow #FCFE40, 'VS' white, dark drop shadow",
+   "assets": {},
+   "sound": [
+    {
+     "id": "whoosh-4",
+     "when": "EACH line: file start ON the line's first frame (37.100 contender A, 38.067 VS, 39.433 contender B), 0.5 s used at -10 dB"
+    },
+    {
+     "id": null,
+     "when": "the matte itself slides in silent (36.767), under the face cut's sound"
+    }
+   ],
+   "reference_cues_choose": [
+    "36.767 face snaps to 130 + matte slides down · 37.100 GAMING SOCIAL APP · 38.067 VS · 39.433 A COMPANY THAT SELLS ELECTRICAL FURNACES (whoosh-4 each) · 41.467 shake cut to the face"
+   ],
+   "browse_cues": [
+    {
+     "src": "choose",
+     "t0": 36.4,
+     "t1": 42.0,
+     "label": "GAMING SOCIAL APP vs A COMPANY THAT SELLS ELECTRICAL FURNACES"
+    }
+   ],
+   "used_in": [
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023)"
+   ],
+   "confidence": "placement, timings, motion and sounds read from the keyframes of choose revision.prproj (2026-11-09); sizes and colours measured on the render",
+   "unknowns": [
+    "the Color Matte's exact colour and blend mode index 18 (read as darken-type from the render)"
+   ],
+   "backdrop_note": "no asset (a Color Matte); the backdrop under it is themes/kinetic-text-2023/textures/suede-turquoise.jpg"
+  },
+  "kt-spin-cut": {
+   "name": "SPIN CUT (a transition, bucket 3: the incoming shot spins a full turn in 5 to 8 frames, mirror-tiled, heavy motion blur)",
+   "trigger": "a cut INTO a full-frame graphic interlude or a reaction shot that should land with a flourish (005: into the wave wall at 26.700, the 'GREEN VORTEX' Mike flagged at 0:27; into the thinking-man shot at 35.533); never on a plain face-to-face cut",
+   "motion": {
+    "spin_right": "an adjustment layer over the cut, 0.167 s (26.700-26.867): rotation 0 -> 180 -> 360 degrees keyed at -0.100 / +0.033 / +0.167 s around the cut (ease, peak speed ~2900 deg/s at the middle key), so the incoming shot appears mid-spin and lands upright 5 frames later",
+    "spin_left": "the same, counter-clockwise and the full 0.267 s on the cut (35.533-35.800): 0 -> -180 -> -360 at 0 / 0.133 / 0.267 s",
+    "edge_fill": "Transform scale-height 200 -> four Mirror effects at 0.25 / 0.75 of the frame (angles -90 / 90 / 0 / -180) -> Transform scale-height 50: the picture is mirror-tiled so the rotating frame never shows black corners",
+    "blur": "Transform shutter angle 260 degrees: at this speed the spinning picture smears into concentric rings (the 'vortex')"
+   },
+   "sound": [
+    {
+     "id": "whoosh-4",
+     "when": "file start 0.10 s BEFORE the cut (26.600 for 26.700) or ON it (35.533), 0.5 s used at -10 dB"
+    }
+   ],
+   "closest_transitions_row": "spin-center-ease-short-cw / -ccw (PerspectiveEase, 0.44 s, 40 + 90 degrees) is NOT this: the 2023 spin is a full 360 in a quarter second; build it to these numbers",
+   "reference_cues_choose": [
+    "26.600 whoosh-4 · 26.700 spin right into the wave wall (5 frames)",
+    "35.533 spin left (whoosh-4) into the thinking-man shot"
+   ],
+   "browse_cues": [
+    {
+     "src": "choose",
+     "t0": 25.9,
+     "t1": 27.6,
+     "label": "spin right into the wave wall (the 0:27 vortex)"
+    },
+    {
+     "src": "choose",
+     "t0": 35.0,
+     "t1": 36.6,
+     "label": "spin left into the thinking-man shot"
+    }
+   ],
+   "used_in": [
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023)"
+   ],
+   "confidence": "placement, timings, motion and sounds read from the keyframes of choose revision.prproj (2026-11-09); sizes and colours measured on the render",
+   "unknowns": []
+  },
+  "kt-wave-wall": {
+   "name": "WAVE WALL (the Scene_22 MOGRT: alternating rows of two phrases, outlined white and filled green, the row ends curling like a wave)",
+   "trigger": "a full-frame interlude for a PAIR of words the next beat is about ('VIRALITY' / 'REACH'): black frame, rows of the two phrases alternate top to bottom, drift sideways and curl at the right edge; 2 to 2.5 s, spun in, blurred and dropped out; one per video (it shares the slot with kt-text-wall: pick one)",
+   "motion": {
+    "source": "Scene_22.aegraphic (After Effects MOGRT, comps 22 / Text_1 / Text_2 / Shadow, effects CC Lens + Offset + Fill + controls, Classic 3D) at Motion scale 200 in 4K = full frame, on a black Color Matte; its keyframes live in the binary .aep, so the motion below is MEASURED ON THE RENDER (frames 801-822)",
+    "rows": "5 rows across the frame (~1080 / 5 px pitch), phrase 1 OUTLINED (white stroke width 1, no fill) and phrase 2 FILLED green #13EF20, alternating; each row is its phrase repeated with a bullet ('VIRALITY · VIRAL...', 'REACH · REACH'), rows drift slowly sideways, the right end of every row bends down and back (CC Lens curl) like a wave rolling in",
+    "in": "kt-spin-cut (spin right, 5 frames) on the cut",
+    "blur_out": "Gaussian blur 0 -> 32 over 2 frames at +1.902 s (the wall goes soft), then the whole nested shot slides DOWN out: y 0.5 -> 1.503 over 0.100 s at +2.300 s",
+    "hold": "2.40 s (26.700-29.100)"
+   },
+   "text_look_2023": "the template font (wide geometric sans, ALL CAPS); stroke white #FFFFFF on black, fill green #13EF20 (template values)",
+   "assets": {
+    "source_reference": "themes/kinetic-text-2023/graphics/_source/Scene_22.aegraphic.zip"
+   },
+   "sound": [
+    {
+     "id": null,
+     "when": "the wall itself is silent: the spin cut's whoosh-4 (26.600) carries the in"
+    },
+    {
+     "id": "whoosh-4",
+     "when": "out: file start ON the slide-down (29.000), 0.63 s used at -10 dB"
+    }
+   ],
+   "build": "RENDER THE TEMPLATE, never stills (the kt-text-wall rule, Mike 2026-11-05): unzip _source/Scene_22.aegraphic.zip, set the two phrases (comps Text_1 / Text_2) by ExtendScript, render comp 22 from 0 at 30 fps, then spin in + blur + drop out in the comp. Pattern: skills/effects-library/scripts/render_text_wall.jsx (written for Scene_23).",
+   "reference_cues_choose": [
+    "26.700 spin in (VIRALITY / REACH rows) · 28.602 blur out · 29.000 slide down out (whoosh-4) onto the shopping b-roll"
+   ],
+   "browse_cues": [
+    {
+     "src": "choose",
+     "t0": 26.4,
+     "t1": 29.4,
+     "label": "VIRALITY / REACH wave wall, spun in, dropped out"
+    }
+   ],
+   "used_in": [
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023)"
+   ],
+   "confidence": "placement, blur and exit read from the project; the wall's own motion measured on the render (AE template, binary keyframes)",
+   "unknowns": [
+    "the row drift speed and curl amount: render the template rather than rebuild it"
+   ]
+  },
+  "kt-meme-inset": {
+   "name": "MEME INSETS beside the head (small reaction clips that illustrate the line, the punchline clip stuttered)",
+   "trigger": "a face line with a comic picture in it ('they don't have historical data' -> empty pockets; 'they have everything to prove' -> 'I'll prove it to everybody'): one or two small looping clips in the free space left and right of the head, for 2 to 3 s",
+   "motion": {
+    "left_inset": "a 640x360 clip at Motion scale 164.5 percent in 4K = 526 x 296 px at 1080p, centre (379, 468); slides in from the LEFT edge: x -0.5 -> 0.5 of the frame over 0.500 s (ease, out-speed 0 / influence 32.5 percent -> in-speed 0 / influence 100); loops (the same 1.1 s clip placed back to back) and is cut with the shot",
+    "right_inset": "a 640x640 clip at 100 percent in 4K = 320 x 320 px, centre (1594, 468); slides in from the RIGHT (the mirror of the left one) 1.33 s after the left inset, ON the punch word; then STUTTERS: the same 0.333 s of the clip placed 4 times (0.333 / 0.333 / 0.200 / 0.333 s), each placement nudged 1 to 8 px sideways, so the punchline repeats like a GIF",
+    "frame": "no border, no shadow, hard rectangle; the face is pulled slightly off-centre by a slow position drift (x 0.526 -> 0.342 -> 0.435 over 2.5 s) while the insets are up"
+   },
+   "sound": [
+    {
+     "id": "whoosh-4",
+     "when": "the face cut that opens the line (5.200)"
+    },
+    {
+     "id": "swoosh-4",
+     "when": "the wav twin, file start 5.200 under the band (the insets themselves are silent)"
+    }
+   ],
+   "house_note": "005's clips were a street meme and a South Park clip: NEVER reuse a TV / cartoon / film clip in a house video (copyright). A house video fills the insets with its own footage, a licensed Envato clip or a ChatGPT still, or drops the device",
+   "reference_cues_choose": [
+    "5.600 left inset slides in (empty pockets) · 6.933 right inset slides in (I'll prove it) + stutter to 8.133"
+   ],
+   "browse_cues": [
+    {
+     "src": "choose",
+     "t0": 5.1,
+     "t1": 8.3,
+     "label": "two meme insets beside the head, the right one stuttered"
+    }
+   ],
+   "used_in": [
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023)"
+   ],
+   "confidence": "placement, timings, motion and sounds read from the keyframes of choose revision.prproj (2026-11-09); sizes and colours measured on the render",
+   "unknowns": []
+  },
+  "kt-emoji-pop": {
+   "name": "EMOJI POP (an animated emoji from the Smiles .aegraphic pack planted on a word in the footage)",
+   "trigger": "a key word in the caption or IN the footage that deserves a reaction (005: a clapping emoji, then a surprised face, planted over the 'Happy Customers' sticky note while the caption says HAPPY CUSTOMERS / MONEY): one emoji at a time, 1 to 2.5 s",
+   "motion": {
+    "placement": "Smiles.aegraphic at Motion scale 21.5 percent in 4K, centre (960, 695) at 1080p, the emoji ~130 px across, ON the word it reacts to; the emoji's own AE animation plays (pop, wiggle, blink); hard cut in and out",
+    "timing": "first emoji 9.400-10.433 (clapping hands, under 'HAPPY CUSTOMERS'), second 10.967-13.367 (surprised face, under 'MONEY' and 'ACQUIRE AND SERVE')"
+   },
+   "sound": [
+    {
+     "id": null,
+     "when": "silent itself: it lands with the caption pop under it (knock-pop 9.400, cash-register 10.900)"
+    }
+   ],
+   "build": "render the chosen emoji comp from Emoticon.aep with alpha (aerender, the hw-subscribe-like-bell route) and place it as an alpha plate; never an emoji font glyph",
+   "reference_cues_choose": [
+    "9.400 clap emoji (with HAPPY CUSTOMERS) · 10.967 surprised face (with MONEY, ACQUIRE AND SERVE) to 13.367"
+   ],
+   "browse_cues": [
+    {
+     "src": "choose",
+     "t0": 9.2,
+     "t1": 13.4,
+     "label": "emoji pops on the sticky-note b-roll"
+    }
+   ],
+   "used_in": [
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023)"
+   ],
+   "confidence": "placement, timings, motion and sounds read from the keyframes of choose revision.prproj (2026-11-09); sizes and colours measured on the render",
+   "unknowns": [
+    "which emoji comps the two placements used (read on the render: clapping hands, surprised face)"
+   ],
+   "assets": {
+    "source_reference": "themes/kinetic-text-2023/graphics/_source/Smiles.aegraphic.zip (005 'Smiles.aegraphic': Emoticon.aep, one comp per animated emoji: Face with Tears of Joy, Winking Face, Star-Struck, Money-Mouth Face, ... ; the template behind kt-emoji-pop)"
+   }
+  },
+  "kt-boxed-words": {
+   "name": "BOXED WORDS (the Scene_11 MOGRT: two words in black boxes, yellow, tilted in 3D, whipping in over a light-grey card)",
+   "trigger": "a TWO-WORD turn the sentence pivots on ('you CAN and SHOULD adopt...'): a full-frame card where the two words land stacked, 1.5 to 2 s, before the statement that follows",
+   "motion": {
+    "source": "Scene_11.aegraphic (After Effects MOGRT; its project survives as 005's MOGRT.aep, saved here as _source/Scene_11-MOGRT.aep) at Motion scale 200 in 4K = full frame; keyframes in the binary .aep, so the motion is MEASURED ON THE RENDER",
+    "words": "word 1 at (960, 414), 3D rotation X -11 / Y 9 / Z 1 degrees; word 2 at (899, 682), X -8 / Y 6 / Z -1; each a black box (rough, noisy edges: Noise 10) with yellow #FFFB23 caps ~140 px; drop shadow opacity 70, angle 120, distance 30, size 25",
+    "in": "word 1 whips in from the upper left with a directional streak blur (template Angle 135 / Length 2 / Density 1), word 2 follows ~0.5 s later; both settle by +0.6 s",
+    "background": "flat light grey #BABABA with a soft vignette (Feather 250), a 5 px box blur on the card",
+    "hold": "1.73 s (13.367-15.100), then the paper card pushes in over it"
+   },
+   "text_look_2023": "template font (Montserrat Black-like) ALL CAPS yellow #FFFB23 on black boxes",
+   "sound": [
+    {
+     "id": null,
+     "when": "the card is cut in SILENT (13.367; the music carries); the next card's fast-swoosh (14.967) takes it out"
+    }
+   ],
+   "build": "render the template (set Box_1 / Box_2 text by ExtendScript, the render_text_wall.jsx pattern) rather than redraw it",
+   "reference_cues_choose": [
+    "13.367 CAN · ~13.9 SHOULD · 14.967 fast-swoosh, the paper card pushes in at 15.033"
+   ],
+   "browse_cues": [
+    {
+     "src": "choose",
+     "t0": 13.2,
+     "t1": 15.2,
+     "label": "CAN / SHOULD boxed words"
+    }
+   ],
+   "used_in": [
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023)"
+   ],
+   "confidence": "placement read from the project's Graphic Parameters; the motion measured on the render (AE template)",
+   "unknowns": [
+    "the exact whip timing inside the template"
+   ],
+   "assets": {
+    "source_reference": "themes/kinetic-text-2023/graphics/_source/Scene_11-MOGRT.aep (005 'MOGRT.aep', 542149 bytes: the Scene_11 .aegraphic's AE project, comps with Box_1 / Box_2, Pos/Rot X Y Z, Shadow_*, Noise, Bkur_Radius controls on a CONTROL PANEL layer; the template behind kt-boxed-words)"
+   }
+  },
+  "kt-camera-wobble": {
+   "name": "CAMERA WOBBLE (the Smooth Camera Wobble preset: a slow handheld drift on any held card, line or photo)",
+   "trigger": "a MODIFIER, not an event: every held text block, card or photo of the 005 edit floats with it (the versus lines, the side-panel text, the paper statement, the band text on the face, the open's photo backdrop) so nothing on screen is ever dead still",
+   "motion": {
+    "position": "a looping 13-key path, period 8.600 s, keys at 0 / 0.667 / 1.317 / 1.883 / 2.550 / 3.267 / 3.850 / 4.333 / 5.083 / 5.633 / 6.383 / 7.100 / 7.833 s (continuous bezier); offsets from centre in px at 1080p, x / y: +3.5/-8.5, -1.5/+8.5, -32/-6.5, -25.5/+9.5, -10.5/-2.5, +3/+7, -4.5/-7, -21.5/+2, -16/-16.5, -12/-2, -6.5/-14, -28/-9, -20/+4 (a ~35 x 26 px drift box)",
+    "scale": "uniform 105 percent so the drift never shows an edge on a full-frame element",
+    "rotation": "optional: the paper statement also rocks 0 -> +0.5 -> 0 -> -0.5 -> 0 degrees at 0 / 0.683 / 1.450 / 2.200 / 3.000 s (a ~3 s cycle)",
+    "phase": "the path starts from its first key at the element's first frame (every 005 use is in phase with its own start)"
+   },
+   "sound": [
+    {
+     "id": null,
+     "when": "never: a wobble has no sound of its own"
+    }
+   ],
+   "reference_cues_choose": [
+    "0.333 photo backdrop · 5.333 / 7.033 band text · 15.033 paper statement (+ rotation) · 37.100 / 38.067 / 39.433 versus lines · 44.600 / 52.100 side-panel text"
+   ],
+   "browse_cues": [
+    {
+     "src": "choose",
+     "t0": 15.0,
+     "t1": 19.7,
+     "label": "the paper statement floating (position + rotation wobble)"
+    }
+   ],
+   "used_in": [
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023)"
+   ],
+   "confidence": "placement, timings, motion and sounds read from the keyframes of choose revision.prproj (2026-11-09); sizes and colours measured on the render",
+   "unknowns": []
+  },
+  "kt-snap-zoom": {
+   "name": "SNAP ZOOM on a face jump cut (the 'Transform 360' preset: 100 -> 120 / 130 percent in 2 frames, full motion blur)",
+   "trigger": "a jump cut inside a face run: the new shot SNAPS to a tighter framing (or back out) in 2 frames, smeared by motion blur, instead of a plain cut; also how the face makes room for a side panel (the snap adds a sideways shift)",
+   "motion": {
+    "in": "Transform scale 100 -> 120 percent and position y 0.500 -> 0.583 over 0.067 s, LINEAR, shutter 360 degrees (3.800; 64.833 the same at y 0.558)",
+    "out": "the next shot starts at 120 and snaps back to 100 / y 0.5 in the same 2 frames (5.200)",
+    "deep": "100 -> 130 percent, y 0.585 (36.767, under the versus stack)",
+    "reframe_for_panel": "100 -> 130 percent with x 0.500 -> 0.636 (face pushed RIGHT for a LEFT panel, 44.333) or -> 0.347 (pushed LEFT for a RIGHT panel, 51.900); the shot after the panel snaps 130 -> 100 back to centre (48.000, 57.167)"
+   },
+   "sound": [
+    {
+     "id": "whoosh-4",
+     "when": "file start 0.033 s before the snap (3.767 for 3.800), 0.5 s used at -10 dB; the face-to-face snaps without a graphic are always whooshed"
+    }
+   ],
+   "house_note": "a house gated-face video runs it on Mike's real face shot: a scale + shift of the whole frame, no keying, so it is allowed",
+   "reference_cues_choose": [
+    "3.800 in (whoosh-4 3.767) · 5.200 out (whoosh-4) · 36.767 deep · 44.333 / 51.900 reframe for a panel · 48.000 / 57.167 back · 64.833 in"
+   ],
+   "browse_cues": [
+    {
+     "src": "choose",
+     "t0": 3.4,
+     "t1": 5.6,
+     "label": "snap in, then snap back out"
+    }
+   ],
+   "used_in": [
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023)"
+   ],
+   "confidence": "placement, timings, motion and sounds read from the keyframes of choose revision.prproj (2026-11-09); sizes and colours measured on the render",
+   "unknowns": []
+  },
+  "kt-shake-cut": {
+   "name": "SHAKE CUT (a transition, bucket 3: the 'Shake Intense In' preset, the incoming shot lands with a decaying jolt)",
+   "trigger": "the cut back to the face after a full-frame card or a versus stack: the face arrives shaking hard and settles in a quarter second",
+   "motion": {
+    "position": "an adjustment layer over the cut, 0.267 s: the picture's centre jumps (0.370, 0.736) -> (0.510, 0.575) -> (0.457, 0.429) -> (0.526, 0.546) -> (0.493, 0.525) -> (0.510, 0.488) -> (0.501, 0.506) -> ... -> (0.5, 0.5), a key every 0.027 s, linear: first jolt ~250 px at 1080p, halving every 1 to 2 keys",
+    "blur": "directional blur whose angle jitters 0 / -5 / -8 / -7 / +8 / +40 / -14 / -6 / -38 degrees and length 15 -> 3 (4K) over the same keys",
+    "edge_fill": "Transform scale-height 200 + four Mirror effects (the kt-spin-cut tiling) so the shake never shows an edge"
+   },
+   "sound": [
+    {
+     "id": "whoosh-4",
+     "when": "file start ON the cut (41.467), 0.5 s used at -10 dB"
+    }
+   ],
+   "closest_transitions_row": "shake-hit-1x..6x (ShakeJolt) is the nearest family; the 2023 preset is stronger at the first key and adds the angle-jittering directional blur",
+   "reference_cues_choose": [
+    "41.467 shake cut from the versus stack back to the face"
+   ],
+   "browse_cues": [
+    {
+     "src": "choose",
+     "t0": 41.0,
+     "t1": 42.3,
+     "label": "shake cut back to the face"
+    }
+   ],
+   "used_in": [
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023)"
+   ],
+   "confidence": "placement, timings, motion and sounds read from the keyframes of choose revision.prproj (2026-11-09); sizes and colours measured on the render",
+   "unknowns": []
+  },
+  "kt-grid-zoom-in": {
+   "name": "GRID ZOOM-IN open (a transition, bucket 3: the 'Simple Smooth In' preset, the first shot grows out of a 3x3 mirror grid)",
+   "trigger": "the very first frame of the video (or of a chapter): the opening shot starts as a third-size tile in a mirrored 3x3 grid and grows to full frame while it unskews, in half a second",
+   "motion": {
+    "scale": "net 33.4 -> 100 percent over 0.483 s (Transform scale-height 100 -> 300, ease: out-speed 1250 / influence 0.01 percent -> in-speed 5.8 / influence 100, i.e. it leaps off and lands soft, then a second Transform at 33.4)",
+    "skew": "10 -> 0 degrees over the same 0.483 s",
+    "edge_fill": "four Mirror effects at 1/3 and 2/3 of the frame (angles -90 / 0 / 180 / 90): the shrunken shot is tiled 3x3, mirrored"
+   },
+   "sound": [
+    {
+     "id": "swoosh-4",
+     "when": "file start ON frame 0 (media in 0.067 s), 1.13 s used"
+    }
+   ],
+   "closest_transitions_row": "zoom-mirror-punch-in (MirrorZoomPunch, the Finzar preset: 0.333 s, skew axis 135, a y bounce): same idea, slower here and without the bounce; build it with that engine at 0.483 s, no bounce",
+   "reference_cues_choose": [
+    "0.000 the open: the face grows out of the grid with GROWTH HACKING already on screen (swoosh-4)"
+   ],
+   "browse_cues": [
+    {
+     "src": "choose",
+     "t0": 0.0,
+     "t1": 1.2,
+     "label": "the open: grid zoom-in"
+    }
+   ],
+   "used_in": [
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023)"
+   ],
+   "confidence": "placement, timings, motion and sounds read from the keyframes of choose revision.prproj (2026-11-09); sizes and colours measured on the render",
+   "unknowns": []
+  },
+  "kt-topic-backdrop": {
+   "name": "TOPIC PHOTO BACKDROP behind the keyed face (DOCUMENTATION ONLY: never built)",
+   "trigger": "(source only) the open 0.333-3.800 s: a 'GROWTH HACKING' doodle photo slides DOWN in behind Mike (who is keyed off his green screen), floating with the camera wobble, a glitch-noise texture over it, while the role label and its 'commonly associated with' line pop under him",
+   "motion": {
+    "photo": "900x506 still at Motion scale 442.8 percent in 4K = full frame, Slide DOWN in (y -0.183 -> 0.5, 0.262 s), kt-camera-wobble, the noise texture (textures/noise-glitch-4k.mp4) over it 0.8-3.8 s"
+   },
+   "house_rule_conflict": "it needs Mike KEYED over the photo: never key or matte Mike's face (memory no-matting-mikes-face; the hw-keyed-presenter precedent)",
+   "sanctioned_alternative": "show the topic photo FULL FRAME as a cover beat with the role label over it (kt-headline-over-broll), or, for a few-second hero open only, a Higgsfield video-to-video regeneration of the face shot with the new background (Seedance 480p rule)",
+   "reference_cues_choose": [
+    "0.333 photo slides down behind the face · 0.933 'IS COMMONLY ASSOCIATED WITH' slides in · 2.500 'SILICON VALLEY STARTUPS'"
+   ],
+   "used_in": [
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023)"
+   ],
+   "confidence": "placement, timings, motion and sounds read from the keyframes of choose revision.prproj (2026-11-09); sizes and colours measured on the render",
+   "unknowns": []
+  },
+  "ep-elegant-promo": {
+   "name": "ELEGANT PROMO montage (the 'Elegant Promo' After Effects template, one picture per 7 s slot)",
+   "composite_of": [
+    "ep-iris-open",
+    "ep-circle-burst",
+    "ep-disc-sweep",
+    "ep-label-title"
+   ],
+   "trigger": "a serious news-promo run of 2 to 4 dated or labelled fact cards, one picture each, the narration running under it (043 at 67.2: 'FEBRUARY 2022' / 'THE ENERGY CRISIS IN EUROPE BEGINS' over an armoured column, 'G7 GROUP' / a 2-line sub-line over the G7 map, 'ESSENTIAL REVENUES' / 'FOR ITS ECONOMY AND ITS WAR MACHINE' over rouble bundles footage)",
+   "motion": {
+    "per_scene": "each picture is one 210-frame slot (7.007 s, template pace): 0.30-1.50 the circle burst carries it in (scene 1: ep-iris-open 0.07-0.90 out of the navy, then the burst 0.87-1.47) · all slot long the slow push-in · 1.77-2.90 ep-disc-sweep · 2.40-4.27 the bar, 2.87 / 3.07-4.40 the title, 3.27 / 3.54-4.34 the sub-line (ep-label-title) · ~4.0-5.3 the white accents · hold to 7.0, when the next burst starts; the last slot holds to the comp end (scene 3: 9.64 s). A picture is alone on screen ~5.8 s",
+    "layouts": "the slots cycle corner_tl (scene 1: discs from beyond the top-left corner, label top-left, left-aligned) -> corner_br (scene 2: discs from beyond the bottom-right corner, label bottom-right, right-anchored) -> top_centre (scene 3: discs hanging from the top edge, label centred); numbers in ep-disc-sweep / ep-label-title",
+    "photo_move": "every picture pushes in from its slot start until the next burst covers it: linear (no ease), +3.8 percent a second compounded (scale 1.005 at 1.6 s -> 1.26 at 7.6 s in scenes 1 and 2), centred (drift < 6 px), a slight roll (-0.04 to -0.08 degrees a second); measured by feature tracking (the template's 3D camera: Camera Control null + Camera 1 over 6 copies of the picture). Footage (scene 3, rouble bundles) keeps its own camera move on top (~25 degrees of roll and a ~540 px pan over its 9.6 s)",
+    "accents": "white decorations, frame reads: scene 1 one short white diagonal stroke (~80-95 px long, ~4 px wide) shooting up-right across the lower right, (1515, 975) -> (1641, 831) at 4.30-4.90 s; scene 2 small white flecks near the G7 'G' ~4.0-4.8 s; scene 3 thin white ring outlines (radius ~125 px, ~5 px stroke) whose arcs draw on and unwind at 3-4 spots in the lower half, 4.0-5.3 s (the template's Shape Layer 41/42, 43/44 in SC_03)",
+    "field": "before the first picture: the navy field #04090F with a faint blue leak at the left edge (the template's Blackout + LEAK comp: Fractal Noise tinted Leaks #4378BB); scene 1's discs carry faint pixel blocks (the Dots comp, Fractal Noise + Mosaic, SC_01 only)",
+    "template": "Motion Array 'Elegant Promo' (Elegant Promo (converted).aep; the logo placeholder sits in '(Footage)/Motion Array/03. Other'). Main comp: Control (8 Color Controls: Text 01, Text 02, Small Text, Line 01, Line 02, Slide 01, Slide 02, Leaks), Blackout, LEAK, SC_03, SC_02, SC_01, two unnamed footage layers. 12 scene slots (unfilled placeholders 'NO Plugins', 'modern style', 'EASY to customize', 'FAST RENDERED', 'COLOR CONTROL', 'unique & clean', 'minimal slides', 'FREE FONT INCLUDED', 'AE CS5.5 and above'); Mike filled Scene_01-03 and rendered 23.657 s (709 frames). Each SC_0N: Image 0N Comp (the picture + camera), Trans_BG 01 + Trans_BG 01_sh (the burst), Shape Layer 34 + 35 (the discs), Text 01 (title + Shape Layer 1 = the bar), Text 02 (sub-line), Logo (not visible), Dots (SC_01), Shape Layer 41-44 (accents)",
+    "placement": "043: V4 67.200-87.020 final\\Main.avi, Motion scale 201 percent, centred, no opacity keys, no transitions (hard cut in from the face, hard cut out to b-roll), speed 118.96 percent (in 0 -> out 23.578 s): main t = 67.200 + render t / 1.18960, so 5.89 s a slot as placed; the a-roll runs on underneath",
+    "build_note": "build it to these numbers at the template pace (7.007 s a picture) unless the screenplay asks for 043's 1.1896x; the scene count is free (the template has 12 slots), the layouts cycle; the cuts in and out are hard"
+   },
+   "text_look_2022": "titles Roboto Black, sub-lines Roboto Regular, both ALL CAPS white #FFFFFF; the bar Line 02 #38C1A9 -> Line 01 #135FB5; the discs Slide 01 #C3264B -> Slide 02 #1C0924 (ep-label-title / ep-disc-sweep)",
+   "assets": {},
+   "sound": [
+    {
+     "id": null,
+     "when": "SILENT in the source (narration + music only): Main.avi's own audio is silent and nothing fires on A1-A4 in 67.200-87.020 (the next sound file on the timeline is '1 - swoosh - short.wav' on A4 at 92.826, after the montage). The screenplay may pair a catalog sound by id on the [SHOW] line"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "67.200-87.020 Main.avi (3 scenes: an armoured column photo, the G7 map, rouble bundles footage)",
+    "67.200 hard cut in · 67.931 burst (open) · 73.342 burst to scene 2 · 79.233 burst to scene 3 · 87.020 hard cut out",
+    "titles: FEBRUARY 2022 69.781 · G7 GROUP 75.612 · ESSENTIAL REVENUES 81.393 (narration 'But when Russia invaded Ukraine in February of 2022' 67.36 ... 'its war machine.' 86.80)"
+   ],
+   "browse_cues": [
+    {
+     "src": "ep",
+     "t0": 10.0,
+     "t1": 30.2,
+     "label": "the whole montage as placed in 043 (1.1896x), with the narration and the Leatherface bed"
+    },
+    {
+     "src": "render",
+     "t0": 0.0,
+     "t1": 23.6,
+     "label": "the clean AE render at the template's own pace (silent)"
+    }
+   ],
+   "used_in": [
+    "CodeMonkey 043 European Energy Crisis in 2022 Explained (2022)"
+   ],
+   "confidence": "placement, speed, scale and the bed level READ from the project; text, fonts, colours and the comp structure READ from the .aep; every motion number MEASURED on the clean render (the template's keyframes live in the binary .aep)",
+   "unknowns": [
+    "the template's keyframe curves themselves (binary .aep): the rows give measured samples, the builder fits its easing to them",
+    "the two unnamed footage layers of the Main comp",
+    "exact alternative: re-render the AE project (_source/ae/) with new pictures and words"
+   ],
+   "decoded": "2026-11-09 from energy-crisis-final.prproj (the render's project) + the three .aep saves (strings) + measurements of render/Main-avi-crf6.mp4"
+  },
+  "ep-iris-open": {
+   "name": "IRIS OPEN: a pinpoint circle opens the first picture out of a dark navy field (soft halo)",
+   "part_of": "ep-elegant-promo",
+   "trigger": "the FIRST picture of a promo run (or of a chapter) out of darkness: a cold, quiet reveal; it hands over to ep-circle-burst (open variant) at 0.87 s",
+   "motion": {
+    "iris": "ONE circle of the picture opens out of the navy field at (620, 580) px (32 / 54 percent of the frame, left of centre): a pinpoint glow from 0.067 s, the picture's edge visible from 0.23 s; edge radius 10 px @0.23, 18 @0.30, 34 @0.37, 44 @0.40, 70 @0.47, 90 @0.50, 114 @0.53, 142 @0.57, 174 @0.60, 206 @0.63, 232 @0.67, 252 @0.70, 268 @0.73, 284 @0.77, 298 @0.80, 308 @0.83, 320 @0.87, 326 @0.90 s (template pace): a slow start, fastest ~950 px/s around 0.60 s, easing out; the centre drifts < 5 px",
+    "halo": "a soft light halo around the rim, ~95 px wide: #2F3337 just outside the edge fading into the field by +95 px; no stroke",
+    "inside": "the picture is already pushing in under the circle (the scene's camera, ep-elegant-promo photo_move)",
+    "field": "the navy field #04090F (flat), a faint blue leak at the left edge (#0B1623 to #0F1C2D within ~250 px of x 0)",
+    "as_placed_043": "1.1896x: pinpoint 67.256, edge 67.397, hand-off to the burst 67.931"
+   },
+   "text_look_2022": "n/a",
+   "assets": {},
+   "sound": [
+    {
+     "id": null,
+     "when": "SILENT in the source (narration + music only): Main.avi's own audio is silent and nothing fires on A1-A4 in 67.200-87.020 (the next sound file on the timeline is '1 - swoosh - short.wav' on A4 at 92.826, after the montage). The screenplay may pair a catalog sound by id on the [SHOW] line"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "67.200 hard cut to the navy field · 67.256 pinpoint at (620, 580) · 67.397-67.957 the armoured-column photo opens to radius 326 ('But when Russia invaded' 67.36-68.24)"
+   ],
+   "browse_cues": [
+    {
+     "src": "render",
+     "t0": 0.0,
+     "t1": 1.6,
+     "label": "the iris over the navy, template pace (silent)"
+    },
+    {
+     "src": "ep",
+     "t0": 10.0,
+     "t1": 11.5,
+     "label": "as placed in 043 (1.1896x)"
+    }
+   ],
+   "used_in": [
+    "CodeMonkey 043 European Energy Crisis in 2022 Explained (2022)"
+   ],
+   "confidence": "MEASURED on the render: the edge radius per frame from radial luminance profiles (the 50 percent point between the picture and the field), the halo from the same profiles, the colours sampled",
+   "unknowns": [
+    "the template's mask easing curve (binary .aep): fit to the sampled radii"
+   ],
+   "decoded": "2026-11-09 from energy-crisis-final.prproj (the render's project) + the three .aep saves (strings) + measurements of render/Main-avi-crf6.mp4"
+  },
+  "ep-circle-burst": {
+   "name": "CIRCLE BURST: six staggered circles carry the next picture in (the scene change)",
+   "part_of": "ep-elegant-promo",
+   "trigger": "every picture change inside a promo run (a transition, bucket 3: the incoming picture arrives in circles over the outgoing one, its title and discs included); the open variant finishes ep-iris-open over the navy field. Never on a face cut",
+   "motion": {
+    "burst": "the next picture arrives in SIX circles (the template's Trans_BG 01_sh: 6 shape layers, each matting a copy of the picture, each with a Drop Shadow), staggered, each growing from a point until it leaves the frame; their union eats the old picture. New-picture coverage from the slot start (template pace): 5 percent @0.60, 10 @0.70, 17 @0.80, 25 @0.90, 41 @1.00, 52 @1.07, 62 @1.13, 71 @1.20, 80 @1.27, 86 @1.33, 90 @1.43 s, done ~1.50 s; measured identical on both 043 changes",
+    "scene_change": "the lead circle at (1300, 500) px: a dot from 0.30 s, radius 35 @0.37, 46 @0.40, 58 @0.43, 75 @0.47, 98 @0.50, 125 @0.53, 160 @0.57, 192 @0.60 s (it already shows the new picture, so a light picture reads as a white circle popping); then, from the frame edges: bottom-left (from beyond the corner) 0.70, top-left (centred ~(145, 0)) 0.83, top (centred ~(1340, 0) or above) 0.93, bottom-right (from ~(1590, 1080) or below) 0.97, centre-left (595, 520) 1.07 s",
+    "open_variant": "in the open the lead circle IS ep-iris-open at (620, 580); the other five come at 0.87 (a big circle from beyond the top-right corner, centre ~(2150, -80), radius 619 @0.87 -> 948 @1.00), 0.93 (top-left), 0.97 (a small one at ~(1343, 545)), ~0.97 (bottom-left) and 1.07 s (bottom-right). Navy left on screen 74 percent @0.87, 53 @1.00, 30 @1.17, 16 @1.30, ~5 @1.47 s (the floor is the picture's own shadows): the dark leftovers between the circles read as liquid blobs",
+    "rim": "each circle's rim carries a soft dark drop shadow (strong over the navy, faint over a picture); no stroke",
+    "as_placed_043": "1.1896x: 67.931-68.436 (open), 73.342-74.351 (50 percent 73.973), 79.233-80.241 (50 percent 79.863)"
+   },
+   "text_look_2022": "n/a (the circles carry the incoming picture; the outgoing title and discs are wiped with their picture)",
+   "assets": {},
+   "sound": [
+    {
+     "id": null,
+     "when": "SILENT in the source (narration + music only): Main.avi's own audio is silent and nothing fires on A1-A4 in 67.200-87.020 (the next sound file on the timeline is '1 - swoosh - short.wav' on A4 at 92.826, after the montage). The screenplay may pair a catalog sound by id on the [SHOW] line"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "67.931-68.436 open variant over the navy (the armoured column)",
+    "73.342-74.351 armoured column -> G7 map ('and the energy crisis began.' 72.50-74.22)",
+    "79.233-80.241 G7 map -> rouble bundles footage ('Russian oil. The goal is' 79.06-80.10)"
+   ],
+   "browse_cues": [
+    {
+     "src": "render",
+     "t0": 7.1,
+     "t1": 8.8,
+     "label": "scene change 1 -> 2, template pace (silent)"
+    },
+    {
+     "src": "ep",
+     "t0": 16.1,
+     "t1": 17.5,
+     "label": "scene change 1 -> 2 as placed"
+    },
+    {
+     "src": "ep",
+     "t0": 22.0,
+     "t1": 23.4,
+     "label": "scene change 2 -> 3 as placed (footage)"
+    },
+    {
+     "src": "render",
+     "t0": 0.6,
+     "t1": 1.7,
+     "label": "the open variant over the navy, template pace"
+    }
+   ],
+   "used_in": [
+    "CodeMonkey 043 European Energy Crisis in 2022 Explained (2022)"
+   ],
+   "confidence": "MEASURED on the render: coverage = pixels nearer the next settled frame than the previous one; circle positions and radii from connected components of the change; the six-layer structure READ from the .aep",
+   "unknowns": [
+    "the exact centres of the circles that enter from beyond the frame (only their visible arcs were measured)",
+    "the template's per-circle easing (binary .aep)"
+   ],
+   "decoded": "2026-11-09 from energy-crisis-final.prproj (the render's project) + the three .aep saves (strings) + measurements of render/Main-avi-crf6.mp4"
+  },
+  "ep-disc-sweep": {
+   "name": "DISC SWEEP: two stacked translucent magenta discs scale in from a centre beyond a corner or the top edge",
+   "part_of": "ep-elegant-promo",
+   "trigger": "the colour wash that backs a title card: it lands ~0.6 s before ep-label-title in the same corner and stays under it; alone, a brand-colour wash sweeping into one corner of a held picture",
+   "motion": {
+    "discs": "two translucent discs on ONE centre beyond the frame, scaling up (the centre does not move): outer radius 566 @1.80, 851 @1.87, 982 @1.94, 1091 @2.00, 1169 @2.07, 1228 @2.14, 1275 @2.20, 1313 @2.27, 1358 @2.34, 1393 @2.47, 1421 @2.60, 1454 @2.87 s, settled ~1457 px (template pace, slot time; a strong ease-out: half the remaining radius every ~0.2 s after 2.0 s; the scale starts off-frame ~0.1 s before the disc crosses into view); the inner disc ~0.78 x the outer radius on the same curve ~0.2 s later (720 @2.14, 897 @2.20, 991 @2.34, 1094 @2.54, 1149 @2.67 s, settled ~1140 px)",
+    "corner_tl": "scene 1: centre (-333, -447), outer settled ~1457 (crossing the top edge at x ~1054 and the left edge at y ~971), inner ~1140 (top edge x ~716, left edge y ~685); visible from 1.77 s (the corner is 557 px from the centre)",
+    "corner_br": "scene 2: the point mirror, centre (2253, 1528), outer ~1457 (crossing the bottom edge at x ~867 and the right edge at y ~110); visible from 1.78 s",
+    "top_centre": "scene 3: centre (961, -925), outer ~1435: a bowl hanging from the top edge across the full width, lowest at y ~510; visible from 1.93 s",
+    "fill": "translucent (the picture reads through): the template's Ramp from Slide 01 #C3264B (bright raspberry) toward Slide 02 #1C0924 (dark plum); measured as rendered over the grey photo: inner disc #B24261 / #9D3B5D / #953A5B, outer ring #84354D / #68223C; over the pale G7 map #B94362 / #8E3B59 / #70344F. The inner disc is the more saturated one and drops a soft dark shadow line onto the outer at its rim (Shape Layer 35's Drop Shadow, likely); no stroke",
+    "dots": "scene 1 only: faint pixel blocks inside the discs (the template's Dots comp)",
+    "as_placed_043": "1.1896x: corner_tl 68.688-69.638, corner_br 74.587-75.528, top_centre 80.603-81.418"
+   },
+   "text_look_2022": "n/a (the label rides on it: ep-label-title)",
+   "assets": {},
+   "sound": [
+    {
+     "id": null,
+     "when": "SILENT in the source (narration + music only): Main.avi's own audio is silent and nothing fires on A1-A4 in 67.200-87.020 (the next sound file on the timeline is '1 - swoosh - short.wav' on A4 at 92.826, after the montage). The screenplay may pair a catalog sound by id on the [SHOW] line"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "68.688 corner_tl ('in February' 68.72-69.22) · 74.587 corner_br ('However, just recently' 74.38-75.58) · 80.603 top_centre ('to keep Russian oil and petroleum' 80.10-81.50)"
+   ],
+   "browse_cues": [
+    {
+     "src": "render",
+     "t0": 1.6,
+     "t1": 3.2,
+     "label": "corner_tl (scene 1), template pace"
+    },
+    {
+     "src": "render",
+     "t0": 8.6,
+     "t1": 10.2,
+     "label": "corner_br (scene 2), template pace"
+    },
+    {
+     "src": "ep",
+     "t0": 23.3,
+     "t1": 24.6,
+     "label": "top_centre (scene 3) as placed"
+    }
+   ],
+   "used_in": [
+    "CodeMonkey 043 European Energy Crisis in 2022 Explained (2022)"
+   ],
+   "confidence": "MEASURED on the render: the outer disc by circle fits to its edge along 20-30 rays per frame (residual < 1 px; scene 2 from its contour), the inner disc from the shadow dip along rays (scene 1; scenes 2-3 by the same ratio), the colours sampled; the two-layer Ramp structure READ from the .aep",
+   "unknowns": [
+    "the discs' opacity / blend mode (the rendered colours do not fit a plain over-blend of one colour: the Ramp varies across the disc)",
+    "the inner disc's radius in scenes 2-3 (its rim is hidden under the label there)"
+   ],
+   "decoded": "2026-11-09 from energy-crisis-final.prproj (the render's project) + the three .aep saves (strings) + measurements of render/Main-avi-crf6.mp4"
+  },
+  "ep-label-title": {
+   "name": "LABEL TITLE: a teal-to-blue bar wipes on, a white Roboto Black title tracks in, a caps sub-line sweeps on",
+   "part_of": "ep-elegant-promo",
+   "trigger": "one short dated or labelled title (a date, a name, a key phrase) + a one- or two-line sub-line over a picture: the promo's fact card, or alone as a header / lower third",
+   "motion": {
+    "bar": "a horizontal bar 91-92 px tall, opaque, square corners, a Ramp from Line 02 teal #38C1A9 (left) to Line 01 blue #135FB5 (right); it wipes on as a scale-X from its anchored end starting 2.40 s (slot time, template pace): width 1 percent @2.47, 3 @2.60, 8 @2.80, 25 @3.00, 45 @3.10, 67 @3.20, 81 @3.34, 88 @3.47, 93 @3.60, 97 @3.80, 99 @4.00, 100 @4.27 s (a thin sliver first, then a fast ease-in-out); the same normalized curve in all three scenes, whatever the bar's width",
+    "title": "white Roboto Black ALL CAPS, cap height 63-64 px (~90 px font), ~26 px padding inside the bar; letters fade on one by one with WIDE tracking that closes as they land: first letter 3.07 s (scene 1, reading order) / 3.00 (scene 2, from the far end) / 2.87 (scene 3, from the far end); lit pixels 50 percent @~3.27, 90 percent @~3.85, all @~4.20, tracking settled 4.40 s (at 3.47 s 'FEBRUARY' spans 549 px vs 435 settled, ~+16 px a letter gap); in scene 1 the first letter lands 140 px left of where it appears (x 262 -> 122, ease-out)",
+    "sub_line": "white Roboto Regular ALL CAPS under the bar: cap 26 px (~36 px font) in scene 1, 21 px (~30 px font) in scenes 2-3, line pitch 45 px; a faint ghost from ~3.27 s, then the characters come to full white in reading order 3.54-4.34 s (0.8 s whatever the length)",
+    "corner_tl": "scene 1: bar x 96-788 y 169-259, anchored LEFT (grows rightward); title left-aligned x 122-782; sub-line left-aligned x 98-724, y 332-357",
+    "corner_br": "scene 2: bar x 1114-1821 y 692-783, anchored RIGHT (grows leftward); title centred in the bar (x 1241-1646); 2-line sub-line right-aligned to x 1821 (y 845-865 / 890-910; the template's text box clipped Mike's longer sentence after 'WHILE')",
+    "top_centre": "scene 3: bar x 422-1497 y 136-227, anchored RIGHT; title centred x 512-1429 (Mike typed 9 leading spaces to centre it); sub-line centred x 680-1239, y 271-291",
+    "with_disc": "the bar starts 0.63 s after its disc enters the frame and sits on it; the title layer carries a Drop Shadow (faint as rendered)",
+    "as_placed_043": "1.1896x: FEBRUARY 2022 bar 69.217-70.789, title 69.781-70.899, sub-line 70.176-70.848; G7 GROUP bar 75.108-76.680, title 75.612-76.789, sub-line 76.066-76.739; ESSENTIAL REVENUES bar 80.998-82.570, title 81.393-82.679, sub-line 81.956-82.629"
+   },
+   "text_look_2022": "titles Roboto Black (Text 01), sub-lines Roboto Regular (Text 02), both ALL CAPS as rendered (typed 'February 2022', 'G7 Group', 'the energy crisis in europe begins'), white #FFFFFF (Controls Text 01 / Text 02 / Small Text), no stroke; the bar #38C1A9 -> #135FB5 (#34B7A9 / #36C0A7 -> #1F83AF / #1871B0 as rendered)",
+   "assets": {},
+   "sound": [
+    {
+     "id": null,
+     "when": "SILENT in the source (narration + music only): Main.avi's own audio is silent and nothing fires on A1-A4 in 67.200-87.020 (the next sound file on the timeline is '1 - swoosh - short.wav' on A4 at 92.826, after the montage). The screenplay may pair a catalog sound by id on the [SHOW] line"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "69.217 FEBRUARY 2022 / THE ENERGY CRISIS IN EUROPE BEGINS (spoken 'February of 2022' 68.94-70.18)",
+    "75.108 G7 GROUP / KEEP RUSSIAN CRUDE OIL AND PETROLEUM PRODUCTS / ON THE MARKET TO AVOID A PRICE SPIKE WHILE (spoken 'the G7 group' 75.58-76.58)",
+    "80.998 ESSENTIAL REVENUES / FOR ITS ECONOMY AND ITS WAR MACHINE (spoken 84.52-86.80, ~3 s after the title)"
+   ],
+   "browse_cues": [
+    {
+     "src": "render",
+     "t0": 2.2,
+     "t1": 4.8,
+     "label": "FEBRUARY 2022, corner_tl, template pace"
+    },
+    {
+     "src": "ep",
+     "t0": 17.9,
+     "t1": 20.0,
+     "label": "G7 GROUP, corner_br, as placed"
+    },
+    {
+     "src": "ep",
+     "t0": 23.8,
+     "t1": 26.0,
+     "label": "ESSENTIAL REVENUES, top_centre, as placed"
+    }
+   ],
+   "used_in": [
+    "CodeMonkey 043 European Energy Crisis in 2022 Explained (2022)"
+   ],
+   "confidence": "MEASURED on the render: bar extents and wipe curve, title and sub-line extents, cap heights and reveal timing by colour masks every frame; fonts, typed text and colours READ from the .aep",
+   "unknowns": [
+    "the template's text-animator settings (tracking amount, range selector shape): fit to the measured samples",
+    "how the bar's width is set (scene 1 693 px, scene 2 708 px, scene 3 1076 px: not fitted to the visible text)"
+   ],
+   "decoded": "2026-11-09 from energy-crisis-final.prproj (the render's project) + the three .aep saves (strings) + measurements of render/Main-avi-crf6.mp4"
   }
  }
 }

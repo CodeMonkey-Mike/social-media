@@ -22,6 +22,7 @@ live one level up in `video-creation/skills/`, not here.
 | `presentation/` | `presentation.md` | | Dark cinematic HTML slide / explainer styling used for code-rendered containers and charts. |
 | `vertical-repurpose/` | `vertical-repurpose.md` | | Build the full-length vertical (1080x1920) cut of an approved 16:9 video (`/vertical-repurpose`). |
 | `video-qa/` | `video-qa.md` | | The mandatory render-QA gate: 10 s chunk renders, motion + audio, before any hand-off. |
+| `yt-post/` | `yt-post.md` | `build_yt_post.py` (YT-POST.json -> 1080x1080 slide PNGs in the video's stylesheet) | The optional last step once a video is LIVE (`run.py ytpost`): a YouTube community-post promo carousel, Mike's real picture on slide 1, queued in `schedule-tweets/data/yt-posts.json`. |
 
 Every gate prints one machine line (`<NAME>-LINT PASS|FAIL ...`) the longform graph parses; run any of them as
 `python video-creation/longform-edited/skills/<skill>/<script> ...`. The graph (`../graph/`) and the track

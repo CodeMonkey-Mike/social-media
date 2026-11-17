@@ -128,6 +128,13 @@ def project_dir(name_or_path: str) -> Path:
     return (MEDIA / name_or_path).resolve()
 
 
+def is_presentation(proj: Path) -> bool:
+    """A longform-PRESENTATION project (format 4, free talk or scripted), run by a longform-edited lane by its folder path:
+    the YT post (Mike 2026-11-15) and the short (Mike 2026-11-17). It carries RESEARCH.md / SCRIPT.md, and none of the
+    longform-edited plan documents."""
+    return not (proj / "AS-RECORDED.md").is_file() and ((proj / "RESEARCH.md").is_file() or (proj / "SCRIPT.md").is_file())
+
+
 def doc(proj: Path, key: str) -> Path:
     return proj / DOCS[key]
 
@@ -267,7 +274,23 @@ def captions_off(proj: Path) -> bool:
 #                 are unchanged (full-frame covers over the blacked spine). No captions on a screen-share beat.
 #                 Build status: the screenplay carries the mode; the plan / build nodes gain `face_body` support when the
 #                 first such video (quant) reaches the plan stage; until then `coverage` HALTS loudly on this mode.
-FACE_MODES = ("gated", "screenshare")
+#   mixed       = Mike 2026-11-09 (canton): BOTH in one video. A 👤 `[FACE]` beat is the normal gated full-screen face
+#                 (reframe, punch-ins, captions as the caption scope says) and a 🖥️ `[SCREENSHARE]` beat is the
+#                 screenshare picture above (webcam bottom-right, CTA top-right, deck area painted with `face_body`).
+#                 Mike switches OBS scenes between the two while recording. ONE source of truth for each window's kind:
+#                 scripts/window_kinds.py `visible_windows()` (re-exported below): AS-RECORDED.md's FACE-windows rows
+#                 name `[FACE]` / `[SCREENSHARE]`, cross-checked IN ORDER against the cover-blackout map (cover_blackout
+#                 tags each window from the screenplay); a count / order mismatch fails loudly. Every per-window
+#                 decision routes through it: coverage stamps COVER-PLAN `visible_windows` and requires `face_body` on
+#                 screenshare windows only; captions, the face reframe (gated off inside SCREENSHARE_WINDOWS), punch-ins
+#                 and the face-style cut-ins on face windows only (list_face_joins, gen_editplan, build_project_captions,
+#                 measure_face_reframe, lint_covers, lint_face_reframe, the transitions check). comp-build.md 4c-mixed.
+FACE_MODES = ("gated", "screenshare", "mixed")
+MIXED_PLAN_SUPPORT = True    # built 2026-11-10 (canton): the plan / build nodes handle face_mode=mixed (see above)
+
+if str(SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS))
+from window_kinds import KINDS as WINDOW_KINDS, WindowKindError, visible_windows, windows_of  # noqa: E402  (the one window-kind source)
 
 
 def face_mode(proj: Path) -> str:

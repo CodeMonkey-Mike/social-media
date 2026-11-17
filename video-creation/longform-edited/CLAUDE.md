@@ -214,6 +214,8 @@ reference files inside the same folder, no orphan files at the `skills/` level (
   every output):** `slide-builder` (title/card slides) · `chart-builder` (system-design stills +
   animated-chart design states) · `receipt-capturer` (verified captures/recordings) · `envato-sourcer`
   (video b-roll) · `image-gen` (ChatGPT images). Dispatch with EXACT §10 output paths.
+- **After the video is LIVE (optional, 2026-11-11):** `yt-post-author` writes the YouTube promo carousel spec for
+  `run.py ytpost` (`skills/yt-post/yt-post.md`).
 
 ## Per-video folder
 

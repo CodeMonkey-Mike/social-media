@@ -380,6 +380,31 @@ what I'm sharing, such as putting in a deck card, a chart, or a whiteboarding sc
   of covers and of each other, every planned row placed). BROLL-PLAN renders a SCREEN-SHARE bodies table; EDIT-PLAN-prep lists
   them under the FACE windows.
 
+**1c. MIXED face mode, a per-video option (Mike, 2026-11-09, first video `canton`; `run.py --face-mode mixed`).** Both
+pictures in ONE video: a 👤 `[FACE]` beat is the normal gated full-screen face (#6: reframe, the picked face transition,
+punch-ins, captions per the caption scope) and a 🖥️ `[SCREENSHARE]` beat is the #1b screen share (webcam bottom-right +
+CTA top-right verbatim, the deck area painted with `face_body` content, no reframe / punch-ins / captions). Mike switches
+OBS scenes between the camera and the screen-share layout while recording; cover-blackout keeps both kinds of window
+visible and tags each `face` or `screenshare` in its map.
+- **ONE source of truth for each window's kind: `scripts/window_kinds.py` `visible_windows()`** (re-exported by
+  `graph/common.py`). AS-RECORDED.md's `## FACE windows` rows name `[FACE]` or `[SCREENSHARE]` in the scripted-beat cell
+  (exactly one; a FACE and a SCREENSHARE beat back to back with no black between are SPLIT into two rows at the OBS scene
+  switch), cross-checked IN ORDER against the cover-blackout map (the desilence passes move times, never the order); a count
+  or order mismatch fails loudly, nothing is guessed. `python scripts/window_kinds.py <media/<project>>` prints them.
+- **BUILT 2026-11-10 (canton, before its plan stage):** (a) `as_recorded`: the prompt asks for the kinds, `lint_as_recorded.py
+  --face-mode mixed` requires one per row, the node runs the map cross-check. (b) `coverage`: the prompt lists the FACE vs
+  SCREENSHARE windows, the node STAMPS COVER-PLAN `visible_windows` (n, tIn, tOut, kind) from the helper, and
+  `_cover_plan_check` requires `face_body` on every SCREENSHARE window and rejects one on a FACE window. (c) `render_cover_plan`
+  prints the kinds (EDIT-PLAN-prep) and the SCREENSHARE bodies (BROLL-PLAN). (d) `list_face_joins` tags each window's kind and
+  gives a SCREENSHARE window no punch candidate; `gen_editplan` seeds punch / leak / caption rows on FACE windows only and tags
+  every FACE row's kind; the edit-plan and transition prompts say so and `_face_style_check` rejects a punch row inside a
+  screen share (a screen share's cut-in takes the plain face pick, never the face-style cut-in). (e) captions: FACE windows
+  only (`build_project_captions` subtracts the screen shares, the sidecar records them, the captions node fails a group inside
+  one). (f) the face reframe is MEASURED on the FACE windows only (`measure_face_reframe` writes `screenshare_windows`); the comp
+  declares `SCREENSHARE_WINDOWS` and keeps the spine at the identity transform inside them (comp-build.md section 4c-mixed),
+  gated by `lint_face_reframe.py`; `lint_covers.py` fails a FACE_BODY row on a FACE window and a caption window or punch-in
+  inside a screen share. `common.MIXED_PLAN_SUPPORT = True`.
+
 **2. Full-screen b-roll is sparse punctuation: ~5 video + 5 image per longform, 1-4s each.**
 (Mike, 2026-06-11, on `banks-own-chain`.) The dominant visual layer is the container-overlay
 presentation (rule #1); full-screen b-roll cutaways only punch the biggest beats.

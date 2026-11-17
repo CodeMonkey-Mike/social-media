@@ -202,7 +202,13 @@ def main():
                 page.wait_for_timeout(500)
             print("  Upload button ready")
             action_pause(page, "before Upload click")
-            upload_btn.click()
+            # Rumble's Groove help-widget iframe (#groove-iframe-element) overlaps the Upload
+            # button and intercepts pointer events (2026-11-09): fall back to a native JS click.
+            try:
+                upload_btn.click(timeout=8000)
+            except Exception:
+                print("  Upload: normal click blocked (overlay) - using JS click", flush=True)
+                upload_btn.evaluate("el => el.click()")
             print("  Clicked Upload ✓", flush=True)
 
             def check_agreement_boxes():

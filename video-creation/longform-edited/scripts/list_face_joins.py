@@ -14,7 +14,7 @@ Each is mapped forward to FINAL-spine seconds (d-time) through the later maps, s
 Output JSON: {"fps", "final_spine", "joins_s" (every join), "face_windows": [{"n", "window_s", "joins_s", "sources"}], ...}.
 Times are pre-card-pause final-spine seconds (the comp routes them through sh() like every other cue).
 """
-import argparse, json, re
+import argparse, json, re, sys
 from pathlib import Path
 
 FPS = 30
@@ -114,6 +114,13 @@ def main():
     wins = []
     for m in re.finditer(r"^\|\s*(\d+)\s*\|\s*([\d.]+)-([\d.]+)\s*\|", asr, re.M):
         wins.append({"n": int(m.group(1)), "window_s": [float(m.group(2)), float(m.group(3))]})
+    # FACE MODE = mixed (house rule #1c): each window's kind from the ONE source (window_kinds.py); a SCREENSHARE window is
+    # played verbatim, so its joins are listed but it gets NO punch candidate (only gated face windows are punched)
+    kinds = None
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from window_kinds import face_mode, visible_windows
+    if face_mode(P) == "mixed":
+        kinds = {w["n"]: w["kind"] for w in visible_windows(P, sc)}   # WindowKindError = loud failure, never a guess
     all_joins = sorted(joins)
     face = []
     for w in wins:
@@ -127,11 +134,16 @@ def main():
             if punch and f - punch[-1] < a.min_gap * FPS:               # two steps a second apart read as a stutter: keep the first
                 continue
             punch.append(f)
-        face.append({"n": w["n"], "window_s": [w0, w1], "length_s": round(w1 - w0, 3),
-                     "joins_s": [round(f / FPS, 3) for f in inside],
-                     "joins_frames": inside,
-                     "punch_candidates_s": [round(f / FPS, 3) for f in punch],
-                     "sources": {str(round(f / FPS, 3)): sorted(joins[f]) for f in inside}})
+        if kinds is not None and kinds.get(w["n"]) != "face":
+            punch = []
+        row = {"n": w["n"], "window_s": [w0, w1], "length_s": round(w1 - w0, 3),
+               "joins_s": [round(f / FPS, 3) for f in inside],
+               "joins_frames": inside,
+               "punch_candidates_s": [round(f / FPS, 3) for f in punch],
+               "sources": {str(round(f / FPS, 3)): sorted(joins[f]) for f in inside}}
+        if kinds is not None:
+            row["kind"] = kinds.get(w["n"])
+        face.append(row)
     final_spine = (S / (post_ps[-1].name[: -len(".map.json")] + ".mp4") if post_ps
                    else S / f"{sc}.{final_letter}.desilenced.mp4")
     out = {"fps": FPS, "final_spine": str(final_spine), "final_map": final_p.name if final_p else None,
@@ -144,7 +156,8 @@ def main():
     dest.write_text(json.dumps(out, indent=1), encoding="utf-8")
     print(f"FACE-JOINS ok joins={len(all_joins)} face_windows={len(face)} with_joins={out['face_windows_with_joins']} punch_points={out['punch_points_total']} -> {dest}")
     for w in face:
-        print(f"  F{w['n']:<2} {w['window_s'][0]:9.3f}-{w['window_s'][1]:<9.3f} ({w['length_s']:5.2f}s)  joins: {w['joins_s'] or 'none'}  punch points: {w['punch_candidates_s'] or 'none'}")
+        print(f"  F{w['n']:<2} {w['window_s'][0]:9.3f}-{w['window_s'][1]:<9.3f} ({w['length_s']:5.2f}s)  joins: {w['joins_s'] or 'none'}  punch points: {w['punch_candidates_s'] or 'none'}"
+              + (f"  [{w['kind']}]" if "kind" in w else ""))
 
 
 if __name__ == "__main__":

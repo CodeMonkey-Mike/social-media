@@ -32,6 +32,22 @@ the bar: a good checker mostly returns ✅.
 5. **Apply** the clearly-warranted fixes (wrong facts, stale names, over-stated claims). **Leave judgment
    calls** (stylistic softening, optional additions) for the author with a recommendation. Report the table.
 
+## Terminology check (part of every pass on a script Mike will say; Mike, 2026-11-16)
+
+Mike learns this field partly from these scripts and repeats their vocabulary in interviews and on camera. An earlier
+session taught him a word that turned out to be the repo's own ("it doesn't make sense to learn something that nobody
+else knows"), so every pass also checks the WORDS, not only the facts:
+
+1. List every term of art in the spoken lines and on the cards.
+2. Sort each into: **standard** (name where: the vendor's docs, the API name in our code, long-standing vocabulary);
+   **real but new or informal** (say so, and define it where it is first said); **our own** (a name for something in
+   our system, or plain English).
+3. Fix: where a standard term exists, the script says it (an API concept is called by its API name: a LangGraph
+   decision edge is a "conditional edge", not a "router"). A word that is ours stays only if the same line explains
+   it, and where a standard term covers the same idea the line ties the two together once ("Those are human labels").
+   Never coin a word for a concept and never present ours as the industry's.
+4. Write the three lists into the project's research file, so the answer to "is this a real term?" is on record.
+
 ## Claim taxonomy (what to check, and how volatile it is)
 | Class | Example | Volatility | Verify with |
 |---|---|---|---|

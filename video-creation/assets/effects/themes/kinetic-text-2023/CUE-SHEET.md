@@ -57,7 +57,7 @@ main-sequence.mp4. The picture was checked at 10 fps for the open. SFX ids are t
 | 85.2-90.8 | (graphics) | pair-contrast card "GROWTH / MARKETER / COMPOUNDING GROWTH & LONG TERM INVESTMENT" |
 | 86.43 / 89.33 | ting | the card's sub-lines pop |
 | 90.73 / 92.40 / 95.60 | whoosh-4 | b-roll cuts (VR kid + paper card, hologram + paper card) |
-| 97.77 | punch-1-2023 (the project's 'Punch 2.mp3' is a byte-twin of Punch 1) | "TECHNICAL SKILLS" white headline over the code b-roll |
+| 97.77 | punch-2-2023 (the project's 'Punch 2.mp3': same size as Punch 1 but a different hit, corrected 2026-11-09) | "TECHNICAL SKILLS" white headline over the code b-roll |
 | 99.40 | punch-sound-effect | "CUSTOMER / OBSESSED" over the cafe b-roll |
 | 102.90 | whoosh-4 | band "GROWTH MARKETERS ARE PEOPLE WHO CAN HELP YOU SOLVE DIFFICULT BUSINESS PROBLEMS" |
 | 105.97 | whoosh-4 | band "THINGS LIKE WHO ARE YOUR BEST CUSTOMERS" |
@@ -199,3 +199,101 @@ blurred), a running caption line on every face shot, lime #BEFF09 key words._
 - One text wall per video, on the biggest idea, with the red punch word on a cash register.
 - The subscribe bar rises onto the chest and clicks itself; the playlist line gets the mouse click.
 - The bed never stops: -20 dB under the open, -25 dB under the rest.
+
+---
+
+# 2023 cue sheet, THIRD SOURCE: "How to choose between Growth Marketing and Growth Hacking" (GrowthMarketingMike 005, main-sequence.mp4, 1:09)
+
+_Added 2026-11-09 (Mike: "do a thorough review of any elements, any effects, or any sound effects that we haven't captured before,
+and put them into our energetic category"). Source of truth: `Delivery/Copied_choose revision/choose revision.prproj` (gunzipped XML,
+main sequence `grammar1-greenscreen-audio-color` 3840x2160 @ 30, 8 video + 6 audio tracks, 16 nested sequences), decoded 2026-11-09;
+text read from the Text components' names + the render. Times are seconds in main-sequence.mp4 (the 26.700 cut is frame 801, checked).
+Music: PALA "Concrete Mazes" (background vocals, catalog `concrete-mazes`) from frame 0 at -15 dB, -19 dB by 16.2 s, -23 dB by 27.8 s.
+Every sound but one was already in `assets/sfx/kinetic-text/` (byte-checked 2026-11-09); the one new file is `punch-2-2023` (Punch 2, shared with 004, wrongly logged as a Punch 1 twin before). The look: Mike keyed over the turquoise suede (the "aqua" =
+`textures/suede-turquoise.jpg`, the same file as 004) the whole video, dark-teal bands and panels, yellow key words._
+
+## The open (0.000-8.233)
+| t | sound | on screen |
+|---|---|---|
+| 0.000 | swoosh-4 | the face GROWS out of a 3x3 mirror grid (kt-grid-zoom-in, 0.483 s) with "GROWTH HACKING" already up (110 pop, y 79 percent) |
+| 0.333 | (silent) | a "GROWTH HACKING" doodle photo slides DOWN in behind the keyed face, floating (kt-topic-backdrop: documentation only), glitch-noise texture over it 0.8-3.8 |
+| 0.933 / 2.500 | (silent) | "IS COMMONLY ASSOCIATED WITH" then "SILICON VALLEY STARTUPS" slide in from the left under the label (0.262 s) |
+| 3.767 / 3.800 | whoosh-4 | SNAP ZOOM: the next face shot snaps 100 -> 120 in 2 frames (kt-snap-zoom) |
+| 5.200 | whoosh-4 + swoosh-4 (wav) | snap back to 100; the dark-teal band slides up; "THEY DON'T HAVE / HISTORICAL DATA" pops (110) and floats (wobble) |
+| 5.600 | (silent) | MEME INSET left (empty pockets) slides in from the left (0.5 s) (kt-meme-inset) |
+| 6.933 | (silent) | MEME INSET right ("I'll prove it to everybody") slides in, then stutters (0.333 s x 4) |
+| 7.033 | (silent) | band text swaps: "THEY HAVE / EVERYTHING TO PROVE" |
+
+## The caption line with payoff pops, the turn, the summary (8.133-19.767)
+| t | sound | on screen |
+|---|---|---|
+| 8.133 | whoosh-4 | OFFSET WHIP into the sticky-note b-roll (kt-whip-cut offset_pan, 0.267 s) |
+| 8.233 | (silent) | caption "AS SOON AS YOU HAVE A BUNCH OF" |
+| 9.400 | knock-pop | "HAPPY CUSTOMERS" payoff at 120 (kt-caption-highlight payoff_120) + a CLAP emoji on the sticky note (kt-emoji-pop) |
+| 10.433 / 10.900 | cash-register | "WHO BRING IN MORE" -> "MONEY" payoff; a SURPRISED emoji (to 13.367) |
+| 11.433 / 12.133 | wooden-rattle-whoosh (12.167) | "THEN THEY COST" -> "ACQUIRE AND SERVE" payoff |
+| 13.367 | (silent) | BOXED WORDS "CAN" / "SHOULD" whip in on a grey card (kt-boxed-words, Scene_11) |
+| 14.967 / 15.033 | fast-swoosh | the PAPER STATEMENT pushes in from the right in 2 frames, floating + rocking (kt-statement-over-broll paper) |
+| 19.667 | fast-swoosh | the card pushes out left |
+
+## The criteria, the wave wall, the versus stack (19.667-41.733)
+| t | sound | on screen |
+|---|---|---|
+| 19.667 | fast-swoosh + swoosh-4 (wav) | business b-roll; the band slides up; "IF YOU DON'T HAVE A PRODUCT MARKET FIT YET" slides in from the left |
+| 22.233 | knock-pop | verdict "GROWTH HACKING" pops under it (kt-lower-third-band verdict_pop) |
+| 23.033 / 25.733 | (silent) / knock-pop | "IF THERE IS A CLEAR MARKET AND DEMAND FOR YOUR PRODUCT" / verdict "GROWTH MARKETING" |
+| 26.600 / 26.700 | whoosh-4 | SPIN CUT right (5 frames, the green "vortex") into the WAVE WALL "VIRALITY / REACH" (kt-spin-cut + kt-wave-wall, Scene_22) |
+| 28.602 | (silent) | the wall blurs out (0 -> 32 in 2 frames) |
+| 29.000 | whoosh-4 | the wall drops out DOWN (0.1 s) onto the shopping b-roll; caption line "IF IT HAS A HIGH POTENTIAL / FOR WIDE REACH / GO FOR" |
+| 31.633 / 31.800 | punch-1-2023 | "GROWTH HACKING" pops at the TOP of the b-roll (y 13 percent) |
+| 32.533 | (silent) | office b-roll; "IF IT HAS MORE NICHE PRODUCT" |
+| 34.900 / 35.067 | punch-2-2023 (Punch 2: its own punch, not a punch-1 twin) | "GROWTH MARKETING" pops at the top |
+| 35.533 | whoosh-4 | SPIN CUT left into the face |
+| 35.633 | cartoon-accent | the THINKING-MAN cutout jumps in beside the head (kt-icon-pop cutout_sticker); "THINK OF WEARABLE TECH" |
+| 36.767 | (silent) | face snaps to 130; the dark-teal matte slides DOWN over it (kt-versus-stack) |
+| 37.100 / 38.067 / 39.433 | whoosh-4 each | "GAMING SOCIAL APP" / "VS" / "A COMPANY THAT SELLS ELECTRICAL FURNACES" drop in and float |
+| 41.467 | whoosh-4 | SHAKE CUT back to the face (kt-shake-cut, 0.267 s) |
+
+## Panels, verdict, subscribe, playlist (41.733-69.167)
+| t | sound | on screen |
+|---|---|---|
+| 42.700 | knock-pop | "HOW SATURATED IS / YOUR MARKET?" 110 pop |
+| 44.333 | swoosh-1 + whoosh-4 (44.200) | face snaps to 130 and right; LEFT panel slides in; "IF YOU HAVE A CLEARLY SUPERIOR PRODUCT" (kt-side-panel snap_reframe) |
+| 46.300 | (silent) | panel text swaps: "BUT DON'T HAVE A TON OF COMPETITORS YET" |
+| 48.000 | whoosh-4 + knock-pop | snap back to 100; "FEEL FREE TO LAY LOW" pop, then the caption line "ON A BRAND BUSINESS FOR NOW / AND OPT FOR GROWTH HACKING" |
+| 51.733 / 51.900 | swoosh-1 | face snaps to 130 and left; RIGHT panel; "HOWEVER AS SOON AS COMPETITORS START SHOWING UP" -> 54.733 "YOU BETTER MAKE SURE ... PUSH YOUR PRICE DOWN" |
+| 57.167 | whoosh-4 | snap back; caption line "THAT'S WHAT USUALLY HAPPENS / WHEN YOU DON'T / HAVE A STRONG BRAND / TO PROTECT YOU" |
+| 60.267 / 60.900 / 61.500 | (silent) | "THEREFORE" -> "GROWTH MARKETING" 110 pop -> "IS THE KEY" slides in under it |
+| 62.167 | subscribe-bar-clicks (the clip's own) | the like / SUBSCRIBE / bell bar slides UP onto the chest (0.262 s), clicks, drops out DOWN at 65.706 |
+| 64.833 | whoosh-4 | snap zoom in; caption "AND ALSO TAKE A LOOK / AT THIS PLAYLIST / RIGHT HERE ABOUT" |
+| 67.233 | cash-register | "THE FUNDAMENTALS OF / GROWTH MARKETING" 110 pop (Motion scale 130, y 35 percent); hard out at 69.167 |
+
+## Devices read from this video (2026-11-09; numbers in `library.json`)
+| device | cues in 005 main-sequence.mp4 |
+|---|---|
+| `kt-versus-stack` (NEW) | 36.767 -> 41.500 |
+| `kt-spin-cut` (NEW transition) | 26.700 right · 35.533 left |
+| `kt-wave-wall` (NEW, Scene_22 MOGRT) | 26.700 -> 29.100 |
+| `kt-meme-inset` (NEW) | 5.600 -> 8.133 |
+| `kt-emoji-pop` (NEW, Smiles.aegraphic) | 9.400 · 10.967 |
+| `kt-boxed-words` (NEW, Scene_11 MOGRT) | 13.367 -> 15.100 |
+| `kt-camera-wobble` (NEW modifier) | 0.333 · 5.333 · 15.033 · 37.100 -> 41.500 · 44.600 · 52.100 |
+| `kt-snap-zoom` (NEW) | 3.800 · 5.200 · 36.767 · 44.333 · 48.000 · 51.900 · 57.167 · 64.833 |
+| `kt-shake-cut` (NEW transition) | 41.467 |
+| `kt-grid-zoom-in` (NEW transition) | 0.000 |
+| `kt-topic-backdrop` (NEW, documentation only: keyed face) | 0.333 -> 3.800 |
+| `kt-statement-over-broll` `paper` (NEW variant) | 15.033 -> 19.767 |
+| `kt-lower-third-band` `verdict_pop` (NEW variant) | 19.667 -> 26.700 · 5.200 -> 8.233 (face) |
+| `kt-side-panel` `snap_reframe` (NEW variant) | 44.333 -> 48.000 · 51.900 -> 57.167 |
+| `kt-whip-cut` `offset_pan` (NEW variant) | 8.133 |
+| `kt-caption-highlight` `payoff_120` (NEW variant) · the running line | 9.400 · 10.967 · 12.133 · every face / b-roll shot |
+| `kt-icon-pop` `cutout_sticker` (NEW variant) | 35.633 |
+| `kt-headline-over-broll` (top verdict) · `kt-keyword-pop` · `kt-subscribe-close` `bar` | 31.800 · 35.067 · 42.700 · 48.000 · 60.900 · 62.167 · 67.233 |
+
+## Pattern to reuse (what 005 adds)
+- A how-to-choose video is criteria + verdicts: each "if X" sits in the band, the verdict pops under it on knock-pop.
+- The one concrete A-vs-B example gets the versus stack over the dimmed face, a whoosh-4 per line, out on a shake cut.
+- The "to sum it up" answer gets the paper statement, floating; the turn into it gets the boxed words.
+- One full-frame interlude per video (wave wall OR text wall), spun in.
+- Face jump cuts snap 100 <-> 120 with a whoosh; every held card floats with the camera wobble.
+- The bed sits higher than 004 / 007 under the open (-15 dB) and settles to -23 dB.

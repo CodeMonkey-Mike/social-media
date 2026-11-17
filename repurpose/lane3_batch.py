@@ -72,6 +72,31 @@ def _lock(action: str, owner: str):
         raise SystemExit(f"could not acquire the chatgpt stage lock (rc {r.returncode})")
 
 
+def _render_code_slides(items, base, args) -> int:
+    """Render the plan's `render: "code-v2"` slides (no browser chat, no lock). Returns the number that failed.
+    Same machine lines as the ChatGPT path (IMG OK / SKIP / FAIL) so the graph's accounting is unchanged."""
+    if not items:
+        return 0
+    from render_carousel_v2 import render_slides
+    todo = []
+    for im in items:
+        out = base / subdir_for(im["purpose"]) / f"{im['purpose']}-{im['image_id']}-{im['slug']}.png"
+        if out.is_file() and out.stat().st_size >= 5000:
+            print(f"IMG SKIP purpose={im['purpose']} id={im['image_id']} slug={im['slug']} (exists, code-v2)")
+        else:
+            todo.append((im, out))
+    fails = 0
+    for (im, out), (path, rep, probs) in zip(todo, render_slides([(i["spec"], o) for i, o in todo])):
+        if probs:
+            fails += 1
+            print(f"IMG FAIL purpose={im['purpose']} id={im['image_id']} slug={im['slug']} reason={'; '.join(probs)}")
+        else:
+            print(f"IMG OK purpose={im['purpose']} id={im['image_id']} slug={im['slug']} "
+                  f"bytes={path.stat().st_size} out={path} (code-v2, title {rep['fit']}px)")
+    print(f"code-v2: {len(items) - len(todo)} on disk, {len(todo) - fails} rendered, {fails} failed")
+    return fails
+
+
 def stage_generate(plan, args) -> int:
     images = plan.get("images") or []
     if not images:
@@ -85,6 +110,14 @@ def stage_generate(plan, args) -> int:
     # per item; the pool still reuses one chat per purpose via the registry). Within a
     # purpose, no-ref items run FIRST and reference-attached items LAST — an attached
     # ref CONTAMINATES the chat's sibling generations (measured 2026-08-07).
+    # CODE-RENDERED slides first (Mike, 2026-11-11): a Version 2 carousel slide (`render: "code-v2"`) is built from its
+    # spec by repurpose/render_carousel_v2.py, so it never touches ChatGPT, the chat pool, the stage lock or a reference.
+    base0 = Path(args.images_base) if args.images_base else qw.IMAGES_BASE_DEFAULT
+    code_fails = _render_code_slides([i for i in images if i.get("render") == "code-v2"], base0, args)
+    images = [i for i in images if i.get("render") != "code-v2"]
+    if not images:
+        print(f"STAGE-DONE generate (fails={code_fails})")
+        return 1 if code_fails else 0
     by_purpose = {}
     for im in images:
         by_purpose.setdefault(im["purpose"], []).append(im)
@@ -107,8 +140,10 @@ def stage_generate(plan, args) -> int:
             todo.append(item)
     print(f"generate: {len(ordered) - len(todo)} on disk, {len(todo)} to generate")
     if not todo:
-        print("STAGE-DONE generate (fails=0)")
-        return 0
+        print(f"STAGE-DONE generate (fails={code_fails})")
+        return 1 if (code_fails and not any(
+            (base / subdir_for(i["purpose"]) / f"{i['purpose']}-{i['image_id']}-{i['slug']}.png").is_file()
+            for i in plan.get("images") or [])) else 0
     ordered = todo
 
     owner = f"lane3-{plan['batch']}"
@@ -153,6 +188,7 @@ def stage_generate(plan, args) -> int:
             sweep_once(Path(args.registry) if args.registry else None)
         if locked:
             _lock("release", owner)
+    fails += code_fails
     print(f"STAGE-DONE generate (fails={fails})")
     # PARTIAL-APPEND (2026-09-10): a failed image is NOT a stage failure. verify writes the
     # HELD ledger for exactly the entries that need it and everything else proceeds to the

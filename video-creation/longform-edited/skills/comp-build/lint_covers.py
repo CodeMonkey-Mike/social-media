@@ -23,6 +23,10 @@ WHITEBOARD beats (kind 'whiteboard', ref = the WB id; comp-build.md section 4b, 
 FACE BODY (screen-share face mode, longform-edited.md house rule #1b; comp-build.md section 4c): the comp's `FACE_BODY` array
 paints the deck area during the FACE windows. Every row sits inside a plan FACE window, never overlaps a COVERS row or another
 FACE_BODY row; with --plan every `face_body[]` row is placed (same ref, same tIn) and a plan with rows needs the array.
+MIXED face mode (house rule #1c; the plan carries `visible_windows`, each window's kind, stamped by the graph from
+scripts/window_kinds.py): FACE_BODY rows sit inside a SCREENSHARE window only (never a gated FACE window), and no caption
+window (CAPTION_SRC, or the CAPTION_WINDOWS of the captions file the comp imports) and no punch-in (`PUNCHES` / `PUNCH_SRC`
+`at:`) lands inside a SCREENSHARE window (a screen share plays verbatim: no captions, no punch).
 A derived comp (the VERTICAL cut) that IMPORTS COVERS from its 16:9 parent is followed to that file.
 Exit: 0 = OK (warnings allowed) · 1 = violations · 2 = could not parse.
 """
@@ -123,6 +127,9 @@ def lint_face_body(fb, covers, plan=None):
     errs = []
     planned = (plan or {}).get("face_body") or []
     faces = [(float(a), float(z)) for a, z in ((plan or {}).get("face_windows") or [])]
+    vis = mixed_windows(plan)
+    if vis is not None:   # MIXED: the deck area exists on the SCREENSHARE windows only
+        faces = vis["screenshare"]
     if fb is None:
         if planned:
             errs.append(f"FACE BODY: COVER-PLAN carries {len(planned)} face_body row(s) but the comp declares no FACE_BODY array (comp-build.md section 4c)")
@@ -130,7 +137,12 @@ def lint_face_body(fb, covers, plan=None):
     for r in fb:
         if r["tOut"] <= r["tIn"]:
             errs.append(f"FACE BODY row at {r['tIn']}s has no length")
-        if faces and not any(a - 0.05 <= r["tIn"] and r["tOut"] <= z + 0.05 for a, z in faces):
+        if vis is not None and any(r["tIn"] < z and a < r["tOut"] for a, z in vis["face"]):
+            errs.append(f"FACE BODY row {r['ref'] or r['kind']} {r['tIn']}->{r['tOut']} lands in a gated FACE window {vis['face']} "
+                        "(FACE MODE = mixed: a deck-area body goes on a SCREENSHARE window only)")
+        elif vis is not None and not any(a - 0.05 <= r["tIn"] and r["tOut"] <= z + 0.05 for a, z in faces):
+            errs.append(f"FACE BODY row {r['ref'] or r['kind']} {r['tIn']}->{r['tOut']} is not inside a SCREENSHARE window {faces}")
+        elif vis is None and faces and not any(a - 0.05 <= r["tIn"] and r["tOut"] <= z + 0.05 for a, z in faces):
             errs.append(f"FACE BODY row {r['ref'] or r['kind']} {r['tIn']}->{r['tOut']} is not inside a FACE window {faces}")
         for c in covers:
             if r["tIn"] < c["tOut"] and c["tIn"] < r["tOut"]:
@@ -150,6 +162,43 @@ def lint_face_body(fb, covers, plan=None):
             got = hit[0]["from"] if hit[0]["from"] is not None else 0.0
             if abs(got - want) > 0.05:
                 errs.append(f"FACE BODY {pid}: whiteboard {ref} needs `from: {want:g}` (the clip's clock runs with the spine)")
+    return errs
+
+
+def mixed_windows(plan):
+    """{'face': [(a, z)], 'screenshare': [(a, z)]} from the plan's `visible_windows` (FACE MODE = mixed), else None."""
+    vw = (plan or {}).get("visible_windows")
+    if not vw:
+        return None
+    out = {"face": [], "screenshare": []}
+    for w in vw:
+        out.setdefault(str(w.get("kind")), []).append((float(w["tIn"]), float(w["tOut"])))
+    return out
+
+
+def lint_mixed(src: str, path: Path, plan):
+    """MIXED: no caption window and no punch-in inside a SCREENSHARE window (the screen share plays verbatim)."""
+    vis = mixed_windows(plan)
+    if vis is None or not vis["screenshare"]:
+        return []
+    errs, ss = [], vis["screenshare"]
+    cap = list(parse_caption_windows(src))
+    imp = re.search(r"import\s*\{[^}]*\bCAPTION_WINDOWS\b[^}]*\}\s*from\s*['\"]\./([\w.-]+)['\"]", src)
+    if imp:
+        p2 = path.parent / (re.sub(r"\.tsx?$", "", imp.group(1)) + ".ts")
+        if p2.is_file():
+            m = re.search(r"CAPTION_WINDOWS[^=]*=\s*\[([\s\S]*?)\]\s*;", p2.read_text(encoding="utf-8"))
+            cap += [(float(a), float(b)) for a, b in re.findall(r"\[\s*([\d.]+)\s*,\s*([\d.]+)\s*\]", m.group(1) if m else "")]
+    for a, b in cap:
+        for x, y in ss:
+            if a < y - 0.05 and x + 0.05 < b:
+                errs.append(f"CAPTIONS-OVER-SCREENSHARE: caption window [{a},{b}] overlaps SCREENSHARE window [{x},{y}] "
+                            "(FACE MODE = mixed: captions on the gated FACE windows only)")
+                break
+    pm = re.search(r"\bPUNCH(?:ES|_SRC)\b[^=]*=\s*\[([\s\S]*?)\]\s*;", src)
+    for t in re.findall(r"\bat:\s*([\d.]+)", pm.group(1) if pm else ""):
+        if any(x - 0.05 <= float(t) <= y + 0.05 for x, y in ss):
+            errs.append(f"PUNCH-IN IN A SCREENSHARE: the punch at {t}s lands in a SCREENSHARE window {ss} (a screen share is never zoomed)")
     return errs
 
 
@@ -247,6 +296,7 @@ def main():
     errs += wb_errs
     fb = parse_face_body(src)
     errs += lint_face_body(fb, covers, plan)
+    errs += lint_mixed(src, path, plan)
     for w in warns:
         print("  warn  " + w)
     if errs:

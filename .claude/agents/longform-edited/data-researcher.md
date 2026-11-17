@@ -34,6 +34,11 @@ Repo root: `C:\Users\mnede\Documents\Claude\social-media` (run every command fro
    our own code-rendered chart.
 3. **`persona/persona.json`** — `verified_claims_only` (conditional language for anything unresolved),
    `terminology_rules` (spellings: Kaspa, GhostDAG, DAGKnight, KRC20 names, TAO), **no em dashes anywhere**.
+3b. **When the brief is about a COIN or TOKEN: `video-creation/skills/coin-research/coin-research.md`** — the one
+   coin-research standard for every track. Cover its 14-row dossier (incl. what holding the token earns and the project's recent posts), run its PRODUCT TELEMETRY SWEEP and its EVENT WINDOW RULE (open the
+   product's home page, probe `/stats` `/v1/stats` `/status` `/facts.json`, save the raw JSON, turn usage into a
+   revenue estimate beside the monthly unlock value). A "NOT FOUND" needs its checked-list; a "not public" claim
+   needs proof. (Born of the JCT miss, 2026-11-11.)
 4. Any sibling `media/*/DATA.md` that covers the same subject (`grep -ril <topic> video-creation/longform-edited/media/*/DATA.md`)
    is a SEED, not a source: re-verify every figure you reuse against a live primary source and re-date it.
 

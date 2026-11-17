@@ -22,6 +22,11 @@ Themes:
   Halloween register. Sounds in `../sfx/halloween-2022/` (woosh9; the other devices were silent). `themes/halloween-2022/`
   also holds `BROLL-BENCH.md` (the reusable b-roll of the source; bears excluded, licence flags). Its alpha plates (blood
   splats, the subscribe MOGRT) are FILL + KEY pairs (`*-fill.mp4` premultiplied colour + `*-key.mp4` alpha as luma).
+- `elegant-promo-2022` ("Elegant promo", 2026-11-09): the "Elegant Promo" After Effects montage at 1:07.2-1:27.0 of Mike's 2022
+  "European Energy Crisis in 2022 Explained" (CodeMonkey 043). Pick it for a serious news-promo run of 2 to 4 dated or labelled
+  fact cards. Silent in its source. No engine yet (the comp-builder builds to the rows). `themes/elegant-promo-2022/_source/`
+  holds the ONLY local copies of its sources (the AE template, the clean render, the Premiere projects, the 2022 sounds and
+  the source video): the E: drive they came from is gone.
 
 `_demo/`: one demo clip per device (`kt-*.mp4`, `hw-*.mp4`, with sound) + `gallery.html`; `_demo/pub/` is the minimal
 public dir the demos render with (it mirrors these theme paths, the sfx folders, the shake track data and the demo photos).

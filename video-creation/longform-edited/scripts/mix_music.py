@@ -58,6 +58,21 @@ def lufs_and_peak(path):
     return (float(m[-1]) if m else None), (float(p[-1]) if p else None)
 
 
+def window_lufs(path, start=None, end=None, exclude=()):
+    """Integrated LUFS of one window of `path` (start..end), or of the whole file with the `exclude` windows dropped
+    (aselect on t, so the excluded audio never enters the meter). None when unmeasurable."""
+    af = ""
+    if exclude:
+        af = "aselect='not(" + "+".join(f"between(t,{c0:.3f},{c1:.3f})" for c0, c1 in exclude) + ")',asetpts=N/SR/TB,"
+    cmd = ["ffmpeg", "-hide_banner", "-nostats"]
+    if start is not None:
+        cmd += ["-ss", f"{start:.3f}", "-to", f"{end:.3f}"]
+    cmd += ["-i", str(path), "-vn", "-af", af + "ebur128", "-f", "null", "-"]
+    r = subprocess.run(cmd, capture_output=True, text=True)
+    m = re.findall(r"I:\s+(-?[\d.]+) LUFS", r.stderr)
+    return float(m[-1]) if m else None
+
+
 def _num(v):
     try:
         return None if v is None else float(v)
@@ -137,6 +152,12 @@ def main():
     ap.add_argument("--voice-db", type=float, default=None,
                     help="gain on Mike's voice in the VO track, clip-insert windows excluded (default: the project's "
                          "GRAPH-PROGRESS.json settings.voice_db, else +2 dB, Mike 2026-10-30)")
+    # CLIP MATCH (Mike 2026-11-10, canton: "I've often noticed that my voice is so much lower than the clips that we use"):
+    # measured on canton's paused spine, Mike's voice sat at -23.4 LUFS and the two clip inserts at -18.1 / -16.6, so even
+    # after +3 dB on the voice the clips stayed 2 to 4 dB louder. Each clip-insert window is measured and LOWERED to the
+    # raised voice's loudness (never raised). Default ON; --no-clip-match restores unity gain in the clip windows.
+    ap.add_argument("--no-clip-match", action="store_true",
+                    help="leave the clip-insert windows at unity instead of matching them to the raised voice")
     # PEAK SAFETY (same note): a brick-wall limiter on the final sum so the mix never peaks above --peak-ceiling dBFS
     ap.add_argument("--peak-ceiling", type=float, default=-1.5,
                     help="final limiter ceiling in dBFS (true peak lands <= -1 dBFS after AAC); 0 disables")
@@ -494,10 +515,23 @@ def main():
         vo_in = "[vop]"
     clip_win = [(round(sh(float(p["at"])) - float(p["dur"]), 3), round(sh(float(p["at"])), 3))
                 for p in (meta.get("pauses") or []) if p.get("clip")]
-    if a.voice_db and not a.plan_preview:
-        g = 10 ** (a.voice_db / 20)
-        inside = "+".join(f"between(t,{c0:.3f},{c1:.3f})" for c0, c1 in clip_win) or "0"
-        chains.append(f"{vo_in}volume='if({inside},1,{g:.5f})':eval=frame[vog]")
+    clip_match = []
+    if clip_win and not a.plan_preview and not a.no_clip_match:
+        voice_l = window_lufs(vo, exclude=clip_win)
+        if voice_l is not None:
+            target = voice_l + (a.voice_db or 0.0)
+            for c0, c1 in clip_win:
+                cl = window_lufs(vo, c0, c1)
+                gdb = min(0.0, round(target - cl, 2)) if cl is not None else 0.0
+                clip_match.append({"window": [c0, c1], "clip_lufs": cl, "target_lufs": round(target, 2), "gain_db": gdb})
+                print(f"clip match {c0:.2f}-{c1:.2f}: clip {cl} LUFS, raised voice {target:.1f} LUFS -> {gdb:+.2f} dB")
+    if (a.voice_db or any(c["gain_db"] for c in clip_match)) and not a.plan_preview:
+        g = 10 ** ((a.voice_db or 0.0) / 20)
+        expr = f"{g:.5f}"
+        for c0, c1 in clip_win:   # nested if(): each clip window gets its own matched gain (unity when not matched)
+            cg = next((10 ** (c["gain_db"] / 20) for c in clip_match if c["window"] == [c0, c1]), 1.0)
+            expr = f"if(between(t,{c0:.3f},{c1:.3f}),{cg:.5f},{expr})"
+        chains.append(f"{vo_in}volume='{expr}':eval=frame[vog]")
         vo_in = "[vog]"
     fc = ";".join(chains) + (";" if chains else "") + vo_in + "".join(labels) + f"amix=inputs={n}:normalize=0:duration=first[ao]"
     if mtotal > total:   # trimmed hold: the music runs past the video's end, so fade the cut (0.2 s, after the last word)
@@ -525,6 +559,7 @@ def main():
     side.write_text(json.dumps({"video": str(video), "vo": str(vo), "out": str(out), "plan": str(mp_p), "plan_preview": a.plan_preview,
                                 "card_t": CARD_T, "pause_s": PAUSE, "pauses": [{"at": a_, "dur": d, "card": c} for a_, d, c in PAUSES], "beds": resolved_beds,
                                 "sfx": sfx, "lib_sfx": lib_sfx, "voice_db": a.voice_db, "voice_clip_windows": clip_win if not a.plan_preview else [],
+                                "clip_match": clip_match,
                                 "peak_ceiling_dbfs": a.peak_ceiling, "lufs_in": li, "lufs_out": lo, "peak_out_dbfs": po,
                                 "rerun": f"python video-creation/longform-edited/scripts/mix_music.py \"{proj}\" --video \"{video}\"{flags}"},
                                indent=2), encoding="utf-8")

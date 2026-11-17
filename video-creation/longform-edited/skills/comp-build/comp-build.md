@@ -307,6 +307,28 @@ const FaceBodyEl: React.FC<{ c: Cover }> = ({ c }) => {
   `from`), and a plan with rows but no array.
 - COVER beats are unchanged (black spine, full-frame covers); the cover->face / face->cover transition rows apply as usual.
 
+### 4c-mixed. MIXED face mode: gated faces AND screen shares in one comp (longform-edited.md house rule #1c) — 2026-11-10, canton first
+`run.py --face-mode mixed`. Each visible window has a KIND (COVER-PLAN `visible_windows`, stamped by the graph from
+`scripts/window_kinds.py`, the one source): a `face` window is a normal gated face (§3a reframe, punch-ins + leaks, the face
+transitions, captions), a `screenshare` window is the §4c screen share (verbatim, deck area painted with its `face_body` rows).
+The reframe is measured on the FACE windows only, so ONE global transform no longer fits: the comp gates it off inside the
+screen shares.
+```tsx
+export const FACE_REFRAME = { scale: 1.385, x: -627, y: -399 };            // assets/face-reframe.json (FACE windows only)
+export const SCREENSHARE_WINDOWS: [number, number][] = [[19.433, 26.633]];  // assets/face-reframe.json screenshare_windows
+const inShare = (t: number) => SCREENSHARE_WINDOWS.some(([a, b]) => t >= sh(a) && t < sh(b));   // t = the paused-spine second
+// the live spine AND every SpineStill: the reframe + the punch scale outside a screen share, the identity inside one
+const spineTransform = (t: number) => inShare(t) ? 'none'
+  : `translate(${FACE_REFRAME.x}px, ${FACE_REFRAME.y}px) scale(${FACE_REFRAME.scale})`;
+const punch = inShare(t) ? 1 : punchAt(t);
+```
+- `FACE_BODY` (§4c) rows sit inside SCREENSHARE windows only; a gated FACE window carries none.
+- Captions: the captions node builds them on the FACE windows only (`CAPTION_WINDOWS` excludes every screen share).
+- Punch-ins / light leaks / glitch hits: FACE windows only (`list_face_joins` lists no punch candidate in a screen share).
+  A screen share's cut-in and cut-out take the plain face pick, never the per-video face-style cut-in (optics / split offset).
+- Gates: `lint_face_reframe.py` FAILS a comp whose `SCREENSHARE_WINDOWS` is missing, differs from the measurement, or is never
+  used; `lint_covers.py --plan` FAILS a FACE_BODY row on a FACE window and any caption window or punch-in inside a screen share.
+
 ## 5. Containers / diagrams (deck → code, spotlight one sub-point at a time)
 Deck slides (`assets/deck/<deck>.html`) become **code-rendered React containers** that FILL THE FRAME and
 **spotlight ONE sub-point at a time** off the CUE-SHEET (never the whole slide held; `../broll-and-containers/broll-and-containers.md`,

@@ -108,19 +108,34 @@ def main():
     screenshare = _settings.get("face_mode") == "screenshare"
     _scope = _settings.get("caption_scope") or []
     captions_none = "none" in (_scope if isinstance(_scope, list) else [_scope])
+    # FACE MODE = mixed (house rule #1c): each window's kind (COVER-PLAN `visible_windows`, stamped by the graph from
+    # scripts/window_kinds.py, else the helper itself); a SCREENSHARE window is seeded like a screenshare-mode window (no
+    # punch, no leak, no caption) and a FACE window like a gated one; every FACE row names its kind
+    mixed_kinds = None
+    if _settings.get("face_mode") == "mixed":
+        vw = cover.get("visible_windows") or []
+        if len(vw) == len(faces):
+            mixed_kinds = [str(w.get("kind")) for w in vw]
+        else:
+            sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts"))
+            from window_kinds import visible_windows
+            mixed_kinds = [w["kind"] for w in visible_windows(proj, a.scope)]
     punch_by_window = {}
     if joins_p.is_file() and not screenshare:
         jj = json.loads(joins_p.read_text(encoding="utf-8"))
         for w in jj.get("face_windows") or []:
             punch_by_window[int(w["n"])] = [float(x) for x in w.get("punch_candidates_s") or []]
     for i, (fa, fz, what) in enumerate(faces, 1):
+        ss_win = screenshare or (mixed_kinds is not None and mixed_kinds[i - 1] == "screenshare")
         if fa > 0.05:
             add(fa, "TRANSITION", f"cover→face cut-in F{i} →TRANSITIONS.md (face pick)")
         add(fa, "FACE", f"F{i} {'opens ON face' if fa <= 0.05 else 'IN'} → {fmt(fz)}  {what[:80]}"
-                        + ("  [SCREEN SHARE: deck area painted per COVER-PLAN face_body]" if screenshare else ""))
-        if fz - fa > 5.0 and not captions_none:   # captions.md: EVERY face hold over 5 s, never short face punctuation
+                        + ("  [SCREEN SHARE: deck area painted per COVER-PLAN face_body]" if ss_win else "")
+                        + ("  [kind: face, the gated full-screen face]" if mixed_kinds is not None and not ss_win else ""))
+        if fz - fa > 5.0 and not captions_none and not (mixed_kinds is not None and ss_win):   # captions.md: EVERY face hold over 5 s
             add(fa, "CAPTION", f"ON → {fmt(fz)} (face hold over 5 s; FACE window only; montserrat house style)")
-        for pj in punch_by_window.get(i, []):
+        punches = [] if (mixed_kinds is not None and ss_win) else punch_by_window.get(i, [])   # a screen share is never punched
+        for pj in punches:
             add(pj, "PUNCH-IN", f"F{i} hard ~15-20% step ON the desilencer join (jumpcuts-final.json) → holds to the next join or {fmt(fz)}")
             if face_glitch:
                 add(pj, "GLITCH", f"F{i} random glitch offset / glitch blocks hit ACROSS the same join (lib:glitchoffset-* / lib:blocks-*; "

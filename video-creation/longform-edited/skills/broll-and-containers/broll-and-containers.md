@@ -216,5 +216,24 @@ by before it can be read:
 - CH5-style mechanics use the **built system-design diagrams** (`graphics/*.png`) as full-frame containers,
   but still SWAP per bullet (don't hold one diagram 50s) and interleave the sub-point text containers.
 
+## ⛔ END SCREEN — draw the slots where YouTube will actually put its cards (Mike, 2026-11-11, AI vs ML)
+The end card's empty video slots are placeholders for YouTube's end-screen ELEMENTS, which Mike places in YouTube Studio
+at upload. YouTube refuses elements that overlap or sit too close together, and a video element can't be shrunk to fit a
+tight grid. So the slots are drawn to YouTube's geometry, never the other way round.
+- **What broke (AI vs ML, 4 videos):** the comp drew four 559x314 slots in a tight 2x2 grid (x 364-923 / 996-1555,
+  y 236-550 / 607-921 on 1920x1080, gaps 73 / 57 px) under a WATCH NEXT title (y 99-159), with the playlist arrows popping
+  beside the slots. In Studio, YouTube would not accept four elements that close. Mike had to space them out (measured off
+  his Studio screenshot, about +-10 px: each element about 620x350, about 32 percent of the frame width; columns at x 304
+  and 987, rows at y 136 and 563, gaps about 60 px across and 75 px down; the grid spans about x 300-1610, y 135-915). The
+  top row then covered the WATCH NEXT title and the right column covered the arrows.
+- **Rule:** with 3 or 4 video slots, draw each slot at about 620x350 (16:9, a third of the width), at least 60 px apart
+  across and 75 px down, filling about x 300-1610 and y 135-915. Keep everything else OUT of that area: the WATCH NEXT
+  title above y 120 (or dropped), the arrows in the side margins (x under 290 or over 1620, pointing in) or not at all.
+  With 1 or 2 slots there's room for the title and arrows: same element size and spacing, laid out in that space.
+- Mike chooses the number of videos (he names them on camera, e.g. "this one, or this one"). If his line asks for 4,
+  build 4 to this geometry. Don't cut the count to make the design fit.
+- The arrows in `kt-subscribe-close` (`assets/effects/library.json`) come from 2023's single playlist slot. On a
+  multi-slot card, place them using the geometry above, never beside a tight grid.
+
 ## Music (cross-ref house rule #10)
 - The edit MUST ship with the chapter music beds, with the inter-bed breath at each bed change.

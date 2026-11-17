@@ -132,8 +132,9 @@ The spine is a **gated face** (longform-edited house rule #6): face is NOT on sc
   as PUNCTUATION. NOT entire blocks of sentences, and NOT every-other-sentence. The vast majority of the
   runtime is `[COVER]`; `[FACE]` is the rare cut back to his eyes that lands one line. When a beat runs
   several sentences, put `[FACE]` on the ONE that hits and cover the rest. Every chapter still gets at
-  least one face beat (usually its opener and its payoff). A mid-roll plug is `[FACE]` throughout;
-  mechanics chapters are almost entirely `[COVER]`.
+  least one face beat (usually its opener and its payoff). A mid-roll plug is `[FACE]` throughout,
+  EXCEPT the OFF-TOPIC plug (a crypto-channel video that is not about crypto), which is `[COVER]` only (section
+  "The OFF-TOPIC plug" below); mechanics chapters are almost entirely `[COVER]`.
 - **A `[FACE]` cut = ONE sentence (Mike's hard rule):** show the face for a single sentence; more than one
   ONLY if they're very small/tight ("Gone. For everyone."). **Tag the very next line `[COVER]` explicitly**
   after a face sentence so the cut can't visually carry across the lines that follow. Untagged still
@@ -143,6 +144,13 @@ The spine is a **gated face** (longform-edited house rule #6): face is NOT on sc
   its `[COVER]`. Never write a placeholder spoken line (an empty or parenthetical 🗣️ `[COVER]` such as "(CH2
   follows)") to satisfy this rule (Mike, 2026-10-15, tao-detailed GATE 1).
 - Rule of thumb: a beat that TEACHES → `[COVER]`; Mike making a point / connecting → `[FACE]`.
+- **🖥️ `[SCREENSHARE]` (face mode `mixed`, Mike 2026-11-09, first video `canton`):** a SECOND kind of on-screen beat
+  next to the normal `[FACE]`. Mike is screen sharing (webcam bottom-right, CTA top-right, as recorded) and the deck
+  area shows content we paint there (card / chart / animated chart / whiteboard), so every `[SCREENSHARE]` line has
+  a 🎬 `[SHOW]` `BODY: ...` line beside it (lint rule 17). Same length as a face beat (ONE sentence, a tight pair
+  allowed), next spoken line `[COVER]`, counts toward `--face-max`. Use it where Mike reacts to what is on his
+  screen; keep `[FACE]` for the personal, direct-to-camera lines. Mike switches OBS scenes between the two while
+  recording. (In face mode `screenshare` every `[FACE]` beat is a screen share instead: longform-edited.md #1b.)
 
 ## Convention 4 — Explainer visuals = SYSTEM-DESIGN containers, one per talking point
 
@@ -193,6 +201,7 @@ editors; markdown gets the same contrast from leading tags + emoji + VS Code cal
 | Tag | Means |
 |---|---|
 | 👤 `[FACE]` | spoken, Mike's face on screen (gated, sparse, ONE sentence — Convention 3) |
+| 🖥️ `[SCREENSHARE]` | spoken, Mike screen sharing, webcam bottom-right, deck area painted per its `BODY:` line (face mode `mixed` only, Convention 3) |
 | 🗣️ `[COVER]` | spoken, voice over visuals (face off, the default) |
 | 🔒 `[SAY-EXACT]` | spoken, the exact locked words (the `>` verbatim case, Convention 1) |
 | 🎬 `[SHOW]` | on-screen direction: b-roll, container, image, receipt, transition, lower-third |
@@ -266,6 +275,40 @@ The `## CLIP-INSERTS` table (copy the shape from `skills/doc-reference/SCREENPLA
 Status is `PROPOSED` (Mike rules at GATE 1), `APPROVED`, `REJECTED` or `HELD`. A REJECTED / HELD row needs no
 `[INSERT]` line; a PROPOSED / APPROVED row must land in a chapter (the lint checks both ways). When nothing fits, the
 section is one line: `NONE: <what DATA.md's Clip candidates found and why none earns its seconds>`.
+
+---
+
+## The OFF-TOPIC plug: the default mid-roll on a crypto-channel video that is NOT about crypto (Mike, 2026-11-10)
+
+A video for Mike's CRYPTO channel (CryptoRich) whose subject is not crypto (AI and jobs, the economy, careers: anything
+a viewer finds with no interest in crypto) carries this plug BY DEFAULT. Its job: tell a new viewer this is a crypto
+channel, and why Mike makes a video like this one on it. A video whose subject IS crypto does not get it by default (a
+plug there is the screenplay's own call, `[FACE]` per Convention 3). AI Engineering channel videos never get it.
+
+- **Where:** ONE spoken line between 40 and 50 percent of the runtime, at a natural seam between two beats (never
+  mid-argument, never inside a run of clip inserts). Title card OFF (Convention 2); the music bed continues under it.
+- **Tag:** 🔒 `[SAY-EXACT]` 🗣️ `[COVER]`. A COVER scene only, never his face (Mike, 2026-11-10); it does not count
+  toward the face budget.
+- **Cover:** the proof on screen: a real-site capture of the community's calls page (cryptorich.vip/showcase) with
+  the named call in view, or that token's real price chart across the call window; the community link lower-third on
+  "click the link". Never an AI image, never a how-the-video-is-made visual.
+- **Shape** (Mike's own wording, first used in `AI destroying lives`, 2026-11-10; keep the order, refresh the facts):
+  1. Who: "By the way, if you're new here, I'm CodeMonkey Mike."
+  2. What he does: "I run a crypto community, build software for my members, create courses."
+  3. Why this channel, tied to the video's subject: "The goal of my channel is to get people invested into assets,
+     before the paychecks run out." (that is the AI-jobs bridge; a video on another subject bridges from ITS subject
+     to the same goal in one sentence)
+  4. The proof, ONE recent call: "And my calls more than make up for the memberships. For example, 3 weeks ago I
+     called a new AI crypto called Janction, and it shot up 6x a few days ago. Just a simple 300 dollar investment would
+     have more than paid for my community's lifetime membership." (amounts in words or plain numbers, never a "$":
+     persona `money_format`, the screenplay lint fails a dollar sign)
+  5. The ask: "Click the link in the description, if you're interested."
+  6. The return: "Now back to the data." (or the chapter's own word)
+- **The proof is live:** the call, how long ago it was made and its multiplier are the CURRENT ones at record time
+  (persona `verified_claims_only`; the persona's call spellings), and the dollar example must hold at that multiplier
+  against the current lifetime-membership price. The line carries a 🔍 `[VERIFY]` for both. Never reuse the Janction
+  numbers on a later video without re-checking them.
+- **Never** explain how Mike makes his videos with AI on the crypto channel, here or anywhere.
 
 ---
 
@@ -377,6 +420,10 @@ edit is cued off THIS, not SCREENPLAY.md. Divergences are listed at the bottom._
 ## FACE windows        table: # | window (s) | content. From `blackdetect` on the blacked picture (non-black
                        = FACE); EVERYTHING ELSE IS BLACK VIDEO and must be covered in the comp. State the
                        face/cover % and confirm ZERO orphans (every window lands on a scripted [FACE] beat).
+                       FACE MODE = mixed (longform-edited.md #1c): the table lists BOTH kinds and each row's
+                       scripted-beat cell names exactly ONE, `[FACE]` or `[SCREENSHARE]`; a face beat and a screen
+                       share back to back (no black between) are split into two rows at the OBS scene switch.
+                       `scripts/window_kinds.py` reads the kinds (lint_as_recorded.py --face-mode mixed gates them).
 
 ## Whisper mishears to FIX in any captions / on-screen text        <- FIRST-CLASS SECTION, not a footnote
    The word-time JSON stays un-edited (it is the cue/timing source), so THIS list is what gets re-applied

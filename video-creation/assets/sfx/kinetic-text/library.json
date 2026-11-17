@@ -527,7 +527,7 @@
    "mood_class": "neutral",
    "mood_source": "2023 edit",
    "trigger": "RED GLOW HEADLINE: the huge red word with a glow over b-roll ('CONVERSIONS')",
-   "best_for": "a single emphatic word in the accent red; the punch IS the emphasis (byte-identical to the root Punch 1.mp3, id punch-1)",
+   "best_for": "a single emphatic word in the accent red; the punch IS the emphasis (byte-identical to the root Punch 1.mp3, id punch-1) NOT the project's 'Punch 2.mp3': same size, different sound (punch-2-2023, checked 2026-11-09)",
    "reference_cues_main_sequence": [
     "53.47 'CONVERSIONS' red glow over the meeting b-roll"
    ],
@@ -536,12 +536,44 @@
     "GrowthMarketingMike 004 Differences between Growth Marketer and Hacker (2023)"
    ],
    "twins": [
-    "Punch 2.mp3 (identical size, not copied); also already at assets/sfx/Punch 1.mp3"
+    "also already at assets/sfx/Punch 1.mp3 (byte-identical)"
    ],
    "tail_sec": 0.25,
    "device": [
     "kt-keyword-pop"
    ]
+  },
+  {
+   "id": "punch-2-2023",
+   "title": "Punch 2",
+   "source": "2023 GrowthMarketingMike projects 004 'differences revision' and 005 'choose revision' (the same file, md5 3aeed29c; Mike's own licensed SFX; origin per file unknown, see license)",
+   "source_file": "Punch 2.mp3",
+   "file": "punch-2.mp3",
+   "character": "a second boxing punch, 0.81 s, about twice as loud (RMS) as punch-1 and a different hit (decoded correlation 0.12 with punch-1)",
+   "type": "kinetic-text",
+   "mood_class": "neutral",
+   "mood_source": "2023 edit",
+   "trigger": "the SECOND of a pair of verdict headlines over b-roll: 'GROWTH MARKETING' after punch-1's 'GROWTH HACKING' (005 34.900); 'TECHNICAL SKILLS' over the code b-roll (004 97.767)",
+   "best_for": "a paired verdict / headline where the second must hit as hard as the first but not sound identical; pair it with punch-1-2023 (same length and onset, different hit). Until 2026-11-09 the catalog wrongly called this file a byte-twin of Punch 1 (same size only)",
+   "reference_cues_main_sequence": [
+    "004: 97.767 'TECHNICAL SKILLS' over the code b-roll"
+   ],
+   "reference_cues_choose": [
+    "005: 34.900 'GROWTH MARKETING' at the top of the office b-roll (35.067 pop)"
+   ],
+   "license": "from Mike's 2023 project; short SFX, no Content-ID code; confirm origin before a new commercial use outside Mike's channels",
+   "used_in": [
+    "GrowthMarketingMike 004 Differences between Growth Marketer and Hacker (2023)",
+    "GrowthMarketingMike 005 How to choose between Growth Marketing and Growth Hacking (2023)"
+   ],
+   "device": [
+    "kt-keyword-pop",
+    "kt-headline-over-broll"
+   ],
+   "duration_sec": 0.81,
+   "attack_sec": 0.21,
+   "peak_dbfs": 4.5,
+   "tail_sec": 0.28
   },
   {
    "id": "punch-sound-effect",

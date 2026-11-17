@@ -8,6 +8,9 @@ Every gated-face comp centres and zooms Mike's face with ONE global transform wh
   - the comp has no `FACE_REFRAME = { scale: ..., x: ..., y: ... }` constant,
   - its numbers differ from the measurement (scale +/- 0.005, x / y +/- 2 px),
   - the constant is declared but never used (a declared-but-dead constant frames nothing).
+  - FACE MODE = mixed (house rule #1c; the measurement carries `screenshare_windows`): the comp keeps the spine at the identity
+    transform inside the screen shares, so it must declare `SCREENSHARE_WINDOWS` with exactly those [start, end] pairs
+    (+/- 0.05 s, source-spine seconds) and USE it (the reframe and the punch scale are gated off inside them).
 A video with no FACE windows passes on the identity transform. A deliberate exception is declared in the comp:
   // FACE_REFRAME_WAIVED: <who, when, why>
 
@@ -64,6 +67,18 @@ def main():
             fails.append(f"{k} is {got[k]}, the measurement says {m[k]}")
     if len(re.findall(r"\bFACE_REFRAME\b", src)) < 2:
         fails.append("FACE_REFRAME is declared but never used (apply it to the spine and to every still of the spine; a background-swap clip is pre-framed and takes none)")
+    ssw = [(float(x), float(y)) for x, y in m.get("screenshare_windows") or []]
+    if ssw:   # FACE MODE = mixed: the screen shares play verbatim (identity transform, no punch)
+        sd = re.search(r"\bSCREENSHARE_WINDOWS\s*(?::[^=]+)?=\s*\[([\s\S]*?)\]\s*;", src)
+        got_ss = [(float(x), float(y)) for x, y in re.findall(r"\[\s*([\d.]+)\s*,\s*([\d.]+)\s*\]", sd.group(1))] if sd else []
+        if not sd:
+            fails.append(f"FACE MODE = mixed: the comp declares no SCREENSHARE_WINDOWS; expected export const SCREENSHARE_WINDOWS: "
+                         f"[number, number][] = {[list(w) for w in ssw]}; (assets/face-reframe.json; the spine plays at the identity "
+                         "transform inside them, comp-build.md section 4c-mixed)")
+        elif len(got_ss) != len(ssw) or any(abs(a - x) > 0.05 or abs(b - y) > 0.05 for (a, b), (x, y) in zip(got_ss, ssw)):
+            fails.append(f"SCREENSHARE_WINDOWS is {got_ss}, the measurement's screenshare_windows are {ssw}")
+        elif len(re.findall(r"\bSCREENSHARE_WINDOWS\b", src)) < 2:
+            fails.append("SCREENSHARE_WINDOWS is declared but never used (gate FACE_REFRAME and the punch scale off inside them)")
     for f in fails:
         print(f"FAIL  {f}")
     if not m.get("centered", True):

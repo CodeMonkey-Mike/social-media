@@ -19,6 +19,13 @@ not duplicate."_
   BEFORE any voice generation. This ecosystem moves in months; authority is only earned if the facts are
   current. Anthropic/Claude specifics defer to the `claude-api` skill.
 
+## Every FINAL also gets a LinkedIn version (standard, Mike 2026-11-09)
+
+Any video for this channel, from ANY track (longform-presentation incl. the VS Code coding series, longform-edited,
+this folder): when the FINAL is over 10 minutes, deliver `<FINAL stem>-LINKEDIN.mp4` too, cut in a pause at a real
+ending + the 10 s "Watch the full video on YouTube" / `@aiEngineeringSimplified` end card. Canonical:
+`../skills/linkedin-cut/linkedin-cut.md`. Not for the crypto channel.
+
 ## Production = longform-edited, but lighter (inherit, don't fork)
 
 This channel runs on the **`longform-edited` track** (`../longform-edited/`) as its base pipeline — same

@@ -425,7 +425,9 @@ def v_render(state: VerticalState) -> VerticalState:
         n = int(re.search(r"-v(\d+)-video", latest.name).group(1)) + 1
     out = vp / f"{proj.name}-VERTICAL-v{n}-video.mp4"
     paused = C.paused_spine(proj, scope)
-    frames = int(round((G._duration(paused) or 0.0) * 30))
+    # + the approved end-card hold (MUSIC-PLAN end_card_hold), which runs the comp past the spine exactly as in the 16:9
+    # (AI vs ML 2026-11-11: a complete 4410-frame render with a 1.8 s hold failed "expected 4356")
+    frames = int(round(((G._duration(paused) or 0.0) + G._end_hold_extra(proj, scope)) * 30))
     base = [sys.executable, "-u", str(G.RENDER_COMP), str(proj), "--mode", "final", "--comp", comp_id, "--public-dir", str(_vdir(proj))]
     # ONE call: render_comp.py renders in 1-minute chunks itself (video-creation/skills/chunked-render, 2026-10-27), which
     # also retires the old ~14436-frame stitch-ceiling parts + their re-encoding ffmpeg join (one generation less).
@@ -478,8 +480,9 @@ def v_verify_final(state: VerticalState) -> VerticalState:
         return C._fail(state, node, "mixed vertical missing")
     probs = []
     d, d169 = G._duration(mixed) or 0.0, G._duration(final169) or 0.0
-    if abs(d - d169) > 0.1:
-        probs.append(f"duration {d:.2f}s vs 16:9 {d169:.2f}s")
+    trim = C.setting(proj, "vertical_end_sec")   # Mike trimmed the vertical's end (AI vs ML 2026-11-11: no end-screen lines)
+    if abs(d - (float(trim) if trim else d169)) > 0.1:
+        probs.append(f"duration {d:.2f}s vs " + (f"the {float(trim):.2f}s vertical_end_sec trim" if trim else f"16:9 {d169:.2f}s"))
     dims = _dims(mixed)
     if dims != (VER_W, VER_H):
         probs.append(f"dimensions {dims}")

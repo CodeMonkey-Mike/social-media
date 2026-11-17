@@ -216,6 +216,7 @@
 
     <section>
       <h2>Replays: old transcripts re-run under a later prompt</h2>
+      <p class="note" id="replayHow" style="margin:0 0 10px"></p>
       <div class="card scroll" id="replayTable"></div>
       <h3>Run-to-run noise (the same prompt, run more than once on one batch)</h3>
       <div class="card scroll" id="noiseTable"></div>
@@ -327,6 +328,19 @@ function renderRecord(rows) {
       <td>${meter(r.selection_precision)}</td><td class="num">${r.killed_2nd}</td><td class="num">${pct(r.final_precision)}</td>
       <td class="num">${r.recall_batches ? `${pct(r.recall)} <span class="muted">(${r.recall_batches} b.)</span>` : '<span class="muted">not reviewed</span>'}</td></tr>`),
     'Nothing on record yet. The first gate approval of a livestream batch writes the first lines.');
+}
+
+// A replay is an OPTION, never part of a livestream run: say what it is, when it is worth it and how to start one.
+function renderReplayHow(batches) {
+  const can = batches.filter((b) => b.transcript_saved).map((b) => b.batch);
+  $('replayHow').innerHTML =
+    '<b>Optional, run on request.</b> A replay runs the clip strategist again on a livestream that was already judged, with its ' +
+    'instructions as they are now. It cuts no video and posts nothing: it returns a list of proposed clips, and that list is scored ' +
+    'against the verdicts on record. It is worth running after the strategist\'s instructions change, to see if the change helped. ' +
+    'One run takes around 8 to 13 minutes. To run one, ask Claude to "replay &lt;batch&gt;", or run ' +
+    '<code>python video-creation/livestream-repurpose/skills/clip-evals/clip_evals.py replay --batch &lt;batch&gt;</code>. ' +
+    (can.length ? `<b>Can be replayed today (${can.length}):</b> ${can.map(esc).join(', ')}.`
+                : 'No batch has a saved transcript yet, so nothing can be replayed.');
 }
 
 function renderReplays(rows, noise) {
@@ -460,6 +474,7 @@ function render() {
   const d = DATA;
   renderTiles(d.totals);
   renderRecord(d.score.record);
+  renderReplayHow(d.batches);
   renderReplays(d.score.replays, d.noise);
   $('matchMin').textContent = Math.round((d.match_min || 0.5) * 100);
   renderFilters(d.batches);

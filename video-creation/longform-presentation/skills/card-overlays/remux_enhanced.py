@@ -26,8 +26,12 @@ def main():
     print(f'EDIT video {v_dur:.3f}s  enhanced audio {e_dur:.3f}s  delta {e_dur - v_dur:+.3f}s')
     if abs(e_dur - v_dur) > a.tolerance:
         sys.exit('the enhanced track is not the EDIT length: wrong source file, or Enhance changed the timeline; not remuxed')
+    # `apad` + `-shortest` = the VIDEO decides the end: a slightly short enhanced track is padded with silence, a slightly
+    # long one is trimmed, and the copied video stream is never cut. A bare `-shortest` dropped the last 3 frames on canton
+    # (2026-11-10): its spine's own audio already ended 42 ms before its video, the enhanced track matched that audio to the
+    # sample, and the muxer stopped at the audio's end (8347 of 8350 frames; the identity check below refused it).
     rc = subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', a.edit, '-i', a.enhanced, '-map', '0:v:0', '-map', '1:a:0',
-                         '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-shortest',
+                         '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-af', 'apad', '-shortest',
                          '-movflags', '+faststart', a.out]).returncode
     if rc:
         sys.exit(rc)

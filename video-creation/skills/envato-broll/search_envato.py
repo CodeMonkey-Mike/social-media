@@ -61,6 +61,20 @@ def rnd(a, b):
     return random.randint(a, b)
 
 
+def dismiss_promo(page):
+    """Close any visible promo modal (2026-11-10: the "You asked, a lot. Now you choose." AI-models dialog sits
+    over the grid, so the lazy grid never scrolls and only 3 cards mount). Close = [role=dialog] button[aria-label=Close]."""
+    closes = page.locator('[role="dialog"] button[aria-label="Close"]')
+    try:
+        for i in range(closes.count()):
+            b = closes.nth(i)
+            if b.is_visible():
+                b.click()
+                time.sleep(0.8)
+    except Exception:
+        pass
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("query")
@@ -88,6 +102,7 @@ def main():
                 got_it.click()
         except Exception:
             pass
+        dismiss_promo(page)
         if a.portrait:  # Orientation filter -> Portrait/Vertical (UI-only; no URL param; NOT a guarantee, see SKILL.md)
             ori = page.locator('button:has-text("Orientation"), [aria-label*="Orientation" i]').first
             try:

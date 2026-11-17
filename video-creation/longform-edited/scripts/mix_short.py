@@ -7,7 +7,8 @@ crossfade at every splice (the desilenced spine leaves only a narrow trough betw
 appends the SHARED CTA take (`video-creation/assets/vo/cta-watch-full.mp3`, "Click below to watch the full video",
 Mike's cloned voice, never re-generated per project) at VO level over the outro card, lays ONE continuous bed from
 MUSIC-PLAN.json (the bed that scored the hook's chapter, at its measured seat, faded out at the end), a soft whoosh
-on each seam, and muxes onto the rendered short (video copied).
+on each seam, and muxes onto the rendered short (video copied). A NO-MUSIC plan (`"no_music": true`) lays no bed and
+`"no_sfx": true` drops the whoosh (pieverse 2026-11-14: Mike's "no music, no sound effects" ruling covers the short too).
 
 Usage: python mix_short.py <media/<project>> --video <short-video.mp4> --work <_previews/short/work> [--out <mp4>]
          [--bed-db <override seat>] [--whoosh-db -14] [--no-whoosh]
@@ -79,19 +80,29 @@ def main():
 
     hook_src = unsh(float(spans[0]["src_start"]))
     bed = next((b for b in plan.get("beds") or [] if float(b["span"][0]) <= hook_src < float(b["span"][1])), (plan.get("beds") or [None])[0])
-    if not bed:
+    # a NO-MUSIC plan (`"no_music": true`, Mike's ruling on record; pieverse 2026-11-14) lays NO bed under the short either,
+    # and `"no_sfx": true` drops the seam whoosh: the short is then the VO spans + the shared CTA take only
+    no_music = plan.get("no_music") is True
+    if not bed and not no_music:
         print("FATAL: MUSIC-PLAN has no beds", file=sys.stderr)
         sys.exit(2)
-    bed_file = REPO / bed["source_file"] if not Path(bed["source_file"]).is_absolute() else Path(bed["source_file"])
-    bed_db = a.bed_db if a.bed_db is not None else float(bed.get("remotion_gain_db"))
-    bed_in = float(bed.get("source_in") or 0.0)
+    if no_music:
+        bed = None
+    no_whoosh = a.no_whoosh or plan.get("no_sfx") is True
+    bed_file = bed_db = None
+    bed_in = 0.0
+    if bed:
+        bed_file = REPO / bed["source_file"] if not Path(bed["source_file"]).is_absolute() else Path(bed["source_file"])
+        bed_db = a.bed_db if a.bed_db is not None else float(bed.get("remotion_gain_db"))
+        bed_in = float(bed.get("source_in") or 0.0)
     # a bed CUT shorter than its seat + the short runs out early, and the audio ended before the picture (left-behind
     # 2026-11-03: a 37 s chorus cut seated at 6.6 s ended at 30.44 s under a 31.03 s short). Seat it earlier so the bed
     # covers the whole short; the apad on the mix below is the last-resort guard (silence, never a short stream).
-    bed_len = duration(bed_file)
+    bed_len = duration(bed_file) if bed else 0.0
     if bed_len and bed_in + total > bed_len:
         bed_in = max(0.0, round(bed_len - total, 3))
-    print(f"SHORT-MIX spans={len(spans)} cta={CTA.name} bed={bed.get('chapter')} ({bed_file.name} @{bed_in}s, {bed_db} dB)")
+    print(f"SHORT-MIX spans={len(spans)} cta={CTA.name} bed="
+          + (f"{bed.get('chapter')} ({bed_file.name} @{bed_in}s, {bed_db} dB)" if bed else "none (no-music plan)"))
 
     inputs, k = ["-i", str(video)], 1
     chains, vo_labels = [], []
@@ -112,13 +123,15 @@ def main():
     chains.append(f"[{k}:a]aformat=sample_rates=48000:channel_layouts=stereo,adelay={int(cta_at * 1000)}|{int(cta_at * 1000)}[cta]")
     k += 1
     # the bed across the whole short, its seat, 0.6 s fade-out at the end
-    inputs += ["-i", str(bed_file)]
-    g = 10 ** (bed_db / 20)
-    chains.append(f"[{k}:a]atrim=start={bed_in:.3f}:end={bed_in + total:.3f},asetpts=PTS-STARTPTS,aformat=sample_rates=48000:channel_layouts=stereo,"
-                  f"afade=t=in:st=0:d=0.3,afade=t=out:st={max(0.0, total - 0.6):.3f}:d=0.6,volume={g:.6f}[bed]")
-    k += 1
-    mix = [vo, "[cta]", "[bed]"]
-    if not a.no_whoosh and WHOOSH.is_file():
+    mix = [vo, "[cta]"]
+    if bed:
+        inputs += ["-i", str(bed_file)]
+        g = 10 ** (bed_db / 20)
+        chains.append(f"[{k}:a]atrim=start={bed_in:.3f}:end={bed_in + total:.3f},asetpts=PTS-STARTPTS,aformat=sample_rates=48000:channel_layouts=stereo,"
+                      f"afade=t=in:st=0:d=0.3,afade=t=out:st={max(0.0, total - 0.6):.3f}:d=0.6,volume={g:.6f}[bed]")
+        k += 1
+        mix.append("[bed]")
+    if not no_whoosh and WHOOSH.is_file():
         for s in spans[1:]:
             inputs += ["-i", str(WHOOSH)]
             t = float(s["out_start"]) - 0.08
@@ -137,8 +150,8 @@ def main():
         sys.exit(1)
     lu, pk = lufs_peak(out)
     (proj / "short-mix.json").write_text(json.dumps({"video": str(video), "out": str(out), "spans": len(spans), "cta": str(CTA), "cta_at": cta_at,
-                                                     "bed": {"chapter": bed.get("chapter"), "file": str(bed_file), "source_in": bed_in, "gain_db": bed_db},
-                                                     "whoosh_db": None if a.no_whoosh else a.whoosh_db, "lufs": lu, "peak_dbfs": pk}, indent=2), encoding="utf-8")
+                                                     "bed": ({"chapter": bed.get("chapter"), "file": str(bed_file), "source_in": bed_in, "gain_db": bed_db} if bed else None),
+                                                     "whoosh_db": None if no_whoosh else a.whoosh_db, "lufs": lu, "peak_dbfs": pk}, indent=2), encoding="utf-8")
     print(f"SHORT-MIX-DONE out={out} dur={duration(out):.3f} lufs={lu} peak={pk}")
     print("PROGRESS 100%")
 

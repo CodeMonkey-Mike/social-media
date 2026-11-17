@@ -192,9 +192,24 @@ def validate_lane3_plan(plan: dict, data_dir: Path = None,
     taken = existing_image_ids(data_dir, images_base, own_filenames, own_entry_keys)
     groups = {}
     for im in images:
-        for k in ("purpose", "image_id", "slug", "prompt"):
+        # A Version 2 carousel slide is CODE-RENDERED (repurpose/render_carousel_v2.py, Mike 2026-11-11): it carries a
+        # `spec` instead of a `prompt`, and never a `ref` (no exemplar, no ChatGPT).
+        code_v2 = im.get("render") == "code-v2"
+        if im.get("render") not in (None, "code-v2"):
+            die(f"image {im.get('image_id')}: unknown render {im.get('render')!r} (only 'code-v2')")
+        for k in ("purpose", "image_id", "slug", "spec" if code_v2 else "prompt"):
             if not im.get(k):
                 die(f"image missing {k!r}: {im}")
+        if code_v2:
+            if im["purpose"] not in ("yt-posts", "ig-carousel"):
+                die(f"image {im['image_id']}: render 'code-v2' is for carousel slides (yt-posts / ig-carousel), not {im['purpose']!r}")
+            if im.get("ref") or im.get("prompt"):
+                die(f"image {im['image_id']}: a code-v2 slide carries a spec ONLY (no prompt, no ref)")
+            sys.path.insert(0, str(Path(__file__).resolve().parent))
+            from render_carousel_v2 import validate_spec
+            probs = validate_spec(im["spec"], f"image {im['image_id']} {im['slug']}")
+            if probs:
+                die("; ".join(probs))
         if im["purpose"] not in PURPOSE_SUBDIR:
             die(f"image {im['image_id']}: unknown purpose {im['purpose']!r}")
         if not HEX8_RE.match(im["image_id"]):

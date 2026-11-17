@@ -39,7 +39,7 @@ Repo root: `C:\Users\mnede\Documents\Claude\social-media` (run every command fro
    field-for-field. The validator that must pass is `repurpose/queue_writer.py`
    `validate_lane3_plan` (read it: it is the hard-gate list).
 5. `schedule-tweets/images/reference/` (logos, faces, topic photos) and
-   `schedule-tweets/images/reference/carousels/version{1,2,4}/` (carousel style exemplars).
+   `schedule-tweets/images/reference/carousels/version{1,4}/` (carousel style exemplars; V2 needs none, it is code-rendered).
    `ls` them live. `hook.png` + `slide.png` in version4 are the V4 style exemplars.
 
 # 1. Topics
@@ -61,7 +61,9 @@ today's values (a "25% pump" on stream may be "+40% on the week" by drafting tim
 ledger: claim -> verdict -> source. Anything you cannot verify is either dropped, written in a
 general form that does not depend on the unverified detail, or confirmed by Mike's own
 statement in the prompt (a prompt line like "Bitwise mentions confirmed by Mike" counts as
-verified). Never invent quotes, filings, or products.
+verified). Never invent quotes, filings, or products. For a claim about a coin's PRODUCT or usage ("it has real
+customers", "no one uses it"), check the product's own live pages per
+`video-creation/skills/coin-research/coin-research.md` (home page, `/stats`-style endpoints) before writing it.
 
 # 3. Defaults (a brief overrides these numbers; never silently change them yourself)
 
@@ -99,6 +101,11 @@ Produce, in this order, shuffling topics:
   reference file from `schedule-tweets/images/reference/` in `ref` (absolute path). Never
   invent a logo; if no reference exists for a real entity the prompt must either avoid
   rendering it or you list it under `missing_references` and keep the prompt entity-free.
+  **Pepe and Pengu are never "missing" (Mike, 2026-11-16, batch `peach`):** Pepe the frog is a
+  very common meme the image model already knows: NAME it in the prompt and render it, no ref.
+  The Pudgy Penguins penguin ($PENGU) has its reference `schedule-tweets/images/reference/pengu.webp`
+  (the chubby blue-and-white penguin, orange beak and feet): cite it in `ref` and keep the
+  penguin faithful to it. Never list either as missing, never swap them for plain unmarked coins.
   **NO URLs in any X post (tweets, threads, polls; Mike, 2026-09-24):** never a link or bare
   domain (not `cryptorich.vip`, not anything): the X algorithm throttles posts with a URL.
   Promo codes ride as text only ("Code ARCHIE at checkout"). See `persona.json` writing_style.x_no_urls.
@@ -116,10 +123,15 @@ Produce, in this order, shuffling topics:
   2 = analytical/editorial, 4 = topic photo hook + data slides). **Put extra weight on Version
   4** whenever a usable topic photo exists in `images/reference/` (a public figure, a mascot, a
   scene) or the brief supplies one; V4 slide 1 then cites BOTH `version4/hook.png` (style) and
-  the topic photo in `ref` as an array, and slides 2+ cite `version4/slide.png`. V2 slides cite
-  the role-matched exemplar in `version2/` (`*-01-hook*`, `*-02/03/04-*`, `*-05-question*`).
+  the topic photo in `ref` as an array, and slides 2+ cite `version4/slide.png`. **V2 slides are
+  CODE-RENDERED (Mike, 2026-11-11), never generated: write the image item with `"render": "code-v2"` and a `"spec"`
+  (`label` "N OF TOTAL", `title`, `accent`, `box_label`, `box` = 1 to 5 text lines) and NO `prompt` and NO `ref`; use a
+  fresh 8-hex `image_id` per slide like any image. The spec shape, limits and the renderer are in `repurpose/SKILL.md`
+  ("Version 2") and `repurpose/render_carousel_v2.py` (`validate_spec` is what the plan validator runs). Every word
+  on the slide is the spec text, so put the verified numbers in it exactly as the fact_check ledger has them. No exemplar
+  is needed, so a V2 carousel never lands in `missing_references`.**
   V1 is pinned to `version1/yt-posts-828eee71-01-hook.png` for every slide (library
-  contamination note in SKILL.md) and the counter text must be stated explicitly. **A slide
+  contamination note in SKILL.md) and the counter text must be stated explicitly. **A V1 or V4 slide
   with no reference exemplar is never written**: if you cannot anchor a post's carousel, choose
   a version you CAN anchor, and record what was missing in `missing_references`. Use the
   version's prompt template verbatim, fill the bracketed text, and end every carousel prompt

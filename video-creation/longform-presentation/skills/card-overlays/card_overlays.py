@@ -15,7 +15,12 @@
 # kind "deck" (default): overlays/<id>.body.html (deck classes, the deck's text verbatim) is wrapped in the deck's own
 #   <style> on a region-sized page and screenshotted to <id>.png. kind "image": a still already rendered at the
 #   region size (a chart-builder diagram). kind "clip": a video already rendered at the region size and the card's
-#   exact length (an animated chart, a whiteboard beat; no audio needed, it is ignored).
+#   exact length (an animated chart, a whiteboard beat; no audio needed, it is ignored). A clip card may carry
+#   "fade_in": false / "fade_out": false (opt-in, written only by cover_runs.py for a cover run on the video's first /
+#   last frame); absent = the fades below, as always.
+# OPT-IN "layout" (written only by cover_runs.py --vertical, 2026-11-15): the recording is re-stacked onto a frame of
+#   another shape (the 1080x1920 vertical: the slide area on top, the webcam under it) before the overlays, and the
+#   region defaults to that whole frame. See layout_graph(). Absent = the spine's own frame, the graph text unchanged.
 # Every overlay is composited at region x,y: stills get the 11-frame entrance (0.93 -> 1 scale + alpha, ease-out
 # cubic: the spotlight look), clips an 11-frame alpha fade-in (a drawn-on clip starts blank anyway); all hold, then
 # a 0.3 s alpha fade out. Audio is stream-copied; the picture keeps the spine's own frame timestamps.
@@ -44,7 +49,9 @@ def load(spec_path):
     for k in ('deck', 'spine', 'out'):
         spec[k] = (d / spec[k]).resolve()
     spec['dir'] = d
-    spec['region'] = {**FULL, **(spec.get('region') or {})}
+    lay = spec.get('layout')        # OPT-IN (cover_runs.py --vertical): the output frame is the layout's, not the spine's
+    full = {'x': 0, 'y': 0, 'w': lay['w'], 'h': lay['h']} if lay else FULL
+    spec['region'] = {**full, **(spec.get('region') or {})}
     for c in spec['cards']:
         c['kind'] = c.get('kind', 'deck')
         if c['kind'] not in ('deck', 'image', 'clip'):
@@ -158,18 +165,57 @@ def entrance(spec, c):
     return str(d / 'in_%02d.png')
 
 
+def layout_graph(lay):
+    """OPT-IN (cover_runs.py --vertical, 2026-11-15): a spec with a "layout" re-stacks the recording onto a frame of
+    another shape BEFORE any overlay, in the same single encode:
+      "layout": {"w": 1080, "h": 1920, "bg": "0x0a0c10",
+                 "panes": [{"name": "deck",   "src": {x, y, w, h}, "dst": {x, y, w, h}},
+                           {"name": "webcam", "src": {x, y, w, h}, "dst": {x, y, w, h}}]}
+    Each pane is one rectangle of the recording (`src`, spine pixels) scaled to its place on the new frame (`dst`); the
+    first pane is padded out to the frame on `bg`, the others are laid over it. Every pane comes from the same input,
+    so the frames keep the spine's own timestamps. Returns the filter text ending in [base]. No "layout" key = this is
+    never called and the graph is what it always was."""
+    W, H, panes = lay['w'], lay['h'], lay['panes']
+    if not panes:
+        sys.exit('layout: at least one pane is needed')
+    n = len(panes)
+    g = ['[0:v]format=yuv444p,split=' + str(n) + ''.join(f'[s{i}]' for i in range(n))]   # 4:4:4: any pixel offset is exact
+    for i, p in enumerate(panes):
+        s, d = p['src'], p['dst']
+        chain = f"[s{i}]crop={s['w']}:{s['h']}:{s['x']}:{s['y']}:exact=1,scale={d['w']}:{d['h']}:flags=lanczos"
+        if i == 0:
+            chain += f",pad={W}:{H}:{d['x']}:{d['y']}:color={lay.get('bg', '0x0a0c10')}[{'base' if n == 1 else 'b0'}]"
+        else:
+            chain += f'[p{i}]'
+        g.append(chain)
+    cur = 'b0'
+    for i in range(1, n):
+        nxt = 'base' if i == n - 1 else f'b{i}'
+        g.append(f"[{cur}][p{i}]overlay=x={panes[i]['dst']['x']}:y={panes[i]['dst']['y']}:format=auto[{nxt}]")
+        cur = nxt
+    return ';'.join(g)
+
+
 def render(spec, fps):
     R = spec['region']
     args = ['ffmpeg', '-v', 'error', '-stats', '-y', '-i', str(spec['spine'])]
     graph, last, n_in = [], '0:v', 1
+    if spec.get('layout'):
+        graph.append(layout_graph(spec['layout']))
+        last = 'base'
     for k, c in enumerate(spec['cards']):
         f_in, f_out = round(c['in'] * fps), round(c['out'] * fps)
         dur = (f_out - f_in) / fps
         if c['kind'] == 'clip':
             args += ['-i', str(c['src'])]
+            # OPT-IN (cover_runs.py, scripted option, 2026-11-14): "fade_in": false / "fade_out": false on a clip card
+            # drops that alpha fade, for a cover run that starts on the video's first frame or ends on its last (there
+            # is no recording to fade from / to). Keys absent = the fades as always, the graph text unchanged.
+            fade_in = '' if c.get('fade_in') is False else f'fade=t=in:st=0:d={IN_FRAMES / fps:.6f}:alpha=1,'
+            fade_out = '' if c.get('fade_out') is False else f'fade=t=out:st={dur - OUT_S:.6f}:d={OUT_S}:alpha=1,'
             graph.append(f'[{n_in}:v]format=rgba,tpad=stop_mode=clone:stop_duration={dur:.6f},trim=duration={dur:.6f},'
-                         f'setpts=PTS-STARTPTS,fade=t=in:st=0:d={IN_FRAMES / fps:.6f}:alpha=1,'
-                         f'fade=t=out:st={dur - OUT_S:.6f}:d={OUT_S}:alpha=1,setpts=PTS+{f_in}/({fps}*TB)[c{k}]')
+                         f'setpts=PTS-STARTPTS,{fade_in}'
+                         f'{fade_out}setpts=PTS+{f_in}/({fps}*TB)[c{k}]')
             n_in += 1
         else:
             hold = (f_out - f_in - IN_FRAMES) / fps
@@ -202,7 +248,8 @@ def qa(spec):
     out = spec['out']
     qa_dir = spec['dir'].parent / '_qa'
     qa_dir.mkdir(exist_ok=True)
-    tw, th = 384, 216
+    ow, oh = (int(v) for v in ffprobe(out, 'stream=width,height')[:2])
+    tw, th = (384, 216) if ow >= oh else (216, 384)     # a vertical FINAL (a "layout" spec) gets portrait tiles
     sheet = Image.new('RGB', (tw * 5, th * len(spec['cards'])), 'black')
     with tempfile.TemporaryDirectory() as tmp:
         for r, c in enumerate(spec['cards']):

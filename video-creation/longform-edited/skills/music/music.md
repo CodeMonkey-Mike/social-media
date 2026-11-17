@@ -73,7 +73,13 @@ of the video. `--dry-run` prints where every bed starts and stops without render
 - **VOICE GAIN +2 dB by default (Mike, 2026-10-30, reset draft):** the Enhance-Speech voice sits BELOW the spliced
   clip-insert voices, so `mix_music.py --voice-db 2.0` (the default) raises Mike's voice in the VO track everywhere
   EXCEPT the clip-insert windows (the sidecar's `pauses[].clip`, kept at unity). The beds and SFX are seated against
-  the VO as before. `--voice-db 0` restores the old behaviour.
+  the VO as before. `--voice-db 0` restores the old behaviour. A per-video `settings.voice_db` in GRAPH-PROGRESS.json
+  overrides the default (quant, bullish-on-kaspa and canton run +3).
+- **CLIP MATCH by default (Mike, 2026-11-10, canton: "I've often noticed that my voice is so much lower than the clips that we
+  use"):** the voice gain alone does not close the gap (canton: voice -23.4 LUFS, clips -18.1 / -16.6, so +3 dB still left them 2
+  to 4 dB louder). `mix_music.py` measures each clip-insert window and the voice outside them, and LOWERS each clip to the
+  raised voice's loudness (never raises it); the gains land in `mix-audio.json` `clip_match`. Canton after the fix: voice
+  around -20.3 LUFS, clips -20.2 / -20.1. `--no-clip-match` keeps the clips at unity.
 - **PEAK SAFETY (same note):** the final sum runs through a brick-wall limiter (`--peak-ceiling -1.5` dBFS, oversampled)
   so the delivered mix never peaks above -1 dBFS (the reset v1 mix peaked at -0.2 dBFS). `MIX-DONE ... peak_out=` must
   read <= -1.0.

@@ -55,6 +55,35 @@ thumbnail/
 - A logo Mike links from a paid stock site (IconScout etc.) is a reference for the SHAPE only:
   redraw it, never paste the file in.
 
+## Editing an earlier thumbnail (2026-11-04, 11-07, 11-09)
+
+When Mike says "model it after this one" and links a stream's thumbnail, keep that scene and change only what he names.
+Fetch it from `https://img.youtube.com/vi/<id>/maxresdefault.jpg` (1280x720) into `<folder>/source.jpg`; there is no
+kit layout, the stream's `build.py` does the edit. Reuse `2026-11-09-my-100x-plays/build.py`:
+
+- `make_plate`: takes the white headline out (mask = white pixels + a 47 px halo, smooth low-res fill, the sky's own
+  grain added); no ghost of the text at 1:1. LaMa is not installed, and this was enough on a smooth sky.
+- Swapping a coin's face: `old_coin` gets the coin's silhouette by colour and fits a rotated ellipse to it; `logo_coin`
+  builds the new coin to that exact ellipse (face + side swept along the short axis) and clips it to the old silhouette,
+  so the dirt in front, the bowl behind and the tilt stay as they were. Shade it toward the ground so it sits in the dirt.
+  A logo that comes as a profile picture is square on black: scale it so its farthest point sits inside the face.
+- Headline: white Impact, one line if it is one idea (size it to clear Mike's hair, about x 1215 on this scene); a
+  second line here runs into the NFT card.
+
+### Swapping what Mike holds (2026-11-15, `peach/build.py`: cocktail glass -> Minute Maid bottle)
+
+- The new object goes BEHIND his fingers: `hands_matte` (GrabCut on a 2x crop, seeded by hand: finger cores = hand, glass
+  interior / wall / shirt = not) puts the source's own fingers back on top. Glass glints caught between two fingers are
+  taken out of the matte by colour (`GLINTS` boxes).
+- `make_plate` takes out the old object and the old headline words with `_fill` (pull-push, never Telea: Telea dragged the
+  dark top of the wall down as a band); fingers and the gold lettering are switched off as fill sources.
+- `bottle_rgba` cuts a product shot off white row by row as two smooth edge curves (stair-steps, a shop badge and a
+  watermark out), makes the empty neck see-through and lights it like the scene. `TAKES` holds size / position / tilt, one
+  `take-<n>.jpg` each; Mike picks.
+- A rotated headline word is matched to the source first (font, size, angle, baseline: the values sit at the top of the
+  file), then only the text and the fill colour change. Fit it by template match on the de-rotated letters, not by a
+  brute-force render search (that ran 10 minutes for nothing).
+
 ## Steps
 
 1. New folder `thumbnail/<date>-<slug>/`; the photo of Mike to use goes in `assets/` (copy it in:

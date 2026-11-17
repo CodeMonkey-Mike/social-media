@@ -108,4 +108,21 @@ export const PAPER_QUANT: Pen = {
   light: '#ffffff',
 };
 
-export const PENS: Record<string, Pen> = { 'paper-pastel': PAPER_PASTEL, 'paper-quant': PAPER_QUANT, 'neon-ink': NEON_INK };
+// Neon & Canton (styles.json `neon-canton`, Mike 2026-11-10, the canton video): neon-ink re-coloured to canton.foundation's
+// look. The site's black page (#030206), headings in the brand yellow #F3FF97, purples for numbers and systems: `gold` the
+// Canton yellow (money / the key thing), `blue` a glow-lifted violet (networks, banks, machines), `red` a magenta purple
+// (the hot / highlighted thing), `green` the site's lilac (good), `brown` a warm peach (people), `grey` a dark purple (ghosted).
+export const NEON_CANTON: Pen = {
+  ...NEON_INK,
+  id: 'neon-canton',
+  bg: '#030206',
+  palette: { blue: '#9D7BFF', gold: '#F3FF97', red: '#D15CFF', green: '#D5A5E3', brown: '#FFB98A', grey: '#4A3C9A' },
+  colorH: '#F3FF97',
+  colorL: '#ffffff',
+  dark: '#8A84B0',
+  light: '#030206',
+};
+
+export const PENS: Record<string, Pen> = {
+  'paper-pastel': PAPER_PASTEL, 'paper-quant': PAPER_QUANT, 'neon-ink': NEON_INK, 'neon-canton': NEON_CANTON,
+};

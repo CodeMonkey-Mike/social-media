@@ -34,7 +34,7 @@ Brief the strategist to prefer FACE spans and croppable covers and to avoid char
 to the centre). A comp that does NOT (kinetic signature open / side panels push the face left) halves the face in a centre crop, so
 pass `--face-from-render`: FACE spans are measured on the rendered 16:9 span (OpenCV Haar, median of sampled frames) and cropped on
 that centre; the measurements land in `assets/short/span-face-crop.json`. If the sampled centres spread more than 8 percent across
-the span (the signature open pushes the face while the labels pop), add `--track-face`: that span gets a per-frame TRACKED crop
+the span (the signature open pushes the face while the labels pop), add `--track-face` (`s_paint_16x9` ALWAYS passes it since canton 2026-11-10, when a static crop cut Mike's face as he leaned at a span's end; it engages only above the 8 percent spread): that span gets a per-frame TRACKED crop
 (Haar every frame, gaps interpolated, path smoothed over 0.7 s, window follows the face). Without it the hook-face check at the
 short gate (35-65 percent at 1.0 s) failed at 29 percent on growth-vs-product. Also brief the strategist that whatever sits beside the
 face (role labels, side panels) is OUT of the 9:16 frame, and to avoid frames where the face slides (panel push-ins).
@@ -55,10 +55,13 @@ rebuild (see the 'not yet in code' note under the edge-text gate).
 captions regardless of the prop, so every face span carried 16:9 captions sliced at both edges ("debt gets pa") under the short's own.
 Every longform comp declares `captions?: boolean` (and `pops?: boolean` when it has kinetic word pops) and renders
 `{captions && <Captions />}`. Check it BEFORE `s_paint_16x9`: one `npx remotion still` of a face frame with `--props {"captions": false}`.
-**A screen-share face strip in a short (quant 2026-11-06, final visual-qa; default until Mike rules otherwise):** a screen-share video's face span is the narrow OBS strip, not a 608 px face crop. It stays verbatim and centred over a blurred, darkened copy of itself, never on white bars (they slice the hair) and never scaled to fill (the caption lands on the nose and mouth). `QuantShort.tsx` `FACE_BAR` is the worked recipe. A caption group on screen under 0.3 s merges into the group before it (`s_captions`).
+**A captions-OFF longform passes that gate without the prop (pieverse 2026-11-14, in code: `_comp_renders_without_captions`):** when the
+video's caption scope is `none` and its generated `<Project>Captions.ts` is empty, the comp has no caption layer to switch off. The
+SHORT is still captioned end to end with its own track (the lane rule; quant's short was too).
+**A screen-share face strip in a short (quant 2026-11-06, final visual-qa; default until Mike rules otherwise):** a screen-share video's face span is the narrow OBS strip, not a 608 px face crop. It stays verbatim and centred over a blurred, darkened copy of itself, never on white bars (they slice the hair) and never scaled to fill (the caption lands on the nose and mouth). `QuantShort.tsx` `FACE_BAR` is the worked recipe. **Face mode `mixed` (canton 2026-11-10, in code in `s_cut_plan`; default until Mike rules otherwise):** the FACE windows the lane uses are the `face` kind only (`window_kinds.py`), and NO span may overlap a SCREENSHARE window (the strategist is told the windows, `_plan_check`'s sibling overlap check FAILS the plan): a mixed video's screen share is the OBS layout with a painted deck area, which has no 608 px face crop and no native-vertical rebuild. A caption group on screen under 0.3 s merges into the group before it (`s_captions`).
 **A caption group holds until its LAST WORD ENDS (lets-get-rich 2026-11-01, final visual-qa):** `s_captions` writes each group's
 end as `e` in `ZCAPTIONS` (short seconds, capped at the span end); the short comp hides a group at
-`Math.min(next.t, Math.max(cur.t + 1.3, cur.e))`, never on a flat 1.3 s cap (a 2.4 s spoken "353x" went blank mid-word). Word
+`Math.min(next.t, Math.max(cur.t + 1.3, cur.e), <end of the CAPTION_WINDOWS window holding cur.t>)`, never on a flat 1.3 s cap (a 2.4 s spoken "353x" went blank mid-word) and never across a span seam (canton 2026-11-10: two spans' windows abut, so the 1.3 s minimum carried "network they join." 8 frames onto the next span's card). **Mishear fixes are TIMECODED:** an AS-RECORDED fix with a timecode touches only the caption group said at that moment (`_mishear_fixes`); only an untimed fix applies everywhere (canton: the one-word fix 115.08 "and" -> "in" turned every "and" in the short into "in"). Word
 ENDS map to final time through the pauses strictly BEFORE them (`_sh_end_fn`): a clip insert spliced right after a word plays
 after it, and the old `<=` mapping stretched "market." over the insert and dropped its caption.
 **Short captions sit in the SAFE ZONE:** bottom pad ~320 px (block at y ~1420-1600), maxWidth <= 860 px so the 1.12 pop and the
@@ -105,6 +108,33 @@ longform's ACTUAL asset (open `assets/vid/<id>-*`), not only the BROLL-PLAN word
 monitor" (no vertical stock exists), the longform had used abstract chat bubbles, and a native-vertical neon bubble loop passed
 first time. Then add the PASS to `assets/short/VISUAL-QA.json` under the clip's `<stem>.mid.png`, drop the waiver, add the overlay
 to the short comp's COVERS, and re-drive with `--redo s_verify_comp,s_render`.
+
+## A presentation project (Mike, 2026-11-17; in code: `short_graph.py`, `C.is_presentation`)
+A SCRIPTED longform-presentation project with a delivered vertical runs THIS lane by its folder path:
+`run.py short --project "video-creation/longform-presentation/media/standard/<p>"` (absolute, cwd- or repo-relative). Same nodes,
+a mode inside them (the detector is the YT post lane's, now in `common.py`). What differs:
+- **Vertical master** = the newest `<p> VERTICAL-vN.mp4`, on the final spine's clock. **VO** = the spine `overlays/cues.json` names
+  in `spine` (the enhanced spine; a painted spine's audio is the same). No paused spine, so sh() is the identity.
+- **Words** = the JSON cues.json names in `words` (else the newest `spine/<spine>.medium-words.json`). No AS-RECORDED.md: mishear
+  fixes come only from a `## Whisper mishears` section in SCRIPT.md or `overlays/CUE-REPORT.md` (same format), none otherwise.
+- **On screen** = `overlays/cues.json` lines (`tag` COVER / SCREENSHARE, `card` + `state`), the stills in `assets/vertical/`. No
+  COVER-PLAN, TRANSITIONS.md or FACE table. A span is `sourced: COVER | SCREENSHARE` (the plan check accepts both); a whiteboard
+  card in the cues (none yet) is still a hard no.
+- **Nothing is burned and the cards are already native vertical:** captions run end to end; `s_paint_16x9`, `s_variants` and
+  `s_vertical_cards` skip.
+- **Caption band:** over a SCREENSHARE stretch (slide stacked over the webcam) the usual block sits on Mike's mouth, so it goes in
+  a 185 px band just above the webcam pane, from the layout in `overlays/cards-v.json` (clip-evals: y 740-925 for a pane at y 934).
+  `s_captions` writes it as `CAPTION_BAND` + `CAPTION_BAND_F` (short frames).
+- **Music:** the project's `MUSIC-PLAN.json`; without one, `s_preflight` writes the no-music, no-SFX default.
+- **Hand-run artifacts are reused:** a captions file newer than `spans.json` is kept (`--redo s_captions` regenerates it), and
+  the first hand render `<p>-SHORT-video.mp4` counts as the render. Free talk (no `cues.json`) is not supported yet.
+- Worked example: clip-evals, 2026-11-17 (the lane's re-run gave back the hand-run short byte for byte).
+
+### Caption windows are whole FRAMES (in code, `s_captions`, clip-evals 2026-11-17)
+A window end written as 4.367 s let a caption ride one frame past the seam at 131/30 = 4.36667 s onto the next span's card.
+`s_captions` now takes every window from the frame table (`out_start` + `frames`), writes its edges as seconds rounded DOWN to
+4 decimals, and also writes `CAPTION_FPS` + `CAPTION_WINDOWS_F` (frames); a group's `e` is capped at its window end. The short
+comp must compare caption times in whole frames (`Math.round(s * FPS)`), never raw seconds (the comp-builder prompt says so).
 
 ### Captions never cross a span end (lane rule in code, 2026-10-08)
 `s_captions` builds the short's caption groups from the words the short KEEPS only (a word belongs to a span when its
@@ -264,6 +294,10 @@ seeking cost. Point `--public-dir` at the folder holding the intermediates and t
 One continuous bed across the whole short, chosen from the project's `MUSIC-PLAN.json` (usually the
 bed that scored the chapter the hook came from), at the house level (~16-18 dB under VO — measure LUFS,
 never guess). Optional: a soft whoosh on each seam. The CTA line sits at VO level, not under the bed.
+
+**A NO-MUSIC video's short has no bed either (pieverse 2026-11-14, in code: `mix_short.py`).** When `MUSIC-PLAN.json` says
+`"no_music": true` (Mike's ruling on record) the mix lays no bed, and `"no_sfx": true` drops the seam whoosh: the short is the VO
+spans + the shared CTA take. Default until Mike rules otherwise; adding a bed later is an audio-only re-mix (`--redo s_mix`).
 
 ## 7. QA + deliver
 

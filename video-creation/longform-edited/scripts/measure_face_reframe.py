@@ -115,17 +115,29 @@ def main():
         sys.exit(2)
     sec = re.search(r"^##\s+FACE windows.*?(?=^##\s|\Z)", ar.read_text(encoding="utf-8"), re.M | re.S)
     faces = [(float(m.group(1)), float(m.group(2))) for m in FACE_RE.finditer(sec.group(0) if sec else "")]
+    nums = list(range(1, len(faces) + 1))
+    # FACE MODE = mixed (house rule #1c): measure the gated FACE windows ONLY (a screen share shows the webcam PiP, whose face
+    # would solve a wrong transform); the SCREENSHARE windows are recorded so the comp keeps them at the identity transform
+    # and lint_face_reframe.py can check the comp's SCREENSHARE_WINDOWS gate (window_kinds.py is the one kind source)
+    mixed = None
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from window_kinds import face_mode, visible_windows, windows_of
+    if face_mode(proj) == "mixed":
+        vis = visible_windows(proj, a.scope)
+        mixed = {"face_mode": "mixed", "screenshare_windows": [list(w) for w in windows_of(vis, "screenshare")]}
+        nums = [w["n"] for w in vis if w["kind"] == "face"]
+        faces = windows_of(vis, "face")
     out = proj / "assets" / "face-reframe.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     if not faces:      # a video with no FACE windows: nothing to reframe, the gate passes on the identity transform
         out.write_text(json.dumps({"spine": str(spine), "windows": [], "scale": 1.0, "x": 0, "y": 0, "centered": True,
-                                   "note": "no FACE windows in AS-RECORDED.md"}, indent=2), encoding="utf-8")
+                                   "note": "no FACE windows in AS-RECORDED.md", **(mixed or {})}, indent=2), encoding="utf-8")
         print(f"FACE-REFRAME scale=1.000 x=0 y=0 windows=0 centered=true\nWROTE {out}\nPROGRESS 100%")
         return
     qa = proj / "_previews" / "qa" / "face-reframe"
     qa.mkdir(parents=True, exist_ok=True)
     wins, boxes, areas, first_frame = [], [], [], {}
-    for i, (fa, fz) in enumerate(faces, 1):
+    for i, (fa, fz) in zip(nums, faces):
         got = []
         for k in range(a.samples):
             t = fa + (fz - fa) * (k + 0.5) / a.samples
@@ -179,6 +191,10 @@ def main():
         "note": "ONE global transform for every FACE window; background-swap clips of a face window get the same framing. "
                 "If face_cx_spread is wider than about 8% of the frame, he moved between takes: QA the previews, a per-window offset may be needed.",
     }
+    if mixed:
+        result.update(mixed)
+        result["note"] += (" FACE MODE = mixed: measured on the gated FACE windows only; the comp keeps the spine at the identity "
+                           "transform (no reframe, no punch) inside SCREENSHARE_WINDOWS (comp-build.md section 4c-mixed).")
     out.write_text(json.dumps(result, indent=2), encoding="utf-8")
     print(f"FACE-REFRAME scale={scale:.3f} x={x} y={y} windows={len(wins)} centered={'true' if centered else 'false'} "
           f"face_cx={cx / W * 100:.1f}% headroom {head_top / H * 100:.0f}% -> {(head_top - top) * s / H * 100:.0f}%")

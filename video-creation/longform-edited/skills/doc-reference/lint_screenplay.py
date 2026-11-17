@@ -45,6 +45,9 @@ no-cold-open rule; the format owner wins on conflict):
      that is not REJECTED / HELD / DROPPED lands as an `[INSERT]` line in a chapter; a NONE section has
      no `[INSERT]` lines. WARN when the spoken line before an insert does not end its sentence (the
      set-up line's end is the splice point).
+ 17. SCREEN-SHARE BEATS (face mode `mixed`, Mike 2026-11-09, canton): a 🖥️ `[SCREENSHARE]` line is a spoken
+     on-screen beat (Mike screen sharing, webcam bottom-right, CTA top-right, the deck area painted by us);
+     it counts toward --face-max with the 👤 `[FACE]` lines and needs a 🎬 `[SHOW]` `BODY:` line within 3 lines.
  15. NO PARENTHESES ON A SPOKEN LINE (Mike, 2026-10-15, tao-detailed GATE 1): a `[FACE]` / `[COVER]` /
      `[SAY-EXACT]` line is only the words Mike says, so a parenthesis on one is a FAIL. A direction, aside,
      word-swap or pronunciation goes on its own 💬 `[NOTE]` / 🎬 `[SHOW]` line; a placeholder spoken line
@@ -84,17 +87,18 @@ from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-EMOJI = {"FACE": "👤", "COVER": "🗣️", "SAY-EXACT": "🔒", "SHOW": "🎬", "NOTE": "💬", "VERIFY": "🔍", "INSERT": "🎞️"}
-EMO = r"(?:👤|🗣️|🗣|🔒|🎬|💬|🔍|🎞️|🎞)"
-TAGNAME = r"(?:FACE|COVER|SAY-EXACT|SHOW|NOTE|VERIFY|INSERT)"
+EMOJI = {"FACE": "👤", "SCREENSHARE": "🖥️", "COVER": "🗣️", "SAY-EXACT": "🔒", "SHOW": "🎬", "NOTE": "💬", "VERIFY": "🔍", "INSERT": "🎞️"}
+EMO = r"(?:👤|🖥️|🖥|🗣️|🗣|🔒|🎬|💬|🔍|🎞️|🎞)"
+TAGNAME = r"(?:FACE|SCREENSHARE|COVER|SAY-EXACT|SHOW|NOTE|VERIFY|INSERT)"
 HOLD = r"(?: HOLD)?"
 # A canonical line HEAD: emoji + backticked tag, then any further backticked tags, each with or
 # without its own emoji (the exemplars write a locked line as 🔒 `[SAY-EXACT]` `[FACE]`).
 TAGGED_LINE = re.compile(r"^\s*" + EMO + r"\s*`\[" + TAGNAME + r"\]" + HOLD + r"`(?:\s*" + EMO + r"?\s*`\[" + TAGNAME + r"\]" + HOLD + r"`)*")
-STARTS_WITH_TAGISH = re.compile(r"^\s*(?:" + EMO + r"\s*)?`?\[(?:FACE|COVER|SAY-EXACT|SHOW|NOTE|VERIFY|INSERT)")
+STARTS_WITH_TAGISH = re.compile(r"^\s*(?:" + EMO + r"\s*)?`?\[(?:FACE|SCREENSHARE|COVER|SAY-EXACT|SHOW|NOTE|VERIFY|INSERT)")
 BARE_TAG = re.compile(r"(?<!`)\[(" + TAGNAME + r")\](?! HOLD`)(?!`)")
 UNIT_RE = re.compile(EMO + r"?\s*`\[" + TAGNAME + r"\]" + HOLD + r"`")
-SPOKEN = {"FACE", "COVER", "SAY-EXACT"}
+SPOKEN = {"FACE", "SCREENSHARE", "COVER", "SAY-EXACT"}
+VISIBLE = {"FACE", "SCREENSHARE"}   # the beats where Mike is on screen (both count toward --face-max)
 # A year written as words: "twenty fifteen", "nineteen ninety-nine", "twenty twenty-six". A quantity
 # never has this shape ("twenty-eight million" is hyphenated, "twenty four seven" has a ones word).
 SPELLED_YEAR = re.compile(r"\b(?:nineteen|twenty)\s+(?:oh\s+\w+|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|"
@@ -202,7 +206,7 @@ def fix_text(text: str, fix_diction: bool = True) -> str:
         if STARTS_WITH_TAGISH.match(line):
             fixed = _backtick_outside_code(line)
             # a line that starts with a backticked tag but no emoji: add the emoji
-            fixed = re.sub(r"^(\s*)`\[(FACE|COVER|SAY-EXACT|SHOW|NOTE|VERIFY|INSERT)\]( HOLD)?`",
+            fixed = re.sub(r"^(\s*)`\[(FACE|SCREENSHARE|COVER|SAY-EXACT|SHOW|NOTE|VERIFY|INSERT)\]( HOLD)?`",
                            lambda m: f"{m.group(1)}{EMOJI[m.group(2)]} `[{m.group(2)}]{m.group(3) or ''}`", fixed)
             # locked lines: 🔒 `[SAY-EXACT]` FIRST, then the gate (exemplar order)
             head = TAGGED_LINE.match(fixed)
@@ -238,7 +242,7 @@ def lint(text: str, face_max=None, voice_clone=False, recorded=False):
     for i, l in enumerate(lines):                                 # 10
         if "$" in re.sub(r"`[^`]*`", "", l):
             fails.append(f"line {i + 1}: dollar sign (persona money_format: write 4.2M / 1.04B, tickers without the cashtag sign)")
-    in_ch, faces, beats, ch_name = False, 0, 0, None
+    in_ch, faces, shares, beats, ch_name = False, 0, 0, 0, None
     for i, l in enumerate(lines):                                 # 1-4, 8
         if re.match(r"^##\s+", l):
             if in_ch and beats == 0:
@@ -253,8 +257,13 @@ def lint(text: str, face_max=None, voice_clone=False, recorded=False):
             continue
         tags = line_tags(l)
         if tags:
-            if "FACE" in tags:
+            if set(tags) & VISIBLE:
                 faces += 1
+            if "SCREENSHARE" in tags:                                 # 17
+                shares += 1
+                near = lines[max(0, i - 3): i + 4]
+                if not any("SHOW" in line_tags(x) and re.search(r"\bBODY\b", x) for x in near):
+                    fails.append(f"line {i + 1}: a 🖥️ `[SCREENSHARE]` beat needs a 🎬 `[SHOW]` BODY: line within 3 lines naming what fills the deck area")
             rest = l[TAGGED_LINE.match(l).end():]
             if (set(tags) & SPOKEN) and (BARE_TAG.search(rest) or re.search(r"`\[(SHOW|NOTE|VERIFY|INSERT)\]`", rest)):
                 fails.append(f"line {i + 1}: a spoken line carries a direction tag mid-line (one job per line)")
@@ -281,8 +290,8 @@ def lint(text: str, face_max=None, voice_clone=False, recorded=False):
                         warns.append(msg + " [already recorded: raw/ holds a master, so the take is what gets built]")
                     else:
                         fails.append(msg)
-            if "SAY-EXACT" in tags and not (set(tags) & {"FACE", "COVER"}):
-                fails.append(f"line {i + 1}: a locked `[SAY-EXACT]` line must carry its gate (`[FACE]` or `[COVER]`) written out")
+            if "SAY-EXACT" in tags and not (set(tags) & {"FACE", "SCREENSHARE", "COVER"}):
+                fails.append(f"line {i + 1}: a locked `[SAY-EXACT]` line must carry its gate (`[FACE]`, `[SCREENSHARE]` or `[COVER]`) written out")
             elif "SAY-EXACT" in tags and tags[0] != "SAY-EXACT":
                 warns.append(f"line {i + 1}: gate before `[SAY-EXACT]` (exemplar order is 🔒 `[SAY-EXACT]` first; --fix reorders)")
         elif STARTS_WITH_TAGISH.match(l) or (in_ch and BARE_TAG.search(l)):
@@ -290,7 +299,7 @@ def lint(text: str, face_max=None, voice_clone=False, recorded=False):
     if in_ch and beats == 0:
         fails.append(f"{ch_name}: no bold `**Beat N ...**` signpost (Convention 5)")
     if face_max is not None and faces > face_max:                 # 8
-        fails.append(f"{faces} `[FACE]` lines; this video allows at most {face_max}")
+        fails.append(f"{faces} on-screen lines (`[FACE]` + `[SCREENSHARE]`, {shares} of them screen shares); this video allows at most {face_max}")
     # 12 + 13: clip inserts are CONSIDERED (section) and consistent (ids both ways)
     sec = re.search(r"^##\s+CLIP-INSERTS.*?(?=^##\s|\Z)", text, re.M | re.S)
     sec_txt = sec.group(0) if sec else ""

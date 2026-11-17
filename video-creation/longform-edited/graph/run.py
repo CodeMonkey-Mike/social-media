@@ -26,6 +26,7 @@ import common as C  # noqa: E402
 from longform_graph import ORDER, build_longform_graph  # noqa: E402
 from vertical_graph import build_vertical_graph  # noqa: E402
 from short_graph import build_short_graph  # noqa: E402
+from ytpost_graph import build_ytpost_graph  # noqa: E402
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.stderr.reconfigure(encoding="utf-8", errors="replace")
@@ -51,6 +52,7 @@ RETRY_LONGFORM = {"compress", "transcribe", "as_recorded", "coverage", "music_pl
                   "card_pauses", "captions", "comp_build", "mix_audio", "final_render", "definition_of_done"}
 RETRY_VERTICAL = {"v_face_crop", "v_assets", "v_comp", "v_render", "v_mix"}
 RETRY_SHORT = {"s_paint_16x9", "s_variants", "s_vertical_cards", "s_qa_final", "s_extract", "s_captions", "s_comp", "s_render", "s_mix"}
+RETRY_YTPOST = {"y_build", "y_qa"}
 
 
 def _gate_name(final):
@@ -103,6 +105,8 @@ def print_project_footer(proj: Path, scope: str = "ALL"):
     finals = list(proj.glob("*-FINAL.mp4"))
     if finals:
         print(f"  FINAL  : {finals[0].name}")
+        if not (proj / "yt-post" / "queue-row.json").is_file():   # the optional last step (yt-post.md, Mike 2026-11-11)
+            print(f"  YT POST: optional, once it is live: run.py ytpost --project {proj.name} --url <youtube link>")
 
 
 def report(final: dict, proj: Path, scope: str) -> int:
@@ -175,7 +179,7 @@ def main_longform():
     ap.add_argument("--face-mode", choices=C.FACE_MODES, default=None,
                     help="per-video FACE picture, persisted in GRAPH-PROGRESS.json: gated (default: the full-screen gated face) | "
                          "screenshare (a FACE beat is Mike's screen share, webcam PiP bottom-right kept verbatim, the deck area "
-                         "painted with that beat's face_body content; Mike 2026-11-04, quant)")
+                         "painted with that beat's face_body content; Mike 2026-11-04, quant) | mixed (BOTH: [FACE] beats gated, [SCREENSHARE] beats screen share; Mike 2026-11-09, canton)")
     ap.add_argument("--container-accent", default=None,
                     help="per-video ACCENT stylesheet slug loaded after the theme file (skills/container-reference/accents/<slug>.css), "
                          "persisted in GRAPH-PROGRESS.json; 'off' clears it (Mike 2026-11-04, quant = Quant orange on white)")
@@ -408,7 +412,11 @@ def main_short():
     if args.stub:
         proj, project = Path(C.DATA) / "stub-project", "stub-project"
     else:
+        # a longform-edited project NAME, or a project folder PATH (absolute, cwd- or repo-relative): a longform-presentation
+        # project runs this lane by its path (Mike 2026-11-17; short_graph.py "presentation project")
         p = Path(args.project)
+        if not p.is_dir() and not p.is_absolute() and (C.REPO_ROOT / p).is_dir():
+            p = C.REPO_ROOT / p
         proj = p.resolve() if p.is_dir() else (C.MEDIA / args.project).resolve()
         project = proj.name
     thread = args.thread or (f"short-stub-{datetime.now():%Y%m%d-%H%M%S}" if args.stub else f"short-{project}")
@@ -444,7 +452,45 @@ def main_short():
     sys.exit(rc)
 
 
-COMMANDS = {"longform": main_longform, "vertical": main_vertical, "short": main_short, "status": main_status}
+def main_ytpost():
+    """The OPTIONAL last step once the video is LIVE (ytpost_graph.py, Mike 2026-11-11): a YouTube community post that
+    promotes it, a square carousel in the video's own look with Mike's picture on slide 1, queued in yt-posts.json."""
+    ap = argparse.ArgumentParser(prog="run.py ytpost", description="Build the promo carousel for a LIVE video and queue it as a YT post.")
+    ap.add_argument("--project", required=True)
+    ap.add_argument("--url", default="", help="the LIVE video's YouTube link (checked against the project title)")
+    ap.add_argument("--face", default="", help="project-relative still of Mike for slides 1 + last (default: the thumbnail's still)")
+    ap.add_argument("--logo", default="", help="project-relative logo image (default: thumbnail/refs/*logo*)")
+    ap.add_argument("--redo", default="", help="nodes to re-run, e.g. y_plan (re-author the slides) or y_qa")
+    ap.add_argument("--thread", default=None)
+    args = ap.parse_args()
+    redo = _parse_list(args.redo)
+    p = Path(args.project)
+    proj = p.resolve() if p.is_dir() else (C.MEDIA / args.project).resolve()
+    project = proj.name
+    thread = args.thread or f"ytpost-{project}-{datetime.now():%Y%m%d-%H%M%S}"
+    C.set_current_project(project)
+    init = {"project": project, "project_dir": str(proj), "scope": "ALL", "thread": thread, "lane": "ytpost", "url": args.url,
+            "face": args.face, "logo": args.logo, "stub": "", "approve": [], "done": [], "redo": redo, "steps": {}, "status": "running"}
+    print(f"YT post graph | {project} | thread {thread}" + (f" | redo {redo}" if redo else ""))
+    from langgraph.checkpoint.sqlite import SqliteSaver
+    conn = sqlite3.connect(str(C.CHECKPOINT_DB), check_same_thread=False)
+    app = build_ytpost_graph(checkpointer=SqliteSaver(conn))
+    config = {"configurable": {"thread_id": thread}, "recursion_limit": 30}
+    started_at, t0 = _now_run(), time.monotonic()
+    # skip=True: no video render here (slide stills + agents), so like posting it never waits for the video run queue
+    final = _supervised(f"ytpost {project}", "ytpost", project, app, config, init, init, RETRY_YTPOST, "", True)
+    rc = report(final, proj, "ALL")
+    status = final.get("status", "failed")
+    C.finish_progress(status, None if rc == 0 else str(final.get("error") or "failed"))
+    C.record_run(thread, {**final, "status": status}, started_at, _now_run(), time.monotonic() - t0, stub="",
+                 requested={"lane": "ytpost", "project": project, "url": args.url, "redo": redo})
+    slides = sorted((proj / "yt-post" / "slides").glob("[0-9][0-9].png"))
+    if slides:
+        print(f"  YT POST: {len(slides)} slides in {proj / 'yt-post' / 'slides'}")
+    sys.exit(rc)
+
+
+COMMANDS = {"longform": main_longform, "vertical": main_vertical, "short": main_short, "ytpost": main_ytpost, "status": main_status}
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] in COMMANDS:

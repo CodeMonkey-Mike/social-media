@@ -1052,6 +1052,8 @@ Slide 1 rules are strictest — it must earn the swipe on its own. If someone sc
 
 Unlike tweet image prompts (which ban text), carousel slide prompts specify the exact text to render. **Always use one of the four named version templates below** — never invent an ad-hoc minimalist prompt. The version templates are the canonical prompt structure; using anything else produces visual inconsistency across the account.
 
+**(Version 2 is code-rendered since 2026-11-11 and exempt from this block: see "Version 2" below. Everything in this block still binds Versions 1 and 4.)**
+
 **⛔ MANDATORY — anchor EVERY slide on a reference exemplar image. This is the #1 repeated regression (Mike has flagged it many times).** A text prompt alone is NEVER acceptable for a carousel slide: generating without a reference produces minimalist, off-brand slides (floating-coin, sentence-case, no news-flash background) that do not match the account's look. For every slide — **whether generating a NEW carousel or regenerating an existing one** — you MUST:
 1. **Make an independent per-post judgment and choose the best-fitting version (1, 2, or 4) for THIS post's content — there is NO default version.** Judge by tone: 1 = high-energy news-flash, 2 = analytical/editorial, 4 = hook photo + data/chart. When a run processes multiple YT posts, you make a SEPARATE version judgment for EACH post; never blanket one version across all of them. Then pull a matching exemplar from `images/reference/carousels/versionN/` (N = the version you chose), matched to the slide's ROLE: hook → `*-01-hook*`, middle beats → `*-02/03/04-*`, question → `*-05-question*`. `ls` the folder live each time.
 2. Pass that exemplar via `--reference-image=` to `generate-image.js`, and in the prompt say **"match the layout, typography, color, and overall styling of the attached reference image."**
@@ -1125,7 +1127,27 @@ Bold crypto news graphic, near-black background, dramatic lighting, bold all-cap
 
 ---
 
-**Version 2 — Tom Bilyeu carousel** (`--subdir=version2`)
+**Version 2 — Tom Bilyeu carousel** (**CODE-RENDERED since 2026-11-11: no ChatGPT, no reference exemplar**)
+
+> **⛔ A Version 2 slide is RENDERED, never generated (Mike, 2026-11-11, after the longform YT-post lane proved a carousel can be built in code).**
+> The look is a fixed template, so `repurpose/render_carousel_v2.py` builds it from a spec (HTML + Playwright, Anton + Inter, 1254x1254,
+> the exemplars' size and look). In a lane 3 plan a V2 slide is an `images[]` item with `render: "code-v2"` and a `spec`, with NO `prompt`
+> and NO `ref`; `lane3_batch.py --stage generate` renders it without opening ChatGPT, taking the chat pool or the stage lock, and the
+> validator (`queue_writer.validate_lane3_plan` -> `validate_spec`) gates it (counter `N OF TOTAL`, no dashes, 1 to 5 box lines, title
+> <= 60 chars). Every word is exactly the spec text, so a number is never re-spelled; the em-dash hazard in the old exemplar is gone.
+> **The "mandatory reference exemplar" rule above does not apply to V2** (there is nothing to anchor: the code IS the look); it still
+> applies to V1 and V4. Spec shape:
+> ```json
+> {"purpose":"yt-posts","image_id":"<fresh 8-hex>","slug":"01-hook","render":"code-v2",
+>  "spec":{"label":"1 OF 6","title":"Bitcoin: 7 TPS.
+Kaspa: 5,700.","accent":"The payment gap is 800x, and it is not closing.",
+>          "box_label":"THE STAT","box":["Bitcoin was built to be global cash.","It processes 7 transactions per second.","Kaspa processes 5,700."]}}
+> ```
+> `
+` in `title` forces a line break; otherwise it wraps. The renderer auto-fits the title (largest size that clears the box) and FAILS
+> on a font that did not load, text past the frame, a title under 150 px, or an accent line that wraps past 2 lines: shorten the copy,
+> never loosen the gate. One slide by hand: `python repurpose/render_carousel_v2.py --spec spec.json --out slide.png`; a whole plan:
+> `--plan repurpose/output/<batch>-lane3-plan.json`. The text-only template below is kept for reference only; do not send it to ChatGPT.
 
 Very dark near-black background, clean editorial layout. Small teal all-caps slide counter label top-left (e.g. "1 OF 6"), large bold white title in sentence case, teal accent line for the key insight, dark rounded content box at the bottom with a teal label and white body text. Premium, educational feel.
 
@@ -1324,7 +1346,7 @@ Cinematic photorealistic 3D render, 1:1 square aspect ratio. [Scene description]
 
 These rules are non-obvious and learned the hard way. Apply all of them when drafting an image prompt.
 
-**Always name brands explicitly — but only if they're well-known.** Image generators recognize popular crypto/tech/company brands and reproduce their actual logos when named. If you say "a Kaspa coin," you get a recognizable Kaspa logo coin. If you say "a coin with a K on it," you get a generic placeholder. Same applies to Bitcoin, Ethereum, Solana, Coinbase, Binance, OpenAI, Apple, Tesla, etc. **Never describe a well-known brand abstractly when you can name it.**
+**Always name brands explicitly — but only if they're well-known.** Image generators recognize popular crypto/tech/company brands and reproduce their actual logos when named. If you say "a Kaspa coin," you get a recognizable Kaspa logo coin. If you say "a coin with a K on it," you get a generic placeholder. Same applies to Bitcoin, Ethereum, Solana, Coinbase, Binance, OpenAI, Apple, Tesla, etc. **Never describe a well-known brand abstractly when you can name it.** The same goes for famous meme mascots (Mike, 2026-11-16, batch `peach`): **Pepe the frog needs no reference file**, name it and render it; **the Pudgy Penguins penguin ($PENGU) uses `images/reference/pengu.webp`** (the chubby blue-and-white penguin, orange beak and feet). Neither is ever listed under `missing_references`.
 
 **The catch — lesser-known brands break this rule.** ChatGPT (and Nano Banana, etc.) don't recognize newer or smaller crypto projects (DeAgent AI, Igra Network, smaller memecoins, etc.). When you name them, the model will either invent a placeholder logo, refuse, or produce something off-brand. For these:
 
@@ -1577,7 +1599,7 @@ Current ChatGPT output is **1254×1254** for 1:1 prompts. The platform-standard 
 
 When **generating OR regenerating** carousel slides (fresh generation is NOT exempt — same rule), **always use Version 1, 2, or 4** (Version 3 is retired — see earlier section). For each pass:
 1. **Choose the best-fitting version (1, 2, or 4) for THIS post based on its content/tone — there is NO default.** 1 = high-energy news-flash, 2 = analytical/editorial, 4 = hook photo + data/chart. Make the judgment independently for every post: if a run has three YT posts with three carousels, that is three separate version judgments, one per post. Do NOT pick a single version and apply it across multiple posts for "consistency" — the right version is whatever each post's content calls for.
-2. Pick a reference image from `images/reference/carousels/versionN/` that matches the slide's role (hook → 01-hook reference, mid-slide → 02/03/04 reference, question → 05-question reference). **This is mandatory, not optional — a carousel slide generated without a versionN reference exemplar is the regression Mike repeatedly catches.**
+2. **(Version 2: skip this step, the slide is code-rendered from a `spec`; see "Version 2".)** For V1 and V4, pick a reference image from `images/reference/carousels/versionN/` that matches the slide's role (hook → 01-hook reference, mid-slide → 02/03/04 reference, question → 05-question reference). **This is mandatory, not optional — a carousel slide generated without a versionN reference exemplar is the regression Mike repeatedly catches.**
 3. Pass it via `--reference-image=` to `generate-image.js`.
 4. Use the version's prompt template, substituting in slide-text derived from the YT post body (the `images[]` entries often have null `slide_text`, so it must be inferred from the body and the slide slug).
 

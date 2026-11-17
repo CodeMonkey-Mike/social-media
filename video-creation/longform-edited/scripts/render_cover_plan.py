@@ -198,7 +198,13 @@ def render_broll(plan: dict, proj: Path) -> str:
     L.append("")
     # Screen-share face mode (longform-edited.md house rule #1b, 2026-11-04 quant): the deck-area content of every FACE window
     fbs = plan.get("face_body") or []
-    if fbs:
+    vw = plan.get("visible_windows") or []   # FACE MODE = mixed (house rule #1c): each window's kind, stamped by the graph
+    if fbs and vw:
+        gated = ", ".join(f"F{w.get('n')}" for w in vw if w.get("kind") == "face") or "none"
+        L.append(f"## SCREEN-SHARE bodies ({len(fbs)}) - what the deck area of each SCREENSHARE window shows (FACE MODE = mixed; the gated "
+                 f"FACE windows {gated} carry none; the assets are the rows above, scaled into the 1464x1080 deck area by the comp, "
+                 "comp-build.md section 4c; nothing extra is built)")
+    elif fbs:
         L.append(f"## SCREEN-SHARE bodies ({len(fbs)}) - what the deck area of each FACE window shows (FACE MODE = screenshare; the assets are "
                  "the rows above, scaled into the 1464x1080 deck area by the comp, comp-build.md section 4c; nothing extra is built)")
         L.append("")
@@ -241,11 +247,22 @@ def render_prep(plan: dict, proj: Path) -> str:
              "`TRANSITIONS.md` (authored after this file)._")
     L.append("")
     fw = plan.get("face_windows") or []
-    if fw:
+    vw = plan.get("visible_windows") or []   # FACE MODE = mixed (house rule #1c): each window's kind, stamped by the graph
+    if vw:
+        L.append("**Visible windows (from the spine picture, not covered; FACE MODE = mixed: `face` = the gated full-screen face with "
+                 "captions / reframe / punch-ins, `screenshare` = the screen share with its deck area painted, no captions / reframe / "
+                 "punch-in):** " + ", ".join(f"F{w.get('n')} {mmss(w['tIn'])}-{mmss(w['tOut'])} {w.get('kind')}" for w in vw))
+        L.append("")
+    elif fw:
         L.append("**FACE windows (from the spine picture, not covered):** " + ", ".join(f"{mmss(a)}-{mmss(b)}" for a, b in fw))
         L.append("")
     fbs = plan.get("face_body") or []
-    if fbs:   # screen-share face mode (house rule #1b): the deck area of each FACE window
+    if fbs and vw:
+        L.append("**SCREEN-SHARE bodies (the deck area of each SCREENSHARE window, painted by the comp):** "
+                 + "; ".join(f"{r.get('id')} {mmss(float(r.get('tIn') or 0))}-{mmss(float(r.get('tOut') or 0))} "
+                             f"{str(r.get('cover_type', '')).upper()} {r.get('asset', '')}" for r in fbs))
+        L.append("")
+    elif fbs:   # screen-share face mode (house rule #1b): the deck area of each FACE window
         L.append("**SCREEN-SHARE bodies (the deck area of each FACE window, painted by the comp):** "
                  + "; ".join(f"{r.get('id')} {mmss(float(r.get('tIn') or 0))}-{mmss(float(r.get('tOut') or 0))} "
                              f"{str(r.get('cover_type', '')).upper()} {r.get('asset', '')}" for r in fbs))

@@ -96,6 +96,16 @@ def main():
     text = ar.read_text(encoding="utf-8")
     sec = re.search(r"^##\s+FACE windows.*?(?=^##\s|\Z)", text, re.M | re.S)
     faces = [(float(m.group(1)), float(m.group(2))) for m in FACE_RE.finditer(sec.group(0) if sec else "")]
+    # FACE MODE = mixed (house rule #1c): captions ride the gated FACE windows only, NEVER a screen share (its deck area is
+    # painted); each window's kind comes from the ONE source, scripts/window_kinds.py (a WindowKindError stops the build)
+    ss_wins = None
+    sys.path.insert(0, str(HERE))
+    from window_kinds import face_mode, visible_windows, windows_of
+    if face_mode(proj) == "mixed":
+        vis = visible_windows(proj, a.scope)
+        ss_wins = windows_of(vis, "screenshare")
+        faces = windows_of(vis, "face")
+        print(f"MIXED face mode: captions on {len(faces)} FACE window(s) only; {len(ss_wins)} SCREENSHARE window(s) never captioned")
     windows = [(fa, fz) for fa, fz in faces if a.all_faces or (fz - fa) > a.min_hold]
     skipped = [(fa, fz) for fa, fz in faces if (fa, fz) not in windows]
     for w in a.window:
@@ -120,6 +130,8 @@ def main():
         windows = subtract(windows, offs)
         for x, y in offs:
             print(f"CAPTIONS-OFF {x:.3f}-{y:.3f} (AS-RECORDED FACE windows section)")
+    if ss_wins:   # mixed: a hand --window or an envato slot never reaches into a screen share either
+        windows = subtract(windows, ss_wins)
     windows.sort()
     merged = []                                  # butt-joined envato slots (and a slot touching a face hold) become one window
     for x, y in windows:
@@ -174,11 +186,14 @@ def main():
     dest.write_text("\n".join(body), encoding="utf-8", newline="\n")
     side = proj / "assets" / "captions.json"
     side.parent.mkdir(parents=True, exist_ok=True)
-    side.write_text(json.dumps({"file": str(dest), "words": str(wj), "windows": windows, "captions_off": offs,
-                                "all_faces": a.all_faces, "cover_windows": cover_wins,
-                                "skipped_short_faces": skipped,
-                                "min_hold_s": a.min_hold, "groups": len(kept), "grouping": {"max_words": a.max_words, "max_short": a.max_short},
-                                "corrections_applied": len(fixes), "style": STYLE, "first_groups": kept[:6]}, indent=2), encoding="utf-8")
+    meta = {"file": str(dest), "words": str(wj), "windows": windows, "captions_off": offs,
+            "all_faces": a.all_faces, "cover_windows": cover_wins,
+            "skipped_short_faces": skipped,
+            "min_hold_s": a.min_hold, "groups": len(kept), "grouping": {"max_words": a.max_words, "max_short": a.max_short},
+            "corrections_applied": len(fixes), "style": STYLE, "first_groups": kept[:6]}
+    if ss_wins is not None:   # mixed: the graph's captions node checks no group lands in one
+        meta["screenshare_windows"] = ss_wins
+    side.write_text(json.dumps(meta, indent=2), encoding="utf-8")
     print(f"CAPTIONS-BUILT groups={len(kept)} windows={len(windows)} file={dest}")
     print(f"WROTE {side}")
     print("PROGRESS 100%")

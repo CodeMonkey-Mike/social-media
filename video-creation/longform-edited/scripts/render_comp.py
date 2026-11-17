@@ -12,7 +12,8 @@ render_comp.py — render a longform-edited composition the canonical way (comp-
   --offthreadvideo-cache-size-in-bytes=3221225472 --timeout=120000 --log=verbose` (3 GB, see --ov-cache-mb).
 - Disk hygiene first: stale `%TEMP%/remotion-*` bundles are removed and free space is printed (renders die at ENOSPC
   with no warning).
-- Verified after: duration == assets/spine.mp4 (+-0.3 s), fps 30, an audio stream.
+- Verified after: duration == assets/spine.mp4 (+-0.3 s; plus the MUSIC-PLAN end_card_hold when one is planned), fps 30,
+  an audio stream.
 - CHUNKED (Mike, 2026-10-27): the render runs through video-creation/skills/chunked-render (1-minute chunks from one
   bundle, h264-mkv with pcm audio joined sample-exact, a watchdog that kills + retries a stalled chunk, resume from the
   last good chunk on a re-run, the run-queue pause honoured, desktop notifications). Never call `npx remotion render`
@@ -48,6 +49,21 @@ def probe(path, entries, select=None):
 def duration(path):
     try:
         return float(probe(path, "format=duration").splitlines()[0])
+    except Exception:
+        return 0.0
+
+
+def end_hold_extra(proj: Path) -> float:
+    """Seconds the comp legitimately runs PAST the spine: MUSIC-PLAN `end_card_hold.hold_until_sec` minus the plan's
+    `spine_duration_sec` (the same allowance verify_comp / verify_final take via longform_graph._end_hold_extra; AI vs ML
+    2026-11-11: a 2.0 s END HOLD made this check exit 1 on a complete render). 0 when nothing is held or `trim` is set."""
+    try:
+        import json
+        plan = json.loads((proj / "MUSIC-PLAN.json").read_text(encoding="utf-8"))
+        hold = plan.get("end_card_hold") or {}
+        until = 0.0 if hold.get("trim") else float(hold.get("hold_until_sec") or 0)
+        spine = float(plan.get("spine_duration_sec") or 0)
+        return max(0.0, until - spine) if (until and spine) else 0.0
     except Exception:
         return 0.0
 
@@ -146,7 +162,9 @@ def main():
     num, den = fps_raw.split("/")
     fps = float(num) / float(den)
     has_audio = "audio" in probe(out, "stream=codec_type", "a")
-    ok = (abs(fps - 30) < 0.01) if a.video_only else ((a.frames is not None or abs(d_out - d_spine) <= 0.3) and abs(fps - 30) < 0.01 and has_audio)
+    hold = end_hold_extra(proj)   # the approved end-card hold (MUSIC-PLAN end_card_hold) runs the comp past the spine
+    len_ok = abs(d_out - d_spine) <= 0.3 or (hold > 0 and abs(d_out - d_spine - hold) <= 0.3)
+    ok = (abs(fps - 30) < 0.01) if a.video_only else ((a.frames is not None or len_ok) and abs(fps - 30) < 0.01 and has_audio)
     print(f"RENDER-DONE mode={a.mode} out={out} dur={d_out:.3f} spine={d_spine:.3f} fps={fps:g} audio={'yes' if has_audio else 'no'} log={log}")
     if not ok:
         print("FATAL: render does not match the spine (duration / fps / audio)", file=sys.stderr)

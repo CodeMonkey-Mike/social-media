@@ -95,7 +95,9 @@ what the primary source says, for Mike's own accuracy, never an on-camera correc
    topic's optional `no_tab` holds the same three for what he says to camera. A fact whose source is one of the tabs goes
    under that tab. A tab with nothing under it fails lint: find something real to say on it, or drop it. Optional `video`
    holds `titles[]` and `thumbnails[]` for the whole recording. Sourcing rules are the `data-researcher` agent's: open what
-   you cite, date everything, primary sources first, never invent. Conditional language for anything unresolved. Then
+   you cite, date everything, primary sources first, never invent. Conditional language for anything unresolved.
+   **A coin topic's facts follow `video-creation/skills/coin-research/coin-research.md`** (the dossier + the product-telemetry
+   sweep: the product's home page and stats endpoints, a checked-list behind every "not found"). Then
    `discussion.py render`, and give him the `TOPICS.docx` path.
 4. **HITL gate: Mike narrows `TOPICS.docx`.** He deletes what he does not want and tells me he is done. `discussion.py
    approve --from-doc`, then relay what it printed so he can see how his edits were read. `clips`, `tabs` and `RUNDOWN.md`
@@ -252,3 +254,10 @@ is about patience and doing the reading, never a guaranteed outcome. Use his own
 - **`scan` reads daily closes.** During market hours the last value is partial. BTC's "close" is a UTC day.
 - **The radar's X policy cache** only refreshes with `topic-radar/fetch-x-policy.py`.
 - **`tabs --open` has not been run against Mike's real Chrome** yet. The player page was tested in a separate Chrome profile.
+- **Fear and Greed tab = CoinMarketCap's page**, not alternative.me's: in a clean profile alternative.me loaded under a racy
+  dating ad and a full-page trading ad (2026-11-13), which `--check` reads as OK. CoinMarketCap's index differs from
+  alternative.me's, so pull the numbers from the index on the tab (its data API: `api.coinmarketcap.com/data-api/v3/fear-greed/chart`).
+- **CoinDesk is metered:** a logged-out tab shows "You have N articles remaining this month" over the lower half, and
+  `--check` itself spends the meter. The headline and standfirst stay visible above it; Mike closes it with the x.
+- **Bitcoin history before Sep 2014** (Yahoo's start, too late for a 200-week SMA before mid-2018) comes from blockchain.com:
+  `api.blockchain.info/charts/market-price?timespan=all&format=json&sampled=false` (an average daily price, not a close).

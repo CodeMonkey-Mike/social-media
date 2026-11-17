@@ -244,7 +244,14 @@ async function typeHuman(page, locator, text) {
       }
       console.log('  Upload button ready');
       await actionPause(page, 'before Upload click');
-      await uploadBtn.click();
+      // Rumble's Groove help-widget iframe (#groove-iframe-element) overlaps the Upload
+      // button and intercepts pointer events (2026-11-09): fall back to a native JS click.
+      try {
+        await uploadBtn.click({ timeout: 8000 });
+      } catch (clickErr) {
+        console.log('  Upload: normal click blocked (overlay) — using JS click');
+        await uploadBtn.evaluate((el) => el.click());
+      }
       console.log('  Clicked Upload ✓');
     } catch (e) {
       throw new Error(`Upload button never became clickable: ${e.message}`);

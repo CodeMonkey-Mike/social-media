@@ -76,6 +76,11 @@ Validated 2026-06-11 on the new app:
 - Search URL: `https://app.envato.com/search?itemType=stock-video&term=<q>` (`+` for spaces).
   Other itemTypes: `photos`, `video-templates`, `music`, `sound-effects`...
 - A "Search tips" popup appears on first visits — dismiss `button:has-text("Okay, got it")`.
+- **⚠ PROMO MODAL (2026-11-10, AI vs ML):** an AI-models promo dialog ("You asked, a lot. Now you choose.") overlays
+  the search grid and item pages. While it is open the grid never scrolls, so a search returns only **3 cards**, and it
+  would intercept the Download click. Both Python tools now close it (`dismiss_promo`:
+  `[role="dialog"] button[aria-label="Close"]`, visible ones only). If a search comes back with exactly 3 results again,
+  run it with `--debug` and look at the screenshot first.
 - Result cards: anchors `a[href]` matching `/search/stock-video/<uuid>`; card innerText shape
   is `"0:07 • <Title> | <Author>"`. Card contains an `<img>` cover AND often a `<video>` whose
   src is a **directly fetchable** `...video_preview_h264.mp4` — download it to WATCH the clip
