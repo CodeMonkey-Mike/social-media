@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What The Image Check Caught</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c10;--card:#12151c;--green:#00e68a;--cyan:#00c2ff;--gold:#ffd700;--red:#ff4060;--text:#e8eaf0;--muted:#8892a4;--border:#1e2330}
+html{font-size:min(2.1vh,1.19vw);background:var(--bg)}
+*{box-sizing:border-box}
+body{margin:0;height:100vh;overflow:hidden;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;justify-content:center;padding:2.4rem 4.5rem;position:relative}
+body>*{position:relative;z-index:1}
+.orb{position:absolute;width:520px;height:520px;border-radius:50%;filter:blur(100px);opacity:.2;background:var(--cyan);bottom:-240px;left:-140px;z-index:0}
+.label{font-size:.8rem;text-transform:uppercase;letter-spacing:.18em;color:#6b7588;font-weight:500}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-variant-numeric:lining-nums;font-size:3.4rem;line-height:1.1;margin:.5rem 0 0}
+.divider{width:60px;height:3px;background:linear-gradient(90deg,var(--green),var(--cyan));border-radius:2px;margin:1rem 0 1.3rem}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.box{background:linear-gradient(135deg,rgba(0,230,138,.08),rgba(0,194,255,.06));border:1px solid rgba(0,230,138,.2);border-radius:12px;padding:.95rem 1.5rem;font-size:1.25rem;line-height:1.45;margin-top:1.3rem}
+.box b{color:var(--green);font-weight:700}
+.source{font-size:.8rem;color:#7a8496;margin-top:.8rem}
+.tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.72rem;letter-spacing:.1em;padding:.16rem .5rem;border-radius:999px;vertical-align:middle;margin-left:.5rem}
+.tag.new{background:var(--gold);color:#141000}
+.tag.more{border:1px solid var(--cyan);color:var(--cyan)}
+
+.pairs{display:flex;justify-content:center;gap:3.4rem;align-items:flex-start}
+.pair .imgs{display:flex;align-items:center;gap:.8rem}
+.shot{position:relative;border-radius:14px;overflow:hidden;border:3px solid var(--c);height:19rem;flex:0 0 auto}
+.shot img{display:block;height:100%;width:100%;object-fit:cover}
+.pair.sq{width:41.2rem}.pair.tall{width:30.6rem}
+.sq .shot{width:19rem}
+.tall .shot{width:13.7rem}
+.tall .shot img{object-position:50% 78%}
+.shot .cap{position:absolute;left:.6rem;top:.6rem;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.72rem;letter-spacing:.1em;padding:.2rem .55rem;border-radius:999px;background:var(--c);color:#0a0c10}
+.arrow{font-size:1.6rem;color:#56607a;flex:1 1 auto;text-align:center}
+.said{margin-top:.8rem;font-size:1.05rem;line-height:1.4;color:#c3cad8}
+.said q{color:var(--text);font-style:italic}
+.said .note{display:block}
+.said .who{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.16em;font-weight:700;color:#6b7588;margin-bottom:.2rem}
+</style></head><body>
+<div class="orb"></div>
+<div class="label">The first live run &middot; the independent check</div>
+<h1>What The Image Check Caught</h1><div class="divider"></div>
+<div class="pairs"><div class="pair sq"><div class="imgs">
+<div class="shot" style="--c:var(--red)"><img src="img/coin-rejected.jpg" alt=""><div class="cap">REJECTED</div></div>
+<div class="arrow">&rarr;</div>
+<div class="shot" style="--c:var(--green)"><img src="img/coin-passed.jpg" alt=""><div class="cap">AFTER THE RETRY</div></div>
+</div><div class="said"><span class="who">The checker's report</span><q>the model added a flat cartoon face (two eyes and a smirk) left of the diamond</q><span class="note">The prompt asked for only the coin's own mark.</span></div></div>
+<div class="pair tall"><div class="imgs">
+<div class="shot" style="--c:var(--red)"><img src="img/cat-rejected.jpg" alt=""><div class="cap">REJECTED</div></div>
+<div class="arrow">&rarr;</div>
+<div class="shot" style="--c:var(--green)"><img src="img/cat-passed.jpg" alt=""><div class="cap">AFTER THE RETRY</div></div>
+</div><div class="said"><span class="who">The checker's report</span><q>the cat wears a satchel and bedroll that are in neither the prompt nor the reference</q><span class="note">The same in all 5 images of that short.</span></div></div>
+</div>
+<div class="box">The checker reports the defect <b>and the fix for the prompt</b>. The image agent regenerates only the rejected files.</div>
+</body></html>

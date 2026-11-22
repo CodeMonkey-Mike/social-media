@@ -1,0 +1,442 @@
+{
+  "session": "solana",
+  "shape": "plan",
+  "primary_coin": "SOL",
+  "researched": "2026-11-17",
+  "note": "A Solana video, around 15 minutes, 10 tabs. Green 'Inspiring:' lines are the motivational ones and 'Say:' lines are talking points, my drafts in your voice, so change anything that doesn't sound like you. Solana isn't in your stack, so it's 'look what's being built', never 'I'm buying SOL'. You already covered DTCC on Nov 13, so that tab is only the press release itself. Prices are as of Nov 17 evening: read the live numbers off your own tabs on record day.",
+  "video": {
+    "titles": [
+      "Zelle Just Picked Solana",
+      "Zelle Just Picked Solana. So Did Wall Street.",
+      "Your Bank's App Just Picked Solana",
+      "Everyone Is Picking Solana (And The Price Doesn't Care Yet)",
+      "Zelle, DTCC, Visa: They All Chose Solana"
+    ],
+    "thumbnails": [
+      "ZELLE PICKED SOLANA (Zelle logo + SOL coin, your face)",
+      "THEY ALL CHOSE SOL (Zelle, DTCC, Visa logos around the SOL coin)",
+      "DOWN 72%?? (SOL coin, big green arrow)"
+    ]
+  },
+  "topics": [
+    {
+      "id": 1,
+      "title": "The hook: the news and the price point opposite ways",
+      "status": "PROPOSED",
+      "why_now": "Zelle named Solana for ZelleUSD on Nov 16 at Breakpoint, four days after DTCC said its tokenization service is coming to Solana, and SOL is around 72% under its high.",
+      "angle": "Your face. Put the two headlines and the price side by side in one breath, then ask the question the whole video answers.",
+      "no_tab": {
+        "prompts": [
+          "Zelle, the app that's already inside your bank's app, just picked Solana. A few days earlier, the company that holds 114 trillion dollars of securities picked Solana too.",
+          "And Solana's price? Down around 72% from its high. So who's going to turn out right here, the price or the people building on it? Let me show you."
+        ]
+      },
+      "tabs": []
+    },
+    {
+      "id": 2,
+      "title": "Zelle picks Solana",
+      "status": "PROPOSED",
+      "coin": "SOL",
+      "why_now": "On stage at Breakpoint 2026 on Nov 16, Zelle said its ZelleUSD stablecoin will run on Solana for international payments, and showed a $1.25 million confidential transfer on devnet.",
+      "angle": "This is the biggest name yet: a network owned by seven of the largest US banks. They picked Solana for trust and uptime, not hype.",
+      "tabs": [
+        {
+          "kind": "x-post",
+          "label": "Watcher.Guru: Zelle picks Solana",
+          "url": "https://x.com/WatcherGuru/status/2122345039150117363",
+          "show": "Read the post out loud, then give your take.",
+          "prompts": [
+            "Zelle. If you have a bank account in America, you've probably used it. It's owned by Bank of America, Chase, Wells Fargo, Capital One, PNC, Truist and U.S. Bank.",
+            "It moved 1.2 trillion dollars last year. And when Zelle needed a blockchain to send dollars to other countries, they picked Solana."
+          ],
+          "facts": [
+            {
+              "text": "Zelle 'processed more than $1.2 trillion in US payments in 2025'",
+              "source": "https://cointelegraph.com/news/zelle-solana-zelleusd-stablecoin-international-payments",
+              "read": "2026-11-17"
+            },
+            {
+              "text": "Early Warning, which runs Zelle, is owned by seven banks: Bank of America, Capital One, JPMorgan Chase, PNC, Truist, U.S. Bank and Wells Fargo",
+              "source": "https://www.earlywarning.com/press-release/zelle-heads-india-unveils-zelleusd-stablecoin-other-markets",
+              "read": "2026-11-17"
+            }
+          ],
+          "careful": [
+            "I could not read the post itself (it needs your X login), so read its wording off the tab before you quote it."
+          ]
+        },
+        {
+          "kind": "article",
+          "label": "Cointelegraph: Zelle taps Solana for ZelleUSD",
+          "url": "https://cointelegraph.com/news/zelle-solana-zelleusd-stablecoin-international-payments",
+          "highlights": [
+            "That piece around trust, security, proven infrastructure is the reason why we chose Solana.",
+            "Zelle processed more than $1.2 trillion in US payments in 2025."
+          ],
+          "prompts": [
+            "Listen to why they picked it. Zelle's general manager said trust, security and proven infrastructure. That's the reason they chose Solana.",
+            "First stop is India, so people here can send money to family over there. And they already showed a 1.25 million dollar private payment on Solana's test network, where only Zelle and the receiving bank could see the amount."
+          ],
+          "facts": [
+            {
+              "text": "Zelle GM Denise Leonhard: 'That piece around trust, security, proven infrastructure is the reason why we chose Solana.' The issuer is Anchorage Digital Bank",
+              "source": "https://cointelegraph.com/news/zelle-solana-zelleusd-stablecoin-international-payments",
+              "read": "2026-11-17"
+            },
+            {
+              "text": "India is the first country where U.S. consumers can use Zelle to send money overseas. 'Initial availability is expected before the end of this year' (June 11 release)",
+              "source": "https://www.earlywarning.com/press-release/zelle-heads-india-unveils-zelleusd-stablecoin-other-markets",
+              "read": "2026-11-17"
+            },
+            {
+              "text": "Breakpoint demo: a $1.25 million confidential transfer on Solana devnet with Token-2022 privacy features, using test tokens",
+              "source": "https://www.cryptopolitan.com/zelle-solana-zelleusd-1-25-million-transfer/",
+              "read": "2026-11-17"
+            }
+          ],
+          "careful": [
+            "It is not live yet: Zelle gave no timeline on stage, and the demo ran on devnet with test tokens. Say 'will run on Solana', never 'is running'.",
+            "Your regular Zelle payments at home don't move to Solana. This is the international, stablecoin side."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "The payment giants were already there",
+      "status": "PROPOSED",
+      "coin": "SOL",
+      "why_now": "Zelle joins Western Union (May), Visa's US stablecoin settlement and Samsung Wallet (Nov 2), all on Solana.",
+      "angle": "Zelle isn't a one-off. Every time a payments company picks a chain, it keeps picking the same one.",
+      "tabs": [
+        {
+          "kind": "article",
+          "label": "The Block: Western Union launches USDPT on Solana",
+          "url": "https://www.theblock.co/news/business/2026-05-04-western-union-launches-usdpt-stablecoin-anchorage-solana-399890",
+          "prompts": [
+            "And Zelle isn't the first. Western Union launched its own dollar stablecoin on Solana in May. Same bank behind it, Anchorage.",
+            "Visa settles stablecoin payments with US banks over Solana. And two weeks ago Samsung Wallet turned on USDC on Solana for around 82 million Galaxy phones in the US. The money apps keep picking the same chain."
+          ],
+          "facts": [
+            {
+              "text": "Western Union's USDPT stablecoin launched on Solana on May 4 2026, issued by Anchorage Digital Bank",
+              "source": "https://www.theblock.co/news/business/2026-05-04-western-union-launches-usdpt-stablecoin-anchorage-solana-399890",
+              "read": "2026-11-18"
+            },
+            {
+              "text": "Visa launched USDC settlement in the United States over Solana with Cross River and Lead Bank (Dec 16 2025)",
+              "source": "https://investor.visa.com/news/news-details/2025/Visa-Launches-Stablecoin-Settlement-in-the-United-States-Marking-a-Breakthrough-for-Stablecoin-Integration/default.aspx",
+              "read": "2026-11-18"
+            },
+            {
+              "text": "Samsung Wallet USDC on Solana went live on Nov 2 2026 for around 82 million US Galaxy devices (Solana's own announcement)",
+              "source": "https://solana.com/news/samsung-wallet-solana",
+              "read": "2026-11-18"
+            }
+          ],
+          "careful": [
+            "Never 'Visa settles 25 billion on Solana': that run rate covers 10 blockchains."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "DTCC: the press release itself",
+      "status": "PROPOSED",
+      "coin": "SOL",
+      "why_now": "DTCC announced on Nov 12 that its tokenization service will connect to Solana, with DTC-tokenized assets expected there in the second half of 2027. You covered it on Nov 13, so this is only the primary source and its quotes.",
+      "angle": "Short. You already told them the news, so show them it's straight from DTCC and read the one Solana line.",
+      "tabs": [
+        {
+          "kind": "article",
+          "label": "DTCC press release: Tokenization Service to connect with Solana",
+          "url": "https://www.dtcc.com/press-releases/2026/dtcc-tokenization-service-to-connect-with-solana",
+          "highlights": [
+            "DTC-tokenized assets expected to be available on Solana in the second half of 2027.",
+            "Institutions choose Solana because it already runs real financial activity at scale."
+          ],
+          "prompts": [
+            "I talked about this last time, but here it is straight from DTCC. Tokenized securities on Solana, second half of 2027.",
+            "And they say those tokens keep the same investor protections and ownership rights as the real thing. That's Wall Street's plumbing, coming to Solana."
+          ],
+          "facts": [
+            {
+              "text": "'DTC-tokenized assets expected to be available on Solana in the second half of 2027.' Eligible DTC-custodied assets, through the DTCC Tokenization Service, which launched Oct 28",
+              "source": "https://www.dtcc.com/press-releases/2026/dtcc-tokenization-service-to-connect-with-solana",
+              "read": "2026-11-17"
+            },
+            {
+              "text": "Brian Steele, DTCC: DTC-tokenized assets on Solana 'will retain the same investor protections, ownership rights and regulatory safeguards'",
+              "source": "https://www.dtcc.com/press-releases/2026/dtcc-tokenization-service-to-connect-with-solana",
+              "read": "2026-11-17"
+            },
+            {
+              "text": "DTCC's depository provided custody for securities 'valued at U.S. $114 trillion' (2025 figure, the release's boilerplate)",
+              "source": "https://www.dtcc.com/press-releases/2026/dtcc-tokenization-service-to-connect-with-solana",
+              "read": "2026-11-17"
+            }
+          ],
+          "careful": [
+            "It's a plan for 2027, for eligible assets only. Never 'Wall Street is buying SOL'."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Wall Street's money is already on Solana",
+      "status": "PROPOSED",
+      "coin": "SOL",
+      "why_now": "Tokenized real-world assets on Solana are at a record $5.12B, with BlackRock, J.P. Morgan and State Street funds on it, and Schwab opened SOL trading on Nov 9.",
+      "angle": "DTCC is 2027. The big asset managers are there today.",
+      "tabs": [
+        {
+          "kind": "chart",
+          "label": "rwa.xyz: tokenized assets on Solana",
+          "url": "https://app.rwa.xyz/networks/solana",
+          "show": "Point at the total, then scroll to the managers list and point at BlackRock, J.P. Morgan and State Street.",
+          "prompts": [
+            "DTCC is next year. But look what's on Solana right now. A record 5 billion dollars in tokenized real-world assets. BlackRock, J.P. Morgan, State Street.",
+            "And Charles Schwab, around 40 million accounts, just opened Solana trading on November 9. This is how adoption looks. Quiet, then all at once."
+          ],
+          "facts": [
+            {
+              "text": "Tokenized RWA on Solana: a record $5.12B, #3 among chains. BlackRock around $861M, J.P. Morgan Asset Management around $742M, State Street around $314M",
+              "source": "https://app.rwa.xyz/networks/solana",
+              "read": "2026-11-18"
+            },
+            {
+              "text": "Schwab made SOL, AVAX and LINK tradable in Schwab Crypto accounts (press release dated Nov 9 2026). Schwab has 'nearly 40 million active accounts' (Blockworks Q3)",
+              "source": "https://pressroom.aboutschwab.com/press-releases/press-release/Charles-Schwab-Makes-Solana-Avalanche-and-Chainlink-Available-to-Trade-Through-Schwab-Crypto-Accounts/default.aspx",
+              "read": "2026-11-18"
+            }
+          ],
+          "careful": [
+            "Tokenized assets are funds sitting on the chain, not people buying SOL. Say 'on Solana', never 'into SOL'."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "The ETFs: still holding",
+      "status": "PROPOSED",
+      "coin": "SOL",
+      "why_now": "US spot SOL ETFs are a net $1.42B in since launch, even after this drop.",
+      "angle": "Through a 70% drawdown, the ETF money mostly stayed.",
+      "tabs": [
+        {
+          "kind": "chart",
+          "label": "Farside: SOL ETF flows",
+          "url": "https://farside.co.uk/sol/",
+          "show": "Scroll to the total row at the bottom.",
+          "prompts": [
+            "Here's the Solana ETFs. Even after this whole drop, they're still sitting on around 1.4 billion dollars of net inflows since launch.",
+            "11 of 14 months came in positive. The people who bought through the ETFs mostly didn't run."
+          ],
+          "facts": [
+            {
+              "text": "US spot SOL ETFs: net $1.42B in since launch, 11 of 14 months net positive. Record day +$86.67M on Sep 25 2026",
+              "source": "https://farside.co.uk/sol/",
+              "read": "2026-11-18"
+            }
+          ],
+          "careful": [
+            "October was -$143.7M and November is -$46.6M so far, and net assets fell from $1.96B to $1.03B. Say 'since launch', never 'money is pouring in right now'."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "The usage: where the trading happens",
+      "status": "PROPOSED",
+      "coin": "SOL",
+      "why_now": "Solana has around a fifth of all DEX volume, level with Ethereum over the last month, and its stablecoin transfers grew 82% year over year in October.",
+      "angle": "People still trade on Solana and move more dollars on it every month, whatever the price does.",
+      "tabs": [
+        {
+          "kind": "chart",
+          "label": "DefiLlama: DEX volume by chain",
+          "url": "https://defillama.com/dexs/chains",
+          "show": "Point at Solana's share next to Ethereum's.",
+          "prompts": [
+            "This is where people actually trade. Solana and Ethereum are basically tied over the last month, around a fifth of all DEX volume each. Around 963 billion dollars traded on Solana in the last year.",
+            "And stablecoin transfers on Solana were up 82% in October from a year ago. Ethereum was up 48%. Dollars are moving to Solana."
+          ],
+          "facts": [
+            {
+              "text": "30-day DEX volume share: Solana 20.3%, Ethereum 20.7%. Around $963B on Solana over the last year",
+              "source": "https://api.llama.fi/overview/dexs",
+              "read": "2026-11-18"
+            },
+            {
+              "text": "October 2026 monthly stablecoin transfers: Solana +82% year over year, Ethereum +48% (Token Terminal)",
+              "source": "https://cointelegraph.com/news/zelle-solana-zelleusd-stablecoin-international-payments",
+              "read": "2026-11-17"
+            }
+          ],
+          "careful": [
+            "Monthly DEX volume is around $61B against $314B in January 2025, and Solana is #3 in stablecoins, far behind Ethereum and Tron. Say 'share' and 'growth', never 'record volume'."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "The network grew up: Alpenglow and Solana 1.0",
+      "status": "PROPOSED",
+      "coin": "SOL",
+      "why_now": "Alpenglow went live on Oct 21, Solana 1.0 dropped the 'mainnet beta' label on Nov 16, and the status page has no incident since Feb 6 2024.",
+      "angle": "Zelle said 'proven infrastructure'. This is what that means. The 'Solana goes down' joke is almost three years old.",
+      "tabs": [
+        {
+          "kind": "article",
+          "label": "Solana: Alpenglow upgrade",
+          "url": "https://solana.com/upgrades/alpenglow",
+          "prompts": [
+            "Remember when everybody joked that Solana goes down? Its status page hasn't had an incident since February 2024. Over a thousand days.",
+            "Alpenglow went live in October. Finality went from around 13 seconds to around 150 milliseconds. And this week Solana officially dropped the word beta. That's what Zelle meant by proven."
+          ],
+          "facts": [
+            {
+              "text": "Alpenglow live on mainnet since Oct 21 2026: around 150 ms finality, from 12.8 s",
+              "source": "https://solana.com/upgrades/alpenglow",
+              "read": "2026-11-18"
+            },
+            {
+              "text": "No incident on Solana's status page since 2024-02-06, around 1,015 days",
+              "source": "https://status.solana.com/api/v2/incidents.json",
+              "read": "2026-11-18"
+            },
+            {
+              "text": "Solana 1.0, Nov 16 2026, retired the 'mainnet beta' label",
+              "source": "https://solana.com/news/solana-1-0-dropping-beta-and-what-comes-next",
+              "read": "2026-11-18"
+            }
+          ],
+          "careful": [
+            "Voting validators are at a multi-year low (around 666), so never call it 'the most decentralized chain'. Talk about speed and uptime."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "We are here: the last time everybody gave up on Solana",
+      "status": "PROPOSED",
+      "coin": "SOL",
+      "why_now": "SOL is around 72% under its Jan 2025 high close. The last time it was this hated was the FTX crash of November 2022.",
+      "angle": "Scroll back to FTX, say 'we are here', then come forward. Last time the news was the scariest it has ever been. This time the news is Zelle, DTCC and Visa. Say 'last time', never 'this time it will'.",
+      "tabs": [
+        {
+          "kind": "chart",
+          "label": "SOL weekly: we are here (FTX 2022)",
+          "url": "https://www.tradingview.com/chart/?symbol=COINBASE%3ASOLUSD&interval=1W",
+          "show": "We are here: pre-scroll to November 2022 to December 2023 before you record. Circle the FTX week and the December 2022 low, drag forward through the end of 2023, then come all the way to this week's candle.",
+          "prompts": [
+            "Look at this. November 2022. FTX blew up. Solana went from 36 dollars to 14 in four days, and by the end of December it closed at 9. Everybody said Solana was dead.",
+            "A year later? Over a hundred dollars. Around 10 times. Two years later, a new all-time high.",
+            "We are here. Down around 72%. Last time, the headline was FTX. This time, the headline is Zelle."
+          ],
+          "facts": [
+            {
+              "text": "2022: from $258.93 (Nov 6 2021) to a $9.65 close on Dec 29 2022, -96.3%. FTX week: $36.77 to $13.94 in four days (Nov 5 to Nov 9 2022)",
+              "source": "computed from SOL daily closes (Yahoo SOL-USD, scripts/market_data.py)",
+              "read": "2026-11-17"
+            },
+            {
+              "text": "Recovery: 10x by Dec 22 2023, $101.51 on Dec 31 2023, a new all-time-high close on Jan 18 2025 ($261.87), 751 days after the low",
+              "source": "computed from SOL daily closes (Yahoo SOL-USD, scripts/market_data.py)",
+              "read": "2026-11-17"
+            },
+            {
+              "text": "Now: $74.26 on Nov 17 2026, around 72% under the Jan 18 2025 close. 2026 low close $62.19 on Jun 6, so around 19% above it",
+              "source": "computed from SOL daily closes (Yahoo SOL-USD, scripts/market_data.py)",
+              "read": "2026-11-17"
+            }
+          ],
+          "careful": [
+            "In 2022 SOL was already down around 71% by May and still fell to -96%. Never 'the bottom is in'.",
+            "SOL is under its 50-week (around 95) and 200-week (around 114) averages. Keep it to 'last time', never a price target."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "Bigger network, same kind of price",
+      "status": "PROPOSED",
+      "coin": "SOL",
+      "why_now": "Against that 2022 low, Solana has around 7.6x the stablecoins, around 21x the money locked in it, and SOL/ETH is around 5x higher.",
+      "angle": "The price is back near hated levels, but the network under it is many times bigger than last time.",
+      "tabs": [
+        {
+          "kind": "chart",
+          "label": "SOL/ETH weekly",
+          "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ASOLETH&interval=1W",
+          "show": "Point at the December 2022 low, then this week.",
+          "prompts": [
+            "Here's what people miss. Against Ethereum, Solana is around five times stronger than at that low.",
+            "And the network under it? Around seven times the stablecoins. Around 20 times the money locked in it. Last time it was this cheap, it was a much smaller network."
+          ],
+          "facts": [
+            {
+              "text": "SOL/ETH: 0.0080 at the Dec 2022 low, 0.0413 now, around 5.1x",
+              "source": "https://www.tradingview.com/chart/?symbol=BINANCE%3ASOLETH&interval=1W",
+              "read": "2026-11-18"
+            },
+            {
+              "text": "Stablecoins on Solana: $1.82B at the Dec 2022 low, $13.89B now (around 7.6x). TVL: $0.23B then, $4.77B now (around 21x)",
+              "source": "https://stablecoins.llama.fi/stablecoincharts/Solana and https://api.llama.fi/v2/historicalChainTvl/Solana",
+              "read": "2026-11-18"
+            }
+          ],
+          "careful": [
+            "TVL is around 64% under its own peak, so compare it with 2022, never with 'the highs'."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "title": "The close: the boring part is where it's built",
+      "status": "PROPOSED",
+      "why_now": "End back on your face with what the news means and the motivational lines.",
+      "angle": "Patience and doing the reading, never a guaranteed outcome. Your own line from the May 20 stream works here.",
+      "no_tab": {
+        "prompts": [
+          "So here's the thing. Zelle, DTCC, Visa, Western Union, Samsung, Schwab. None of them picked Solana because the price was up. They picked it while it was down.",
+          "I've said it before: the best time to get in is in a bear market. Not because it feels good. Because it doesn't."
+        ],
+        "inspiring": [
+          "Every chart you wish you'd bought looked exactly like this at the time. Ugly. Quiet. Nobody wanted it.",
+          "When the news and the price point in opposite directions, I pay attention to the news.",
+          "You don't have to call the bottom. You just have to still be here, still reading, when everybody else has left.",
+          "The people who make it in this space aren't the smartest ones. They're the ones who didn't quit during the boring part.",
+          "Fear is loud. Building is quiet. Right now, it's very quiet."
+        ],
+        "careful": [
+          "Your bear-market line is from your May 20 stream, where it ended 'it'll always work out'. Leave that ending off: no guaranteed outcome."
+        ]
+      },
+      "tabs": []
+    }
+  ],
+  "order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "docx_sha256": "7aceaa9d9cbfa87c07b4fa0cdbc49102490e1e2ea6b30d7a7223829a05eee247"
+}

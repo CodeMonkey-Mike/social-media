@@ -25033,14 +25033,14 @@
           "url_note": "URL reconciled from https://rumble.com/account/content by title match and confirmed against the public page. Post-time capture races platform processing; this pass runs after everything has settled."
         },
         "bitchute": {
-          "status": "failed",
-          "posted_at": null,
-          "url": null,
+          "status": "posted",
+          "posted_at": "2026-11-17T17:40:11.825Z",
+          "url": "https://www.bitchute.com/video/rrI9p60HpukR/",
           "views": null,
           "views_captured_at": null,
           "caption_override": null,
-          "error": "Publish not confirmed (missing-thumbnail modal or no /content redirect). The video uploaded as a DRAFT — publish it manually from BitChute Studio. Do NOT re-run this script (it would re-upload and duplicate).",
-          "url_note": "2026-11-16: uploaded as a DRAFT (upload_code dx4T1k8fwsBV), missing-thumbnail modal 3/3. Publish it from BitChute Studio; do NOT re-run the poster."
+          "url_note": "URL reconciled from https://www.bitchute.com/content by title match and confirmed against the public page. Post-time capture races platform processing; this pass runs after everything has settled.",
+          "prev_error": "Publish not confirmed (missing-thumbnail modal or no /content redirect). The video uploaded as a DRAFT — publish it manually from BitChute Studio. Do NOT re-run this script (it would re-upload and duplicate)."
         }
       },
       "created_at": "2026-11-16T11:10:29"
@@ -25118,13 +25118,13 @@
           "url_note": "recovered 2026-11-17: id verified by public <title> match"
         },
         "bitchute": {
-          "status": "posted_unverified",
+          "status": "posted",
           "posted_at": "2026-11-17T12:04:07.936Z",
           "url": "https://www.bitchute.com/video/x8I08dJshMXu/",
           "views": null,
           "views_captured_at": null,
           "caption_override": null,
-          "error": "Publish confirmed via /content but public URL did not resolve within retry window: verify on the channel, or run scripts/reconcile_short_urls.py --platform bitchute --apply. Do NOT re-run the poster (would duplicate)."
+          "url_note": "URL reconciled from https://www.bitchute.com/content by title match and confirmed against the public page. Post-time capture races platform processing; this pass runs after everything has settled."
         }
       },
       "created_at": "2026-11-16T11:10:29"
@@ -25192,23 +25192,22 @@
           "caption_override": null
         },
         "rumble": {
-          "status": "posted_unverified",
+          "status": "posted",
           "posted_at": "2026-11-17T13:36:48.889Z",
-          "url": null,
+          "url": "https://rumble.com/shorts/v7ih7t8",
           "views": null,
           "views_captured_at": null,
           "caption_override": null,
-          "error": "Short URL found on /account/content but public page did not resolve within the retry window: verify manually. Do NOT re-run (would duplicate).",
-          "url_note": "JS twin captured neighbour id v7ih3f0 (kaspa-things-are-gonna-pop); nulled 2026-11-17, recover via reconciler"
+          "url_note": "URL reconciled from https://rumble.com/account/content by title match and confirmed against the public page. Post-time capture races platform processing; this pass runs after everything has settled."
         },
         "bitchute": {
-          "status": "posted_unverified",
+          "status": "posted",
           "posted_at": "2026-11-17T13:41:41.390Z",
           "url": "https://www.bitchute.com/video/go64MZfPXM68/",
           "views": null,
           "views_captured_at": null,
           "caption_override": null,
-          "error": "Publish confirmed via /content but public URL did not resolve within retry window: verify on the channel, or run scripts/reconcile_short_urls.py --platform bitchute --apply. Do NOT re-run the poster (would duplicate)."
+          "url_note": "URL reconciled from https://www.bitchute.com/content by title match and confirmed against the public page. Post-time capture races platform processing; this pass runs after everything has settled."
         }
       },
       "created_at": "2026-11-16T11:10:29"
@@ -25236,57 +25235,60 @@
       ],
       "platforms": {
         "yt_shorts": {
-          "status": "pending",
-          "posted_at": null,
-          "url": null,
+          "status": "posted",
+          "posted_at": "2026-11-18T13:07:58.307Z",
+          "url": "https://www.youtube.com/shorts/jG4IwMBJ31o",
           "views": null,
           "views_captured_at": null,
           "caption_override": null
         },
         "ig_reels": {
-          "status": "pending",
-          "posted_at": null,
-          "url": null,
+          "status": "posted",
+          "posted_at": "2026-11-18T13:16:40.526Z",
+          "url": "https://www.instagram.com/realcodemonkeymike/reel/Df4lP03vgJf/",
           "views": null,
           "views_captured_at": null,
           "caption_override": null
         },
         "x": {
-          "status": "pending",
-          "posted_at": null,
-          "url": null,
+          "status": "posted",
+          "posted_at": "2026-11-18T15:23:11.256Z",
+          "url": "https://x.com/mikeneder/status/2123074536945967146",
           "views": null,
           "views_captured_at": null,
-          "caption_override": null
+          "caption_override": null,
+          "error": null,
+          "last_failure": "2026-11-18: the JS twin failed both passes pre-Post (X mask overlay intercepted the caption-box click after video attach; nothing published). Posted the same day via the fixed post_x_short.py."
         },
         "tiktok": {
-          "status": "pending",
-          "posted_at": null,
-          "url": null,
+          "status": "posted",
+          "posted_at": "2026-11-18T13:04:30.383Z",
+          "url": "https://www.tiktok.com/@realcodemonkeymike/video/7709495093664795918",
           "views": null,
           "views_captured_at": null,
           "caption_override": null
         },
         "facebook": {
-          "status": "pending",
-          "posted_at": null,
-          "url": null,
+          "status": "posted",
+          "posted_at": "2026-11-18T12:52:53.813Z",
+          "url": "https://www.facebook.com/reel/4141974936095861/",
           "views": null,
           "views_captured_at": null,
           "caption_override": null
         },
         "rumble": {
-          "status": "pending",
-          "posted_at": null,
-          "url": null,
+          "status": "posted",
+          "posted_at": "2026-11-18T12:40:46.810Z",
+          "url": "https://rumble.com/shorts/v7iixns",
           "views": null,
           "views_captured_at": null,
-          "caption_override": null
+          "caption_override": null,
+          "url_note": "2026-11-18: real id recovered from the next run's neighbour capture, public <title> verified"
         },
         "bitchute": {
-          "status": "pending",
-          "posted_at": null,
-          "url": null,
+          "status": "posted",
+          "posted_at": "2026-11-18T12:43:55.057Z",
+          "url": "https://www.bitchute.com/video/KvK0mOmCuklf/",
           "views": null,
           "views_captured_at": null,
           "caption_override": null
@@ -25317,6 +25319,424 @@
       ],
       "platforms": {
         "yt_shorts": {
+          "status": "posted",
+          "posted_at": "2026-11-18T14:19:48.603Z",
+          "url": "https://www.youtube.com/shorts/fwsXfIK35so",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "ig_reels": {
+          "status": "posted",
+          "posted_at": "2026-11-18T14:19:20.587Z",
+          "url": "https://www.instagram.com/realcodemonkeymike/reel/Df4schMuVhM/",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "x": {
+          "status": "posted",
+          "posted_at": "2026-11-18T15:33:24.570Z",
+          "url": "https://x.com/mikeneder/status/2123077108737978372",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "tiktok": {
+          "status": "posted_unverified",
+          "posted_at": "2026-11-18T14:07:59.789Z",
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null,
+          "url_note": "2026-11-18: Post + confirm + redirect to /tiktokstudio/content all fired, but the video URL was not found on the content dashboard (script wrote the dashboard placeholder). Live per the redirect; backfill URL from @realcodemonkeymike. Do NOT re-post."
+        },
+        "facebook": {
+          "status": "posted",
+          "posted_at": "2026-11-18T13:55:50.535Z",
+          "url": "https://www.facebook.com/reel/1116365737690243/",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "rumble": {
+          "status": "posted",
+          "posted_at": "2026-11-18T13:43:04.420Z",
+          "url": "https://rumble.com/shorts/v7ij0l2",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null,
+          "url_note": "2026-11-18: real id from reconcile_short_urls.py dry run, public <title> verified, hand-written"
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": "2026-11-18T13:47:49.794Z",
+          "url": "https://www.bitchute.com/video/KDjBkPvlZh2l/",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null,
+          "url_note": "URL reconciled from https://www.bitchute.com/content by title match and confirmed against the public page. Post-time capture races platform processing; this pass runs after everything has settled."
+        }
+      },
+      "created_at": "2026-11-16T11:10:29"
+    },
+    {
+      "id": "r-20261119-pieverse-17x-at-a-billion",
+      "batch": "ripping",
+      "slug": "pieverse-17x-at-a-billion",
+      "source_livestream": "ripping-2026-11-19",
+      "source_clip": "pieverse-17x-at-a-billion",
+      "video_path": "shorts/ripping-2026-11-19/1-pieverse-17x-at-a-billion.mp4",
+      "thumbnail_path": null,
+      "duration_seconds": 44.29,
+      "width": 1080,
+      "height": 1920,
+      "title": "Pieverse Just Hit a Billion. That Is 17.5x From My Call",
+      "hook": "If you got into Pieverse when I called it earlier this year, you'd be up over 17x, man.",
+      "caption": "If you got into $PIEVERSE when I called it earlier this year, you'd be up over 17x.\n\nMy bot called it at a 20 million market cap. It started going up and I didn't want to buy it while it was going up. Then it came down a little, and I bought it at 60 million.\n\nNow it's at 1.05 billion. Divide that by 60... 17.5x. Holy guacamole, dude. 🥑",
+      "tags": [
+        "Pieverse",
+        "PIEVERSE",
+        "Altcoins",
+        "CryptoGems",
+        "Crypto"
+      ],
+      "platforms": {
+        "yt_shorts": {
+          "status": "posted",
+          "posted_at": "2026-11-19T13:04:20.473Z",
+          "url": "https://www.youtube.com/shorts/zNUPpS7v27o",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "ig_reels": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null,
+          "error": null
+        },
+        "x": {
+          "status": "posted",
+          "posted_at": "2026-11-19T13:03:53.190Z",
+          "url": "https://x.com/mikeneder/status/2123401863970107627",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "tiktok": {
+          "status": "posted",
+          "posted_at": "2026-11-19T12:54:03.741Z",
+          "url": "https://www.tiktok.com/@realcodemonkeymike/video/7709863627469196557",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "facebook": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "rumble": {
+          "status": "posted",
+          "posted_at": "2026-11-19T12:38:25.354Z",
+          "url": "https://rumble.com/shorts/v7ikpya",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null,
+          "error": null,
+          "url_note": "2026-11-19: real id recovered via reconcile_short_urls.py dry run + curl title check (public title matches this short); earlier neighbour id nulled."
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": "2026-11-19T12:41:35.796Z",
+          "url": "https://www.bitchute.com/video/ZaG6VjYscU68/",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        }
+      },
+      "created_at": "2026-11-19T02:36:16"
+    },
+    {
+      "id": "r-20261119-calls-ripping-on-a-red-day",
+      "batch": "ripping",
+      "slug": "calls-ripping-on-a-red-day",
+      "source_livestream": "ripping-2026-11-19",
+      "source_clip": "calls-ripping-on-a-red-day",
+      "video_path": "shorts/ripping-2026-11-19/2-calls-ripping-on-a-red-day.mp4",
+      "thumbnail_path": null,
+      "duration_seconds": 41.4,
+      "width": 1080,
+      "height": 1920,
+      "title": "Only 3 Green Bubbles Out of 100, and My Plays Are Ripping Again",
+      "hook": "The crazy thing is the entire market is dumping. This entire page has only three green bubbles out of 100.",
+      "caption": "The entire market is dumping. Look at all this red: only three green bubbles out of 100.\n\n$PIPPIN, we did an 89x at the beginning of this year, and suddenly it's ripping again. $VELVET, the 58x in June, is pumping again. It knows I'm going live.\n\nAll these plays in my community are pumping, everybody else is dumping. Hell yeah, man. 🔥",
+      "tags": [
+        "Pippin",
+        "Velvet",
+        "Altcoins",
+        "CryptoGems",
+        "Crypto"
+      ],
+      "platforms": {
+        "yt_shorts": {
+          "status": "posted",
+          "posted_at": "2026-11-20T13:05:57.010Z",
+          "url": "https://www.youtube.com/shorts/PV3W-_57anM",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "ig_reels": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "x": {
+          "status": "failed",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null,
+          "error": "Caption verification failed (pre-Post, nothing published).\nExpected: \"The entire market is dumping. Look at all this red: only three green bubbles out of 100.\\n\\n$PIPPIN, we did an 89x at the beginning of this year, and suddenly it's ripping again. $VELVET, the 58x in June, is pumping again. It knows I'm going live.\\n\\nAll these plays in my community are pumping, everybody else is dumping. Hell yeah, man. 🔥\\n\\n#Pippin #Velvet\"\nGot:      \"The entire market is dumping. Look at all this red: only three green bubbles out of 100.\\n\\n\\n$pippin, we did an 89x at the beginning of this year, and suddenly it's ripping again. $VELVET, the 58x in June, is pumping again. It knows I'm going live.\\n\\n\\nAll these plays in my community are pumping, everybody else is dumping. Hell yeah, man. 🔥\\n\\n\\n#Pippin #Velvet\""
+        },
+        "tiktok": {
+          "status": "posted",
+          "posted_at": "2026-11-20T12:54:57.065Z",
+          "url": "https://www.tiktok.com/@realcodemonkeymike/video/7710234960245853454",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "facebook": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "rumble": {
+          "status": "posted",
+          "posted_at": "2026-11-20T12:24:43.491Z",
+          "url": "https://rumble.com/shorts/v7imjq4",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null,
+          "url_note": "URL reconciled from https://rumble.com/account/content by title match and confirmed against the public page. Post-time capture races platform processing; this pass runs after everything has settled."
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": "2026-11-20T12:34:17.081Z",
+          "url": "https://www.bitchute.com/video/CDj4tZeJnCyD/",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null,
+          "url_note": "URL reconciled from https://www.bitchute.com/content by title match and confirmed against the public page. Post-time capture races platform processing; this pass runs after everything has settled."
+        }
+      },
+      "created_at": "2026-11-19T02:36:16"
+    },
+    {
+      "id": "r-20261119-pieverse-17x-at-a-billion-impact",
+      "batch": "ripping",
+      "slug": "pieverse-17x-at-a-billion-impact",
+      "source_livestream": "ripping-2026-11-19",
+      "source_clip": "pieverse-17x-at-a-billion-impact",
+      "video_path": "shorts/ripping-2026-11-19/6-pieverse-17x-at-a-billion-impact.mp4",
+      "thumbnail_path": null,
+      "duration_seconds": 28.57,
+      "width": 1080,
+      "height": 1920,
+      "title": "Pieverse Is at a Billion. That 17x Could Turn Into 170x",
+      "hook": "Holy crap, we're at a billion. I can't believe it. We're actually at a billion.",
+      "caption": "Holy crap, we're at a billion. I can't believe it.\n\n$PIEVERSE is in the x402 narrative: agent to agent payments. That's why it's pumping. We got our bases covered.\n\nIt's probably gonna do another 10x on top of where it is. Who knows how many billions it gets to? That 17x could turn into like 170x... 🚀",
+      "tags": [
+        "Pieverse",
+        "PIEVERSE",
+        "x402",
+        "AIAgents",
+        "Crypto"
+      ],
+      "platforms": {
+        "yt_shorts": {
+          "status": "posted",
+          "posted_at": "2026-11-20T13:44:32.928Z",
+          "url": "https://www.youtube.com/shorts/4tuF_ysjy2Q",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "ig_reels": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "x": {
+          "status": "posting",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null,
+          "error": "Run killed by system memory pressure after Processing started (video attached, no caption step, no Post click in log). Verify on X before any reset to pending."
+        },
+        "tiktok": {
+          "status": "posted",
+          "posted_at": "2026-11-20T13:33:09.618Z",
+          "url": "https://www.tiktok.com/@realcodemonkeymike/video/7710244787101781261",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "facebook": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "rumble": {
+          "status": "posted",
+          "posted_at": "2026-11-20T13:19:53.762Z",
+          "url": "https://rumble.com/shorts/v7imm40",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null,
+          "url_note": "URL reconciled from https://rumble.com/account/content by title match and confirmed against the public page. Post-time capture races platform processing; this pass runs after everything has settled."
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": "2026-11-20T13:21:53.470Z",
+          "url": "https://www.bitchute.com/video/MF5cpkE8fiIS/",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null,
+          "url_note": "URL reconciled from https://www.bitchute.com/content by title match and confirmed against the public page. Post-time capture races platform processing; this pass runs after everything has settled."
+        }
+      },
+      "created_at": "2026-11-19T02:36:17"
+    },
+    {
+      "id": "r-20261119-ai-jobs-own-assets",
+      "batch": "ripping",
+      "slug": "ai-jobs-own-assets",
+      "source_livestream": "ripping-2026-11-19",
+      "source_clip": "ai-jobs-own-assets",
+      "video_path": "shorts/ripping-2026-11-19/3-ai-jobs-own-assets.mp4",
+      "thumbnail_path": null,
+      "duration_seconds": 40.34,
+      "width": 1080,
+      "height": 1920,
+      "title": "It Will Be Crazy Hard to Get Ahead If You Don't Have Assets",
+      "hook": "If you have a robot in your house and it has to do a plumbing job, it's going to have to order parts and pay for things.",
+      "caption": "If you have a robot in your house and it has to do a plumbing job, it's going to have to order parts and pay for things. It's going to be an interesting future. Tough, though.\n\nYou have to invest in assets. We're going to see an asset driven future, where you earn dividends off what you own. Can't get a job, stuck on UBI... how the hell are you going to progress?\n\nAnybody watching this channel is on the right path. You're not checked out. 💪",
+      "tags": [
+        "Assets",
+        "Investing",
+        "AI",
+        "UBI",
+        "FutureOfWork"
+      ],
+      "platforms": {
+        "yt_shorts": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "ig_reels": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "x": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "tiktok": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "facebook": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "rumble": {
+          "status": "posted_unverified",
+          "posted_at": "2026-11-21T14:30:34.225Z",
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null,
+          "error": "Short URL found on /account/content but public page did not resolve within the retry window: verify manually. Do NOT re-run (would duplicate)."
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": "2026-11-21T14:34:15.848Z",
+          "url": "https://www.bitchute.com/video/deLasIsZDgQA/",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        }
+      },
+      "created_at": "2026-11-19T02:36:16"
+    },
+    {
+      "id": "r-20261119-hate-eth-go-where-the-money-is",
+      "batch": "ripping",
+      "slug": "hate-eth-go-where-the-money-is",
+      "source_livestream": "ripping-2026-11-19",
+      "source_clip": "hate-eth-go-where-the-money-is",
+      "video_path": "shorts/ripping-2026-11-19/4-hate-eth-go-where-the-money-is.mp4",
+      "thumbnail_path": null,
+      "duration_seconds": 36.48,
+      "width": 1080,
+      "height": 1920,
+      "title": "I Hate ETH, But One Day It Is Going to Flip Bitcoin",
+      "hook": "I even believe, I kid you not, that one day Ethereum is going to flip Bitcoin. I hate ETH, but I gotta go where the money is.",
+      "caption": "I kid you not: one day Ethereum is going to flip $BTC. I hate $ETH, but I gotta go where the money is.\n\nEthereum is giving me the vibe that it's going to be totally dominant. I hate it. I hate it.\n\nAnd I think the $20,000 ETH is really conservative, 10 years from now. 🤔",
+      "tags": [
+        "Ethereum",
+        "ETH",
+        "Bitcoin",
+        "BTC",
+        "Crypto"
+      ],
+      "platforms": {
+        "yt_shorts": {
           "status": "pending",
           "posted_at": null,
           "url": null,
@@ -25373,27 +25793,27 @@
           "caption_override": null
         }
       },
-      "created_at": "2026-11-16T11:10:29"
+      "created_at": "2026-11-19T02:36:17"
     },
     {
-      "id": "p-20261116-kaspa-things-are-gonna-pop-impact",
-      "batch": "peach",
-      "slug": "kaspa-things-are-gonna-pop-impact",
-      "source_livestream": "peach-2026-11-16",
-      "source_clip": "kaspa-things-are-gonna-pop-impact",
-      "video_path": "shorts/peach-2026-11-16/7-kaspa-things-are-gonna-pop-impact.mp4",
+      "id": "r-20261119-anthropic-ipo-money-rotating-out",
+      "batch": "ripping",
+      "slug": "anthropic-ipo-money-rotating-out",
+      "source_livestream": "ripping-2026-11-19",
+      "source_clip": "anthropic-ipo-money-rotating-out",
+      "video_path": "shorts/ripping-2026-11-19/5-anthropic-ipo-money-rotating-out.mp4",
       "thumbnail_path": null,
-      "duration_seconds": 19.43,
+      "duration_seconds": 32.98,
       "width": 1080,
       "height": 1920,
-      "title": "There's a Bright Future for Kaspa. Just a Lot of Pain Right Now",
-      "hook": "We've been like this for too long. We never got a break.",
-      "caption": "$KAS holders have been like this for too long. We never got a break. Keep getting beaten over the head.\n\nBut smart money keeps building, keeps investing. Things are gonna pop, and 2027 is gonna be awesome.\n\nA bright future for Kaspa. It's always good to buy more... 💎",
+      "title": "Why We're Dumping: All This Money Is Rotating Out for the Anthropic IPO",
+      "hook": "This was like the SpaceX IPO, right? And now this is the Anthropic IPO. All this money rotating out.",
+      "caption": "This was the SpaceX IPO. Now it's the Anthropic IPO, and all this money is rotating out of $BTC.\n\nAfter the SpaceX IPO, it was a few more weeks on the weekly candles before it actually bottomed. Maybe a little further down, the same way.\n\nIt is what it is. We'll take it as it comes. I've got a few plays pumping on a day like this... absolutely insane. 😎",
       "tags": [
-        "Kaspa",
-        "KAS",
-        "ProofOfWork",
-        "HODL",
+        "Bitcoin",
+        "BTC",
+        "Anthropic",
+        "IPO",
         "Crypto"
       ],
       "platforms": {
@@ -25449,6 +25869,171 @@
           "status": "pending",
           "posted_at": null,
           "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        }
+      },
+      "created_at": "2026-11-19T02:36:17"
+    },
+    {
+      "id": "r-20261119-ai-jobs-own-assets-impact",
+      "batch": "ripping",
+      "slug": "ai-jobs-own-assets-impact",
+      "source_livestream": "ripping-2026-11-19",
+      "source_clip": "ai-jobs-own-assets-impact",
+      "video_path": "shorts/ripping-2026-11-19/7-ai-jobs-own-assets-impact.mp4",
+      "thumbnail_path": null,
+      "duration_seconds": 19.75,
+      "width": 1080,
+      "height": 1920,
+      "title": "AI Codes Better Than Any Engineer. You Can't Be a Code Monkey Anymore",
+      "hook": "It is official that AI can code better than any software engineer.",
+      "caption": "It is official: AI can code better than any software engineer. There's no need anymore to be a code monkey.\n\nCode monkey is just a term for a geek who likes to sit there and write code all day. That's where I got the name from.\n\nYou can't be a code monkey going forward. You just can't do it. You're going to find yourself unemployed. 🧠",
+      "tags": [
+        "AI",
+        "CodeMonkey",
+        "SoftwareEngineering",
+        "AIJobs",
+        "Coding"
+      ],
+      "platforms": {
+        "yt_shorts": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "ig_reels": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "x": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "tiktok": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "facebook": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "rumble": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "bitchute": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        }
+      },
+      "created_at": "2026-11-19T03:24:16"
+    },
+    {
+      "id": "p-20261116-kaspa-things-are-gonna-pop-impact",
+      "batch": "peach",
+      "slug": "kaspa-things-are-gonna-pop-impact",
+      "source_livestream": "peach-2026-11-16",
+      "source_clip": "kaspa-things-are-gonna-pop-impact",
+      "video_path": "shorts/peach-2026-11-16/7-kaspa-things-are-gonna-pop-impact.mp4",
+      "thumbnail_path": null,
+      "duration_seconds": 19.43,
+      "width": 1080,
+      "height": 1920,
+      "title": "There's a Bright Future for Kaspa. Just a Lot of Pain Right Now",
+      "hook": "We've been like this for too long. We never got a break.",
+      "caption": "$KAS holders have been like this for too long. We never got a break. Keep getting beaten over the head.\n\nBut smart money keeps building, keeps investing. Things are gonna pop, and 2027 is gonna be awesome.\n\nA bright future for Kaspa. It's always good to buy more... 💎",
+      "tags": [
+        "Kaspa",
+        "KAS",
+        "ProofOfWork",
+        "HODL",
+        "Crypto"
+      ],
+      "platforms": {
+        "yt_shorts": {
+          "status": "posted",
+          "posted_at": "2026-11-19T12:27:56.530Z",
+          "url": "https://www.youtube.com/shorts/RvuLcfwLW4g",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "ig_reels": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "x": {
+          "status": "posted",
+          "posted_at": "2026-11-19T12:27:21.278Z",
+          "url": "https://x.com/mikeneder/status/2123392672115155073",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "tiktok": {
+          "status": "posted",
+          "posted_at": "2026-11-19T12:16:35.107Z",
+          "url": "https://www.tiktok.com/@realcodemonkeymike/video/7709853985187843341",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "facebook": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null,
+          "error": null
+        },
+        "rumble": {
+          "status": "posted",
+          "posted_at": "2026-11-19T11:51:33.213Z",
+          "url": "https://rumble.com/shorts/v7iko4w",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null,
+          "error": null,
+          "url_note": "2026-11-19: real id recovered by hand; public page title matches this short (verified via curl). Earlier poster run had recorded neighbour id and it was nulled."
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": "2026-11-19T11:54:40.597Z",
+          "url": "https://www.bitchute.com/video/wO8r0NmhqfE1/",
           "views": null,
           "views_captured_at": null,
           "caption_override": null

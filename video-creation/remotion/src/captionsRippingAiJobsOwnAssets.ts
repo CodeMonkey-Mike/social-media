@@ -1,0 +1,63 @@
+// batch ripping / clip #3 - `ai-jobs-own-assets` (FULL)
+// CANONICAL captions skill output. Never hand-authored. Rebuilt by this EXACT invocation:
+//   python video-creation/skills/captions/build_captions.py
+//     --words video-creation/shorts/ripping/ai-jobs-own-assets/whisper-words.json
+//     --style montserrat --var CAPTIONS_RIP3 --max-secs 1.6 --max-short 4
+//     --colorize "y=robot,assets,asset,dividends,own,invest,ahead,channel gr=right,path,future r=tough,crazy,hard,stuck,ubi,paycheck"
+// WORD SOURCE: the clip's own whisper-words.json (no gap > 0.35 s anywhere in the word stream; whisper-verified on the
+// final render). --max-short 4 keeps every group at 2-4 words (the contract's band). "you're you're" -> the skill's
+// stutter collapse (not a protected persona double). "ubi" renders lowercase via the preset CSS.
+export const CAPTIONS_RIP3: { t: number; h: string }[] = [
+  { t:   0.00, h: 'if you have a' },
+  { t:   0.82, h: '<y>robot</y> in your' },
+  { t:   1.52, h: 'house and it' },
+  { t:   2.10, h: 'has to do' },
+  { t:   2.62, h: 'repair, you know' },
+  { t:   3.52, h: 'it has to do' },
+  { t:   4.14, h: 'a plumbing job' },
+  { t:   5.12, h: 'or has to go' },
+  { t:   5.94, h: 'out onto the roof' },
+  { t:   6.90, h: 'it\'s going to' },
+  { t:   7.52, h: 'have to order' },
+  { t:   8.24, h: 'parts and it\'s' },
+  { t:   9.54, h: 'going to have' },
+  { t:   9.86, h: 'to pay things' },
+  { t:  10.56, h: 'man it\'s just it\'s' },
+  { t:  11.42, h: 'going to be' },
+  { t:  11.70, h: 'an interesting <gr>future</gr>' },
+  { t:  12.66, h: 'man.' },
+  { t:  12.92, h: 'it\'s going to' },
+  { t:  13.38, h: 'be <r>tough</r> though' },
+  { t:  14.04, h: 'you have to' },
+  { t:  14.60, h: '<y>invest</y> in <y>assets</y>' },
+  { t:  15.68, h: 'because we\'re going' },
+  { t:  16.34, h: 'to see like an' },
+  { t:  17.18, h: '<y>asset</y> driven <gr>future,</gr>' },
+  { t:  18.60, h: '<gr>right?</gr>' },
+  { t:  18.96, h: 'we\'re earning <y>dividends</y>' },
+  { t:  20.12, h: 'of what you <y>own</y>' },
+  { t:  21.26, h: 'and it\'s going' },
+  { t:  21.84, h: 'to be <r>crazy</r>' },
+  { t:  22.88, h: '<r>hard</r> to get' },
+  { t:  23.94, h: '<y>ahead</y> if you' },
+  { t:  24.76, h: 'don\'t have <y>assets</y>' },
+  { t:  25.80, h: 'because if you\'re' },
+  { t:  26.88, h: 'just going to' },
+  { t:  27.32, h: 'you can\'t get a' },
+  { t:  28.36, h: '<r>paycheck</r> and you' },
+  { t:  29.30, h: 'don\'t have you know' },
+  { t:  29.96, h: 'you can\'t get a' },
+  { t:  30.64, h: 'job.' },
+  { t:  30.88, h: 'you\'ll be <r>stuck</r>' },
+  { t:  31.70, h: 'on <r>ubi</r> what the' },
+  { t:  32.84, h: 'hell are you' },
+  { t:  33.38, h: 'going to progress?' },
+  { t:  34.04, h: 'that\'s why anybody\'s' },
+  { t:  35.38, h: 'watching this <y>channel</y>' },
+  { t:  36.06, h: 'now i\'m saying' },
+  { t:  36.78, h: 'is like it' },
+  { t:  37.52, h: 'you\'re on the' },
+  { t:  38.32, h: '<gr>right</gr> <gr>path,</gr> man.' },
+  { t:  39.24, h: 'you\'re not checked' },
+  { t:  39.86, h: 'out' },
+];

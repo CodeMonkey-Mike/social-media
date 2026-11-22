@@ -1,0 +1,86 @@
+[
+  {
+    "id": "pieverse-17x-at-a-billion",
+    "n": 1,
+    "removals": [
+      {
+        "start": 190.9,
+        "end": 193.2,
+        "why": "restatement: second 'I bought it down in here.' said again word for word after a 1 s pause (the first one, 'and I bought it down in here', stays)"
+      },
+      {
+        "start": 397.61,
+        "end": 399.5,
+        "why": "calculator narration: 'let's do like this, and then we' while he types; the line now reads '1.05 billion, right? So, like, divide by 60 because it was 60 million market cap'"
+      },
+      {
+        "start": 173.95,
+        "end": 175.67,
+        "why": "restart: 'My bot, (1.1 s pause) my bot called it', the pause and the second 'my bot' go, leaving 'My bot called it at a 20 million market cap'"
+      }
+    ],
+    "notes": "Measured 10.9% of voiced content (validator). Hook seg 0 and both peak beats untouched (2508.9-2512.95 and 402.3-409.95), including the 'is that a, is that a 17.5' stutter inside the payoff peak. Both of his numbers stay (20 million bot alert, 60 million in the math). Every edge is in gated silence. The thinnest is 175.67, a 40 ms gap between 'bot' and 'called'; if 'called' sounds clipped drop the last removal. Not cut, no gap to cut in: 'right?' fused to '1.05 billion', and 'here. My' before the first 'bot'. Seg 1 opens on 'Ooh. Look at that' (the 'Holy guacamole' quoted in the clip plan ends at 169.02, before the 169.10 in point). Seg 2 in point 182.93 left as cut: it sits in a -41 dB dip right before 'started', and moving it earlier brings in the 'right?' at 182.66-182.88. Caption fix: the words after the second cut are 'like, divide by 60' (the Whisper text 'decided to buy it by 60' is wrong)."
+  },
+  {
+    "id": "calls-ripping-on-a-red-day",
+    "n": 2,
+    "removals": [
+      {
+        "start": 116.5,
+        "end": 118.8,
+        "why": "restatement: 'I remember Pippin was ripping.' is said again with more energy two lines later ('Pippin was freaking ripping and suddenly he's ripping again'); now reads 'Pippin. We did an 89x at the beginning of this year.'"
+      },
+      {
+        "start": 876.12,
+        "end": 879.86,
+        "why": "self-correction on the Velvet multiple: 'We did that 68X on it. And, um, (pause) there was a 58 with' right before he lands on '58X ... in June'; his own corrected number stays, the line now reads 'Velvet. 58X, in June, just a few months back, and this thing is pumping again'"
+      }
+    ],
+    "boundary_relock": [
+      {
+        "segment_index": 1,
+        "new_start": 115.56
+      }
+    ],
+    "notes": "Measured 11.9% of voiced content (validator). RELOCK seg 1: the 115.12 in point caught 'Right?' (115.20-115.50), the tail of the sentence before; new start 115.56 is in gated silence, 'Pippin' starts at 115.61. Hook line and both peak beats untouched (432.3-436.9 and all of seg 4); the 'is, is dumping' stutter in the hook stays. NUMBER CALL FOR MIKE on the last removal: heard in short windows as '68X on it, and, um, there was a 58, with 58X, and, uh, in June'. He calls it 'that 58x' again at 15:46 of this stream and every past post says 58x on Velvet, so the cut keeps 58X and drops the 68X slip. If Mike wants 68X spoken, drop the last removal whole (the clip then sits at 4.7%); there is no clean narrower cut, since 'on it. And, um' has no gap and cutting only 'there was a 58 with' leaves '68X, um, 58X'. Its end edge 879.86 is not silence: it is the flat -40 dB onset of 'fifty' after 'with' has decayed; a re-decode of the join reads 'Velvet, 58X in, uh, in June' clean. Its start and both edges of the first removal are in gated silence. Left for 5C: 'and, uh,' at 880.67-881.10 (the 1.15 s pause after it is for 5B). Not cut, no gap: the 'it know, it knows' stutter opening seg 3. The 'I think' Whisper puts before 'this thing is pumping again' is not in the audio. Captions: 58x, 89x, 'everybody else is dumping', 'CodeMonkey Mike has the greatest crypto community'."
+  },
+  {
+    "id": "ai-jobs-own-assets",
+    "n": 3,
+    "removals": [
+      {
+        "start": 1578.66,
+        "end": 1580.8,
+        "why": "hedge plus tic: 'or something, (pause) you know,' between 'go out onto the roof' and 'it's going to have to order parts'"
+      },
+      {
+        "start": 1654.825,
+        "end": 1655.6,
+        "why": "tic: trailing 'You know?' after 'how the hell are you going to progress?'"
+      },
+      {
+        "start": 1640.35,
+        "end": 1641.2,
+        "why": "tic: stand-alone 'right?' between 'dividends off what you own' and 'And it's going to be crazy hard'"
+      }
+    ],
+    "notes": "Measured 4.5% of voiced content (validator). LIGHT ON PURPOSE: the only real fumbles in this clip sit inside the two peak beats, which are protected, so they stay whole: 'because if you're just going to, you can't get a paycheck and you don't have, you know,' (1646.06-1650.72, peak 1) and 'what I'm saying is like, you're, you're' (1658.1-1659.5, peak 2). I checked whether the first could be cut cleanly if Mike asks: it cannot. The only silence is after 'because' (1646.58-1647.28); 'you know, you can't get a job' runs with no gap (1650.55-1650.88), so any out point there lands inside a word. Opening line of the hook untouched; the first removal is 7 s in, after the roof example. The last removal runs 0.2 s past the nominal start of peak 1 (1641.0, a drifted Whisper time): on the master 'right?' is 1640.82-1641.09 and the first word of the peak, 'And', starts at 1641.42, so no peak word is touched; drop it if the span must stay untouched to the frame. Edges: 1578.66 is a 40 ms gap at -57 dB between 'roof' and 'or'; 1654.825 is a 45 ms gap after 'progress?' (ends 1654.80); the rest are digital silence. Not cut, no gap: the first 'you know' (1574.56-1574.82) and the first 'right?' fused to 'future' (1636.36-1636.52). Captions as in the clip plan ('go out onto the roof', 'earn dividends off what you own', 'stuck on UBI, how the hell')."
+  },
+  {
+    "id": "hate-eth-go-where-the-money-is",
+    "n": 4,
+    "removals": [
+      {
+        "start": 1419.95,
+        "end": 1421.94,
+        "why": "restatement: 'I get back into Litecoin, and it's like' repeats 'I can't believe I'm getting back into Litecoin' from four seconds earlier; now reads 'so I'm like, okay. Ethereum starts giving me the vibe'"
+      },
+      {
+        "start": 1412.812,
+        "end": 1414.25,
+        "why": "hesitation stall: drawn-out 'and, you know, it's' (1.4 s) between 'made in America token' and 'getting ETFs'"
+      }
+    ],
+    "notes": "Measured 8.7% of voiced content (validator). Seg 0 (hook and peak beat, 1435.3-1443.6) untouched. Also untouched: 'And I hate Ethereum. I hate it. I hate it.' and the turn that makes the clip bullish, 'But then it's okay, I'll buy into it because I know it's gonna pump like crazy', plus the whole close (20,000 dollar ETH, 10 years from now). First removal: start in digital silence, end in a 65 ms gated gap before 'Ethereum'. Last removal: the start edge 1412.812 is a 25 ms trough at -47 dB between 'token' and 'and', not silence; the end is a 50 ms gated gap before 'getting'. Result is 'it's that made in America token, getting ETFs, and now it has an optional privacy feature'. If 'token' sounds clipped drop the last removal (the clip then sits at 5.1%). Not cut, no gap: 'Right? Because, you know,' (1410.50-1411.25), 'you know' in 'Ethereum starts, you know, giving' (1422.58-1423.00), and the 'I mean,' that opens seg 2 (runs straight into 'I think'). Captions: Litecoin (not 'line coin'), 'the vibe that Ethereum is going to be, like, totally dominant', 20,000 dollar ETH."
+  }
+]

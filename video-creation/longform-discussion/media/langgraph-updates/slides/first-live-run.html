@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One Livestream. 44 Agent Runs.</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c10;--card:#12151c;--green:#00e68a;--cyan:#00c2ff;--gold:#ffd700;--red:#ff4060;--text:#e8eaf0;--muted:#8892a4;--border:#1e2330}
+html{font-size:min(2.1vh,1.19vw);background:var(--bg)}
+*{box-sizing:border-box}
+body{margin:0;height:100vh;overflow:hidden;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;justify-content:center;padding:2.4rem 4.5rem;position:relative}
+body>*{position:relative;z-index:1}
+.orb{position:absolute;width:520px;height:520px;border-radius:50%;filter:blur(100px);opacity:.2;background:var(--cyan);bottom:-240px;left:-140px;z-index:0}
+.label{font-size:.8rem;text-transform:uppercase;letter-spacing:.18em;color:#6b7588;font-weight:500}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-variant-numeric:lining-nums;font-size:3.4rem;line-height:1.1;margin:.5rem 0 0}
+.divider{width:60px;height:3px;background:linear-gradient(90deg,var(--green),var(--cyan));border-radius:2px;margin:1rem 0 1.3rem}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.box{background:linear-gradient(135deg,rgba(0,230,138,.08),rgba(0,194,255,.06));border:1px solid rgba(0,230,138,.2);border-radius:12px;padding:.95rem 1.5rem;font-size:1.25rem;line-height:1.45;margin-top:1.3rem}
+.box b{color:var(--green);font-weight:700}
+.source{font-size:.8rem;color:#7a8496;margin-top:.8rem}
+.tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.72rem;letter-spacing:.1em;padding:.16rem .5rem;border-radius:999px;vertical-align:middle;margin-left:.5rem}
+.tag.new{background:var(--gold);color:#141000}
+.tag.more{border:1px solid var(--cyan);color:var(--cyan)}
+
+.cols{display:grid;grid-template-columns:1.55fr 1fr;gap:1.6rem;align-items:stretch}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1rem 1.3rem;position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent)}
+.bar{display:grid;grid-template-columns:12.6rem 1fr;align-items:center;gap:.9rem;padding:.42rem 0}
+.bar .name{font-size:1.02rem;color:#c3cad8}
+.bar .track{display:flex;align-items:center;gap:.7rem}
+.bar .fill{flex:0 0 auto;height:1.25rem;border-radius:6px;background:linear-gradient(90deg,var(--cyan),var(--green))}
+.bar .num{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:1.25rem;color:var(--text)}
+.bar .why{font-size:.88rem;color:var(--muted);white-space:nowrap}
+.bar.small .fill{background:#3a4358}
+.side{display:grid;gap:.8rem}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:.75rem 1.2rem}
+.stat .big{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:2.3rem;color:var(--green);line-height:1.1}
+.stat .cap{font-size:1rem;color:#c3cad8}
+.stat.dim .big{color:var(--muted)}
+.pillhead{font-size:.8rem;text-transform:uppercase;letter-spacing:.16em;font-weight:700;color:#7a8496;margin:1.1rem 0 .5rem}
+.pills{display:grid;grid-template-columns:1fr 1fr 1.7fr;gap:.8rem}
+.pill{border-radius:12px;padding:.7rem 1.1rem;border:1px solid var(--c);background:var(--card);font-size:1.02rem;line-height:1.35;color:#c3cad8;display:flex;align-items:center;gap:.9rem}
+.pill b{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:2rem;color:var(--c)}
+</style></head><body>
+<div class="orb"></div>
+<div class="label">The first live run</div>
+<h1>One Livestream. 44 Agent Runs.</h1><div class="divider"></div>
+<div class="cols">
+<div class="card"><div class="bar"><div class="name mono">remotion-builder</div><div class="track"><div class="fill" style="width:11.00rem"></div><div class="num">14</div><span class="why">7 plans + 7 builds</span></div></div><div class="bar"><div class="name mono">visual-qa</div><div class="track"><div class="fill" style="width:10.21rem"></div><div class="num">13</div><span class="why">12 for the shorts + 1 for the posts</span></div></div><div class="bar"><div class="name mono">image-gen</div><div class="track"><div class="fill" style="width:9.43rem"></div><div class="num">12</div><span class="why">7 first rounds + 5 retries</span></div></div><div class="bar small"><div class="name mono">tighten-strategist</div><div class="track"><div class="fill" style="width:1.57rem"></div><div class="num">2</div></div></div><div class="bar small"><div class="name mono">clip-strategist</div><div class="track"><div class="fill" style="width:0.79rem"></div><div class="num">1</div></div></div><div class="bar small"><div class="name mono">lane3-drafter</div><div class="track"><div class="fill" style="width:0.79rem"></div><div class="num">1</div></div></div><div class="bar small"><div class="name mono">publish-meta-author</div><div class="track"><div class="fill" style="width:0.79rem"></div><div class="num">1</div></div></div></div>
+<div class="side">
+<div class="stat"><div class="big">7</div><div class="cap">shorts built, every one through all 4 steps</div></div>
+<div class="stat"><div class="big">41</div><div class="cap">images planned by the builder</div></div>
+<div class="stat dim"><div class="big">13</div><div class="cap">runs the one-agent build would have taken (computed)</div></div>
+</div>
+</div>
+<div class="pillhead">The image check, by short</div>
+<div class="pills">
+<div class="pill" style="--c:var(--green)"><b>2</b><span>passed the first time</span></div>
+<div class="pill" style="--c:var(--cyan)"><b>2</b><span>passed after one retry</span></div>
+<div class="pill" style="--c:var(--gold)"><b>3</b><span>still had a rejected image after 2 rounds, so the builder built without it</span></div>
+</div>
+<div class="source">Source: the graph's own agent logs and each short's image list and image-check report, one livestream, Nov 18 to 19, 2026.</div>
+</body></html>

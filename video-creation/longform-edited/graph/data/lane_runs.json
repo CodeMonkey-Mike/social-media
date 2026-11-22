@@ -32809,5 +32809,55 @@
       }
     },
     "error": null
+  },
+  {
+    "run_id": "ytpost-clip-evals-20261117-130133@2026-11-17T13:01:33",
+    "lane": 1,
+    "lane_name": "longform",
+    "thread": "ytpost-clip-evals-20261117-130133",
+    "started_at": "2026-11-17T13:01:33",
+    "ended_at": "2026-11-17T13:03:50",
+    "duration_s": 137.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "ytpost",
+      "project": "clip-evals",
+      "url": "https://youtu.be/U26NDilqCDo",
+      "redo": []
+    },
+    "summary": {
+      "batch": "clip-evals",
+      "last_node": "y_queue",
+      "steps": {
+        "y_preflight": {
+          "status": "ran",
+          "detail": "https://youtu.be/U26NDilqCDo = \"Evals in Production: Turning Human Verdicts Into a Score\" on @aiEngineeringSimplified (queue ai-yt-posts.json); face thumbnail/yt-post-face-full.png; logo none",
+          "at": "2026-11-17T13:01:33"
+        },
+        "y_plan": {
+          "status": "ran",
+          "detail": "10 slides; post headline \"Every keep or kill at my human gate is now an eval score\"",
+          "at": "2026-11-17T13:01:33"
+        },
+        "y_build": {
+          "status": "ran",
+          "detail": "10 slides rendered 1080x1080 -> yt-post/slides/",
+          "at": "2026-11-17T13:01:59"
+        },
+        "y_qa": {
+          "status": "ran",
+          "detail": "10 slides PASS visual-qa (round 1)",
+          "at": "2026-11-17T13:03:49"
+        },
+        "y_queue": {
+          "status": "ran",
+          "detail": "ai-yt-post-2026-11-17-clip-evals-video appended in ai-yt-posts.json (AI Engineering Simplified, dashboard tab \"AI YouTube Posts\"), 10 images, pending position 1/1 (no poster for this channel yet: Mike posts it by hand)",
+          "at": "2026-11-17T13:03:50"
+        }
+      }
+    },
+    "error": null
   }
 ]

@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 2 · Lecture 5 — Bitcoin's Shortcomings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0d0d;
+    --surface: #141414;
+    --border: #222;
+    --text: #f0f0f0;
+    --muted: #888;
+    --very-muted: #444;
+    --accent: #F5A623;
+    --sidebar-w: 220px;
+    --nav-h: 52px;
+    --progress-h: 3px;
+  }
+
+  html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; }
+
+  #progress-bar {
+    position: fixed; top: 0; left: 0; height: var(--progress-h);
+    background: var(--accent); width: 0%; z-index: 1000;
+    transition: width 0.4s ease;
+  }
+
+  #app { display: flex; height: 100vh; padding-top: var(--progress-h); }
+
+  #sidebar {
+    width: var(--sidebar-w); min-width: var(--sidebar-w);
+    background: var(--surface); border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    padding: 2rem 0 calc(var(--nav-h) + 1rem);
+    overflow-y: auto; z-index: 10;
+  }
+
+  #sidebar-header {
+    padding: 0 1.2rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1rem;
+  }
+
+  #sidebar-header .section-label {
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin-bottom: 0.35rem;
+  }
+
+  #sidebar-header .lecture-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 0.78rem; color: var(--text); line-height: 1.35;
+  }
+
+  #chapter-nav { list-style: none; padding: 0; flex: 1; }
+
+  #chapter-nav li {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    padding: 0.55rem 1.2rem;
+    border-left: 2px solid transparent;
+    cursor: pointer; transition: all 0.2s ease;
+  }
+
+  #chapter-nav li:hover { border-left-color: var(--border); }
+  #chapter-nav li.active { border-left-color: var(--accent); }
+  #chapter-nav li.visited { border-left-color: #333; }
+
+  #chapter-nav li .ch-num {
+    font-size: 0.6rem; color: var(--accent); font-weight: 600;
+    margin-top: 0.1rem; min-width: 1rem;
+  }
+  #chapter-nav li.visited .ch-num { color: var(--very-muted); }
+  #chapter-nav li:not(.active):not(.visited) .ch-num { color: var(--muted); }
+
+  #chapter-nav li .ch-title {
+    font-size: 0.65rem; line-height: 1.4; font-weight: 500; color: var(--muted);
+  }
+  #chapter-nav li.active .ch-title { color: var(--text); }
+  #chapter-nav li.visited .ch-title { color: var(--very-muted); }
+
+  #main {
+    flex: 1; overflow: hidden; position: relative;
+    padding-bottom: var(--nav-h);
+  }
+
+  .slide {
+    position: absolute; inset: 0;
+    padding: 3.5rem 4rem;
+    display: none; flex-direction: column;
+    opacity: 0; transition: opacity 0.5s ease;
+    overflow-y: auto;
+  }
+  .slide.active { display: flex; }
+  .slide.visible { opacity: 1; }
+
+  .breadcrumb {
+    font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 1.4rem; font-weight: 500;
+  }
+  .breadcrumb span { color: var(--accent); }
+
+  .eyebrow {
+    font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin-bottom: 0.6rem;
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+    color: var(--text); line-height: 1.15; margin-bottom: 2.2rem;
+  }
+
+  .slide-counter {
+    position: fixed; bottom: calc(var(--nav-h) + 1rem); right: 1.8rem;
+    font-size: 0.62rem; letter-spacing: 0.12em; color: var(--muted); font-weight: 500;
+  }
+  .slide-counter span { color: var(--accent); }
+
+  .content { flex: 1; display: flex; flex-direction: column; gap: 1rem; }
+
+  /* TWO COL */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+
+  /* STANDARD CARD */
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1.3rem 1.5rem;
+  }
+
+  .card .card-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 0.85rem; color: var(--text); margin-bottom: 0.5rem;
+  }
+
+  .card ul { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+  .card ul li {
+    font-size: 0.72rem; color: var(--muted);
+    padding-left: 1rem; position: relative;
+  }
+  .card ul li::before {
+    content: ''; position: absolute; left: 0; top: 0.45em;
+    width: 4px; height: 4px; border-radius: 50%; background: var(--accent);
+  }
+
+  /* ACCENT TOP BORDER CARD */
+  .card.accent-top { border-top: 2px solid var(--accent); }
+
+  /* STAT ROW */
+  .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+
+  .stat-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-top: 2px solid var(--accent); border-radius: 3px;
+    padding: 1.2rem 1.4rem;
+  }
+  .stat-card .stat-num {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 1.6rem; color: var(--accent); line-height: 1; margin-bottom: 0.3rem;
+  }
+  .stat-card .stat-label { font-size: 0.65rem; color: var(--muted); line-height: 1.4; }
+
+  /* TIMELINE / FORK STEPS */
+  .fork-row {
+    display: flex; align-items: stretch; gap: 0;
+  }
+
+  .fork-node {
+    flex: 1; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1.1rem 1.3rem;
+    display: flex; flex-direction: column; gap: 0.4rem;
+  }
+
+  .fork-node.highlight { border-color: var(--accent); }
+
+  .fork-node .fn-year {
+    font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600;
+  }
+
+  .fork-node .fn-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 0.82rem; color: var(--text);
+  }
+
+  .fork-node .fn-desc {
+    font-size: 0.68rem; color: var(--muted); line-height: 1.4;
+  }
+
+  .fork-arrow {
+    display: flex; align-items: center; padding: 0 0.5rem;
+    color: var(--very-muted); font-size: 0.9rem; flex-shrink: 0;
+  }
+
+  /* COMPARE CARDS */
+  .compare-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1.3rem 1.5rem;
+  }
+  .compare-card .cc-label {
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 600; margin-bottom: 0.4rem;
+  }
+  .compare-card.bad .cc-label { color: var(--muted); }
+  .compare-card.good .cc-label { color: var(--accent); }
+  .compare-card .cc-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 0.9rem; color: var(--text); margin-bottom: 0.6rem;
+  }
+  .compare-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .compare-card ul li {
+    font-size: 0.7rem; color: var(--muted);
+    padding-left: 1rem; position: relative;
+  }
+  .compare-card.bad ul li::before {
+    content: ''; position: absolute; left: 0; top: 0.45em;
+    width: 4px; height: 4px; border-radius: 50%; background: var(--border);
+  }
+  .compare-card.good ul li::before {
+    content: ''; position: absolute; left: 0; top: 0.45em;
+    width: 4px; height: 4px; border-radius: 50%; background: var(--accent);
+  }
+
+  /* CLOSING STATEMENT */
+  .closing {
+    border-left: 2px solid var(--accent);
+    padding: 0.9rem 1.3rem;
+    margin-top: 0.3rem;
+  }
+  .closing p {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 0.95rem; color: var(--text); line-height: 1.5;
+  }
+  .closing p span { color: var(--accent); }
+
+  /* KASPA ARCH VISUAL */
+  .arch-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; align-items: start; }
+
+  .chain-visual { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .chain-label {
+    font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 600; margin-bottom: 0.2rem;
+  }
+  .chain-label.btc { color: var(--muted); }
+  .chain-label.kas { color: var(--accent); }
+
+  .chain-blocks {
+    display: flex; align-items: center; gap: 0.3rem; flex-wrap: wrap;
+  }
+
+  .block {
+    width: 32px; height: 32px; border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.55rem; font-weight: 600;
+  }
+  .block.btc-b { background: var(--border); color: var(--muted); }
+  .block.kas-b { background: rgba(245,166,35,0.15); border: 1px solid var(--accent); color: var(--accent); }
+
+  .chain-arrow { font-size: 0.7rem; color: var(--very-muted); }
+
+  .dag-grid {
+    display: grid; grid-template-columns: repeat(4, 32px);
+    grid-template-rows: repeat(3, 32px);
+    gap: 6px;
+  }
+
+  /* NAV */
+  #nav-bar {
+    position: fixed; bottom: 0; left: var(--sidebar-w); right: 0;
+    height: var(--nav-h); background: var(--surface);
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: flex-end;
+    padding: 0 2rem; gap: 0.75rem; z-index: 100;
+  }
+
+  .nav-btn {
+    font-family: 'Inter', sans-serif; font-size: 0.7rem;
+    font-weight: 500; letter-spacing: 0.08em;
+    padding: 0.45rem 1.2rem; border-radius: 2px;
+    cursor: pointer; transition: all 0.2s ease;
+  }
+  #btn-prev { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+  #btn-prev:hover { border-color: var(--muted); color: var(--text); }
+  #btn-next { background: var(--accent); border: 1px solid var(--accent); color: #000; font-weight: 600; }
+  #btn-next:hover { opacity: 0.85; }
+
+  /* ANIMATIONS */
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-12px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  .slide.visible .card,
+  .slide.visible .stat-card,
+  .slide.visible .fork-node,
+  .slide.visible .compare-card {
+    animation: slideIn 0.4s ease both;
+  }
+
+  .slide.visible .card:nth-child(2),
+  .slide.visible .stat-card:nth-child(2),
+  .slide.visible .fork-node:nth-child(2),
+  .slide.visible .compare-card:nth-child(2) { animation-delay: 0.07s; }
+
+  .slide.visible .card:nth-child(3),
+  .slide.visible .stat-card:nth-child(3),
+  .slide.visible .fork-node:nth-child(3) { animation-delay: 0.14s; }
+
+  .slide.visible .card:nth-child(4) { animation-delay: 0.21s; }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<div id="app">
+  <aside id="sidebar">
+    <div id="sidebar-header">
+      <div class="section-label">Section 2 · Lecture 5</div>
+      <div class="lecture-title">Bitcoin's Shortcomings</div>
+    </div>
+    <ul id="chapter-nav">
+      <li data-slide="0" class="active">
+        <span class="ch-num">01</span>
+        <span class="ch-title">Bitcoin Was Never Meant to Be Perfect</span>
+      </li>
+      <li data-slide="1">
+        <span class="ch-num">02</span>
+        <span class="ch-title">The Scalability Problem</span>
+      </li>
+      <li data-slide="2">
+        <span class="ch-num">03</span>
+        <span class="ch-title">The Blocksize Wars & Bitcoin Cash</span>
+      </li>
+      <li data-slide="3">
+        <span class="ch-num">04</span>
+        <span class="ch-title">Energy Consumption</span>
+      </li>
+      <li data-slide="4">
+        <span class="ch-num">05</span>
+        <span class="ch-title">User Experience & Self-Custody</span>
+      </li>
+      <li data-slide="5">
+        <span class="ch-num">06</span>
+        <span class="ch-title">Volatility & Fungibility</span>
+      </li>
+      <li data-slide="6">
+        <span class="ch-num">07</span>
+        <span class="ch-title">What Bitcoin Left Out</span>
+      </li>
+      <li data-slide="7">
+        <span class="ch-num">08</span>
+        <span class="ch-title">Enter Kaspa</span>
+      </li>
+      <li data-slide="8">
+        <span class="ch-num">09</span>
+        <span class="ch-title">Progress Requires Tradeoffs</span>
+      </li>
+    </ul>
+  </aside>
+
+  <main id="main">
+
+    <!-- SLIDE 1 -->
+    <section class="slide active" data-index="0">
+      <div class="breadcrumb">Section 2 / <span>Lecture 5</span></div>
+      <div class="eyebrow">Context</div>
+      <h2>Bitcoin Was Never Meant to Be Perfect</h2>
+      <div class="content">
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">What Satoshi Solved</div>
+            <ul>
+              <li>Trustless digital money</li>
+              <li>No central authority needed</li>
+              <li>Censorship resistance</li>
+              <li>Fixed, verifiable supply</li>
+              <li>Permissionless participation</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">What Was Left Open</div>
+            <ul>
+              <li>Transaction throughput</li>
+              <li>Confirmation speed</li>
+              <li>Energy efficiency</li>
+              <li>Programmability</li>
+              <li>User experience</li>
+            </ul>
+          </div>
+        </div>
+        <div class="closing">
+          <p>Bitcoin solved the <span>hardest problem</span> first. What it left behind opened the door for everything that came next.</p>
+        </div>
+      </div>
+      <div class="slide-counter"><span>1</span> / 9</div>
+    </section>
+
+    <!-- SLIDE 2 -->
+    <section class="slide" data-index="1">
+      <div class="breadcrumb">Section 2 / <span>Lecture 5</span></div>
+      <div class="eyebrow">Scalability</div>
+      <h2>The Scalability Problem</h2>
+      <div class="content">
+        <div class="stat-row">
+          <div class="stat-card">
+            <div class="stat-num">~7</div>
+            <div class="stat-label">Bitcoin transactions per second</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">24,000+</div>
+            <div class="stat-label">Visa transactions per second</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">$50+</div>
+            <div class="stat-label">Peak average transaction fee (2021/2023)</div>
+          </div>
+        </div>
+        <div class="two-col" style="margin-top: 0.4rem;">
+          <div class="card">
+            <div class="card-title">Why It Happens</div>
+            <ul>
+              <li>1MB block size cap</li>
+              <li>New block every ~10 minutes</li>
+              <li>Limited transactions per block</li>
+              <li>High demand = fee auction</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">The Real-World Impact</div>
+            <ul>
+              <li>Small transfers priced out</li>
+              <li>Not viable for daily payments</li>
+              <li>Congestion during bull markets</li>
+              <li>Hours-long confirmation waits</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="slide-counter"><span>2</span> / 9</div>
+    </section>
+
+    <!-- SLIDE 3 -->
+    <section class="slide" data-index="2">
+      <div class="breadcrumb">Section 2 / <span>Lecture 5</span></div>
+      <div class="eyebrow">The First Fix</div>
+      <h2>The Blocksize Wars &amp; Bitcoin Cash</h2>
+      <div class="content">
+        <div class="fork-row" style="gap: 0.5rem;">
+          <div class="fork-node">
+            <div class="fn-year">2015–2017</div>
+            <div class="fn-title">The Debate</div>
+            <div class="fn-desc">Community splits: keep blocks small vs. scale by increasing block size</div>
+          </div>
+          <div class="fork-arrow">→</div>
+          <div class="fork-node highlight">
+            <div class="fn-year">Aug 2017</div>
+            <div class="fn-title">Bitcoin Cash Forks</div>
+            <div class="fn-desc">Block size raised from 1MB to 8MB. Faster and cheaper transactions</div>
+          </div>
+          <div class="fork-arrow">→</div>
+          <div class="fork-node">
+            <div class="fn-year">Nov 2018</div>
+            <div class="fn-title">BCH Splits Again</div>
+            <div class="fn-desc">Bitcoin Cash forks into BCH and Bitcoin SV. The community fractures further</div>
+          </div>
+        </div>
+        <div class="two-col" style="margin-top: 0.4rem;">
+          <div class="card">
+            <div class="card-title">What BCH Fixed</div>
+            <ul>
+              <li>Faster transactions</li>
+              <li>Lower fees</li>
+              <li>Higher throughput</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">What BCH Broke</div>
+            <ul>
+              <li>Larger blocks need more storage</li>
+              <li>Higher bandwidth to run a node</li>
+              <li>Fewer nodes = more centralization</li>
+              <li>Lost Bitcoin's network effect</li>
+            </ul>
+          </div>
+        </div>
+        <div class="closing">
+          <p>Bigger blocks is a <span>blunt instrument</span>. You trade decentralization for speed.</p>
+        </div>
+      </div>
+      <div class="slide-counter"><span>3</span> / 9</div>
+    </section>
+
+    <!-- SLIDE 4 -->
+    <section class="slide" data-index="3">
+      <div class="breadcrumb">Section 2 / <span>Lecture 5</span></div>
+      <div class="eyebrow">Energy</div>
+      <h2>Energy Consumption</h2>
+      <div class="content">
+        <div class="stat-row">
+          <div class="stat-card">
+            <div class="stat-num">~150 TWh</div>
+            <div class="stat-label">Bitcoin's estimated annual energy use</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">~130 TWh</div>
+            <div class="stat-label">Argentina's annual electricity consumption</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">Proof of Work</div>
+            <div class="stat-label">The mechanism that requires the energy</div>
+          </div>
+        </div>
+        <div class="two-col" style="margin-top: 0.4rem;">
+          <div class="card">
+            <div class="card-title">The Argument Against</div>
+            <ul>
+              <li>Consumes as much as a small country</li>
+              <li>Significant carbon footprint</li>
+              <li>Political and regulatory liability</li>
+              <li>Hard to defend publicly</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">The Argument For</div>
+            <ul>
+              <li>Energy expenditure IS the security</li>
+              <li>Miners increasingly use renewables</li>
+              <li>Uses stranded / excess energy</li>
+              <li>Gold mining also uses massive energy</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="slide-counter"><span>4</span> / 9</div>
+    </section>
+
+    <!-- SLIDE 5 -->
+    <section class="slide" data-index="4">
+      <div class="breadcrumb">Section 2 / <span>Lecture 5</span></div>
+      <div class="eyebrow">Adoption Barrier</div>
+      <h2>User Experience &amp; Self-Custody</h2>
+      <div class="content">
+        <div class="three-col">
+          <div class="card accent-top">
+            <div class="card-title">Seed Phrases</div>
+            <ul>
+              <li>12 or 24 random words</li>
+              <li>Must be stored offline</li>
+              <li>Lose it, lose everything</li>
+            </ul>
+          </div>
+          <div class="card accent-top">
+            <div class="card-title">Wallet Addresses</div>
+            <ul>
+              <li>34-character strings</li>
+              <li>One typo = lost funds</li>
+              <li>No name, no confirmation</li>
+            </ul>
+          </div>
+          <div class="card accent-top">
+            <div class="card-title">No Recovery</div>
+            <ul>
+              <li>No password reset</li>
+              <li>No customer support</li>
+              <li>No fraud department</li>
+            </ul>
+          </div>
+        </div>
+        <div class="closing" style="margin-top: 0.5rem;">
+          <p>Self-sovereignty is <span>powerful</span>. But the burden of security falls entirely on <span>you</span>.</p>
+        </div>
+      </div>
+      <div class="slide-counter"><span>5</span> / 9</div>
+    </section>
+
+    <!-- SLIDE 6 -->
+    <section class="slide" data-index="5">
+      <div class="breadcrumb">Section 2 / <span>Lecture 5</span></div>
+      <div class="eyebrow">As Money</div>
+      <h2>Volatility &amp; Fungibility</h2>
+      <div class="content">
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Volatility</div>
+            <ul>
+              <li>Price can swing 30%+ in a week</li>
+              <li>Cannot price goods in Bitcoin reliably</li>
+              <li>Not a stable medium of exchange</li>
+              <li>Merchants cannot easily accept it</li>
+              <li>Makes budgeting impossible</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">Fungibility</div>
+            <ul>
+              <li>Blockchain is fully public</li>
+              <li>Every coin has a traceable history</li>
+              <li>Coins linked to illicit activity flagged</li>
+              <li>Exchanges can refuse "tainted" BTC</li>
+              <li>Not all Bitcoin is treated equally</li>
+            </ul>
+          </div>
+        </div>
+        <div class="closing">
+          <p>A truly fungible currency treats <span>every unit identically</span>. Bitcoin's transparency works against this.</p>
+        </div>
+      </div>
+      <div class="slide-counter"><span>6</span> / 9</div>
+    </section>
+
+    <!-- SLIDE 7 -->
+    <section class="slide" data-index="6">
+      <div class="breadcrumb">Section 2 / <span>Lecture 5</span></div>
+      <div class="eyebrow">By Design</div>
+      <h2>What Bitcoin Intentionally Left Out</h2>
+      <div class="content">
+        <div class="two-col">
+          <div class="compare-card bad">
+            <div class="cc-label">Bitcoin</div>
+            <div class="cc-title">Intentionally Simple</div>
+            <ul>
+              <li>No native smart contracts</li>
+              <li>No programmable logic</li>
+              <li>Script language is deliberately limited</li>
+              <li>Stability and security over features</li>
+            </ul>
+          </div>
+          <div class="compare-card good">
+            <div class="cc-label">The Door It Opened</div>
+            <div class="cc-title">Ethereum & Beyond</div>
+            <ul>
+              <li>Smart contracts on-chain</li>
+              <li>DeFi, NFTs, DAOs</li>
+              <li>Programmable money</li>
+              <li>Entire ecosystem built on top</li>
+            </ul>
+          </div>
+        </div>
+        <div class="closing">
+          <p>Bitcoin's simplicity is a <span>strength and a limitation</span>. It is what makes it secure — and what made the rest of crypto necessary.</p>
+        </div>
+      </div>
+      <div class="slide-counter"><span>7</span> / 9</div>
+    </section>
+
+    <!-- SLIDE 8 -->
+    <section class="slide" data-index="7">
+      <div class="breadcrumb">Section 2 / <span>Lecture 5</span></div>
+      <div class="eyebrow">The Next Generation</div>
+      <h2>Enter Kaspa</h2>
+      <div class="content">
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Bitcoin's Base Layer Limits</div>
+            <ul>
+              <li>~7 TPS throughput</li>
+              <li>10-minute block times</li>
+              <li>Linear blockchain — one block at a time</li>
+              <li>Scaling requires Layer 2 workarounds</li>
+            </ul>
+          </div>
+          <div class="card accent-top">
+            <div class="card-title">Kaspa's BlockDAG Architecture</div>
+            <ul>
+              <li>Blocks processed in parallel, not sequence</li>
+              <li>1 block per second today</li>
+              <li>Roadmap: 10, then 100 blocks per second</li>
+              <li>Near-instant confirmations</li>
+              <li>Fees of fractions of a cent</li>
+              <li>Still proof-of-work</li>
+            </ul>
+          </div>
+        </div>
+        <div class="closing">
+          <p>Kaspa doesn't bolt a fix on top. It <span>rebuilds the foundation</span> using the GHOSTDAG protocol — parallel blocks, without sacrificing decentralization.</p>
+        </div>
+      </div>
+      <div class="slide-counter"><span>8</span> / 9</div>
+    </section>
+
+    <!-- SLIDE 9 -->
+    <section class="slide" data-index="8">
+      <div class="breadcrumb">Section 2 / <span>Lecture 5</span></div>
+      <div class="eyebrow">The Big Picture</div>
+      <h2>Progress Requires Tradeoffs</h2>
+      <div class="content">
+        <div class="three-col">
+          <div class="card accent-top">
+            <div class="card-title">Bitcoin Cash</div>
+            <ul>
+              <li>Traded decentralization for speed</li>
+              <li>Bigger blocks, fewer nodes</li>
+              <li>Lost network effect</li>
+              <li>Largely a failed experiment</li>
+            </ul>
+          </div>
+          <div class="card accent-top">
+            <div class="card-title">Ethereum</div>
+            <ul>
+              <li>Traded simplicity for programmability</li>
+              <li>Proof of Stake, not Proof of Work</li>
+              <li>Unlocked DeFi and smart contracts</li>
+              <li>Different trust model</li>
+            </ul>
+          </div>
+          <div class="card accent-top">
+            <div class="card-title">Kaspa</div>
+            <ul>
+              <li>Keeps proof-of-work security</li>
+              <li>Solves speed at the base layer</li>
+              <li>blockDAG instead of blockchain</li>
+              <li>Story still being written</li>
+            </ul>
+          </div>
+        </div>
+        <div class="closing">
+          <p>Bitcoin's shortcomings were not bugs. They were <span>design choices</span> — and they sparked an entire industry trying to do better.</p>
+        </div>
+      </div>
+      <div class="slide-counter"><span>9</span> / 9</div>
+    </section>
+
+  </main>
+</div>
+
+<div id="nav-bar">
+  <button class="nav-btn" id="btn-prev">Prev</button>
+  <button class="nav-btn" id="btn-next">Next</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const navItems = document.querySelectorAll('#chapter-nav li');
+  const progressBar = document.getElementById('progress-bar');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+  let current = 0;
+
+  function goTo(index) {
+    if (index < 0 || index >= slides.length) return;
+
+    slides[current].classList.remove('visible');
+    setTimeout(() => {
+      slides[current].classList.remove('active');
+      slides[index].classList.add('active');
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        slides[index].classList.add('visible');
+      }));
+    }, 300);
+
+    navItems[current].classList.remove('active');
+    navItems[current].classList.add('visited');
+    navItems[index].classList.remove('visited');
+    navItems[index].classList.add('active');
+
+    current = index;
+
+    progressBar.style.width = ((current + 1) / slides.length * 100) + '%';
+    btnPrev.style.opacity = current === 0 ? '0.3' : '1';
+    btnPrev.style.pointerEvents = current === 0 ? 'none' : 'auto';
+    btnNext.textContent = current === slides.length - 1 ? 'Done' : 'Next';
+  }
+
+  slides[0].classList.add('visible');
+  progressBar.style.width = (1 / slides.length * 100) + '%';
+  btnPrev.style.opacity = '0.3';
+  btnPrev.style.pointerEvents = 'none';
+
+  btnNext.addEventListener('click', () => goTo(current + 1));
+  btnPrev.addEventListener('click', () => goTo(current - 1));
+  navItems.forEach(item => item.addEventListener('click', () => goTo(parseInt(item.dataset.slide))));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+  });
+</script>
+</body>
+</html>

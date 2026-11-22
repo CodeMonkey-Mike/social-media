@@ -1,0 +1,612 @@
+{
+  "batch": "ripping",
+  "date": "2026-11-18",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/ripping LOW BPS VERTICAL/ripping LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-11-18",
+  "brief": null,
+  "fact_check": [
+    {
+      "claim": "'pie verse... it just hit a billion... 1.05 billion' and 'look at this pump right now' (transcript)",
+      "verdict": "verified, with the tracker split noted: CoinMarketCap shows a market cap of $1.058B at $3.52 (300.35M circulating, ATH $3.59 on Nov 18 2026); CoinGecko shows $970M at $3.53 (274.75M circulating, ATH $3.64 on Nov 18 2026, so around $1.0B at the high). 24h +70.1% (CMC +69.5%), 7d +117.9%, 30d +228.6%; the biggest 24h gainer in the CoinGecko top 100 at drafting (+68.5% versus +27.3% for the next coin). Bitcoin $62,615, -3.25% 24h, -14.6% 7d. Copy: 'touched a $1 billion market cap on November 18', 'ran 70% in a single day', 'up around 118% on the week', 'a new all-time high around $3.60', 'Bitcoin fell 3%' and 'down around 15% over the same week'. OPERATOR NOTE: the 70% and 118% figures are the Nov 18 snapshot; if Pieverse gives back a large part of the move before these post, re-check the tweet, YT post 1, thread 1 and V4 slides 1 to 3.",
+      "source": "api.coingecko.com coins/markets and coins/pieverse/market_chart (2026-11-19 00:24 UTC); coinmarketcap.com/currencies/pieverse (fetched 2026-11-19)"
+    },
+    {
+      "claim": "'we decided to buy it at 60 because it was 60 million market cap... a 17.5 [x]... you'd be up over 17x' and 'my bot called it at a 20 million market cap' (transcript)",
+      "verdict": "PARTLY verified, and the multiple is NOT printed. CoinGecko shows Pieverse at a $59M to $66M market cap on Nov 21 to 24 and Nov 28 to Dec 2 2025 (price $0.34 to $0.37 on 175M circulating), so the $60M call level holds; the November 2025 low near 12 to 13 cents is a market cap near $21M to $23M, so the $20M bot flag holds. 17.5x is the market cap ratio ($1.05B / $60M). The PRICE multiple from the roughly $0.34 that a $60M cap meant at the time is around 10x at $3.53, because circulating supply grew from 175M to 275M (CoinGecko) or 300M (CMC); the September tweets said 'about 8x' at $1.98, which implies yet another base. Copy therefore states the two market caps ('near a $60 million market cap' and '$1 billion') and prints no multiple anywhere. OPERATOR NOTE: ask Mike which multiple he wants on record before a '17x' goes into any copy.",
+      "source": "api.coingecko.com coins/pieverse/market_chart days=365 (2026-11-19); schedule-tweets/data/x-tweets.json (Sept 22 2026 tweet); repurpose/output/pieverse-lane3-plan.json fact_check"
+    },
+    {
+      "claim": "'pie verse is in the x402 narrative... agent to agent payments' (transcript)",
+      "verdict": "product checked on the project's own live pages (coin-research row 8): pieverse.io/llms.txt says 'Live agent payments: deferred' and 'x402, UCP, ACP, AP2-style agent transactions: deferred', and describes the product as provisioning web3-native AI agents deployed to chat channels; the home page product is Purr-Fect Claw (agents for Line and Kakao) per the longform project's DATA.md (read Nov 11 to 14). The whitepaper and CoinMarketCap still describe 'an agent-native, compliant payment stack powered by x402b rails'. So copy says Pieverse 'trades in the agent payments narrative, the x402 trade' and 'sits in' that lane, and YT post 1 and thread 1 carry one line: what is live is AI agents for chat apps, the payment rails are still ahead. No usage, volume or transaction figure is printed. 'Public since September' = the first Pieverse tweets (Sept 22 2026).",
+      "source": "pieverse.io/llms.txt (fetched 2026-11-19); video-creation/longform-edited/media/pieverse/DATA.md (Pillar 3 and section 4, do-not-air); coinmarketcap.com/currencies/pieverse About text"
+    },
+    {
+      "claim": "'to get in it now, this huge pump... it's very dangerous. I wouldn't do it' and the short squeeze / liquidations read off Coinglass (transcript)",
+      "verdict": "Mike's own caution, drafted as his ('Would I chase it up here? No.'). The short squeeze read is NOT drafted: open interest and liquidation figures were not pulled (Binance futures is not reachable from this machine per coin-research), so no derivatives claim appears anywhere.",
+      "source": "transcript; video-creation/skills/coin-research/coin-research.md (event window rule, reachable venues)"
+    },
+    {
+      "claim": "'the entire market is dumping... only three green bubbles out of 100' (transcript)",
+      "verdict": "softened: at drafting 20 of the CoinGecko top 100 were green on 24h (9 of them stablecoins or tokenized treasuries) and 80 were red; the stream-time count of three cannot be reproduced. Copy says 'most of the top 100 was red' and never 'three'.",
+      "source": "api.coingecko.com coins/markets top 100 by market cap (2026-11-19 00:25 UTC)"
+    },
+    {
+      "claim": "'Pippin is ripping again... we did an 89X' and 'Velvet... 68X... 58X in June... pumping again' (transcript)",
+      "verdict": "verified as bounces off fresh lows, NOT drafted: $PIPPIN $0.0185, +66% 24h, one day after a one-year low of $0.011 (Nov 17 2026), 98% under its Feb 26 2026 ATH ($0.897), market cap $18.5M; $VELVET $0.073, +64% 7d, after a one-year low of $0.045 on Nov 9, 96% under its June 29 2026 ATH ($2.08), market cap $34.6M. The Velvet multiple differs between streams (58x, 68x, 130x). A 'ripping' post on two coins sitting 96% to 98% under their highs would misread, and both lines sit inside the membership pitch.",
+      "source": "api.coingecko.com coins/markets and market_chart days=365 for pippin and velvet (2026-11-19); earlier ledgers (ai-takeover, best-time, 30x-tao)"
+    },
+    {
+      "claim": "'Zelle selects Solana to expand international payments using crypto stablecoins' (transcript, reading a headline)",
+      "verdict": "verified: on Nov 16 2026, on stage at Solana's Breakpoint conference, Zelle (run by Early Warning Services) said its ZelleUSD (ZLUSD) stablecoin will launch on Solana for international peer to peer payments; Anchorage Digital Bank is the issuer and US to India is the first corridor; no launch date was given on stage. Copy: 'Zelle just picked Solana for its ZelleUSD stablecoin and its push into international payments'.",
+      "source": "cointelegraph.com/news/zelle-solana-zelleusd-stablecoin-international-payments (fetched 2026-11-19); coinmarketcap.com/academy/article/zelle-solana-zelleusd-international-payments; cryptobriefing.com/zelle-solana-zelleusd-stablecoin-international-payments"
+    },
+    {
+      "claim": "'Swift that partnered with Linea' (transcript)",
+      "verdict": "corrected per the grapes ledger: Swift is building its blockchain shared ledger with Consensys, the company that built Linea; the ledger went into a live pilot on July 9 2026 with 17 banks and runs on a permissioned network, not the public Linea chain. Copy: 'Swift is building its blockchain ledger with Consensys, the team that built Linea, and it has been in a live pilot with 17 banks since July'; never 'Swift runs on Linea'. $LINEA $0.00189, market cap $46M (not printed).",
+      "source": "repurpose/output/grapes-lane3-plan.json fact_check (theblock.co/post/372706/swift-blockchain-ledger-consensys; eco.com 17 banks article, Aug 27 2026); api.coingecko.com (2026-11-19)"
+    },
+    {
+      "claim": "'the whole Quant setup and the Canton setup with settlements' (transcript)",
+      "verdict": "verified per the peach and stock-market ledgers: the DTCC Tokenization Service went live on Oct 28 2026 on the Canton Network and will connect to Solana in the second half of 2027 (announced Nov 12 2026); The Clearing House picked Quant for its tokenized deposit network (Sept 24 2026). Copy uses the DTCC line ('live on Canton, with Solana lined up for the second half of 2027'); Quant appears only as a price run in YT post 2 and its thread.",
+      "source": "repurpose/output/peach-lane3-plan.json fact_check (cryptobriefing.com/dtcc-tokenized-assets-solana-2027); repurpose/output/stock-market-lane3-plan.json fact_check"
+    },
+    {
+      "claim": "'we just had the Quant pump, we just had NEAR pump... they get their unique pumps here and there' (transcript)",
+      "verdict": "verified and dated on CoinGecko daily data: $QNT $55.91 on Aug 19 2026 to $287.38 on Oct 1 2026 (5.1x in 43 days, my calc), now $150.80; $NEAR $1.588 on Aug 19 2026 to $5.888 on Oct 12 2026 (3.7x, my calc), now $3.28. Copy: 'around $56 on August 19 to around $287 on October 1, 5x in six weeks' and 'around $1.59 to around $5.89 by October 12, almost 4x'; the polls say 'Quant ran 5x from August into October'.",
+      "source": "api.coingecko.com coins/quant-network and coins/near market_chart days=365 (2026-11-19)"
+    },
+    {
+      "claim": "'the LAB, 353X we did back in May... I was thinking LAB was going to do like a 20x over time... suddenly goes exploding with a 350x' (transcript)",
+      "verdict": "Mike's own community result, on record in persona.json (spoken_voice cta_style: a 353X on the LAB token); written as his own numbers in YT post 2 and thread 2 only.",
+      "source": "persona.json; transcript"
+    },
+    {
+      "claim": "viewer: 'Kaspa will lead the bull run'; Mike: 'I don't know about Kaspa leading the bull run... different coins going to pump at different times... we're far from the day when everything is pumping at the same time... 2027, that's possible... we're talking 2028' (transcript)",
+      "verdict": "Mike's own view, drafted in first person. Because his one-liner 'Kaspa leads the next bull run' posted on Nov 17, copy never says Kaspa will not lead; it says the run is showing up one coin at a time and the everything-pumps-together phase comes later ('a taste in 2027, the real thing in 2028'). 'Its day hasn't come yet' rests on $KAS $0.02702, market cap $752M, rank 80, 87.0% under its ATH ($0.2074, July 31 2024); 10 blocks per second and the fair launch per prior ledgers. The '50x that only does a 5x' line is his general rule for high conviction plays and is written as a general rule, not as a Kaspa forecast.",
+      "source": "transcript; api.coingecko.com (2026-11-19 00:24 UTC); schedule-tweets/data/x-tweets.json (Nov 17 tweet)"
+    },
+    {
+      "claim": "'US oil prices fall below $82 a barrel for the very first time since August 27th... gas prices... largest single day drop in 18 years' (transcript, reading a post)",
+      "verdict": "partly verified: the post is real (Nov 18 2026); WTI fell under $83 for the first time since late August (FXStreet; Trading Economics $82.87, -3.66% on Nov 18), more than 20% under October's peak near $104. The 18-year gasoline record has no wire confirmation and is NOT printed. Copy (YT post 2 and thread 2, one line, no war framing): 'US oil just fell under $83 a barrel for the first time since late August'. The Iran / Strait of Hormuz material and the '100K Bitcoin without the war' counterfactual stay out (dark register is tweet tier only, and no tweet was built on it).",
+      "source": "fxstreet.com/news/wti-oil-drifts-below-8300-as-higher-us-stocks-calm-concerns-about-supply-202611180855; tradingeconomics.com/commodity/crude-oil; x.com/KobeissiLetter/status/2123107215477547378 (search result, 2026-11-19)"
+    },
+    {
+      "claim": "'the productivity explosion because of AI is going to cause prices to get cheaper... no reason to have any interest rates at all... then the surge is going to happen' (transcript)",
+      "verdict": "Mike's macro thesis; drafted softly as his read ('when prices keep coming down, the Fed gets room to cut, and cheap money lifts everything at once'). No rate level and no 'zero' is printed.",
+      "source": "transcript"
+    },
+    {
+      "claim": "'somebody in my last live stream said Solana is probably going to surge before TAO does, and I think that's right... I want to catch TAO at 170... it's at 190' (transcript)",
+      "verdict": "verified: $TAO $190.81 (-11.0% 7d, 74.8% under its $757.60 ATH); $SOL $73.20. The Solana catalysts named in copy are the Zelle and DTCC items above. The under $170 level is Mike's own, with 'Never financial advice'. His aside about buying Solana again is not drafted (no position announcement, and SOL is never framed as a stacking pick).",
+      "source": "api.coingecko.com (2026-11-19 00:24 UTC); transcript; persona.json stacking_lineup"
+    },
+    {
+      "claim": "'mixed feeling about this Kaspa dollar thing... somebody on X replied to me talking about a bridge... having a bridge for USDT is like a little security flaw... it's not like there's an urgency... eventually Kaspa is going to start going up and then there's a demand, why don't we have regular USDT without a bridge' (transcript)",
+      "verdict": "Mike's own position, drafted as the follow-up to his Nov 16 question tweet (it moves the story forward: the answer he got back and where he lands). The bridge argument is attributed to the replies ('the best answer I got back'), not asserted, and no copy says whether USDT is or is not on Kaspa. Re-checked on the community site: testnet May 2027 and mainnet target September 2027 ('These are development targets and may change'), 'No $USDT or $USDC deployment is promised'. The chat line about a podcast with the Kaspa Dollar developer was not checked and is not drafted.",
+      "source": "transcript; kdollar.space (fetched 2026-11-19); repurpose/output/peach-lane3-plan.json fact_check"
+    },
+    {
+      "claim": "'Kaspa Rocket... there is a launchpad out there... only a 5K market cap... you put in like 20 bucks and it turns into a million' and '$KDOLLAR launched and tradeable on Kaspa Rocket' (transcript)",
+      "verdict": "NOT drafted: kasparocket.fun shows a 'Launch your Kaspa Token' page ('Fair launch, no pre-sale, no team allocation') with no status line and no token stats in a plain fetch, and kdollar.space links to a KaspaRocket market for $KDOLLAR (KCC-20, Kaspa L1). The $5K market cap, the token Whisper wrote as 'then' and the lottery-ticket framing could not be verified, and a post built on unnamed micro caps would be an unverified claim.",
+      "source": "kasparocket.fun (fetched 2026-11-19); kdollar.space (fetched 2026-11-19); repurpose/output/was-i-right-lane3-plan.json fact_check"
+    },
+    {
+      "claim": "'I hate Ethereum... one day Ethereum is going to flip Bitcoin... a $20,000 ETH is really conservative, 10 years from now' (transcript)",
+      "verdict": "Mike's own prediction (persona core_theses carries the ETH flip), drafted in first person as the batch's deliberate engagement-bait item (technique 5, provocative prediction). $ETH $1,768 at drafting, so $20,000 is around 11x; no current price is printed. His 'I'll buy into it' is not drafted (ETH is never a stacking pick in copy).",
+      "source": "transcript; persona.json core_theses and stacking_lineup; api.coingecko.com (2026-11-19 00:24 UTC)"
+    },
+    {
+      "claim": "'it is official that AI can code better than any software engineer... you can't be a code monkey going forward... you have to invest in assets... an asset driven future' (transcript); the 70,000-agent call center story, the job-loss clips he played and the modem support call",
+      "verdict": "the coding and assets lines are Mike's own professional opinion, drafted in first person in one tweet with no statistic. The call center figure (a podcast guest's anecdote), the clips and the modem story are unverified or personal tangents and are NOT drafted; no creator or podcast is named.",
+      "source": "transcript; persona.json avoid_in_drafts"
+    },
+    {
+      "claim": "'in the last year we saw like Zcash, like out of the blue out of this huge pump. It really caught me off guard. I thought it was just like this old dead antiquated token' (transcript)",
+      "verdict": "UNRESOLVED: possible zKAS mishear, ask Mike; no content drafted",
+      "source": "persona.json ticker_corrections.zkas_not_zcash; lane 3 hard gate"
+    },
+    {
+      "claim": "'this is the Anthropic IPO, all this money rotating out... does that mean a bunch of extra weeks going a little bit further down, the same way this happened after SpaceX' (transcript)",
+      "verdict": "NOT drafted: the peach batch shipped this as a YT post and a thread on Nov 15 and 16. Status at drafting: reports say Anthropic priced at $83 (above the $70 to $78 range) with Nasdaq trading under ANT starting Thursday Nov 19 2026; no first-day result exists yet, so a follow-up would be stale or unverified by post time.",
+      "source": "cryptobriefing.com/anthropic-prices-ipo-83-nasdaq-ant; finance.yahoo.com Anthropic IPO live blog (searched 2026-11-19); repurpose/output/peach-lane3-plan.json"
+    },
+    {
+      "claim": "The gem list read off the Discord ('Stonk, Pump, Graham, Peek, Kaspa, TAO, Arbitrum, Litecoin', the compute play that did a 6x, Pengu 'insider meme coin', Canton, JCT at a 20 million market cap with 33 exchanges), Litecoin 'made in America... optional privacy', Clash, the exchange-listing tracker, the swing trading software, 'another 10x... 30x... Lambo territory', the private gems and the community pitch (transcript)",
+      "verdict": "NOT drafted: the list is trader-portfolio framing (persona no_rotation_framing) and sits inside the membership pitch, which the lane 3 rules exclude. 'Graham' is Gram: Toncoin was renamed Gram (ticker GRAM) on June 15 2026 and trades at $1.02; it is only named in the list, so there is no Toncoin item and no toncoin X poll. $PENGU $0.00469 (market cap $295M) is only named, and its tweet shipped on Nov 16. Housecoin was not mentioned. JCT is in a post-unlock freefall (peach ledger). The remark about how other influencers use the public as exit liquidity is never drafted (no calling out creators).",
+      "source": "transcript; persona.json avoid_in_drafts; dextools.io and crypto.news Toncoin to Gram coverage (searched 2026-11-19); api.coingecko.com (2026-11-19)"
+    },
+    {
+      "claim": "'Bitcoin... the low of this candle is 62,200 and it's currently at 62,400' and 'we just dropped below the 50 and the 200... crypto winter for the second time in a year' (transcript)",
+      "verdict": "verified: $BTC $62,615 at drafting, -3.25% 24h, -14.6% 7d, 50.3% under its $126,080 ATH (Oct 6 2025), and under its 200-week SMA (around $68K, peach ledger). Copy prints only 'fell 3%' for Nov 18 and 'down around 15%' for the week; no price level is printed because it will move before these post. The 'new bear market' line is not drafted.",
+      "source": "api.coingecko.com (2026-11-19 00:24 UTC); repurpose/output/peach-lane3-plan.json fact_check"
+    },
+    {
+      "claim": "Whisper mishears audited: 'pie verse' / 'Hi verse' / 'pyverse' / 'five verse' / 'pivors' = Pieverse; 'towel' / 'Tower' / 'Tal' / 'Tao' = TAO; 'CASP' = Kaspa; 'Zell' / 'Zella' / 'zeal' = Zelle; 'Linnea' = Linea; 'Graham' = Gram (Toncoin); 'Peek' = PEAQ; 'Albertrum' = Arbitrum; 'pingu' / 'Pengo' = Pengu; 'straight of her moves' / 'Homoes' = Strait of Hormuz; 'Bicy Letter' = The Kobeissi Letter; 'centralizer changes' = centralized exchanges; 'the lab' = LAB",
+      "verdict": "corrected everywhere in copy. Weighting: Kaspa first (two X tweets with IG companions, YT post 2, thread 2, one YT poll and one X poll), then TAO (one tweet, one YT poll and one X poll); Toncoin and Housecoin were not discussed and Pengu was only named; the rest follows what the stream was about (Pieverse and the payments lanes: one tweet, YT post 1, thread 1), plus one ETH one-liner and one AI and assets tweet as the non-project item.",
+      "source": "transcript; persona.json terminology_rules and ticker_corrections"
+    },
+    {
+      "claim": "Image references",
+      "verdict": "ls of schedule-tweets/images/reference/ done live on 2026-11-19. pieverse.jpg (the plush white cat mascot) is cited on the Pieverse X image and, first in the array with version4/hook.png, on the V4 hook of YT post 1; version4/slide.png anchors V4 slides 2 to 5. kaspa-logo.png is cited on both Kaspa X images and their IG 4:5 companions; bittensor-tao.png on the TAO image; ethereum-eth.png on the ETH image. YT post 2 is Version 2, code-rendered from six specs (no prompt, no ref). The AI and assets image carries no real logo or face (a generic programmer with bright green eyes) and is listed first so it runs before the reference-attached items. Solana and Bitcoin have no reference files and appear only as plain unmarked coins (missing_references).",
+      "source": "schedule-tweets/images/reference (ls 2026-11-19); repurpose/SKILL.md; persona.json image_generation"
+    }
+  ],
+  "carousel_versions": {
+    "yt-post-2026-11-18-pieverse-one-billion-four-payment-lanes": "version4 (the extra V4 weight applies: images/reference/pieverse.jpg, the plush white cat mascot, is a usable topic photo and Pieverse is the subject, so slide 1 cites BOTH pieverse.jpg and version4/hook.png as an array and slides 2 to 5 cite version4/slide.png. The post is a data walk (the day's numbers, the call's market caps, the four payments lanes, an A/B/C question), which maps onto V4's three stat boxes plus insight box; the centre panels are simple shapes with no figures for the model to override, and every stat box figure is pinned in the prompt. V1 was the runner-up for the news-flash tone; V2 rejected because a topic photo exists.)",
+    "yt-post-2026-11-18-every-coin-gets-its-day": "version2 (analytical / editorial: an argument chain made of a viewer question, three dated price runs, the macro path and the Kaspa setup. It is number-dense and V2 is code-rendered, so every figure is exactly the ledger's. V4 was weighed first because kaspa-logo.png exists, but the post walks through four coins and a macro path rather than Kaspa alone, YT post 1 already takes the V4 slot with the stronger topic photo, and V4 data slides are known to override authored figures; V1 rejected because the tone is analysis, not hype. Six code-v2 specs, no prompt and no ref.)"
+  },
+  "missing_references": [
+    "Zelle, Swift, DTCC and Consensys logos: no reference files; they appear as text labels only on V4 slide 4 (no logos rendered)."
+  ],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "eb0326e3",
+      "slug": "ai-writes-code-own-assets",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A Pixar-style programmer character with bright green eyes, short dark hair and a black hoodie stands up from a desk and walks toward the viewer with a confident half smile, carrying a small glowing treasure chest under one arm; the open chest is filled with plain gold coins and a few tiny glowing miniature buildings. Behind him at the desk, a sleek friendly robot has taken the chair and types on the keyboard at blinding speed, sparks of light flying from its fingers; the monitors show only abstract glowing horizontal bars with no letters, numbers or symbols. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background. Dramatic cinematic lighting with a cool blue glow from the monitors and a warm gold rim light from the chest. Calm and determined: let the machine type, own the assets. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "79196981",
+      "slug": "pieverse-one-billion-red-day",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. The plush white cat mascot exactly as shown in the attached reference (a round fluffy white cat with small black button eyes, tiny whiskers and a slim glowing blue headband across its forehead) rides a small sleek rocket straight up through the centre of the frame, one paw raised in triumph, leaving a bright trail of blue and violet light. All around it, dozens of small dull red coins fall downward like rain into the darkness below; every falling coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Keep the cat's likeness faithful to the reference: same proportions, same headband, same fur; use the reference only for the cat, not its desk, its city or its panel text. Deep navy near-black background. Dramatic cinematic lighting with a cool blue rim light from the headband and the rocket trail and a faint red glow on the falling coins. Triumphant: the one thing going up on a red day. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\pieverse.jpg"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "3340c74d",
+      "slug": "kaspa-dollar-bridge-answer",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, stands at the edge of a deep dark canyon in front of an old swaying rope bridge with a few missing planks and one fraying rope. It leans forward and tugs the rope with one hand, one eyebrow raised, calm and unhurried, in no rush to cross. Behind it on its own side of the canyon a small solid stone mint glows warmly, with a short stack of freshly minted pale silver coins beside it whose faces are completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin, a soft warm glow from the mint. Calm and skeptical: a bridge is one more thing that can break. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "3340c74d",
+      "slug": "kaspa-dollar-bridge-answer",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, stands at the edge of a deep dark canyon in front of an old swaying rope bridge with a few missing planks and one fraying rope. It leans forward and tugs the rope with one hand, one eyebrow raised, calm and unhurried, in no rush to cross. Behind it on its own side of the canyon a small solid stone mint glows warmly, with a short stack of freshly minted pale silver coins beside it whose faces are completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin, a soft warm glow from the mint. Calm and skeptical: a bridge is one more thing that can break. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "1d69c6df",
+      "slug": "solana-runs-before-tao",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A running track at night under stadium lights. In the near lane a TAO coin character with arms and legs, a clean white coin whose face shows the dark tau-shaped TAO emblem exactly as shown in the attached reference image, stands relaxed at the starting line with its arms folded and a calm knowing smile, in no hurry. In the next lane a Solana coin character with arms and legs, a dark coin whose face shows the official Solana logo (three slanted parallel bars in a purple to green gradient), has already burst off the line and sprints ahead down the track, kicking up dust. Deep navy near-black background. Dramatic cinematic lighting. Cool white rim light on the TAO coin, a purple and green glow trailing the runner. Calm and patient: let it run first. Use the attached reference only as the source for the emblem; do not reproduce the reference image itself. The TAO coin carries no other symbol or lettering, and the Solana coin carries only the Solana logo. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\bittensor-tao.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "701346b5",
+      "slug": "kaspa-day-has-not-come",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. Backstage in the dark wings of a grand theatre. In the foreground a Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, waits behind the heavy curtain, rolling its shoulders and cracking its knuckles with a hungry confident grin. Out on the bright stage in the background, three small coin characters in bronze, silver and white take their bows under a spotlight in front of a cheering crowd of silhouettes; their faces are completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. A second spotlight beam is just beginning to swing toward the wings. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin, warm gold light spilling from the stage. Hungry and confident: its turn is next. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "701346b5",
+      "slug": "kaspa-day-has-not-come",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. Backstage in the dark wings of a grand theatre. In the foreground a Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, waits behind the heavy curtain, rolling its shoulders and cracking its knuckles with a hungry confident grin. Out on the bright stage in the background, three small coin characters in bronze, silver and white take their bows under a spotlight in front of a cheering crowd of silhouettes; their faces are completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. A second spotlight beam is just beginning to swing toward the wings. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin, warm gold light spilling from the stage. Hungry and confident: its turn is next. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "db1534e9",
+      "slug": "eth-twenty-thousand-conservative",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A steep dark mountain ridge at night. An Ethereum coin character with arms and legs, a polished silver coin whose face shows the Ethereum diamond logo exactly as shown in the attached reference image (two stacked grey faceted pyramids), climbs hard up the final stretch toward the summit, jaw set, eyes locked on the top. On the summit a large Bitcoin coin character, a gold coin whose face shows the official Bitcoin logo (the B with two vertical strokes), sits on a small stone throne and glances down over its shoulder with a nervous sideways look. Deep navy near-black background. Dramatic cinematic lighting. Cool violet blue rim light on the Ethereum coin, a warm gold glow on the summit. Defiant: the climb nobody wants to see. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. The Ethereum coin carries no other symbol or lettering, and the Bitcoin coin carries only the Bitcoin logo. No other text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\ethereum-eth.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "d8d4c59b",
+      "slug": "01-hook",
+      "prompt": "Single editorial hook image for a carousel, 1:1 square. TWO REFERENCE IMAGES ARE ATTACHED. Use the FIRST attached reference (the plush white cat with the glowing headband seated at a holographic desk in a futuristic city) as the full-bleed background image, keeping the cat's likeness faithful, cropped to a square on the LEFT-HAND cat only with its face and desk centred in the upper two thirds of the frame; render the small holographic panels as blank glowing rectangles and do not reproduce any lettering or numbers from the reference. Use the SECOND attached reference ONLY as the layout and typography key: match its bold all-caps bottom text treatment, its small circular chart bubble overlay and its bottom SWIPE FOR MORE bar. In the top right corner place a small circular bubble overlay containing one simple green line chart that runs low and flat and then climbs steeply at the right edge, with no numbers or axis labels. Bold all-caps text across the bottom: 'PIEVERSE TOUCHED $1 BILLION' in white on the first line, then 'ON A RED DAY' in bright green on the second line. Small white all-caps 'SWIPE FOR MORE' text at the very bottom. No pagination dots, no carousel indicators. Keep every line of text inside a margin of at least 8 percent of the frame width. Render NO watermark, no @handle, no username, no shield badge, no artist signature and no initials anywhere in the frame or in any corner; the second attached reference carries a small badge and page dots and they must NOT be reproduced. No em dashes anywhere in the rendered text, use colons or commas instead. Do not invent any numbers, tickers, logos or lettering beyond the exact text specified above; render no text other than the text specified here.",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\pieverse.jpg",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\hook.png"
+      ]
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "35fffc22",
+      "slug": "02-the-day",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'The day Pieverse touched $1 billion'. Stat boxes: 'ONE DAY: UP 70%', 'ONE WEEK: UP 118%', 'BITCOIN, SAME WEEK: DOWN 15%'. Centre panel: a single green line chart that runs low and flat across most of the panel and then climbs steeply at the right edge, with no numbers, dates or axis labels. Bottom green box labelled 'NOVEMBER 18' with two bullets: 'Most of the top 100 was red.' and 'Pieverse was the biggest gainer in it.'. Page number 2 in a circle at the top right. Use every figure exactly as written here and do not change, round or add any number. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. The page number 2 appears exactly once and nowhere else. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "ac749550",
+      "slug": "03-the-call",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'How the call went'. Stat boxes: 'BOT FLAG: NEAR $20M', 'MY BUY: NEAR $60M', 'NOV 18: $1 BILLION'. Centre panel: three plain rounded green bars side by side rising from left to right like steps, the third far taller than the first two, with no numbers or labels. Bottom green box labelled 'THE TIMELINE' with two bullets: 'Called in November 2025.' and 'Public in September 2026.'. Page number 3 in a circle at the top right. Use every figure exactly as written here and do not change, round or add any number. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. The page number 3 appears exactly once and nowhere else. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "c7209042",
+      "slug": "04-four-lanes",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Payments is four lanes now'. Stat boxes: 'BANKS: ZELLE PICKS SOLANA', 'WIRES: SWIFT AND CONSENSYS', 'SETTLEMENT: DTCC ON CANTON'. Centre panel: four plain parallel horizontal arrows running from left to right, evenly spaced, with no labels or numbers. Bottom green box labelled 'LANE FOUR' with two bullets: 'AI agents that pay each other.' and 'That is the lane Pieverse sits in.'. Page number 4 in a circle at the top right. Use every figure exactly as written here and do not change, round or add any number. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. The page number 4 appears exactly once and nowhere else. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "a22324cd",
+      "slug": "05-question",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Which payments lane ends up the biggest?'. Stat boxes: 'A: BANK TRANSFERS', 'B: SETTLEMENT', 'C: AI AGENTS'. Centre panel: three plain rounded panels side by side, each headed A, B and C, otherwise empty. Bottom green box labelled 'TELL ME IN THE COMMENTS' with one bullet: 'Pick a lane and tell me why.'. Page number 5 in a circle at the top right. Use every figure exactly as written here and do not change, round or add any number. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. The page number 5 appears exactly once and nowhere else. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "9c8a1dce",
+      "slug": "01-hook",
+      "render": "code-v2",
+      "spec": {
+        "label": "1 OF 6",
+        "title": "Every coin\ngets its day",
+        "accent": "The bull run is showing up one coin at a time.",
+        "box_label": "THE QUESTION",
+        "box": [
+          "A viewer told me Kaspa leads the next bull run.",
+          "Here is what the last three months showed."
+        ]
+      }
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "ac252f88",
+      "slug": "02-quant-and-near",
+      "render": "code-v2",
+      "spec": {
+        "label": "2 OF 6",
+        "title": "Quant: 5x\nin six weeks",
+        "accent": "Around $56 on August 19 to around $287 on October 1",
+        "box_label": "THEN NEAR",
+        "box": [
+          "Around $1.59 to around $5.89 by October 12.",
+          "Almost 4x, on its own schedule."
+        ]
+      }
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "52cc8abd",
+      "slug": "03-pieverse",
+      "render": "code-v2",
+      "spec": {
+        "label": "3 OF 6",
+        "title": "Pieverse:\n$1 billion\non a red day",
+        "accent": "Up 70% in one day while Bitcoin fell 15% on the week",
+        "box_label": "NOVEMBER 18",
+        "box": [
+          "It was the biggest gainer in the top 100.",
+          "It did not wait for Bitcoin."
+        ]
+      }
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "2d21989f",
+      "slug": "04-everything-at-once",
+      "render": "code-v2",
+      "spec": {
+        "label": "4 OF 6",
+        "title": "When does\neverything\npump at once?",
+        "accent": "My read: a taste in 2027, the real thing in 2028",
+        "box_label": "WHAT IT NEEDS",
+        "box": [
+          "Energy prices keep coming down.",
+          "The Fed gets room to cut.",
+          "Cheap money lifts everything together."
+        ]
+      }
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "248a803d",
+      "slug": "05-kaspa",
+      "render": "code-v2",
+      "spec": {
+        "label": "5 OF 6",
+        "title": "Kaspa has not\nhad its day yet",
+        "accent": "Around 2.7 cents, 87% under its all-time high",
+        "box_label": "THE SETUP I WANT",
+        "box": [
+          "A high conviction play.",
+          "Way down at the bottom.",
+          "Before its day comes."
+        ]
+      }
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "0d397400",
+      "slug": "06-question",
+      "render": "code-v2",
+      "spec": {
+        "label": "6 OF 6",
+        "title": "When does\nKaspa get\nits run?",
+        "accent": "First half of 2027, second half of 2027, or 2028?",
+        "box_label": "TELL ME IN THE COMMENTS",
+        "box": [
+          "Pick one and tell me why."
+        ]
+      }
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "Pieverse touched a $1 billion market cap on November 18, on a day Bitcoin fell 3% and most of the top 100 was red. 🚀\n\nI called $PIEVERSE in November 2025, near a $60 million market cap. This week it ran 70% in a single day.\n\nWould I chase it up here? No. After a pump like this it's dangerous. The time to buy was at the bottom, when nobody was looking. Never financial advice.\n\n#pieverse #x402",
+      "hook": "Pieverse touched a $1 billion market cap on November 18, on a day Bitcoin fell 3% and most of the top 100 was red.",
+      "image_id": "79196981",
+      "notes": "Pieverse subject; Pieverse is not in persona project_handles, so no Follow line; no IG (not Kaspa). Market caps only, no multiple printed (see fact_check: the 17.5x on stream is a market cap ratio; the price multiple is around 10x). Image cites pieverse.jpg (the mascot)."
+    },
+    {
+      "tweet": "I asked why Kaspa needs its own dollar instead of just USDT and USDC.\n\nThe best answer I got back: bringing USDT to Kaspa means trusting a bridge, and a bridge is one more thing that can break.\n\nFair point. I still don't see the urgency. When $KAS starts running, the demand for native USDT with no bridge shows up by itself.\n\n#kaspa #kas #stablecoins",
+      "hook": "I asked why Kaspa needs its own dollar instead of just USDT and USDC.",
+      "image_id": "3340c74d",
+      "notes": "Kaspa subject; IG companion shares the image. No Follow line (Kaspa). Follow-up to the Nov 16 question tweet: the answer Mike got back and where he lands (no urgency). The bridge argument is attributed to the replies, not asserted."
+    },
+    {
+      "tweet": "Somebody on my last stream said Solana gets its big run before $TAO does. I think that's right.\n\nZelle just picked Solana for its ZelleUSD stablecoin and international payments. The DTCC connects its tokenization service to Solana in the second half of 2027. The bullish news keeps landing on $SOL.\n\nIt doesn't change my TAO plan. It's around $190, and I want a nice big buy under $170. Never financial advice.\n\n#bittensor #tao #solana",
+      "hook": "Somebody on my last stream said Solana gets its big run before $TAO does. I think that's right.",
+      "image_id": "1d69c6df",
+      "notes": "TAO subject; project_handles tao = null, so no Follow line; no IG (not Kaspa). Solana has no reference file, so it is a plain unmarked purple to green coin in the image (missing_references)."
+    },
+    {
+      "tweet": "I call myself CodeMonkey. A code monkey is a geek who sits there and writes code all day.\n\nThat job is going away. As a programmer I'll say it: AI codes better than any software engineer now. The ones who make it think like the business and let the agents do the work.\n\nWhen paychecks get harder to come by, what you own has to do the earning. That's why I'm buying assets while everything is this far down.\n\n#AI #crypto #investing",
+      "hook": "I call myself CodeMonkey. A code monkey is a geek who sits there and writes code all day.",
+      "image_id": "eb0326e3",
+      "notes": "The one non-project item (AI and jobs into assets), Mike's own professional opinion in first person, no statistic. No handle, no IG. Image carries no logo and no real face (generic programmer, bright green eyes per the Mike-character rule)."
+    },
+    {
+      "tweet": "Quant had its run. NEAR had its run. Pieverse just had its run. Kaspa is still sitting at 2.7 cents, and its day hasn't come yet... $KAS 😎\n\n#kaspa #kas",
+      "hook": "Quant had its run. NEAR had its run. Pieverse just had its run. Kaspa is still sitting at 2.7 cents, and its day hasn't come yet...",
+      "image_id": "701346b5",
+      "notes": "Single-line image-first. Kaspa subject; IG companion shares the image. No Follow line (Kaspa). Trailing ellipsis is the persona signature device. Quant and NEAR runs dated in fact_check."
+    },
+    {
+      "tweet": "I hate $ETH, and I still think it flips $BTC one day... a $20,000 Ethereum ten years from now is my conservative number. 🤔\n\n#ethereum #eth",
+      "hook": "I hate $ETH, and I still think it flips $BTC one day...",
+      "image_id": "db1534e9",
+      "notes": "Single-line image-first. Engagement note: correction-bait technique #5 (provocative prediction): THE deliberate 1-in-10 bait item for this batch. Mike's own words on stream (hates ETH, thinks it flips Bitcoin one day, $20,000 in ten years is conservative). No handle for ETH, no IG. Bitcoin has no reference file: plain unmarked gold coin in the image."
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-11-18-pieverse-one-billion-four-payment-lanes",
+      "topic": "Pieverse touches $1 billion on a red day and the four payments lanes moving on-chain (built from YT post 1)",
+      "variation_label": "A (stat shock, numbered lanes, the caveat, the call)",
+      "tweets": [
+        {
+          "text": "Pieverse touched a $1 billion market cap on November 18.\n\nIt ran 70% in one day while Bitcoin fell 3% and most of the top 100 was red.\n\nThe reason is bigger than one coin. Payments is moving on-chain in four lanes:",
+          "hook": "Pieverse touched a $1 billion market cap on November 18."
+        },
+        {
+          "text": "The numbers first.\n\n$PIEVERSE printed a new all-time high around $3.60 and was the biggest gainer in the top 100. It's up around 118% on the week.\n\n$BTC is down around 15% over the same week."
+        },
+        {
+          "text": "Lane one, bank to bank.\n\nZelle just picked Solana for its ZelleUSD stablecoin and its push into international payments. $SOL"
+        },
+        {
+          "text": "Lane two, wires.\n\nSwift is building its blockchain ledger with Consensys, the team that built Linea. It has been in a live pilot with 17 banks since July. $LINEA"
+        },
+        {
+          "text": "Lane three, settlement.\n\nThe DTCC put its tokenization service live on Canton, with Solana lined up for the second half of 2027. $CC"
+        },
+        {
+          "text": "Lane four, machines: AI agents that pay each other. That's the x402 trade, and it's the lane Pieverse sits in.\n\nHere's the thing: what's live from Pieverse right now is AI agents for chat apps. The payment rails are still ahead. That's what the market is betting on."
+        },
+        {
+          "text": "I called it in November 2025, near a $60 million market cap.\n\nWould I chase a 70% day? No. It's dangerous up here.\n\nThe time to buy is at the bottom, when nobody is looking. Never financial advice."
+        },
+        {
+          "text": "If this helped you see the payments narrative...\n\nFollow me for crypto narratives before they get obvious.\n\n🧠 + 😎"
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-11-18-every-coin-gets-its-day",
+      "topic": "Every coin gets its day: the bull run one coin at a time, when everything pumps together, and where that leaves Kaspa (built from YT post 2)",
+      "variation_label": "B (viewer question, evidence chain, the macro path, the Kaspa setup)",
+      "tweets": [
+        {
+          "text": "A viewer told me Kaspa will lead the next bull run.\n\nMy answer: the run isn't showing up as one big green month. It's showing up one coin at a time.\n\nAnd it already started:",
+          "hook": "A viewer told me Kaspa will lead the next bull run."
+        },
+        {
+          "text": "Quant went from around $56 on August 19 to around $287 on October 1.\n\nThat's 5x in six weeks, on its own narrative. $QNT"
+        },
+        {
+          "text": "NEAR went from around $1.59 to around $5.89 by October 12. Almost 4x.\n\nThen this week Pieverse ran 70% in a day and touched a $1 billion market cap, in a week when $BTC dropped around 15%."
+        },
+        {
+          "text": "It was the same with LAB.\n\nI called it thinking 20x over a couple of years. In May it exploded and we did 353x.\n\nYou never know which one is next, or when. Every coin gets its day."
+        },
+        {
+          "text": "So when does everything pump together?\n\nUS oil just fell under $83 for the first time since late August. When prices keep coming down, the Fed gets room to cut, and cheap money lifts everything at once.\n\nA taste of it in 2027 is possible. The real thing, I think, is 2028."
+        },
+        {
+          "text": "Where does that leave Kaspa?\n\n$KAS is around 2.7 cents, 87% under its all-time high. Its day hasn't come yet.\n\nThat's the setup I want: a high conviction play, way down at the bottom, before its day."
+        },
+        {
+          "text": "If this changed how you think about the next bull run...\n\nFollow me for Kaspa and macro takes that ignore the four-year cycle echo chamber.\n\n🧠 + 😎"
+        }
+      ]
+    }
+  ],
+  "x_polls": [
+    {
+      "id": "poll-2026-11-18-when-does-kaspa-get-its-run",
+      "topic": "When does Kaspa get its run: every coin gets its day",
+      "eligible_topic": "kaspa",
+      "tweet_text": "Quant ran 5x from August into October. NEAR ran almost 4x. Pieverse touched a $1 billion market cap this week.\n\n$KAS is around 2.7 cents, and its day hasn't come yet.\n\nWhen does Kaspa get its run?",
+      "hook": "Quant ran 5x from August into October. NEAR ran almost 4x. Pieverse touched a $1 billion market cap this week.",
+      "options": [
+        "Before 2026 ends",
+        "First half of 2027",
+        "Second half of 2027",
+        "2028 or later"
+      ],
+      "duration": "1d"
+    },
+    {
+      "id": "poll-2026-11-18-solana-or-tao-first",
+      "topic": "Which gets its big run first: Solana or TAO",
+      "eligible_topic": "tao",
+      "tweet_text": "A viewer said Solana gets its big run before $TAO does, and I think that's right.\n\nZelle just picked $SOL for its stablecoin. TAO is around $190, and I still want a nice big buy under $170.\n\nWhich one runs first?",
+      "hook": "A viewer said Solana gets its big run before $TAO does, and I think that's right.",
+      "options": [
+        "$SOL first",
+        "$TAO first",
+        "They run together"
+      ],
+      "duration": "1d"
+    }
+  ],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-11-18-when-does-kaspa-get-its-run",
+      "topic": "When does Kaspa get its run: every coin gets its day",
+      "source_post": "yt-post-2026-11-18-every-coin-gets-its-day",
+      "question_text": "Quant ran 5x from August into October. NEAR ran almost 4x. Pieverse touched a $1 billion market cap this week.\n\nKaspa is sitting around 2.7 cents, 87% under its all-time high, and its day hasn't come yet.\n\nWhen does $KAS get its run?",
+      "hook": "Quant ran 5x from August into October. NEAR ran almost 4x. Pieverse touched a $1 billion market cap this week.",
+      "options": [
+        "Before 2026 ends",
+        "First half of 2027",
+        "Second half of 2027",
+        "2028 or later, when everything pumps together"
+      ]
+    },
+    {
+      "id": "yt-text-poll-2026-11-18-solana-or-tao-first",
+      "topic": "Which gets its big run first: Solana or TAO",
+      "source_post": null,
+      "question_text": "A viewer on my stream said Solana gets its big run before TAO does, and I think that's right.\n\nZelle just picked Solana for its ZelleUSD stablecoin, and the DTCC connects to it in the second half of 2027. $TAO is around $190, and I still want a nice big buy under $170.\n\nWhich one gets its big run first?",
+      "hook": "A viewer on my stream said Solana gets its big run before TAO does, and I think that's right.",
+      "options": [
+        "Solana runs first",
+        "TAO runs first",
+        "They run together"
+      ]
+    }
+  ],
+  "yt_posts": [
+    {
+      "id": "yt-post-2026-11-18-pieverse-one-billion-four-payment-lanes",
+      "topic": "Pieverse touches a $1 billion market cap on a red day: how the call went and the four payments lanes moving on-chain (Zelle and Solana, Swift and Consensys, DTCC and Canton, AI agents)",
+      "variation_label": "A + CTA1",
+      "body_style": "stat shock, the call, the four lanes, one caveat line, the comment ask",
+      "cta_target": "subscribe_youtube",
+      "body": "Pieverse touched a $1 billion market cap on November 18. It ran 70% in a single day while Bitcoin fell 3% and most of the top 100 was red. I called it a year ago near a $60 million market cap, and the reason it's moving is bigger than one coin.\n\nFirst, the numbers. $PIEVERSE printed a new all-time high around $3.60 and finished the day as the biggest gainer in the top 100. It's up around 118% on the week. Bitcoin is down around 15% over the same week.\n\nHere's how the call went. My bot flagged it in November 2025, down near a $20 million market cap. It ran, I waited, it came back down, and I bought near $60 million. I didn't talk about it publicly until September.\n\nNow the part that matters: why. Pieverse trades in the agent payments narrative, the x402 trade. And payments isn't one narrative anymore. It's four lanes, and every one of them is moving on-chain.\n\nLane one, bank to bank. Zelle just picked Solana for its ZelleUSD stablecoin and its push into international payments.\n\nLane two, wires. Swift is building its blockchain ledger with Consensys, the team that built Linea, and it has been in a live pilot with 17 banks since July.\n\nLane three, settlement. The DTCC put its tokenization service live on Canton, with Solana lined up for the second half of 2027.\n\nLane four, machines. AI agents that pay each other. That's the lane Pieverse sits in. Here's the thing: what's live from Pieverse right now is its AI agents for chat apps. The payment rails are still ahead, and that's the part the market is betting on.\n\nSo would I chase a 70% day? No. It's dangerous up here. The time to get in is at the bottom, way down at the bottom, when nobody is looking. That's why I keep a play in every one of these lanes.\n\nSo tell me: which payments lane ends up the biggest? Bank transfers, settlement, or AI agents? Drop it in the comments.\n\nIf this helped you see the payments narrative, hit like and subscribe so you catch the next one.",
+      "engagement_question": "Which payments lane ends up the biggest: bank transfers, settlement, or AI agents?",
+      "images": [
+        {
+          "image_id": "d8d4c59b",
+          "slide_text": "PIEVERSE TOUCHED $1 BILLION / ON A RED DAY"
+        },
+        {
+          "image_id": "35fffc22",
+          "slide_text": "One day: up 70%. One week: up 118%. Bitcoin, same week: down 15%."
+        },
+        {
+          "image_id": "ac749550",
+          "slide_text": "Bot flag near $20M, my buy near $60M, $1 billion on Nov 18"
+        },
+        {
+          "image_id": "c7209042",
+          "slide_text": "Payments is four lanes now: banks, wires, settlement, AI agents"
+        },
+        {
+          "image_id": "a22324cd",
+          "slide_text": "Which payments lane ends up the biggest?"
+        }
+      ]
+    },
+    {
+      "id": "yt-post-2026-11-18-every-coin-gets-its-day",
+      "topic": "Every coin gets its day: the bull run is arriving one coin at a time (Quant, NEAR, Pieverse, LAB), when everything pumps together, and where that leaves Kaspa",
+      "variation_label": "B + CTA1",
+      "body_style": "viewer question, the evidence chain, the macro path, the Kaspa setup, the comment ask",
+      "cta_target": "subscribe_youtube",
+      "body": "Somebody told me this week that Kaspa will lead the next bull run. Here's my answer: the run isn't showing up as one big green month where everything goes up together. Not yet. It's showing up one coin at a time, and it already started.\n\nLook at the last three months. Quant went from around $56 on August 19 to around $287 on October 1. That's 5x in six weeks. NEAR went from around $1.59 to around $5.89 by October 12, almost 4x. Then this week Pieverse ran 70% in a day and touched a $1 billion market cap, in a week when Bitcoin dropped around 15%.\n\nNone of them waited for Bitcoin. Each one had its own narrative and its own day: Quant in bank settlement, Pieverse in agent payments. It was the same with LAB. I called that one thinking 20x over a couple of years. In May it exploded and we did 353x. You never know which one is next, or when. Solana might get its big run next year while TAO waits for the year after. It could go something like that.\n\nSo when does everything pump at the same time? I think that comes later. Energy prices are finally coming down: US oil just fell under $83 a barrel for the first time since late August. When prices keep coming down, the Fed gets room to cut, and cheap money is what lifts everything at once. A week or two like that in 2027? Possible. The real thing, where the whole market flies together, I think that's more like 2028.\n\nWhere does that leave Kaspa? $KAS is sitting around 2.7 cents, 87% under its all-time high. Same proof of work, same fair launch, same 10 blocks per second. Its day hasn't come yet. And that's the setup I want for any high conviction play: get in at the bottom, way down at the bottom, before its day. If you're aiming for a 50x and it only does a 5x, you still did a 5x.\n\nSo tell me: when does Kaspa get its run? First half of 2027, second half of 2027, or 2028? Drop it in the comments.\n\nIf this changed how you think about the next bull run, hit like and subscribe for more.",
+      "engagement_question": "When does Kaspa get its run: first half of 2027, second half of 2027, or 2028?",
+      "images": [
+        {
+          "image_id": "9c8a1dce",
+          "slide_text": "Every coin gets its day: the bull run arrives one coin at a time"
+        },
+        {
+          "image_id": "ac252f88",
+          "slide_text": "Quant: 5x in six weeks. NEAR: almost 4x."
+        },
+        {
+          "image_id": "52cc8abd",
+          "slide_text": "Pieverse: $1 billion on a red day"
+        },
+        {
+          "image_id": "2d21989f",
+          "slide_text": "When does everything pump at once? A taste in 2027, the real thing in 2028"
+        },
+        {
+          "image_id": "248a803d",
+          "slide_text": "Kaspa has not had its day yet: 2.7 cents, 87% under its all-time high"
+        },
+        {
+          "image_id": "0d397400",
+          "slide_text": "When does Kaspa get its run?"
+        }
+      ]
+    }
+  ],
+  "ig_single": [
+    {
+      "id": "ig-2026-11-18-kaspa-dollar-bridge-answer",
+      "kaspa_subject": true,
+      "image_id": "3340c74d",
+      "aspect_ratio": "4:5",
+      "hook": "I asked why Kaspa needs its own dollar instead of just USDT and USDC.",
+      "caption": "I asked why Kaspa needs its own dollar instead of just USDT and USDC.\n\nThe best answer I got back: bringing USDT to Kaspa means trusting a bridge, and a bridge is one more thing that can break. A stablecoin minted on Kaspa itself, against locked $KAS, has no bridge in the middle.\n\nFair point. I'm still taking it as it comes, because I don't see the urgency. The Kaspa Dollar proposal is a working draft, with a testnet planned for May 2027 and a mainnet target of September 2027.\n\nHere's what I do know: when Kaspa starts running, the demand for stablecoins on it shows up by itself. Native USDT with no bridge is going to get asked for, loudly.\n\nWhich one would you actually use on Kaspa?",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#stablecoin",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "I asked why Kaspa needs its own dollar instead of just USDT and USDC."
+    },
+    {
+      "id": "ig-2026-11-18-kaspa-day-has-not-come",
+      "kaspa_subject": true,
+      "image_id": "701346b5",
+      "aspect_ratio": "4:5",
+      "hook": "Quant had its run. NEAR had its run. Pieverse just had its run. Kaspa is still sitting at 2.7 cents, and its day hasn't come yet...",
+      "caption": "Quant had its run. NEAR had its run. Pieverse just had its run. Kaspa is still sitting at 2.7 cents, and its day hasn't come yet...\n\nQuant went 5x in six weeks. NEAR almost 4x. Pieverse touched $1 billion this week while Bitcoin dropped around 15%.\n\n$KAS is 87% under its all-time high. Same proof of work, same fair launch, same 10 blocks per second.\n\nThe best time to get in is at the bottom. When does its day come?",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#krc20",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Quant had its run. NEAR had its run. Pieverse just had its run. Kaspa is still sitting at 2.7 cents, and its day hasn't come yet..."
+    }
+  ]
+}

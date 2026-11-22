@@ -92,6 +92,20 @@ import { FutureOfSoftwareEngineersShort, DUR as FOSES_DUR, FPS as FOSES_FPS } fr
 import { ClipEvalsShort, DUR as CES_DUR, FPS as CES_FPS } from './ClipEvalsShort';
 // batch peach / clip #2 calls-still-up-after-the-dump FULL (livestream short, 2026-11-16). Flat-namespace check: no existing PeachCallsStillUp / PCH2_ / broll-pch2 / thumb-pch2 / ovl-pch2.
 import { PeachCallsStillUp, PCH2_FPS, PCH2_DURATION } from './PeachCallsStillUp';
+// batch ripping / clip #2 calls-ripping-on-a-red-day FULL (livestream short, 2026-11-18). Flat-namespace check: no existing RippingCallsRedDay / RIP2_ / broll-rip2.
+import { RippingCallsRedDay, RIP2_FPS, RIP2_DURATION } from './RippingCallsRedDay';
+// batch ripping / clip #3 ai-jobs-own-assets FULL (livestream short, 2026-11-18). Flat-namespace check: no existing RippingAiJobsOwnAssets / RIP3_ / constants-ripping-ai-jobs-own-assets.
+import { RippingAiJobsOwnAssets, RIP3_FPS, RIP3_DURATION } from './RippingAiJobsOwnAssets';
+// batch ripping / clip #1 pieverse-17x-at-a-billion FULL (livestream short, 2026-11-18). Flat-namespace check: no existing RippingPieverse17x / RIP1_ / constants-ripping-pieverse-17x-at-a-billion.
+import { RippingPieverse17x, RIP1_FPS, RIP1_DURATION } from './RippingPieverse17x';
+// batch ripping / clip #4 hate-eth-go-where-the-money-is FULL (livestream short, 2026-11-19). Flat-namespace check: no existing RippingHateEth / RIP4_ / constants-ripping-hate-eth-go-where-the-money-is.
+import { RippingHateEth, RIP4_FPS, RIP4_DURATION } from './RippingHateEth';
+// batch ripping / clip #5 anthropic-ipo-money-rotating-out FULL (livestream short, 2026-11-19). Flat-namespace check: no existing RippingAnthropicIpo / RIP5_ / constants-ripping-anthropic-ipo-money-rotating-out.
+import { RippingAnthropicIpo, RIP5_FPS, RIP5_DURATION } from './RippingAnthropicIpo';
+// batch ripping / clip #6 pieverse-17x-at-a-billion-impact IMPACT (livestream short, 2026-11-19). Flat-namespace check: no existing RippingPieverse170x / RIP6_ / constants-ripping-pieverse-17x-at-a-billion-impact.
+import { RippingPieverse170x, RIP6_FPS, RIP6_DURATION } from './RippingPieverse170x';
+// batch ripping / clip #7 ai-jobs-own-assets-impact IMPACT (livestream short, 2026-11-19). Flat-namespace check: no existing RippingAiJobsImpact / RIP7_ / constants-ripping-ai-jobs-own-assets-impact.
+import { RippingAiJobsImpact, RIP7_FPS, RIP7_DURATION } from './RippingAiJobsImpact';
 // batch peach / clip #3 kaspa-things-are-gonna-pop FULL (livestream short, 2026-11-16). Flat-namespace check: no existing PeachKaspaThingsPop / PCH3_.
 import { PeachKaspaThingsPop, PCH3_FPS, PCH3_DURATION } from './PeachKaspaThingsPop';
 // batch peach / clip #1 pengu-flips-pepe FULL (livestream short, 2026-11-16). Flat-namespace check: no existing PeachPenguFlipsPepe / PCH1_.
@@ -402,6 +416,18 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="ClipEvalsShort" component={ClipEvalsShort} durationInFrames={CES_DUR} fps={CES_FPS} width={1080} height={1920} />
       {/* batch peach / clip #2 calls-still-up-after-the-dump FULL: 1080x1920 @30, 1180 f = 39.333 s; public dir shorts/peach/render-assets */}
       <Composition id="PeachCallsStillUp" component={PeachCallsStillUp} durationInFrames={PCH2_DURATION} fps={PCH2_FPS} width={1080} height={1920} />
+      <Composition id="RippingCallsRedDay" component={RippingCallsRedDay} durationInFrames={RIP2_DURATION} fps={RIP2_FPS} width={1080} height={1920} />
+      {/* batch ripping / clip #3 ai-jobs-own-assets FULL: 1080x1920 @30, 1208 f = 40.267 s; public dir shorts/ripping/render-assets */}
+      <Composition id="RippingAiJobsOwnAssets" component={RippingAiJobsOwnAssets} durationInFrames={RIP3_DURATION} fps={RIP3_FPS} width={1080} height={1920} />
+      {/* batch ripping / clip #1 pieverse-17x-at-a-billion FULL: 1080x1920 @30, 1327 f = 44.233 s; public dir shorts/ripping/render-assets */}
+      <Composition id="RippingPieverse17x" component={RippingPieverse17x} durationInFrames={RIP1_DURATION} fps={RIP1_FPS} width={1080} height={1920} />
+      <Composition id="RippingHateEth" component={RippingHateEth} durationInFrames={RIP4_DURATION} fps={RIP4_FPS} width={1080} height={1920} />
+      {/* batch ripping / clip #5 anthropic-ipo-money-rotating-out FULL: 1080x1920 @30, 988 f = 32.933 s; public dir shorts/ripping/render-assets */}
+      <Composition id="RippingAnthropicIpo" component={RippingAnthropicIpo} durationInFrames={RIP5_DURATION} fps={RIP5_FPS} width={1080} height={1920} />
+      {/* batch ripping / clip #6 pieverse-17x-at-a-billion-impact IMPACT: 1080x1920 @30, 857 f = 28.567 s; public dir shorts/ripping/render-assets */}
+      <Composition id="RippingPieverse170x" component={RippingPieverse170x} durationInFrames={RIP6_DURATION} fps={RIP6_FPS} width={1080} height={1920} />
+      {/* batch ripping / clip #7 ai-jobs-own-assets-impact IMPACT: 1080x1920 @30, 579 f = 19.300 s; public dir shorts/ripping/render-assets */}
+      <Composition id="RippingAiJobsImpact" component={RippingAiJobsImpact} durationInFrames={RIP7_DURATION} fps={RIP7_FPS} width={1080} height={1920} />
       {/* batch peach / clip #1 pengu-flips-pepe FULL: 1080x1920 @30, 1059 f = 35.300 s; public dir shorts/peach/render-assets */}
       <Composition id="PeachKaspaThingsPop" component={PeachKaspaThingsPop} durationInFrames={PCH3_DURATION} fps={PCH3_FPS} width={1080} height={1920} />
       <Composition id="PeachKaspaPopImpact" component={PeachKaspaPopImpact} durationInFrames={PCH7_DURATION} fps={PCH7_FPS} width={1080} height={1920} />

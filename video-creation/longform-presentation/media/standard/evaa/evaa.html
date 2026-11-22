@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVAA Protocol (EVAA)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-deep:#0a0c10;
+  --bg-card:#12151c;
+  --bg-card-hover:#181c26;
+  --accent-green:#00e68a;   /* NEAR */
+  --accent-cyan:#00c2ff;    /* TAO */
+  --accent-gold:#ffd700;    /* the questions / callouts */
+  --accent-red:#ff4060;     /* caveats */
+  --accent-purple:#a855f7;  /* atmosphere */
+  --text-primary:#e8eaf0;
+  --text-secondary:#8892a4;
+  --text-muted:#505a6e;
+  --border:#1e2330;
+}
+
+/* ===== Foundation (presentation.md, verbatim) ===== */
+*{box-sizing:border-box;margin:0;padding:0}
+
+html{scroll-behavior:smooth;scroll-snap-type:y mandatory}
+body{background:var(--bg-deep);font-family:'DM Sans',sans-serif;color:var(--text-primary);overflow-x:hidden}
+
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.slide{
+  min-height:100vh;scroll-snap-align:start;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:60px 80px;position:relative;overflow:hidden;
+}
+@media(max-width:900px){ .slide{padding:40px 28px} }
+
+.orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:.4;pointer-events:none}
+.slide>*:not(.orb){position:relative;z-index:1}
+
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2.8rem,6vw,5.5rem);line-height:1.05;letter-spacing:-.02em}
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(1.8rem,3.5vw,3rem);line-height:1.15}
+h3{font-family:'DM Sans',sans-serif;font-weight:700;font-size:1.15rem;text-transform:uppercase;letter-spacing:.12em}
+h3.mono{text-transform:none;letter-spacing:0}
+.ey{display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);font-weight:600;margin-bottom:18px}
+p{font-size:clamp(.95rem,1.05vw,1.05rem);line-height:1.7;color:var(--text-secondary)}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.divider{width:60px;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:24px 0}
+.center{text-align:center}
+
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.pu{color:var(--accent-purple)} .re{color:var(--accent-red)} .tl{color:var(--accent-teal)}
+
+/* ===== Components (presentation.md) ===== */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:32px;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.card .top-accent{position:absolute;top:0;left:0;right:0;height:2px}
+.card h3{margin-bottom:6px}
+.card p{margin-top:12px}
+
+.tag{display:inline-block;padding:4px 12px;border-radius:100px;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.tag.green{background:rgba(0,230,138,.15);color:var(--accent-green)}
+.tag.cyan{background:rgba(0,194,255,.15);color:var(--accent-cyan)}
+.tag.gold{background:rgba(255,215,0,.15);color:var(--accent-gold)}
+.tag.red{background:rgba(255,64,96,.15);color:var(--accent-red)}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:900px){ .grid2,.grid3{grid-template-columns:1fr} }
+
+.impact{background:linear-gradient(135deg,rgba(0,230,138,.08),rgba(0,194,255,.06));border:1px solid rgba(0,230,138,.2);border-radius:12px;padding:24px 28px;margin-top:30px}
+
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:28px}
+.col{padding:32px;border-radius:16px}
+.col .ml{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
+.col .q{font-style:italic;color:var(--text-primary);margin-top:16px;padding-left:18px;border-left:3px solid var(--accent-green)}
+@media(max-width:900px){ .cmp{grid-template-columns:1fr} }
+
+.rules{list-style:none;margin-top:24px}
+.rules li{padding:16px 20px;margin-bottom:12px;border-radius:12px;background:rgba(255,255,255,.02);border-left:3px solid var(--accent-cyan);font-family:'JetBrains Mono',monospace;font-size:.95rem;color:var(--text-primary);line-height:1.5}
+.rules li .why{color:var(--text-muted);font-size:.8rem}
+
+table.mx{width:100%;border-collapse:separate;border-spacing:0 12px;margin-top:24px}
+table.mx th,table.mx td{padding:16px 22px;text-align:center;font-size:1rem}
+table.mx th{color:var(--text-secondary);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em}
+table.mx td.name{text-align:left;font-weight:700;font-size:1.1rem}
+table.mx tr.row td{background:var(--bg-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+table.mx tr.row td:first-child{border-left:1px solid var(--border);border-radius:14px 0 0 14px}
+table.mx tr.row td:last-child{border-right:1px solid var(--border);border-radius:0 14px 14px 0}
+
+/* ===== Animation + navigation (presentation.md, verbatim) ===== */
+.fade-in{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+.delay-1{transition-delay:.15s}.delay-2{transition-delay:.3s}.delay-3{transition-delay:.45s}
+.delay-4{transition-delay:.6s}.delay-5{transition-delay:.75s}
+
+.nav-dots{position:fixed;right:28px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:100}
+.nav-dots button{width:8px;height:8px;border-radius:50%;border:none;background:var(--text-muted);cursor:pointer;padding:0;transition:transform .3s,background .3s}
+.nav-dots button.active{background:var(--accent-green);transform:scale(1.4)}
+@media(max-width:900px){ .nav-dots{right:14px} }
+
+.scroll-hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.2em;z-index:2}
+.scroll-hint svg{animation:bounce 1.8s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* ===== This deck: screen-share recording with a webcam PiP bottom-right =====
+   Every slide's content sits in .wrap (the left 68vw), so the webcam corner (the right 25vw x bottom 25vh at
+   1080p) is never covered. G shows the webcam guide box, F toggles fullscreen. The scrollbar is hidden so it
+   never shows in the recording. */
+html{scrollbar-width:none} html::-webkit-scrollbar{display:none}
+.wrap{max-width:68vw}
+@media(max-width:900px){ .wrap{max-width:none} }
+.sub{font-size:clamp(1.05rem,1.4vw,1.35rem);line-height:1.6;color:var(--text-secondary);margin-top:18px;max-width:52vw}
+.quote{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.15rem,1.6vw,1.6rem);line-height:1.45;color:var(--text-primary)}
+.quote-by{margin-top:14px;font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);font-weight:600}
+.card .big{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(1.3rem,2vw,1.9rem);line-height:1.2;color:var(--text-primary)}
+.col.near{background:linear-gradient(135deg,rgba(0,230,138,.07),rgba(0,230,138,.02));border:1px solid rgba(0,230,138,.28)}
+.col.tao{background:linear-gradient(135deg,rgba(0,194,255,.07),rgba(0,194,255,.02));border:1px solid rgba(0,194,255,.28)}
+.col .rules{margin-top:16px}
+.col.near .rules li{border-left-color:var(--accent-green)}
+.col .rules li{font-family:'DM Sans',sans-serif;font-size:clamp(.95rem,1.05vw,1.05rem)}
+.col .rules li b{color:var(--text-primary)}
+.col .rules li{color:var(--text-secondary)}
+.col .q{font-family:'Playfair Display',serif;font-size:clamp(1.1rem,1.4vw,1.35rem)}
+.col.tao .q{border-left-color:var(--accent-cyan)}
+/* the foundation's `.slide>*:not(.orb){position:relative}` outranks `.scroll-hint{position:absolute}`; restore it */
+.slide>.scroll-hint{position:absolute}
+table.mx td{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:1.3rem;padding:14px 22px}
+table.mx td.name{font-family:'DM Sans',sans-serif;font-size:1.15rem}
+table.mx td .note{display:block;font-family:'DM Sans',sans-serif;font-weight:400;font-size:.95rem;color:var(--text-secondary);margin-top:4px}
+table.mx{margin-top:8px}
+table.mx th.g{color:var(--accent-green)} table.mx th.c{color:var(--accent-cyan)}
+.qcard{padding:22px 26px}
+.qcard .qnum{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.8rem;color:var(--accent-gold);margin-bottom:8px}
+.qcard .qtext{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(1.05rem,1.35vw,1.3rem);line-height:1.3;color:var(--text-primary)}
+.asof{margin-top:18px;font-size:.72rem;color:var(--text-muted);letter-spacing:.04em}
+.col.vote{background:linear-gradient(135deg,rgba(255,215,0,.06),rgba(255,215,0,.015));border:1px solid rgba(255,215,0,.26)}
+.col.vote .rules li{border-left-color:var(--accent-gold)}
+.col.vote .q{border-left-color:var(--accent-gold)}
+.col .stat{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:clamp(1.9rem,2.9vw,2.8rem);line-height:1.1;margin-top:14px}
+.col .stat-note{font-size:clamp(.9rem,1vw,1rem);color:var(--text-secondary);margin-top:6px}
+#vote .col{padding:26px 30px}
+#vote .rules li{padding:11px 16px;margin-bottom:8px}
+#vote .q{margin-top:12px}
+
+#pip-zone{position:fixed;right:2.08vw;bottom:3.7vh;width:25vw;height:25vh;border:3px dashed rgba(255,255,255,.35);border-radius:6px;
+  display:none;align-items:center;justify-content:center;color:rgba(255,255,255,.5);font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;z-index:200}
+#pip-zone.show{display:flex}
+
+/* ===== Shared standard-deck components (from binance.html) ===== */
+.hero{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:clamp(3rem,5.4vw,5.4rem);line-height:1;margin-top:26px}
+.hero .hero-note{font-family:'DM Sans',sans-serif;font-weight:500;font-size:clamp(1rem,1.3vw,1.3rem);color:var(--text-secondary);margin-left:14px;vertical-align:middle}
+.stat-card{padding:22px 26px}
+.stat-card .num,.money-card .num{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:clamp(1.6rem,2.4vw,2.4rem);line-height:1.1}
+.stat-card p{margin-top:8px}
+.stat-card.sm{padding:18px 22px}
+.stat-card.sm .num{font-size:clamp(1.4rem,2vw,2rem)}
+.money-card{padding:24px 26px}
+.money-card .tag{margin-bottom:10px}
+.money-card .lead{margin-top:4px;color:var(--text-primary)}
+.mini{list-style:none;margin-top:14px}
+.mini li{padding:7px 0 7px 14px;border-left:2px solid var(--border);margin-bottom:6px;color:var(--text-secondary);font-size:clamp(.9rem,1vw,1rem);line-height:1.45}
+.col.night{background:linear-gradient(135deg,rgba(255,64,96,.07),rgba(255,64,96,.015));border:1px solid rgba(255,64,96,.26)}
+.col.story{background:linear-gradient(135deg,rgba(255,215,0,.06),rgba(255,215,0,.015));border:1px solid rgba(255,215,0,.24)}
+.col.story .rules li{border-left-color:var(--accent-gold)}
+.col.story .q{border-left-color:var(--accent-gold);font-size:clamp(1rem,1.2vw,1.2rem)}
+.tl-list{list-style:none;margin-top:16px}
+.tl-list li{display:flex;gap:18px;padding:12px 0;border-bottom:1px solid var(--border);color:var(--text-secondary);font-size:clamp(.95rem,1.05vw,1.05rem);line-height:1.45}
+.tl-list li:last-child{border-bottom:none}
+.tl-list li b{color:var(--text-primary)}
+.tl-list .t{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--accent-red);min-width:58px}
+#how .col,#next .col,#dprk .col{padding:24px 28px}
+#how .rules li,#next .rules li,#dprk .rules li{padding:10px 16px;margin-bottom:8px}
+.col.dprk{background:linear-gradient(135deg,rgba(255,64,96,.07),rgba(168,85,247,.03));border:1px solid rgba(255,64,96,.26)}
+.col.dprk .rules li{border-left-color:var(--accent-red)}
+.col.heists{background:linear-gradient(135deg,rgba(255,215,0,.06),rgba(255,215,0,.015));border:1px solid rgba(255,215,0,.24)}
+table.hx{width:100%;border-collapse:collapse;margin-top:14px}
+table.hx td{padding:11px 6px;border-bottom:1px solid var(--border);font-size:clamp(.95rem,1.1vw,1.1rem);color:var(--text-primary)}
+table.hx td.y{color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-size:.9rem}
+table.hx td.a{text-align:right;font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--accent-gold)}
+table.hx tr.hot td{border-bottom:none;font-weight:700}
+table.hx tr.hot td.a{color:var(--accent-red);font-size:clamp(1.2rem,1.5vw,1.5rem)}
+.col.pays{background:linear-gradient(135deg,rgba(255,215,0,.06),rgba(255,215,0,.015));border:1px solid rgba(255,215,0,.24)}
+.col.pays .rules li{border-left-color:var(--accent-gold)}
+.col.paths{background:linear-gradient(135deg,rgba(0,230,138,.06),rgba(0,194,255,.02));border:1px solid rgba(0,230,138,.24)}
+.path{margin-top:16px;padding:18px 20px;border-radius:12px;background:rgba(255,255,255,.02)}
+.path.good{border-left:3px solid var(--accent-green)}
+.path.bad{border-left:3px solid var(--accent-red)}
+.path .pt{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(1.1rem,1.4vw,1.35rem);color:var(--text-primary)}
+.path.good .pt{color:var(--accent-green)} .path.bad .pt{color:var(--accent-red)}
+.path .pd{margin-top:6px;color:var(--text-secondary);font-size:clamp(.95rem,1.05vw,1.05rem);line-height:1.5}
+
+/* ===== JCT deck additions ===== */
+table.mx tr.row.hot td{background:#1d1b12;border-color:rgba(255,215,0,.35)}
+table.mx tr.row.hot td.name{color:var(--accent-gold)}
+table.mx th{padding:4px 22px}
+table.hx th{padding:0 6px 6px;text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);font-weight:600}
+table.hx th.r{text-align:right}
+table.hx td.s{color:var(--text-secondary);font-size:clamp(.88rem,1vw,1rem)}
+table.hx td.live{color:var(--accent-green)}
+.col.locked{background:linear-gradient(135deg,rgba(168,85,247,.07),rgba(168,85,247,.015));border:1px solid rgba(168,85,247,.28)}
+.col.locked .rules li{border-left-color:var(--accent-purple)}
+.col.pitch{background:linear-gradient(135deg,rgba(0,194,255,.07),rgba(0,194,255,.02));border:1px solid rgba(0,194,255,.28)}
+.col.who{background:linear-gradient(135deg,rgba(0,230,138,.06),rgba(0,230,138,.015));border:1px solid rgba(0,230,138,.24)}
+.col.who .rules li{border-left-color:var(--accent-green)}
+.col.flags{background:linear-gradient(135deg,rgba(255,64,96,.07),rgba(255,64,96,.015));border:1px solid rgba(255,64,96,.26)}
+.col.flags .rules li{border-left-color:var(--accent-red)}
+#what .col,#live .col,#unlock .col,#watch .col{padding:24px 28px}
+#what .rules li,#unlock .rules li,#watch .rules li{padding:10px 16px;margin-bottom:8px}
+#peers table.mx td{padding:11px 22px}
+#peers .chain{display:block;font-size:.72em;color:var(--text-muted);font-weight:400;white-space:nowrap;margin-top:2px}
+#peers tr.ven td{background:rgba(34,211,238,.06)}
+.gap-card{padding:20px 24px}
+.gap-card .num{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:clamp(1.15rem,1.5vw,1.5rem);line-height:1.15}
+.gap-card p{margin-top:8px;font-size:clamp(.9rem,1vw,1rem);line-height:1.5}
+.claim{margin-top:16px;padding:16px 20px;border-radius:12px;background:rgba(255,255,255,.02);border-left:3px solid var(--accent-cyan)}
+.claim .src{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);font-weight:600}
+.claim .say{margin-top:6px;font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.1rem,1.4vw,1.35rem);line-height:1.35;color:var(--text-primary)}
+.claim.l1{border-left-color:var(--accent-gold)}
+#nonews .col,#identity .col{padding:24px 28px}
+#nonews .tl-list .t{min-width:66px;white-space:nowrap}
+#identity .cmp{margin-top:12px !important}
+#identity .col{padding:34px 38px}
+#identity .claim{margin-top:22px;padding:22px 26px}
+#identity .claim .say{font-size:clamp(1.3rem,1.75vw,1.7rem)}
+#identity .rules li{padding:16px 20px;margin-bottom:14px;font-size:clamp(1.05rem,1.2vw,1.2rem)}
+#identity h3{font-size:1.3rem}
+.repo-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.repo-links a{font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:600;color:var(--accent-red);text-decoration:none;padding:5px 12px;border-radius:100px;background:rgba(255,64,96,.12);border:1px solid rgba(255,64,96,.3);position:relative;z-index:2}
+.repo-links a:hover{background:rgba(255,64,96,.22)}
+#identity .col.pitch{display:flex;flex-direction:column}
+#identity .col.pitch .claim{flex:1;display:flex;flex-direction:column;justify-content:center}
+#identity .claim .say{font-size:clamp(1.4rem,1.9vw,1.85rem)}
+#identity .col.story .rules{margin-top:22px}
+#identity .col.story .rules li{padding:24px 24px;margin-bottom:20px;font-size:clamp(1.15rem,1.35vw,1.35rem)}
+#nonews .rules li,#identity .rules li{padding:10px 16px;margin-bottom:8px}
+
+/* ===== EVAA deck additions ===== */
+.col.tvl-col{background:linear-gradient(135deg,rgba(0,194,255,.07),rgba(0,194,255,.02));border:1px solid rgba(0,194,255,.28)}
+.bars{margin-top:16px}
+.bar{display:grid;grid-template-columns:minmax(150px,13vw) 1fr 74px;align-items:center;gap:14px;padding:8px 0}
+.bar .bl{color:var(--text-secondary);font-size:clamp(.9rem,1vw,1rem)}
+.bar .bt{height:14px;border-radius:7px;background:rgba(255,255,255,.04);overflow:hidden}
+.bar .bf{display:block;height:100%;border-radius:7px}
+.bar .bv{font-family:'JetBrains Mono',monospace;font-weight:600;text-align:right;color:var(--text-primary)}
+#live .col{padding:24px 28px}
+#live .rules li{padding:10px 16px;margin-bottom:8px}
+#identity .gap-card .tag{margin-bottom:8px}
+#identity .gap-card .num{font-size:clamp(1.6rem,2.4vw,2.4rem)}
+#identity .col{padding:22px 28px}
+#identity .rules li{padding:10px 16px;margin-bottom:8px;font-size:clamp(.95rem,1.05vw,1.05rem)}
+#identity .cmp{margin-top:20px !important}
+#gaps .gap-card p{font-size:clamp(.95rem,1.05vw,1.05rem)}
+#unlock .stat-note{margin-bottom:4px}
+.bar .bv.re{color:var(--accent-red)}
+table.mx td.re{color:var(--accent-red)} table.mx td.g{color:var(--accent-green)}
+</style>
+</head>
+<body>
+
+<!-- SLIDE: 11X -->
+<section class="slide" id="pump">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-cyan);top:-240px;left:-180px;opacity:.22"></div>
+  <div class="orb" style="width:480px;height:480px;background:var(--accent-gold);top:-140px;right:-200px;opacity:.18"></div>
+  <div class="wrap">
+    <span class="ey fade-in">EVAA Protocol (EVAA) · Friday, November 20, 2026</span>
+    <h1 class="fade-in delay-1" style="font-size:min(80px,4.1vw);white-space:nowrap">EVAA Just Went <span class="g">11x</span> in Three Weeks<br>And <span class="g">39x</span> From My Call</h1>
+    <p class="sub fade-in delay-2">The token of TON's lending app inside Telegram, up every day but one this week, while the rest of DeFi fell.</p>
+
+    <div class="hero fade-in delay-2"><span class="g">$5.84</span> <span class="hero-note">up from $0.51 on October 27</span></div>
+
+    <div class="grid3 fade-in delay-3" style="margin-top:22px">
+      <div class="card stat-card">
+        <div class="top-accent" style="background:linear-gradient(90deg,var(--accent-green),transparent)"></div>
+        <div class="num g">5.4x</div>
+        <p>in one week, from <span class="mono">$1.08</span> on November <span class="mono">13</span></p>
+      </div>
+      <div class="card stat-card">
+        <div class="top-accent" style="background:linear-gradient(90deg,var(--accent-gold),transparent)"></div>
+        <div class="num go">+68%</div>
+        <p>in a single hour, November <span class="mono">14</span> at <span class="mono">15:00</span> UTC</p>
+      </div>
+      <div class="card stat-card">
+        <div class="top-accent" style="background:linear-gradient(90deg,var(--accent-red),transparent)"></div>
+        <div class="num re">-57%</div>
+        <p>still below its launch-month high of <span class="mono">$13.62</span></p>
+      </div>
+    </div>
+
+    <div class="impact fade-in delay-4" style="margin-top:22px;padding:16px 24px">
+      <p style="color:var(--text-primary);font-size:clamp(1rem,1.15vw,1.15rem)">Market cap <span class="mono g">$38.6M</span> · fully diluted <span class="mono go">$292M</span> · 24h volume <span class="mono g">$43M</span></p>
+    </div>
+
+    <div class="asof fade-in delay-4">As of November 20, 2026, 14:00 UTC. Source: CoinGecko.</div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+  </div>
+</section>
+
+<!-- SLIDE: NO NEWS -->
+<section class="slide" id="nonews">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-red);bottom:-260px;left:-180px;opacity:.2"></div>
+  <div class="orb" style="width:420px;height:420px;background:var(--accent-gold);top:-180px;right:-120px;opacity:.16"></div>
+  <div class="wrap">
+    <span class="ey fade-in">What moved it</span>
+    <h2 class="fade-in delay-1">A Pump With No News</h2>
+    <div class="divider fade-in delay-1" style="background:linear-gradient(90deg,var(--accent-red),var(--accent-gold))"></div>
+
+    <div class="cmp" style="margin-top:4px">
+      <div class="col night fade-in delay-2">
+        <div class="ml">The last three weeks</div>
+        <h3 class="re">The Timeline</h3>
+        <ul class="tl-list">
+          <li><span class="t">Oct 28</span><span><b><span class="mono">$0.51</span> to <span class="mono">$1.45</span></b> in two days. Volume up over <span class="mono">100x</span></span></li>
+          <li><span class="t">Nov 13</span><span>Faded back to <span class="mono">$1.08</span></span></li>
+          <li><span class="t">Nov 14</span><span><b><span class="mono">+68%</span></b> in one hour. Gate volume <span class="mono">24x</span> the day before</span></li>
+          <li><span class="t">Nov 20</span><span>Five more up days, to <b><span class="mono">$5.84</span></b></span></li>
+        </ul>
+      </div>
+      <div class="col story fade-in delay-3">
+        <div class="ml">Where the trading is</div>
+        <h3 class="go">A Futures Market</h3>
+        <ul class="rules">
+          <li><b><span class="mono">$96M</span> traded on perps</b> at just three exchanges, vs <span class="mono">$43M</span> on every spot market</li>
+          <li><b>Open interest about <span class="mono">$46M</span></b> on those three, more than the whole market cap</li>
+          <li><b>On Gate, <span class="mono">3</span> accounts short for every <span class="mono">1</span> long</b> while the price climbed</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="impact fade-in delay-4" style="margin-top:18px;padding:16px 24px;background:linear-gradient(135deg,rgba(255,64,96,.08),rgba(255,215,0,.05));border-color:rgba(255,64,96,.24)">
+      <div class="quote" style="font-size:clamp(1.05rem,1.4vw,1.4rem)">"The market's had a rough week. The workbench is still lit."</div>
+      <div class="quote-by">EVAA's Telegram, November 15. Not one post about the token, the price or a listing during the run</div>
+    </div>
+
+    <div class="asof fade-in delay-4">Sources: CoinGecko, Gate, Bitget and MEXC public data, EVAA's Telegram channels.</div>
+  </div>
+</section>
+
+<!-- SLIDE: WHAT IT IS -->
+<section class="slide" id="what">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-cyan);bottom:-260px;left:-180px;opacity:.22"></div>
+  <div class="orb" style="width:420px;height:420px;background:var(--accent-green);top:-180px;right:-120px;opacity:.16"></div>
+  <div class="wrap">
+    <span class="ey fade-in">What EVAA is</span>
+    <h2 class="fade-in delay-1">A Lending App Inside Telegram</h2>
+    <div class="divider fade-in delay-1"></div>
+
+    <div class="cmp" style="margin-top:4px">
+      <div class="col pitch fade-in delay-2">
+        <div class="ml">"The first decentralized lending protocol on TON"</div>
+        <h3 class="c">How It Works</h3>
+        <ul class="rules">
+          <li><b>Lenders</b> deposit GRAM (TON's coin), stablecoins or staked TON and earn interest</li>
+          <li><b>Borrowers</b> post collateral worth more than the loan</li>
+          <li><b>Liquidators</b> step in when a loan's collateral runs thin</li>
+          <li><b>Runs as a Telegram Mini App</b>, plus a web app and a payment card</li>
+        </ul>
+      </div>
+      <div class="col who fade-in delay-3">
+        <div class="ml">Started at a TON hackathon, 2023</div>
+        <h3 class="g">Who's Behind It</h3>
+        <ul class="rules">
+          <li><b>CEO Vlad Kamyshov</b>, co-founder Aleksandr Sudeikin</li>
+          <li><b>Raised <span class="mono">$2.5M</span></b> in a private token sale, January <span class="mono">2025</span></li>
+          <li><b>Backers include</b> TON Ventures, Animoca, Polymorphic Capital, CMT Digital</li>
+          <li><b>Audited</b> by Quantstamp and Trail of Bits. No exploit on record</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="impact fade-in delay-4" style="margin-top:18px;padding:16px 24px">
+      <p style="color:var(--text-primary);font-size:clamp(1rem,1.15vw,1.15rem)"><span class="g" style="font-weight:700">Token launched October 3, 2025</span> on Binance Alpha and Binance Futures. It lives on TON and BNB Chain, and <span class="mono">61%</span> of the supply sits on BNB Chain.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE: THE PRODUCT -->
+<section class="slide" id="live">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-red);top:-240px;left:-180px;opacity:.16"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-cyan);bottom:-260px;left:40%;opacity:.16"></div>
+  <div class="wrap">
+    <span class="ey fade-in">The product · money deposited in EVAA</span>
+    <h2 class="fade-in delay-1">The Token Went Up. The Deposits Went Down.</h2>
+    <div class="divider fade-in delay-1" style="background:linear-gradient(90deg,var(--accent-red),var(--accent-cyan))"></div>
+
+    <div class="cmp fade-in delay-2" style="margin-top:4px">
+      <div class="col tvl-col">
+        <div class="ml">Total value locked</div>
+        <h3 class="c">From the Peak</h3>
+        <div class="bars">
+          <div class="bar"><span class="bl">Jan 2025 peak</span><span class="bt"><span class="bf" style="width:100%;background:var(--accent-cyan)"></span></span><span class="bv">$84.3M</span></div>
+          <div class="bar"><span class="bl">Oct 2025, token launch</span><span class="bt"><span class="bf" style="width:18.8%;background:var(--accent-cyan)"></span></span><span class="bv">$15.8M</span></div>
+          <div class="bar"><span class="bl">Jan 2026</span><span class="bt"><span class="bf" style="width:12.7%;background:var(--accent-cyan)"></span></span><span class="bv">$10.7M</span></div>
+          <div class="bar"><span class="bl">Nov 12, 2026</span><span class="bt"><span class="bf" style="width:9%;background:var(--accent-gold)"></span></span><span class="bv">$7.6M</span></div>
+          <div class="bar"><span class="bl">Today</span><span class="bt"><span class="bf" style="width:7.9%;background:var(--accent-red)"></span></span><span class="bv re">$6.6M</span></div>
+        </div>
+        <div class="stat re" style="margin-top:18px">-92%</div>
+        <div class="stat-note">from the peak, and down <span class="mono">13%</span> during this week's rally</div>
+      </div>
+      <div class="col story">
+        <div class="ml">On its own home page</div>
+        <h3 class="go">The Big Numbers</h3>
+        <ul class="rules">
+          <li><b><span class="mono">$118M+</span></b> "total deposit at the peak"</li>
+          <li><b><span class="mono">300K+</span></b> "unique wallets"</li>
+          <li><b><span class="mono">$1.4B+</span></b> "transaction volume"</li>
+          <li><b>Typed into the page's code</b>, not live, no date</li>
+        </ul>
+        <div class="stat c" style="margin-top:16px">$3.6M</div>
+        <div class="stat-note">borrowed right now, the part that pays interest</div>
+      </div>
+    </div>
+
+    <div class="asof fade-in delay-4">Sources: DefiLlama (read November 20, 2026), evaa.finance.</div>
+  </div>
+</section>
+
+<!-- SLIDE: SUPPLY -->
+<section class="slide" id="identity">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-purple);top:-240px;left:-180px;opacity:.2"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-gold);bottom:-260px;left:40%;opacity:.14"></div>
+  <div class="wrap">
+    <span class="ey fade-in">How big is it, really?</span>
+    <h2 class="fade-in delay-1">How Many Tokens Are Out? Depends Who You Ask</h2>
+    <div class="divider fade-in delay-1" style="background:linear-gradient(90deg,var(--accent-purple),var(--accent-gold))"></div>
+
+    <div class="grid3 fade-in delay-2" style="margin-top:6px">
+      <div class="card gap-card"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-cyan),transparent)"></div><span class="tag cyan">CoinGecko</span><div class="num c">6.6M</div><p>tokens circulating, so a market cap of <span class="mono">$38.6M</span></p></div>
+      <div class="card gap-card"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-gold),transparent)"></div><span class="tag gold">EVAA's own API</span><div class="num go">17.9M</div><p>what EVAA reports, and CoinMarketCap uses: a market cap of <span class="mono">$104M</span></p></div>
+      <div class="card gap-card"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-red),transparent)"></div><span class="tag red">Unlock tracker</span><div class="num re">29.7M</div><p>already unlocked, <span class="mono">59%</span> of the max, self-reported</p></div>
+    </div>
+
+    <div class="cmp fade-in delay-3" style="margin-top:20px">
+      <div class="col pitch">
+        <div class="ml">Read on-chain</div>
+        <h3 class="c">What Exists</h3>
+        <ul class="rules">
+          <li><b><span class="mono">49.05M</span> minted</b> of the <span class="mono">50M</span> cap: <span class="mono">30M</span> on BNB Chain, <span class="mono">19.05M</span> on TON</li>
+          <li><b>The TON token can still be minted</b>, by a multisig</li>
+        </ul>
+      </div>
+      <div class="col locked">
+        <div class="ml">The same coin, priced three ways</div>
+        <h3 class="pu">The Gap</h3>
+        <ul class="rules">
+          <li><b>The market cap</b> swings <span class="mono">2.7x</span> depending on the site</li>
+          <li><b>Fully diluted:</b> <span class="mono">$292M</span> on both</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="asof fade-in delay-4">As of November 20, 2026. Sources: CoinGecko, CoinMarketCap, api.evaa.space, TON and BNB Chain on-chain.</div>
+  </div>
+</section>
+
+<!-- SLIDE: WHAT THE TOKEN DOES -->
+<section class="slide" id="gaps">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-purple);top:-240px;left:-180px;opacity:.24"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-red);bottom:-260px;left:40%;opacity:.14"></div>
+  <div class="wrap">
+    <span class="ey fade-in">The receipts</span>
+    <h2 class="fade-in delay-1">What Holding EVAA Gets You Today</h2>
+    <div class="divider fade-in delay-1" style="background:linear-gradient(90deg,var(--accent-purple),var(--accent-red))"></div>
+
+    <div class="grid3 fade-in delay-2" style="margin-top:6px">
+      <div class="card gap-card"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-cyan),transparent)"></div><div class="num c">The app</div><p>You do not need the token to lend or borrow. The only cost is interest</p></div>
+      <div class="card gap-card"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-gold),transparent)"></div><div class="num go">Voting</div><p>The docs say holders "can" vote. No vote found on Snapshot, in the docs or on its Telegram</p></div>
+      <div class="card gap-card"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-green),transparent)"></div><div class="num g">Staking</div><p>The docs say the token "may" be staked. No live staking product in the docs or the app's channels</p></div>
+      <div class="card gap-card"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-purple),transparent)"></div><div class="num pu">Buyback</div><p>Listed as something governance "might include, in the future"</p></div>
+      <div class="card gap-card"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-red),transparent)"></div><div class="num re">Revenue</div><p>No fee or revenue figure published. DefiLlama does not track any</p></div>
+      <div class="card gap-card"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-gold),transparent)"></div><div class="num go">Telegram</div><p>The <span class="mono">234K</span>-member main channel has not posted since October <span class="mono">2025</span></p></div>
+    </div>
+
+    <div class="asof fade-in delay-4">Sources: EVAA docs, evaa.finance FAQ, Snapshot, DefiLlama, t.me/evaaprotocol (read November 20, 2026).</div>
+  </div>
+</section>
+
+<!-- SLIDE: VS PEERS -->
+<section class="slide" id="peers">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-gold);top:-260px;left:-180px;opacity:.18"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-cyan);bottom:-240px;left:40%;opacity:.16"></div>
+  <div class="wrap">
+    <span class="ey fade-in">EVAA vs the other lending apps' coins</span>
+    <h2 class="fade-in delay-1">Priced Like a Lending App With <span class="go">141x</span> the Deposits</h2>
+    <p class="sub fade-in delay-1">Venus is the main lending app on BNB Chain. Its coin has the same market cap as EVAA, <span class="mono">$38.4M</span>. Venus holds <span class="mono">$932M</span> in deposits. EVAA holds <span class="mono">$6.6M</span>.</p>
+    <div class="divider fade-in delay-1" style="background:linear-gradient(90deg,var(--accent-gold),var(--accent-cyan))"></div>
+
+    <table class="mx fade-in delay-2">
+      <tr><th style="text-align:left">Coin</th><th>Market cap</th><th>Fully diluted</th><th>Deposits (TVL)</th><th>7 days</th></tr>
+      <tr class="row"><td class="name">Aave <span class="chain">Ethereum + others</span></td><td>$1.57B</td><td>$1.63B</td><td>$16.2B</td><td class="re">-9%</td></tr>
+      <tr class="row"><td class="name">Compound <span class="chain">Ethereum</span></td><td>$174M</td><td>$174M</td><td>$1.11B</td><td class="re">-13%</td></tr>
+      <tr class="row ven"><td class="name">Venus <span class="chain">BNB Chain</span></td><td>$38.4M</td><td>$67.5M</td><td>$932M</td><td class="re">-12%</td></tr>
+      <tr class="row hot"><td class="name">EVAA <span class="chain">TON</span></td><td>$38.4M</td><td class="go">$290M</td><td class="re">$6.6M</td><td class="g">+434%</td></tr>
+      <tr class="row"><td class="name">Euler <span class="chain">Ethereum</span></td><td>$19.6M</td><td>$22.2M</td><td>$235M</td><td class="re">-8%</td></tr>
+    </table>
+
+    <div class="grid3 fade-in delay-3" style="margin-top:14px">
+      <div class="card stat-card sm"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-gold),transparent)"></div><div class="num go">5.8x</div><p>EVAA's market cap over its deposits. The others: <span class="mono">0.04</span> to <span class="mono">0.16</span></p></div>
+      <div class="card stat-card sm"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-cyan),transparent)"></div><div class="num c">4.3x</div><p>EVAA's fully diluted value, compared with Venus's (<span class="mono">$290M</span> vs <span class="mono">$67.5M</span>)</p></div>
+      <div class="card stat-card sm"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-red),transparent)"></div><div class="num re">All red</div><p>every lending coin, and GRAM itself, down on the week</p></div>
+    </div>
+
+    <div class="asof fade-in delay-4">As of November 20, 2026, 14:00 UTC. Sources: CoinGecko, DefiLlama.</div>
+  </div>
+</section>
+
+<!-- SLIDE: WHAT TO WATCH -->
+<section class="slide" id="watch">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-red);top:-260px;left:-180px;opacity:.18"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-green);bottom:-240px;left:40%;opacity:.18"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Before you buy</span>
+    <h2 class="fade-in delay-1">What to Watch</h2>
+    <div class="divider fade-in delay-1" style="background:linear-gradient(90deg,var(--accent-red),var(--accent-green))"></div>
+
+    <div class="cmp" style="margin-top:4px">
+      <div class="col flags fade-in delay-2">
+        <div class="ml">The risks</div>
+        <h3 class="re">Read the Tape</h3>
+        <ul class="rules">
+          <li><b>Its last spike:</b> <span class="mono">$2.77</span> in July, gave back <span class="mono">71%</span> in <span class="mono">10</span> days</li>
+          <li><b>Concentrated:</b> the top <span class="mono">10</span> wallets hold <span class="mono">81%</span> of the BNB Chain supply</li>
+          <li><b>Thin at home:</b> about <span class="mono">$0.1M</span> a day trades on TON itself</li>
+          <li><b>Bought at the October 2025 top?</b> Still down <span class="mono">57%</span></li>
+        </ul>
+      </div>
+      <div class="col paths fade-in delay-3">
+        <div class="ml">Two ways from here</div>
+        <h3 class="g">The Squeeze Test</h3>
+        <div class="path good"><div class="pt">The shorts keep paying</div><div class="pd">Price holds through the November <span class="mono">27</span> unlock and open interest keeps rising.</div></div>
+        <div class="path bad"><div class="pt">The fuel runs out</div><div class="pd">The shorts are gone, open interest falls, and a <span class="mono">$6.6M</span> app is left carrying a <span class="mono">$292M</span> valuation.</div></div>
+      </div>
+    </div>
+
+    <div class="impact fade-in delay-4" style="margin-top:18px;padding:16px 24px">
+      <p style="color:var(--text-primary);font-size:clamp(1rem,1.15vw,1.15rem)"><span class="g" style="font-weight:700">What would make it real:</span> deposits growing again, a live staking or buyback, a word from the team.</p>
+    </div>
+
+    <div class="impact fade-in delay-4" style="margin-top:12px;padding:14px 24px;background:rgba(255,255,255,.02);border-color:var(--border)">
+      <p style="font-size:clamp(.95rem,1.05vw,1.05rem)"><b style="color:var(--text-primary)">Where it trades:</b> Gate, Bitget, KuCoin, MEXC, Kraken, PancakeSwap and Binance Alpha. Not on Binance spot, Coinbase or Upbit.</p>
+    </div>
+
+    <div class="asof fade-in delay-4">As of November 20, 2026. Sources: CoinGecko, DefiLlama, Binplorer, Gate.</div>
+  </div>
+</section>
+
+<div id="pip-zone">Webcam</div>
+
+<div class="nav-dots" id="navDots"></div>
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+
+/* fade-in on scroll */
+const fadeObserver = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.15});
+document.querySelectorAll('.fade-in').forEach(el=>fadeObserver.observe(el));
+
+/* nav dots */
+const dotsWrap = document.getElementById('navDots');
+slides.forEach((s,i)=>{
+  const b=document.createElement('button');
+  b.setAttribute('aria-label','Go to slide '+(i+1));
+  b.addEventListener('click',()=>s.scrollIntoView({behavior:'smooth'}));
+  dotsWrap.appendChild(b);
+});
+const dots = Array.from(dotsWrap.children);
+const dotObserver = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ const i=slides.indexOf(e.target); dots.forEach((d,j)=>d.classList.toggle('active',j===i)); } });
+},{threshold:0.5});
+slides.forEach(s=>dotObserver.observe(s));
+
+/* arrow-key / spacebar nav (handy when recording) */
+function currentIndex(){
+  const mid=window.innerHeight/2; let idx=0,best=Infinity;
+  slides.forEach((s,i)=>{ const r=s.getBoundingClientRect(); const d=Math.abs((r.top+r.bottom)/2-mid); if(d<best){best=d;idx=i;} });
+  return idx;
+}
+document.addEventListener('keydown',e=>{
+  if(['ArrowRight','ArrowDown',' '].includes(e.key)){ e.preventDefault(); slides[Math.min(slides.length-1,currentIndex()+1)].scrollIntoView({behavior:'smooth'}); }
+  if(['ArrowLeft','ArrowUp'].includes(e.key)){ e.preventDefault(); slides[Math.max(0,currentIndex()-1)].scrollIntoView({behavior:'smooth'}); }
+});
+</script>
+<script>
+/* recording helpers: G = webcam guide box, F = fullscreen */
+document.addEventListener('keydown',e=>{
+  if(e.key==='g'||e.key==='G') document.getElementById('pip-zone').classList.toggle('show');
+  if(e.key==='f'||e.key==='F'){ if(!document.fullscreenElement) document.documentElement.requestFullscreen(); else document.exitFullscreen(); }
+});
+</script>
+</body>
+</html>

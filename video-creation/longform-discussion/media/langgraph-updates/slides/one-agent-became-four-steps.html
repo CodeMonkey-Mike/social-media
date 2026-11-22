@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One Agent Became Four Steps</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c10;--card:#12151c;--green:#00e68a;--cyan:#00c2ff;--gold:#ffd700;--red:#ff4060;--text:#e8eaf0;--muted:#8892a4;--border:#1e2330}
+html{font-size:min(2.1vh,1.19vw);background:var(--bg)}
+*{box-sizing:border-box}
+body{margin:0;height:100vh;overflow:hidden;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;justify-content:center;padding:2.4rem 4.5rem;position:relative}
+body>*{position:relative;z-index:1}
+.orb{position:absolute;width:520px;height:520px;border-radius:50%;filter:blur(100px);opacity:.2;background:var(--cyan);bottom:-240px;left:-140px;z-index:0}
+.label{font-size:.8rem;text-transform:uppercase;letter-spacing:.18em;color:#6b7588;font-weight:500}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-variant-numeric:lining-nums;font-size:3.4rem;line-height:1.1;margin:.5rem 0 0}
+.divider{width:60px;height:3px;background:linear-gradient(90deg,var(--green),var(--cyan));border-radius:2px;margin:1rem 0 1.3rem}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.box{background:linear-gradient(135deg,rgba(0,230,138,.08),rgba(0,194,255,.06));border:1px solid rgba(0,230,138,.2);border-radius:12px;padding:.95rem 1.5rem;font-size:1.25rem;line-height:1.45;margin-top:1.3rem}
+.box b{color:var(--green);font-weight:700}
+.source{font-size:.8rem;color:#7a8496;margin-top:.8rem}
+.tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.72rem;letter-spacing:.1em;padding:.16rem .5rem;border-radius:999px;vertical-align:middle;margin-left:.5rem}
+.tag.new{background:var(--gold);color:#141000}
+.tag.more{border:1px solid var(--cyan);color:var(--cyan)}
+
+.rowlabel{font-size:.78rem;text-transform:uppercase;letter-spacing:.16em;color:#6b7588;font-weight:700;margin:0 0 .5rem}
+.old{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:.85rem 1.3rem;display:flex;align-items:center;gap:1.6rem;margin-bottom:1.5rem}
+.old .who{font-size:1.2rem;color:var(--muted);white-space:nowrap}
+.old .jobs{display:flex;gap:.6rem;flex-wrap:nowrap}
+.old .jobs span{border:1px solid #2a3142;border-radius:999px;padding:.3rem .85rem;font-size:1rem;color:#aab3c5;white-space:nowrap}
+.old .count{margin-left:auto;font-size:.95rem;color:var(--muted);white-space:nowrap}
+.flow,.back{display:grid;grid-template-columns:1fr 2.4rem 1fr 2.4rem 1fr 2.4rem 1fr}
+.flow{align-items:stretch}
+.node{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem 1.15rem 1.05rem;position:relative;overflow:hidden}
+.node::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--c)}
+.node .step{font-size:.78rem;letter-spacing:.16em;font-weight:700;color:var(--c)}
+.node .who{font-size:1.28rem;margin:.45rem 0 .5rem}
+.node .what{font-size:1.02rem;line-height:1.4;color:#c3cad8}
+.node .code{display:block;margin-top:.55rem;font-size:.86rem;color:var(--muted)}
+.cy{--c:var(--cyan)}.gd{--c:var(--gold)}.gr{--c:var(--green)}
+.arrow{display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:#56607a}
+.back .loop{grid-column:3 / 6;margin:0 23%;height:2.5rem;border:2px dashed var(--gold);border-top:none;border-radius:0 0 14px 14px;position:relative}
+.back .loop::before{content:"";position:absolute;left:-.48rem;top:-.45rem;border-left:.42rem solid transparent;border-right:.42rem solid transparent;border-bottom:.7rem solid var(--gold)}
+.back .note{grid-column:3 / 6;text-align:center;font-size:.98rem;color:var(--gold);margin-top:.45rem}
+</style></head><body>
+<div class="orb"></div>
+<div class="label">The livestream graph &middot; the step that builds each short</div>
+<h1>One Agent Became Four Steps</h1><div class="divider"></div>
+<div class="rowlabel">Before</div>
+<div class="old"><div class="who mono">remotion-builder</div>
+<div class="jobs"><span>plans the images</span><span>generates them in the browser</span><span>checks its own images</span><span>builds the video</span></div>
+<div class="count">1 agent, 1 run per short</div></div>
+<div class="rowlabel">Now</div>
+<div class="flow">
+<div class="node cy"><div class="step">1 · PLAN</div><div class="who mono">remotion-builder</div><div class="what">Writes the plan and a JSON list of the images to make. Then it stops.</div></div>
+<div class="arrow">&rarr;</div>
+<div class="node gd"><div class="step">2 · IMAGES<span class="tag new">NEW</span></div><div class="who mono">image-gen</div><div class="what">Generates every image on the list.<span class="code">The graph's code holds the browser lock.</span></div></div>
+<div class="arrow">&rarr;</div>
+<div class="node gr"><div class="step">3 · IMAGE CHECK</div><div class="who mono">visual-qa</div><div class="what">Opens every image. Reports PASS or FAIL and changes nothing.</div></div>
+<div class="arrow">&rarr;</div>
+<div class="node cy"><div class="step">4 · BUILD</div><div class="who mono">remotion-builder</div><div class="what">Builds the video from the files on disk.</div></div>
+</div>
+<div class="back"><div class="loop"></div><div class="note">FAIL: back to image-gen with the checker's report, 2 rounds at most</div></div>
+<div class="box"><b>4 steps, 3 agents per short.</b> The same builder is called twice, and it never touches the browser.</div>
+<div class="source">Source: batch_graph.py, the per-clip build pipeline, read Nov 19, 2026.</div>
+</body></html>

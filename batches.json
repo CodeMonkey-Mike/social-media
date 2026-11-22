@@ -1613,6 +1613,58 @@
       "briefs": {
         "clips": "Every clip must be UNDER 70 seconds final length. Mike: limit the clips to under 70 seconds."
       }
+    },
+    {
+      "batch": "ripping",
+      "track": "livestream-repurpose",
+      "status": "active",
+      "date": "2026-11-18",
+      "livestream_title": "ripping LOW BPS VERTICAL",
+      "title": null,
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/ripping/ripping LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/ripping LOW BPS VERTICAL/ripping LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/ripping LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/ripping/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/ripping",
+        "video-creation/shorts/ripping"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done",
+        "longform": "skip"
+      },
+      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-11-18.",
+      "briefs": {
+        "clips": "HARD CAP from Mike for this batch: every clip must be UNDER 60 seconds as a finished short. Keep each raw cut under 60 seconds too, so the tightened result is safely under. A moment that cannot be told in under 60 seconds is not picked."
+      }
+    },
+    {
+      "batch": "evaa-reveal",
+      "track": "livestream-repurpose",
+      "status": "active",
+      "date": "2026-11-22",
+      "livestream_title": "evaa-reveal LOW BPS VERTICAL",
+      "title": null,
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/evaa-reveal/evaa-reveal LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/evaa-reveal LOW BPS VERTICAL/evaa-reveal LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/evaa-reveal LOW BPS VERTICAL",
+      "dashboard": null,
+      "directories": [
+        "video-creation/shorts/evaa-reveal"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "pending",
+        "longform": "skip"
+      },
+      "note": "registered by the batch orchestrator 2026-11-22",
+      "briefs": {
+        "lane3": "Limit threads to exactly 1 thread. Create 3 quiz questions (YT quizzes).",
+        "clips": "Limit to 5 clips maximum. Every clip must be under 45 seconds."
+      }
     }
   ]
 }

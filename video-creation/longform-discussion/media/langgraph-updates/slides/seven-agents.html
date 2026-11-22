@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7 Agents Work Inside This Graph</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c10;--card:#12151c;--green:#00e68a;--cyan:#00c2ff;--gold:#ffd700;--red:#ff4060;--text:#e8eaf0;--muted:#8892a4;--border:#1e2330}
+html{font-size:min(2.1vh,1.19vw);background:var(--bg)}
+*{box-sizing:border-box}
+body{margin:0;height:100vh;overflow:hidden;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;justify-content:center;padding:2.4rem 4.5rem;position:relative}
+body>*{position:relative;z-index:1}
+.orb{position:absolute;width:520px;height:520px;border-radius:50%;filter:blur(100px);opacity:.2;background:var(--cyan);bottom:-240px;left:-140px;z-index:0}
+.label{font-size:.8rem;text-transform:uppercase;letter-spacing:.18em;color:#6b7588;font-weight:500}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-variant-numeric:lining-nums;font-size:3.4rem;line-height:1.1;margin:.5rem 0 0}
+.divider{width:60px;height:3px;background:linear-gradient(90deg,var(--green),var(--cyan));border-radius:2px;margin:1rem 0 1.3rem}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.box{background:linear-gradient(135deg,rgba(0,230,138,.08),rgba(0,194,255,.06));border:1px solid rgba(0,230,138,.2);border-radius:12px;padding:.95rem 1.5rem;font-size:1.25rem;line-height:1.45;margin-top:1.3rem}
+.box b{color:var(--green);font-weight:700}
+.source{font-size:.8rem;color:#7a8496;margin-top:.8rem}
+.tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.72rem;letter-spacing:.1em;padding:.16rem .5rem;border-radius:999px;vertical-align:middle;margin-left:.5rem}
+.tag.new{background:var(--gold);color:#141000}
+.tag.more{border:1px solid var(--cyan);color:var(--cyan)}
+
+.cols{display:grid;grid-template-columns:1fr 1.12fr;gap:1.4rem;align-items:stretch}
+.left{display:flex;flex-direction:column;justify-content:space-between}
+.group{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:.9rem 1.3rem .5rem;position:relative;overflow:hidden}
+.group::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--c),transparent)}
+.group .gl{font-size:.78rem;text-transform:uppercase;letter-spacing:.16em;font-weight:700;color:var(--c);margin-bottom:.35rem}
+.agent{padding:.62rem 0;border-top:1px solid var(--border)}
+.agent:first-of-type{border-top:none}
+.agent .top{display:flex;align-items:baseline;justify-content:space-between;gap:1rem}
+.agent .name{font-size:1.18rem}
+.agent .tier{font-size:.86rem;color:var(--muted);white-space:nowrap}
+.agent .job{font-size:1rem;color:#c3cad8;margin-top:.2rem}
+.agent.hl{background:rgba(255,215,0,.05);margin:0 -1.3rem;padding-left:1.3rem;padding-right:1.3rem;border-top-color:rgba(255,215,0,.3)}
+.agent.hl + .agent{border-top-color:rgba(255,215,0,.3)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:.7rem 1.1rem}
+.stat .big{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:2rem;color:var(--green)}
+.stat .big i{font-style:normal;color:#56607a;font-size:1.5rem;margin:0 .35rem}
+.stat .big s{text-decoration:none;color:var(--muted)}
+.stat .cap{font-size:.95rem;color:#c3cad8;margin-top:.1rem}
+</style></head><body>
+<div class="orb"></div>
+<div class="label">The agents</div>
+<h1>7 Agents Work Inside This Graph</h1><div class="divider"></div>
+<div class="cols">
+<div class="left">
+<div class="group" style="--c:var(--cyan)"><div class="gl">Judgment, hands back a plan</div>
+<div class="agent"><div class="top"><div class="name mono">clip-strategist</div><div class="tier mono">fable, max effort</div></div><div class="job">picks the clips from the transcript</div></div>
+<div class="agent"><div class="top"><div class="name mono">tighten-strategist</div><div class="tier mono">fable, max effort</div></div><div class="job">plans which filler to cut from a clip</div></div>
+<div class="agent"><div class="top"><div class="name mono">lane3-drafter</div><div class="tier mono">fable, max effort</div></div><div class="job">drafts the tweets, threads and posts</div></div>
+</div>
+<div class="stats">
+<div class="stat"><div class="big"><s>6</s><i>&rarr;</i>7</div><div class="cap">agents in this graph</div></div>
+<div class="stat"><div class="big"><s>6</s><i>&rarr;</i>9</div><div class="cap">places the code starts an agent</div></div>
+</div>
+</div>
+<div class="group" style="--c:var(--green)"><div class="gl">Builds or checks</div>
+<div class="agent"><div class="top"><div class="name mono">remotion-builder<span class="tag more">CALLED TWICE PER SHORT</span></div><div class="tier mono">opus, xhigh effort</div></div><div class="job">plans each short's images, then builds its video</div></div>
+<div class="agent hl"><div class="top"><div class="name mono">image-gen<span class="tag new">NEW IN THIS GRAPH</span></div><div class="tier mono">sonnet, xhigh effort</div></div><div class="job">generates each short's images in the browser</div></div>
+<div class="agent"><div class="top"><div class="name mono">visual-qa<span class="tag more">2 JOBS NOW</span></div><div class="tier mono">opus, high effort</div></div><div class="job">checks every generated image, for the posts and now for the shorts</div></div>
+<div class="agent"><div class="top"><div class="name mono">publish-meta-author</div><div class="tier mono">opus, medium effort</div></div><div class="job">writes the titles and captions</div></div>
+</div>
+</div>
+<div class="source">Source: the spawn_agent calls in batch_graph.py and each agent definition's model and effort lines, read Nov 19, 2026.</div>
+</body></html>

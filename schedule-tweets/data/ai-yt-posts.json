@@ -1,0 +1,85 @@
+{
+  "$schema_doc": "The YouTube community posts of the AI Engineering Simplified channel (@aiEngineeringSimplified), one object per post, the same shape as yt-posts.json (the crypto channel's queue). Rows come from the ytpost lane (python video-creation/longform-edited/graph/run.py ytpost), which picks this queue when the live video is on this channel, for a longform-edited or a longform-presentation video (Mike, 2026-11-17). Slide images live in schedule-tweets/images/ai-yt/. Status flow: 'pending' (queued) -> 'posted' (posted_at and post_url set). Posted by schedule-tweets/scripts/post_yt_community.py --channel ai (Python; its own ai-ytbot-profile, CDP 9225; first post 2026-11-17). The JS post-yt-community.js posts only the crypto channel: never run it for this file. Shown on the dashboard's AI YouTube Posts tab.",
+  "posts": [
+    {
+      "id": "ai-yt-post-2026-11-17-clip-evals-video",
+      "topic": "Promo carousel for the live video \"Evals in Production: Turning Human Verdicts Into a Score\"",
+      "source_transcript": null,
+      "variation_label": "video promo carousel",
+      "body_style": "watch-the-full-video link + headline + two arrow points + hashtags",
+      "cta_target": "watch_video",
+      "created_at": "2026-11-17T13:03:49",
+      "status": "posted",
+      "posted_at": "2026-11-18T00:33:36.697Z",
+      "post_url": "https://www.youtube.com/post/UgkxGCVWtK3K2PQoaVcU6L147fneXwkssnse",
+      "body": "▶ Watch the full video: https://youtu.be/U26NDilqCDo\n\nEvery keep or kill at my human gate is now an eval score\n\n→ 98 clips judged on record, 82.7 percent precision\n→ 11 of 17 kills were one half of a full clip and impact cut pair\n\n#AIEngineering #LLMEvals #LangGraph",
+      "engagement_question": null,
+      "char_count": 266,
+      "images": [
+        {
+          "seq": 1,
+          "image_id": "55d239f8",
+          "image_path": "schedule-tweets/images/ai-yt/ai-yt-posts-55d239f8-01-human-verdicts-into-a-score.png",
+          "slide_text": "Human verdicts into a score"
+        },
+        {
+          "seq": 2,
+          "image_id": "b69b9618",
+          "image_path": "schedule-tweets/images/ai-yt/ai-yt-posts-b69b9618-02-two-kinds-of-harness.png",
+          "slide_text": "Two kinds of harness / An agent harness runs the loop and hands the model its tools. An evaluation harness runs the evals end to end and adds up the results."
+        },
+        {
+          "seq": 3,
+          "image_id": "9ab8a741",
+          "image_path": "schedule-tweets/images/ai-yt/ai-yt-posts-9ab8a741-03-one-graph-14-steps.png",
+          "slide_text": "One graph, 14 steps"
+        },
+        {
+          "seq": 4,
+          "image_id": "04b6dba2",
+          "image_path": "schedule-tweets/images/ai-yt/ai-yt-posts-04b6dba2-04-rules-live-in-the-code.png",
+          "slide_text": "Rules live in the code / A rule that only lives in the context is a request. The prompt explains the job. The code enforces the rules."
+        },
+        {
+          "seq": 5,
+          "image_id": "3181f167",
+          "image_path": "schedule-tweets/images/ai-yt/ai-yt-posts-3181f167-05-the-fix-had-three-parts.png",
+          "slide_text": "The fix had three parts"
+        },
+        {
+          "seq": 6,
+          "image_id": "af7e118e",
+          "image_path": "schedule-tweets/images/ai-yt/ai-yt-posts-af7e118e-06-a-score-moves-by-itself.png",
+          "slide_text": "A score moves by itself / 83.3 / Same prompt, same transcript, same model. The difference was one impact cut."
+        },
+        {
+          "seq": 7,
+          "image_id": "134722fa",
+          "image_path": "schedule-tweets/images/ai-yt/ai-yt-posts-134722fa-07-what-the-record-shows.png",
+          "slide_text": "What the record shows / 82.7% / 184 lines covering 21 livestreams, every keep or kill on record."
+        },
+        {
+          "seq": 8,
+          "image_id": "78aaa6cb",
+          "image_path": "schedule-tweets/images/ai-yt/ai-yt-posts-78aaa6cb-08-the-finding-i-didn-t-expect.png",
+          "slide_text": "The finding I didn't expect"
+        },
+        {
+          "seq": 9,
+          "image_id": "7c526a75",
+          "image_path": "schedule-tweets/images/ai-yt/ai-yt-posts-7c526a75-09-opinions-become-replays.png",
+          "slide_text": "Opinions become replays / Can a cheaper model pick as well? That used to be an opinion. Now it's a replay."
+        },
+        {
+          "seq": 10,
+          "image_id": "dee81a68",
+          "image_path": "schedule-tweets/images/ai-yt/ai-yt-posts-dee81a68-10-watch-the-full-video.png",
+          "slide_text": "Watch the full video / Evals in Production: Turning Human Verdicts Into a Score"
+        }
+      ],
+      "carousel_version": "video-promo",
+      "source": "longform-edited ytpost lane (clip-evals)",
+      "video_url": "https://youtu.be/U26NDilqCDo"
+    }
+  ]
+}

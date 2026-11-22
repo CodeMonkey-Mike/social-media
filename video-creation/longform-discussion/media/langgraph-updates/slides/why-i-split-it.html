@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why I Split It</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c10;--card:#12151c;--green:#00e68a;--cyan:#00c2ff;--gold:#ffd700;--red:#ff4060;--text:#e8eaf0;--muted:#8892a4;--border:#1e2330}
+html{font-size:min(2.1vh,1.19vw);background:var(--bg)}
+*{box-sizing:border-box}
+body{margin:0;height:100vh;overflow:hidden;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;justify-content:center;padding:2.4rem 4.5rem;position:relative}
+body>*{position:relative;z-index:1}
+.orb{position:absolute;width:520px;height:520px;border-radius:50%;filter:blur(100px);opacity:.2;background:var(--cyan);bottom:-240px;left:-140px;z-index:0}
+.label{font-size:.8rem;text-transform:uppercase;letter-spacing:.18em;color:#6b7588;font-weight:500}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-variant-numeric:lining-nums;font-size:3.4rem;line-height:1.1;margin:.5rem 0 0}
+.divider{width:60px;height:3px;background:linear-gradient(90deg,var(--green),var(--cyan));border-radius:2px;margin:1rem 0 1.3rem}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.box{background:linear-gradient(135deg,rgba(0,230,138,.08),rgba(0,194,255,.06));border:1px solid rgba(0,230,138,.2);border-radius:12px;padding:.95rem 1.5rem;font-size:1.25rem;line-height:1.45;margin-top:1.3rem}
+.box b{color:var(--green);font-weight:700}
+.source{font-size:.8rem;color:#7a8496;margin-top:.8rem}
+.tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.72rem;letter-spacing:.1em;padding:.16rem .5rem;border-radius:999px;vertical-align:middle;margin-left:.5rem}
+.tag.new{background:var(--gold);color:#141000}
+.tag.more{border:1px solid var(--cyan);color:var(--cyan)}
+
+.rows{display:grid;grid-template-columns:1fr 2.6rem 1fr;row-gap:.85rem;align-items:stretch}
+.head{font-size:.78rem;text-transform:uppercase;letter-spacing:.16em;font-weight:700;color:#6b7588;padding:0 0 .1rem .2rem}
+.cell{border-radius:14px;padding:.85rem 1.25rem .9rem;border:1px solid var(--border);background:var(--card)}
+.cell h3{margin:0 0 .3rem;font-size:1.28rem;font-weight:700;line-height:1.25}
+.cell p{margin:0;font-size:1.02rem;line-height:1.4;color:#c3cad8}
+.bad{border-color:rgba(255,64,96,.35);background:rgba(255,64,96,.05)}.bad h3{color:#ff8fa3}
+.good{border-color:rgba(0,230,138,.35);background:rgba(0,230,138,.05)}.good h3{color:var(--green)}
+.arrow{display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:#56607a}
+.rule{margin-top:1.2rem;border:1px solid rgba(255,215,0,.35);background:rgba(255,215,0,.05);border-radius:12px;padding:.9rem 1.5rem;font-size:1.4rem;font-weight:700;color:var(--gold)}
+.rule span{color:var(--text);font-weight:500}
+</style></head><body>
+<div class="orb"></div>
+<div class="label">Why the build step was rebuilt</div>
+<h1>Three Problems With One Agent Doing It All</h1><div class="divider"></div>
+<div class="rows">
+<div class="head">The one-agent build</div><div></div><div class="head">What changed</div>
+<div class="cell bad"><h3>It waited for the browser, and a waiting agent can quit</h3><p>One browser, one image at a time. A builder once ended its turn while it waited, and the run sat there.</p></div>
+<div class="arrow">&rarr;</div>
+<div class="cell good"><h3>The lock moved into code</h3><p>The graph takes the lock, starts the image agent, and releases it in a <span class="mono">finally</span> block.</p></div>
+<div class="cell bad"><h3>It checked its own images</h3><p>No second pair of eyes saw a short's images before the video was built.</p></div>
+<div class="arrow">&rarr;</div>
+<div class="cell good"><h3>A separate agent checks every image</h3><p>It only reports: PASS or FAIL, the defect, and the fix for the prompt.</p></div>
+<div class="cell bad"><h3>Mechanical work ran on the builder's model</h3><p>Image generation ran inside the builder: <span class="mono">opus, xhigh effort</span>.</p></div>
+<div class="arrow">&rarr;</div>
+<div class="cell good"><h3>The image agent runs on a smaller model</h3><p><span class="mono">sonnet, xhigh effort</span>. The builder keeps its model for the video code.</p></div>
+</div>
+<div class="rule">One agent per decision. <span>Where nothing is being decided, it's code.</span></div>
+</body></html>

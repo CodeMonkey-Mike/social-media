@@ -1,0 +1,594 @@
+{
+  "session": "langgraph-updates",
+  "channel": "ai",
+  "shape": "plan",
+  "researched": "2026-11-19",
+  "note": "\"Say:\" lines are talking points in your voice, not a script, so change anything that doesn't sound like you. The code changes are not committed yet: VS Code marks every added line with a green bar beside its line number, and Source Control shows the old and new file side by side. That view empties once the changes are committed. Every line number here was checked against the files on Nov 19. If a file is edited before you record, ask me to check them again.",
+  "video": {
+    "titles": [
+      "I Split One AI Agent Into Three. Here's the Code",
+      "One Agent Per Decision: Refactoring a LangGraph Pipeline",
+      "My AI Agent Was Checking Its Own Work. So I Split It",
+      "From 6 Agents to 7: What Changed in My LangGraph Pipeline",
+      "44 Agent Runs to Process One Livestream"
+    ],
+    "thumbnails": [
+      "6 TO 7 AGENTS (the two numbers big, an arrow between them)",
+      "ONE AGENT PER DECISION",
+      "IT CHECKED ITS OWN WORK (the coin with the drawn face beside it)"
+    ]
+  },
+  "order": [],
+  "topics": [
+    {
+      "id": 1,
+      "title": "The hook: 6 agents became 7",
+      "status": "PROPOSED",
+      "why_now": "Your last video on this channel said 6 agents work inside this graph. The build step has been rebuilt since, and the first real livestream went through it on Nov 18.",
+      "angle": "Open on the number, then promise the code. Engineer to engineer: what changed, why, and the lines that do it.",
+      "tabs": [],
+      "no_tab": {
+        "prompts": [
+          "In my last video I told you 6 agents work inside this graph. It's 7 now. And the step that builds each short went from one agent to four steps.",
+          "I'll show you why I split it, the code that does it, and what happened the first time a real livestream ran through it.",
+          "One livestream took 44 agent runs. Let me show you where they all come from."
+        ],
+        "facts": [
+          {
+            "text": "The last video, as you said it: \"Six agents work inside this graph. Three of them make judgment calls and hand back a plan, and three of them build or check things.\"",
+            "source": "the transcript of your last video, youtu.be/U26NDilqCDo",
+            "read": "2026-11-19"
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "title": "What changed: one agent became four steps",
+      "status": "PROPOSED",
+      "why_now": "The whole update is one node of the graph: the step that builds each short.",
+      "angle": "Show the before and the after on one slide before any code, so every code tab has a map to hang on.",
+      "tabs": [
+        {
+          "kind": "local",
+          "word": "Slide",
+          "label": "One Agent Became Four Steps",
+          "url": "file:///C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-discussion/media/langgraph-updates/slides/one-agent-became-four-steps.html",
+          "show": "One slide. Nothing to click.",
+          "prompts": [
+            "Before, one agent did everything for a short. It planned the images, generated them in a browser, checked its own images, and built the video.",
+            "Now that's four steps. The builder plans. A second agent generates the images. A third agent checks them. Then the builder comes back and builds.",
+            "Same builder, called twice. And it never touches the browser anymore."
+          ],
+          "facts": [
+            {
+              "text": "Per short it is now 4 steps and 3 agents: plan (remotion-builder), images (image-gen), image check (visual-qa), build (remotion-builder again)",
+              "source": "batch_graph.py, the comment above the build pipeline",
+              "read": "2026-11-19"
+            },
+            {
+              "text": "A rejected image goes back to image-gen with the checker's report, 2 rounds at most",
+              "source": "batch_graph.py, BROLL_QA_ROUNDS",
+              "read": "2026-11-19"
+            }
+          ],
+          "careful": [
+            "Only the build step changed. Picking the clips, cutting, tightening and publishing work the way your last video showed them."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Why I split it",
+      "status": "PROPOSED",
+      "why_now": "Each of the three reasons is something that went wrong, or could not be checked, in the one-agent build.",
+      "angle": "Three concrete problems, then the rule that came out of them: one agent per decision, and code where nothing is being decided.",
+      "tabs": [
+        {
+          "kind": "local",
+          "word": "Slide",
+          "label": "Three Problems With One Agent Doing It All",
+          "url": "file:///C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-discussion/media/langgraph-updates/slides/why-i-split-it.html",
+          "show": "One slide. Nothing to click.",
+          "prompts": [
+            "Three things pushed me to split it. One: there's a single browser making the images, so a builder had to wait its turn. And once, an agent ended its turn while it was waiting. The run sat there.",
+            "Two: the only one checking the images was the agent that made them.",
+            "Three: generating images is mechanical work, and it was running on the big model I use to write the video code.",
+            "So here's the rule I use now. One agent per decision. And if nothing is being decided, it shouldn't be an agent. It should be code."
+          ],
+          "facts": [
+            {
+              "text": "The builder that quit: batch archie-promo, Sep 24, 2026. It saw the image generator queued behind another builder, said \"I'll continue when it finishes\", and its process exited with the short unbuilt",
+              "source": ".claude/agents/remotion-builder.md, the section \"Never end your turn to wait\"",
+              "read": "2026-11-19"
+            },
+            {
+              "text": "remotion-builder runs on opus at xhigh effort. image-gen runs on sonnet at xhigh effort",
+              "source": "the model and effort lines of the two agent definitions",
+              "read": "2026-11-19"
+            }
+          ],
+          "careful": [
+            "Put no number on money or time saved. The old build and the new one were never timed against each other."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "The names for this",
+      "status": "PROPOSED",
+      "why_now": "These patterns have standard names, and an interviewer will know them.",
+      "angle": "Tie your build step to the industry's words once, so nobody takes it for a private invention: a workflow, prompt chaining with a gate, and the evaluator-optimizer loop.",
+      "tabs": [
+        {
+          "kind": "article",
+          "label": "Anthropic: Building effective agents",
+          "url": "https://www.anthropic.com/engineering/building-effective-agents",
+          "show": "Scroll to the heading \"Workflow: Evaluator-optimizer\", the last of the five workflows.",
+          "highlights": [
+            "Workflows are systems where LLMs and tools are orchestrated through predefined code paths.",
+            "one LLM call generates a response while another provides evaluation and feedback"
+          ],
+          "prompts": [
+            "None of this is my invention, and it has names. Anthropic calls a system where code decides the order a workflow. That's my graph: code picks the next step, and each step is an agent.",
+            "One model generates and another one evaluates, in a loop. They call that evaluator-optimizer. Mine is the same pattern with whole agents, and I cap it at two rounds.",
+            "And plan first, check, then build: that's prompt chaining with a gate in the middle."
+          ],
+          "facts": [
+            {
+              "text": "Anthropic, \"Building effective agents\", published Dec 19, 2024. It names 5 workflows: prompt chaining, routing, parallelization, orchestrator-workers, evaluator-optimizer",
+              "source": "https://www.anthropic.com/engineering/building-effective-agents",
+              "read": "2026-11-19"
+            },
+            {
+              "text": "Its prompt chaining section says you can add programmatic checks, which it calls a gate, on the steps in between",
+              "source": "https://www.anthropic.com/engineering/building-effective-agents",
+              "read": "2026-11-19"
+            }
+          ],
+          "careful": [
+            "The article describes single LLM calls. Yours are whole agents, so say \"the same pattern\", never \"what Anthropic built\".",
+            "The page says at its top that much of the tooling it describes has changed since December 2024. You are borrowing its pattern names, nothing about tools."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "The 7 agents in this graph",
+      "status": "PROPOSED",
+      "why_now": "Your last video put the 6 agents on one card. This is the same card, one update later.",
+      "angle": "The count is the headline, and the two tags are the insight: one new agent, and two existing agents that each picked up a second job.",
+      "tabs": [
+        {
+          "kind": "local",
+          "word": "Slide",
+          "label": "7 Agents Work Inside This Graph",
+          "url": "file:///C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-discussion/media/langgraph-updates/slides/seven-agents.html",
+          "show": "One slide. Nothing to click.",
+          "prompts": [
+            "Here's the whole roster. 3 agents make judgment calls and hand back a plan. 4 build or check things.",
+            "The new one in this graph is image-gen. But look at the other two tags: the builder is called twice per short, and visual QA has two jobs now.",
+            "So in the code, it went from 6 places where the graph starts an agent to 9."
+          ],
+          "facts": [
+            {
+              "text": "7 agents now and 6 before. 9 spawn_agent calls now and 6 before",
+              "source": "batch_graph.py as it is now, against commit 3e7033a1",
+              "read": "2026-11-19"
+            },
+            {
+              "text": "image-gen was not written for this graph. It already made the images for the long videos, and it got one new section of instructions",
+              "source": ".claude/agents/longform-edited/image-gen.md",
+              "read": "2026-11-19"
+            }
+          ],
+          "careful": [
+            "Say \"in this graph\". Other pipelines in the repo have their own agents, and your last video kept those out too."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "The code: five changes",
+      "status": "PROPOSED",
+      "why_now": "5 files changed. These are the five places worth putting on screen.",
+      "angle": "Open each file at the line and say what was added. The first three are the Python. The last two are the agents' own instructions.",
+      "tabs": [
+        {
+          "kind": "code",
+          "label": "batch_graph.py: _build_clip, the whole pipeline in 17 lines",
+          "url": "vscode://file/C:/Users/mnede/Documents/Claude/social-media/video-creation/livestream-repurpose/graph/batch_graph.py:1080",
+          "path": "video-creation/livestream-repurpose/graph/batch_graph.py",
+          "line": 1080,
+          "end": 1096,
+          "anchor": "def _build_clip(",
+          "anchors": [
+            {
+              "line": 1087,
+              "text": "broll_plan_path(batch, slug).is_file()"
+            },
+            {
+              "line": 1088,
+              "text": "_plan_prompt(state, c)"
+            },
+            {
+              "line": 1089,
+              "text": "broll_items(batch, slug) is None"
+            },
+            {
+              "line": 1092,
+              "text": "_clip_images(state, node, c)"
+            },
+            {
+              "line": 1093,
+              "text": "_build_prompt(state, c, notes)"
+            },
+            {
+              "line": 1156,
+              "text": "_build_clip(state, node, c)"
+            }
+          ],
+          "show": "Start on the def. The three calls are lines 1088, 1092 and 1093.",
+          "prompts": [
+            "This is the whole thing. Plan. Images and the check. Build. Three calls.",
+            "Look at the if on top. If the plan files are already on disk, it skips the plan. Every step works that way, so when a run dies halfway I run it again and it picks up where it stopped.",
+            "And the graph never takes the agent's word for it. After the plan stage, it checks that the two files are really on disk."
+          ],
+          "facts": [
+            {
+              "text": "Added: _build_clip, lines 1080 to 1096. The plan stage is line 1088, the images and the check are line 1092, the build stage is line 1093",
+              "source": "batch_graph.py",
+              "read": "2026-11-19"
+            },
+            {
+              "text": "The skip: line 1087 runs the plan stage only when BROLL-PLAN.md or a valid image list is missing. Line 1089 checks again after the agent returns",
+              "source": "batch_graph.py",
+              "read": "2026-11-19"
+            },
+            {
+              "text": "Changed: lane2_build maps _build_clip over the clips on line 1156, 3 at a time on this run. Before, that line started one builder per clip",
+              "source": "batch_graph.py and the run's log",
+              "read": "2026-11-19"
+            }
+          ]
+        },
+        {
+          "kind": "code",
+          "label": "batch_graph.py: _clip_images, the lock and the check loop",
+          "url": "vscode://file/C:/Users/mnede/Documents/Claude/social-media/video-creation/livestream-repurpose/graph/batch_graph.py:1015",
+          "path": "video-creation/livestream-repurpose/graph/batch_graph.py",
+          "line": 1015,
+          "end": 1071,
+          "anchor": "def _clip_images(",
+          "anchors": [
+            {
+              "line": 875,
+              "text": "BROLL_QA_ROUNDS = 2"
+            },
+            {
+              "line": 1010,
+              "text": "def _qa_verdict("
+            },
+            {
+              "line": 1042,
+              "text": "for rnd in range(first, BROLL_QA_ROUNDS + 1)"
+            },
+            {
+              "line": 1046,
+              "text": "_stage_lock(\"acquire\", \"chatgpt\", owner)"
+            },
+            {
+              "line": 1049,
+              "text": "spawn_agent(state, node, \"image-gen\""
+            },
+            {
+              "line": 1051,
+              "text": "finally:"
+            },
+            {
+              "line": 1052,
+              "text": "_stage_lock(\"release\", \"chatgpt\", owner)"
+            },
+            {
+              "line": 1058,
+              "text": "spawn_agent(state, node, \"visual-qa\""
+            },
+            {
+              "line": 1063,
+              "text": "report.write_text("
+            }
+          ],
+          "show": "The lock is lines 1046 to 1052. The loop starts on line 1042.",
+          "prompts": [
+            "The browser makes one image at a time, so there's a lock around it. Before, the agent had to take that lock itself. Now the code takes it, starts the agent, and releases it in a finally block.",
+            "An agent can stop while it's waiting for a lock. A finally block can't.",
+            "Then the loop. Generate, check, and if the checker rejects something, go around once more with the checker's report. Two rounds, then it stops and the builder gets a note."
+          ],
+          "facts": [
+            {
+              "text": "The lock: taken on line 1046, image-gen started on line 1049, released in finally on line 1052",
+              "source": "batch_graph.py",
+              "read": "2026-11-19"
+            },
+            {
+              "text": "The loop: line 1042. visual-qa starts on line 1058, and _qa_verdict (line 1010) reads the last line of its answer, VERDICT: PASS or VERDICT: FAIL",
+              "source": "batch_graph.py",
+              "read": "2026-11-19"
+            },
+            {
+              "text": "visual-qa has no Write tool, so the graph saves its report itself on line 1063. The round limit is BROLL_QA_ROUNDS = 2, line 875",
+              "source": "batch_graph.py",
+              "read": "2026-11-19"
+            }
+          ],
+          "careful": [
+            "The standard word for this lock is a mutex. Yours is a small script the graph calls, not a LangGraph feature, so don't present it as one."
+          ]
+        },
+        {
+          "kind": "code",
+          "label": "batch_graph.py: one agent, two prompts",
+          "url": "vscode://file/C:/Users/mnede/Documents/Claude/social-media/video-creation/livestream-repurpose/graph/batch_graph.py:912",
+          "path": "video-creation/livestream-repurpose/graph/batch_graph.py",
+          "line": 912,
+          "end": 997,
+          "anchor": "def _plan_prompt(",
+          "anchors": [
+            {
+              "line": 894,
+              "text": "def broll_items("
+            },
+            {
+              "line": 915,
+              "text": "STAGE 1 of 2 (PLAN ONLY)"
+            },
+            {
+              "line": 926,
+              "text": "Do NOT generate images"
+            },
+            {
+              "line": 933,
+              "text": "def _images_prompt("
+            },
+            {
+              "line": 963,
+              "text": "def _broll_qa_prompt("
+            },
+            {
+              "line": 980,
+              "text": "def _build_prompt("
+            },
+            {
+              "line": 983,
+              "text": "STAGE 2 of 2 (BUILD)"
+            }
+          ],
+          "show": "The plan prompt starts on line 912. Jump to line 980 for the build prompt.",
+          "prompts": [
+            "I didn't write a planner agent. It's the same builder with two prompts. Stage 1 of 2: plan only, write two files, stop. Stage 2 of 2: the images are done, build from what's on disk.",
+            "Those two files are the handoff. A plan a person can read, and a JSON list for the next agent: one object per image, with the file path and the full prompt.",
+            "And code validates that JSON before the image agent ever starts."
+          ],
+          "facts": [
+            {
+              "text": "Added: _plan_prompt, lines 912 to 930, with \"STAGE 1 of 2 (PLAN ONLY)\" on line 915. Rewritten: _build_prompt, lines 980 to 997, with \"STAGE 2 of 2 (BUILD)\" on line 983",
+              "source": "batch_graph.py",
+              "read": "2026-11-19"
+            },
+            {
+              "text": "Added: broll_items, line 894, validates the list. Every item needs a prompt and an absolute .png path, and an empty list is valid",
+              "source": "batch_graph.py",
+              "read": "2026-11-19"
+            },
+            {
+              "text": "Added: the prompts for the other two agents, _images_prompt on line 933 and _broll_qa_prompt on line 963",
+              "source": "batch_graph.py",
+              "read": "2026-11-19"
+            }
+          ]
+        },
+        {
+          "kind": "code",
+          "label": "remotion-builder.md: the agent is told it runs twice",
+          "url": "vscode://file/C:/Users/mnede/Documents/Claude/social-media/.claude/agents/remotion-builder.md:19",
+          "path": ".claude/agents/remotion-builder.md",
+          "line": 19,
+          "end": 32,
+          "anchor": "You are called TWICE per clip",
+          "anchors": [
+            {
+              "line": 22,
+              "text": "STAGE 1, PLAN ONLY"
+            },
+            {
+              "line": 25,
+              "text": "STAGE 2, BUILD"
+            },
+            {
+              "line": 29,
+              "text": "never run `gen_batch.py`"
+            },
+            {
+              "line": 25,
+              "text": "One clip = FOUR steps, three agents",
+              "path": "video-creation/livestream-repurpose/skills/remotion-shorts-build/SKILL.md"
+            }
+          ],
+          "prompts": [
+            "The other half of the change is in the agent's own instructions. The code enforces the order. The definition tells the agent what its job is now.",
+            "It says: you are called twice per clip, and you never generate images."
+          ],
+          "facts": [
+            {
+              "text": "Added: the section \"You are called TWICE per clip, and you never generate images\", lines 19 to 32",
+              "source": "remotion-builder.md",
+              "read": "2026-11-19"
+            },
+            {
+              "text": "The written spec got the same change: remotion-shorts-build/SKILL.md, \"One clip = FOUR steps, three agents\", line 25",
+              "source": "SKILL.md",
+              "read": "2026-11-19"
+            }
+          ]
+        },
+        {
+          "kind": "code",
+          "label": "image-gen.md: an existing agent gets a second job",
+          "url": "vscode://file/C:/Users/mnede/Documents/Claude/social-media/.claude/agents/longform-edited/image-gen.md:59",
+          "path": ".claude/agents/longform-edited/image-gen.md",
+          "line": 59,
+          "end": 69,
+          "anchor": "## Livestream SHORTS",
+          "anchors": [
+            {
+              "line": 66,
+              "text": "The graph already holds the `chatgpt` stage lock"
+            },
+            {
+              "line": 963,
+              "text": "def _broll_qa_prompt(",
+              "path": "video-creation/livestream-repurpose/graph/batch_graph.py"
+            }
+          ],
+          "prompts": [
+            "The image agent already existed. It was making the images for my long videos. It got one new section, and that was it.",
+            "And the checker needed no change at all. Visual QA is the same agent. The graph just hands it a different prompt."
+          ],
+          "facts": [
+            {
+              "text": "Added: the section \"Livestream SHORTS\", lines 59 to 69. Line 66 tells the agent the graph already holds the lock",
+              "source": "image-gen.md",
+              "read": "2026-11-19"
+            },
+            {
+              "text": "visual-qa.md has no change. Its new job is only the prompt in _broll_qa_prompt, batch_graph.py line 963",
+              "source": "git diff, and batch_graph.py",
+              "read": "2026-11-19"
+            }
+          ],
+          "careful": [
+            "5 files changed in all. The fifth, lane3-drafter.md, is a separate small rule about brand logos and is not part of this story."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "The first live run: one livestream, 44 agent runs",
+      "status": "PROPOSED",
+      "why_now": "It ran on a real livestream on Nov 18, so these are measured numbers and not a design.",
+      "angle": "The total first, then the split by agent. More agents means more runs, and each run is small enough to check.",
+      "tabs": [
+        {
+          "kind": "local",
+          "word": "Slide",
+          "label": "One Livestream. 44 Agent Runs.",
+          "url": "file:///C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-discussion/media/langgraph-updates/slides/first-live-run.html",
+          "show": "One slide. Nothing to click.",
+          "prompts": [
+            "First real run. One livestream, 7 shorts. The graph started an agent 44 times.",
+            "The builder ran 14 times, twice per short. The image agent 12 times. Visual QA 13 times.",
+            "2 shorts passed the image check the first time. 2 passed after one retry. And 3 still had a rejected image after two rounds, so the builder built those without the rejected images."
+          ],
+          "facts": [
+            {
+              "text": "44 agent runs: remotion-builder 14, visual-qa 13, image-gen 12, tighten-strategist 2, clip-strategist 1, lane3-drafter 1, publish-meta-author 1",
+              "source": "the run headers in the graph's agent logs for this batch",
+              "read": "2026-11-19"
+            },
+            {
+              "text": "7 shorts built and 41 images planned. All 7 finished with a passing build gate",
+              "source": "the 7 image lists and progress.json of the batch",
+              "read": "2026-11-19"
+            },
+            {
+              "text": "The one-agent build would have taken 13 runs for the same 7 shorts (1 + 2 + 7 + 1 + 1 + 1). Computed, not measured",
+              "source": "computed from the same logs",
+              "read": "2026-11-19"
+            }
+          ],
+          "careful": [
+            "Say \"agent runs\", not \"agents\": 44 runs by 7 agents. One more builder was started by hand afterward to repair a short, and it is not in the 44."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "What the independent check caught",
+      "status": "PROPOSED",
+      "why_now": "The run produced real catches, and the rejected images were kept on disk.",
+      "angle": "This is the proof for the second reason. Show the pictures and let them make the point.",
+      "tabs": [
+        {
+          "kind": "local",
+          "word": "Slide",
+          "label": "What The Image Check Caught",
+          "url": "file:///C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-discussion/media/langgraph-updates/slides/what-the-check-caught.html",
+          "show": "One slide. Nothing to click.",
+          "prompts": [
+            "This is why the checker is its own agent. On the left, what the image model made. On the right, after the checker sent it back.",
+            "The prompt said put only the coin's own mark on it. The model drew a little face next to the mark. The checker rejected it, wrote the fix for the prompt, and the retry came back clean.",
+            "Same thing with the cat. The model gave the mascot a satchel and a bedroll nobody asked for, in all 5 images of that short."
+          ],
+          "facts": [
+            {
+              "text": "Clip 4, round 1: \"the model added a flat cartoon face (two eyes and a smirk) left of the diamond\". Regenerated, and it passed in round 2",
+              "source": "the checker's report in the graph's log",
+              "read": "2026-11-19"
+            },
+            {
+              "text": "Clip 6, round 1: \"the cat wears a satchel and bedroll that are in neither the prompt nor the reference\", in all 5 images",
+              "source": "the checker's report in the graph's log",
+              "read": "2026-11-19"
+            },
+            {
+              "text": "Clip 3, round 1: a made-up brand label on a tool's battery, around 20 by 60 pixels. Regenerated, and it passed in round 2",
+              "source": "the checker's report in the graph's log",
+              "read": "2026-11-19"
+            }
+          ],
+          "careful": [
+            "The check did not fix everything. On 3 shorts, what was left after 2 rounds was framing, and that is your next topic."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "What I'd change next, and the close",
+      "status": "PROPOSED",
+      "why_now": "The run also showed two limits, and the fix for one of them is already clear.",
+      "angle": "End as an engineer: what the numbers told you, the next change, then the one rule to take away.",
+      "tabs": [],
+      "no_tab": {
+        "prompts": [
+          "Two things the run taught me. The browser is the bottleneck. The build took 4 hours and 38 minutes, and the browser was busy for around 3.9 of those hours.",
+          "And a retry fixes content. It doesn't fix framing. When the checker said the subject sits too close to the edge, regenerating never fixed it. So framing problems will go to the builder as a crop, and only content problems go back to the image agent.",
+          "If you take one thing from this video: when one agent is making two different decisions, split it. And when nothing is being decided, write code.",
+          "If you haven't seen the first video on this graph, watch that one next."
+        ],
+        "facts": [
+          {
+            "text": "The build step ran 21:56 to 02:34, 4 hours 38 minutes, 3 shorts at a time. The 12 image-gen runs add up to 234 minutes in the browser",
+            "source": "the run's log",
+            "read": "2026-11-19"
+          },
+          {
+            "text": "Clips 1, 6 and 7 ended the image check on a framing defect after 2 rounds. Their retries took 13.6, 29.6 and 15.4 minutes",
+            "source": "the run's log and the 3 image-check reports",
+            "read": "2026-11-19"
+          }
+        ],
+        "careful": [
+          "The framing change is a plan and is not built. Say \"next\", not \"now\"."
+        ]
+      }
+    }
+  ],
+  "docx_sha256": "c0fe2891a54de4b73135c03467ca4b71210b5b4150f4ac4a2dd25485a25dbb46"
+}

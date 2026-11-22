@@ -1,0 +1,47 @@
+{
+  "agents_now": [
+    "clip-strategist",
+    "image-gen",
+    "lane3-drafter",
+    "publish-meta-author",
+    "remotion-builder",
+    "tighten-strategist",
+    "visual-qa"
+  ],
+  "calls_now": 9,
+  "agents_before": [
+    "clip-strategist",
+    "lane3-drafter",
+    "publish-meta-author",
+    "remotion-builder",
+    "tighten-strategist",
+    "visual-qa"
+  ],
+  "calls_before": 6,
+  "tiers": {
+    "clip-strategist": "fable, max effort",
+    "tighten-strategist": "fable, max effort",
+    "lane3-drafter": "fable, max effort",
+    "remotion-builder": "opus, xhigh effort",
+    "image-gen": "sonnet, xhigh effort",
+    "visual-qa": "opus, high effort",
+    "publish-meta-author": "opus, medium effort"
+  },
+  "runs": {
+    "clip-strategist": 1,
+    "image-gen": 12,
+    "lane3-drafter": 1,
+    "publish-meta-author": 1,
+    "remotion-builder": 14,
+    "tighten-strategist": 2,
+    "visual-qa": 13
+  },
+  "runs_total": 44,
+  "clips": 7,
+  "built": 7,
+  "images": 41,
+  "check_first": 2,
+  "check_retry": 2,
+  "check_still": 3,
+  "runs_old_design": 13
+}
