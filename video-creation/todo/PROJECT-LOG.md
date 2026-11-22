@@ -186,6 +186,20 @@ code) stay in `demos/`, which is gitignored. Here they are only summarized.
     instead of FAIL, and only content defects (wrong subject, invented logo or text, off-model mascot) go back to
     `image-gen`.
   - The browser is the bottleneck of the whole build (3.9 h of 4.6 h), so the fix-round policy sets the batch time.
+- **Make the 4 build steps real LangGraph nodes** (Mike, 2026-11-22, while scripting langgraph-updates: the current
+  shape came from a Claude session's recommendation while he was learning LangGraph, and a seasoned LangGraph
+  developer would ask why the steps aren't nodes). Today `lane2_build` is ONE node: `_build_clip` runs plan, images
+  (under the `chatgpt` lock), image check (a Python `for` loop, at most `BROLL_QA_ROUNDS` = 2) and build as plain
+  Python, 2 shorts at a time in a thread pool. Target: a **per-short subgraph** (nodes plan, images, image_check, build;
+  image_check back to images as a conditional edge capped at 2 rounds) fanned out from `lane2_build` with `Send`
+  ([docs](https://docs.langchain.com/oss/python/langgraph/graph-api-send-command#use-send-for-map-reduce)). Not 4 nodes
+  in the main graph: LangGraph runs in supersteps, so every short's plan would finish before any short's images start.
+  Must keep: the resume from disk (plan files present, the round number in the image check's report), the wait on
+  `.building.pid` builders started outside the graph, the cap of 2 (likely the run config's `max_concurrency`; check),
+  the cross-process `chatgpt` lock taken in code with its `finally`, and per-short failures gathered without stopping
+  the other shorts. First step: turn the fake-agent test below into a `scripts/check-*.py` and prove the subgraph
+  against it before a live batch. Video: langgraph-updates is recorded as built (its script says the 4 steps are
+  plain Python inside one node); the refactor can be its own before-and-after video.
 - The fake-agent test of `_build_clip` (twelve cases) lives only in a temp folder. Worth keeping as
   `scripts/check-*.py` next to the spawner check if Mike wants it.
 - The cut tool has no single-clip redo (`cut_topics.py` re-cuts every clip), so clip 7's raw `-full.mp4` on the
