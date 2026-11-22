@@ -7,7 +7,7 @@ description: Post the next pending single tweet from data/x-tweets.json via the 
 
 ```powershell
 cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
-node scripts/post-tweet.js
+python -u scripts/post_tweet.py
 ```
 
 Picks up the first tweet with `status === "pending"`, posts it, writes `status: "posted"`, `posted_at`, and `url` back to `data/x-tweets.json`.

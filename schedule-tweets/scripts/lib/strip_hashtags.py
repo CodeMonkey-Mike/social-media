@@ -1,5 +1,5 @@
 # strip_hashtags.py — CANONICAL Python port of lib/strip-hashtags.js (2026-08-11,
-# posting-tail migration; the JS twin is FROZEN rollback). Plain canonical-port
+# posting-tail migration; the JS twin was DELETED 2026-11-22). Plain canonical-port
 # header — this is a pure-function lib, no machine line.
 #
 # Shared caption builder for vertical-short posters.

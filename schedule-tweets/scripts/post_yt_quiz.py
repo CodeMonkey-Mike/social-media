@@ -1,7 +1,7 @@
 # post_yt_quiz.py — CANONICAL Python port of post-yt-quiz.js
-# (2026-08-11, posting-tail migration; the JS twin is FROZEN rollback).
-# Status: PRODUCTION POSTER for YT quizzes (bless-pending). Do NOT fall back to the JS twin —
-# it still carries the dead legacy selectors below and CANNOT post (see 2026-08-30).
+# (2026-08-11, posting-tail migration).
+# Status: the ONLY poster for YT quizzes, LIVE-BLESSED 2026-08-30. The JS twin (dead legacy
+# selectors, could not post since 2026-08-30) was DELETED 2026-11-22: Python-only repo, Mike.
 #
 # YouTube community QUIZ poster.
 # A quiz is a poll where exactly ONE option is marked correct, plus an optional
@@ -48,7 +48,7 @@
 #     abort before Post unless exactly one is pressed AND it is the intended index. A quiz with the
 #     wrong answer marked is worse than one not posted.
 #
-# Mirrors scripts/post-yt-poll.js for: real CDP keystrokes (the ViewModel textareas are real
+# Mirrors scripts/post_yt_poll.py for: real CDP keystrokes (the ViewModel textareas are real
 # <textarea>s, so keyboard input registers and input_value() reads back), robust_click (Playwright
 # click -> JS-click fallback), the two-button Post trap, and human timing.
 #
@@ -86,7 +86,7 @@ ADD_ANSWER = "button.ytPostsCreationOptionsViewModelAddOptionButton"
 CORRECT_BTN = ".ytPostsCreationOptionViewModelOptionSelectorButton"
 EXPL_TEXTAREA = ".ytPostsCreationOptionsEditorViewModelExplanationContainer textarea"
 
-# Timing constants — mirrored from scripts/post-yt-poll.js
+# Timing constants — mirrored from scripts/post_yt_poll.py
 CHAR_DELAY_MIN = 60
 CHAR_DELAY_MAX = 150
 ACTION_MIN = int(os.environ.get("YTQ_ACTION_MIN", 2000))

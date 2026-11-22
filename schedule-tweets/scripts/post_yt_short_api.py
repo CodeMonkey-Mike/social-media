@@ -1,7 +1,8 @@
 # post_yt_short_api.py — CANONICAL Python port of post-yt-short-api.js
-# (2026-08-11, posting-tail migration; the JS twin is FROZEN rollback).
-# Status: PORTED, BLESS-PENDING — invoke the JS twin for production posts until
-# this port is live-blessed with one real post.
+# (2026-08-11, posting-tail migration).
+# Status: the ONLY YouTube Shorts poster (the JS twin was DELETED 2026-11-22: Python-only repo,
+# Mike). FIRST LIVE POST PENDING: this port has not completed a real post yet, so read
+# the log of its first run closely (one attempt, never relaunch).
 #
 # Uploads one pending vertical short to YouTube via the Data API v3, bypassing
 # the web UI entirely. THE HARD RULE STANDS: YouTube Shorts are posted via the
@@ -53,7 +54,7 @@ UPLOAD_SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
 # youtube.readonly lets the pre-upload duplicate check use the Data API (playlistItems.list on
 # the channel's uploads playlist, 1 quota unit) instead of depending on YouTube's flaky public
 # RSS feed. Existing upload-only tokens keep working: the API check reports "insufficient scope"
-# and the public fallbacks take over until Mike re-consents once via scripts/yt-reauth.js.
+# and the public fallbacks take over until Mike re-consents once via scripts/yt_reauth.py.
 READ_SCOPES = ["https://www.googleapis.com/auth/youtube.readonly"]
 AUTH_SCOPES = UPLOAD_SCOPES + READ_SCOPES
 BROWSER_UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -212,7 +213,7 @@ def _fetch(url):
 # flipping the row to 'posted'). Three independent sources, tried in order; the first one that
 # ANSWERS (match or clean "no match") wins. Only if EVERY source is unavailable do we refuse to
 # upload. Added 2026-09-11 after YouTube's public RSS feed 404/500'd for ~3 hours and blocked
-# three shorts that had already gone out to the other six platforms. Mirrors post-yt-short-api.js.
+# three shorts that had already gone out to the other six platforms.
 
 def find_via_data_api(access_token, channel_id, target):
     """Source 1: authenticated Data API. Uploads playlist id = channel id with UC -> UU
@@ -224,7 +225,7 @@ def find_via_data_api(access_token, channel_id, target):
         params={"part": "snippet", "playlistId": playlist_id, "maxResults": 50},
         headers={"Authorization": f"Bearer {access_token}"}, timeout=30)
     if resp.status_code == 403:
-        raise RuntimeError("token lacks youtube.readonly (run `node scripts/yt-reauth.js` "
+        raise RuntimeError("token lacks youtube.readonly (run `python scripts/yt_reauth.py` "
                            "once to enable the authenticated check)")
     if resp.status_code != 200:
         raise RuntimeError(f"HTTP {resp.status_code} from playlistItems.list: {resp.text[:160]}")

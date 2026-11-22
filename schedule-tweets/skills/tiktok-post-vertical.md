@@ -7,7 +7,7 @@ description: Post the next pending TikTok vertical video from data/shorts.json b
 
 ```powershell
 cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
-node scripts/post-tiktok-short.js
+python -u scripts/post_tiktok_short.py
 ```
 
 **Free the tiktokbot-profile + CDP port 9224 first** — Chrome can't open CDP on a profile that's already in use. **Do NOT kill-all Chrome** (`Stop-Process -Name chrome -Force` nukes Mike's main browsing window — hard rule). Since TikTok now uses a *dedicated* `tiktokbot-profile` (NOT main `User Data`), a **per-profile kill** is sufficient and leaves the main browser alone. Validated 2026-06-13: CDP 9224 spawned first-try on both passes with only the per-profile kill below.
@@ -16,7 +16,7 @@ node scripts/post-tiktok-short.js
 Get-CimInstance Win32_Process -Filter "Name = 'chrome.exe'" | Where-Object { $_.CommandLine -like "*tiktokbot-profile*" -or $_.CommandLine -like "*9224*" } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }
 Start-Sleep -Seconds 3
 # verify nothing remains on the profile / port, then:
-node scripts/post-tiktok-short.js
+python -u scripts/post_tiktok_short.py
 ```
 
 (The old `Stop-Process -Name chrome -Force` kill-all advice predates the dedicated profile and violates the never-kill-main-Chrome rule — superseded.)
@@ -125,4 +125,4 @@ if(s){s.platforms.tiktok.status='pending';delete s.platforms.tiktok.error;fs.wri
 
 ## Hashtag policy (added 2026-05-29)
 
-Short captions must NOT contain visible `#hashtags`. The poster script strips inline `#word` tokens from the caption body via `scripts/lib/strip-hashtags.js` before posting. Cashtags (`$KAS`, `$BTC`) are preserved. The dedicated platform keyword/tags field (where one exists) is left intact — that is invisible metadata, not a visible hashtag. This is automatic; no manual step needed.
+Short captions must NOT contain visible `#hashtags`. The poster script strips inline `#word` tokens from the caption body via `scripts/lib/strip_hashtags.py` before posting. Cashtags (`$KAS`, `$BTC`) are preserved. The dedicated platform keyword/tags field (where one exists) is left intact — that is invisible metadata, not a visible hashtag. This is automatic; no manual step needed.

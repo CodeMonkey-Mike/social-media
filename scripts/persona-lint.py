@@ -68,7 +68,7 @@ CHECKS = [
 # Structural rule (not a string regex): a longs.json entry may only fan out to these platforms.
 # YouTube longform is uploaded by Mike HIMSELF, by hand — it is NOT a queue recipient and there is
 # no upload-longform-youtube script, so a stray platform (e.g. "youtube") pins the entry in the
-# dashboard forever. Mirrors ALLOWED_PLATFORMS in scripts/lib/longform-queue.js. Report only.
+# dashboard forever. Mirrors ALLOWED_PLATFORMS in scripts/lib/longform_queue.py. Report only.
 ALLOWED_LONGFORM_PLATFORMS = {"rumble", "bitchute", "facebook"}
 
 # Structural rule (not a string regex): an ig-single-image.json entry may only exist if its subject

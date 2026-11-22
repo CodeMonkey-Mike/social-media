@@ -1,7 +1,8 @@
 # post_yt_poll.py — CANONICAL Python port of post-yt-poll.js
-# (2026-08-11, posting-tail migration; the JS twin is FROZEN rollback).
-# Status: PORTED, BLESS-PENDING — invoke the JS twin for production posts until
-# this port is live-blessed with one real post.
+# (2026-08-11, posting-tail migration).
+# Status: the ONLY YouTube text-poll poster (the JS twin was DELETED 2026-11-22: Python-only repo,
+# Mike). FIRST LIVE POST PENDING: this port has not completed a real post yet, so read
+# the log of its first run closely (one attempt, never relaunch).
 #
 # YouTube text-poll poster.
 # Working approach (2026-05-21):
@@ -26,11 +27,11 @@
 # 2026-08-30 — port defect fixed BEFORE it ever ran: `wait_for_function`'s `arg` was passed
 # positionally (it is keyword-only in playwright.sync_api, unlike the JS twin's positional 2nd
 # parameter), which crashes the add-option loop on a poll with 3+ options. Nothing had exercised
-# it because the port is bless-pending and the JS twin does production polls. Found when the
+# it because the port was bless-pending and the JS twin did production polls. Found when the
 # identical line crashed post_yt_quiz.py. Probed the same day (scripts/_diag_yt_poll_viewmodel.py):
 # the text-poll composer has NOT followed the quiz onto the ViewModel components — `ytd-poll-attachment`
 # and `tp-yt-paper-input.poll-option-input input` are still the live widget, so every selector below
-# remains correct and the JS twin still posts fine.
+# remains correct (the JS twin, deleted 2026-11-22, was still posting fine on them).
 import json
 import math
 import os

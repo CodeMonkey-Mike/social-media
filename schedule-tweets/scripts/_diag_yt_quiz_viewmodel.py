@@ -1,7 +1,7 @@
 # _diag_yt_quiz_viewmodel.py — READ-ONLY diagnostic for the YouTube community QUIZ composer.
 #
 # Why this exists: on 2026-08-30 post-yt-quiz.js/post_yt_quiz.py started failing with
-# "Quiz editor did not open (display=none)". The legacy probe (_diag-yt-quiz-selectors.js)
+# "Quiz editor did not open (display=none)". The legacy probe (_diag-yt-quiz-selectors.js, deleted 2026-11-22)
 # showed the legacy Polymer container `ytd-backstage-quiz-editor-renderer#quiz-attachment`
 # stuck at display:none while NEW `ytPostsCreationOptionViewModel*` elements rendered with
 # real dimensions — i.e. YouTube migrated the quiz composer from the Polymer `ytd-*`

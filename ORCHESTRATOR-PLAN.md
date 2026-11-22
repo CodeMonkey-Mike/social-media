@@ -61,7 +61,7 @@ ROOT CLAUDE.md   ← auto-loaded into context every session (the "zero searching
      │  "for posting → see agents/posting.md"
      ▼
 agents/posting.md   ← a condensed REFERENCE doc (loaded on demand, or @-imported)
-     │  "post a tweet → node schedule-tweets/scripts/post-tweet.js ..."
+     │  "post a tweet → python schedule-tweets/scripts/post_tweet.py ..."
      ▼
 the actual script / SKILL.md / data in the subfolder   ← the real work
 ```

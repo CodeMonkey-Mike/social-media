@@ -7,7 +7,7 @@ description: Post the next pending Facebook vertical video (Reel) from data/shor
 
 ```powershell
 cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
-node scripts/post-fb-short.js
+python -u scripts/post_fb_short.py
 ```
 
 Picks up the first short where `platforms.facebook.status === "pending"`, posts it as a Facebook Reel, and writes `platforms.facebook.status: "posted"`, `posted_at`, and `url` back to `data/shorts.json`.
@@ -79,7 +79,7 @@ Uses `fbbot-profile`. **Chrome must be fully closed before running** — Playwri
 >
 > **Pinned id rotates over time — don't assume the last-known id is still current.** Confirmed values seen: `1296481415588836` (through 2026-06-11) → `1730184431514071` (2026-06-13/06-14) → `1699471777769256` (2026-07-20). Always verify by checking whether the id in the captured list is repeated across multiple posts in the SAME run (the tell of a pinned/stale entry) rather than trusting a specific id from memory.
 >
-> **⚠ NEW GOTCHA (2026-07-20): "take the topmost `/reel/`" breaks when a LONGFORM upload to FB (`upload-longform-facebook.js`) ran earlier in the same session — the longform's own reel can rank ABOVE the short's reel in the `/videos` list capture, so blindly taking position-0-after-the-pinned-video grabs the longform, not the short.** This run: after posting a Robinhood longform (reel `1057931206748131`) then a short in the same session, the short's capture returned `["<pinned videos/id>", "reel/1057931206748131" (the longform, already recorded), "reel/1178839395316690" (the actual new short)]`. **Fix applied by hand:** don't take "topmost `/reel/`" mechanically — take the topmost `/reel/` that is NOT ALREADY RECORDED as a URL anywhere in this run's `shorts.json`/`longs.json` writes (i.e. genuinely new, not just topmost). When longform and short uploads to FB both happen in one session, always cross-check the candidate URL against every URL already written this run before accepting it.
+> **⚠ NEW GOTCHA (2026-07-20): "take the topmost `/reel/`" breaks when a LONGFORM upload to FB (`upload_longform_facebook.py`) ran earlier in the same session — the longform's own reel can rank ABOVE the short's reel in the `/videos` list capture, so blindly taking position-0-after-the-pinned-video grabs the longform, not the short.** This run: after posting a Robinhood longform (reel `1057931206748131`) then a short in the same session, the short's capture returned `["<pinned videos/id>", "reel/1057931206748131" (the longform, already recorded), "reel/1178839395316690" (the actual new short)]`. **Fix applied by hand:** don't take "topmost `/reel/`" mechanically — take the topmost `/reel/` that is NOT ALREADY RECORDED as a URL anywhere in this run's `shorts.json`/`longs.json` writes (i.e. genuinely new, not just topmost). When longform and short uploads to FB both happen in one session, always cross-check the candidate URL against every URL already written this run before accepting it.
 
 > **✅ CANONICAL RECOVERY RECIPE (generalized + validated twice 2026-07-21) — resolve by SET DIFFERENCE, not by list position.**
 > Every position-based heuristic above ("topmost `/reel/`", "skip the leading `/videos/`") has needed a patch as soon as a new kind of entry appeared in the list. The position-independent rule that has never failed: **take the script's `Recent video URLs` list and check each candidate id against the full text of `shorts.json` AND `longs.json`. The id present in NEITHER file is the new short's real reel.** Everything else in that list is by construction the pinned video, an already-recorded short, or a longform whose URL you already wrote back.
@@ -87,7 +87,7 @@ Uses `fbbot-profile`. **Chrome must be fully closed before running** — Playwri
 > - 2026-07-21 step 25 → `4390652537838667` (pinned), `1348343490689619` (in `longs.json`, THIS run's longform), **`797900793345206` (in neither → correct)**.
 > - **Ordering requirement:** write each longform's real URL back to `longs.json` immediately after its upload step, before any later FB short runs — that's what keeps the difference unambiguous.
 > - Record a `url_note` on the corrected row with the bogus in-run capture and how it was resolved, so a later sweep doesn't re-litigate it.
-> - This is also the right shape for the long-outstanding script fix: port the longform baseline-diff capture into `post-fb-short.js` (snapshot ids before submit, diff after).
+> - This was the shape of the script fix, and it is DONE: `post_fb_short.py` does the baseline diff itself since 2026-08-28 (snapshot ids before submit, diff after).
 
 ## Debug artifacts
 
@@ -106,4 +106,4 @@ if(s){s.platforms.facebook.status='pending';delete s.platforms.facebook.error;fs
 
 ## Hashtag policy (added 2026-05-29)
 
-Short captions must NOT contain visible `#hashtags`. The poster script strips inline `#word` tokens from the caption body via `scripts/lib/strip-hashtags.js` before posting. Cashtags (`$KAS`, `$BTC`) are preserved. The dedicated platform keyword/tags field (where one exists) is left intact — that is invisible metadata, not a visible hashtag. This is automatic; no manual step needed.
+Short captions must NOT contain visible `#hashtags`. The poster script strips inline `#word` tokens from the caption body via `scripts/lib/strip_hashtags.py` before posting. Cashtags (`$KAS`, `$BTC`) are preserved. The dedicated platform keyword/tags field (where one exists) is left intact — that is invisible metadata, not a visible hashtag. This is automatic; no manual step needed.

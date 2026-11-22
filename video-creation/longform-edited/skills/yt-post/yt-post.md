@@ -32,7 +32,7 @@ the track: a longform-edited and a longform-presentation video can each be on ei
 
 | Channel | Queue | Images | Dashboard tab | Posted by |
 |---|---|---|---|---|
-| the crypto channel, `@CodeMonkeyMike` | `schedule-tweets/data/yt-posts.json` | `images/yt/` | YT Posts | Mike's YT posting run (`post-yt-community`) |
+| the crypto channel, `@CodeMonkeyMike` | `schedule-tweets/data/yt-posts.json` | `images/yt/` | YT Posts | Mike's YT posting run (`post_yt_community.py`) |
 | AI Engineering Simplified, `@aiEngineeringSimplified` | `schedule-tweets/data/ai-yt-posts.json` | `images/ai-yt/` | **AI YouTube Posts** | `python schedule-tweets/scripts/post_yt_community.py --channel ai` (2026-11-17), from its own `ai-ytbot-profile` signed in as the channel, CDP 9225. Never the JS `post-yt-community.js` or a bare run of the Python one: those post the crypto queue as @CodeMonkeyMike |
 
 The id is `yt-post-<date>-<project>-video` on the crypto queue and `ai-yt-post-<date>-<project>-video` on the AI queue.

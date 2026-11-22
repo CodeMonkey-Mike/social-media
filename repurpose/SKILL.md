@@ -998,7 +998,7 @@ After appending, confirm with the user: "Added N Instagram post(s) to data/ig-si
 
 IG carousels are **repurposed from an existing YouTube community post** — not authored from scratch. Each IG carousel's `source_post` links to the YT post it came from.
 
-1. **Reuse the YT carousel's slide images as-is — do NOT regenerate.** IG carousels post at **1:1** (the `post-ig-carousel.js` uploader clicks straight through the Crop screen and takes IG's 1:1 default; it does NOT select 4:5 — only `post-ig-single.js` selects 4:5). The YT slides are already 1:1, so the IG carousel's `slides[].image_path` point at the same `images/yt/yt-posts-*.png` files. No extra image generation, no 4:5 versions.
+1. **Reuse the YT carousel's slide images as-is — do NOT regenerate.** IG carousels post at **1:1** (the `post_ig_carousel.py` uploader clicks straight through the Crop screen and takes IG's 1:1 default; it does NOT select 4:5 — only `post_ig_single.py` selects 4:5). The YT slides are already 1:1, so the IG carousel's `slides[].image_path` point at the same `images/yt/yt-posts-*.png` files. No extra image generation, no 4:5 versions.
 
 2. **The caption is SHORT — four sentences max.** This is the big difference from every other format. The YT post body is a long essay (up to ~2,500 chars); the IG **single-image** caption can run 1.5–3× a tweet. The IG **carousel** caption does neither — **the slides carry the content**, so the caption is just a brief hook + a line or two of setup + the engagement question. Never paste the YT essay into a carousel caption. (`ig-carousel.json` allows up to 2,200 chars, but that is a ceiling, not a target — stay around 3–4 sentences.)
 
@@ -1609,9 +1609,9 @@ Each posting script uses a dedicated Chrome profile, but a few collisions exist:
 
 - **X tweets / X polls / X threads / X shorts / reply-guy** all use `xbot-profile`.
 - **ChatGPT (for image generation in `generate-image.js`)** uses `chatgpt-profile` — a dedicated profile created 2026-05-22 so image gen can run in parallel with X posting. Previously was `xbot-profile`.
-- **TikTok (`post-tiktok-short.js`) uses the MAIN Chrome User Data profile + CDP port 9224.** Known issue: `node scripts/post-tiktok-short.js` sometimes fails with "Chrome did not open CDP 9224 within 15s" even when no Chrome processes exist (verified via PowerShell `Get-Process chrome` and `netstat`). Chrome appears to launch (a window briefly opens) but the CDP port never binds — likely because Chrome's launcher stub intercepts the spawn from Node's `child_process` and doesn't propagate `--remote-debugging-port` correctly.
+- **TikTok (`post_tiktok_short.py`) uses the MAIN Chrome User Data profile + CDP port 9224.** Known issue: `python -u scripts/post_tiktok_short.py` sometimes fails with "Chrome did not open CDP 9224 within 15s" even when no Chrome processes exist (verified via PowerShell `Get-Process chrome` and `netstat`). Chrome appears to launch (a window briefly opens) but the CDP port never binds — likely because Chrome's launcher stub intercepts the spawn from Node's `child_process` and doesn't propagate `--remote-debugging-port` correctly.
 
-  **Workaround that works reliably:** launch Chrome manually from PowerShell FIRST, then run the Node script — the script's `isCDPReady()` check will detect the live Chrome and reuse it. Manual launch:
+  **Workaround that works reliably:** launch Chrome manually from PowerShell FIRST, then run the script — the script's `is_cdp_ready()` check will detect the live Chrome and reuse it. Manual launch:
   ```powershell
   Start-Process -FilePath 'C:\Program Files\Google\Chrome\Application\chrome.exe' -ArgumentList @(
     '--user-data-dir=C:\Users\mnede\AppData\Local\Google\Chrome\User Data',
@@ -1621,7 +1621,7 @@ Each posting script uses a dedicated Chrome profile, but a few collisions exist:
     'about:blank'
   )
   ```
-  Wait 2–3 seconds (port 9224 binds almost instantly when launched this way), then `cd schedule-tweets; node scripts/post-tiktok-short.js`. The script will print "Chrome already on CDP 9224 ✓" and proceed.
+  Wait 2–3 seconds (port 9224 binds almost instantly when launched this way), then `cd schedule-tweets; python -u scripts/post_tiktok_short.py`. The script will print "Chrome already on CDP 9224 ✓" and proceed.
 
 Implication: with the dedicated `chatgpt-profile` (2026-05-22), image generation never collides with posting on the **Chrome** side. The only Chrome conflict left is two posting scripts sharing a profile (e.g. two X scripts), handled by the sequential posting list.
 

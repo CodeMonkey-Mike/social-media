@@ -7,7 +7,7 @@ description: Post the next pending X poll from data/x-polls.json via the Playwri
 
 ```powershell
 cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
-node scripts/post-x-poll.js
+python -u scripts/post_x_poll.py
 ```
 
 Picks up the first poll with `status === "pending"`, posts it with an attached X poll widget, and writes `status: "posted"`, `posted_at`, and `poll_url` back to `data/x-polls.json`.

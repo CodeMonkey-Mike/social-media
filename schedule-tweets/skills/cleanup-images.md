@@ -32,16 +32,20 @@ Scans `images/` (excluding `images/reference/`) and moves images to the Windows 
 
 ## How to run
 
+The policy lives in the repo's one cleanup engine (`cleanup/cleanup.js`, target `schedule-tweets`;
+rules in `cleanup/cleanup.md`). The old `scripts/cleanup-images.js` was only a shim that forwarded
+to it and was deleted 2026-11-22, so run the engine directly.
+
 ### Dry run (shows what would be recycled, no changes)
 ```
-cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
-node scripts/cleanup-images.js --dry-run
+cd C:\Users\mnede\Documents\Claude\social-media
+node cleanup/cleanup.js --target schedule-tweets --dry-run
 ```
 
 ### Live run (moves files to Recycle Bin)
 ```
-cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
-node scripts/cleanup-images.js
+cd C:\Users\mnede\Documents\Claude\social-media
+node cleanup/cleanup.js --target schedule-tweets
 ```
 
 ## Expected output

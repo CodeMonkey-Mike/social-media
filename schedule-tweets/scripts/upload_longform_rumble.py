@@ -1,5 +1,6 @@
 # upload_longform_rumble.py — CANONICAL Python port of upload-longform-rumble.js
-# (2026-08-11, posting-tail migration; the JS twin is FROZEN rollback).
+# (2026-08-11, posting-tail migration). Status: LIVE-BLESSED 2026-08-11, the only Rumble
+# longform uploader (the JS twin was DELETED 2026-11-22: Python-only repo, Mike).
 #
 # 1:1 port on playwright.sync_api: same rumblebot-profile Chrome, same selectors,
 # same human pacing, same licensing-page handling and URL-scan strategy, same
@@ -7,6 +8,7 @@
 #   - stdout is unbuffered + machine lines (POST OK/POST FAIL) for the graph.
 #   - the post-run inspection hold is 60s (was 5 min) — the graph wrapper, not a
 #     human terminal, owns the run now.
+import os
 import random
 import re
 import sys
@@ -26,7 +28,9 @@ RUMBLE_V_RE = re.compile(r"https://rumble\.com/v[a-zA-Z0-9]+-[a-zA-Z0-9][^\s\"'<
 RUMBLE_V_RE_JS = r"https:\/\/rumble\.com\/v[a-zA-Z0-9]+-[a-zA-Z0-9][^\s\"'<>]*\.html"
 
 CHAR_DELAY_MIN, CHAR_DELAY_MAX = 40, 120
-ACTION_MIN, ACTION_MAX = 2000, 5000
+# Env-overridable like every other poster (same names and defaults the JS twin had; unset = defaults).
+ACTION_MIN = int(os.environ.get("LFR_ACTION_MIN") or 2000)
+ACTION_MAX = int(os.environ.get("LFR_ACTION_MAX") or 5000)
 
 
 def rnd(a, b):
@@ -321,7 +325,7 @@ def main():
                 print(f"POST OK platform=rumble url={url}", flush=True)
             else:
                 print("\nPosted — URL not captured (check Rumble dashboard).")
-                print("WARNING: longs.json still says pending. Confirm with scripts/check-rumble-longform.js")
+                print("WARNING: longs.json still says pending. Confirm with scripts/check_rumble_longform.py")
                 print("and record the URL, otherwise the next run will re-upload this same video.")
                 print("POST FAIL platform=rumble reason=no-url-captured", flush=True)
             print("Done ✓")

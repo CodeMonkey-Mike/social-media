@@ -26,7 +26,7 @@ Picks up the first short where `platforms.x.status === "pending"`, posts it as a
 
 ## Chrome profile
 
-Uses `xbot-profile`. Shared with `post-tweet.js`, `post_thread.py`, `post-x-poll.js` — don't run two at once. **Chrome must be fully closed before running.**
+Uses `xbot-profile`. Shared with `post_tweet.py`, `post_thread.py`, `post_x_poll.py` — don't run two at once. **Chrome must be fully closed before running.**
 
 ## Timing constants
 
@@ -70,4 +70,4 @@ See `x-post-tweet.md` for Rules 0, 1, 2 — they apply identically here.
 
 ## Hashtag policy (added 2026-05-29)
 
-Short captions must NOT contain visible `#hashtags`. The poster script strips inline `#word` tokens from the caption body via `scripts/lib/strip-hashtags.js` before posting. Cashtags (`$KAS`, `$BTC`) are preserved. The dedicated platform keyword/tags field (where one exists) is left intact — that is invisible metadata, not a visible hashtag. This is automatic; no manual step needed.
+Short captions must NOT contain visible `#hashtags`. The poster script strips inline `#word` tokens from the caption body via `scripts/lib/strip_hashtags.py` before posting. Cashtags (`$KAS`, `$BTC`) are preserved. The dedicated platform keyword/tags field (where one exists) is left intact — that is invisible metadata, not a visible hashtag. This is automatic; no manual step needed.

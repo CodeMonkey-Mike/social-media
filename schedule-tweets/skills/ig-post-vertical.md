@@ -3,17 +3,17 @@ name: ig-post-vertical
 description: Post the next pending Instagram vertical video (Reel) from data/shorts.json via Playwright script.
 ---
 
-> ✅ **FIXED 2026-05-25:** the file-input timeout after Create → "Post" was caused by a **"Turn on Notifications" modal** trapping focus and blocking the Create flow — not a selector change. FIX: `dismissBlockingDialogs()` clicks **"Not Now"** after home-load and before Create (applied to single/reel/carousel). If it breaks at file-input again, check for a new blocking modal first (`scripts/_diag-ig-create.js`).
+> ✅ **FIXED 2026-05-25:** the file-input timeout after Create → "Post" was caused by a **"Turn on Notifications" modal** trapping focus and blocking the Create flow — not a selector change. FIX: `dismissBlockingDialogs()` clicks **"Not Now"** after home-load and before Create (applied to single/reel/carousel). If it breaks at file-input again, check for a new blocking modal first (`scripts/_diag_ig_create.py`).
 
 ## Invocation
 
 ```powershell
 cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
-python scripts/post_ig_reel.py
+python -u scripts/post_ig_reel.py
 ```
 
-> ✅ **Python port is the production poster (LIVE-BLESSED 2026-09-24).** `post-ig-reel.js` is FROZEN
-> rollback and still has the defects fixed below. Do not use it for production posts.
+> ✅ **`post_ig_reel.py` is the only IG Reel poster (LIVE-BLESSED 2026-09-24).** The JS twin
+> (`post-ig-reel.js`), which had the defects fixed below, was deleted 2026-11-22.
 
 ## Share outcome is decided by a Reels-grid baseline diff (2026-09-24)
 
@@ -131,11 +131,11 @@ fs.writeFileSync('data/shorts.json', JSON.stringify(d, null, 2));
 
 ## Hashtag policy (added 2026-05-29)
 
-Short captions must NOT contain visible `#hashtags`. The poster script strips inline `#word` tokens from the caption body via `scripts/lib/strip-hashtags.js` before posting. Cashtags (`$KAS`, `$BTC`) are preserved. The dedicated platform keyword/tags field (where one exists) is left intact — that is invisible metadata, not a visible hashtag. This is automatic; no manual step needed.
+Short captions must NOT contain visible `#hashtags`. The poster script strips inline `#word` tokens from the caption body via `scripts/lib/strip_hashtags.py` before posting. Cashtags (`$KAS`, `$BTC`) are preserved. The dedicated platform keyword/tags field (where one exists) is left intact — that is invisible metadata, not a visible hashtag. This is automatic; no manual step needed.
 
 ## ⚠ Dying at `input[type="file"]` is NOT always the blocking-modal bug — grep the log for `Clicked Post ✓` first (2026-07-22)
 
-`locator.waitFor: Timeout 15000ms exceeded — waiting for locator('input[type="file"]')` is the same error the 2026-05-25 "Turn on Notifications" blocking-modal bug produced, so it is easy to misdiagnose. On 2026-07-22 it was instead a **transient miss on the Create → Post sub-link click**: `_diag-ig-create.js` showed the flow completely healthy (no dialogs, Post sub-link present and clickable, `input[type=file] count: 1`).
+`locator.waitFor: Timeout 15000ms exceeded — waiting for locator('input[type="file"]')` is the same error the 2026-05-25 "Turn on Notifications" blocking-modal bug produced, so it is easy to misdiagnose. On 2026-07-22 it was instead a **transient miss on the Create → Post sub-link click**: `_diag_ig_create.py` showed the flow completely healthy (no dialogs, Post sub-link present and clickable, `input[type=file] count: 1`).
 
 **The tell is in the script's own log:**
 - healthy: `Opening Create → Post...` → **`Clicked Post ✓`** → `Uploading video...`
@@ -145,7 +145,7 @@ The script advances past the un-registered click and then waits for a file input
 
 **Triage order:**
 1. Grep the failed log for `Clicked Post ✓`. **Absent → transient click miss.**
-2. Only if the flow genuinely looks broken, run `scripts/_diag-ig-create.js` to check for a new blocking modal (notifications / save-login / consent).
+2. Only if the flow genuinely looks broken, run `scripts/_diag_ig_create.py` to check for a new blocking modal (notifications / save-login / consent).
 
 **A single retry IS allowed here and does not violate the one-attempt rule.** The failure is strictly *pre-upload*: no bytes sent, no composer filled, nothing published, zero duplicate risk. This is categorically different from a kill after a point-of-no-return signal. Recovery: reset the platform row `failed` → `pending`, delete its `error`, per-profile kill igbot Chrome, run once. Worked first try on 2026-07-22.
 
@@ -153,7 +153,7 @@ The script advances past the un-registered click and then waits for a file input
 
 ## ⚠ NEW 2026-07-30 — `IG returned an error after Share: try again` is a THIRD, distinct IG Reel failure class (post-Share, do NOT auto-retry)
 
-`post-ig-reel.js` failed on `pm-20260729-housecoin-still-holding` with:
+The JS poster (`post-ig-reel.js`, deleted 2026-11-22) failed on `pm-20260729-housecoin-still-holding` with:
 
 ```
 Clicking Share...
@@ -167,7 +167,7 @@ This is **not** either documented failure mode, and the triage order must now di
 | Signature | Stage | Cause | Retry? |
 |---|---|---|---|
 | Timeout on `input[type="file"]`, log has **no** `Clicked Post ✓` | pre-upload | transient Post sub-link click miss (2026-07-22) | ✅ safe — no bytes sent |
-| Timeout on `input[type="file"]`, create flow genuinely broken | pre-upload | new blocking modal (2026-05-25); dump with `_diag-ig-create.js` | ✅ safe after fixing |
+| Timeout on `input[type="file"]`, create flow genuinely broken | pre-upload | new blocking modal (2026-05-25); dump with `_diag_ig_create.py` | ✅ safe after fixing |
 | **`error after Share` toast, seconds after Share** | **post-Share** | **IG server-side rejection of the share itself** | ❌ **do not auto-retry** |
 
 **Why the third one is not auto-retryable:** the video bytes were already uploaded and the Share

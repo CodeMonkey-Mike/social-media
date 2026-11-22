@@ -1,7 +1,7 @@
 # recapture_rumble_url.py — CANONICAL Python port of recapture-rumble-url.js
-# (2026-08-11, posting-tail migration; the JS twin is FROZEN rollback). Status:
-# PORTED, BLESS-PENDING — invoke the JS twin for production posts until this
-# port is live-blessed with one real post.
+# (2026-08-11, posting-tail migration). Status: the ONLY Rumble URL recapture tool (the JS
+# twin was DELETED 2026-11-22: Python-only repo, Mike). FIRST LIVE RUN PENDING: it has not
+# been run for real yet, so read the log of its first run closely.
 #
 # Fix the Rumble URL for a short by matching its title on /account/content
 # (where shorts live as /shorts/v<id>). Use for a short left `posted_unverified`

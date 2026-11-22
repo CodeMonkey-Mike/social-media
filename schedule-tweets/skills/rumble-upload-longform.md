@@ -7,7 +7,7 @@ description: Upload a single longform video to Rumble — typically a 1-2 hour l
 
 ```powershell
 cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
-node scripts/upload-longform-rumble.js
+python -u scripts/upload_longform_rumble.py
 ```
 
 Uploads one video.
@@ -20,7 +20,7 @@ Do NOT stop and ask the user "should I stage this?" or "the folder root has a di
 
 ## Staging (none needed — the script reads `longs.json` directly)
 
-`upload-longform-rumble.js` now sources the next-pending `rumble` entry **directly from `longs.json`** via `scripts/lib/longform-queue.js` (`pickNextLongform('rumble')`). It uploads the entry's own `video_path` / `thumbnail_path` (usually a `longform/<source>/` subfolder) and builds the post from the entry's title / description / tags / categories / visibility. **Do NOT copy anything into `longform/` root** — the old loose-root staging step is gone (it was what left orphaned duplicates behind).
+`upload_longform_rumble.py` now sources the next-pending `rumble` entry **directly from `longs.json`** via `scripts/lib/longform_queue.py` (`pick_next_longform('rumble')`). It uploads the entry's own `video_path` / `thumbnail_path` (usually a `longform/<source>/` subfolder) and builds the post from the entry's title / description / tags / categories / visibility. **Do NOT copy anything into `longform/` root** — the old loose-root staging step is gone (it was what left orphaned duplicates behind).
 
 1. The script picks the next pending `rumble` entry itself (queue order) — you stage nothing.
 2. Run the upload script.
@@ -51,7 +51,7 @@ Prerequisite: the entry's `video_path` (and optional `thumbnail_path`) must exis
 
 ## Chrome profile
 
-Uses `rumblebot-profile`. Shared with `scripts/post-rumble-short.js` — don't run two at once. **Chrome must be fully closed before running.**
+Uses `rumblebot-profile`. Shared with `scripts/post_rumble_short.py` — don't run two at once. **Chrome must be fully closed before running.**
 
 ## Timing constants
 
@@ -83,7 +83,7 @@ URL captured by regex match against the confirmation page. **No HTTP-level live 
 
 | If… | Use |
 |---|---|
-| Landscape video, 1–2 hour livestream recording | this script (`upload-longform-rumble.js`) |
-| Vertical 9:16 short clip from `data/shorts.json` | `rumble-post-vertical.md` (`post-rumble-short.js`) |
+| Landscape video, 1–2 hour livestream recording | this script (`upload_longform_rumble.py`) |
+| Vertical 9:16 short clip from `data/shorts.json` | `rumble-post-vertical.md` (`post_rumble_short.py`) |
 
 The two scripts share the `rumblebot-profile` and so cannot run simultaneously.

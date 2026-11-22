@@ -144,7 +144,7 @@ existing entries. Then posting is the per-platform schedule-tweets skills (see "
 ## Related long-form link (teaser shorts)
 
 `related_longform_url` (top-level, default `null`): when a short is a TEASER for a related long-form
-video, set this to the long-form's URL. `post-yt-short-api.js` appends `Watch the full video: <url>`
+video, set this to the long-form's URL. `post_yt_short_api.py` appends `Watch the full video: <url>`
 to the YouTube description. (The native YouTube Studio "Related video" field on a Short is NOT
 settable via the Data API v3 — set that manually in Studio if you also want the on-Short chip; the
 description link is the API-supported equivalent.) Leave `null` for standalone shorts.
@@ -166,7 +166,7 @@ The **title is the hook**: a curiosity gap that stops the scroll and is only res
 
 - **Store captions HASHTAG-FREE.** The `tags` array is the single source of truth for hashtags; the
   poster scripts auto-append the right number per platform at post time via
-  `scripts/lib/strip-hashtags.js` → `buildCaption()` (X **2**, BitChute **3**, TikTok/IG/Facebook
+  `scripts/lib/strip_hashtags.py` → `buildCaption()` (X **2**, BitChute **3**, TikTok/IG/Facebook
   **5**, YouTube **3** in the description + the full array to the YT tags field, Rumble **0** in the
   description because it fills its dedicated tags box from `short.tags`). So you no longer hand-write
   or count hashtags — just write a clean caption and **populate `tags`** (order = relevance; the first
@@ -195,8 +195,8 @@ reads as one + is discoverable (canonical: `vertical-ai-persona/kaspa-wise-man/C
 ## After staging
 
 - Posting is handled by the **schedule-tweets per-platform skills**, run **ONE AT A TIME**
-  (sequential posting is a hard rule — never parallel). YouTube via `post-yt-short-api.js` (API,
-  preferred) NOT the legacy Playwright `post-yt-short.js`.
+  (sequential posting is a hard rule — never parallel). YouTube via `post_yt_short_api.py` (API
+  only: the legacy Playwright uploader was deleted 2026-11-22).
 - Known gotchas: **BitChute** silently rejects `.webp` thumbnails (PNG/JPG only); **Rumble** and
   **Facebook** can capture a stale `url` after a successful upload (treat Submit-success as truth,
   backfill the real URL).

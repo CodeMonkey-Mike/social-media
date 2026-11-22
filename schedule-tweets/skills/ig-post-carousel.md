@@ -7,7 +7,7 @@ description: Post the next pending Instagram carousel (multi-image post) from da
 
 ```powershell
 cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
-node scripts/post-ig-carousel.js
+python -u scripts/post_ig_carousel.py
 ```
 
 Picks up the first post with `status === "pending"` from `data/ig-carousel.json`, posts it as a carousel, and writes `status: "posted"`, `posted_at`, and `post_url` back to the file.
@@ -26,7 +26,7 @@ Uses `igbot-profile` (`C:\Users\mnede\AppData\Local\Google\Chrome\igbot-profile`
 Stop-Process -Name chrome -Force -ErrorAction SilentlyContinue
 ```
 
-Shared with `post-ig-single.js` and `post-ig-reel.js` — never run two IG scripts at once.
+Shared with `post_ig_single.py` and `post_ig_reel.py` — never run two IG scripts at once.
 
 ## Timing constants
 

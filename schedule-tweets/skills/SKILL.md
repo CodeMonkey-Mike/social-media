@@ -10,7 +10,7 @@ Each capability has its own file in this folder. This file is the index and home
 
 ### Operational note: these scripts BUFFER stdout — an empty log is NOT a hang
 
-Most of these Node/Playwright scripts run 3-8 minutes (built-in 60-180s human-pacing waits before composer AND before Post) and several (`post_thread.py` unless run with `python -u`, `upload-longform-*.js`) **flush their entire stdout only at exit** — so the background-task log file stays EMPTY for minutes while the script is working normally. Do not read an empty log as stuck. When a step is quiet longer than expected, confirm the process is alive with `ps -W | grep -iE "/node|chrome"` before doing anything — a live `node`/`chrome` pair means it is still driving the browser. **NEVER relaunch a posting script that appears stuck** (shared-profile Chrome collision kills the in-flight post — this is the standing one-attempt rule). Wait for the process to exit, then read the flushed log. `post-thread.js` (multi-tweet, ~175s pre-post wait) and the long-form uploads (large-file upload + server-side processing poll, up to ~12 min) are the slowest and the most likely to look silent.
+Most of these Python/Playwright scripts run 3-8 minutes (built-in 60-180s human-pacing waits before composer AND before Post), and a Python script started without `-u` **flushes its entire stdout only at exit** — so the background-task log file stays EMPTY for minutes while the script is working normally. **Always start them as `python -u scripts/<name>.py`** so the log streams. Do not read an empty log as stuck. When a step is quiet longer than expected, confirm the process is alive with `ps -W | grep -iE "python|chrome"` before doing anything — a live `python`/`chrome` pair means it is still driving the browser. **NEVER relaunch a posting script that appears stuck** (shared-profile Chrome collision kills the in-flight post — this is the standing one-attempt rule). Wait for the process to exit, then read the flushed log. `post_thread.py` (multi-tweet, ~175s pre-post wait) and the long-form uploads (large-file upload + server-side processing poll, up to ~12 min) are the slowest and the most likely to look silent.
 
 ---
 
@@ -47,26 +47,28 @@ Coverage caveat: the content pages show roughly one page of recent videos, so th
 that window. The deeper backlog (108 Rumble / 33 BitChute rows as of 2026-08-13) needs pagination
 added before it can be swept.
 
-## Posting tail → Python + the POST graph (migration wave, 2026-08-11)
+## Posting scripts are PYTHON ONLY: every JS file in `scripts/` was deleted 2026-11-22
 
-**Every posting/upload script now has a CANONICAL Python port** (`scripts/post_*.py`,
-`scripts/upload_longform_*.py`, `scripts/recapture_rumble_url.py`, libs
-`scripts/lib/longform_queue.py` + `scripts/lib/strip_hashtags.py`). The JS twins are
-**FROZEN rollback** — do not edit them; fixes land in the Python file. **Once a port is
-LIVE-BLESSED its JS twin is DELETED, not kept** (Python-only repo rule, Mike 2026-10-21; first
-deletion: `post-thread.js` + its dead `setup.js`/`x-auth.json` helper that same day). A blessed
-port with a surviving JS twin in the table below is an open cleanup item, not a rollback option.
+**There is no JavaScript left in `schedule-tweets/scripts/`** (Mike, 2026-11-22: "we should not have
+any js files in that folder"). Every posting / upload / check script is its Python file
+(`scripts/post_*.py`, `scripts/upload_longform_*.py`, `scripts/recapture_rumble_url.py`, libs
+`scripts/lib/longform_queue.py` + `scripts/lib/strip_hashtags.py`), ported 2026-08-11 in the
+posting-tail migration. The JS twins were deleted that day whether or not their port had posted
+live yet, so **there is no rollback script**: a poster that fails is diagnosed from its log and
+fixed in the Python file. Run every script as `python -u scripts/<name>.py` (never `node`).
 
-**Blessed posters run through the POST graph (segment 7), one entry × one platform per
-invocation** — the invocation IS Mike's decision to post; verify-from-disk against the
-queue file is built in:
+**The longform uploaders and the BitChute short also run through the POST graph (segment 7), one
+entry × one platform per invocation** — the invocation IS Mike's decision to post;
+verify-from-disk against the queue file is built in:
 
 ```
 python video-creation/livestream-repurpose/graph/run.py post --platform <p> [--kind longform|short]
 ```
 
-**Bless ledger** (a port becomes the production poster only after ONE real post ran clean
-through it; until then invoke the JS twin):
+**Live-proof ledger.** A port is LIVE-BLESSED once ONE real post ran clean through it. The rows
+marked **FIRST LIVE POST PENDING** have never completed a real post and are now the only poster
+for their queue: on their first run read the log line by line, keep to one attempt, and add the
+row's date here once it posts clean.
 
 | Port | Status |
 |---|---|
@@ -75,13 +77,38 @@ through it; until then invoke the JS twin):
 | `upload_longform_facebook.py` | ✅ LIVE-BLESSED 2026-08-11 (one diagnosed pre-action re-run: cold-profile nav timeout before any action — hardened to a 60s first-nav timeout) |
 | `post_bitchute_short.py` | ✅ LIVE-BLESSED 2026-08-11 (`t-20260810-freaking-early-not-degen` via `post --kind short`; one found-and-fixed sync-API timing gap: the popup URL is empty at domcontentloaded so `upload_code` missed → placeholder URL + posted_unverified. Port now re-reads the URL before Proceed; that run's real URL was recovered via the public beta API `POST api.bitchute.com/api/beta/channel/videos {channel_id}` — the SPA channel page has no server-side listing, but this API needs no auth and is the URL-recovery path of record) |
 | `post_thread.py` | ✅ LIVE-BLESSED 2026-08-12 (`thread-2026-08-12-200-week-line`, 7 tweets, 7/7 verified — the run that fixed the 2026-07-30 `tweetTextarea_5` defect: `state="attached"` + 30s timeout + `scroll_into_view_if_needed()` + JS-click fallback. **JS twin `post-thread.js` DELETED 2026-10-21**; `post_thread.py` is the only thread poster) |
-| `post_fb_short.py` | ✅ LIVE-BLESSED 2026-08-28 (`ewp-20260827-dead-memes-comeback-impact` → `reel/891047553840477`, verified live; 19s on the page vs 18.79s source, URL unique across the queue). The blessing run exercised the new baseline diff on the real failure path: round 1 reported "no new video yet (processing)" — the exact state where the JS twin grabs the PREVIOUS short's URL — and the diff refused it, waited one interval, then captured the true reel. **The frozen JS twin still has the neighbour-URL bug, so FB shorts go through the Python port.** |
-| `post_yt_quiz.py` | ✅ LIVE-BLESSED 2026-08-30 (`yt-quiz-2026-08-28-robinhood-chain-what-is-it` → `youtube.com/post/Ugkx88b83lVM2eUt1JET7Se78SJuFVSITajP`). **The JS twin is not a fallback here — it CANNOT post at all:** YouTube moved the quiz composer off the Polymer `ytd-backstage-quiz-editor-renderer` onto its `ytPostsCreation*ViewModel*` components, so the legacy widget is permanently `display:none` and `post-yt-quiz.js` throws `Quiz editor did not open (display=none)` before Post (clean pre-post fail, nothing published). The port carries the ViewModel selectors; full old→new map in `yt-post-quiz.md`. The bless run also closed the 4x-logged `aria-pressed=null` escalation (the selector is a `<button-view-model>` wrapper with no aria; state is a class on it) and fixed a latent port defect where `wait_for_function`'s `arg` was passed positionally, which crashed on the 3rd option. |
-| `post_ig_reel.py` | ✅ LIVE-BLESSED 2026-09-24 (`p-20260922-110x-in-8-days-community-wins` → `reel/DdrCMvfhA6L`, caption verified on IG). Blessed WITH a deliberate fix after the JS twin failed that row with `error after Share: Something went wrong` and left no evidence: Share-outcome text is matched only inside the composer dialog + `[role=alert/status]` (the JS reads the whole page incl. the home feed), an error saves a screenshot + dialog text to `tmp/ig-reel-debug/`, and a **Reels-grid baseline diff** (scraped from `/reels/` BEFORE upload) decides the outcome on every path. **The JS twin still has all of these defects, so IG Reels go through the Python port.** Detail: `ig-post-vertical.md`. |
+| `post_fb_short.py` | ✅ LIVE-BLESSED 2026-08-28 (`ewp-20260827-dead-memes-comeback-impact` → `reel/891047553840477`, verified live; 19s on the page vs 18.79s source, URL unique across the queue). The blessing run exercised the new baseline diff on the real failure path: round 1 reported "no new video yet (processing)" — the exact state where the JS twin grabs the PREVIOUS short's URL — and the diff refused it, waited one interval, then captured the true reel. (The JS twin, deleted 2026-11-22, had the neighbour-URL bug to the end.) |
+| `post_yt_quiz.py` | ✅ LIVE-BLESSED 2026-08-30 (`yt-quiz-2026-08-28-robinhood-chain-what-is-it` → `youtube.com/post/Ugkx88b83lVM2eUt1JET7Se78SJuFVSITajP`). **The JS twin could not post at all from that day on** (deleted 2026-11-22): YouTube moved the quiz composer off the Polymer `ytd-backstage-quiz-editor-renderer` onto its `ytPostsCreation*ViewModel*` components, so the legacy widget is permanently `display:none` and `post-yt-quiz.js` threw `Quiz editor did not open (display=none)` before Post (clean pre-post fail, nothing published). The port carries the ViewModel selectors; full old→new map in `yt-post-quiz.md`. The bless run also closed the 4x-logged `aria-pressed=null` escalation (the selector is a `<button-view-model>` wrapper with no aria; state is a class on it) and fixed a latent port defect where `wait_for_function`'s `arg` was passed positionally, which crashed on the 3rd option. |
+| `post_ig_reel.py` | ✅ LIVE-BLESSED 2026-09-24 (`p-20260922-110x-in-8-days-community-wins` → `reel/DdrCMvfhA6L`, caption verified on IG). Blessed WITH a deliberate fix after the JS twin failed that row with `error after Share: Something went wrong` and left no evidence: Share-outcome text is matched only inside the composer dialog + `[role=alert/status]` (the JS reads the whole page incl. the home feed), an error saves a screenshot + dialog text to `tmp/ig-reel-debug/`, and a **Reels-grid baseline diff** (scraped from `/reels/` BEFORE upload) decides the outcome on every path. (The JS twin, deleted 2026-11-22, had all of these defects.) Detail: `ig-post-vertical.md`. |
 | `post_x_short.py` | ✅ LIVE-BLESSED 2026-11-18 (`p-20261116-dumping-and-im-buying` → `status/2123074536945967146`, `p-20261116-pengu-flips-pepe-impact` → `status/2123077108737978372`). Blessed WITH a deliberate fix after the JS twin failed both passes of that day's run pre-Post: `locator.click: Timeout 30000ms` on `tweetTextarea_0`, a `[data-testid="mask"]` from `#layers` intercepting the click right after the video attached (caption never typed, nothing published). Two read-only probes on `xbot-profile` (same video, short and 150 s home idle) could not reproduce the overlay and the twin saved no evidence, so it is intermittent and still unidentified. The port now scopes every composer locator to the compose `[role="dialog"]` (the home feed carries a second `tweetTextarea_0` / `fileInput`, so "modal never opened" and "modal covered" were indistinguishable), times the caption click out at 5 s and falls back to a JS focus + click while printing what covers the box, verifies the typed caption against the dialog textarea before Post, and saves a screenshot + `#layers` text to `tmp/x-short-debug/` on any failure. Neither bless run hit the blocked-click path, so the fallback itself is not yet live-proven: **if it fires, read the `caption-click-blocked-*.txt` it leaves to name the overlay.** |
-| every other `post_*.py` | PORTED, BLESS-PENDING — JS twin posts until blessed |
+| `post_yt_community.py` | ✅ LIVE-BLESSED on the **AI channel** 2026-11-17 (`--channel ai`, clip-evals carousel, 10/10 images). **Crypto channel (the default, `data/yt-posts.json`): FIRST LIVE POST PENDING**, same script and flow, different Chrome profile and queue. |
+| `post_tweet.py` · `post_x_poll.py` · `post_yt_poll.py` · `post_ig_single.py` · `post_ig_carousel.py` · `post_tiktok_short.py` · `post_rumble_short.py` · `post_yt_short_api.py` · `recapture_rumble_url.py` | **FIRST LIVE POST PENDING** (ported 2026-08-11, never run for a real post; their JS twins did the posting until 2026-11-22). `post_rumble_short.py` got the JS twin's last fix on the way out: the Groove help-widget overlay fallback on the Upload click (2026-11-09), which had only reached the JS file and the longform uploader. Every other fix made to a JS twin after the port date was already in its Python file (checked 2026-11-22 against the git history of each twin). |
 
-**Suite-wide documented divergences from the JS twins (the ONLY two + one deliberate fix):**
+**Deleted without a Python version (2026-11-22).** These were not ported because each was
+banned, a one-off tied to one past post, or already replaced. They are in git history
+(`git show 352c39cf:schedule-tweets/scripts/<name>`) if one is ever needed.
+
+| Deleted | Why | Use instead |
+|---|---|---|
+| `post-yt-short.js` | the browser YouTube Shorts uploader the hard rule bans | `post_yt_short_api.py` (API only) |
+| `_diag-yt-upload.js` | probe for that banned uploader's dialog, one clip's path hardcoded | none |
+| `_diag-bitchute-publish.js` | one-off that clicks Publish: it put a real video live with placeholder metadata on 2026-06-11 | `_diag_bitchute_thumb.py` (stops before Proceed) |
+| `_diag-poll.js` · `_diag-poll2.js` · `_diag-poll3.js` · `_diag-yt-poll-selectors.js` | older probes of the YT text-poll composer | `_diag_yt_poll_viewmodel.py` |
+| `_diag-yt-quiz-selectors.js` · `_diag-yt-quiz-explanation.js` | probe the quiz editor YouTube removed on 2026-08-30 | `_diag_yt_quiz_viewmodel.py` · `_diag_yt_quiz_correct.py` |
+| `_post-poll-direct.js` | early prototype of the YT poll poster (it posts) | `post_yt_poll.py` |
+| `_delete-and-repost-poll.js` · `_verify-yt-post.js` · `_reorder.js` | hardcoded to one past post / one past queue reorder | none |
+| `_check-ig-reels.js` | same job as two existing Python tools | `_diag_ig_recent_reels.py` · `_diag_ig_reel_caption.py` |
+| `retry-bitchute-url.js` | looked for the `/content` placeholder URL the posters no longer write | `reconcile_short_urls.py --platform bitchute` |
+| `cleanup-images.js` | deprecated shim around the cleanup engine | `node cleanup/cleanup.js --target schedule-tweets` (`cleanup-images.md`) |
+
+**Read-only check tools ported 2026-11-22** (same name, dashes to underscores; none has been run
+since the port, so treat a first run as its test): `check_fb_longform.py` · `check_rumble_longform.py` ·
+`inspect_fb_video.py <url>` · `_list_bitchute_content.py` · `_check_fb_reel.py <url>` ·
+`_check_tiktok_content.py` · `_check_x_profile.py` · `_check_yt_posts.py` · `_diag_ig_create.py` ·
+`_diag_ig_reel.py` · `_diag_x_poll_selectors.py` · `_diag_x_poll.py` ·
+`_diag_bitchute_thumb.py <video.mp4>` · and `yt_reauth.py` (the YouTube token re-auth, `yt-post-vertical.md`).
+
+**Suite-wide documented divergences from the (deleted) JS twins (the ONLY two + one deliberate fix):**
 1. A final machine line `POST OK platform=<p> ...` / `POST FAIL platform=<p> reason=...`
    at the same terminal points where the JS wrote a terminal queue status (parsed by the
    POST graph).
@@ -127,21 +154,25 @@ relaunch** (a "failed" post may already be live), YT Shorts via API only.
 
 | Queue file | Platform | Script |
 |---|---|---|
-| `data/x-tweets.json` | X single tweet | `scripts/post-tweet.js` |
-| `data/x-threads.json` | X thread | `python -u scripts/post_thread.py` ⭐ (JS twin deleted 2026-10-21) |
-| `data/x-polls.json` | X poll | `scripts/post-x-poll.js` |
-| `data/yt-posts.json` | YouTube community post | `scripts/post-yt-community.js` |
-| `data/ai-yt-posts.json` | YouTube community post on **AI Engineering Simplified** (2026-11-17) | `python scripts/post_yt_community.py --channel ai` (Python only: the JS `post-yt-community.js` and a bare Python run post the crypto queue as @CodeMonkeyMike) |
-| `data/yt-text-polls.json` | YouTube text poll | `scripts/post-yt-poll.js` |
-| `data/ig-single-image.json` | Instagram single | `scripts/post-ig-single.js` |
-| `data/ig-carousel.json` | Instagram carousel | `scripts/post-ig-carousel.js` |
-| `data/shorts.json` → `platforms.x` | X video short | `python -u scripts/post_x_short.py` ⭐ (JS twin retired 2026-11-18) |
-| `data/shorts.json` → `platforms.yt_shorts` | YouTube Short | `scripts/post-yt-short-api.js` ⭐ |
-| `data/shorts.json` → `platforms.ig_reels` | Instagram Reel | `scripts/post_ig_reel.py` ⭐ (JS twin frozen) |
-| `data/shorts.json` → `platforms.facebook` | Facebook Reel | `scripts/post-fb-short.js` |
-| `data/shorts.json` → `platforms.tiktok` | TikTok | `scripts/post-tiktok-short.js` |
-| `data/shorts.json` → `platforms.rumble` | Rumble short | `scripts/post-rumble-short.js` |
-| `data/shorts.json` → `platforms.bitchute` | BitChute short | `scripts/post-bitchute-short.js` |
+| `data/x-tweets.json` | X single tweet | `python -u scripts/post_tweet.py` |
+| `data/x-threads.json` | X thread | `python -u scripts/post_thread.py` ⭐ |
+| `data/x-polls.json` | X poll | `python -u scripts/post_x_poll.py` |
+| `data/yt-posts.json` | YouTube community post (crypto channel, @CodeMonkeyMike) | `python -u scripts/post_yt_community.py` (`--channel crypto` is the default) |
+| `data/ai-yt-posts.json` | YouTube community post on **AI Engineering Simplified** (2026-11-17) | `python -u scripts/post_yt_community.py --channel ai` (a bare run, with no `--channel`, posts the crypto queue as @CodeMonkeyMike) |
+| `data/yt-text-polls.json` | YouTube text poll | `python -u scripts/post_yt_poll.py` |
+| `data/ig-single-image.json` | Instagram single | `python -u scripts/post_ig_single.py` |
+| `data/ig-carousel.json` | Instagram carousel | `python -u scripts/post_ig_carousel.py` |
+| `data/shorts.json` → `platforms.x` | X video short | `python -u scripts/post_x_short.py` ⭐ |
+| `data/shorts.json` → `platforms.yt_shorts` | YouTube Short | `python -u scripts/post_yt_short_api.py` (API only, no browser route) |
+| `data/shorts.json` → `platforms.ig_reels` | Instagram Reel | `python -u scripts/post_ig_reel.py` ⭐ |
+| `data/shorts.json` → `platforms.facebook` | Facebook Reel | `python -u scripts/post_fb_short.py` ⭐ |
+| `data/shorts.json` → `platforms.tiktok` | TikTok | `python -u scripts/post_tiktok_short.py` |
+| `data/shorts.json` → `platforms.rumble` | Rumble short | `python -u scripts/post_rumble_short.py` |
+| `data/shorts.json` → `platforms.bitchute` | BitChute short | `python -u scripts/post_bitchute_short.py` ⭐ |
+| `data/yt-quizzes.json` | YouTube quiz | `python -u scripts/post_yt_quiz.py` ⭐ |
+| `data/longs.json` → `platforms.<p>` | Longform (Rumble / BitChute / Facebook) | `python -u scripts/upload_longform_<p>.py` ⭐ |
+
+⭐ = live-blessed (ledger above). No star = first live post pending.
 
 ---
 
@@ -149,15 +180,15 @@ relaunch** (a "failed" post may already be live), YT Shorts via API only.
 
 | Profile | Used by |
 |---|---|
-| `xbot-profile` | post-tweet, post_thread.py, post-x-poll, post-x-short |
-| `ytbot-profile` (CDP 9223) | post-yt-poll, post-yt-short (legacy) |
+| `xbot-profile` | post_tweet.py, post_thread.py, post_x_poll.py, post_x_short.py |
+| `ytbot-profile` (CDP 9223) | post_yt_poll.py, post_yt_quiz.py, post_yt_community.py (crypto channel) |
 | `ai-ytbot-profile` (CDP 9225) | post_yt_community.py `--channel ai`: AI Engineering Simplified, signed in directly as @aiEngineeringSimplified (Mike, 2026-11-17). Re-login: `yt-post-community.md`, "AI Engineering Simplified channel" |
-| `igbot-profile` | post-ig-single, post-ig-reel |
-| `fbbot-profile` | post-fb-short |
-| `rumblebot-profile` | post-rumble-short, upload-longform-rumble |
-| `bitchutebot-profile` | post-bitchute-short, upload-longform-bitchute |
+| `igbot-profile` | post_ig_single.py, post_ig_carousel.py, post_ig_reel.py |
+| `fbbot-profile` | post_fb_short.py, upload_longform_facebook.py |
+| `rumblebot-profile` | post_rumble_short.py, upload_longform_rumble.py |
+| `bitchutebot-profile` | post_bitchute_short.py, upload_longform_bitchute.py |
 | `chatgpt-profile` | generate-image.js, generate-image-batch.js |
-| Main `User Data\Default` (CDP 9224) | post-tiktok-short |
+| `tiktokbot-profile` (real Chrome over CDP 9224) | post_tiktok_short.py |
 
 ---
 
@@ -165,46 +196,45 @@ relaunch** (a "failed" post may already be live), YT Shorts via API only.
 
 | Script | `CHAR_DELAY` | `ACTION` | `PRE_COMPOSE` | `PRE_POST` | URL verify |
 |---|---|---|---|---|---|
-| `post-tweet.js` | 60–150ms | 4–7s | 60–180s | 5–180s | toast nav |
+| `post_tweet.py` | 60–150ms | 4–7s | 60–180s | 5–180s | toast nav |
 | `post_thread.py` | 60–150ms | 4–7s | 60–180s | 60–180s | ✓ HTTP + per-tweet text match |
-| `post-x-poll.js` | 60–150ms | 4–7s | 60–180s | 5–180s | toast nav |
-| `post-yt-poll.js` | 60–150ms | 2–3.5s | 30–90s | 30–90s | URL fetch (waits halved 2026-06-14) |
-| `post-ig-single.js` | 5–40ms | 1–5s | 1–15s | reused | URL fetch |
-| `post-fb-short.js` | 60–150ms | 4–7s | 60–180s | 60–180s | ✓ HTTP + video |
-| `post-tiktok-short.js` | 60–150ms | 4–7s | 60–180s | 60–180s | ✓ HTTP + video |
+| `post_x_poll.py` | 60–150ms | 4–7s | 60–180s | 5–180s | toast nav |
+| `post_yt_poll.py` | 60–150ms | 2–3.5s | 30–90s | 30–90s | URL fetch (waits halved 2026-06-14) |
+| `post_ig_single.py` | 5–40ms | 1–5s | 1–15s | reused | URL fetch |
+| `post_fb_short.py` | 60–150ms | 4–7s | 60–180s | 60–180s | ✓ baseline diff on /videos + HTTP + video |
+| `post_tiktok_short.py` | 60–150ms | 4–7s | 60–180s | 60–180s | ✓ HTTP + video |
 | `post_x_short.py` | 60–150ms | 4–7s | 60–180s | reused | toast nav + caption read-back |
-| `post-yt-short.js` (legacy) | clipboard | 3–6s | none | none | dialog redirect |
-| `post-ig-reel.js` | 40–120ms | 3–6s | 15–45s | reused | profile grid |
-| `post-rumble-short.js` | 40–120ms | 2–5s | none | none | confirmation |
-| `post-bitchute-short.js` | 40–120ms | 3–6s | 10–25s | none | studio dashboard |
-| `upload-longform-rumble.js` | 40–120ms | 2–5s | none | none | confirmation |
-| `upload-longform-bitchute.js` | 40–120ms | 3–6s | none | none | studio dashboard |
+| `post_ig_reel.py` | 40–120ms | 3–6s | 15–45s | reused | Reels-grid baseline diff |
+| `post_rumble_short.py` | 40–120ms | 2–5s | none | none | confirmation |
+| `post_bitchute_short.py` | 40–120ms | 3–6s | 10–25s | none | studio dashboard |
+| `upload_longform_rumble.py` | 40–120ms | 2–5s | none | none | confirmation |
+| `upload_longform_bitchute.py` | 40–120ms | 3–6s | none | none | studio dashboard |
 
 `reused` = script applies `PRE_COMPOSE` range a second time instead of a separate `PRE_POST` constant.
 
 **Every `ACTION` / `PRE_COMPOSE` / `PRE_POST` value above is env-overridable** (the table shows the
-defaults, which apply when the var is unset). Per-script prefix: `XT_` post-tweet · `XTH_` post-thread ·
-`XS_` post-x-short · `FB_` post-fb-short · `TT_` post-tiktok-short · `BC_` post-bitchute-short ·
-`IG_` post-ig-reel · `RM_` post-rumble-short · `YTP_` post-yt-poll · `YTQ_` post-yt-quiz ·
-`XP_` post-x-poll · `IGS_` post-ig-single · `IGC_` post-ig-carousel · `YTC_` post-yt-community ·
-`LFB_` upload-longform-facebook · `LFR_` upload-longform-rumble · `LFBC_` upload-longform-bitchute
+defaults, which apply when the var is unset). Per-script prefix: `XT_` post_tweet · `XTH_` post_thread ·
+`XS_` post_x_short · `FB_` post_fb_short · `TT_` post_tiktok_short · `BC_` post_bitchute_short ·
+`IG_` post_ig_reel · `RM_` post_rumble_short · `YTP_` post_yt_poll · `YTQ_` post_yt_quiz ·
+`XP_` post_x_poll · `IGS_` post_ig_single · `IGC_` post_ig_carousel · `YTC_` post_yt_community ·
+`LFB_` upload_longform_facebook · `LFR_` upload_longform_rumble · `LFBC_` upload_longform_bitchute
 (the last seven added 2026-08-10, closing the gap where those scripts were hardcoded). Suffix is
-`_MIN` / `_MAX`, values in ms — e.g. `XT_PRE_COMPOSE_MIN=6000 XT_PRE_COMPOSE_MAX=18000 node scripts/post-tweet.js`.
+`_MIN` / `_MAX`, values in ms — e.g. `XT_PRE_COMPOSE_MIN=6000 XT_PRE_COMPOSE_MAX=18000 python -u scripts/post_tweet.py`.
 Used 2026-08-09 to run a full sweep with the three human-pacing layers cut to 1/10 for speed.
-**Finding from that run: 1/10 is too fast for `post-fb-short.js`.** X, TikTok, IG, Rumble, BitChute, YT
+**Finding from that run: 1/10 is too fast for the Facebook short poster.** X, TikTok, IG, Rumble, BitChute, YT
 poll/quiz all posted fine, but FB pass 1 silently failed: the final step-4 "Post" click landed while the
 dialog was still re-rendering, so it never submitted (the log's tell is `[step4_after_final]` still showing
 a `Create post` dialog with `Post` + a new `Edit` button, instead of dismissing an upsell then `Submitted ✓`).
 Re-running at **half** default (`FB_ACTION 2000/3500`, `FB_PRE_COMPOSE`/`FB_PRE_POST` 30000/60000) submitted
 first try. If pacing FB down for speed, do not go below half default.
-**`post-fb-short.js` URL capture is not baseline-diffed (2026-08-10).** Posting two FB shorts in one
+**(Historical, fixed 2026-08-28, see the note below.) The JS FB short poster's URL capture was not baseline-diffed (2026-08-10).** Posting two FB shorts in one
 session recorded the SAME reel URL for both: the second run submitted fine (`Submitted ✓`) but FB had not
 yet surfaced the new reel on the /videos tab, so the script latched onto the most recent OLD reel and
-"verified" it live. `upload-longform-facebook.js` does poll a baseline diff; the short poster does not.
+"verified" it live. The longform uploader polled a baseline diff; the JS short poster did not.
 Symptom: two `shorts.json` rows with an identical `facebook.url`. **Fix the record, never re-post** — set
 that row to `posted_unverified` with `url: null` and recapture from the Videos tab.
 
-> ✅ **FIXED in `post_fb_short.py` (2026-08-28) — the JS twin still has the bug.** It recurred that day
+> ✅ **FIXED in `post_fb_short.py` (2026-08-28).** It recurred that day
 > on `ewp-20260827-october-zombies-impact`, which recorded the previous short's reel URL. The baseline
 > diff from `upload_longform_facebook.py` is now ported into the Python poster: it snapshots every
 > video/reel id on `/videos` **before** the upload, then after Share polls that tab (default 10 min,
@@ -214,8 +244,8 @@ that row to `posted_unverified` with `url: null` and recapture from the Videos t
 > **New terminal state:** submitted but no new video inside the window is `posted_unverified` with
 > `url: null`, NOT `failed` — a `failed` row invites a re-post, which is a duplicate upload. Machine line
 > is `POST OK platform=facebook url=none status=posted_unverified`, matching the rumble/bitchute ports.
-> Per the freeze doctrine the fix landed in the Python port ONLY; `post-fb-short.js` is frozen rollback
-> and still writes neighbour URLs, so **post FB shorts through `post_fb_short.py`** from here.
+> The fix landed in the Python port only; the JS twin never got it and was deleted 2026-11-22, so
+> `post_fb_short.py` is the only FB short poster.
 > Port status: ✅ LIVE-BLESSED 2026-08-28 on the first pass (see the bless ledger above).
 **`CHAR_DELAY` is deliberately NOT env-exposed** — per-keystroke cadence is the strongest bot signal, so
 it stays fixed. The functional waits (IG's 5-min processing hold, FB's reel poll, upload-to-100%) are also
@@ -236,6 +266,15 @@ untouched by these vars; they exist because the platform needs the time, and cut
 - **Bash `cd` is not persistent across tool calls.** Always prefix every script invocation with `cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets &&`.
 
 ---
+
+> **Script names in the dated notes below (added 2026-11-22).** Every JavaScript file in `scripts/`
+> was deleted on 2026-11-22 and each tool's Python file is its only version. The dated notes keep the
+> name of the script that ran at the time, bugs and all, so they stay a true record. To run one
+> today, swap the name: dashes to underscores and `.js` to `.py` (`post-fb-short.js` is
+> `post_fb_short.py`, `recapture-rumble-url.js` is `recapture_rumble_url.py`, `yt-reauth.js` is
+> `yt_reauth.py`), started with `python -u scripts/<name>.py`, never `node`. The few scripts with no
+> Python version are in the "Deleted without a Python version" table near the top. A defect a note
+> pins on a `.js` poster may already be fixed in the Python one: the ledger near the top says which.
 
 ## Operational notes — 2026-05-22 session
 

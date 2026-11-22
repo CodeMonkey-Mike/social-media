@@ -7,7 +7,7 @@ description: Upload a single longform video to BitChute — typically a 1-2 hour
 
 ```powershell
 cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
-node scripts/upload-longform-bitchute.js
+python -u scripts/upload_longform_bitchute.py
 ```
 
 Uploads one video.
@@ -20,7 +20,7 @@ Do NOT stop and ask the user "should I stage this?" or "the folder root has a di
 
 ## Staging (none needed — the script reads `longs.json` directly)
 
-`upload-longform-bitchute.js` now sources the next-pending `bitchute` entry **directly from `longs.json`** via `scripts/lib/longform-queue.js` (`pickNextLongform('bitchute')`). It uploads the entry's own `video_path` / `thumbnail_path` (usually a `longform/<source>/` subfolder) and builds the post from the entry's title / description / tags. **Do NOT copy anything into `longform/` root** — the old loose-root staging step is gone (it was what left orphaned duplicates behind).
+`upload_longform_bitchute.py` now sources the next-pending `bitchute` entry **directly from `longs.json`** via `scripts/lib/longform_queue.py` (`pick_next_longform('bitchute')`). It uploads the entry's own `video_path` / `thumbnail_path` (usually a `longform/<source>/` subfolder) and builds the post from the entry's title / description / tags. **Do NOT copy anything into `longform/` root** — the old loose-root staging step is gone (it was what left orphaned duplicates behind).
 
 1. The script picks the next pending `bitchute` entry itself (queue order) — you stage nothing.
 2. Run the upload script.
@@ -45,7 +45,7 @@ Prerequisite: the entry's `video_path` (and optional `thumbnail_path`) must exis
 
 ## ⛔ Search Terms field is LETTERS-ONLY (A–Z) — applies to longform too (2026-06-19)
 
-BitChute's **Search Terms field rejects anything but letters A–Z** with a red **"Only use letters A to Z"** error. Any tag containing a **digit or symbol** (e.g. `ai16z`, `web3`, `100x`) throws a validation popup that **blocks the publish** — and on the shorts side that same popup gets misread as the "missing-thumbnail modal," causing a consistent every-attempt `failed`. Root-caused on the shorts side 2026-06-19 (the `ai16z` tag failed a short twice; dropping it published cleanly first try). **The longform Search Terms field is the identical control with the identical rule**, so `upload-longform-bitchute.js` now applies the same filter: any non-letters tag is **dropped** and the next valid tag is used (source `tags` are left untouched for other platforms). If you ever build the search terms by hand, use **letters-only** tokens.
+BitChute's **Search Terms field rejects anything but letters A–Z** with a red **"Only use letters A to Z"** error. Any tag containing a **digit or symbol** (e.g. `ai16z`, `web3`, `100x`) throws a validation popup that **blocks the publish** — and on the shorts side that same popup gets misread as the "missing-thumbnail modal," causing a consistent every-attempt `failed`. Root-caused on the shorts side 2026-06-19 (the `ai16z` tag failed a short twice; dropping it published cleanly first try). **The longform Search Terms field is the identical control with the identical rule**, so `upload_longform_bitchute.py` now applies the same filter: any non-letters tag is **dropped** and the next valid tag is used (source `tags` are left untouched for other platforms). If you ever build the search terms by hand, use **letters-only** tokens.
 
 ## Validation (pre-Chrome)
 
@@ -55,7 +55,7 @@ BitChute's **Search Terms field rejects anything but letters A–Z** with a red 
 
 ## Chrome profile
 
-Uses `bitchutebot-profile`. Shared with `scripts/post-bitchute-short.js` — don't run two at once. **Chrome must be fully closed before running.**
+Uses `bitchutebot-profile`. Shared with `scripts/post_bitchute_short.py` — don't run two at once. **Chrome must be fully closed before running.**
 
 ## Timing constants
 
@@ -83,14 +83,14 @@ Longform timings are lighter than vertical-video scripts because the upload itse
 
 URL written from the Studio dashboard — **NOT the specific video URL** (it writes `https://www.bitchute.com/content`).
 
-**Derive the real video URL from the upload_code** — don't just leave the dashboard URL or scrape the channel by hand. The upload page URL the script lands on contains `?upload_code=<CODE>&...` (logged as `Upload page: https://up###.bitchute.com/videos/upload/?upload_code=<CODE>...`). The public video lives at `https://www.bitchute.com/video/<CODE>/` — exactly how `post-bitchute-short.js` already builds it. Confirmed 2026-06-14 (banks-own-chain: upload_code `mrkhxqj2SopE` → `https://www.bitchute.com/video/mrkhxqj2SopE/`, og:title matched). Verify with `curl ... | grep og:title` and write THAT to `longs.json`, not `/content`. (TODO worth doing: port the short script's upload_code→URL derivation into `upload-longform-bitchute.js` so this is automatic.)
+**Derive the real video URL from the upload_code** — don't just leave the dashboard URL or scrape the channel by hand. The upload page URL the script lands on contains `?upload_code=<CODE>&...` (logged as `Upload page: https://up###.bitchute.com/videos/upload/?upload_code=<CODE>...`). The public video lives at `https://www.bitchute.com/video/<CODE>/` — exactly how `post_bitchute_short.py` already builds it. Confirmed 2026-06-14 (banks-own-chain: upload_code `mrkhxqj2SopE` → `https://www.bitchute.com/video/mrkhxqj2SopE/`, og:title matched). Verify with `curl ... | grep og:title` and write THAT to `longs.json`, not `/content`. (TODO worth doing: port the short script's upload_code→URL derivation into `upload_longform_bitchute.py` so this is automatic.)
 
 ## Custom thumbnail vs. Grab Thumbnail
 
 | Script | Thumbnail source |
 |---|---|
-| `upload-longform-bitchute.js` (this skill) | Custom PNG file if present; falls back to Grab Thumbnail |
-| `post-bitchute-short.js` (`bitchute-post-vertical.md`) | Always Grab Thumbnail (auto-picks a frame) |
+| `upload_longform_bitchute.py` (this skill) | Custom PNG file if present; falls back to Grab Thumbnail |
+| `post_bitchute_short.py` (`bitchute-post-vertical.md`) | Always Grab Thumbnail (auto-picks a frame) |
 
 To skip the custom thumbnail for a longform run, delete or rename the PNG before running.
 
@@ -98,7 +98,7 @@ To skip the custom thumbnail for a longform run, delete or rename the PNG before
 
 | If… | Use |
 |---|---|
-| Landscape video, 1–2 hour livestream recording | this script (`upload-longform-bitchute.js`) |
-| Vertical 9:16 short clip from `data/shorts.json` | `bitchute-post-vertical.md` (`post-bitchute-short.js`) |
+| Landscape video, 1–2 hour livestream recording | this script (`upload_longform_bitchute.py`) |
+| Vertical 9:16 short clip from `data/shorts.json` | `bitchute-post-vertical.md` (`post_bitchute_short.py`) |
 
 The two scripts share `bitchutebot-profile` and so cannot run simultaneously.

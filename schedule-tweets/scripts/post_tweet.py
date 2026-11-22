@@ -1,6 +1,8 @@
 # post_tweet.py — CANONICAL Python port of post-tweet.js (2026-08-11, posting-tail
-# migration; the JS twin is FROZEN rollback). Status: PORTED, BLESS-PENDING — invoke
-# the JS twin for production posts until this port is live-blessed with one real post.
+# migration).
+# Status: the ONLY X single-tweet poster (the JS twin was DELETED 2026-11-22: Python-only repo,
+# Mike). FIRST LIVE POST PENDING: this port has not completed a real post yet, so read
+# the log of its first run closely (one attempt, never relaunch).
 #
 # 1:1 port on playwright.sync_api: same xbot-profile Chrome, same selectors, same
 # human-timing pauses (char delays / action pauses / pre-compose / pre-post waits),

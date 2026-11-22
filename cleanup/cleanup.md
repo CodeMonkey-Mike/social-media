@@ -209,5 +209,6 @@ preview matters more here than for the image cleaner.
 
 ## Note on the old entrypoint
 
-`schedule-tweets/scripts/cleanup-images.js` still works but is now a thin shim that
-delegates to `node cleanup/cleanup.js --target schedule-tweets`. The policy lives here.
+`schedule-tweets/scripts/cleanup-images.js` was a thin shim that delegated to
+`node cleanup/cleanup.js --target schedule-tweets`. It was deleted 2026-11-22 (no JS is kept in
+`schedule-tweets/scripts/`), so run that command directly. The policy lives here.

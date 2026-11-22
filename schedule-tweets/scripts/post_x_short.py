@@ -24,7 +24,7 @@
 #     or the pre-launch "video file not found" exit, neither of which touch
 #     platforms.x.status in the JS.
 #
-# Deliberate fix (2026-11-18, the JS twin still has the defect): both passes of that day's
+# Deliberate fix (2026-11-18; the JS twin, since deleted, had the defect): both passes of that day's
 # run failed pre-Post with `locator.click: Timeout 30000ms` on tweetTextarea_0, a
 # `[data-testid="mask"]` from #layers intercepting the click right after the video
 # attached. Two read-only probes (short + 150 s home idle, same video) could not reproduce

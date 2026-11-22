@@ -1,5 +1,6 @@
 # upload_longform_bitchute.py — CANONICAL Python port of upload-longform-bitchute.js
-# (2026-08-11, posting-tail migration; the JS twin is FROZEN rollback).
+# (2026-08-11, posting-tail migration). Status: LIVE-BLESSED 2026-08-11, the only BitChute
+# longform uploader (the JS twin was DELETED 2026-11-22: Python-only repo, Mike).
 #
 # 1:1 port on playwright.sync_api: same bitchutebot-profile Chrome, same selectors,
 # same mandatory-thumbnail rule (a missing thumbnail turns Proceed into a permanent
@@ -7,6 +8,7 @@
 # search-terms filter, same three click strategies + 30s retry loop, same
 # upload_code URL capture, same title-keyed longs.json write-back.
 # Documented divergences ONLY: machine lines (POST OK/FAIL) + 60s post-run hold.
+import os
 import random
 import re
 import sys
@@ -24,7 +26,9 @@ BITCHUTE_HOME = "https://www.bitchute.com/"
 MIN_FILE_SIZE = 1_000_000
 
 CHAR_DELAY_MIN, CHAR_DELAY_MAX = 40, 120
-ACTION_MIN, ACTION_MAX = 3000, 6000
+# Env-overridable like every other poster (same names and defaults the JS twin had; unset = defaults).
+ACTION_MIN = int(os.environ.get("LFBC_ACTION_MIN") or 3000)
+ACTION_MAX = int(os.environ.get("LFBC_ACTION_MAX") or 6000)
 
 
 def rnd(a, b):
@@ -357,7 +361,7 @@ def main():
                 print(f"POST OK platform=bitchute url={video_url}", flush=True)
             else:
                 print("\nPosted (processing) — video URL not captured.")
-                print("WARNING: longs.json still says pending. Run scripts/_list-bitchute-content.js "
+                print("WARNING: longs.json still says pending. Run scripts/_list_bitchute_content.py "
                       "and record the URL, otherwise the next run will re-upload this same video.")
                 print("POST FAIL platform=bitchute reason=no-url-captured", flush=True)
             print("Done ✓")

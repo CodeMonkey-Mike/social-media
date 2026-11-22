@@ -226,14 +226,14 @@ code) stay in `demos/`, which is gitignored. Here they are only summarized.
 
 **Repo housekeeping**
 - **Change the JavaScript files over to Python** (Mike, 2026-11-17: "this is a python repo. we should not be using
-  javascript unless it is a remotion file"). 315 tracked `.js` files outside `remotion/` (count of 2026-11-17); 36
-  already have a Python twin (same name, `_` for `-`), so for those the work is switching callers and docs to the
-  Python one and retiring the JS:
+  javascript unless it is a remotion file"). 315 tracked `.js` files outside `remotion/` on 2026-11-17, **265 on
+  2026-11-22** after `schedule-tweets/scripts/` was done (first row). Where a Python twin exists (same name, `_` for
+  `-`) the work is switching callers and docs to the Python one and retiring the JS:
 
   | Folder | JS files | Python twin exists | Note |
   |---|---|---|---|
-  | `video-creation/assets/transitions/` | 87 | 0 | check first which are Remotion-side (those stay) |
-  | `schedule-tweets/scripts/` | 50 | 20 | the posters; YT community proven in Python (next bullet) |
+  | `schedule-tweets/scripts/` | **0** | all | **DONE 2026-11-22** (branch `chore/schedule-tweets-js-to-python`): all 49 JS files deleted. 19 already had a twin, 14 were ported that day (the read-only check and diagnostic tools + `yt_reauth.py`), 16 were deleted with no port (banned, a one-off, or already replaced: the table in `schedule-tweets/skills/SKILL.md`). Ten posters have not posted live in Python yet (that doc's live-proof ledger); the new check tools have not been run yet either. |
+  | `video-creation/assets/transitions/` | 87 | 0 | checked 2026-11-22: none is Remotion-side (Remotion code names them only in comments), so all are portable build tools |
   | `repurpose/archive/` | 43 | 0 | archived: delete or leave, not port |
   | `video-creation/longform-edited/media/` | 39 | 0 | per-video files, go with each project folder after publish |
   | `repurpose/` | 23 | 6 | |
@@ -244,10 +244,13 @@ code) stay in `demos/`, which is gitignored. Here they are only summarized.
   | `video-creation/longform-edited/skills/` | 5 | 5 | frozen twins of the Python lints |
   | everything else (`cleanup/`, `scripts/`, `x-reply-guy/`, `topic-radar/`, a few skills) | 20 | 5 | |
 
-  First steps: (1) switch the crypto channel's YT posts from `post-yt-community.js` to
-  `post_yt_community.py --channel crypto` (proven on the AI channel 2026-11-17); (2) reword `CLAUDE.md`'s Python-first
-  rule (it still allows JS for the existing posters, LinkedIn and reply-guy) and its "edit data/*.json with Node" line
-  (Python with `ensure_ascii=False` keeps emoji just as safely). Recount with `git ls-files "*.js"` minus `remotion/`.
+  First steps: (1) DONE 2026-11-22: the crypto channel's YT posts go through `post_yt_community.py` (the JS poster is
+  deleted; the first live crypto post through it is still to come); (2) HALF DONE 2026-11-22: `CLAUDE.md`'s
+  Python-first rule no longer lists the `schedule-tweets` posters as a JS exception. Still open, for Mike to rule on:
+  the LinkedIn and reply-guy exception, the "edit data/*.json with Node" line (Python with `ensure_ascii=False` keeps
+  emoji just as safely), and the `node -e` queue-reset snippets in the posting docs. Note `schedule-tweets/package.json`
+  + `node_modules` must stay for now: 15 JS files elsewhere (music-sourcing, ai-engineering media) load Playwright
+  from there. Recount with `git ls-files "*.js"` minus `remotion/`.
 - Orphan Markdown files: Mike wants to go through them one by one before deleting any ("maybe there's some information
   that we wanted to put in there").
 - The clip-evals video, the short-lane change and the AI channel's YouTube-post queue are **not committed yet**. Commit

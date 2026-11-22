@@ -1,7 +1,8 @@
 # post_tiktok_short.py — CANONICAL Python port of post-tiktok-short.js
-# (2026-08-11, posting-tail migration; the JS twin is FROZEN rollback). Status:
-# PORTED, BLESS-PENDING — invoke the JS twin for production posts until this
-# port is live-blessed with one real post.
+# (2026-08-11, posting-tail migration).
+# Status: the ONLY TikTok poster (the JS twin was DELETED 2026-11-22: Python-only repo,
+# Mike). FIRST LIVE POST PENDING: this port has not completed a real post yet, so read
+# the log of its first run closely (one attempt, never relaunch).
 #
 # Uploads one pending TikTok video from data/shorts.json.
 #
@@ -52,7 +53,7 @@ CDP_PORT = 9224
 TIKTOK_UPLOAD_URL = "https://www.tiktok.com/tiktokstudio/upload?lang=en"
 PLATFORM = "tiktok"
 
-# Timing constants mirrored from post-fb-short.js / post-x-short.js
+# Timing constants mirrored from post_fb_short.py / post_x_short.py
 CHAR_DELAY_MIN = 60
 CHAR_DELAY_MAX = 150
 ACTION_MIN = int(os.environ.get("TT_ACTION_MIN") or 4000)

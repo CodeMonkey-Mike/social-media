@@ -9,8 +9,13 @@ Crypto channel (@CodeMonkeyMike, `data/yt-posts.json`):
 
 ```powershell
 cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
-node scripts/post-yt-community.js
+python -u scripts/post_yt_community.py
 ```
+
+> `post_yt_community.py` is the only community poster for both channels (the JS
+> `post-yt-community.js` was deleted 2026-11-22). It is live-blessed on the AI channel
+> (2026-11-17). ⚠ **The crypto channel has not posted through it yet**: on the first crypto
+> run read the log line by line, one attempt, never relaunch.
 
 Picks up the first post with `status === "pending"` from `data/yt-posts.json`, posts it (text + optional images), and writes `status: "posted"`, `posted_at`, and `post_url` back to the file.
 
@@ -25,12 +30,11 @@ python -u scripts/post_yt_community.py --channel ai
 
 Posts the next `pending` row of `data/ai-yt-posts.json` (the dashboard's **AI YouTube Posts** tab) as
 **@aiEngineeringSimplified**, from that channel's OWN Chrome profile, `ai-ytbot-profile` (signed in directly as the
-channel, Mike 2026-11-17), on CDP **9225**. Same flow as the rest of this page, step for step (the Python port follows
-the JS twin 1:1), plus an **active-channel guard** right after the login check: the account menu must show
+channel, Mike 2026-11-17), on CDP **9225**. Same flow as the rest of this page, step for step, plus an **active-channel guard** right after the login check: the account menu must show
 `@aiEngineeringSimplified`, or the run fails before anything is typed. The guard runs on the crypto channel too.
 
-- **Only the Python port knows this channel.** `node scripts/post-yt-community.js` and a bare
-  `python scripts/post_yt_community.py` (default `--channel crypto`) post the CRYPTO queue as @CodeMonkeyMike.
+- **`--channel ai` is what selects this channel.** A bare `python -u scripts/post_yt_community.py`
+  (default `--channel crypto`) posts the CRYPTO queue as @CodeMonkeyMike.
 - Run it in the background (3 to 6 minutes: two 30 to 90 s waits), ONE attempt, like every poster
   (`skills/SKILL.md`, "NEVER run a posting script in the foreground").
 - Re-login when the session expires: the "Re-logging in" launch below with `ai-ytbot-profile` in place of
@@ -51,7 +55,7 @@ Each post may have:
 
 Uses `ytbot-profile` via **CDP attach** on port **9223** — not `launchPersistentContext`. The script auto-spawns Chrome with `--remote-debugging-port=9223` if the port isn't already open, then connects Playwright via `connectOverCDP`.
 
-Shared with `scripts/post-yt-poll.js` — don't run two at once.
+Shared with `scripts/post_yt_poll.py` — don't run two at once.
 
 **Chrome must be fully closed (or already running on port 9223) before launch.** If Chrome is already running on the `ytbot-profile` *without* the debug port, the script can't take over — it will fail after 12 seconds with `Chrome did not open remote debugging port 9223`. Close all Chrome windows on this profile first.
 

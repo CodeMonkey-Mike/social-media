@@ -1,5 +1,6 @@
 # upload_longform_facebook.py — CANONICAL Python port of upload-longform-facebook.js
-# (2026-08-11, posting-tail migration; the JS twin is FROZEN rollback).
+# (2026-08-11, posting-tail migration). Status: LIVE-BLESSED 2026-08-11, the only Facebook
+# longform uploader (the JS twin was DELETED 2026-11-22: Python-only repo, Mike).
 #
 # 1:1 port on playwright.sync_api: same fbbot-profile Chrome, same feed-composer ->
 # Photo/video -> wizard -> Post flow, same BASELINE-DIFF verification (never trust
@@ -8,6 +9,7 @@
 # same title-keyed longs.json write-back with posted vs posted_unverified.
 # Documented divergences ONLY: machine lines (POST OK/FAIL); no interactive hold
 # (the JS closed immediately after verify too).
+import os
 import random
 import re
 import sys
@@ -28,9 +30,13 @@ FB_PAGE = "realCodeMonkeyMike"
 PAGE_URL = f"https://www.facebook.com/{FB_PAGE}/"
 
 CHAR_DELAY_MIN, CHAR_DELAY_MAX = 60, 150
-ACTION_MIN, ACTION_MAX = 4000, 7000
-PRE_COMPOSE_MIN, PRE_COMPOSE_MAX = 60000, 180000
-PRE_POST_MIN, PRE_POST_MAX = 60000, 180000
+# Env-overridable like every other poster (same names and defaults the JS twin had; unset = defaults).
+ACTION_MIN = int(os.environ.get("LFB_ACTION_MIN") or 4000)
+ACTION_MAX = int(os.environ.get("LFB_ACTION_MAX") or 7000)
+PRE_COMPOSE_MIN = int(os.environ.get("LFB_PRE_COMPOSE_MIN") or 60000)
+PRE_COMPOSE_MAX = int(os.environ.get("LFB_PRE_COMPOSE_MAX") or 180000)
+PRE_POST_MIN = int(os.environ.get("LFB_PRE_POST_MIN") or 60000)
+PRE_POST_MAX = int(os.environ.get("LFB_PRE_POST_MAX") or 180000)
 VIDEOS_TAB_WAIT_MIN, VIDEOS_TAB_WAIT_MAX = 5000, 9000
 
 UPSELL_LABELS = [r"^not now$", r"^no thanks$", r"^maybe later$", r"^skip$",
@@ -499,7 +505,7 @@ def main():
                                      "posted" if verified else "posted_unverified")
             else:
                 print("\nWARNING: longs.json still says pending (no URL captured).")
-                print("Check the page with scripts/check-fb-longform.js before re-running, "
+                print("Check the page with scripts/check_fb_longform.py before re-running, "
                       "or you will duplicate.")
 
             if verified:

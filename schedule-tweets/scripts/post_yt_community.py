@@ -1,13 +1,14 @@
 # post_yt_community.py — CANONICAL Python port of post-yt-community.js
-# (2026-08-11, posting-tail migration; the JS twin is FROZEN rollback).
-# Status: PORTED, BLESS-PENDING — invoke the JS twin for production posts until
-# this port is live-blessed with one real post. (Crypto channel; see TWO CHANNELS below for the AI one.)
+# (2026-08-11, posting-tail migration). Status: the ONLY YouTube community poster, both channels
+# (the JS twin was DELETED 2026-11-22: Python-only repo, Mike). LIVE-BLESSED on the AI channel
+# 2026-11-17; FIRST LIVE POST PENDING on the crypto channel, so read the log of its first crypto
+# run closely (one attempt, never relaunch). See TWO CHANNELS below.
 #
 # TWO CHANNELS (Mike, 2026-11-17). `--channel crypto` is the default: @CodeMonkeyMike, data/yt-posts.json,
 # ytbot-profile on CDP 9223, behaviour unchanged. `--channel ai`: @aiEngineeringSimplified,
 # data/ai-yt-posts.json, its OWN Chrome profile (ai-ytbot-profile, signed in directly as that channel) on
-# CDP 9225, images in images/ai-yt/. The AI channel's queue is posted ONLY by this script: the JS twin knows
-# one channel. CHANNELS below is the one table. Every channel: before anything is posted, the account menu
+# CDP 9225, images in images/ai-yt/. (The deleted JS twin knew only the crypto
+# channel.) CHANNELS below is the one table. Every channel: before anything is posted, the account menu
 # must show the expected @handle (two signed-in YouTube profiles exist now), and only a channel's owner sees
 # the composer on its posts page, so a wrong login fails before the Post click.
 #
@@ -27,7 +28,8 @@
 #   - the composer's image input = the first MULTI-file input (YouTube's search box added a hidden single-file
 #     input that comes first, 2026-11), and the posts-page snapshot waits for domcontentloaded, 60 s.
 # LIVE-BLESSED on the AI channel 2026-11-17 (clip-evals carousel, 10/10 images, post
-# UgkxGCVWtK3K2PQoaVcU6L147fneXwkssnse). The crypto channel still runs the JS twin until Mike switches it.
+# UgkxGCVWtK3K2PQoaVcU6L147fneXwkssnse). The crypto channel posts through this script too since
+# 2026-11-22 (JS twin deleted); it has not completed a real crypto post yet.
 import argparse
 import json
 import math

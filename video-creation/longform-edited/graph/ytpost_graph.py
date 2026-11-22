@@ -3,7 +3,7 @@ ytpost_graph.py: the OPTIONAL last step of a longform-edited OR longform-present
 on YouTube (Mike, 2026-11-11, canton): a YouTube community post that promotes it, a square image CAROUSEL in the video's
 own look with Mike's picture on the first and last slides (the "watch the full video" format other crypto channels run),
 queued as a `pending` row of the YT post queue of the CHANNEL the video is on (CHANNELS below, Mike 2026-11-17):
-schedule-tweets/data/yt-posts.json for the crypto channel (posted by Mike's posting run, post-yt-community.js),
+schedule-tweets/data/yt-posts.json for the crypto channel (posted by Mike's posting run, post_yt_community.py),
 schedule-tweets/data/ai-yt-posts.json for AI Engineering Simplified (the dashboard's "AI YouTube Posts" tab; posted by
 schedule-tweets/scripts/post_yt_community.py --channel ai, from its own ai-ytbot-profile, since 2026-11-17).
 

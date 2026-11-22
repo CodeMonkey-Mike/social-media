@@ -1,7 +1,7 @@
 # post_fb_short.py — CANONICAL Python port of post-fb-short.js (2026-08-11,
-# posting-tail migration; the JS twin is FROZEN rollback). Status: ✅ LIVE-BLESSED
-# 2026-08-28 — this port is the production Facebook shorts poster. The JS twin
-# still has the neighbour-URL capture bug; do NOT fall back to it.
+# posting-tail migration). Status: ✅ LIVE-BLESSED 2026-08-28 — this port is the only
+# Facebook shorts poster. The JS twin (which had the neighbour-URL capture bug) was
+# DELETED 2026-11-22: Python-only repo, Mike.
 #
 # Uploads one pending Facebook video from data/shorts.json.
 #
@@ -64,7 +64,7 @@ FB_PAGE = "realCodeMonkeyMike"
 PAGE_URL = f"https://www.facebook.com/{FB_PAGE}/"
 PLATFORM = "facebook"
 
-# Timing constants — mirrored from post-x-short.js (per the JS twin's own comment)
+# Timing constants — mirrored from post_x_short.py (per the JS twin's own comment)
 CHAR_DELAY_MIN = 60      # ms per caption keystroke
 CHAR_DELAY_MAX = 150
 ACTION_MIN = int(os.environ.get("FB_ACTION_MIN") or 4000)      # ms between major UI actions

@@ -1,7 +1,7 @@
 # post_ig_reel.py — CANONICAL Python port of post-ig-reel.js (2026-08-11,
-# posting-tail migration; the JS twin is FROZEN rollback). Status: LIVE-BLESSED
-# 2026-09-24 (p-20260922-110x-in-8-days-community-wins -> reel/DdrCMvfhA6L),
-# this port is the production IG Reel poster.
+# posting-tail migration). Status: LIVE-BLESSED 2026-09-24
+# (p-20260922-110x-in-8-days-community-wins -> reel/DdrCMvfhA6L), this port is the only
+# IG Reel poster (the JS twin was DELETED 2026-11-22: Python-only repo, Mike).
 #
 # Uploads one pending Instagram Reel from data/shorts.json. Instagram web has
 # no dedicated "Reel" creation link; uploading a video via the Post flow
@@ -27,7 +27,7 @@
 #
 # DELIBERATE FIX (2026-09-24, after p-20260922-110x-in-8-days-community-wins
 # failed with "IG returned an error after Share: Something went wrong" and
-# left no evidence). The JS twin still carries all of these defects:
+# left no evidence). The JS twin (deleted 2026-11-22) carried all of these defects:
 #   1. Share-outcome signals were regex-matched against document.body.innerText,
 #      i.e. the whole page INCLUDING the home feed behind the composer, so any
 #      feed caption saying "try again" / "posted" could fake an outcome. Now

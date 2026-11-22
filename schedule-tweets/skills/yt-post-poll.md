@@ -3,27 +3,30 @@ name: yt-post-poll
 description: Post the next pending YouTube community text poll from data/yt-text-polls.json via Playwright script.
 ---
 
-> ✅ **FIXED 2026-06-10 — it was NEVER a DOM change; the option-field targeting was the bug.** A read-only diagnostic (`scripts/_diag-yt-poll-selectors.js`) proved every selector is UNCHANGED: poll attachment opens inline, `tp-yt-paper-input.poll-option-input` count = 2, `#add-option button` exists, each row is `[remove-X icon-button][input field]`. The real bug: the old code computed the **host's bounding-box center** and did a raw `page.mouse.click(x,y)` to focus — that coordinate click missed the input (it's offset right of the remove-X), so text never entered (`host.value="null"`) and the widget degraded, which then made the coordinate-based add-option click miss too (the `dispatchEvent` fallback hung 30s). **The fix (selectors untouched):** target the **inner `<input>`** directly (`tp-yt-paper-input.poll-option-input input`), focus it with an actionability-checked `robustClick` (Playwright click → native JS click fallback), type real keystrokes (preserves Polymer two-way binding + YouTube submission state), verify each option via `input.inputValue()`, and add fields with `robustClick` on `#add-option button`. Two safety gates run BEFORE Post: per-option value verify (throws if text didn't register) + waiting for the visible Post button to enable. **Validated end-to-end 2026-06-10:** posted `yt-text-poll-2026-05-31-kaspa-3-dollar` live (3 options, all `✓`) → `youtube.com/post/UgkxoCWoDh4DZ0pNorSpIxuuObW8nNBTwF8R`. YT polls work again.
+> ✅ **FIXED 2026-06-10 — it was NEVER a DOM change; the option-field targeting was the bug.** A read-only diagnostic (`scripts/_diag-yt-poll-selectors.js`, deleted 2026-11-22; `scripts/_diag_yt_poll_viewmodel.py` is the probe now) proved every selector is UNCHANGED: poll attachment opens inline, `tp-yt-paper-input.poll-option-input` count = 2, `#add-option button` exists, each row is `[remove-X icon-button][input field]`. The real bug: the old code computed the **host's bounding-box center** and did a raw `page.mouse.click(x,y)` to focus — that coordinate click missed the input (it's offset right of the remove-X), so text never entered (`host.value="null"`) and the widget degraded, which then made the coordinate-based add-option click miss too (the `dispatchEvent` fallback hung 30s). **The fix (selectors untouched):** target the **inner `<input>`** directly (`tp-yt-paper-input.poll-option-input input`), focus it with an actionability-checked `robustClick` (Playwright click → native JS click fallback), type real keystrokes (preserves Polymer two-way binding + YouTube submission state), verify each option via `input.inputValue()`, and add fields with `robustClick` on `#add-option button`. Two safety gates run BEFORE Post: per-option value verify (throws if text didn't register) + waiting for the visible Post button to enable. **Validated end-to-end 2026-06-10:** posted `yt-text-poll-2026-05-31-kaspa-3-dollar` live (3 options, all `✓`) → `youtube.com/post/UgkxoCWoDh4DZ0pNorSpIxuuObW8nNBTwF8R`. YT polls work again.
 
 > ℹ️ **Text polls did NOT follow the quiz onto YouTube's ViewModel components (checked 2026-08-30).**
 > The quiz composer migrated that day and its poster broke outright (see [[yt-post-quiz]]), so the
 > obvious worry was that polls went the same way. They did not: a read-only probe
 > (`scripts/_diag_yt_poll_viewmodel.py`) confirmed `ytd-poll-attachment` is still the LIVE widget
 > (637x148 inline), with `tp-yt-paper-input.poll-option-input input` and `#add-option button` all
-> visible and real. Every selector below stands and `post-yt-poll.js` still posts. Re-run that probe
+> visible and real. Every selector below stands (the JS poster was still posting on them when it was deleted, 2026-11-22). Re-run that probe
 > before assuming otherwise — the quiz precedent means a future migration is plausible, and the tell
 > is legacy containers going `display:none` while `ytPostsCreation*` classes appear.
 >
-> One latent defect WAS fixed that day in the bless-pending Python port (`post_yt_poll.py`):
+> One latent defect WAS fixed that day in `post_yt_poll.py`:
 > `wait_for_function`'s `arg` was passed positionally, which is keyword-only in Python Playwright and
 > crashes the add-option loop on a poll with **3+ options**. It had never fired because the JS twin
-> does production polls. Unrelated to the DOM; relevant only when the port is blessed.
+> did production polls then. Unrelated to the DOM.
+>
+> ⚠ **`post_yt_poll.py` is now the ONLY poll poster and has NOT posted a real poll yet** (the JS twin
+> was deleted 2026-11-22). On its first run read the log line by line, one attempt, never relaunch.
 
 ## Invocation
 
 ```powershell
 cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
-node scripts/post-yt-poll.js
+python -u scripts/post_yt_poll.py
 ```
 
 Picks up the first poll with `status === "pending"` from `data/yt-text-polls.json`, posts it, and writes `status: "posted"`, `posted_at`, and `post_url` back to the file.
@@ -80,7 +83,7 @@ Symptom: the script typed the question + all 3 options correctly (each `✓`), l
 
 ROOT CAUSE: the Post click was the **last** click in the script still using `page.mouse.click(x, y)` at the button's computed center — the exact brittle pattern the 2026-06-10 option-field fix replaced everywhere else. A coordinate click misses YouTube's Polymer Post button and never fires its submit handler, so the composer never clears and nothing posts. (The `getBoundingClientRect` center can sit on a non-interactive overlay/padding, or the synthetic mouse event isn't honored by the paper-button.)
 
-FIX (in `post-yt-poll.js`): target the visible button as an ELEMENT — `page.locator('button[aria-label="Post"]:visible').first()` — and `robustClick` it (trusted Playwright click, JS-click fallback), the same helper the options use. The reliable success signal is **"Composer cleared ✓"**; if you see that, the new-post-URL lookup will succeed. Validated end-to-end: posted `yt-text-poll-2026-06-07-four-year-cycle-dead` → `youtube.com/post/UgkxSPhYb_rgiRKF3dkAdpOIyWjVsflwOCSn`.
+FIX (in `post_yt_poll.py`): target the visible button as an ELEMENT — `page.locator('button[aria-label="Post"]:visible').first()` — and `robustClick` it (trusted Playwright click, JS-click fallback), the same helper the options use. The reliable success signal is **"Composer cleared ✓"**; if you see that, the new-post-URL lookup will succeed. Validated end-to-end: posted `yt-text-poll-2026-06-07-four-year-cycle-dead` → `youtube.com/post/UgkxSPhYb_rgiRKF3dkAdpOIyWjVsflwOCSn`.
 
 Wait times were also **halved 2026-06-14** (PRE_COMPOSE / PRE_POST 60–180s → 30–90s, ACTION 4–7s → 2–3.5s) for faster iteration — community posts aren't reply-throttle-sensitive.
 

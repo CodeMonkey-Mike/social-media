@@ -148,7 +148,7 @@ transient click miss. Retrying just burns 7 minutes per attempt.
    wait, and/or wait on `state: 'attached'` then focus via `robustClick`/`fill` rather than
    requiring visibility.
 2. Raise the per-textarea timeout from 10s to ~30s.
-3. Same overlay caveat as `post-x-poll.js` applies inside the composer — prefer
+3. Same overlay caveat as `post_x_poll.py` applies inside the composer — prefer
    `fill()` / native JS click over coordinate clicks.
 
 **Threshold to watch:** 5-tweet-and-under threads have posted fine for months (6/6 and 7/7

@@ -1,5 +1,12 @@
 # Retrofit Suggestions — Post-Publish URL Verification
 
+> **Script names (note added 2026-11-22).** This document was written against the JavaScript
+> posters, which were all deleted on 2026-11-22. Each one is now the Python file of the same
+> name with dashes turned to underscores (`post-tweet.js` is `post_tweet.py`), except the
+> browser YouTube uploader `post-yt-short.js`, which has no successor (YouTube Shorts are API
+> only). Several suggestions below have since landed in the Python posters; check the file
+> before acting on one.
+
 **Status:** in progress — 1B (`post-thread.js`) retrofitted 2026-05-21. Remaining items below.
 **Last audited:** 2026-05-21
 

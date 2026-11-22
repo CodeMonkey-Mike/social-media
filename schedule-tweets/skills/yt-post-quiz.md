@@ -5,18 +5,17 @@ description: Post the next pending YouTube community QUIZ from data/yt-quizzes.j
 
 A **YouTube community quiz** is a poll variant: same question + 2-4 options, but exactly ONE option is
 marked **correct**, and an optional **explanation** is shown to the viewer *after* they answer. Built
-2026-07-07 by mirroring [[yt-post-poll]] (`scripts/post-yt-poll.js`) — same Chrome/CDP setup, same real
+2026-07-07 by mirroring [[yt-post-poll]] (`scripts/post_yt_poll.py`) — same Chrome/CDP setup, same real
 CDP keystrokes, same robustClick, same two-button Post trap, same human timing. The quiz-specific parts
 are the composer widget, a mandatory correct-answer mark, and the explanation field.
 
-> ⛔ **Post quizzes with the PYTHON port — the JS twin cannot post any more (2026-08-30).**
+> ⛔ **`post_yt_quiz.py` is the only quiz poster. The JS twin stopped being able to post on 2026-08-30 and was deleted 2026-11-22.**
 > YouTube migrated the quiz composer off the Polymer `ytd-backstage-quiz-editor-renderer` onto its
 > newer `ytPostsCreation*ViewModel*` components. The legacy widget still exists in the DOM but is
-> permanently `display:none` / 0x0, so `post-yt-quiz.js` throws `Quiz editor did not open
-> (display=none)` before it ever reaches Post (clean pre-post failure, nothing published, no
-> duplicate risk) and every other legacy selector it uses now points at a 0x0 ghost.
+> permanently `display:none` / 0x0, so the JS `post-yt-quiz.js` threw `Quiz editor did not open
+> (display=none)` before it ever reached Post (clean pre-post failure, nothing published, no
+> duplicate risk) and every other legacy selector it used pointed at a 0x0 ghost.
 > `scripts/post_yt_quiz.py` carries the ViewModel selectors and is ✅ LIVE-BLESSED 2026-08-30.
-> Per the freeze doctrine the JS twin was left untouched as rollback; it is NOT a fallback here.
 
 ## Invocation
 
@@ -50,7 +49,7 @@ green with a ✓ and the explanation is shown beneath the options.
 Uses `ytbot-profile` (`C:\Users\mnede\AppData\Local\Google\Chrome\ytbot-profile`) via CDP port 9223 —
 identical to the poll poster. **Any Chrome window already using ytbot-profile must be closed** first.
 
-## Timing constants (mirrored from post-yt-poll.js — human delays are observed on every action)
+## Timing constants (mirrored from post_yt_poll.py — human delays are observed on every action)
 
 | Constant | Default | Purpose |
 |---|---|---|
@@ -161,9 +160,9 @@ read the log before doing anything else.
 - `scripts/_diag_yt_quiz_correct.py` — the mark-correct control specifically: dumps every selector
   button (classes / aria / aria-pressed) on a fresh 2-row editor, again after `Add answer` ×2, and
   again after clicking a row, so you can see exactly which attribute reflects state.
-- `scripts/_diag-yt-quiz-selectors.js` — the original 2026-07-07 probe (legacy DOM; dumps the whole
-  page, so it is noisy now).
-- `scripts/_diag-yt-quiz-explanation.js` — legacy per-option explanation probe.
+- (Deleted 2026-11-22: `_diag-yt-quiz-selectors.js`, the original 2026-07-07 probe, and
+  `_diag-yt-quiz-explanation.js`. Both probed the legacy editor YouTube removed; the two Python
+  probes above replace them.)
 
 None of them ever click Post.
 

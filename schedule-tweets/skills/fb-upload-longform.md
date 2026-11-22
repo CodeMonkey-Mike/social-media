@@ -7,10 +7,10 @@ description: Upload a single longform video to Facebook — typically a 1-2 hour
 
 ```powershell
 cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
-node scripts/upload-longform-facebook.js
+python -u scripts/upload_longform_facebook.py
 ```
 
-Uploads one video. The Facebook upload flow itself is the same as `fb-post-vertical.md` (`post-fb-short.js`): feed composer → Photo/video → upload → wizard → Post → verify.
+Uploads one video. The Facebook upload flow itself is the same as `fb-post-vertical.md` (`post_fb_short.py`): feed composer → Photo/video → upload → wizard → Post → verify.
 
 ## ⛔ HARD RULE — `data/longs.json` is the queue, the dashboard cue is correct
 
@@ -20,7 +20,7 @@ Do NOT stop and ask the user "should I stage this?" or "the folder root has a di
 
 ## Staging (none needed — the script reads `longs.json` directly)
 
-`upload-longform-facebook.js` now sources the next-pending `facebook` entry **directly from `longs.json`** via `scripts/lib/longform-queue.js` (`pickNextLongform('facebook')`). It uploads the entry's own `video_path` and builds the caption from the entry's title + description. **Do NOT copy anything into `longform/` root** — the old loose-root staging step is gone (it was what left orphaned duplicates behind).
+`upload_longform_facebook.py` now sources the next-pending `facebook` entry **directly from `longs.json`** via `scripts/lib/longform_queue.py` (`pick_next_longform('facebook')`). It uploads the entry's own `video_path` and builds the caption from the entry's title + description. **Do NOT copy anything into `longform/` root** — the old loose-root staging step is gone (it was what left orphaned duplicates behind).
 
 1. The script picks the next pending `facebook` entry itself (queue order) — you stage nothing.
 2. Run the upload script.
@@ -38,11 +38,11 @@ Facebook routes only vertical 9:16 clips to Reels. A landscape longform goes thr
 
 ## Chrome profile
 
-Uses `fbbot-profile`. Shared with `post-fb-short.js` — don't run two at once. **Chrome must be fully closed on this profile before running** (other profiles are fine).
+Uses `fbbot-profile`. Shared with `post_fb_short.py` — don't run two at once. **Chrome must be fully closed on this profile before running** (other profiles are fine).
 
 ## Timing constants
 
-Mirror `post-fb-short.js`: `PRE_COMPOSE` 60–180s, `PRE_POST` 60–180s, `ACTION` 4–7s, `CHAR_DELAY` 60–150ms. The upload-to-100% wait is 10 min (longform files are large).
+Mirror `post_fb_short.py`: `PRE_COMPOSE` 60–180s, `PRE_POST` 60–180s, `ACTION` 4–7s, `CHAR_DELAY` 60–150ms. The upload-to-100% wait is 10 min (longform files are large).
 
 ## What the script does
 
@@ -78,5 +78,5 @@ Each wizard step saves to `tmp/fb-longform-debug/stepN_state.png`. Inspect on fa
 
 | If… | Use |
 |---|---|
-| Landscape 1-2 hour livestream recording from `longform/` | this script (`upload-longform-facebook.js`) |
-| Vertical 9:16 short clip from `data/shorts.json` | `fb-post-vertical.md` (`post-fb-short.js`) |
+| Landscape 1-2 hour livestream recording from `longform/` | this script (`upload_longform_facebook.py`) |
+| Vertical 9:16 short clip from `data/shorts.json` | `fb-post-vertical.md` (`post_fb_short.py`) |

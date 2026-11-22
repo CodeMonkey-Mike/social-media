@@ -1,7 +1,10 @@
 # post_rumble_short.py — CANONICAL Python port of post-rumble-short.js
-# (2026-08-11, posting-tail migration; the JS twin is FROZEN rollback). Status:
-# PORTED, BLESS-PENDING — invoke the JS twin for production posts until this
-# port is live-blessed with one real post.
+# (2026-08-11, posting-tail migration).
+# Status: the ONLY Rumble shorts poster (the JS twin was DELETED 2026-11-22: Python-only repo,
+# Mike). FIRST LIVE POST PENDING: this port has not completed a real post yet, so read
+# the log of its first run closely (one attempt, never relaunch).
+# 2026-11-22: carries the JS twin's last fix (2026-11-09), the Groove help-widget
+# overlay fallback on the Upload click, which had only reached the JS file.
 #
 # Uploads one pending Rumble video from data/shorts.json. Uses rumblebot-profile
 # via launch_persistent_context with real Chrome. Adapted (like the JS twin)
@@ -288,7 +291,13 @@ def main():
                     page.wait_for_timeout(500)
                 print("  Upload button ready")
                 action_pause(page, "before Upload click")
-                upload_btn.click()
+                # Rumble's Groove help-widget iframe (#groove-iframe-element) overlaps the Upload
+                # button and intercepts pointer events (2026-11-09): fall back to a native JS click.
+                try:
+                    upload_btn.click(timeout=8000)
+                except Exception:
+                    print("  Upload: normal click blocked (overlay) - using JS click", flush=True)
+                    upload_btn.evaluate("el => el.click()")
                 print("  Clicked Upload \u2713")
             except Exception as e:
                 raise RuntimeError(f"Upload button never became clickable: {e}")

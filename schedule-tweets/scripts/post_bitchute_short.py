@@ -1,5 +1,6 @@
 # post_bitchute_short.py — CANONICAL Python port of post-bitchute-short.js
-# (2026-08-11, posting-tail migration; the JS twin is FROZEN rollback).
+# (2026-08-11, posting-tail migration). Status: LIVE-BLESSED 2026-08-11, the only BitChute
+# shorts poster (the JS twin was DELETED 2026-11-22: Python-only repo, Mike).
 #
 # Uploads one pending BitChute video from data/shorts.json via bitchutebot-profile
 # (real Chrome, persistent context). 1:1 port: same stuck-'posting' bail (exit 2),

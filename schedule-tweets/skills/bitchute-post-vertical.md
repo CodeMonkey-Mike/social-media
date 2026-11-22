@@ -7,7 +7,7 @@ description: Post the next pending BitChute vertical video from data/shorts.json
 
 ```powershell
 cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
-node scripts/post-bitchute-short.js
+python -u scripts/post_bitchute_short.py
 ```
 
 Picks up the first short where `platforms.bitchute.status === "pending"`, uploads via BitChute Studio, and writes `platforms.bitchute.status: "posted"`, `posted_at`, and `url` back to `data/shorts.json`.
@@ -18,7 +18,7 @@ Picks up the first short where `platforms.bitchute.status === "pending"`, upload
 
 ## Chrome profile
 
-Uses `bitchutebot-profile`. Shared with `upload-longform-bitchute.js` — don't run two at once. **Chrome must be fully closed before running.**
+Uses `bitchutebot-profile`. Shared with `upload_longform_bitchute.py` — don't run two at once. **Chrome must be fully closed before running.**
 
 ## Timing constants
 
@@ -71,7 +71,7 @@ BitChute's post-upload flow shows up in **two shapes**, run-to-run, and the scri
 
 **What happened:** on one run the `Grab Thumbnail` step logged `Thumbnail grabbed ✓` but BitChute did **not** actually register a thumbnail. At publish, BitChute popped a **"missing thumbnail, try again"** modal and the submit never completed. The OLD script then waited 120s for a `/content` redirect, timed out, logged `Warning: no /content redirect — submission may still have gone through`, and **marked the short `posted` anyway with a guessed `upload_code` URL.** The video was actually an **unpublished draft** — nobody would have noticed without eyeballing the browser. The old "no redirect = still posted, treat as done" assumption was the bug.
 
-**The fix (now in `post-bitchute-short.js`):**
+**The fix (now in `post_bitchute_short.py`):**
 1. **`grabThumbnail()` is a reusable helper.** A successful grab-button *click* is NOT proof a thumbnail registered.
 2. **Self-recovery loop (up to 3x):** after Proceed, if the missing-thumbnail modal is detected, the script dismisses it, re-grabs the thumbnail, and retries Proceed.
 3. **Strict success gate — the important part:** the short is marked `posted` **only if** it sees the `/content` redirect **OR** confirms the title is actually live by scraping `/content` (`scrapeContentPage` + `findByTitle`). A bare no-redirect timeout no longer counts as success.
@@ -85,7 +85,7 @@ BitChute's post-upload flow shows up in **two shapes**, run-to-run, and the scri
 
 **Why it matters far beyond the tag field:** that validation popup **blocks the second Proceed**, AND its text matches the script's loose modal detector, so it gets **misreported as the "missing-thumbnail modal"** above. This is why a short with a digit-tag fails **consistently on every attempt** (3× modal → `failed`) while the thumbnail is completely fine. The `elizaos-my-favorite-ai` short failed BOTH passes of a 28-step run **solely** because of the `ai16z` tag; the moment the tag was dropped it took the single-Proceed happy path and went live (`…/video/eimSAyR6yqTp/`). So: **a BitChute `failed` whose modal log says "missing-thumbnail" but whose thumbnail is obviously valid is almost certainly a digit/symbol in the Search Terms — check the tags first.**
 
-**Fixed in `post-bitchute-short.js` (and `upload-longform-bitchute.js`):** search terms now `filter(t => /^[A-Za-z]+$/.test(t))` before `.slice(0,3)` — any tag with a digit/symbol is **dropped** and the next valid tag is used (e.g. `["ElizaOS","ai16z","AI","altcoins","crypto"]` → `ElizaOS AI altcoins`). This is automatic; the source `tags` are left untouched (so `ai16z` stays valid for X/YT/etc.). **Do NOT manually retitle/relabel the entry for other platforms.** If a digit-tag fix is ever needed by hand, pick letters-only replacements or just drop the offending tag.
+**Fixed in `post_bitchute_short.py` (and `upload_longform_bitchute.py`):** search terms now `filter(t => /^[A-Za-z]+$/.test(t))` before `.slice(0,3)` — any tag with a digit/symbol is **dropped** and the next valid tag is used (e.g. `["ElizaOS","ai16z","AI","altcoins","crypto"]` → `ElizaOS AI altcoins`). This is automatic; the source `tags` are left untouched (so `ai16z` stays valid for X/YT/etc.). **Do NOT manually retitle/relabel the entry for other platforms.** If a digit-tag fix is ever needed by hand, pick letters-only replacements or just drop the offending tag.
 
 ## Resetting a stuck BitChute short
 
@@ -106,4 +106,4 @@ fs.writeFileSync('data/shorts.json', JSON.stringify(d, null, 2));
 
 ## Hashtag policy (added 2026-05-29)
 
-Short captions must NOT contain visible `#hashtags`. The poster script strips inline `#word` tokens from the caption body via `scripts/lib/strip-hashtags.js` before posting. Cashtags (`$KAS`, `$BTC`) are preserved. The dedicated platform keyword/tags field (where one exists) is left intact — that is invisible metadata, not a visible hashtag. This is automatic; no manual step needed.
+Short captions must NOT contain visible `#hashtags`. The poster script strips inline `#word` tokens from the caption body via `scripts/lib/strip_hashtags.py` before posting. Cashtags (`$KAS`, `$BTC`) are preserved. The dedicated platform keyword/tags field (where one exists) is left intact — that is invisible metadata, not a visible hashtag. This is automatic; no manual step needed.

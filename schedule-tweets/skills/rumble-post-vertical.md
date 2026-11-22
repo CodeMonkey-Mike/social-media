@@ -7,7 +7,7 @@ description: Post the next pending Rumble vertical video from data/shorts.json v
 
 ```powershell
 cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
-node scripts/post-rumble-short.js
+python -u scripts/post_rumble_short.py
 ```
 
 Picks up the first short where `platforms.rumble.status === "pending"`, uploads to rumble.com/upload.php, and writes `platforms.rumble.status: "posted"`, `posted_at`, and `url` back to `data/shorts.json`.
@@ -18,7 +18,7 @@ Picks up the first short where `platforms.rumble.status === "pending"`, uploads 
 
 ## Chrome profile
 
-Uses `rumblebot-profile`. Shared with `upload-longform-rumble.js` — don't run two at once. **Chrome must be fully closed before running.**
+Uses `rumblebot-profile`. Shared with `upload_longform_rumble.py` — don't run two at once. **Chrome must be fully closed before running.**
 
 ## Timing constants
 
@@ -42,9 +42,9 @@ URL captured from the confirmation dashboard. **No live-page HTTP verification**
 
 > ✅ **DEFINITIVE ROOT CAUSE + FIX (2026-06-02): wrong URL namespace — now handled in the script.** Rumble **shorts** live at **`rumble.com/shorts/v<id>`**, NOT the regular `rumble.com/v<id>-<slug>.html`. Shorts **never appear in the channel video grid** (`/user/CodeMonkeyMike`) or its SSR HTML, so the old channel-scrape could NEVER capture a short's real URL — it always wrote an unrelated `.html` video's URL. The real URL lives on **`rumble.com/account/content`**, where each short's row has an anchor `href="/shorts/v<id>"`.
 >
-> **`post-rumble-short.js` now does this automatically:** after Submit it loads `/account/content`, matches THIS short by title (smallest element containing the title, climb to the `/shorts/v` anchor), takes the `/shorts/v<id>` URL, then **liveness-checks** it (HTTP GET the public page, confirm `<title>` matches; retries for processing lag). It marks `posted` only if the public page resolves; otherwise `posted_unverified` with an error note (and **never writes a wrong `.html` URL**). The old channel `.html` scrape and the 3-minute redirect poll were removed. It ignores any `.html` URL the redirect loop may have seen (wrong namespace for a short).
+> **`post_rumble_short.py` now does this automatically:** after Submit it loads `/account/content`, matches THIS short by title (smallest element containing the title, climb to the `/shorts/v` anchor), takes the `/shorts/v<id>` URL, then **liveness-checks** it (HTTP GET the public page, confirm `<title>` matches; retries for processing lag). It marks `posted` only if the public page resolves; otherwise `posted_unverified` with an error note (and **never writes a wrong `.html` URL**). The old channel `.html` scrape and the 3-minute redirect poll were removed. It ignores any `.html` URL the redirect loop may have seen (wrong namespace for a short).
 >
-> **`posted_unverified` handling:** means the upload submitted but liveness couldn't be confirmed in-window (or the short hadn't surfaced on `/account/content` yet). The status is NOT `pending`, so it won't be re-picked/duplicated. **Recapture with `node scripts/recapture-rumble-url.js <short-id>`** — it re-matches the short by title on `/account/content`, grabs the `/shorts/v<id>` URL, liveness-checks it, and writes it back (sets `posted` if live). **Do NOT re-run the poster** (it would re-upload). (Validated 2026-06-02: recovered wells-fargo → `/shorts/v7aqvri`.)
+> **`posted_unverified` handling:** means the upload submitted but liveness couldn't be confirmed in-window (or the short hadn't surfaced on `/account/content` yet). The status is NOT `pending`, so it won't be re-picked/duplicated. **Recapture with `python -u scripts/recapture_rumble_url.py <short-id>`** — it re-matches the short by title on `/account/content`, grabs the `/shorts/v<id>` URL, liveness-checks it, and writes it back (sets `posted` if live). **Do NOT re-run the poster** (it would re-upload). (Validated 2026-06-02: recovered wells-fargo → `/shorts/v7aqvri`.)
 >
 > **Capture must be anchor-anchored:** the title→URL match iterates each `/shorts/v` anchor and finds the one whose *own* row contains the title (smallest ancestor level). Climbing the other way (title node → nearest anchor) crosses into neighbor rows and grabs the wrong video — that bug mis-captured kaspa's URL for the wells-fargo short before it was fixed.
 >
@@ -80,7 +80,7 @@ fs.writeFileSync('data/shorts.json', JSON.stringify(d, null, 2));
 
 ## Hashtag policy (added 2026-05-29)
 
-Short captions must NOT contain visible `#hashtags`. The poster script strips inline `#word` tokens from the caption body via `scripts/lib/strip-hashtags.js` before posting. Cashtags (`$KAS`, `$BTC`) are preserved. The dedicated platform keyword/tags field (where one exists) is left intact — that is invisible metadata, not a visible hashtag. This is automatic; no manual step needed.
+Short captions must NOT contain visible `#hashtags`. The poster script strips inline `#word` tokens from the caption body via `scripts/lib/strip_hashtags.py` before posting. Cashtags (`$KAS`, `$BTC`) are preserved. The dedicated platform keyword/tags field (where one exists) is left intact — that is invisible metadata, not a visible hashtag. This is automatic; no manual step needed.
 
 ## ⛔⛔ ROOT CAUSE FOUND 2026-08-13: the title match crossed ROW BOUNDARIES — 19 rows held their NEIGHBOUR's id
 
@@ -120,10 +120,10 @@ This is NOT the same as the long-known `posted_unverified` processing lag. Tell 
 | Post live? | yes | yes |
 | URL correct? | yes | **no** |
 
-**Rule: after any Rumble short post, grep the captured `/shorts/v<id>` against `shorts.json`. If it already appears on another row, the URL is wrong** — null it out or mark it for `scripts/recapture-rumble-url.js` rather than leaving a duplicate id sitting on two rows. A `null` is honest; a wrong URL silently corrupts the record.
+**Rule: after any Rumble short post, grep the captured `/shorts/v<id>` against `shorts.json`. If it already appears on another row, the URL is wrong** — null it out or mark it for `scripts/recapture_rumble_url.py` rather than leaving a duplicate id sitting on two rows. A `null` is honest; a wrong URL silently corrupts the record.
 
 **Never re-upload on this** — the post is live either way (the standing never-retry rule applies).
 
-**Script fix worth doing:** have `post-rumble-short.js` do that duplicate check itself before writing, and fall back to `url: null` when the captured id is already in use.
+**Script fix worth doing:** have `post_rumble_short.py` do that duplicate check itself before writing, and fall back to `url: null` when the captured id is already in use.
 
 **Backlog implication:** the ~73-75 row `rumble.status === "posted_unverified"` backlog may contain *duplicated* URLs, not merely unverified ones. Check for repeated ids when that sweep is finally run.

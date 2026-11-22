@@ -385,10 +385,10 @@ separate uploader dir). One queue entry → up to 7 platforms.
   ⚠ `post-yt-short.js` originally ignored its override (used `short.caption` directly) — patched
   2026-05-30 to `short.platforms.yt_shorts.caption_override || short.caption`.
 - **Posting scripts** (run ONE AT A TIME — sequential-posting is a hard rule, see memory):
-  `node scripts/post-rumble-short.js`, `post-bitchute-short.js`, `post-fb-short.js`,
-  `post-tiktok-short.js` (kill Chrome first; it's `.js`, CDP-attached), `post-x-short.js`,
-  `post-ig-reel.js`, and **YouTube via `post-yt-short-api.js` (API — preferred)** NOT the legacy
-  `post-yt-short.js` (50MB Playwright cap; our shorts are 60–80MB so legacy can't attach them).
+  `python -u scripts/post_rumble_short.py`, `post_bitchute_short.py`, `post_fb_short.py`,
+  `post_tiktok_short.py` (kill Chrome first; it is CDP-attached), `post_x_short.py`,
+  `post_ig_reel.py`, and **YouTube via `post_yt_short_api.py` (API only)**: the legacy browser
+  uploader `post-yt-short.js` (50MB Playwright cap) was deleted 2026-11-22.
 - **Known stale-URL gotchas (upload succeeds, captured `url` is wrong):** Rumble scrapes the prior
   channel video while the new one processes (treat Submit success as truth, backfill URL manually);
   Facebook grabs a perennial `/videos/<id>` at list position 0 — the real reel is the topmost `/reel/`.

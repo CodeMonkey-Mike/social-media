@@ -1,5 +1,5 @@
 # longform_queue.py — CANONICAL Python port of lib/longform-queue.js (2026-08-11,
-# posting-tail migration; the JS twin is FROZEN rollback). Sources the next longform
+# posting-tail migration; the JS twin was DELETED 2026-11-22). Sources the next longform
 # to upload directly from data/longs.json and records completed uploads back.
 #
 # 1:1 port: same allow-list hard rule (YouTube longform is uploaded by Mike BY HAND,
