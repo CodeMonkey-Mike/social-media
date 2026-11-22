@@ -12,7 +12,9 @@ FAIL (exit 1):
     `vertical` on | off, `short` off | on | seconds 15 to 60, `yt post` on | off
   - no `## CARDS` table, a card with an unknown kind, an animated-chart with states
   - two cards / states that would be the same still file (`<id>.png`, `<id>-<state>.png`)
-  - a spoken line with no tag, an unknown tag, a `[FACE]` tag (no face scenes in v1), a tagged line with no words
+  - a spoken line with no tag, an unknown tag, a tagged line with no words
+  - more than FACE_SCENES_MAX (2) FACE scenes, a FACE scene of consecutive `[FACE]` lines (Mike 2026-11-22: "up to 2 face
+    scenes"), or a `[SHOW]` line under a `[FACE]` line (a face scene shows his face, never a card)
   - a tag not written the screenplay way (its emoji, then the tag in code ticks), or a `[COVER]` carrying a card name
   - a `[COVER]` line with no `[SHOW]` line under it, a `[SHOW]` line with no `[COVER]` line above it, or one that does
     not start with `<card>:` / `<card>.<state>:`
@@ -27,8 +29,9 @@ WARN:
   - a number on a spoken line or in the CARDS table that RESEARCH.md does not contain (when RESEARCH.md is found)
   - a `[COVER]` line of 3 words or fewer (its card would flash by; merge it into its neighbour)
   - no `[SCREENSHARE]` line at all (allowed: the whole video is covered)
+  - a FACE scene over about 25 words (a face scene is a sentence or two to the camera, the punctuation of the video)
 
-Machine line: SCRIPT-LINT PASS|FAIL lines=N covers=N screenshares=N cards=N fails=N warns=N
+Machine line: SCRIPT-LINT PASS|FAIL lines=N covers=N screenshares=N faces=N cards=N fails=N warns=N
 """
 import argparse
 import importlib.util
@@ -135,15 +138,13 @@ def lint(text, research_text=None):
     for e in p["lines"]:
         n, tag = e["n"], e["tag"]
         if tag is None:
-            fails.append(f"line {n}: a spoken line with no tag; start it with {SC.EMOJI['SCREENSHARE']} `[SCREENSHARE]` or "
-                         f"{SC.EMOJI['COVER']} `[COVER]`, or make it a {SC.EMOJI['NOTE']} `[NOTE]`: {e['raw'].strip()[:70]}")
-            continue
-        if tag == "FACE":
-            fails.append(f"line {n}: `[FACE]` is not in v1 of the scripted option (no full-camera face scenes; script.md 'Not in v1')")
+            fails.append(f"line {n}: a spoken line with no tag; start it with {SC.EMOJI['SCREENSHARE']} `[SCREENSHARE]`, "
+                         f"{SC.EMOJI['COVER']} `[COVER]` or {SC.EMOJI['FACE']} `[FACE]`, or make it a {SC.EMOJI['NOTE']} `[NOTE]`: "
+                         f"{e['raw'].strip()[:70]}")
             continue
         if tag not in SC.SPOKEN_TAGS:
-            fails.append(f"line {n}: unknown tag `[{tag}]`; a SCRIPT.md has four: `[SCREENSHARE]` and `[COVER]` (spoken), "
-                         "`[SHOW]` and `[NOTE]` (not spoken)")
+            fails.append(f"line {n}: unknown tag `[{tag}]`; a SCRIPT.md has five: `[SCREENSHARE]`, `[COVER]` and `[FACE]` "
+                         "(spoken), `[SHOW]` and `[NOTE]` (not spoken)")
             continue
         if not e["text"]:
             fails.append(f"line {n}: a `[{tag}]` line with no spoken words (a direction is a `[NOTE]` line)")
@@ -187,6 +188,15 @@ def lint(text, research_text=None):
                 fails.append(f"line {n}: {msg}")
     covers = sum(1 for e in spoken if e["tag"] == "COVER")
     shares = sum(1 for e in spoken if e["tag"] == "SCREENSHARE")
+    scenes = SC.face_scenes(spoken)
+    if len(scenes) > SC.FACE_SCENES_MAX:
+        fails.append(f"{len(scenes)} FACE scenes (script lines {', '.join(str(s[0]) for s in scenes)}); at most "
+                     f"{SC.FACE_SCENES_MAX} (Mike 2026-11-22). Make the others `[SCREENSHARE]` or `[COVER]` lines")
+    by_n = {e["n"]: e for e in spoken}
+    for sc in scenes:
+        words = sum(len(by_n[n]["text"].split()) for n in sc)
+        if words > 25:
+            warns.append(f"line {sc[0]}: a FACE scene of {words} words; a face scene is a sentence or two to the camera")
     if spoken and not shares:
         warns.append("no `[SCREENSHARE]` line: the whole video is covered (allowed; the recording is then never seen)")
     if research_text is not None:
@@ -199,7 +209,7 @@ def lint(text, research_text=None):
             miss = sorted({v for v in numbers_in(c["numbers"]) if v not in hay})
             if miss:
                 warns.append(f"line {c['n']}: card {cid} number(s) not found in RESEARCH.md: {', '.join(miss)}")
-    return fails, warns, len(spoken), covers, shares, len(cards)
+    return fails, warns, len(spoken), covers, shares, len(scenes), len(cards)
 
 
 def main():
@@ -210,12 +220,12 @@ def main():
     sp = Path(a.script)
     if not sp.is_file():
         print(f"no such file: {sp}")
-        print("SCRIPT-LINT FAIL lines=0 covers=0 screenshares=0 cards=0 fails=1 warns=0")
+        print("SCRIPT-LINT FAIL lines=0 covers=0 screenshares=0 faces=0 cards=0 fails=1 warns=0")
         sys.exit(1)
     rp = Path(a.research) if a.research else sp.with_name("RESEARCH.md")
     research = rp.read_text(encoding="utf-8", errors="replace") if rp.is_file() else None
     text = sp.read_text(encoding="utf-8")
-    fails, warns, n, covers, shares, ncards = lint(text, research)
+    fails, warns, n, covers, shares, faces, ncards = lint(text, research)
     print(f"lint_script: {sp}")
     ex = SC.extras(SC.parse(text)["settings"])[0]
     print("  note  extras: vertical " + ("on" if ex["vertical"] else "off") + ", short "
@@ -226,7 +236,7 @@ def main():
         print(f"  FAIL  {f}")
     for w in warns:
         print(f"  WARN  {w}")
-    print(f"SCRIPT-LINT {'FAIL' if fails else 'PASS'} lines={n} covers={covers} screenshares={shares} cards={ncards} "
+    print(f"SCRIPT-LINT {'FAIL' if fails else 'PASS'} lines={n} covers={covers} screenshares={shares} faces={faces} cards={ncards} "
           f"fails={len(fails)} warns={len(warns)}")
     sys.exit(1 if fails else 0)
 

@@ -1,9 +1,11 @@
 ---
 name: yt-post-community
-description: Post the next pending YouTube community post from data/yt-posts.json via Playwright script (CDP-attach to ytbot-profile Chrome).
+description: Post the next pending YouTube community post of one channel via Playwright (CDP attach), the crypto channel's data/yt-posts.json (ytbot-profile) or AI Engineering Simplified's data/ai-yt-posts.json (python post_yt_community.py --channel ai, ai-ytbot-profile).
 ---
 
 ## Invocation
+
+Crypto channel (@CodeMonkeyMike, `data/yt-posts.json`):
 
 ```powershell
 cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
@@ -13,6 +15,27 @@ node scripts/post-yt-community.js
 Picks up the first post with `status === "pending"` from `data/yt-posts.json`, posts it (text + optional images), and writes `status: "posted"`, `posted_at`, and `post_url` back to the file.
 
 For engagement collection on already-posted community posts (likes), see `collect-engagement.md`.
+
+## AI Engineering Simplified channel (`--channel ai`, 2026-11-17)
+
+```powershell
+cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
+python -u scripts/post_yt_community.py --channel ai
+```
+
+Posts the next `pending` row of `data/ai-yt-posts.json` (the dashboard's **AI YouTube Posts** tab) as
+**@aiEngineeringSimplified**, from that channel's OWN Chrome profile, `ai-ytbot-profile` (signed in directly as the
+channel, Mike 2026-11-17), on CDP **9225**. Same flow as the rest of this page, step for step (the Python port follows
+the JS twin 1:1), plus an **active-channel guard** right after the login check: the account menu must show
+`@aiEngineeringSimplified`, or the run fails before anything is typed. The guard runs on the crypto channel too.
+
+- **Only the Python port knows this channel.** `node scripts/post-yt-community.js` and a bare
+  `python scripts/post_yt_community.py` (default `--channel crypto`) post the CRYPTO queue as @CodeMonkeyMike.
+- Run it in the background (3 to 6 minutes: two 30 to 90 s waits), ONE attempt, like every poster
+  (`skills/SKILL.md`, "NEVER run a posting script in the foreground").
+- Re-login when the session expires: the "Re-logging in" launch below with `ai-ytbot-profile` in place of
+  `ytbot-profile`, sign in as AI Engineering Simplified, close with the X.
+- Channel table: `CHANNELS` in `scripts/post_yt_community.py`. A profile and its debug port belong to one channel.
 
 ## Queue file
 
@@ -88,6 +111,12 @@ await fileInputs.first().setInputFiles(imagePaths);
 ```
 
 The second input is for "Add more images" and is unreliable — it can replace the first image instead of adding, and cannot be reliably targeted. Always upload all images in one call to the first input.
+
+**Since 2026-11 the first file input on the page is NOT the composer's** (seen on the AI channel, 2026-11-17): YouTube's
+search box carries a hidden single-file input (`ytSearchboxComponentHiddenFileInput`, search by image) earlier in the
+DOM, and the upload fails on it with `Non-multiple file input can only accept single file` (before the Post click,
+nothing posted). The Python poster targets `input[type="file"][multiple]:not(.ytSearchboxComponentHiddenFileInput)`.
+The JS twin above still takes `.first()`: it breaks the same way once the crypto account gets the new search box.
 
 ## CRITICAL — never click the "+" in the thumbnail strip
 

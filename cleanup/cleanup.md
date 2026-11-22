@@ -49,7 +49,8 @@ item also references it. An **orphan** image (referenced by no queue) is recycle
 **≥ 14 days old** (`ORPHAN_AGE_DAYS` in `targets/schedule-tweets.js`); a newer orphan is kept,
 since it may be freshly generated and not yet queued. Because active batches are always recent,
 this age threshold protects their art without any batch-id check. Queues scanned:
-`x-tweets`, `x-threads`, `x-polls`, `ig-single-image`, `ig-carousel`, `yt-posts`, `yt-text-polls`.
+`x-tweets`, `x-threads`, `x-polls`, `ig-single-image`, `ig-carousel`, `yt-posts`, `ai-yt-posts` (the AI Engineering
+Simplified channel's community posts, 2026-11-17), `yt-text-polls`.
 
 **Reply-guy image replies (`x-reply-guy/data/reply-images/`) are GC'd here too**, by the same
 reference-count but against the reply queues and keyed by **basename** (the reply queues store

@@ -21,6 +21,10 @@
 # OPT-IN "layout" (written only by cover_runs.py --vertical, 2026-11-15): the recording is re-stacked onto a frame of
 #   another shape (the 1080x1920 vertical: the slide area on top, the webcam under it) before the overlays, and the
 #   region defaults to that whole frame. See layout_graph(). Absent = the spine's own frame, the graph text unchanged.
+# OPT-IN "face_reframe" (written only by cover_runs.py for a script with `[FACE]` lines, 2026-11-22):
+#   {"crop": {x, y, w, h}, "windows": [[t_in, t_out], ...]}: inside each window (spine seconds, the full-camera OBS scene)
+#   the picture is that crop of the recording scaled to the output frame, so his face is centred (the measured
+#   reframe, ../script/face_scenes.py). Under the overlays, in the same encode. Absent = the graph text unchanged.
 # Every overlay is composited at region x,y: stills get the 11-frame entrance (0.93 -> 1 scale + alpha, ease-out
 # cubic: the spotlight look), clips an 11-frame alpha fade-in (a drawn-on clip starts blank anyway); all hold, then
 # a 0.3 s alpha fade out. Audio is stream-copied; the picture keeps the spine's own frame timestamps.
@@ -79,6 +83,9 @@ def check(spec, strict=True):
     fps = round(int(num) / int(den))
     dur = float(ffprobe(spec['spine'], 'format=duration')[0])
     R = spec['region']
+    for a, b in (spec.get('face_reframe') or {}).get('windows', []):
+        if not (0 <= a < b <= dur + 0.05):
+            sys.exit(f"face_reframe window {a}-{b} must be ascending and inside 0-{dur:.2f}")
     prev = 0.0
     for c in spec['cards']:
         if not (prev <= c['in'] < c['out'] <= dur):
@@ -165,7 +172,7 @@ def entrance(spec, c):
     return str(d / 'in_%02d.png')
 
 
-def layout_graph(lay):
+def layout_graph(lay, src='0:v'):
     """OPT-IN (cover_runs.py --vertical, 2026-11-15): a spec with a "layout" re-stacks the recording onto a frame of
     another shape BEFORE any overlay, in the same single encode:
       "layout": {"w": 1080, "h": 1920, "bg": "0x0a0c10",
@@ -179,7 +186,7 @@ def layout_graph(lay):
     if not panes:
         sys.exit('layout: at least one pane is needed')
     n = len(panes)
-    g = ['[0:v]format=yuv444p,split=' + str(n) + ''.join(f'[s{i}]' for i in range(n))]   # 4:4:4: any pixel offset is exact
+    g = [f'[{src}]format=yuv444p,split=' + str(n) + ''.join(f'[s{i}]' for i in range(n))]   # 4:4:4: any pixel offset is exact
     for i, p in enumerate(panes):
         s, d = p['src'], p['dst']
         chain = f"[s{i}]crop={s['w']}:{s['h']}:{s['x']}:{s['y']}:exact=1,scale={d['w']}:{d['h']}:flags=lanczos"
@@ -200,9 +207,21 @@ def render(spec, fps):
     R = spec['region']
     args = ['ffmpeg', '-v', 'error', '-stats', '-y', '-i', str(spec['spine'])]
     graph, last, n_in = [], '0:v', 1
+    fr = spec.get('face_reframe') or {}
+    if fr.get('windows'):
+        graph.append('[0:v]split=2[fr_main][fr_src]')
+        last = 'fr_main'
     if spec.get('layout'):
-        graph.append(layout_graph(spec['layout']))
+        graph.append(layout_graph(spec['layout'], last))
         last = 'base'
+    if fr.get('windows'):
+        c = fr['crop']
+        ow, oh = (spec['layout']['w'], spec['layout']['h']) if spec.get('layout') else (FULL['w'], FULL['h'])
+        # gte/lt, never between(): t_out is where the next scene's first frame starts
+        on = '+'.join(f'gte(t,{a:.4f})*lt(t,{b:.4f})' for a, b in fr['windows'])
+        graph.append(f"[fr_src]crop={c['w']}:{c['h']}:{c['x']}:{c['y']}:exact=1,scale={ow}:{oh}:flags=lanczos[fr_z]")
+        graph.append(f"[{last}][fr_z]overlay=x=0:y=0:enable='{on}':format=auto[fr_out]")
+        last = 'fr_out'
     for k, c in enumerate(spec['cards']):
         f_in, f_out = round(c['in'] * fps), round(c['out'] * fps)
         dur = (f_out - f_in) / fps

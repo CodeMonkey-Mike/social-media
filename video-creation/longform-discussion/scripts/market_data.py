@@ -45,6 +45,7 @@ SERIES = {
     "TAO": ("yahoo", "TAO22974-USD", "Bittensor close (UTC day)"),
     "QNT": ("yahoo", "QNT-USD", "Quant close (UTC day)"),
     "KAS": ("yahoo", "KAS-USD", "Kaspa close (UTC day)"),
+    "SOL": ("yahoo", "SOL-USD", "Solana close (UTC day), from 2020-04"),
     "WTI": ("yahoo", "CL=F", "WTI crude front-month close"),
     "BRENT": ("yahoo", "BZ=F", "Brent crude front-month close"),
     "GOLD": ("yahoo", "GC=F", "Gold front-month close"),

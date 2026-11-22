@@ -27,6 +27,7 @@ Scans `images/` (excluding `images/reference/`) and moves images to the Windows 
 | `data/ig-single-image.json` | `posts[]` | `image_path` |
 | `data/ig-carousel.json` | `posts[].slides[]` | `image_path` |
 | `data/yt-posts.json` | `posts[].images[]` | `image_path` |
+| `data/ai-yt-posts.json` | `posts[].images[]` | `image_path` |
 | `data/yt-text-polls.json` | `polls[]` | `image_path` |
 
 ## How to run

@@ -15,6 +15,11 @@ THE POLICY (Mike, 2026-10-13; tail pad widened 2026-10-14):
     the 300 ms residual read "too fast" on Crypto vs. The Traditional Financial System): the same 0.8 s
     min-silence, DECK_PAD_TAIL 0.3 + DECK_PAD_HEAD 0.2 = 0.5 s between sentences, and DECK_SLIDE_PAUSE 0.9 s
     kept in a cut pause that holds a slide change (found in the picture). Formats 2 and 4 keep 0.2 + 0.1.
+  * FACE SCENES of a scripted standard video (2026-11-22, ../script/script.md "Face scenes"): when the project's
+    SCRIPT.md has `[FACE]` lines, the full-camera scenes are found in the picture (../script/face_scenes.py) and every
+    pause between the first and the last word of a face scene is KEPT (the canonical tool's --keep-face-pauses rule,
+    Mike lets-get-rich 2026-10-31: "the face scenes are intentional"; a silence over 2.5 s is still dead air and is cut
+    down to 0.45 s). Automatic, no flag; --no-face-pauses turns it off.
 
 This file holds NO detection or cutting logic. Detection (dual-threshold -57/-52 dBFS RMS, 80 ms
 blip-absorb), the 8 ms declick and the frame-locked trim/atrim/concat render are all imported from the
@@ -38,6 +43,7 @@ Usage (paths are arguments; run from anywhere):
   ... --slide-pause 0.9                   a cut pause holding a slide change keeps 0.9 s of air (detected from the
                                            picture; a change inside speech is reported only). DEFAULT ON for a
                                            deck lecture (media/deck-lecture/), --slide-pause 0 turns it off
+  ... --no-face-pauses                    a scripted video with `[FACE]` lines: do not protect the face-scene pauses
   ... --nvenc [--bps 2M]                   the canonical tool's NVENC proxy path (capped at 2.5 Mbps) instead
                                            of the default libx264 crf 18; crf 18 is the deliverable quality
                                            for on-screen text, NVENC is for proxies only
@@ -68,6 +74,22 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 CANON_DIR = os.path.normpath(os.path.join(HERE, "..", "..", "..", "skills", "desilencer", "scripts"))
 sys.path.insert(0, CANON_DIR)
 import desilence as d  # noqa: E402  the ONE silence tool; nothing here re-implements it
+sys.path.insert(0, os.path.normpath(os.path.join(HERE, "..", "script")))
+
+
+def script_has_face(folder):
+    """The project's SCRIPT.md (in the input's folder or up to two folders above it: the input may sit in spine/ or
+    raw/) has `[FACE]` lines -> its path, else None."""
+    import script_common as SC
+    cur = folder
+    for _ in range(3):
+        sp = os.path.join(cur, "SCRIPT.md")
+        if os.path.isfile(sp):
+            with open(sp, encoding="utf-8") as f:
+                lines = SC.parse(f.read())["lines"]
+            return sp if any(e["tag"] == "FACE" for e in lines) else None
+        cur = os.path.dirname(cur)
+    return None
 
 
 def tc(t):
@@ -161,6 +183,8 @@ def main():
     ap.add_argument("--slide-pause", type=float, default=None,
                     help=f"a cut pause that holds a SLIDE CHANGE keeps this much air (s) instead of the pad residual; "
                          f"deck lectures default to {DECK_SLIDE_PAUSE}, 0 = off")
+    ap.add_argument("--no-face-pauses", action="store_true",
+                    help="a scripted video with [FACE] lines: cut face-scene pauses like any other (default: keep them)")
     ap.add_argument("--dry-run", action="store_true", help="plan + QA, no render")
     ap.add_argument("--nvenc", action="store_true", help="NVENC proxy encode instead of libx264 crf 18")
     ap.add_argument("--bps", default="2M", help="NVENC target bitrate (only with --nvenc)")
@@ -224,6 +248,19 @@ def main():
         print(f"slide changes: {len(changes)} found; a cut pause holding one keeps {slide_pause*1000:.0f} ms")
         for c, what, given in slide_rows:
             print(f"  {tc(c)}  {what}" + (f" (+{given:.2f}s kept)" if given else ""))
+    face_wins, face_kept = [], []
+    script_face = script_has_face(folder)
+    if script_face and vid:
+        import face_scenes as FS
+        face_wins = FS.detect(src)
+        if args.no_face_pauses:
+            print(f"face scenes: {len(face_wins)} found; --no-face-pauses, their pauses are cut like any other")
+        else:
+            face_kept = d.face_inner_spans(face_wins, regs)
+            cuts = d.protect_cuts(cuts, face_kept)
+            print(f"face scenes ({os.path.basename(script_face)} has [FACE] lines): {len(face_wins)} full-camera window(s) "
+                  f"found, every pause inside them kept (over {d.FACE_PAUSE_MAX} s cut to {d.FACE_PAUSE_KEEP} s): "
+                  + (", ".join(f"{tc(a)}-{tc(b)}" for a, b in face_wins) or "NONE, check the recording"))
     keeps, removed = d.complement(cuts, total)
     n_sil = sum(1 for r in regs if r[0] == "sil")
     print(f"{len(cuts)} of {n_sil} pauses are >= {min_sil*1000:.0f} ms -> {removed:.1f}s removed, "
@@ -238,6 +275,8 @@ def main():
                               "residual": pad_tail + pad_head, "deviation": deviation,
                               "slide_pause": slide_pause, "deck_lecture": deck},
                    "slide_changes": [[round(c, 2), what] for c, what, _ in slide_rows],
+                   "face_windows": [[round(a, 3), round(b, 3)] for a, b in face_wins],
+                   "face_pauses_kept": [[round(a, 3), round(b, 3)] for a, b in face_kept],
                    "src_total": total, "removed": removed, "out_total": total - removed,
                    "cuts": [[round(a, 3), round(b, 3)] for a, b in sorted(cuts)],
                    "keeps": [[round(a, 3), round(b, 3)] for a, b in keeps]}, f, indent=1)

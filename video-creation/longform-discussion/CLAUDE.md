@@ -9,4 +9,6 @@ no video: it ends when the tabs are ready and he has his talking points.
 - **Mike wants things to talk about:** a SESSION, Flow B. `python scripts/discussion.py scan` first.
 - **Mike gates the list in Word.** He deletes what he does not want from `TOPICS.docx`, then `discussion.py approve --from-doc`
   reads what is left. Nothing downloads and no tabs open until then, and the CLI enforces it.
+- **A running series** (one step per episode, outside `media/`): `series/<name>/SERIES.md`. First: `series/health-breakthroughs/`,
+  a month of medical breakthroughs per episode from January 2024. `python scripts/discussion.py series health-breakthroughs` = next month.
 - Dataset: `circumstances/circumstances.json` (view: `circumstances/CIRCUMSTANCES.md`). Sessions: `media/<session>/`.

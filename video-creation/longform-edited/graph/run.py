@@ -454,8 +454,10 @@ def main_short():
 
 def main_ytpost():
     """The OPTIONAL last step once the video is LIVE (ytpost_graph.py, Mike 2026-11-11): a YouTube community post that
-    promotes it, a square carousel in the video's own look with Mike's picture on slide 1, queued in yt-posts.json."""
-    ap = argparse.ArgumentParser(prog="run.py ytpost", description="Build the promo carousel for a LIVE video and queue it as a YT post.")
+    promotes it, a square carousel in the video's own look with Mike's picture on slide 1, queued in the YT post queue of
+    the channel the video is on (yt-posts.json = crypto, ai-yt-posts.json = AI Engineering Simplified, Mike 2026-11-17)."""
+    ap = argparse.ArgumentParser(prog="run.py ytpost", description="Build the promo carousel for a LIVE video and queue it as a YT post "
+                                                                   "in its channel's queue.")
     ap.add_argument("--project", required=True)
     ap.add_argument("--url", default="", help="the LIVE video's YouTube link (checked against the project title)")
     ap.add_argument("--face", default="", help="project-relative still of Mike for slides 1 + last (default: the thumbnail's still)")

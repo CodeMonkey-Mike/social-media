@@ -164,6 +164,7 @@ Resuming an interrupted graph means executing it, which a static file server can
 | Threads | `data/x-threads.json` |
 | X Polls | `data/x-polls.json` |
 | YT Posts | `data/yt-posts.json` |
+| AI YouTube Posts | `data/ai-yt-posts.json`: the AI Engineering Simplified channel's community posts (2026-11-17), filled by the ytpost lane (`video-creation/longform-edited/skills/yt-post/yt-post.md`, "Which queue"); posted with `python scripts/post_yt_community.py --channel ai` |
 | YT Polls | `data/yt-text-polls.json` |
 | IG Single | `data/ig-single-image.json` |
 | IG Carousel | `data/ig-carousel.json` |

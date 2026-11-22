@@ -73,6 +73,8 @@ function plan({ repoRoot }) {
   scanFile(D('ig-single-image.json'), d => d.posts || [], p => [p.image_path]);
   scanFile(D('ig-carousel.json'), d => d.posts || [], p => (p.slides || []).map(s => s.image_path));
   scanFile(D('yt-posts.json'), d => d.posts || [], p => (p.images || []).map(i => i.image_path));
+  // AI Engineering Simplified's community posts (2026-11-17), same shape; without this its pending slides read as orphans
+  scanFile(D('ai-yt-posts.json'), d => d.posts || [], p => (p.images || []).map(i => i.image_path));
   scanFile(D('yt-text-polls.json'), d => d.polls || [], p => [p.image_path]);
 
   // Staged video queues (shorts.json / longs.json) use PER-PLATFORM status, not a single

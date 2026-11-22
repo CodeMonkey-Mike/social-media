@@ -14,6 +14,27 @@ stops at talking points.
 **Triggers:** "find me things to talk about" · "discussion topics" · "scan this video" · any influencer URL Mike hands
 over in this context · "open the tabs".
 
+## Channel: crypto by default, `"channel": "ai"` for AI Engineering Simplified (Mike, 2026-11-19)
+
+A session is for the crypto channel unless its `TOPICS.json` says `"channel": "ai"`. The first AI session is
+`langgraph-updates`: Mike walks through a code change over slides and the files themselves. For an AI session:
+
+- **Off, in code (`lint_plan`):** the "We are here" chart and the coin rules. The tab budget and the per-tab caps still hold.
+- **On:** `code` tabs (Tabs, below). A crypto session refuses them, because repo code on screen is pipeline detail.
+- **The channel's own rules apply** (`video-creation/ai-engineering/CLAUDE.md`): on-screen authority, and the accuracy
+  pass with its terminology check on every "Say:" line (`video-creation/skills/accuracy-pass/accuracy-pass.md`). The three
+  term lists and how each number was computed go in `media/<session>/research/RESEARCH.md`.
+- **Slides:** several single-slide tabs, one file each, built by one script in `media/<session>/slides/` that computes its
+  numbers from the code and the logs at build time (`langgraph-updates/slides/build_slides.py`, `--shoot` for QA stills).
+
+## Series: running research no single recording owns (Mike, 2026-11-19)
+
+`series/<name>/` holds a series Mike returns to week after week, outside `media/` because no one video owns it. Each step
+of it is an ordinary session named `series/<name>/<step>`, so render, approve, tabs and status work unchanged. The first:
+**`series/health-breakthroughs/`** (crypto channel): health and medical breakthroughs one month at a time from January 2024,
+plus a "this week" closer, for his "AI is good for the economy" thread. Its rules: `series/health-breakthroughs/SERIES.md`.
+`discussion.py series <name>` prints the months done, the AI share and the next month.
+
 ## The two data files
 
 | File | What it is | Lifetime |
@@ -148,6 +169,7 @@ If research changes after he starts editing, tell him rather than regenerating.
 | `x-post` | the permalink | Needs his X login, so `--check` skips it |
 | `odds` | Polymarket, Kalshi | Read the live number on camera |
 | `clip` | a local player page | See below |
+| `code` | a repo file at a line, in VS Code (`vscode://file/<path>:<line>`) | AI channel only. Fields: `path` (from the repo root), `line`, `end`, `anchor` (text that must be on `line`) and `anchors[]` (`{line, text, path?}`), one for every other line a fact cites. `render` and `tabs --check` re-read them all, so a line number that went stale fails and says where the text is now. The document prints the file and lines under the link. `tabs --open` opens these with `code --goto`, never in Chrome |
 | `local` | a chart or a single slide built from our data | For a chart only a paid site shows, build after approval. **A slide he asks for is ONE slide in one tab, never a slideshow (Mike, 2026-11-06: "I just want to have a tab open to a single slide").** It lives in `media/<session>/slides/` with its build script (the `yt-presentation` look, every number pulled from data at build time, no scrolling), and its `url` is the `file:///` path |
 
 ## Clips
@@ -228,7 +250,8 @@ is about patience and doing the reading, never a guaranteed outcome. Use his own
   `careful` to what stops a false line. Excitement never becomes a price promise. Motivational lines go in `inspiring[]`, which the doc labels in green, so Mike can spot them at a glance (2026-11-06).
 - **Tabs are runtime, because he stops and talks at every one.** Money and I runs around 12 sources in 15 minutes, one fact and
   one take each, and a double or triple-length video is the failure. A `shape: plan` session (he named the subject) is capped in
-  code at 12 tabs, 3 facts and 2 cautions a tab, and no coin except Kaspa over a third of the tabs. A `shape: menu` session
+  code at 12 tabs, 3 facts and 2 cautions a tab, and no coin except Kaspa over a third of the tabs. When he names another
+  coin as the whole subject ("i want to talk about solana", 2026-11-17), the session sets `primary_coin` and that coin takes Kaspa's place in the rule. A `shape: menu` session
   (a broad list he narrows) can run long, so its doc says how long and `approve` prints the length of what he kept. A deck
   sets its own `minutes`.
 - **Crypto channel persona applies** (`persona/persona.json`): no em dashes, "around" not "about" for numbers, never
@@ -253,6 +276,9 @@ is about patience and doing the reading, never a guaranteed outcome. Use his own
 - **FRED** drops the connection on a browser User-Agent, so `market_data.py` sends a plain one. Yahoo needs the browser one.
 - **`scan` reads daily closes.** During market hours the last value is partial. BTC's "close" is a UTC day.
 - **The radar's X policy cache** only refreshes with `topic-radar/fetch-x-policy.py`.
+- **A `code` tab's link has not been clicked by hand** (2026-11-19), in LibreOffice or through `tabs --open`. The link is
+  VS Code's own format, its handler is registered on this machine, and LibreOffice kept the links when it exported the
+  document. The file and lines are printed under each code tab so nothing depends on the link.
 - **`tabs --open` has not been run against Mike's real Chrome** yet. The player page was tested in a separate Chrome profile.
 - **Fear and Greed tab = CoinMarketCap's page**, not alternative.me's: in a clean profile alternative.me loaded under a racy
   dating ad and a full-page trading ad (2026-11-13), which `--check` reads as OK. CoinMarketCap's index differs from

@@ -43,7 +43,15 @@ PROOF (<project>/_qa/<VERTICAL>-layout-proof.png): both rectangles drawn on a re
   python cover_runs.py "media/standard/<p>/overlays/cues.json" --vertical [--step check | build | render | qa]
       [--deck-rect 0,0,1464,1080] [--cam-rect 1466,400,454,680 | none] [--bg 0x0a0c10] [--out "../<p> VERTICAL-v2.mp4"]
 
-Machine lines: COVER-RUNS PASS|FAIL runs=N cards=N frames=N   ·   LEAK-CHECK PASS|FAIL samples=N min_psnr=<dB>
+FACE SCENES (`[FACE]` lines, 2026-11-22; ../script/script.md "Face scenes"): cue_script.py found the full-camera OBS
+scenes in the spine's picture (`face_windows` in cues.json). The build step MEASURES the one crop that centres his face
+(../script/face_scenes.py, the longform-edited solver: face on the horizontal centre, eye line about 40% down, bars out
+of frame; for --vertical the live height cut to 9:16 around his face), saves it in overlays/face-reframe.json
+(face-reframe-v.json) and writes `face_reframe` into cards.json, so card_overlays.py zooms those windows in the same
+encode. The QA step writes <project>/_qa/<FINAL>-face-proof.png (the crop drawn on each window, beside the frame it
+makes); open it.
+
+Machine lines: COVER-RUNS PASS|FAIL runs=N cards=N frames=N faces=N   ·   LEAK-CHECK PASS|FAIL samples=N min_psnr=<dB>
 """
 import argparse
 import json
@@ -57,6 +65,8 @@ from PIL import Image, ImageDraw
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import card_overlays as CO  # noqa: E402  (the unchanged renderer: its entrance length, exit length and frame maths)
+sys.path.insert(0, str(HERE.parent / "script"))
+import face_scenes as FS  # noqa: E402  (the ONE face-scene detector + the measured face crop)
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
@@ -143,6 +153,32 @@ class Job:
         self.runs_dir = self.ov / ("runs-v" if self.vertical else "runs")
         self.layout = self._layout(a) if self.vertical else None
         self.plan = self._plan()
+        self.face_windows = [list(w) for w in self.cues.get("face_windows", [])]
+        self.has_face_lines = any(r["tag"] == "FACE" for r in self.cues["lines"])
+        self.face_json = self.ov / ("face-reframe-v.json" if self.vertical else "face-reframe.json")
+
+    def face_reframe(self):
+        """The measured crop for the face windows ({crop, windows, ...}), cached in face-reframe(-v).json and re-measured
+        only when the spine, the windows or the output size change. None when there is no face window."""
+        if not self.face_windows:
+            return None
+        key = {"spine": str(self.spine), "mtime": int(self.spine.stat().st_mtime), "windows": self.face_windows,
+               "out": [self.W, self.H]}
+        if self.face_json.is_file():
+            old = json.loads(self.face_json.read_text(encoding="utf-8"))
+            if old.get("key") == key and old.get("crop"):
+                return old
+        qa_dir = self.proj / "_qa"
+        qa_dir.mkdir(exist_ok=True)
+        print(f"  measuring the face crop on {len(self.face_windows)} face window(s) ({self.W}x{self.H})", flush=True)
+        m = FS.measure(self.spine, self.face_windows, self.W, self.H, qa_dir=qa_dir)
+        if not m:
+            sys.exit("no face found in the face windows: check them in CUE-REPORT.md section 5b (and the spine's picture)")
+        m.update({"key": key, "windows": self.face_windows})
+        self.face_json.write_text(json.dumps(m, indent=1) + "\n", encoding="utf-8", newline="\n")
+        c = m["crop"]
+        print(f"  face crop {c['w']}x{c['h']} at {c['x']},{c['y']} (x{m['scale']}), centred: {'yes' if m['centered'] else 'NO, the zoom cap was hit'}", flush=True)
+        return m
 
     def _layout(self, a):
         """The vertical frame of the screen-share scenes (card_overlays.py "layout"): the rectangles given on the command
@@ -223,6 +259,11 @@ class Job:
                     fails.append(f"{run['id']}: {src.name} has no window.setT(t): an animated chart is a TIME-DRIVEN page (card-overlays.md, kind clip)")
                 if s["frames"] < self.fps:
                     flags.append(f"{run['id']}: card {label(s)} is up for only {s['frames'] / self.fps:.2f} s")
+        if self.has_face_lines and "face_windows" not in self.cues:
+            fails.append("the script has `[FACE]` lines but cues.json has no face windows: re-run cue_script.py with --spine")
+        elif self.has_face_lines and not self.face_windows:
+            fails.append("the script has `[FACE]` lines but the spine has no full-camera scene (cue_script.py found none): "
+                         "was the take recorded without switching OBS to the full-camera scene?")
         for f in flags:
             print(f"  FLAG  {f}")
         for f in fails:
@@ -231,7 +272,7 @@ class Job:
 
     def machine(self, ok):
         print(f"COVER-RUNS {'PASS' if ok else 'FAIL'} runs={len(self.plan)} cards={sum(len(r['segments']) for r in self.plan)} "
-              f"frames={sum(r['frames'] for r in self.plan)}")
+              f"frames={sum(r['frames'] for r in self.plan)} faces={len(self.face_windows)}")
 
     # ── build ────────────────────────────────────────────────────────────────────────────────────────────────────
     def _signature(self, run):
@@ -362,10 +403,13 @@ class Job:
         for c in keep:
             if any(c["in"] < r["out"] and r["in"] < c["out"] for r in runs):
                 sys.exit(f"cards.json card {c['id']} ({c['in']}-{c['out']}) overlaps a cover run: move it or drop it")
-        spec = {k: v for k, v in self.old.items() if k not in ("cards", "region", "deck", "spine", "out", "layout")}
+        spec = {k: v for k, v in self.old.items() if k not in ("cards", "region", "deck", "spine", "out", "layout", "face_reframe")}
         spec.update({"deck": self.deck, "spine": self._rel(self.spine), "out": self.out})
         if self.layout:
             spec["layout"] = self.layout     # the vertical frame: card_overlays.py re-stacks the recording onto it
+        fr = self.face_reframe()
+        if fr:                               # the face scenes: the measured crop, zoomed in the same encode
+            spec["face_reframe"] = {"crop": fr["crop"], "windows": self.face_windows}
         spec["cards"] = sorted(keep + runs, key=lambda c: c["in"])
         self.cards_json.write_text(json.dumps(spec, indent=1, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
         print(f"WROTE {self.cards_json} ({len(runs)} run(s)" + (f" + {len(keep)} other card(s)" if keep else "") + ")")
@@ -435,13 +479,50 @@ class Job:
                     dst = qa_dir / (final.stem.replace(" ", "-") + "-layout-proof.png")
                     proof.save(dst)
                     print(f"layout proof -> {dst} (the rectangles on the recording at {t:.2f} s, and the vertical frame they make)")
+        if self.face_windows:
+            # the FACE PROOF: per face window, the recording with the measured crop drawn on it, beside the frame it makes
+            fr = json.loads(self.face_json.read_text(encoding="utf-8")) if self.face_json.is_file() else {}
+            c = fr.get("crop")
+            sw, sh = (int(v) for v in probe(self.spine, "stream=width,height")[:2])
+            pw, ph = 960, round(960 * sh / sw)
+            rows = []
+            for k, (fa, fz) in enumerate(self.face_windows):
+                t = (fa + fz) / 2
+                src = self._frame(self.spine, t, pw, ph)
+                got = self._frame(final, t, round(ph * self.W / self.H), ph)
+                if src is None or got is None:
+                    continue
+                left = Image.fromarray(src)
+                d = ImageDraw.Draw(left)
+                if c:
+                    q = pw / sw
+                    d.rectangle([c["x"] * q, c["y"] * q, (c["x"] + c["w"]) * q - 1, (c["y"] + c["h"]) * q - 1], outline="lime", width=3)
+                d.text((8, 6), f"face {k + 1}: {fa:.2f}-{fz:.2f} s", fill="yellow")
+                row = Image.new("RGB", (pw + got.shape[1] + 12, ph), "black")
+                row.paste(left, (0, 0))
+                row.paste(Image.fromarray(got), (pw + 12, 0))
+                rows.append(row)
+                fr_t = self._frame(final, t, tw, th)
+                im = Image.fromarray(fr_t) if fr_t is not None else Image.new("RGB", (tw, th), "black")
+                ImageDraw.Draw(im).text((6, 4), f"face {k + 1} {t:.2f}s", fill="lime")
+                tiles.append(im)
+                n_share += 1
+            if rows:
+                proof = Image.new("RGB", (max(r.width for r in rows), sum(r.height for r in rows)), "black")
+                y = 0
+                for r in rows:
+                    proof.paste(r, (0, y))
+                    y += r.height
+                dst = qa_dir / (final.stem.replace(" ", "-") + "-face-proof.png")
+                proof.save(dst)
+                print(f"face proof -> {dst} (the crop on the recording, and the frame it makes, per face window)")
         if tiles:
             sheet = Image.new("RGB", (tw * cols, th * ((len(tiles) + cols - 1) // cols)), "black")
             for i, im in enumerate(tiles):
                 sheet.paste(im, ((i % cols) * tw, (i // cols) * th))
             dst = qa_dir / (final.stem.replace(" ", "-") + "-cover-cards-sheet.png")
             sheet.save(dst)
-            print(f"qa sheet -> {dst} ({len(tiles) - n_share} card window(s)" + (f" + {n_share} screen-share scene(s)" if n_share else "") + ")")
+            print(f"qa sheet -> {dst} ({len(tiles) - n_share} card window(s)" + (f" + {n_share} screen-share / face scene(s)" if n_share else "") + ")")
         # LEAK CHECK: inside a run the FINAL must BE the run clip (the recording never shows through). Sampled at the
         # middle of every card window and on the frames around every card change; the run's own fade-in / fade-out
         # edges are the sanctioned move to and from the recording and are left out.

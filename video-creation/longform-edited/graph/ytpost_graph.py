@@ -1,19 +1,24 @@
 """
-ytpost_graph.py: the OPTIONAL last step of a longform-edited video, run once the video is LIVE on YouTube (Mike,
-2026-11-11, canton): a YouTube community post that promotes it, a square image CAROUSEL in the video's own look with
-Mike's picture on the first and last slides (the "watch the full video" format other crypto channels run), queued as a
-`pending` row of schedule-tweets/data/yt-posts.json. Posting stays Mike's manual posting run (post-yt-community.js).
+ytpost_graph.py: the OPTIONAL last step of a longform-edited OR longform-presentation video, run once the video is LIVE
+on YouTube (Mike, 2026-11-11, canton): a YouTube community post that promotes it, a square image CAROUSEL in the video's
+own look with Mike's picture on the first and last slides (the "watch the full video" format other crypto channels run),
+queued as a `pending` row of the YT post queue of the CHANNEL the video is on (CHANNELS below, Mike 2026-11-17):
+schedule-tweets/data/yt-posts.json for the crypto channel (posted by Mike's posting run, post-yt-community.js),
+schedule-tweets/data/ai-yt-posts.json for AI Engineering Simplified (the dashboard's "AI YouTube Posts" tab; posted by
+schedule-tweets/scripts/post_yt_community.py --channel ai, from its own ai-ytbot-profile, since 2026-11-17).
 
   python video-creation/longform-edited/graph/run.py ytpost --project <name> --url <youtube link> [--face <still>] [--logo <img>]
 
 Nodes (no HITL gate: the queue row IS the review point, nothing posts until Mike runs posting):
   y_preflight  the link is checked against the project (oEmbed title == the video's title; a wrong link FAILS, canton
-               2026-11-11: the first link given was another video) -> yt-post/video.json; picks Mike's face still + logo
+               2026-11-11: the first link given was another video) and its channel must have a queue -> yt-post/video.json;
+               picks Mike's face still + logo
   y_plan       yt-post-author agent -> yt-post/YT-POST.json (slides + post copy); the node stamps the fixed fields and
                FAILS a number on a slide that the video never said (AS-RECORDED.md / DATA.md)
   y_build      skills/yt-post/build_yt_post.py -> yt-post/slides/NN.png (1080x1080, the video's locked stylesheet)
   y_qa         visual-qa on every slide; a FAIL goes back to the author with the defects (2 rounds), then rebuild
-  y_queue      slides -> schedule-tweets/images/yt/, the row upserted into yt-posts.json with Node (never PowerShell)
+  y_queue      slides -> schedule-tweets/images/<channel dir>/, the row upserted into the channel's queue with Node
+               (never PowerShell)
 Canonical rules: ../skills/yt-post/yt-post.md
 """
 import json
@@ -35,8 +40,19 @@ import common as C  # noqa: E402
 
 SK = C.SKILLS / "yt-post"
 BUILD = SK / "build_yt_post.py"
-QUEUE = C.REPO_ROOT / "schedule-tweets" / "data" / "yt-posts.json"
-IMG_DIR = C.REPO_ROOT / "schedule-tweets" / "images" / "yt"
+DATA_DIR = C.REPO_ROOT / "schedule-tweets" / "data"
+IMAGES_DIR = C.REPO_ROOT / "schedule-tweets" / "images"
+# The queue a promo post joins = the one for the channel the LIVE video is on, read off its oEmbed author_url in
+# y_preflight, never off the track: a longform-edited or a longform-presentation video can be on either channel (Mike,
+# 2026-11-17: "the queue will be specifically for the AI engineering simplified channel"). Keyed by the lower-cased
+# handle; a video on any other channel fails y_preflight. `posting` is what the run report says happens next.
+CHANNELS = {
+    "@codemonkeymike": {"label": "the crypto channel", "queue": "yt-posts.json", "images": "yt", "prefix": "yt-posts",
+                        "row": "yt-post", "tab": "YT Posts", "posting": "posts on Mike's next YT post run"},
+    "@aiengineeringsimplified": {"label": "AI Engineering Simplified", "queue": "ai-yt-posts.json", "images": "ai-yt",
+                                 "prefix": "ai-yt-posts", "row": "ai-yt-post", "tab": "AI YouTube Posts",
+                                 "posting": "posts when Mike asks: post_yt_community.py --channel ai"},
+}
 QA_ROUNDS = 2
 NUM_RE = re.compile(r"\d+(?:[.,]\d+)*")
 
@@ -75,6 +91,11 @@ def _dir(proj: Path) -> Path:
 
 def _norm(t: str) -> str:
     return re.sub(r"[^a-z0-9]+", "", (t or "").lower())
+
+
+def channel_of(handle: str):
+    """The CHANNELS entry for a channel handle ("@aiEngineeringSimplified"), else None."""
+    return CHANNELS.get((handle or "").strip().lower())
 
 
 def video_id(url: str):
@@ -157,6 +178,11 @@ def y_preflight(state: YtPostState) -> YtPostState:
         return C._fail(state, node, f"the link {url} plays \"{emb.get('title')}\" ({emb.get('author_name')}), not this video "
                                     f"\"{want}\": pass the link of THIS video")
     handle = "@" + emb.get("author_url", "").rstrip("/").rsplit("@", 1)[-1] if "@" in emb.get("author_url", "") else ""
+    ch = channel_of(handle)
+    if not ch:
+        return C._fail(state, node, f"the video is on {handle or emb.get('author_url') or 'an unknown channel'} "
+                                    f"({emb.get('author_name')}), which has no YT post queue (known: "
+                                    f"{', '.join(c['label'] + ' ' + c['queue'] for c in CHANNELS.values())}; CHANNELS in ytpost_graph.py)")
     face = state.get("face") or prev.get("face") or ""
     if not face:
         # the still the THUMBNAIL was built from is the one Mike already approved; else the best-scored hook still
@@ -172,9 +198,11 @@ def y_preflight(state: YtPostState) -> YtPostState:
     if logo and not (proj / logo).is_file():
         return C._fail(state, node, f"logo {logo} not found under the project folder")
     info = {"url": f"https://youtu.be/{vid}", "id": vid, "title": emb.get("title"), "channel": handle,
-            "channel_name": (emb.get("author_name") or "").split(" - ")[0], "face": face, "logo": logo, "checked_at": C._now_iso()}
+            "channel_name": (emb.get("author_name") or "").split(" - ")[0], "queue": ch["queue"], "face": face, "logo": logo,
+            "checked_at": C._now_iso()}
     C._write_json_atomic(vj, info)
-    return {"steps": C._step(state, node, "ran", f"{info['url']} = \"{info['title']}\" on {handle}; face {face}; logo {logo or 'none'}")}
+    return {"steps": C._step(state, node, "ran", f"{info['url']} = \"{info['title']}\" on {handle} (queue {ch['queue']}); "
+                                                 f"face {face}; logo {logo or 'none'}")}
 
 
 def _corpus(proj: Path) -> str:
@@ -240,8 +268,10 @@ def unsaid_numbers(spec: dict, corpus: str) -> list:
 
 
 def _author(state, node, proj: Path, spec_p: Path, info: dict, defects: str = ""):
-    prompt = (f"Author the YouTube PROMO CAROUSEL for the delivered longform-edited video `{proj.name}` (folder `{proj}`), "
-              f"live at {info['url']} as \"{info['title']}\", per your agent definition and "
+    ch = channel_of(info.get("channel")) or {}
+    prompt = (f"Author the YouTube PROMO CAROUSEL for the delivered video `{proj.name}` (folder `{proj}`), "
+              f"live at {info['url']} as \"{info['title']}\" on the channel {info.get('channel_name') or ch.get('label', '')} "
+              f"({info.get('channel')}: apply your rules for that channel), per your agent definition and "
               f"`video-creation/longform-edited/skills/yt-post/yt-post.md`.\n"
               + _sources_brief(proj)
               + (f"REVISE the existing `{spec_p}`: visual-qa FAILED these slides, fix exactly these and keep every passing slide as it "
@@ -390,30 +420,37 @@ def _slug(t: str) -> str:
 
 
 def y_queue(state: YtPostState) -> YtPostState:
-    """The carousel joins the YT post queue as a `pending` row (Mike's posting run publishes it; nothing posts here)."""
+    """The carousel joins the YT post queue OF ITS CHANNEL as a `pending` row (nothing posts here)."""
     node = "y_queue"
     proj = _proj(state)
     if state.get("stub"):
         return {"steps": C._step(state, node, "stub"), "status": "done"}
     d = _dir(proj)
     spec = json.loads((d / "YT-POST.json").read_text(encoding="utf-8"))
+    ch = channel_of(spec.get("channel"))
+    if not ch:
+        return C._fail(state, node, f"no YT post queue for the channel {spec.get('channel')!r} (CHANNELS in ytpost_graph.py): "
+                                    "re-run y_preflight with the live link")
+    queue, img_dir = DATA_DIR / ch["queue"], IMAGES_DIR / ch["images"]
+    if not queue.is_file():
+        return C._fail(state, node, f"the {ch['label']} queue {queue} does not exist")
     slides = sorted((d / "slides").glob("[0-9][0-9].png"))
     if len(slides) != len(spec.get("slides") or []):
         return C._fail(state, node, f"{len(slides)} slide PNGs for {len(spec.get('slides') or [])} spec slides: rebuild (--redo y_build)")
-    rid = f"yt-post-{datetime.now():%Y-%m-%d}-{proj.name}-video"
+    rid = f"{ch['row']}-{datetime.now():%Y-%m-%d}-{proj.name}-video"
     old = {}
-    q = json.loads(QUEUE.read_text(encoding="utf-8"))
+    q = json.loads(queue.read_text(encoding="utf-8"))
     prev = next((p for p in q.get("posts", []) if p.get("id", "").endswith(f"-{proj.name}-video")), None)
     if prev:
         if prev.get("status") != "pending":
             return {"steps": C._step(state, node, "skipped", f"{prev['id']} is already {prev.get('status')}: not touched"), "status": "done"}
         rid = prev["id"]
         old = {im.get("seq"): im for im in prev.get("images") or []}
-    IMG_DIR.mkdir(parents=True, exist_ok=True)
+    img_dir.mkdir(parents=True, exist_ok=True)
     images = []
     for seq, (f, s) in enumerate(zip(slides, spec["slides"]), 1):
         iid = (old.get(seq) or {}).get("image_id") or uuid.uuid4().hex[:8]   # a regen reuses its image_id (same file)
-        dest = IMG_DIR / f"yt-posts-{iid}-{seq:02d}-{_slug(s.get('headline') or s.get('kind'))}.png"
+        dest = img_dir / f"{ch['prefix']}-{iid}-{seq:02d}-{_slug(s.get('headline') or s.get('kind'))}.png"
         prev_path = (old.get(seq) or {}).get("image_path")
         if prev_path and (C.REPO_ROOT / prev_path).is_file() and (C.REPO_ROOT / prev_path) != dest:
             (C.REPO_ROOT / prev_path).unlink()
@@ -432,12 +469,13 @@ def y_queue(state: YtPostState) -> YtPostState:
            "video_url": spec["video_url"]}
     rowp = d / "queue-row.json"
     C._write_json_atomic(rowp, row)
-    r = subprocess.run(["node", "-e", UPSERT_JS, str(QUEUE), str(rowp)], capture_output=True, text=True, encoding="utf-8")
+    r = subprocess.run(["node", "-e", UPSERT_JS, str(queue), str(rowp)], capture_output=True, text=True, encoding="utf-8")
     m = re.search(r"^UPSERT (\w+) (\S+)(?: pending_position=(\S+))?", r.stdout or "", re.M)
     if r.returncode != 0 or not m:
-        return C._fail(state, node, "the yt-posts.json upsert failed", (r.stdout or "") + (r.stderr or ""))
-    return {"steps": C._step(state, node, "ran", f"{m.group(2)} {m.group(1).lower()} in yt-posts.json, {len(images)} images, pending "
-                                                 f"position {m.group(3)} (posts on Mike's next YT post run)"), "status": "done"}
+        return C._fail(state, node, f"the {ch['queue']} upsert failed", (r.stdout or "") + (r.stderr or ""))
+    return {"steps": C._step(state, node, "ran", f"{m.group(2)} {m.group(1).lower()} in {ch['queue']} ({ch['label']}, dashboard tab "
+                                                 f"\"{ch['tab']}\"), {len(images)} images, pending position {m.group(3)} "
+                                                 f"({ch['posting']})"), "status": "done"}
 
 
 ORDER = ["y_preflight", "y_plan", "y_build", "y_qa", "y_queue"]

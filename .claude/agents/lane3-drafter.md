@@ -98,9 +98,18 @@ Produce, in this order, shuffling topics:
   a prompt, never "scion"), a clear emotional read (triumphant / defiant / hungry / calm), and
   **"No text or words anywhere in the image."** State the aspect ratio in every prompt. A
   real logo/face (Kaspa coin, TAO coin, a named person, a named meme mascot) MUST cite a
-  reference file from `schedule-tweets/images/reference/` in `ref` (absolute path). Never
-  invent a logo; if no reference exists for a real entity the prompt must either avoid
-  rendering it or you list it under `missing_references` and keep the prompt entity-free.
+  reference file from `schedule-tweets/images/reference/` in `ref` (absolute path) when one
+  exists. Never invent a logo for a LESSER-KNOWN project: if no reference exists for it, the
+  prompt must either avoid rendering it or you list it under `missing_references` and keep the
+  prompt entity-free.
+  **WELL-KNOWN brands need no reference and are never "missing" (Mike, 2026-11-18, batch
+  `ripping`: "solana and bitcoin are common. there is no need for their images"):** Bitcoin,
+  Ethereum, Solana, BNB, XRP, Dogecoin, and majors like Tesla, Nvidia, Coinbase, Binance,
+  Robinhood, Apple, OpenAI, Anthropic. NAME the brand in the prompt and ask for its real logo
+  on the coin; attach a reference only if one happens to be on disk. A plain unmarked coin
+  standing in for Bitcoin or Solana is the documented WRONG answer (`repurpose/SKILL.md`,
+  "Always name brands explicitly"; the shorts skill's step 2a has the same three buckets), and
+  listing one under `missing_references` asks Mike for a file nobody needs.
   **Pepe and Pengu are never "missing" (Mike, 2026-11-16, batch `peach`):** Pepe the frog is a
   very common meme the image model already knows: NAME it in the prompt and render it, no ref.
   The Pudgy Penguins penguin ($PENGU) has its reference `schedule-tweets/images/reference/pengu.webp`

@@ -37,7 +37,7 @@ from pathlib import Path
 
 W = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
 BODY, BULLET, TOPIC, TAB = "Normal", "List Bullet", "Heading 1", "Heading 2"
-KIND_WORD = {"article": "Article", "chart": "Chart", "x-post": "X post", "odds": "Odds", "local": "Chart I would build"}
+KIND_WORD = {"article": "Article", "chart": "Chart", "x-post": "X post", "odds": "Odds", "local": "Chart I would build", "code": "Code"}
 CHILD_KINDS = {"highlight": "highlights", "inspiring": "inspiring", "prompt": "prompts", "fact": "facts", "careful": "careful"}   # line kind -> the list it lives in
 INSPIRE_RGB, HIGHLIGHT_RGB = "0B7A53", "8A6D00"
 FONT = "Calibri"
@@ -74,7 +74,7 @@ def norm(s: str) -> str:
 @dataclass(eq=False)
 class Line:
     """One paragraph of a topic. pieces = [(text, url or None, "bold" | "muted" | "warn" | None)]."""
-    kind: str      # why_now | angle | tab | show | words | context | prompt | fact | careful
+    kind: str      # why_now | angle | tab | where | show | words | context | prompt | fact | careful
     topic: int
     owner: object  # the tab this line sits under, or the topic's no_tab bucket, or None for a topic-level line
     obj: object    # the fact or tab dict, or the string itself
@@ -125,6 +125,9 @@ def layout(t):
         lines += child_lines(tid, t["no_tab"])
     for tab in t["tabs"]:
         lines.append(Line("tab", tid, tab, tab, TAB, tab_pieces(tab)))
+        if tab["kind"] == "code":   # the path and lines as text too, so he can get there by hand if the link does not fire
+            span = f"{tab['path']}, " + (f"lines {tab['line']} to {tab['end']}" if tab.get("end") else f"line {tab['line']}")
+            lines.append(Line("where", tid, tab, span, BODY, [("File: ", None, "muted"), (span, None, "muted")]))
         if tab.get("show"):
             lines.append(Line("show", tid, tab, tab["show"], BODY, [("On this tab: ", None, "muted"), (tab["show"], None, "muted")]))
         if tab["kind"] == "clip":
@@ -164,6 +167,9 @@ def preface_lines(s):
              "Tip: View > Navigator (F5) lists the topics and tabs. Drag one to move it, or right-click it and delete it. "
              "Ctrl+click opens a link, and a clip's link opens at its first second.",
              "Save and close this when you're done, then tell me. Nothing downloads before that."]
+    if any(tab.get("kind") == "code" for t in s["topics"] for tab in t.get("tabs", [])):
+        lines.append("A Code link opens that file in VS Code at the line. The file and line are written under it too: in VS Code, "
+                     "Ctrl+P finds the file and Ctrl+G jumps to the line.")
     if s.get("note"):
         lines.append(s["note"])
     return lines

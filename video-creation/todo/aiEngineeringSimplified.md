@@ -96,3 +96,9 @@ logs have no clip numbers. The old prompt versions could not be recovered, so al
 8. **Context engineering.** `CLAUDE.md` points instead of duplicating, skills are read when needed, and each agent gets
    one narrow slice. Check the overlap with the sub-agents video.
 9. **Tracing** and **structured outputs:** gaps 3 and 4 above, each best filmed alongside its fix.
+10. **Grade my own prompting** (added 2026-11-18, not built yet). A skill that reads Mike's own Claude Code session logs
+    and reports the habits that cost him turns, quoted, each with its cost and a fix, plus a trend verdict. The twist
+    for the video: each correction is traced to its cause, a missing detail in the prompt or a repo doc that told
+    Claude the wrong thing. Working title: "I had AI grade how I prompt it, across 1,000 sessions." Not ranked yet;
+    the build plan is idea 18 in `demos/ideas.md` (private). Pairs with token tracking (3): fewer wasted turns is a
+    cost number.

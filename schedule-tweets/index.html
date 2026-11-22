@@ -393,6 +393,7 @@
   <button class="tab" data-tab="threads">Threads <span class="badge" id="badge-threads">…</span></button>
   <button class="tab" data-tab="xpolls">X Polls <span class="badge" id="badge-xpolls">…</span></button>
   <button class="tab" data-tab="ytposts">YT Posts <span class="badge" id="badge-ytposts">…</span></button>
+  <button class="tab" data-tab="aiytposts">AI YouTube Posts <span class="badge" id="badge-aiytposts">…</span></button>
   <button class="tab" data-tab="ytpolls">YT Polls <span class="badge" id="badge-ytpolls">…</span></button>
   <button class="tab" data-tab="ytquiz">YT Quiz <span class="badge" id="badge-ytquiz">…</span></button>
   <button class="tab" data-tab="igsingle">IG Single <span class="badge" id="badge-igsingle">…</span></button>
@@ -407,6 +408,7 @@
 <div id="tab-threads"    class="tab-content"><div class="loading">Loading…</div></div>
 <div id="tab-xpolls"     class="tab-content"><div class="loading">Loading…</div></div>
 <div id="tab-ytposts"    class="tab-content"><div class="loading">Loading…</div></div>
+<div id="tab-aiytposts"  class="tab-content"><div class="loading">Loading…</div></div>
 <div id="tab-ytpolls"    class="tab-content"><div class="loading">Loading…</div></div>
 <div id="tab-ytquiz"     class="tab-content"><div class="loading">Loading…</div></div>
 <div id="tab-igsingle"   class="tab-content"><div class="loading">Loading…</div></div>
@@ -503,8 +505,8 @@ function renderXPolls(items) {
   }).join('');
 }
 
-function renderYTPosts(items) {
-  if (!items.length) return '<div class="empty">No pending YT posts</div>';
+function renderYTPosts(items, emptyText = 'No pending YT posts') {
+  if (!items.length) return `<div class="empty">${esc(emptyText)}</div>`;
   return items.map((p, i) => {
     const imgs = (p.images || []).map(s =>
       `<img src="${esc(imgUrl(s.image_path))}" alt="${esc(s.slide_text || '')}" title="${esc(s.slide_text || '')}">`
@@ -817,6 +819,8 @@ const SOURCES = [
   { tab: 'threads',    url: '/data/x-threads.json',       key: 'threads', render: renderThreads },
   { tab: 'xpolls',     url: '/data/x-polls.json',         key: 'polls',   render: renderXPolls },
   { tab: 'ytposts',    url: '/data/yt-posts.json',        key: 'posts',   render: renderYTPosts },
+  // the AI Engineering Simplified channel's own queue (Mike, 2026-11-17): same row shape, filled by the ytpost lane
+  { tab: 'aiytposts',  url: '/data/ai-yt-posts.json',     key: 'posts',   render: items => renderYTPosts(items, 'No pending AI YouTube posts') },
   { tab: 'ytpolls',    url: '/data/yt-text-polls.json',   key: 'polls',   render: renderYTPolls },
   { tab: 'ytquiz',     url: '/data/yt-quizzes.json',      key: 'quizzes', render: renderYTQuiz },
   { tab: 'igsingle',   url: '/data/ig-single-image.json', key: 'posts',   render: renderIGSingle },

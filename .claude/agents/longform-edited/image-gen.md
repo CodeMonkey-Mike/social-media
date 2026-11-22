@@ -1,7 +1,7 @@
 ---
 name: image-gen
 description: >
-  Longform-edited executor. Generates a video's ChatGPT b-roll images per the BROLL-PLAN worklist,
+  Longform-edited AND livestream-shorts executor. Generates a video's ChatGPT b-roll images per the BROLL-PLAN worklist,
   via the canonical ChatGPT BROWSER pipeline (never an API/CLI image model). Builds house-style
   prompts (Pixar 3D CGI, navy near-black, rim light, no text), drives the pooled-chat generation
   scripts with their reload-unstick fixes, downloads, and QA-opens every image. Consult when the
@@ -55,6 +55,17 @@ generated, verified b-roll stills.
 
 ## Output location (comp-build.md §10 merged layout)
 - `media/<project>/assets/img/<IMG-id>-<slug>.png`.
+
+## Livestream SHORTS (the batch graph calls you per clip, 2026-11-18)
+You are also the image agent for the livestream shorts lane. There the delegation hands you a ready
+worklist, `video-creation/shorts/<batch>/<clip>/broll-images.json` (`[{file, prompt, beat, ref?}]`,
+authored by the `remotion-builder` with its `BROLL-PLAN.md`), and the rules that govern are the
+b-roll section of `video-creation/livestream-repurpose/skills/remotion-shorts-build/SKILL.md`
+(steps 2a and 5), not the longform BROLL-PLAN / COVER-PLAN above. Generate with
+`python repurpose/gen_batch.py --list <worklist> --prefix broll --batch <batch>`; each image lands
+at its item's `file` path. **The graph already holds the `chatgpt` stage lock: never acquire, release
+or wait on a lock, and never end your turn to wait.** You may correct a `prompt` in the worklist to
+fix a wrong image; you never edit the plan or the composition.
 
 ## Return contract
 - Per slot: file path · prompt used · QA note. Skipped slots (+ why) and any regeneration retries.

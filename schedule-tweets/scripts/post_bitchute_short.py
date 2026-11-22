@@ -488,6 +488,25 @@ def main():
                 if thumb_err:
                     print(f"  ⚠ Missing-thumbnail modal (attempt {attempt}/3) — "
                           "dismissing + re-grabbing thumbnail...")
+                    # Diagnostic (2026-11-17): the detector above also matches any
+                    # "try again" text (e.g. a Search Terms validation error), so log
+                    # what the page ACTUALLY says before dismissing it.
+                    try:
+                        hit = upload_page.locator(
+                            "text=/missing thumbnail|thumbnail.*(required|missing)|try again/i").first
+                        print(f"    modal text: {hit.inner_text()[:300]!r}")
+                        errs = upload_page.eval_on_selector_all(
+                            ".q-field--error, .q-field__messages, [role=alert], .q-dialog",
+                            "els => els.map(e => (e.innerText||'').trim()).filter(Boolean)")
+                        print(f"    page errors/dialogs: {errs[:8]!r}")
+                        diag_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(
+                            os.path.abspath(__file__)))), "video-creation", "cache", "bitchute-diag")
+                        os.makedirs(diag_dir, exist_ok=True)
+                        shot = os.path.join(diag_dir, f"modal-attempt{attempt}.png")
+                        upload_page.screenshot(path=shot, full_page=True)
+                        print(f"    screenshot: {shot}")
+                    except Exception as e:
+                        print(f"    (modal diagnostic failed: {e})")
                     try:
                         upload_page.keyboard.press("Escape")
                     except Exception:

@@ -18,16 +18,17 @@ when he started the video; a missing row is off (this example has no `short` row
 
 ## PRODUCTION CONVENTIONS
 
-The same tags as a long-form edited screenplay. This track uses 4 of them.
+The same tags as a long-form edited screenplay. This track uses 5 of them.
 
 | Tag | Means |
 |---|---|
 | 🖥️ `[SCREENSHARE]` | spoken, on the screen share as filmed: the deck or the browser, with your webcam |
 | 🗣️ `[COVER]` | spoken, while a card fills the whole frame. Your webcam is hidden, so you can read the line |
+| 👤 `[FACE]` | spoken to the lens, on your full-camera OBS scene: switch to it before the line, back after it. The video centres your face. At most 2 face scenes |
 | 🎬 `[SHOW]` | what is on screen for the `[COVER]` lines above it. It starts with the card's name from the CARDS table; a dot and a second word, as in `supply.locked`, is the same card with a different part lit. Not spoken |
 | 💬 `[NOTE]` | a note to you. Not spoken |
 
-This track has no `[FACE]` scenes, title cards or music yet, so the file has no chapter map and no budgets.
+This track has no title cards or music yet, so the file has no chapter map and no budgets.
 
 ## CARDS
 
@@ -69,7 +70,8 @@ This track has no `[FACE]` scenes, title cards or music yet, so the file has no 
 
 🗣️ `[COVER]` So there are 3 things I'm watching from here.
 🎬 `[SHOW]` what-to-watch: the card WHAT TO WATCH, 3 things.
-🖥️ `[SCREENSHARE]` That's EXAMPLECOIN. Let me know in the comments if you're holding it.
+💬 `[NOTE]` Switch OBS to the full-camera scene for the next line, then back.
+👤 `[FACE]` That's EXAMPLECOIN. Let me know in the comments if you're holding it.
 
 ## NOTES
 

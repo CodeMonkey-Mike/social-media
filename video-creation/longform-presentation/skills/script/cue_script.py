@@ -5,6 +5,7 @@ Read script.md (this folder) first. Run it after the spine is final and transcri
 
   python cue_script.py "media/standard/<p>/SCRIPT.md" --words "media/standard/<p>/spine/<final spine>.medium-words.json"
       [--spine "media/standard/<p>/spine/<final spine>.mp4"] [--out-dir "media/standard/<p>/overlays"] [--allow-missing]
+      [--allow-face-mismatch]          (--spine is required when the script has `[FACE]` lines)
 
 What it does (no judgment, no rewriting; the word JSON is never edited):
   1. ALIGN. Mike reads the script, so the transcript is close. Every spoken line's words are aligned to the transcript
@@ -20,10 +21,17 @@ What it does (no judgment, no rewriting; the word JSON is never edited):
      previous word ends) and runs to the next line's window, so the windows are contiguous. Consecutive `[COVER]`
      lines form one RUN (cover_runs.py renders each run as one clip); consecutive lines on the same card and state
      are one card window inside it. A run's edges sit in the silence next to the neighbouring `[SCREENSHARE]` line.
+  5. FACE SCENES (script.md, "Face scenes"; 2026-11-22). When the script has `[FACE]` lines, the full-camera scenes are
+     found in the spine's picture (face_scenes.py: both side edges black = the full-camera OBS scene) and saved as
+     `face_windows` (cover_runs.py centres his face in them). Every `[FACE]` line must sit inside one: a line said on
+     the screen-share scene (OBS not switched, or switched late) is a FAIL, because the video would show the screen
+     share where the script says his face. Re-record, retag the line, or re-run with --allow-face-mismatch when Mike
+     accepts it. A face window that holds no `[FACE]` line is a FLAG (under a cover nobody sees it).
 
 Writes <out-dir>/cues.json (the machine record cover_runs.py reads) and <out-dir>/CUE-REPORT.md (for a human).
 FAIL (exit 1) only when a `[COVER]` line is MISSING (it has no window, so its card would never show; read the list,
-then re-run with --allow-missing if Mike dropped those lines on purpose) or the windows are not monotonic. Number
+then re-run with --allow-missing if Mike dropped those lines on purpose), a `[FACE]` line is not on the full-camera
+scene (above, 5), or the windows are not monotonic. Number
 mismatches, changed lines and ad-libs are FLAGS, never failures.
 
 PINS: `--pin <script line>=<seconds>` sets a line's window start by hand (a mis-resolved start, an ad-lib that should
@@ -33,7 +41,7 @@ saved in <out-dir>/cue-pins.json and re-applied on every run; delete the entry t
 `number_mismatches` in the machine line counts the lines where he said a DIFFERENT number (both sides disagree); a
 number only left out or only added is listed under them in the report and is not counted.
 
-Machine line: SCRIPT-CUE PASS|FAIL lines=N kept=N changed=N missing=N adlibs=N number_mismatches=N runs=N
+Machine line: SCRIPT-CUE PASS|FAIL lines=N kept=N changed=N missing=N adlibs=N number_mismatches=N runs=N faces=N
 """
 import argparse
 import difflib
@@ -46,6 +54,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import script_common as SC  # noqa: E402
+import face_scenes as FS  # noqa: E402  (the ONE face-scene detector; cover_runs.py and the desilence preset use it too)
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
@@ -167,7 +176,7 @@ def align(lines, words):
     return res, T
 
 
-def build(script_path, words_path, spine=None, allow_missing=False, pins=None):
+def build(script_path, words_path, spine=None, allow_missing=False, pins=None, allow_face_mismatch=False):
     parsed = SC.parse(Path(script_path).read_text(encoding="utf-8"))
     bad = [f"line {n}: {msg}" for n, msg in parsed["problems"]]
     bad += [f"line {e['n']}: not a `[SCREENSHARE]` line or a `[COVER]` line with words and a `[SHOW]` card" for e in parsed["lines"]
@@ -175,6 +184,9 @@ def build(script_path, words_path, spine=None, allow_missing=False, pins=None):
     if bad:
         return None, ["SCRIPT.md is not lint-clean (run lint_script.py first): " + "; ".join(bad[:5])]
     lines = parsed["lines"]
+    has_face = any(e["tag"] == "FACE" for e in lines)
+    if has_face and not spine:
+        return None, ["the script has `[FACE]` lines: pass --spine, the face scenes are found in its picture"]
     words = load_words(words_path)
     if not words or not lines:
         return None, ["no words in the transcript" if not words else "no spoken lines in the script"]
@@ -235,7 +247,8 @@ def build(script_path, words_path, spine=None, allow_missing=False, pins=None):
         text, t0, t1 = said(a_tok, b_tok)
         scene = "as filmed (before the first line)" if after is None else \
             (f"stays on {lines[after]['card']}" + (f".{lines[after]['state']}" if lines[after]["state"] else "")
-             if lines[after]["tag"] == "COVER" else "screen share, as filmed")
+             if lines[after]["tag"] == "COVER" else "face scene, centred" if lines[after]["tag"] == "FACE"
+             else "screen share, as filmed")
         adlibs.append({"after_line": None if after is None else lines[after]["n"], "tIn": round(t0, 3), "tOut": round(t1, 3),
                        "text": text, "scene": scene})
 
@@ -304,7 +317,7 @@ def build(script_path, words_path, spine=None, allow_missing=False, pins=None):
         if r["tag"] != "COVER":
             cur = None
             if r["tOut"] - r["tIn"] < 1.5:
-                flags.append(f"script line {r['n']}: a `[SCREENSHARE]` scene of {r['tOut'] - r['tIn']:.2f} s between covers "
+                flags.append(f"script line {r['n']}: a `[{r['tag']}]` scene of {r['tOut'] - r['tIn']:.2f} s between covers "
                              "(the covers fade out and straight back in; consider making it a cover line)")
             continue
         if cur is None:
@@ -325,12 +338,36 @@ def build(script_path, words_path, spine=None, allow_missing=False, pins=None):
                 flags.append(f"{run['id']}: card {seg['card']}{'.' + seg['state'] if seg['state'] else ''} is up for only "
                              f"{seg['tOut'] - seg['tIn']:.2f} s (script line {seg['lines'][0]})")
 
+    # FACE SCENES (5): where the recording is on the full-camera scene, and does every `[FACE]` line sit inside one?
+    face_windows, face_check = [], []
+    if has_face:
+        face_windows = [list(w) for w in FS.detect(spine)]
+        for r in live:
+            if r["tag"] != "FACE":
+                continue
+            a, b = r["said_in"], r["said_out"]
+            inside = sum(max(0.0, min(b, z) - max(a, w)) for w, z in face_windows)
+            ok = inside >= (b - a) - 0.15                    # 0.15 s of slack: the switch can land on the first syllable
+            face_check.append({"n": r["n"], "said_in": a, "said_out": b, "on_face_s": round(inside, 2), "ok": ok})
+            if not ok:
+                msg = (f"script line {r['n']} is a `[FACE]` line, but only {inside:.2f} s of its {b - a:.2f} s ({mmss(a)} to "
+                       f"{mmss(b)}) is on the full-camera scene (OBS not switched, or switched late): re-record it, retag it, or "
+                       "re-run with --allow-face-mismatch")
+                (flags if allow_face_mismatch else problems).append(msg)
+        for w, z in face_windows:
+            if not any(c["ok"] and w - 0.2 <= c["said_in"] and c["said_out"] <= z + 0.2 for c in face_check):
+                flags.append(f"a full-camera window {mmss(w)} to {mmss(z)} ({z - w:.2f} s) holds no `[FACE]` line (a cover "
+                             "hides it; under a screen-share line it plays, his face centred)")
+    for r in out_lines:
+        if r["status"] == "MISSING" and r["tag"] == "FACE":
+            flags.append(f"script line {r['n']} is a `[FACE]` line he did not say")
+
     n_kept = sum(1 for r in out_lines if r["status"].startswith("KEPT"))
     n_chg = sum(1 for r in out_lines if r["status"].startswith(("CHANGED", "PINNED")))
     n_miss = sum(1 for r in out_lines if r["status"] == "MISSING")
     n_diff = sum(1 for m in mism if m["kind"] == "different")
     machine = (f"SCRIPT-CUE {'FAIL' if problems else 'PASS'} lines={len(out_lines)} kept={n_kept} changed={n_chg} missing={n_miss} "
-               f"adlibs={len(adlibs)} number_mismatches={n_diff} runs={len(runs)}")
+               f"adlibs={len(adlibs)} number_mismatches={n_diff} runs={len(runs)} faces={len(face_windows)}")
     cues = {"script": str(Path(script_path).resolve()), "words": str(Path(words_path).resolve()),
             "spine": str(Path(spine).resolve()) if spine else None, "duration": round(dur, 3),
             "lead_s": LEAD, "allow_missing": bool(allow_missing),
@@ -339,6 +376,7 @@ def build(script_path, words_path, spine=None, allow_missing=False, pins=None):
             "extras": SC.extras(parsed["settings"])[0],     # vertical / short / yt post, as named in the header (absent = off)
             "cards": {k: {"kind": v["kind"], "states": v["states"]} for k, v in parsed["cards"].items()},
             "lines": out_lines, "adlibs": adlibs, "number_mismatches": mism, "runs": runs, "flags": flags,
+            "face_windows": face_windows, "face_check": face_check, "allow_face_mismatch": bool(allow_face_mismatch),
             "problems": problems, "machine": machine}
     return cues, problems
 
@@ -382,7 +420,7 @@ def report(cues):
     if miss:
         L += ["| script line | scene | the line |", "|---|---|---|"]
         for r in miss:
-            sc = "SCREENSHARE" if r["tag"] != "COVER" else f"COVER {r['card']}" + (f".{r['state']}" if r["state"] else "")
+            sc = r["tag"] if r["tag"] != "COVER" else f"COVER {r['card']}" + (f".{r['state']}" if r["state"] else "")
             L.append(f"| {r['n']} | {sc} | {r['text']} |")
         L += ["", "A missing `[COVER]` line has no window, so that card (or state) never shows for it. "
               + ("Accepted with --allow-missing." if cues["allow_missing"] else "The run FAILS until it is re-run with --allow-missing "
@@ -410,6 +448,13 @@ def report(cues):
     L += ["## 5. Flags", ""]
     L += [f"- {f}" for f in cues["flags"]] or ["None."]
     L += [f"- **FAIL:** {p}" for p in cues["problems"]]
+    if cues.get("face_windows") or cues.get("face_check"):
+        L += ["", "## 5b. Face scenes (the full-camera OBS scene, found in the picture)", ""]
+        L += [f"- full-camera window {mmss(w)} to {mmss(z)} ({z - w:.2f} s)" for w, z in cues.get("face_windows", [])] \
+            or ["- no full-camera window found in the spine"]
+        for c in cues.get("face_check", []):
+            L.append(f"- script line {c['n']} `[FACE]`, said {mmss(c['said_in'])} to {mmss(c['said_out'])}: "
+                     + ("on the full-camera scene" if c["ok"] else f"**only {c['on_face_s']:.2f} s on the full-camera scene**"))
     L += ["", "## 6. Cover runs (one clip each, built by `cover_runs.py`)", ""]
     if cues["runs"]:
         L += ["| run | from | to | length | cards in order |", "|---|---|---|---|---|"]
@@ -421,7 +466,7 @@ def report(cues):
         L += ["No cover run: the whole video plays as filmed.", ""]
     L += ["## 7. Every line", "", "| script line | scene | window in | window out | status | as heard |", "|---|---|---|---|---|---|"]
     for r in cues["lines"]:
-        sc = "SCREENSHARE" if r["tag"] != "COVER" else f"COVER {r['card']}" + (f".{r['state']}" if r["state"] else "")
+        sc = r["tag"] if r["tag"] != "COVER" else f"COVER {r['card']}" + (f".{r['state']}" if r["state"] else "")
         if r["status"] == "MISSING":
             L.append(f"| {r['n']} | {sc} | | | MISSING | ({r['text']}) |")
         else:
@@ -436,6 +481,8 @@ def main():
     ap.add_argument("--spine", default=None, help="the FINAL spine (for its duration; recorded for cover_runs.py)")
     ap.add_argument("--out-dir", default=None, help="default: <script folder>/overlays")
     ap.add_argument("--allow-missing", action="store_true", help="Mike dropped the missing [COVER] lines on purpose: do not fail on them")
+    ap.add_argument("--allow-face-mismatch", action="store_true",
+                    help="Mike accepts a [FACE] line that is not on the full-camera scene: a flag, not a failure")
     ap.add_argument("--pin", action="append", default=[], metavar="LINE=SECONDS",
                     help="pin a script line's window start by hand (repeatable; saved in <out-dir>/cue-pins.json, re-applied every run)")
     a = ap.parse_args()
@@ -448,11 +495,11 @@ def main():
     if a.pin:
         out_dir.mkdir(parents=True, exist_ok=True)
         pins_p.write_text(json.dumps(pins, indent=1) + "\n", encoding="utf-8", newline="\n")
-    cues, problems = build(a.script, a.words, a.spine, a.allow_missing, pins)
+    cues, problems = build(a.script, a.words, a.spine, a.allow_missing, pins, a.allow_face_mismatch)
     if cues is None:
         for p in problems:
             print(f"  FAIL  {p}")
-        print("SCRIPT-CUE FAIL lines=0 kept=0 changed=0 missing=0 adlibs=0 number_mismatches=0 runs=0")
+        print("SCRIPT-CUE FAIL lines=0 kept=0 changed=0 missing=0 adlibs=0 number_mismatches=0 runs=0 faces=0")
         sys.exit(1)
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "cues.json").write_text(json.dumps(cues, indent=1, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")

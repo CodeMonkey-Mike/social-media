@@ -861,19 +861,239 @@ def _built(c: dict) -> bool:
     return str(c.get("phase", "")) == "7-built" and "PASS" in str(c.get("gate", ""))
 
 
-def _build_prompt(state: BatchState, c: dict) -> str:
+# ── the per-clip build pipeline (Mike, 2026-11-17, built 2026-11-18) ────────────
+# One agent per decision, plain code where there is nothing to decide:
+#   1 PLAN    remotion-builder writes BROLL-PLAN.md + broll-images.json and stops
+#   2 IMAGES  the `chatgpt` stage lock is taken HERE, in code, then image-gen generates
+#   3 QA      visual-qa opens every image; a FAIL goes back to image-gen (BROLL_QA_ROUNDS)
+#   4 BUILD   remotion-builder builds the composition from the images on disk
+# Before this the builder did all four itself: a builder once quit while waiting on the lock
+# (archie-promo 2026-09-24), nobody but the builder ever looked at a short's images, and the
+# image work ran at the builder's Opus/xhigh tier. Every stage is resumable from disk.
+BUILD_SKILL = "video-creation/livestream-repurpose/skills/remotion-shorts-build/SKILL.md"
+STAGE_LOCK = SHORTS / "_tooling" / "stage_lock.py"
+BROLL_QA_ROUNDS = 2
+
+
+def clip_dir(batch: str, slug: str) -> Path:
+    return SHORTS / batch / slug
+
+
+def broll_plan_path(batch: str, slug: str) -> Path:
+    return clip_dir(batch, slug) / "BROLL-PLAN.md"
+
+
+def broll_list_path(batch: str, slug: str) -> Path:
+    return clip_dir(batch, slug) / "broll-images.json"
+
+
+def broll_qa_path(batch: str, slug: str) -> Path:
+    return clip_dir(batch, slug) / "broll-visual-qa.md"
+
+
+def broll_items(batch: str, slug: str) -> Optional[List[dict]]:
+    """The clip's image worklist, or None when it is missing or malformed. An EMPTY list is
+    valid: a clip whose scoped directive exempts it from coverage needs no images."""
+    d = _read_json(broll_list_path(batch, slug), None)
+    if not isinstance(d, list):
+        return None
+    for it in d:
+        if not (isinstance(it, dict) and str(it.get("prompt") or "").strip()
+                and Path(str(it.get("file") or "")).is_absolute()
+                and str(it["file"]).lower().endswith(".png")):
+            return None
+    return d
+
+
+def _broll_missing(items: List[dict]) -> List[str]:
+    return [it["file"] for it in items if not Path(it["file"]).is_file()]
+
+
+def _plan_prompt(state: BatchState, c: dict) -> str:
     batch = state["batch"]
     return (
-        f"Build vertical short clip {c['n']} `{c['slug']}` of batch `{batch}` end to end to the "
-        f"FINALIZED-SHORT contract (`video-creation/livestream-repurpose/skills/remotion-shorts-build/SKILL.md`): "
-        f"BROLL-PLAN, ChatGPT b-roll (house style, budget rules), Remotion composition, SFX, captions "
-        f"(captions skill), frame-0 thumbnail, ONE full-quality render via `render_short.py full` (NO "
+        f"STAGE 1 of 2 (PLAN ONLY) for vertical short clip {c['n']} `{c['slug']}` of batch `{batch}`. "
+        f"Read the FINALIZED-SHORT contract (`{BUILD_SKILL}`) and its canon, read this clip's scoped "
+        f"directives (`clip_directives.py --batch {batch} --clip {c['n']}`), then author TWO files and STOP:\n"
+        f"1. `{broll_plan_path(batch, c['slug'])}`: the BROLL-PLAN (one row per beat, with the explicit "
+        f"BASE-SHOWING beats, to the coverage budget, the reference-image gate run live).\n"
+        f"2. `{broll_list_path(batch, c['slug'])}`: the image worklist, a JSON array with one object per "
+        f"image to generate: `file` (ABSOLUTE path `{SHORTS / batch / 'render-assets'}\\broll-<batch code><clip n>-<beat>.png`, "
+        f"a name no other clip uses), `prompt` (the full house-style prompt, well-known brands named explicitly), "
+        f"`beat` (the plan row it serves), and `ref` (absolute path of the reference image) ONLY when the plan's "
+        f"reference gate calls for one. Screenshots, code-drawn cards and base-showing beats are NOT in the list. "
+        f"An empty array is correct only when a scoped directive exempts this clip from coverage.\n"
+        f"Do NOT generate images, do NOT touch the ChatGPT browser or the stage locks, do NOT write the "
+        f"composition, do NOT render. A separate image agent generates the list, visual-qa checks it, and you "
+        f"are called again to build. Your final message is one JSON object: "
+        f'{{"broll_plan": "<path>", "broll_list": "<path>", "images": <count>}}.'
+    )
+
+
+def _images_prompt(state: BatchState, c: dict, redo_report: Optional[Path]) -> str:
+    batch = state["batch"]
+    lst = broll_list_path(batch, c["slug"])
+    redo = ""
+    if redo_report:
+        redo = (
+            f"\nThis is a FIX ROUND. visual-qa failed some images: read `{redo_report}`. For every FAILED "
+            f"file: move the bad png into `{clip_dir(batch, c['slug']) / '_qa' / 'rejected'}` (never delete, "
+            f"never overwrite), correct that item's `prompt` in the worklist so the defect cannot recur, then "
+            f"run the generator again (it regenerates only the files that are missing). Leave PASSED images alone."
+        )
+    return (
+        f"Generate the ChatGPT b-roll images for vertical SHORT clip {c['n']} `{c['slug']}` of livestream batch "
+        f"`{batch}`. This is a shorts job, not a longform one: the worklist is `{lst}` (already authored, with "
+        f"its plan `{broll_plan_path(batch, c['slug'])}`), and every image goes to the `file` path its item names. "
+        f"Run the canonical generator from the repo root, in the FOREGROUND with a long timeout:\n"
+        f"`python repurpose/gen_batch.py --list \"{lst}\" --prefix broll --batch {batch}`\n"
+        f"The batch graph ALREADY HOLDS the `chatgpt` stage lock for you: do not acquire, release or wait on "
+        f"any lock, and never end your turn to wait for anything. One attempt per run: if the generator seems "
+        f"stuck, read its output, never relaunch blind. It skips files that exist, so a re-run after a partial "
+        f"result is safe. When it finishes: md5sum the pngs (a duplicate is a mis-capture: move it aside and "
+        f"regenerate), and OPEN every image to check it against its prompt (the named asset, house style, no "
+        f"unrequested real logo or real face, no stray text). Fix a wrong image by correcting the prompt in the "
+        f"worklist and regenerating that one file. Do not edit the BROLL-PLAN, the composition or anything "
+        f"else.{redo}\n"
+        f"Your final message is one JSON object: per file `path`, `ok` and a QA note, plus `failed` (files "
+        f"you could not get right)."
+    )
+
+
+def _broll_qa_prompt(state: BatchState, c: dict, items: List[dict]) -> str:
+    batch = state["batch"]
+    files = "\n".join(it["file"] for it in items if Path(it["file"]).is_file())
+    return (
+        f"Visual-QA every ChatGPT b-roll image of vertical short clip {c['n']} `{c['slug']}` (batch `{batch}`) "
+        f"against ITS prompt in `{broll_list_path(batch, c['slug'])}`, its beat in "
+        f"`{broll_plan_path(batch, c['slug'])}`, and the b-roll rules of `{BUILD_SKILL}` (step 2a brand buckets, "
+        f"step 5 persona inspection: a real logo or real face the prompt did NOT ask for is a FAIL, a named "
+        f"well-known brand the prompt DID ask for is correct; invented numbers or chart figures are a FAIL; "
+        f"wrong subject, wrong coin colour, stray text, artifacts, two near-identical images are FAILs). Files:\n"
+        f"{files}\n\n"
+        f"Report only; change nothing. Give one line per file, exactly `PASS: <file name>` or "
+        f"`FAIL: <file name> | <the defect> | <the prompt fix>`, and make the LAST line exactly "
+        f"`VERDICT: PASS` (every file passed) or `VERDICT: FAIL`."
+    )
+
+
+def _build_prompt(state: BatchState, c: dict, notes: str = "") -> str:
+    batch = state["batch"]
+    return (
+        f"STAGE 2 of 2 (BUILD) for vertical short clip {c['n']} `{c['slug']}` of batch `{batch}`: build it to "
+        f"the FINALIZED-SHORT contract (`{BUILD_SKILL}`). The b-roll is ALREADY DONE: the plan is "
+        f"`{broll_plan_path(batch, c['slug'])}`, the generated images are the `file` paths in "
+        f"`{broll_list_path(batch, c['slug'])}`, and the independent image check is "
+        f"`{broll_qa_path(batch, c['slug'])}`. Do NOT generate or regenerate images and do NOT touch the "
+        f"ChatGPT browser or the `chatgpt` lock. Build from what is on disk: the Remotion composition, SFX, "
+        f"captions (captions skill), frame-0 thumbnail, ONE full-quality render via `render_short.py full` (NO "
         f"low-bitrate draft; fix any defect with `render_short.py splice` / `audio`, never a second full "
         f"render unless it is clip-wide), then run the mechanical gate "
-        f"(`finalized_short_gate.py --clip {c['n']}`) and self-QA. Project folder: `{SHORTS / batch}`; "
-        f"progress: `{prog_path(batch)}`. Respect the chatgpt/render stage locks (stage_lock.py). "
-        f"Done means progress.json shows this clip phase 7-built with a PASS gate."
+        f"(`finalized_short_gate.py --clip {c['n']}`) and self-QA. A beat whose image is missing or still "
+        f"FAILED in the image check is remapped to another clean image of this clip, a code-drawn card or a "
+        f"base-showing beat (update the BROLL-PLAN to match, zero orphans) and named in your report.{notes} "
+        f"Project folder: `{SHORTS / batch}`; progress: `{prog_path(batch)}`. Respect the `render` stage lock "
+        f"(render_short.py takes it itself). Done means progress.json shows this clip phase 7-built with a PASS gate."
     )
+
+
+def _stage_lock(action: str, stage: str, owner: str) -> int:
+    r = subprocess.run([sys.executable, "-u", str(STAGE_LOCK), action, stage, "--owner", owner],
+                       cwd=str(REPO_ROOT), stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                       text=True, encoding="utf-8", errors="replace")
+    if r.returncode != 0:
+        print(f"[batch] stage_lock {action} {stage} ({owner}) exit {r.returncode}: "
+              f"{(r.stdout or '').strip()[-300:]}", flush=True)
+    return r.returncode
+
+
+def _qa_verdict(out: str) -> Optional[str]:
+    m = re.findall(r"^\W*VERDICT:\s*(PASS|FAIL)\b", out or "", flags=re.M | re.I)
+    return m[-1].upper() if m else None
+
+
+def _clip_images(state: BatchState, node: str, c: dict) -> str:
+    """Stages 2 + 3 for one clip. Returns a note for the builder ('' when every image exists
+    and passed); raises RuntimeError when the clip cannot go on."""
+    batch, slug, n = state["batch"], c["slug"], c["n"]
+    items = broll_items(batch, slug)
+    if not items:
+        return ""
+    report = broll_qa_path(batch, slug)
+    verdict, redo, done_rounds = None, None, 0
+    if report.is_file():
+        old = report.read_text(encoding="utf-8")
+        verdict = _qa_verdict(old)
+        m = re.search(r"visual QA, round (\d+)", old.splitlines()[0] if old else "")
+        done_rounds = int(m.group(1)) if m else 0
+        if not _broll_missing(items):
+            if verdict == "PASS":
+                return ""
+            if done_rounds >= BROLL_QA_ROUNDS:
+                # A re-driven batch: this clip already used its image rounds (batch `ripping`, 2026-11-19:
+                # clips 1, 6 and 7 ended FAIL after two rounds and their builders remapped). Do not
+                # regenerate again; the builder gets the same note. Delete the report to force new rounds.
+                return _images_note(verdict, [], done_rounds)
+            if verdict == "FAIL" and done_rounds:
+                redo = report                               # resume at the fix round, no second look first
+    marker = build_marker(batch, slug)
+    first = done_rounds + 1 if redo else 1
+    verdict = None
+    for rnd in range(first, BROLL_QA_ROUNDS + 1):
+        if _broll_missing(items) or redo:
+            owner = f"{batch}-{slug}-images"
+            _beat(state, node, f"clip {n}: waiting for the ChatGPT browser")
+            if _stage_lock("acquire", "chatgpt", owner) != 0:
+                raise RuntimeError("could not take the chatgpt stage lock")
+            try:
+                spawn_agent(state, node, "image-gen", _images_prompt(state, c, redo),
+                            f"agent-image-gen-{batch}-{n}.log", marker=marker)
+            finally:
+                _stage_lock("release", "chatgpt", owner)
+            items = broll_items(batch, slug) or items       # a fix round may have corrected prompts
+        present = [it for it in items if Path(it["file"]).is_file()]
+        if not present:
+            raise RuntimeError(f"image-gen produced none of the {len(items)} images "
+                               f"(log agent-image-gen-{batch}-{n}.log)")
+        rc, out = spawn_agent(state, node, "visual-qa", _broll_qa_prompt(state, c, items),
+                              f"agent-visual-qa-{batch}-clip{n}.log", marker=marker)
+        verdict = _qa_verdict(out)
+        if rc == 0 and (out or "").strip():
+            # visual-qa carries no Write tool: its report comes back as text and is persisted here.
+            report.write_text(f"# {batch} clip {n} `{slug}`: b-roll visual QA, round {rnd} "
+                              f"({_now_iso()})\n\n{out}", encoding="utf-8")
+        print(f"[batch] {node}: clip {n} image check round {rnd}: {verdict or 'no verdict'}", flush=True)
+        if verdict == "PASS" and not _broll_missing(items):
+            return ""
+        redo = report if verdict == "FAIL" and report.is_file() else None
+        if not redo and not _broll_missing(items):
+            break                                           # no verdict to act on: do not regenerate blind
+    return _images_note(verdict, [Path(f).name for f in _broll_missing(items)], BROLL_QA_ROUNDS)
+
+
+def _images_note(verdict: Optional[str], missing: List[str], rounds: int) -> str:
+    return (f" NOTE FROM THE GRAPH: after {rounds} image round(s) the image check ended "
+            f"{verdict or 'with no verdict'}" + (f" and these images are missing: {missing}" if missing else "")
+            + ". Read the image check first and remap those beats.")
+
+
+def _build_clip(state: BatchState, node: str, c: dict) -> Optional[str]:
+    """The whole per-clip pipeline. Returns an error string, or None (the caller still
+    verifies 7-built PASS from progress.json)."""
+    batch, slug, n = state["batch"], c["slug"], c["n"]
+    marker = build_marker(batch, slug)
+    log = f"agent-remotion-builder-{batch}-{n}.log"
+    try:
+        if not (broll_plan_path(batch, slug).is_file() and broll_items(batch, slug) is not None):
+            spawn_agent(state, node, "remotion-builder", _plan_prompt(state, c), log, marker=marker)
+            if not broll_plan_path(batch, slug).is_file() or broll_items(batch, slug) is None:
+                return (f"clip {n}: the builder's plan stage left no valid BROLL-PLAN.md + "
+                        f"broll-images.json in {clip_dir(batch, slug)} (log {log})")
+        notes = _clip_images(state, node, c)
+        spawn_agent(state, node, "remotion-builder", _build_prompt(state, c, notes), log, marker=marker)
+    except Exception as e:
+        return f"clip {n}: {type(e).__name__}: {e}"
+    return None
 
 
 def build_marker(batch: str, slug: str) -> Path:
@@ -888,7 +1108,8 @@ def _marker_pid(marker: Path) -> Optional[int]:
 
 
 def lane2_build(state: BatchState) -> BatchState:
-    """One headless remotion-builder per clip, `max_builders` at a time (state value,
+    """One build pipeline per clip (`_build_clip`: plan -> image-gen under the chatgpt lock ->
+    visual-qa -> build), `max_builders` at a time (state value,
     overridable per run via env BATCH_MAX_BUILDERS so a resumed supervisor can change
     it). A clip whose `.building.pid` marker points at a LIVE process is being built by
     someone else (a previous supervisor incarnation, or a hand-spawned builder): it is
@@ -929,13 +1150,12 @@ def lane2_build(state: BatchState) -> BatchState:
              f"{[(c['n'], pid) for c, pid in external]}" if external else ""), flush=True)
     _beat(state, node, f"building {len(todo)} clip(s), {workers} concurrent")
 
-    def one(c):
-        return c, spawn_agent(state, node, "remotion-builder", _build_prompt(state, c),
-                              f"agent-remotion-builder-{batch}-{c['n']}.log",
-                              marker=build_marker(batch, c["slug"]))
+    errors = []
     if todo:
         with ThreadPoolExecutor(max_workers=workers) as ex:
-            list(ex.map(one, todo))
+            errors = [e for e in ex.map(lambda c: _build_clip(state, node, c), todo) if e]
+        for e in errors:
+            print(f"[batch] {node}: {e}", flush=True)
     waited = 0
     for c, pid in external:
         while pid_alive(pid):
@@ -948,7 +1168,8 @@ def lane2_build(state: BatchState) -> BatchState:
     fresh = {c["n"]: c for c in prog(batch).get("clips", [])}
     still = [c["slug"] for c in surviving if not _built(fresh.get(c["n"], {}))]
     if still:
-        err = f"clips not 7-built PASS after the builders: {still}"
+        err = f"clips not 7-built PASS after the builders: {still}" + \
+              ("; " + "; ".join(errors) if errors else "")
         return {"status": "failed", "error": err, "steps": _step(state, node, "failed", err)}
     return {"steps": _step(state, node, "ran",
                            f"{len(todo)} built here, {len(external)} awaited; all {len(surviving)} 7-built PASS")}

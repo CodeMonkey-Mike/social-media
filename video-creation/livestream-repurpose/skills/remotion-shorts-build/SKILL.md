@@ -22,6 +22,23 @@ documented standard. Hours were lost. This file makes that impossible to repeat.
    `video-creation/style-guide/shorts-style-guide.md`, `style-guide/broll-analysis.md`). **Read them
    in full before building.** This file is the contract and the gate; those are the how.
 
+## One clip = FOUR steps, three agents (Mike, 2026-11-17; in the graph since 2026-11-18)
+
+One agent per decision, plain code where there is nothing to decide. `lane2_build` in
+`graph/batch_graph.py` runs every clip through `_build_clip`:
+
+| # | Step | Who | Leaves on disk |
+|---|---|---|---|
+| 1 | PLAN | `remotion-builder`, stage 1 | `<clip>/BROLL-PLAN.md` + `<clip>/broll-images.json` (`[{file, prompt, beat, ref?}]`, `file` absolute, in the batch's `render-assets/`) |
+| 2 | IMAGES | the graph takes the `chatgpt` lock IN CODE, then `image-gen` runs `gen_batch.py` on the worklist | the pngs |
+| 3 | IMAGE CHECK | `visual-qa` opens every image; a FAIL goes back to step 2 (two rounds at most) | `<clip>/broll-visual-qa.md` |
+| 4 | BUILD | `remotion-builder`, stage 2: composition, SFX, captions, render, gate | the render, `7-built` PASS |
+
+The builder never generates an image and never touches the ChatGPT browser. An image still missing
+or FAILED after the rounds is remapped by the builder at step 4 (another clean image, a code-drawn
+card, a base-showing beat). Every step is skipped when its files already exist, so a re-driven
+batch picks up where it stopped. Clips still run in parallel: only step 2 takes turns.
+
 ## Batch builds run IN PARALLEL — use the stage lock, never serialize
 
 **Do NOT build a batch one clip at a time.** Launch every clip's builder at once and serialize only
@@ -168,8 +185,10 @@ cinematic), meme images, animated coin/logo graphics, abstract motion, real arti
    answer: on `tendies` clip 5 it produced a blank gold coin facing a correctly-marked Ethereum
    diamond in a clip whose entire argument is BTC vs ETH, which reads as a rendering fault rather
    than a neutral choice.
-3. **Generate straight into the clip's `render-assets/`** with `broll-<batch>-<beat>.png` names;
-   reference via `staticFile()`.
+3. **Generate straight into the batch's `render-assets/`** with `broll-<batch>-<beat>.png` names;
+   reference via `staticFile()`. (Steps 1-2 are the builder's PLAN stage, which also writes the
+   worklist `broll-images.json`; step 3 is the `image-gen` agent's; steps 4-5 are the builder's BUILD
+   stage, after `visual-qa` has made the same step-5 inspection independently.)
    - **Primary generator = `python repurpose/gen_batch.py --list <list.json> --prefix broll --batch <id>`
      (ChatGPT, pool purpose `broll`; canonical Python port 2026-08-11, built on the blessed
      `gen_images.py` capture stack — `generate-broll-reload.js` / `gen-batch-freshchat.js` are its
@@ -205,10 +224,11 @@ cinematic), meme images, animated coin/logo graphics, abstract motion, real arti
      Best run against a FRESH chat (retire the active broll chat first, or pass `--fresh`) so the
      seen-set starts clean.
      **After a run, ALWAYS `md5sum` the beat pngs to confirm zero duplicates** (a dup = a mis-capture to
-     regenerate; the generator also byte-rejects sibling dups itself). The build agent runs this
-     generator ITSELF as part of building its one clip (Mike: a single agent builds each clip end to
-     end, one at a time) — the reload/`file_id`/URL/modal handling above makes it reliable enough to
-     run unattended. It gets stuck ONLY if you use the old JS DOM-poll scripts; use `gen_batch.py`.
+     regenerate; the generator also byte-rejects sibling dups itself). **The `image-gen` agent runs
+     this generator, not the build agent** (Mike, 2026-11-17, replacing "a single agent builds each
+     clip end to end"; see "One clip = FOUR steps" above). The batch graph holds the `chatgpt` lock
+     around it. The reload/`file_id`/URL/modal handling above makes it reliable enough to run
+     unattended. It gets stuck ONLY if you use the old JS DOM-poll scripts; use `gen_batch.py`.
    - The old JS (`generate-broll-reload.js`, `gen-batch-freshchat.js`, `gen-images.js`,
      `generate-broll-batch.js`) is frozen rollback only — do not reach for it unless the Python
      stack is broken and the rollback is deliberate.

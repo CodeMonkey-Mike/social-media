@@ -12,8 +12,9 @@
 
 ## Queue → script (full table in SKILL.md)
 - Tweets `data/x-tweets.json` → `scripts/post-tweet.js` · threads → `python scripts/post_thread.py` (Python only, JS twin deleted 2026-10-21) · X poll → `post-x-poll.js`
-- Shorts `data/shorts.json` (per `platforms.*`) → `post-{x-short, yt-short-api, ig-reel, fb-short, tiktok-short, rumble-short, bitchute-short}.js`
+- Shorts `data/shorts.json` (per `platforms.*`) → `post-{yt-short-api, ig-reel, fb-short, tiktok-short, rumble-short, bitchute-short}.js` · X short → `python -u scripts/post_x_short.py` (JS twin retired 2026-11-18)
 - YT community `data/yt-posts.json` → `post-yt-community.js` · YT poll `data/yt-text-polls.json` → `post-yt-poll.js`
+- AI Engineering Simplified community posts `data/ai-yt-posts.json` → `python scripts/post_yt_community.py --channel ai` (2026-11-17; its own `ai-ytbot-profile`, CDP 9225; run when Mike asks for the AI channel's post, not yet part of a full posting run). The JS `post-yt-community.js` and a bare Python run post the crypto queue as @CodeMonkeyMike
 - IG single/carousel → `post-ig-single.js` / `post-ig-carousel.js`
 - Longform → `upload-longform-{rumble,bitchute}.js` (folder-based; **update `data/longs.json` status+url manually** after)
 

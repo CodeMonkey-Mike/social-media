@@ -56,6 +56,12 @@ word and the new slide's first. A change inside speech or inside an uncut pause 
 changes it found go into the map (`slide_changes`). Mind the spotlight's `chapter_pause`: on a deck lecture every
 slide is a chapter, so a chapter pause stacks on top of this air (decide one or the other per video).
 
+**Face scenes of a scripted standard video (2026-11-22, automatic):** when the project's `SCRIPT.md` (the input's
+folder or up to two above it) has `[FACE]` lines, the preset finds the full-camera scenes in the picture
+(`../script/face_scenes.py`) and keeps every pause between the first and the last word of each, the canonical tool's
+`--keep-face-pauses` rule (over 2.5 s is still cut to 0.45 s). The windows and the kept spans go into the map
+(`face_windows`, `face_pauses_kept`). `--no-face-pauses` turns it off. `../script/script.md`, "Face scenes".
+
 ## Procedure
 
 1. **Defumble FIRST** if the take has retakes / false starts / abandoned fragments

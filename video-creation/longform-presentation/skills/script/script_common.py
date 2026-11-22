@@ -6,6 +6,7 @@ Nothing here judges the script: it only reads it into a structure. lint_script.p
 A SCRIPT.md is WRITTEN like a longform-edited screenplay (Mike 2026-11-16: "why make this file any different?"): the
 same tags, each with its emoji and in code ticks, under the same `## CH<n> - <TITLE>` headings.
   spoken:  `[SCREENSHARE]` the recording as filmed  |  `[COVER]` a card fills the whole frame
+           `[FACE]` Mike on his full-camera OBS scene, his face centred (at most FACE_SCENES_MAX scenes; 2026-11-22)
   silent:  `[SHOW]` <card>[.<state>]: what is on screen for the `[COVER]` lines ABOVE it (back to the previous `[SHOW]`
            line, `[SCREENSHARE]` line or heading)  |  `[NOTE]` a note to Mike
 So a `[COVER]` line carries no card name: its card and state come from the `[SHOW]` line under it.
@@ -29,12 +30,15 @@ SETTINGS = ("project", "channel", "silence", "enhance speech")
 # missing row = off. `vertical` on | off (the full 9:16 cut), `short` off | on | <seconds> (on = 30), `yt post` on | off.
 EXTRAS = ("vertical", "short", "yt post")
 SHORT_DEFAULT_S = 30
-SPOKEN_TAGS = ("COVER", "SCREENSHARE")
+SPOKEN_TAGS = ("COVER", "SCREENSHARE", "FACE")
+# a FACE SCENE = consecutive `[FACE]` lines (a `[NOTE]` between them does not split it). Mike 2026-11-22: "a few screenshare
+# scenes, and up to 2 face scenes" (script.md, "Face scenes").
+FACE_SCENES_MAX = 2
 SILENT_TAGS = ("SHOW", "NOTE")
 # How each tag is WRITTEN: its emoji, then the tag in code ticks, exactly as a longform-edited screenplay writes it, so a
 # script previews like a screenplay. The emoji are the screenplay lint's own table (lint_screenplay.EMOJI); this copy
 # keeps the parser import-free and lint_script.py fails if the two ever differ.
-EMOJI = {"SCREENSHARE": "\U0001F5A5️", "COVER": "\U0001F5E3️", "SHOW": "\U0001F3AC", "NOTE": "\U0001F4AC"}
+EMOJI = {"SCREENSHARE": "\U0001F5A5️", "COVER": "\U0001F5E3️", "FACE": "\U0001F464", "SHOW": "\U0001F3AC", "NOTE": "\U0001F4AC"}
 
 TAG_RE = re.compile(r"^\[([A-Za-z][A-Za-z-]*)(?:[ \t]+([^\]]*))?\][ \t]*(.*)$")
 LEAD = re.compile(r"^([^\x00-\x7f]+)[ \t]*")             # the tag's emoji
@@ -135,10 +139,11 @@ def parse(text):
                     problems.append((n, "`[COVER]` takes no card name: the `[SHOW]` line under it names the card, the way a "
                                         f"screenplay is written: {s[:60]}"))
                 pending.append(entry)
-            elif tag == "SCREENSHARE":
+            elif tag in ("SCREENSHARE", "FACE"):
                 scene_ends()
                 if arg:
-                    problems.append((n, f"`[SCREENSHARE]` takes no argument (the recording plays as filmed): {s[:60]}"))
+                    problems.append((n, f"`[{tag}]` takes no argument (the recording plays as filmed"
+                                        + (", his face centred" if tag == "FACE" else "") + f"): {s[:60]}"))
             lines.append(entry)
             continue
         if kind != "slide":
@@ -170,6 +175,20 @@ def extras(settings):
     else:
         bad.append(f"header: `short` must be off | on | a length in seconds from 15 to 60, got '{settings.get('short')}'")
     return out, bad
+
+
+def face_scenes(lines):
+    """[[line n, ...], ...]: the FACE SCENES, each a run of consecutive `[FACE]` lines (spoken lines only, so a `[NOTE]`
+    or a `[SHOW]` line between two `[FACE]` lines never splits a scene)."""
+    out, prev = [], None
+    for e in lines:
+        if e["tag"] == "FACE":
+            if prev == "FACE":
+                out[-1].append(e["n"])
+            else:
+                out.append([e["n"]])
+        prev = e["tag"]
+    return out
 
 
 def card_file(card, state):

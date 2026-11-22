@@ -19,6 +19,9 @@ Commands:
   tabs <session> [--check] [--open]
                                the ordered tab list. --check loads each in a throwaway browser. --open opens a new Chrome window
   status <session>             where the session stands
+  series <name>                a running SERIES (series/<name>/): the months done, how many items each and how many
+                               involved AI, and the next month to research. A month is a session named
+                               series/<name>/<YYYY-MM>, so render / approve / tabs / status take that name as is
 
 The HITL gate is enforced here: clips, tabs and RUNDOWN.md refuse to run until Mike has approved topics.
 Exit: 0 = OK, 1 = a check failed, 2 = waiting on Mike's gate or a usage error.
@@ -44,12 +47,17 @@ DATASET = ROOT / "circumstances" / "circumstances.json"
 DATASET_MD = ROOT / "circumstances" / "CIRCUMSTANCES.md"
 LAST_SCAN = ROOT / "circumstances" / "last-scan.json"
 MEDIA = ROOT / "media"
+SERIES = ROOT / "series"   # running research that no one recording owns (Mike, 2026-11-19: health-breakthroughs, a month at a time)
 CAPTURE = ROOT.parent / "longform-edited" / "skills" / "clip-inserts" / "capture_clip_insert.py"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
 
 ENTRY_KINDS = {"precedent", "pattern", "recurring-chart", "claim-check", "inspiration"}
 ENTRY_STATUS = {"verified", "partly-verified", "unverified"}
-TAB_KINDS = {"article", "chart", "clip", "x-post", "odds", "local"}
+TAB_KINDS = {"article", "chart", "clip", "x-post", "odds", "local", "code"}
+# The channel the recording is for. "ai" = AI Engineering Simplified (Mike, 2026-11-19, session `langgraph-updates`): the
+# coin rules and the "We are here" chart do not apply, and a `code` tab (a repo file at a line, opened in VS Code) is allowed.
+CHANNELS = {"crypto", "ai"}
+REPO = ROOT.parents[1]   # the repo root: a code tab's `path` is relative to it
 CHECK_TYPES = {"always", "manual", "midterm_window", "fed_hike_within", "drawdown", "day_drop", "day_jump",
                "level_above", "level_below", "near_sma", "near_low"}
 TOPIC_STATUS = {"PROPOSED", "APPROVED", "REJECTED"}
@@ -209,6 +217,39 @@ def cmd_scan(_a):
 
 
 # ── lint + dataset view ───────────────────────────────────────────────────────────────────────────────────────────────
+def code_url(path: str, line: int) -> str:
+    """VS Code's own link format (the `vscode://` handler it registers on install): opens the file at that line."""
+    return f"vscode://file/{(REPO / path).as_posix()}:{line}"
+
+
+def lint_code_tab(t, w: str):
+    """A line number is true only until the next edit of that file, so every line a code tab cites is re-read on each render
+    and each `tabs --check`: `anchor` must be on `line`, and each `anchors[]` text ({line, text, path?}) on its own line."""
+    errs = [f"{w}: code tab without {k}" for k in ("path", "line", "anchor") if not t.get(k)]
+    if errs:
+        return errs
+    cited = [(t["path"], t["line"], t["anchor"])] + [(a.get("path") or t["path"], a.get("line"), a.get("text")) for a in t.get("anchors", [])]
+    files = {}
+    for path, line, text in cited:
+        if not (line and text):
+            errs.append(f"{w}: an anchor needs line + text")
+            continue
+        if path not in files:
+            f = REPO / path
+            files[path] = f.read_text(encoding="utf-8", errors="replace").splitlines() if f.is_file() else None
+        rows = files[path]
+        if rows is None:
+            errs.append(f"{w}: no file {path}")
+        elif not 1 <= int(line) <= len(rows) or text not in rows[int(line) - 1]:
+            now = [i + 1 for i, x in enumerate(rows) if text in x]
+            errs.append(f"{w}: '{text}' is not on line {line} of {path} " + (f"(it is on line {now[0]} now)" if now else "(it is not in the file)"))
+    if t.get("end") and int(t["end"]) < int(t["line"]):
+        errs.append(f"{w}: end is before line")
+    if not errs and t.get("url") != code_url(t["path"], int(t["line"])):
+        errs.append(f"{w}: url must be {code_url(t['path'], int(t['line']))}")
+    return errs
+
+
 def lint_tabs(tabs, where: str):
     errs = []
     for i, t in enumerate(tabs):
@@ -225,6 +266,8 @@ def lint_tabs(tabs, where: str):
                     errs.append(f"{w}: clip without {k}")
             if t.get("start") and t.get("end") and clock_s(t["end"]) <= clock_s(t["start"]):
                 errs.append(f"{w}: clip end is not after its start")
+        if t.get("kind") == "code":
+            errs += lint_code_tab(t, w)
     return errs
 
 
@@ -311,7 +354,9 @@ def cmd_lint(_a):
 
 # ── sessions ──────────────────────────────────────────────────────────────────────────────────────────────────────────
 def session_dir(name: str) -> Path:
-    return MEDIA / name
+    """A recording's session is media/<name>. A series month is series/<series>/<YYYY-MM>, passed with its series/ prefix."""
+    name = name.replace("\\", "/").strip("/")
+    return ROOT / name if name.startswith("series/") else MEDIA / name
 
 
 def load_session(name: str):
@@ -324,6 +369,9 @@ def load_session(name: str):
 
 def lint_session(s):
     errs = lint_text(s, "session")
+    channel = s.get("channel", "crypto")
+    if channel not in CHANNELS:
+        errs.append(f"session: channel must be one of {sorted(CHANNELS)}")
     ids = set()
     for t in s["topics"]:
         tid = t.get("id")
@@ -343,6 +391,9 @@ def lint_session(s):
                     errs.append(f"topic {tid}: a fact without text + source + read date: {f.get('text', '')[:50]}")
         errs += lint_tabs(t.get("tabs", []), f"topic {tid}")
         for tab in t.get("tabs", []):
+            if tab.get("kind") == "code" and channel != "ai":
+                # Repo code on screen is pipeline detail, and that stays off the crypto channel (Mike, 2026-11-05).
+                errs.append(f"topic {tid}: tab '{tab.get('label')}' is a code tab, and those are for the AI channel only (set channel to ai)")
             if tab.get("dropped"):
                 continue
             # A clip says its own piece. Any other tab with nothing under it leaves him on screen with nothing to say.
@@ -370,15 +421,19 @@ def lint_plan(s):
             errs.append(f"plan: topic {t['id']} tab '{tab['label']}' has more than {FACTS_PER_TAB} facts. One fact and one take is the format")
         if len(tab.get("careful", [])) > CAREFUL_PER_TAB:
             errs.append(f"plan: topic {t['id']} tab '{tab['label']}' has more than {CAREFUL_PER_TAB} cautions. Fans are watching: keep only what stops a false line")
-    if not any(str(tab.get("show", "")).startswith("We are here") for _t, tab in rows):
+    # A past-chart moment is the crypto channel's format. An AI-channel session has no chart to scroll back on.
+    if s.get("channel", "crypto") == "crypto" and not any(str(tab.get("show", "")).startswith("We are here") for _t, tab in rows):
         errs.append("plan: no 'We are here' chart. Show a moment from the past and say where we are now (Mike, 2026-11-06)")
+    # The video's own coin. Kaspa unless he named another coin as the whole subject (e.g. "i want to talk about solana",
+    # 2026-11-17): then that coin is the primary and every OTHER coin stays under a third.
+    primary = s.get("primary_coin", PRIMARY_COIN)
     coins = {}
     for t, _tab in rows:
         if t.get("coin"):
             coins[t["coin"]] = coins.get(t["coin"], 0) + 1
     for coin, n in coins.items():
-        if coin != PRIMARY_COIN and rows and n / len(rows) > OTHER_COIN_SHARE:
-            errs.append(f"plan: {coin} has {n} of {len(rows)} tabs. No coin except {PRIMARY_COIN} gets more than a third")
+        if coin != primary and rows and n / len(rows) > OTHER_COIN_SHARE:
+            errs.append(f"plan: {coin} has {n} of {len(rows)} tabs. No coin except {primary} gets more than a third")
     for t in s["topics"]:   # the fans of this coin are watching, so every coin topic carries bullish lines
         if t.get("coin") and t.get("status") != "REJECTED":
             holders = [t.get("no_tab") or {}] + [b for b in t.get("tabs", []) if not b.get("dropped")]
@@ -468,7 +523,7 @@ def render_rundown(s):
             L += ["### No tab, on camera", ""] + under(t["no_tab"])
         for n, owner, tab in numbered:
             if owner is t:
-                where = tab.get("file") or tab.get("url")
+                where = f"{tab['path']}:{tab['line']}" if tab["kind"] == "code" else tab.get("file") or tab.get("url")
                 extra = f" {tab['show']}" if tab.get("show") else ""
                 L += [f"### Tab {n}, {tab['kind']}: {tab['label']}", "", f"{where}{extra}", ""] + under(tab)
     return "\n".join(L)
@@ -677,6 +732,11 @@ def check_tabs(rows, shots: Path):
                 print(f"TAB {n} NOT-READY {tab['label']}: no local file yet")
                 problems += 1
                 continue
+            if tab["kind"] == "code":   # not a browser page: the check is that every cited line still holds its text
+                stale = lint_code_tab(tab, f"tab {n}")
+                print(f"TAB {n} {'STALE ' + '; '.join(stale) if stale else 'OK'} code {tab['path']}:{tab['line']}")
+                problems += 1 if stale else 0
+                continue
             if "x.com/" in target:
                 print(f"TAB {n} SKIP x.com needs your login, not checkable here: {target}")
                 continue
@@ -719,9 +779,18 @@ def cmd_tabs(a):
         if missing or not chrome:
             print(f"FAIL not opening, not ready: {missing}" if missing else "FAIL Chrome not found")
             return 1
+        # Code tabs open in VS Code at their line (Chrome would only ask what to do with a vscode:// link).
+        code_tabs = [tab for _, _, tab in rows if tab["kind"] == "code"]
+        editor = shutil.which("code") if code_tabs else None
+        if code_tabs and not editor:
+            print("FAIL not opening: VS Code's `code` command is not on PATH, and this session has code tabs")
+            return 1
         # a NEW window in Mike's normal Chrome, so his logins apply. Never closes or restarts anything.
-        subprocess.Popen([chrome, "--new-window"] + [tab_target(tab) for _, _, tab in rows])
-        print(f"OPENED {len(rows)} tabs in a new Chrome window")
+        web = [tab_target(tab) for _, _, tab in rows if tab["kind"] != "code"]
+        subprocess.Popen([chrome, "--new-window"] + web)
+        for tab in code_tabs:
+            subprocess.Popen([editor, "--goto", f"{REPO / tab['path']}:{tab['line']}"])
+        print(f"OPENED {len(web)} tabs in a new Chrome window" + (f" and {len(code_tabs)} files in VS Code" if code_tabs else ""))
     return 1 if bad else 0
 
 
@@ -738,6 +807,28 @@ def cmd_status(a):
     return 0
 
 
+def cmd_series(a):
+    """One line per month researched, then the next month. A topic's `ai` (yes / no) says whether AI was part of the
+    breakthrough itself; `week: true` marks a "this week" closer, which is counted apart from the month."""
+    d = SERIES / a.name
+    months = sorted(m for m in d.glob("[0-9][0-9][0-9][0-9]-[0-9][0-9]") if (m / "TOPICS.json").is_file()) if d.is_dir() else []
+    if not months:
+        print(f"SERIES {a.name}: no months yet in {d}")
+        return 1
+    tot = ai_tot = 0
+    for m in months:
+        s = read_json(m / "TOPICS.json")
+        kept = [t for t in s["topics"] if t.get("status") != "REJECTED" and not t.get("week")]
+        ai = sum(t.get("ai") == "yes" for t in kept)
+        tot, ai_tot = tot + len(kept), ai_tot + ai
+        gate = "approved" if running_order(s) else "at Mike's gate"
+        print(f"  {m.name}: {len(kept)} breakthroughs, {ai} with AI ({gate})")
+    y, mo = map(int, months[-1].name.split("-"))
+    nxt = f"{y + (mo == 12)}-{mo % 12 + 1:02d}"
+    print(f"SERIES {a.name}: {len(months)} month(s), {tot} breakthroughs, {ai_tot} with AI. Next month to research: {nxt}")
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -747,6 +838,9 @@ def main():
         x = sub.add_parser(name)
         x.add_argument("session")
         x.set_defaults(fn=fn)
+    x = sub.add_parser("series")
+    x.add_argument("name")
+    x.set_defaults(fn=cmd_series)
     x = sub.add_parser("approve")
     x.add_argument("session")
     x.add_argument("--from-doc", action="store_true", help="read the ruling out of the TOPICS.docx Mike narrowed")

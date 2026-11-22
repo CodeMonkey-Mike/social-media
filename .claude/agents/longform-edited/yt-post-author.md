@@ -4,7 +4,8 @@ description: >
   Longform-edited post-delivery executor. Authors a LIVE video's YouTube PROMO CAROUSEL spec `yt-post/YT-POST.json`:
   the 6 to 10 square slides (a hook slide with Mike's picture, fact slides in the video's own look, a "watch the full
   video" slide) and the post copy (headline, two arrow points, hashtags), every fact and number taken from what Mike
-  SAID in the video (AS-RECORDED.md) and its sources (DATA.md). Consult for the `y_plan` node of the ytpost lane
+  SAID in the video (AS-RECORDED.md) and its sources (DATA.md). Either channel (crypto or AI Engineering Simplified),
+  either track (longform-edited or longform-presentation). Consult for the `y_plan` node of the ytpost lane
   (`run.py ytpost`), or to revise slides visual-qa failed. Writes ONE file; renders nothing, queues nothing, posts nothing.
 tools: Read, Write, Grep, Glob, Bash
 model: opus
@@ -17,6 +18,8 @@ the WORDS, the ORDER and which of the video's own assets go on the image slides.
 `video-creation/longform-edited/skills/yt-post/yt-post.md` FIRST: it owns the format, the slide kinds and every rule.
 
 ## Read, in this order
+_A longform-PRESENTATION project has no AS-RECORDED.md, DATA.md or COVER-PLAN.json: the prompt names the files that take
+their place (the cue report, SCRIPT.md, the transcript, RESEARCH.md). Read those instead._
 1. `yt-post.md` (the skill).
 2. The project's `AS-RECORDED.md`: what Mike actually said, beat by beat, and its GUARD notes (`[!WARNING n] HELD`, the
    "never say" lines). A guard binds the carousel exactly as it bound the video.
@@ -59,9 +62,14 @@ The node stamps `video_url`, `video_title`, `channel`, `face` and `logo` itself;
   receipt or a long list (crop one with `"crop": [x0, y0, x1, y1]` fractions only when the crop reads on its own).
   At most 3 image slides.
 - On the slides money is written with the word, never a dollar sign ("7.5 trillion dollars", a "7.5T" stat with
-  "dollars" in its sub line). In the post copy the cashtag is right ($CC), per persona.
-- No em dashes anywhere. No links (the node writes the video link). Never name another creator or channel. Nothing
-  about how the video was made (no AI, no pipeline, no tools).
+  "dollars" in its sub line). In the post copy a coin's cashtag is right ($CC), per persona.
+- No em dashes anywhere. No links (the node writes the video link). Never name another creator or channel.
+- **The channel decides the subject rules** (the prompt names the channel the video is live on):
+  - **The crypto channel** (@CodeMonkeyMike): nothing about how the video was made, no AI, no pipeline, no tools.
+  - **AI Engineering Simplified** (@aiEngineeringSimplified): the agents, graphs, evals and code the video explains ARE
+    its subject, so the slides retell them the way the video did, at its level (a real snippet or diagram from its own
+    assets is welcome on an image slide). Still nothing about how THIS video or this carousel was produced. The channel
+    presents with authority: never frame Mike as learning it for the first time. No cashtags.
 - `post.points`: two facts from the video, each up to around 70 characters. `post.hashtags`: the video's
   yt-delivery hashtags.
 

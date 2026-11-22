@@ -5,12 +5,15 @@ ways, chosen when the video is started:
 
 - **FREE TALK** (the format as it has always been): Mike talks from the slides and a notes doc, a handful of moments
   get one overlay inside the deck area. Nothing here applies; `../card-overlays/card-overlays.md` is the whole skill.
-- **SCRIPTED** (this skill, Mike 2026-11-14): Mike reads a light `SCRIPT.md`. Every spoken line is either a
+- **SCRIPTED** (this skill, Mike 2026-11-14): Mike reads a light `SCRIPT.md`. Every spoken line is a
   **COVER** scene (a deck card, a system-design chart still or an animated chart fills the WHOLE frame and hides the
-  recording, his webcam and the membership box included) or a **SCREEN-SHARE** scene (the recording as filmed). Most of the runtime is covered; a handful of
-  screen-share scenes play as filmed. Still one ffmpeg final render, no Remotion comp, no draft.
+  recording, his webcam and the membership box included), a **SCREEN-SHARE** scene (the recording as filmed) or, at
+  most twice a video, a **FACE** scene (his full-camera OBS scene, his face centred; 2026-11-22, "Face scenes" below).
+  Most of the runtime is covered; a handful of screen-share scenes play as filmed. Still one ffmpeg final render, no
+  Remotion comp, no draft.
 
-**Status: v1 built 2026-11-14, not yet run on a real recording.** The lint, the cue step and the cover-run render were
+**Status: v1 built 2026-11-14; clip-evals (2026-11-17) was the first real video. Face scenes added 2026-11-22 (below),
+not yet run on a real recording.** The lint, the cue step and the cover-run render were
 tested on pieverse's script, transcript and cards (History, below). The pre-recording half (the script written to
 this format, the cards built full frame by the shared builders) has not been exercised yet: the first real
 video is the proof, and whatever it teaches goes back into this file.
@@ -47,7 +50,7 @@ future-of-software-engineers ("I may or may not ask for the vertical conversion,
 |---|---|---|---|
 | the VERTICAL cut | `vertical` `on` / `off` | the whole video at 1080x1920, same cues, same audio | **built** (`cover_runs.py --vertical`, below) |
 | the SHORT | `short` `off` / `on` (= 30) / seconds 15 to 60 | a ~30 s vertical cut with captions and the "watch the full video" outro | **built** (2026-11-17): the longform-edited short lane takes this project by its folder, cut from the delivered vertical (`run.py short --project "<the project folder>" [--seconds 30]`, `video-creation/longform-edited/skills/longform-to-short/longform-to-short.md` "A presentation project"); needs the vertical cut first (the lint warns when `short` is on and `vertical` off) |
-| the YT post | `yt post` `on` / `off` | the promo carousel, once the video is LIVE | **built**: the longform-edited lane takes this project by its folder (`run.py ytpost --project "<the project folder>" --url <link>`, `video-creation/longform-edited/skills/yt-post/yt-post.md`) |
+| the YT post | `yt post` `on` / `off` | the promo carousel, once the video is LIVE | **built**: the longform-edited lane takes this project by its folder (`run.py ytpost --project "<the project folder>" --url <link>`, `video-creation/longform-edited/skills/yt-post/yt-post.md`); the queue follows the channel the video is live on (an AI Engineering Simplified video lands in `schedule-tweets/data/ai-yt-posts.json`, the dashboard's AI YouTube Posts tab). First end to end run: clip-evals, 2026-11-17 |
 
 - **They are NOT a question.** He names them when he starts the video ("scripted, with a vertical and a YT post"), or
   he names none. A row that is missing is `off`. Never ask about them, never build one he did not name.
@@ -88,9 +91,9 @@ The SAME `cues.json` rendered a second time at 1080x1920. Nothing of the 16:9 is
 | 1 | Research | as format 4 (`RESEARCH.md` is the only number source; a coin follows `video-creation/skills/coin-research/coin-research.md`) | `RESEARCH.md` |
 | 2 | The script | written to the format below (no dedicated agent yet: the main loop writes it), `lint_script.py` must PASS, **Mike gates it** | `SCRIPT.md` |
 | 3 | The deck, the cover cards, the charts | the deck as format 4. Deck cards: one still per card and per state, by the shared `slide-builder` agent (`.claude/agents/longform-edited/`) briefed with the full 1920x1080 frame as its frame, the CARDS table as its worklist, `RESEARCH.md` as its only number source and `assets/cards/` as its output folder (not yet exercised on this track). `chart-builder` for a chart still and for an animated chart's time-driven page, briefed as in `card-overlays.md` but with the full frame as its frame. `visual-qa` clears every file | `<p>.html`, `assets/cards/`, `assets/diagrams/`, `assets/charts/` |
-| 4 | Mike records | one screen-share scene, reading the script (Recording notes) | `raw/<timestamp>.mkv` |
-| 5 | The spine | exactly format 4's: defumbler agent (a scripted read has retakes), the silence pass with the definition from the header, the Enhance Speech handoff + remux when on, transcribe. **No blackout** (he is on screen in every uncovered frame by design) | `spine/` + `<final spine>.medium-words.json` |
-| 6 | Cue | `cue_script.py`: every line's window, the ad-libs, **the number check** | `overlays/cues.json`, `overlays/CUE-REPORT.md` |
+| 4 | Mike records | the screen-share scene, reading the script; the full-camera scene for each `[FACE]` line (Recording notes) | `raw/<timestamp>.mkv` |
+| 5 | The spine | exactly format 4's: defumbler agent (a scripted read has retakes), the silence pass with the definition from the header, the Enhance Speech handoff + remux when on, transcribe. **No blackout** (he is on screen in every uncovered frame by design). With `[FACE]` lines the preset keeps every pause inside a face scene on its own ("Face scenes") | `spine/` + `<final spine>.medium-words.json` |
+| 6 | Cue | `cue_script.py`: every line's window, the ad-libs, **the number check**, the face scenes (`--spine` required when the script has `[FACE]` lines) | `overlays/cues.json`, `overlays/CUE-REPORT.md` |
 | 7 | Record-day numbers | any figure that drifted since the research is re-pulled into `RESEARCH.md` and its card rebuilt BEFORE the render (pieverse: the price, the circulating count and the perp volume had all moved by the recording day) | the cards |
 | 8 | Cover runs + the render | `../card-overlays/cover_runs.py`: check, one clip per run, `cards.json`, the unchanged `card_overlays.py` render, the QA sheet and the leak check | `overlays/runs/`, `overlays/cards.json`, `<p> FINAL-vN.mp4`, `_qa/` |
 | 9 | Deliver | as format 4 (the absolute path; Mike uploads) | |
@@ -138,6 +141,7 @@ the Markdown preview), under the same `## CH<n> - <TITLE>` headings. A script on
 |---|---|
 | 🖥️ `[SCREENSHARE]` | Spoken. He says the line over the recording as filmed. Nothing is overlaid. |
 | 🗣️ `[COVER]` | Spoken. He says the line while a card fills the whole frame. The tag carries NO card name. |
+| 👤 `[FACE]` | Spoken. He says the line to the camera on his full-camera OBS scene; the video centres his face ("Face scenes"). At most 2 face scenes a video (a scene = consecutive `[FACE]` lines), a sentence or two each. |
 | 🎬 `[SHOW]` | Not spoken. What is on screen for the `[COVER]` lines ABOVE it, back to the previous `[SHOW]` line, `[SCREENSHARE]` line or heading. It starts with the card, then a colon: `<card-id>: what it shows`, or `<card-id>.<state>: what is lit` (a cross-fade from the state before). |
 | 💬 `[NOTE]` | Not spoken. A note or a direction to Mike. |
 | `(parentheses)` inside a spoken line | A direction inside the line. Never spoken, never cued. |
@@ -149,7 +153,7 @@ the Markdown preview), under the same `## CH<n> - <TITLE>` headings. A script on
 - **The first `[SHOW]` line of a card says what the card is** (`the card THE SUPPLY, 3 rows`, `a system-design chart
   of ...`, `code from <file>, <function>`, `JSON, one line of ...`) and then what is lit; the later ones say only what
   changes. Mike reviews the script from these lines, without cross-reading the CARDS table.
-- **A `## PRODUCTION CONVENTIONS` table of the 4 tags opens the file**, under the settings table (the reference has
+- **A `## PRODUCTION CONVENTIONS` table of the 5 tags opens the file**, under the settings table (the reference has
   it), as a screenplay's does.
 - What a `[SCREENSHARE]` scene should have on screen is a `[NOTE]` (a `[SHOW]` line with no `[COVER]` line above it
   fails).
@@ -161,8 +165,8 @@ the Markdown preview), under the same `## CH<n> - <TITLE>` headings. A script on
 
 Consecutive `[COVER]` lines under one `[SHOW]` line are one card window; a new card or state starts where its first
 line starts. Prose under any other `## ` heading (`## NOTES`, open questions, the do-not-air list) is a note, never
-spoken. What the lint enforces: every spoken line tagged, only these four tags (`[FACE]` fails: no face scenes in v1),
-every tag written with its emoji and in code ticks, every `[COVER]` line covered by a `[SHOW]` line, every `[SHOW]`
+spoken. What the lint enforces: every spoken line tagged, only these five tags, at most 2 face scenes (a face scene of
+more than about 25 words is a warning), every tag written with its emoji and in code ticks, every `[COVER]` line covered by a `[SHOW]` line, every `[SHOW]`
 card and state listed in the table and every listed card and state used, no two names that would be the same still
 file, no em dash, and Mike's spoken-word rules. The word rules are NOT copied into this track: the lint runs every line
 through the longform-edited screenplay gate (`video-creation/longform-edited/skills/doc-reference/lint_screenplay.py`),
@@ -170,19 +174,53 @@ so the two tracks cannot drift apart (contractions, "just cannot", "around" befo
 digits, no "honest" lead-in, no dollar sign). The emoji are that gate's own table too.
 
 Not in a `SCRIPT.md`, because this track does not have them yet: a chapter map, budgets, beat signposts, music plans,
-clip inserts, title cards, and the tags `[FACE]`, `[SAY-EXACT]`, `[VERIFY]`, `[INSERT]`. If a script seems to need one
+clip inserts, title cards, and the tags `[SAY-EXACT]`, `[VERIFY]`, `[INSERT]`. If a script seems to need one
 of them, the video belongs in `longform-edited/`.
 
 ## Recording notes
 
-- **One OBS scene for the whole take: the screen share with the webcam**, as every standard video. No full-camera
-  scene (v1 has no face scenes and nothing would centre or reframe one).
+- **The screen share with the webcam for the whole take**, as every standard video, **except the `[FACE]` lines**:
+  switch OBS to the **full-camera scene** (the one longform-edited is recorded on) just before a `[FACE]` line, say it
+  to the lens, and switch back before the next line. A hotkey for each scene makes it one key press. Switch in the
+  pause, never mid-word: the cue step fails a `[FACE]` line that is not on the full-camera scene.
 - **Every `[SCREENSHARE]` line is recorded with its slide on screen.** That scene ships as filmed. (On pieverse the
   screen-share scenes were recorded over an empty deck area and painted in afterward; nothing here paints.)
 - During `[COVER]` lines the picture does not matter: it is hidden. He can read.
 - Read the lines as written, numbers above all. A reworded line still cues; a number said differently from the
   script is caught by the cue step but cannot be fixed without a re-record.
 - A spoken instruction ("cut that out", "go again") is followed and removed by the defumbler, as in every track.
+
+## Face scenes (Mike, 2026-11-22: "a few screenshare scenes, and up to 2 face scenes")
+
+v1 left them out because nothing would centre one. Now a `[FACE]` line is Mike on his full-camera OBS scene, and the
+video zooms and centres his face there exactly as longform-edited does, inside the same single ffmpeg render.
+
+- **Why a full-camera scene and not the webcam of the screen share:** the webcam in a standard recording is about
+  550 x 680 px and already soft; filling a 1920x1080 frame from it is about a 3.5x zoom. The full-camera scene is the
+  whole camera picture, and the centring zoom on it is about 1.5x (the same as longform-edited's).
+- **Found in the picture, never typed in** (`face_scenes.py`): the full-camera scene does not fill the 16:9 canvas,
+  so it has black pillar bars down both sides; every screen-share layout has the webcam against the right edge. A
+  frame with both edges black and live picture in the middle is a face frame, frame-accurate on the file's own
+  timestamps. Tested 2026-11-22: exact to the frame on a spliced test spine (screen share, the AI vs ML full-camera
+  take, screen share), zero false windows over the whole JCT FINAL (crypto layout) and the 18-minute clip-evals
+  spine (AI layout). On a new OBS layout, run `python skills/script/face_scenes.py "<spine>" --measure --proof
+  <png>` and look before trusting it.
+- **The silence pass** (step 5): the preset sees the `[FACE]` lines in `SCRIPT.md`, finds the face scenes in its
+  input and keeps every pause between the first and the last word of each (Mike's longform-edited rule, "the face
+  scenes are intentional"; over 2.5 s is still dead air, cut to 0.45 s). `--no-face-pauses` turns it off.
+- **The cue** (step 6) saves the face windows in `cues.json` and checks every `[FACE]` line against them: a line not
+  on the full-camera scene FAILS (`--allow-face-mismatch` if Mike accepts it); a full-camera window with no `[FACE]`
+  line is a flag. Section 5b of `CUE-REPORT.md` lists both.
+- **The render** (step 8): `cover_runs.py` measures ONE crop for all the face windows (`face_scenes.measure`, the
+  longform-edited solver `measure_face_reframe.solve`: face on the horizontal centre, eye line about 40% down, a small
+  gap above the hair, the bars out of frame; scale 1.0 to 1.6), saves it in `overlays/face-reframe.json`, previews in
+  `_qa/face-<n>-reframed.jpg`, and writes `face_reframe` into `cards.json`. `card_overlays.py` crops and scales the
+  recording inside those windows, under the cover cards, in the same encode. A cover over a face scene simply hides
+  it. **Open `_qa/<FINAL>-face-proof.png`** (the crop drawn on each window, beside the frame it makes).
+- **The vertical cut:** the same windows, cropped 9:16 to his full height and centred on his face (about 1.8x,
+  `overlays/face-reframe-v.json`), never the re-stacked screen-share layout.
+- **Not done:** a punch-in or a transition into a face scene (it is a hard cut, the OBS switch itself), captions,
+  a background swap.
 
 ## After the cue: reading `CUE-REPORT.md`
 
@@ -217,9 +255,7 @@ of them, the video belongs in `longform-edited/`.
 
 ## Not in v1 (each is a decision for a later version, not an oversight)
 
-- Full-camera FACE scenes, and the measured face centring that goes with them (today that is Remotion code in the
-  longform-edited track; here it would be a zoom and crop inside the ffmpeg pass, plus a way for the silence tool to
-  know the face scenes without the blackout).
+- (Built 2026-11-22, "Face scenes": full-camera FACE scenes, at most 2, centred in the ffmpeg pass.)
 - The cover blackout, transitions between scenes beyond the fade in and out of a run, sound effects, captions,
   Envato or AI b-roll, whiteboard beats, a music bed.
 - A cover that leaves the webcam visible (a card inside the deck area): that is free talk's layout. A scripted cover
@@ -237,8 +273,9 @@ of them, the video belongs in `longform-edited/`.
 | `script.md` | this doc |
 | `SCRIPT.reference.md` | the lint-clean skeleton of a `SCRIPT.md` (a made-up coin, fake numbers) |
 | `script_common.py` | the one `SCRIPT.md` parser, shared by the lint and the cue step |
-| `lint_script.py` | the format gate: `python lint_script.py "<SCRIPT.md>" [--research "<RESEARCH.md>"]` -> `SCRIPT-LINT PASS\|FAIL lines=N covers=N screenshares=N cards=N fails=N warns=N` |
-| `cue_script.py` | the cue step: `python cue_script.py "<SCRIPT.md>" --words "<words.json>" [--spine "<spine.mp4>"] [--out-dir <overlays>] [--allow-missing] [--pin LINE=SECONDS]` -> `SCRIPT-CUE PASS\|FAIL lines=N kept=N changed=N missing=N adlibs=N number_mismatches=N runs=N` |
+| `face_scenes.py` | the ONE face-scene detector + the measured face crop ("Face scenes"): `python face_scenes.py "<spine>" [--measure] [--vertical] [--proof <png>]` -> `FACE-SCENES windows=N total=<s> [crop=w:h:x:y scale=<s> centered=true\|false]`; imported by `cue_script.py`, `cover_runs.py` and the desilence preset |
+| `lint_script.py` | the format gate: `python lint_script.py "<SCRIPT.md>" [--research "<RESEARCH.md>"]` -> `SCRIPT-LINT PASS\|FAIL lines=N covers=N screenshares=N faces=N cards=N fails=N warns=N` |
+| `cue_script.py` | the cue step: `python cue_script.py "<SCRIPT.md>" --words "<words.json>" [--spine "<spine.mp4>"] [--out-dir <overlays>] [--allow-missing] [--allow-face-mismatch] [--pin LINE=SECONDS]` -> `SCRIPT-CUE PASS\|FAIL lines=N kept=N changed=N missing=N adlibs=N number_mismatches=N runs=N faces=N` |
 | `../card-overlays/cover_runs.py` | the cover runs, the render and the QA (documented in `../card-overlays/card-overlays.md`, "Cover runs"); `--vertical` = the vertical cut from the same cues |
 
 ## Defaults chosen for v1 (2026-11-14; change them here and in the code together)
@@ -295,3 +332,17 @@ of them, the video belongs in `longform-edited/`.
   - The YT post lane (`ytpost_graph.py`) now reads a presentation project (`<p> FINAL-vN.mp4`; `SCRIPT.md`, the cue
     report, the transcript and `RESEARCH.md` in place of AS-RECORDED / DATA). Checked at function level on JCT and
     pieverse; not yet run end to end on a presentation video.
+- **2026-11-22, face scenes (Mike: "we held off on the idea that we could add a face scene because we needed to
+  center it ... up to 2 face scenes").** `[FACE]` lines on the full-camera OBS scene, found in the picture, centred
+  with the longform-edited solver in the one ffmpeg pass, both 16:9 and vertical; the preset keeps face-scene pauses.
+  Tested end to end on a 16 s spliced spine (clip-evals screen share, the AI vs ML full-camera take, screen share; a
+  3-line script, 1 face scene, 1 cover): lint PASS, cue PASS with the face line on the 6.00 to 10.00 s window, 16:9
+  render 480 = 480 frames, crop 1282x720 (x1.5) centred, the first face frame and the first screen-share frame after
+  it both exact; vertical render 480 = 480 frames, crop 604x1076 (x1.78) centred; leak checks PASS. A `[FACE]` line
+  moved onto the screen share FAILS the cue (0.28 s of 3.30 s on the camera scene); 3 face scenes FAIL the lint.
+  clip-evals (no face scenes) re-checked unchanged: lint PASS, cover-run check PASS, the render graph text the same.
+  First real video: langgraph-updates (AI Engineering Simplified).
+- **2026-11-17, the YT post end to end on clip-evals (Mike: a queue "specifically for the AI engineering simplified
+  channel").** The lane now queues by the channel the live video is on; clip-evals (live on AI Engineering Simplified)
+  became the first row of `schedule-tweets/data/ai-yt-posts.json`: 10 slides, visual-qa PASS on the second build
+  (the face still and two image slides fixed, `video-creation/longform-edited/skills/yt-post/yt-post.md`).

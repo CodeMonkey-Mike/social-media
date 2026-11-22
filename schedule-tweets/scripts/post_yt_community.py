@@ -1,7 +1,15 @@
 # post_yt_community.py — CANONICAL Python port of post-yt-community.js
 # (2026-08-11, posting-tail migration; the JS twin is FROZEN rollback).
 # Status: PORTED, BLESS-PENDING — invoke the JS twin for production posts until
-# this port is live-blessed with one real post.
+# this port is live-blessed with one real post. (Crypto channel; see TWO CHANNELS below for the AI one.)
+#
+# TWO CHANNELS (Mike, 2026-11-17). `--channel crypto` is the default: @CodeMonkeyMike, data/yt-posts.json,
+# ytbot-profile on CDP 9223, behaviour unchanged. `--channel ai`: @aiEngineeringSimplified,
+# data/ai-yt-posts.json, its OWN Chrome profile (ai-ytbot-profile, signed in directly as that channel) on
+# CDP 9225, images in images/ai-yt/. The AI channel's queue is posted ONLY by this script: the JS twin knows
+# one channel. CHANNELS below is the one table. Every channel: before anything is posted, the account menu
+# must show the expected @handle (two signed-in YouTube profiles exist now), and only a channel's owner sees
+# the composer on its posts page, so a wrong login fails before the Post click.
 #
 # 1:1 port on playwright.sync_api. Posts the next pending YouTube community post
 # (data/yt-posts.json) via the ytbot-profile. Chrome is spawned as a raw OS process
@@ -13,7 +21,14 @@
 # button selector fallback chain + setInputFiles + thumbnail pre-post count
 # verification (with the 4s-more retry), same post-check URL diff + body-snippet /
 # image-count verification (verifyPosted). Documented divergences ONLY:
-#   - final machine line (POST OK/FAIL platform=yt-community) for the graph.
+#   - final machine line (POST OK/FAIL platform=yt-community) for the graph
+#     (platform=ai-yt-community on the AI channel).
+#   - the --channel table and the active-channel guard (2026-11-17, above).
+#   - the composer's image input = the first MULTI-file input (YouTube's search box added a hidden single-file
+#     input that comes first, 2026-11), and the posts-page snapshot waits for domcontentloaded, 60 s.
+# LIVE-BLESSED on the AI channel 2026-11-17 (clip-evals carousel, 10/10 images, post
+# UgkxGCVWtK3K2PQoaVcU6L147fneXwkssnse). The crypto channel still runs the JS twin until Mike switches it.
+import argparse
 import json
 import math
 import os
@@ -29,13 +44,38 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
-YT_JSON = Path(__file__).resolve().parent.parent / "data" / "yt-posts.json"
+DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 CHROME_EXE = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
-CHROME_PROFILE = r"C:\Users\mnede\AppData\Local\Google\Chrome\ytbot-profile"
-CDP_PORT = 9223
+CHROME_DIR = r"C:\Users\mnede\AppData\Local\Google\Chrome"
 WORKSPACE_ROOT = r"C:\Users\mnede\Documents\Claude\social-media\schedule-tweets"
-CHANNEL_HANDLE = "CodeMonkeyMike"
-POSTS_URL = f"https://www.youtube.com/@{CHANNEL_HANDLE}/posts"
+
+# One row per YouTube channel (Mike, 2026-11-17). A profile and its debug port belong to ONE channel:
+# never point two channels at the same profile or port (9223 is the crypto channel's, shared with its
+# poll / quiz posters).
+CHANNELS = {
+    "crypto": {"queue": "yt-posts.json", "profile": "ytbot-profile", "port": 9223, "handle": "CodeMonkeyMike",
+               "image_dirs": ["images/yt", "images/ig", "images/x"], "platform": "yt-community"},
+    "ai": {"queue": "ai-yt-posts.json", "profile": "ai-ytbot-profile", "port": 9225,
+           "handle": "aiEngineeringSimplified", "image_dirs": ["images/ai-yt"], "platform": "ai-yt-community"},
+}
+
+
+def configure(name):
+    """Point the module at one channel's queue, profile, port and posts page."""
+    global CHANNEL, YT_JSON, PROFILE_NAME, CHROME_PROFILE, CDP_PORT, CHANNEL_HANDLE, POSTS_URL, IMAGE_DIRS, PLATFORM
+    ch = CHANNELS[name]
+    CHANNEL = name
+    YT_JSON = DATA_DIR / ch["queue"]
+    PROFILE_NAME = ch["profile"]
+    CHROME_PROFILE = os.path.join(CHROME_DIR, ch["profile"])
+    CDP_PORT = ch["port"]
+    CHANNEL_HANDLE = ch["handle"]
+    POSTS_URL = f"https://www.youtube.com/@{CHANNEL_HANDLE}/posts"
+    IMAGE_DIRS = list(ch["image_dirs"])
+    PLATFORM = ch["platform"]
+
+
+configure("crypto")  # the default, exactly the old constants; main() re-points it for --channel
 
 CHAR_DELAY = 5  # unused in the JS twin too (carried over as-is)
 ACTION_MIN = int(os.environ.get("YTC_ACTION_MIN", 5000))
@@ -114,7 +154,7 @@ def start_chrome():
 
     raise RuntimeError(
         f"Chrome did not open remote debugging port {CDP_PORT} within 12 seconds.\n"
-        "This usually means the ytbot-profile is still locked by another Chrome process.\n"
+        f"This usually means the {PROFILE_NAME} is still locked by another Chrome process.\n"
         "Close all Chrome windows (including background Chrome) and re-run."
     )
 
@@ -127,7 +167,7 @@ def resolve_image_path(img):
             return abs_path
         print(f"  image_path doesn't resolve ({abs_path}) — falling back to glob")
     if img.get("image_id"):
-        for d in ["images/yt", "images/ig", "images/x"]:
+        for d in IMAGE_DIRS:
             full_dir = Path(WORKSPACE_ROOT) / d
             if not full_dir.exists():
                 continue
@@ -139,7 +179,9 @@ def resolve_image_path(img):
 
 # Scrape the most recent post URLs from the community posts page
 def get_recent_post_urls(page, count=5):
-    page.goto(POSTS_URL)
+    # domcontentloaded + 60 s: the full "load" event can hang past 30 s on a cold profile (the documented pre-check
+    # timeout, 2026-08-19; hit again on the AI channel's posts page, 2026-11-17, before the composer opened).
+    page.goto(POSTS_URL, wait_until="domcontentloaded", timeout=60000)
     try:
         page.wait_for_load_state("domcontentloaded", timeout=30000)
     except Exception:
@@ -259,7 +301,45 @@ def verify_posted(page, pre_urls, post):
     return {"ok": True, "url": new_url, "info": info}
 
 
+# ACTIVE-CHANNEL GUARD (2026-11-17): two signed-in YouTube profiles exist, so read the account menu and refuse
+# to go on when it shows a DIFFERENT channel. An unreadable menu (a UI change) is not a failure by itself: the
+# composer only renders for the channel's owner, so a wrong login still fails before the Post click.
+def check_active_channel(page):
+    expected = f"@{CHANNEL_HANDLE}".lower()
+    header = ""
+    try:
+        page.locator("button#avatar-btn, #avatar-btn").first.click(timeout=5000)
+        page.wait_for_timeout(2500)
+        hdr = page.locator("ytd-active-account-header-renderer").first
+        if hdr.count() > 0:
+            header = " | ".join(t.strip() for t in hdr.inner_text(timeout=5000).splitlines() if t.strip())
+    except Exception as e:
+        print(f"  Account menu not readable ({type(e).__name__}); relying on the owner-only composer")
+    finally:
+        try:
+            page.keyboard.press("Escape")
+        except Exception:
+            pass
+    if not header:
+        print("  Active channel not confirmed from the menu; relying on the owner-only composer")
+        return
+    if expected not in header.lower():
+        raise RuntimeError(
+            f"Signed in as the wrong channel: the account menu shows \"{header}\", expected @{CHANNEL_HANDLE}. "
+            f"Nothing was posted. Re-login the {PROFILE_NAME} as @{CHANNEL_HANDLE}."
+        )
+    print(f"  Active channel confirmed: {header} \u2713")
+
+
 def main():
+    ap = argparse.ArgumentParser(description="Post the next pending YouTube community post of ONE channel's queue.")
+    ap.add_argument("--channel", choices=sorted(CHANNELS), default="crypto",
+                    help="crypto (default) = @CodeMonkeyMike, data/yt-posts.json; "
+                         "ai = @aiEngineeringSimplified, data/ai-yt-posts.json (its own ai-ytbot-profile)")
+    args = ap.parse_args()
+    configure(args.channel)
+    print(f"Channel: @{CHANNEL_HANDLE} | queue: data/{YT_JSON.name} | profile: {PROFILE_NAME} | CDP {CDP_PORT}")
+
     data = json.loads(YT_JSON.read_text(encoding="utf-8"))
     post = next((p for p in data["posts"] if p["status"] == "pending"), None)
 
@@ -311,10 +391,11 @@ def main():
             avatar = page.locator("#avatar-btn, button#avatar-btn, ytd-topbar-menu-button-renderer").count()
             if avatar == 0:
                 raise RuntimeError(
-                    "Not logged in to YouTube in the ytbot-profile.\n"
-                    "Close Chrome, open it manually with --user-data-dir=ytbot-profile, log in, then re-run."
+                    f"Not logged in to YouTube in the {PROFILE_NAME}.\n"
+                    f"Close Chrome, open it manually with --user-data-dir={PROFILE_NAME}, log in, then re-run."
                 )
             print("YouTube loaded and logged in \u2713")
+            check_active_channel(page)
 
             # -- PRE-CHECK ----------------------------------------------------------
             duplicate_url = check_already_posted(page, post["body"])
@@ -324,7 +405,7 @@ def main():
                 post["posted_at"] = post.get("posted_at") or now_iso_z()
                 post["post_url"] = duplicate_url
                 save(data)
-                print(f"POST OK platform=yt-community url={duplicate_url} status=already-posted", flush=True)
+                print(f"POST OK platform={PLATFORM} url={duplicate_url} status=already-posted", flush=True)
                 browser.close()
                 return
 
@@ -393,7 +474,7 @@ def main():
             if not text_area:
                 raise RuntimeError(
                     "Could not find a visible YouTube composer text area after expanding. "
-                    "Check that the ytbot-profile is logged in and on the posts page."
+                    f"Check that the {PROFILE_NAME} is logged in as @{CHANNEL_HANDLE} and on the posts page."
                 )
 
             # -- Paste body text ------------------------------------------------------
@@ -449,10 +530,15 @@ def main():
                 print("  Clicked Image button \u2713")
                 page.wait_for_timeout(1500)
 
-                # Use the FIRST file input (the multi-file one). The second one is "add more" and unreliable.
-                file_inputs = page.locator('input[type="file"]')
-                file_inputs.first.wait_for(state="attached", timeout=10000)
-                file_inputs.first.set_input_files([str(p) for p in image_paths])
+                # Use the composer's FIRST MULTI-file input. The one after it is single-file "add more" and
+                # unreliable. Never a bare input[type="file"].first: since 2026-11 YouTube's search box carries a
+                # hidden SINGLE-file input (ytSearchboxComponentHiddenFileInput, search by image) that comes first
+                # in the DOM, and the upload fails on it ("Non-multiple file input can only accept single file";
+                # the AI channel's first run, 2026-11-17, before the Post click, nothing posted).
+                file_input = page.locator(
+                    'input[type="file"][multiple]:not(.ytSearchboxComponentHiddenFileInput)').first
+                file_input.wait_for(state="attached", timeout=10000)
+                file_input.set_input_files([str(p) for p in image_paths])
                 upload_wait = random_between(6000, 10000)
                 print(f"  setInputFiles called — waiting {js_round(upload_wait / 1000)}s "
                       "for YouTube thumbnail rendering...", flush=True)
@@ -529,14 +615,14 @@ def main():
             post.pop("error", None)
             save(data)
             print(f"\nDone \u2713  Post URL: {result['url']}")
-            print(f"POST OK platform=yt-community url={result['url']}", flush=True)
+            print(f"POST OK platform={PLATFORM} url={result['url']}", flush=True)
 
         except Exception as err:
             post["status"] = "failed"
             post["error"] = str(err)
             save(data)
             print(f"\nPosting failed: {err}", file=sys.stderr)
-            print(f"POST FAIL platform=yt-community reason={str(err).splitlines()[0][:120]}", flush=True)
+            print(f"POST FAIL platform={PLATFORM} reason={str(err).splitlines()[0][:120]}", flush=True)
             sys.exit(1)
         finally:
             # Disconnect Playwright from Chrome; then close the Chrome window

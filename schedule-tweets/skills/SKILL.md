@@ -78,6 +78,7 @@ through it; until then invoke the JS twin):
 | `post_fb_short.py` | ✅ LIVE-BLESSED 2026-08-28 (`ewp-20260827-dead-memes-comeback-impact` → `reel/891047553840477`, verified live; 19s on the page vs 18.79s source, URL unique across the queue). The blessing run exercised the new baseline diff on the real failure path: round 1 reported "no new video yet (processing)" — the exact state where the JS twin grabs the PREVIOUS short's URL — and the diff refused it, waited one interval, then captured the true reel. **The frozen JS twin still has the neighbour-URL bug, so FB shorts go through the Python port.** |
 | `post_yt_quiz.py` | ✅ LIVE-BLESSED 2026-08-30 (`yt-quiz-2026-08-28-robinhood-chain-what-is-it` → `youtube.com/post/Ugkx88b83lVM2eUt1JET7Se78SJuFVSITajP`). **The JS twin is not a fallback here — it CANNOT post at all:** YouTube moved the quiz composer off the Polymer `ytd-backstage-quiz-editor-renderer` onto its `ytPostsCreation*ViewModel*` components, so the legacy widget is permanently `display:none` and `post-yt-quiz.js` throws `Quiz editor did not open (display=none)` before Post (clean pre-post fail, nothing published). The port carries the ViewModel selectors; full old→new map in `yt-post-quiz.md`. The bless run also closed the 4x-logged `aria-pressed=null` escalation (the selector is a `<button-view-model>` wrapper with no aria; state is a class on it) and fixed a latent port defect where `wait_for_function`'s `arg` was passed positionally, which crashed on the 3rd option. |
 | `post_ig_reel.py` | ✅ LIVE-BLESSED 2026-09-24 (`p-20260922-110x-in-8-days-community-wins` → `reel/DdrCMvfhA6L`, caption verified on IG). Blessed WITH a deliberate fix after the JS twin failed that row with `error after Share: Something went wrong` and left no evidence: Share-outcome text is matched only inside the composer dialog + `[role=alert/status]` (the JS reads the whole page incl. the home feed), an error saves a screenshot + dialog text to `tmp/ig-reel-debug/`, and a **Reels-grid baseline diff** (scraped from `/reels/` BEFORE upload) decides the outcome on every path. **The JS twin still has all of these defects, so IG Reels go through the Python port.** Detail: `ig-post-vertical.md`. |
+| `post_x_short.py` | ✅ LIVE-BLESSED 2026-11-18 (`p-20261116-dumping-and-im-buying` → `status/2123074536945967146`, `p-20261116-pengu-flips-pepe-impact` → `status/2123077108737978372`). Blessed WITH a deliberate fix after the JS twin failed both passes of that day's run pre-Post: `locator.click: Timeout 30000ms` on `tweetTextarea_0`, a `[data-testid="mask"]` from `#layers` intercepting the click right after the video attached (caption never typed, nothing published). Two read-only probes on `xbot-profile` (same video, short and 150 s home idle) could not reproduce the overlay and the twin saved no evidence, so it is intermittent and still unidentified. The port now scopes every composer locator to the compose `[role="dialog"]` (the home feed carries a second `tweetTextarea_0` / `fileInput`, so "modal never opened" and "modal covered" were indistinguishable), times the caption click out at 5 s and falls back to a JS focus + click while printing what covers the box, verifies the typed caption against the dialog textarea before Post, and saves a screenshot + `#layers` text to `tmp/x-short-debug/` on any failure. Neither bless run hit the blocked-click path, so the fallback itself is not yet live-proven: **if it fires, read the `caption-click-blocked-*.txt` it leaves to name the overlay.** |
 | every other `post_*.py` | PORTED, BLESS-PENDING — JS twin posts until blessed |
 
 **Suite-wide documented divergences from the JS twins (the ONLY two + one deliberate fix):**
@@ -130,10 +131,11 @@ relaunch** (a "failed" post may already be live), YT Shorts via API only.
 | `data/x-threads.json` | X thread | `python -u scripts/post_thread.py` ⭐ (JS twin deleted 2026-10-21) |
 | `data/x-polls.json` | X poll | `scripts/post-x-poll.js` |
 | `data/yt-posts.json` | YouTube community post | `scripts/post-yt-community.js` |
+| `data/ai-yt-posts.json` | YouTube community post on **AI Engineering Simplified** (2026-11-17) | `python scripts/post_yt_community.py --channel ai` (Python only: the JS `post-yt-community.js` and a bare Python run post the crypto queue as @CodeMonkeyMike) |
 | `data/yt-text-polls.json` | YouTube text poll | `scripts/post-yt-poll.js` |
 | `data/ig-single-image.json` | Instagram single | `scripts/post-ig-single.js` |
 | `data/ig-carousel.json` | Instagram carousel | `scripts/post-ig-carousel.js` |
-| `data/shorts.json` → `platforms.x` | X video short | `scripts/post-x-short.js` |
+| `data/shorts.json` → `platforms.x` | X video short | `python -u scripts/post_x_short.py` ⭐ (JS twin retired 2026-11-18) |
 | `data/shorts.json` → `platforms.yt_shorts` | YouTube Short | `scripts/post-yt-short-api.js` ⭐ |
 | `data/shorts.json` → `platforms.ig_reels` | Instagram Reel | `scripts/post_ig_reel.py` ⭐ (JS twin frozen) |
 | `data/shorts.json` → `platforms.facebook` | Facebook Reel | `scripts/post-fb-short.js` |
@@ -149,6 +151,7 @@ relaunch** (a "failed" post may already be live), YT Shorts via API only.
 |---|---|
 | `xbot-profile` | post-tweet, post_thread.py, post-x-poll, post-x-short |
 | `ytbot-profile` (CDP 9223) | post-yt-poll, post-yt-short (legacy) |
+| `ai-ytbot-profile` (CDP 9225) | post_yt_community.py `--channel ai`: AI Engineering Simplified, signed in directly as @aiEngineeringSimplified (Mike, 2026-11-17). Re-login: `yt-post-community.md`, "AI Engineering Simplified channel" |
 | `igbot-profile` | post-ig-single, post-ig-reel |
 | `fbbot-profile` | post-fb-short |
 | `rumblebot-profile` | post-rumble-short, upload-longform-rumble |
@@ -169,7 +172,7 @@ relaunch** (a "failed" post may already be live), YT Shorts via API only.
 | `post-ig-single.js` | 5–40ms | 1–5s | 1–15s | reused | URL fetch |
 | `post-fb-short.js` | 60–150ms | 4–7s | 60–180s | 60–180s | ✓ HTTP + video |
 | `post-tiktok-short.js` | 60–150ms | 4–7s | 60–180s | 60–180s | ✓ HTTP + video |
-| `post-x-short.js` | 60–150ms | 4–7s | 60–180s | reused | toast nav |
+| `post_x_short.py` | 60–150ms | 4–7s | 60–180s | reused | toast nav + caption read-back |
 | `post-yt-short.js` (legacy) | clipboard | 3–6s | none | none | dialog redirect |
 | `post-ig-reel.js` | 40–120ms | 3–6s | 15–45s | reused | profile grid |
 | `post-rumble-short.js` | 40–120ms | 2–5s | none | none | confirmation |

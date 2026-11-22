@@ -1,7 +1,7 @@
 # post_x_short.py — CANONICAL Python port of post-x-short.js (2026-08-11,
-# posting-tail migration; the JS twin is FROZEN rollback). Status: PORTED,
-# BLESS-PENDING — invoke the JS twin for production posts until this port is
-# live-blessed with one real post.
+# posting-tail migration). Status: LIVE-BLESSED 2026-11-18 (two clean posts,
+# p-20261116-dumping-and-im-buying + p-20261116-pengu-flips-pepe-impact, after the
+# deliberate fix below). This is the production X-short poster; the JS twin is retired.
 # Uploads one pending short to X from data/shorts.json. Same pattern as
 # post_tweet.py: launch_persistent_context with xbot-profile. Videos are attached
 # via the hidden fileInput; X processes them before posting.
@@ -23,6 +23,20 @@
 #     status of 'posted' or 'failed' — NOT on the early "no pending X shorts" exit
 #     or the pre-launch "video file not found" exit, neither of which touch
 #     platforms.x.status in the JS.
+#
+# Deliberate fix (2026-11-18, the JS twin still has the defect): both passes of that day's
+# run failed pre-Post with `locator.click: Timeout 30000ms` on tweetTextarea_0, a
+# `[data-testid="mask"]` from #layers intercepting the click right after the video
+# attached. Two read-only probes (short + 150 s home idle, same video) could not reproduce
+# it, and the twin saved no evidence, so the overlay is intermittent and unidentified.
+# The page holds TWO composers (the compose modal + the inline home one), and every
+# composer locator was unscoped `.first`, so "modal never opened" and "modal covered"
+# looked identical. Now: (1) every composer locator is scoped to the compose dialog and
+# the open-wait requires the dialog's textarea; (2) the caption click times out in 5 s
+# and falls back to a JS focus + click (post_thread.py's documented pattern), printing
+# what covers the box; (3) the typed caption is read back from the dialog's textarea
+# and must match before Post (the other X posters already verify; this one never did);
+# (4) any failure saves a screenshot + the #layers text to tmp/x-short-debug/.
 
 import json
 import math
@@ -57,6 +71,33 @@ ACTION_MIN = env_int("XS_ACTION_MIN", 4000)
 ACTION_MAX = env_int("XS_ACTION_MAX", 7000)
 PRE_COMPOSE_MIN = env_int("XS_PRE_COMPOSE_MIN", 60000)
 PRE_COMPOSE_MAX = env_int("XS_PRE_COMPOSE_MAX", 180000)
+
+# The compose modal. The home feed renders its own inline composer with the same
+# tweetTextarea_0 / fileInput test ids, so every composer locator is scoped to this.
+DIALOG = '[role="dialog"]'
+MODAL_TEXTAREA = f'{DIALOG} [data-testid="tweetTextarea_0"]'
+DEBUG_DIR = Path(WORKSPACE_ROOT) / "tmp" / "x-short-debug"
+
+# What is on top of the modal textarea's centre, plus the text of every #layers child,
+# i.e. the evidence that was missing on 2026-11-18.
+BLOCKER_JS = r"""() => {
+  const el = document.querySelector('[role="dialog"] [data-testid="tweetTextarea_0"]');
+  let covered_by = null;
+  if (el) {
+    const r = el.getBoundingClientRect();
+    const top = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
+    if (top && !(top === el || el.contains(top)))
+      covered_by = (top.getAttribute('data-testid') || top.tagName) + ' ' + (top.className || '');
+  }
+  return JSON.stringify({
+    url: location.href,
+    modal_textarea: !!el,
+    covered_by,
+    masks: document.querySelectorAll('[data-testid="mask"]').length,
+    layers: [...document.querySelectorAll('#layers > div')]
+      .map(d => (d.innerText || '').replace(/\s+/g, ' ').slice(0, 400)).filter(Boolean),
+  }, null, 1);
+}"""
 
 
 def js_round(x):
@@ -95,6 +136,28 @@ def type_human(page, text):
     for ch in text:
         page.keyboard.type(ch)
         page.wait_for_timeout(rnd(CHAR_DELAY_MIN, CHAR_DELAY_MAX))
+
+
+def save_error_evidence(page, label):
+    DEBUG_DIR.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    png = DEBUG_DIR / f"{label}-{stamp}.png"
+    txt = DEBUG_DIR / f"{label}-{stamp}.txt"
+    try:
+        page.screenshot(path=str(png), full_page=False)
+    except Exception as e:
+        print(f"  (screenshot failed: {e})", flush=True)
+    try:
+        txt.write_text(page.evaluate(BLOCKER_JS), encoding="utf-8")
+    except Exception as e:
+        print(f"  (layer dump failed: {e})", flush=True)
+    print(f"  Evidence saved: {png}", flush=True)
+
+
+def same_text(a, b):
+    # Draft.js reports blank lines between blocks inconsistently in innerText, so compare
+    # with every whitespace run collapsed: this still proves the caption landed in full.
+    return " ".join((a or "").split()) == " ".join((b or "").split())
 
 
 def wait_for_home_or_login(page, timeout_ms=30000):
@@ -177,14 +240,19 @@ def main():
             # --- Open composer ---
             compose_btn = page.locator('[data-testid="SideNav_NewTweet_Button"]')
             mouse_click(page, compose_btn)
-            page.wait_for_selector('[data-testid="tweetTextarea_0"]', timeout=10000)
+            # The MODAL's textarea, not any textarea: the inline home composer satisfies an
+            # unscoped wait even when the modal never opened.
+            try:
+                page.wait_for_selector(MODAL_TEXTAREA, timeout=10000)
+            except Exception:
+                raise RuntimeError("Compose modal did not open (no dialog textarea after the compose click).")
             action_pause(page, "composer open")
 
             # --- Attach video ---
             print("Attaching video...")
-            file_input = page.locator('input[data-testid="fileInput"]').first
+            file_input = page.locator(f'{DIALOG} input[data-testid="fileInput"]').first
             if file_input.count() == 0:
-                raise RuntimeError("fileInput not found in composer.")
+                raise RuntimeError("fileInput not found in the compose modal.")
             file_input.set_input_files(str(video_path))
             print("  Video set \u2014 waiting for processing...")
 
@@ -205,7 +273,7 @@ def main():
                 # Progress bar may not appear for small files — check for thumbnail instead
                 try:
                     page.wait_for_selector(
-                        '[data-testid="attachments"] video, [data-testid="attachments"] [role="img"]',
+                        f'{DIALOG} [data-testid="attachments"] video, {DIALOG} [data-testid="attachments"] [role="img"]',
                         timeout=30000)
                     print("  Video attached (thumbnail visible) \u2713")
                 except Exception:
@@ -213,15 +281,29 @@ def main():
             action_pause(page, "after video attach")
 
             # --- Type caption ---
-            textarea = page.locator('[data-testid="tweetTextarea_0"]').first
-            textarea.click()
+            textarea = page.locator(MODAL_TEXTAREA).first
+            try:
+                textarea.click(timeout=5000)
+            except Exception as e:
+                print(f"  caption click blocked ({e.__class__.__name__}); what is on top:", flush=True)
+                print(page.evaluate(BLOCKER_JS), flush=True)
+                save_error_evidence(page, "caption-click-blocked")
+                print("  using JS focus + click", flush=True)
+                textarea.evaluate("el => { el.focus(); el.click(); }")
             page.keyboard.press("Control+Home")
             page.wait_for_timeout(500)
 
             print(f"Typing caption ({len(caption)} chars)...")
             type_human(page, caption)
             page.wait_for_timeout(1000)
-            print("Caption typed \u2713")
+
+            got = textarea.evaluate("el => el.innerText")
+            if not same_text(got, caption):
+                raise RuntimeError(
+                    "Caption verification failed (pre-Post, nothing published).\n"
+                    f"Expected: {json.dumps(caption, ensure_ascii=False)}\n"
+                    f"Got:      {json.dumps(got, ensure_ascii=False)}")
+            print("Caption typed + verified \u2713")
             action_pause(page, "after caption")
 
             # --- Pre-post wait ---
@@ -263,6 +345,7 @@ def main():
             print(f"POST OK platform=x url={url or ''}", flush=True)
 
         except Exception as err:
+            save_error_evidence(page, "failed")
             short["platforms"][PLATFORM]["status"] = "failed"
             short["platforms"][PLATFORM]["error"] = str(err)
             SHORTS_JSON.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")

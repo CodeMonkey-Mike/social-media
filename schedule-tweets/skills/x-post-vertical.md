@@ -7,8 +7,16 @@ description: Post the next pending X vertical video from data/shorts.json via Pl
 
 ```powershell
 cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
-node scripts/post-x-short.js
+python -u scripts/post_x_short.py
 ```
+
+> ✅ **Python port is the production poster (LIVE-BLESSED 2026-11-18); the JS twin is retired.** The JS
+> twin failed both passes of the 2026-11-18 run pre-Post: a `[data-testid="mask"]` overlay intercepted the
+> caption-box click right after the video attached. The port scopes the composer to the compose dialog,
+> falls back to a JS focus + click when the caption click is blocked, verifies the caption before Post, and
+> saves evidence to `tmp/x-short-debug/` on failure. Full note: the bless ledger in `SKILL.md`.
+> A run usually passes the 600 s foreground ceiling (two 60-180 s waits + the processing wait), so it is
+> moved to the background: that is still the one attempt, never relaunch; `python -u` keeps the log live.
 
 Picks up the first short where `platforms.x.status === "pending"`, posts it as a video tweet, and writes `platforms.x.status: "posted"`, `posted_at`, and `url` back to `data/shorts.json`.
 

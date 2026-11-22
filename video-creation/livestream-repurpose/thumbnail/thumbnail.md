@@ -84,6 +84,25 @@ kit layout, the stream's `build.py` does the edit. Reuse `2026-11-09-my-100x-pla
   file), then only the text and the fill colour change. Fit it by template match on the de-rotated letters, not by a
   brute-force render search (that ran 10 minutes for nothing).
 
+### Re-editing a thumbnail that was itself built here (2026-11-19, `2026-11-19-token-reveal/build.py`)
+
+- Start from the earlier build's own pieces (its `source.jpg`, `clean-plate.png`, `hands-matte.png`, imported by path),
+  never from YouTube's re-compressed copy of the result.
+- Recolouring a glowing object (the Kaspa flame): hue-rotate it in HSV, keeping each pixel's S and V, weighted by hue
+  (flame cyan in, the wall's royal blue ~212 deg out) and by a soft ellipse around it. Bright cores stay near white.
+- A drawn object in his hand (a coin): built at 4x in code (face gradient, raised rim, reeded edge, embossed glyph), put
+  behind the same hands matte, with the same finger contact shadows.
+
+### Swapping a coin for a ready-made 3D coin PNG (2026-11-21, `2026-11-21-39x-while-everyone-cries/build.py`)
+
+- When Mike hands over a finished coin render (transparent PNG, e.g. his teal Kaspa coin), paste it as is, never rebuilt:
+  fill the old coin out of the plate first (its colour mask + a halo, low-res Telea), then set the PNG a touch larger than
+  the old coin so none of it shows, and cut it along the old coin's DIRT LINE (its lowest pixel per column where it was
+  buried, held flat where its own round edge takes over), shaded toward the ground.
+- A logo coin on a coloured logo (white glyph on violet): the face takes the logo's own ground colour as a gradient, and
+  the scene's warm tint stays light (1.03 / 1.0 / .96) so the white glyph does not turn cream.
+- A headline line ending just over a scene object (the bull's horn tips): switch that area off in the plate mask.
+
 ## Steps
 
 1. New folder `thumbnail/<date>-<slug>/`; the photo of Mike to use goes in `assets/` (copy it in:
