@@ -63,7 +63,7 @@ Single source of truth for generating Ana. Read before any generation. Everythin
 
 ## Voice (LOCKED — Mike, 2026-10-18): ElevenLabs v3 + the `ana-2` clone, ALWAYS CHEERFUL
 - **Engine:** ElevenLabs v3 on the Higgsfield Audio page with the `ana-2` custom voice
-  (`skills/higgsfield-voice/_gen-model.js "ElevenLabs v3" <chunks.json> <outDir>`), **never time-stretched** (no atempo).
+  (`skills/higgsfield-voice/_gen_model.py "ElevenLabs v3" <chunks.json> <outDir>`), **never time-stretched** (no atempo).
   Seed Speech ANA-2 is retired for her spoken lines: flat and robotic, and the 1.2-1.3x stretch it needed made it worse
   ("a robot from a movie 30 years ago", faithful-crypto-intro v4).
 - **Delivery = CHEERFUL BY DEFAULT, every line.** Each chunk's TTS text starts with a cheer tag: `[cheerfully]` for normal
@@ -72,7 +72,7 @@ Single source of truth for generating Ana. Read before any generation. Everythin
   robotic in her clone: if a line needs warmth, write `[cheerfully] [warmly]`, never `[warmly]` alone. Target MORE
   cheer than the faithful-crypto-intro v6 body lines (06 was `[cheerfully]`, 08 was `[warmly]`): those were the
   floor, not the aim.
-- **Gate:** `verify-tts.js` strips `[...]` tags, so the SCRIPT.md gate still passes; Whisper-verify every take (v3 can
+- **Gate:** `verify_tts.py` strips `[...]` tags, so the SCRIPT.md gate still passes; Whisper-verify every take (v3 can
   mangle a brand name under heavy tags: re-roll with a lighter tag, as Yuli's "[excited]" welcome needed).
 - **Her face follows her voice:** Aurora's expression tracks the audio energy, so a cheerful take is also what makes her
   smile on screen (plus the `AURORA_PROMPT` smile guidance for greetings).

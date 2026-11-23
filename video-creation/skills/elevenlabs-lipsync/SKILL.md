@@ -11,14 +11,14 @@ decision (global memory `reference_elevenlabs_lipsync_ui_only`).
 
 ## One-time login
 ```
-node setup-elevenlabs.js
+python setup_elevenlabs.py
 ```
 Real Chrome, dedicated `elevenlabs-profile` (`C:\Users\mnede\AppData\Local\Google\Chrome\elevenlabs-profile`).
 Log in once; session persists. Never use the main Chrome profile; never kill all Chrome.
 
 ## Create a lip-sync
 ```
-node lipsync-create.js --image <face.png> --audio <line.wav> [--model "Creatify Aurora"] [--generate]
+python lipsync_create.py --image <face.png> --audio <line.wav> [--model "Creatify Aurora"] [--generate]
 ```
 - Default **stages and stops** before Generate; add `--generate` to actually submit.
 - Anti-automation built in (house pattern): real Chrome, `webdriver` masked, hover->randomized
@@ -26,22 +26,27 @@ node lipsync-create.js --image <face.png> --audio <line.wav> [--model "Creatify 
 
 ## Fetch the finished render
 ```
-node fetch-result.js --out <result.mp4> [--minutes 8]
+python fetch_result.py --out <result.mp4> [--minutes 8]
 ```
 Polls **History**, scopes to the most-recent **Creatify Aurora** card, downloads its video by
 direct URL, and verifies it's an mp4 (`ftyp`), not an image.
 
-> **`fetch-result.js` scrapes the History inline `<video>` preview, which is MUTED / video-only — the
+> **`fetch_result.py` scrapes the History inline `<video>` preview, which is MUTED / video-only — the
 > downloaded file has NO audio stream (2026-06-21).** That is fine for the edit (lip-sync clips are muted
 > in the comp; the spine audio carries). But to get the render **WITH AUDIO** (to review/compare lip-sync
-> quality), use **`fetch-download.js --model <name> --out <path>`** instead — it navigates History the same
+> quality), use **`fetch_download.py --model <name> --out <path>`** instead — it navigates History the same
 > way, then clicks the card's `aria-label="Download"` button to capture the real muxed export. Do NOT try to
 > mux the input audio back onto the silent preview — the Sync video→lipsync models add a ~0.2-0.3s lead-in,
 > so the audio ends up ahead of the lips. (Built 2026-06-21.)
 >
+> **2026-11-23:** the History preview `fetch_result.py` saves carried an audio stream that day (h264 + aac,
+> ffprobe on a Creatify Aurora card), and renders are now served from `elevenlabsusercontent.com`, no longer
+> `storage.googleapis.com/xi-backend`. Check with ffprobe before relying on either; `fetch_download.py` is
+> still the full export.
+>
 > **VIDEO→lipsync models** (Sync 3, Sync Lipsync 2 Pro, Veed Lipsync) take a driving clip via `--video` on
-> `lipsync-create.js` (not `--image`); all three accept an uploaded video with no region-block (verified
-> 2026-06-21). They output ~480p video-only previews; fetch the audio export with `fetch-download.js`.
+> `lipsync_create.py` (not `--image`); all three accept an uploaded video with no region-block (verified
+> 2026-06-21). They output ~480p video-only previews; fetch the audio export with `fetch_download.py`.
 
 ## Flow / selectors (validated 2026-06-11 — update here + scripts when EL changes the DOM)
 - App: `https://elevenlabs.io/app/image-video`. Left nav item "Image & Video" = `/app/image-video`.
@@ -62,8 +67,8 @@ direct URL, and verifies it's an mp4 (`ftyp`), not an image.
 ## Model input modality — NOT all lip-sync models take an image (confirmed 2026-06-12)
 Some lip-sync models are **image -> lipsync** (feed a face photo); others are **video -> lipsync**
 (feed an existing talking-head video to re-sync to new audio). The image file input simply won't
-exist for video models — `lipsync-create.js` then times out on the image upload. Verified via
-`probe-model.js --model "<name>"` (reports each file input's `accept`):
+exist for video models — `lipsync_create.py` then times out on the image upload. Verified via
+`probe_model.py --model "<name>"` (reports each file input's `accept`):
 - **IMAGE -> lipsync:** Creatify Aurora, **HeyGen Avatar 4**, **Veed Fabric** (accept = jpg/png/webp).
 - **VIDEO -> lipsync:** **Sync 3** (accept = mp4/mov/mkv/webm...). Needs a driving video, not a still.
 - **OmniHuman 1.5 = REGIONALLY BLOCKED for uploaded faces (confirmed 2026-06-19).** It rejects any
@@ -75,7 +80,7 @@ exist for video models — `lipsync-create.js` then times out on the image uploa
   (Sync Lipsync 2 Pro, Veed Lipsync still untested — probe first.)
 - **HeyGen Avatar 4 = image->lipsync, accepts uploaded faces (validated 2026-06-19)** — the working
   alternative when OmniHuman is blocked; outputs ~9:16 480-ish.
-`probe-model.js` is read-only (never generates); use it whenever you try a new model.
+`probe_model.py` is read-only (never generates); use it whenever you try a new model.
 
 ## Content moderation — "high-risk financial advice" block (proceed AUTONOMOUSLY)
 ElevenLabs **prohibits high-risk financial advice**, and its moderation flags **superlative / promissory
@@ -102,11 +107,11 @@ other crypto"* was **blocked 3x** while neutral explainer sentences with the SAM
 The composer **defaults to 720p**. ALWAYS set the Resolution to **480p** before Generate (Creatify
 Aurora and every model). Reasons: the project's 480p philosophy (Remotion upscales 480p → 1080 for
 FREE — root `CLAUDE.md`), AND it spends less of the limited ElevenLabs video allowance. Mike's rule,
-2026-06-19. `lipsync-create.js` now selects 480p automatically (rect-based click on the Resolution
+2026-06-19. `lipsync_create.py` now selects 480p automatically (rect-based click on the Resolution
 menu, non-fatal so it never blocks Generate). Override with `--resolution`.
 
 ## Fetching the RIGHT render — the duplicate-render trap (learned 2026-06-19, the hard way)
-Renders land in the **History** sub-tab of Image & Video, newest at the TOP. `fetch-result.js` grabs
+Renders land in the **History** sub-tab of Image & Video, newest at the TOP. `fetch_result.py` grabs
 the TOPMOST card naming `--model`. This is reliable ONLY when your render has FINISHED.
 
 **The trap:** while your newest render is still cooking it shows **"Almost done…"** with a blurred
@@ -121,7 +126,7 @@ On 2026-06-19 this burned ~an hour: it kept grabbing an old Yuli clip, then a du
 - **ALWAYS content-verify the download — never trust it.** Transcribe it (local Whisper), check the
   duration, and diff the md5 vs the previous clip. Wrong transcript/duration = you grabbed a stale render.
 - **Don't trust History-tab navigation from ad-hoc scripts** — they often stay on **Explore** and
-  scrape the avatar-PRESET preview videos (6–11s) instead of your renders. `fetch-result.js` itself
+  scrape the avatar-PRESET preview videos (6–11s) instead of your renders. `fetch_result.py` itself
   DOES reach History; check its `el-history2.png` screenshot to see what it actually saw.
 
 > General technique (not a rule): if a lip-sync clip's pace doesn't match the edit, you can speed the
@@ -151,9 +156,9 @@ VIEW frames of the output to confirm before accepting.**
 
 ## Gotchas / quality notes
 - **One-time announcement popovers** (e.g. "GPT Image 2 just launched!", a radix popper) can overlay
-  the composer and intercept pointer events -> clicks time out. `lipsync-create.js` now dismisses
+  the composer and intercept pointer events -> clicks time out. `lipsync_create.py` now dismisses
   them first (`dismissPopovers`: named close button / Escape / corner click). Added 2026-06-12.
-- `fetch-result.js` takes **`--model`** (default Creatify Aurora) to scope the History card to the
+- `fetch_result.py` takes **`--model`** (default Creatify Aurora) to scope the History card to the
   right model — required when generating with HeyGen/Sync/Veed/etc. (generalized 2026-06-12).
 - **Output aspect = the input image's aspect** (image models). HeyGen Avatar 4 instead reframed to
   9:16 (480x854) from a 3:4 source; Veed Fabric preserved source aspect (480x628). Both came back
@@ -166,3 +171,22 @@ VIEW frames of the output to confirm before accepting.**
 - The composer's "N left" counter is a **separate video-generation allowance**, not the account's
   voice/character credit balance.
 - One generation = one render; renders run server-side (a few minutes for a ~4s clip).
+
+## 2026-11-23: the skill is Python now (no JavaScript left in this folder)
+Files: `_el.py` (what every script shares: the profile, the anti-automation launch, the History tab, the
+"topmost card of this model" logic), `setup_elevenlabs.py`, `lipsync_create.py`, `fetch_result.py`,
+`fetch_download.py`, `probe_model.py`, `_grab_recent.py [N] [out_dir]`, `_hist_shot.py`. Same flags as the JS;
+`python` where it said `node`. The `node_modules` link that sat in this folder is no longer needed.
+- **Behavior changes:** `_grab_recent.py` reads the **History** tab (the JS read the Assets page, which no longer
+  lists renders, so it found 0 videos) and refuses to run on any other tab, because Explore's videos are the
+  avatar presets; `fetch_download.py` no longer carries the JS's menu-fallback `text=/\.mp4|MP4/i` selector part
+  (it was not valid inside a CSS list, so that fallback never matched); `setup_elevenlabs.py` waits for the
+  Chrome window to be closed when there is no keyboard (an agent run).
+- **Checked on 2026-11-23, Python and JS side by side on the live site:** `probe_model.py` (same output),
+  `_hist_shot.py` (same), `fetch_result.py` (same file, equal md5), `fetch_download.py` (same file, equal md5,
+  video + audio). `lipsync_create.py` was run STAGED ONLY with a test image and a tone: Lip sync tab, Creatify
+  Aurora picked from the menu, both files attached, resolution set to 480p (screenshot checked).
+  `setup_elevenlabs.py` exits when its window is closed. `_grab_recent.py 2` fetched the two newest renders.
+- **NOT checked, because it spends the video allowance:** `lipsync_create.py --generate` (the submit click, the
+  policy modal, the status hints). That code is the JS's flow, moved over unchanged. On the first real run read
+  the output and the `el-generating.png` screenshot: one attempt.

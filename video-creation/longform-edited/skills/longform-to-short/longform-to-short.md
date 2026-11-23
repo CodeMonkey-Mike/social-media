@@ -255,7 +255,7 @@ over the last frame or a held b-roll, with Mike's cloned voice saying the line.
 - **The approved take is a SHARED asset: `video-creation/assets/vo/cta-watch-full.mp3`** (Mike, 2026-07-25),
   sitting with the shared music/sfx/transitions, NOT in any project folder. Reuse it for every short off
   every project; see `assets/vo/README.md`. Regenerate only when the line changes or Mike rejects the
-  reading, and edit `assets/vo/CTA-SCRIPT.md` first so `verify-tts.js` can gate the chunks. It costs
+  reading, and edit `assets/vo/CTA-SCRIPT.md` first so `verify_tts.py` can gate the chunks. It costs
   credits, so it needs Mike's OK (root `CLAUDE.md` cost rule), and a needless re-roll also DRIFTS the
   delivery, which would leave shorts from different videos ending on different readings.
 

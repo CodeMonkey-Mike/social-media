@@ -57,7 +57,7 @@ Canonical skill: `../skills/higgsfield-voice/SKILL.md`. Steps:
    spellings + the caps rule (short-word ALL-CAPS clips; see the skill's pronunciation map). Format: a JSON
    array of `{ "file": "chunk-NN.mp3", "text": "..." }`. **(2026-07-16: authoring from a stale draft voiced
    10 chunks with wrong text and burned credits — the gate in step 4 now blocks that.)**
-1b. **GATE — prove it matches before generating:** `node video-creation/skills/higgsfield-voice/verify-tts.js
+1b. **GATE — prove it matches before generating:** `python video-creation/skills/higgsfield-voice/verify_tts.py
    media/<video>/SCRIPT.md media/<video>/tts-chunks.json` must print `ALL N chunks MATCH` (exit 0). This is
    also run automatically inside the batch driver when you pass `SCRIPT.md` (step 4) — do that; it aborts
    before spending any credits on a mismatch.
@@ -65,9 +65,9 @@ Canonical skill: `../skills/higgsfield-voice/SKILL.md`. Steps:
    it does not launch): `chrome.exe --user-data-dir="C:\Users\mnede\AppData\Local\Google\Chrome\hfbot-profile"
    --remote-debugging-port=9333 https://higgsfield.ai/`. The profile stays logged in; only re-auth once if it
    shows logged out.
-3. **In the Audio UI: model = Seed Speech, voice preset = MIKE-CLONE** (helpers: `_set-voice.js` /
-   `_open-preset.js` / `_select-mike.js`). The batch driver **aborts if the selected voice isn't MIKE-CLONE**.
-4. **Run the batch WITH the SCRIPT.md gate arg:** `node video-creation/skills/higgsfield-voice/_batch-generate.js
+3. **In the Audio UI: model = Seed Speech, voice preset = MIKE-CLONE** (helper, run in
+   `skills/higgsfield-voice/`: `python _pick_voice.py "MIKE-CLONE"`; `_open_preset.py` lists the voices). The batch driver **aborts if the selected voice isn't MIKE-CLONE**.
+4. **Run the batch WITH the SCRIPT.md gate arg:** `python video-creation/skills/higgsfield-voice/_batch_generate.py
    <tts-chunks.json> <audioDir> <SCRIPT.md>` — the 3rd arg makes the driver re-run the verify gate and
    **abort before touching the browser if any chunk drifts from the script** (no wasted credits). It then
    fills + GENERATEs each chunk, writes `<audioDir>/_manifest.json` incrementally (`[{file, ok, url}]`), and

@@ -9,9 +9,9 @@ for n in "$@"; do
   case $n in 01|03) STILL="$M/yuli-pinkchair-webcam.png";; *) STILL="$M/ana-purplechair-webcam.png";; esac
   echo "=== $(date +%T) generate chunk-$n"
   PR=""; [ -n "${AURORA_PROMPT:-}" ] && PR="--prompt \"$AURORA_PROMPT\""   # optional expression guidance (Aurora = guided lip sync)
-  eval node lipsync-create.js --image "\"$STILL\"" --audio "\"$P/audio/_aurora/chunk-$n.wav\"" --model "\"Creatify Aurora\"" $PR --generate 2>&1 | tail -4
+  eval python lipsync_create.py --image "\"$STILL\"" --audio "\"$P/audio/_aurora/chunk-$n.wav\"" --model "\"Creatify Aurora\"" $PR --generate 2>&1 | tail -4
   echo "=== $(date +%T) wait 150s then fetch"; sleep 150
-  node fetch-result.js --model "Creatify Aurora" --out "$P/clips/chunk-$n-aurora.mp4" --minutes 10 2>&1 | tail -3
+  python fetch_result.py --model "Creatify Aurora" --out "$P/clips/chunk-$n-aurora.mp4" --minutes 10 2>&1 | tail -3
   ffprobe -v error -show_entries stream=width,height:format=duration -of csv=p=0 "$P/clips/chunk-$n-aurora.mp4" 2>&1 | tr '\n' ' '; echo
 done
 echo "=== $(date +%T) AURORA DONE"

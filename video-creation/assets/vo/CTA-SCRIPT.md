@@ -2,7 +2,7 @@
 
 The one spoken line that closes every short condensed out of this project's longform.
 Canonical text lives HERE; `tts-chunks.json` is derived from it and gated against it by
-`video-creation/skills/higgsfield-voice/verify-tts.js` before any credits are spent.
+`video-creation/skills/higgsfield-voice/verify_tts.py` before any credits are spent.
 
 Markup per `higgsfield-voice/SKILL.md`: ALL-CAPS only on content words of 5+ letters ("WATCH"
 qualifies). Voice preset: MIKE-CLONE.

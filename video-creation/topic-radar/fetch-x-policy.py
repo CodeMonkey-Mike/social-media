@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
 fetch-x-policy.py — Scrape recent posts from the X policy-reporter watchlist
-(x-accounts.json) into x-policy.json, which build-dashboard.js renders in the
+(x-accounts.json) into x-policy.json, which build_dashboard.py renders in the
 Policy Radar tab.
 
-Separate from build-dashboard.js on purpose: this drives the shared
+Separate from build_dashboard.py on purpose: this drives the shared
 xbot-profile Chrome (same as x-reply-guy), so it needs Chrome to be free and
 must NEVER run while a posting script is running. The dashboard build itself
 stays browser-free and just renders whatever this script last cached.
@@ -140,7 +140,7 @@ def main():
         "accounts": results,
     }, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"\nSaved {OUT_FILE}")
-    print("Now re-run: node build-dashboard.js to refresh the dashboard.")
+    print("Now re-run: python build_dashboard.py to refresh the dashboard.")
 
 
 if __name__ == "__main__":

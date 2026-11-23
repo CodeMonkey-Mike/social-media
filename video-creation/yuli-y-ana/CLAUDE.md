@@ -45,11 +45,11 @@ video is `media/faithful-crypto-intro/` (the first video through this folder's l
   `--frames=A-B`, concat-filter it into the previous FINAL with v9-style head/tail trims (recipe in `PROJECT-LOG.md` v11,
   rule in `../longform-edited/longform-edited.md` §Partial replacement), PSNR the three regions.
 - **"Yuli" is pronounced "Julie"** (Dominican Y- names are said with a J): spell it **Julie** in every TTS text (gate rule
-  `julie -> yuli` in `verify-tts.js`); captions still print YULI (`make_captions.py` fix map).
+  `julie -> yuli` in `verify_tts.py`); captions still print YULI (`make_captions.py` fix map).
 - **Ana's voice = ElevenLabs v3 + the `ana-2` clone, CHEERFUL BY DEFAULT on every line (LOCKED, Mike 2026-10-18):**
   each TTS chunk starts with `[cheerfully]` (normal lines) or `[excited]` (greetings, welcomes, sign-offs), never a plain
   or `[warmly]`-only line, no atempo. Anything less reads robotic in her clone. Canonical detail + the floor/aim
-  reference: `ANA-SPEC.md` "Voice (LOCKED)". Driver `skills/higgsfield-voice/_gen-model.js "ElevenLabs v3"`.
+  reference: `ANA-SPEC.md` "Voice (LOCKED)". Driver `skills/higgsfield-voice/_gen_model.py "ElevenLabs v3"`.
   Yuli stays on Seed Speech YULI-1 (natural at 1.0x; her VO lines 1.08x) except greeting lines, which go through v3
   `[cheerfully]` so Aurora has energy to animate (see below).
 - **Welcome / greeting faces want a big smile + excitement, BOTH personas (Mike, 2026-10-18)**: Aurora takes a guidance

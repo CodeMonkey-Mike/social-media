@@ -33,11 +33,11 @@ the platforms' in-app music, whose license is app-only and gets claimed on cross
 
 ## 1. Auth (same pattern as schedule-tweets posters)
 Real Chrome + a dedicated persistent profile:
-`C:\Users\mnede\AppData\Local\Google\Chrome\soundstripe-profile`. `launchPersistentContext(..., {
-channel:'chrome' })`.
+`C:\Users\mnede\AppData\Local\Google\Chrome\soundstripe-profile`. `launch_persistent_context(...,
+channel="chrome")` (Python Playwright; `launch()` in `scripts/soundstripe.py`).
 **Since 2026-10-14 the login cookie (`_soundstripe_session`) is SESSION-ONLY**, so Chrome drops it every
 time the automated browser closes and the next run is logged out (that is how the 7-track elevator
-batch failed first). Fix in the script: **`node scripts/soundstripe.js login [--wait 10]`** opens the
+batch failed first). Fix in the script: **`python scripts/soundstripe.py login [--wait 10]`** opens the
 profile, waits for Mike to sign in, and saves the cookies to `video-creation/cache/music-sourcing/recon/session-cookies.json`; every
 `download` / `download-alt` run re-injects + re-saves them. A logged-out run now fails fast with
 `NOT SIGNED IN` (the page flag `data-download-handoff-signed-in-value`), never a selector timeout.
@@ -46,14 +46,14 @@ Chrome while a script runs (profile lock = "Opening in existing browser session"
 **Song-page markup (2026-10):** the download controls are `<a data-controller="download-handoff">`
 anchors keyed by `data-download-handoff-media-id-value="<objectID>"` (row control
 `data-song-detail-row-action="download"`); the old `button[data-testid="song-license-btn"]` is gone.
-`downloadControl()` in the script owns the selector.
+`download_control()` in the script owns the selector.
 
 ## 2. Commands
 ```
-node scripts/soundstripe.js login [--wait 10]              # once per lost session (see §1)
-node scripts/soundstripe.js search "<query>" [--limit 24] [--all-partners]
-node scripts/soundstripe.js download <objectID> [--query "<title>"] [--dest <dir>]
-node scripts/soundstripe.js download-alt <objectID> [--query "<title>"] [--dest <dir>] [--stems]
+python scripts/soundstripe.py login [--wait 10]              # once per lost session (see §1)
+python scripts/soundstripe.py search "<query>" [--limit 24] [--all-partners]
+python scripts/soundstripe.py download <objectID> [--query "<title>"] [--dest <dir>]
+python scripts/soundstripe.py download-alt <objectID> [--query "<title>"] [--dest <dir>] [--stems]
 ```
 - **search** — calls Soundstripe's **Algolia** index directly over HTTP (public search key; NO
   browser, NO auth, no side effects). Writes `video-creation/cache/music-sourcing/candidates.json` + **`board.html`** — a self-contained
@@ -90,9 +90,9 @@ To ingest an entire Soundstripe **private playlist** into the reusable library (
 code + Alternate-Versions instrumentals, per track), use the three `_playlist*` helpers in `scripts/`
 (they wrap the documented `download` / `download-alt` commands — not a substitute for them):
 ```
-node scripts/_playlist-enum.js     <playlistId>              # 1. enumerate the playlist's songs
-node scripts/_playlist-download.js <playlistId> [--limit N] [--skip a,b]  # 2. batch download (resumable)
-node scripts/_register-playlist.js <playlistId> [--skip a,b] # 3. register all into assets/music/library.json
+python scripts/_playlist_enum.py     <playlistId>              # 1. enumerate the playlist's songs
+python scripts/_playlist_download.py <playlistId> [--limit N] [--skip a,b]  # 2. batch download (resumable)
+python scripts/_register_playlist.py <playlistId> [--skip a,b] # 3. register all into assets/music/library.json
 ```
 - **enum** — opens the playlist with the authed profile (re-injecting `video-creation/cache/music-sourcing/recon/session-cookies.json`, same as
   `download`), sniffs the app API (`/app/playlists/<id>/songs?page[offset]=&page[limit]=`, offset/limit paged),
@@ -100,7 +100,7 @@ node scripts/_register-playlist.js <playlistId> [--skip a,b] # 3. register all i
   and makes NO api.soundstripe.com call** (so no token, "auth token: MISSING" is normal): the script then falls
   back to reading the song ids off the rows (song links + `data-download-handoff-media-id-value` anchors, page
   order) and resolves title / artists / duration via Algolia getObject. If it prints `songs found: 0`, run
-  `node scripts/soundstripe.js login` first (the saved session may be gone), then retry.
+  `python scripts/soundstripe.py login` first (the saved session may be gone), then retry.
 - **download** — for each not-yet-present track: `download` (full mp3 + license) THEN `download-alt`
   (instrumentals / section cuts), unzips into `assets/music/<Title>/`, deletes the zip. **Resumable** via
   `video-creation/cache/music-sourcing/recon/playlist-<id>-progress.json` — re-invoke to continue; SEQUENTIAL (shared Chrome profile), so
@@ -172,7 +172,7 @@ python scripts/analyze-music.py --file "<path>"   # analyze ANY audio file, prin
   `schedule-tweets/data/shorts.json`. The raw code never needs to live in `batches.json`.
 
 ## 4. The Soundstripe API map (discovered 2026-06-04)
-- **Search = Algolia.** App `W1S5J3A2XP`, public key in the gitignored `.algolia-key` (read by `scripts/algolia-key.js`), index
+- **Search = Algolia.** App `W1S5J3A2XP`, public key in the gitignored `.algolia-key` (read by `scripts/algolia_key.py`), index
   `prod_songs_all_partners_most_recent`. `POST https://w1s5j3a2xp-dsn.algolia.net/1/indexes/*/queries`
   body `{requests:[{indexName,query,params}]}`. Hits carry `objectID` (=song id), `title`, `artists`,
   `bpm`, `energy`, `key`, `tags{mood,genre,instrument,characteristic}`, `keywords`,
@@ -196,7 +196,7 @@ python scripts/analyze-music.py --file "<path>"   # analyze ANY audio file, prin
 `POST /app/content_id_licenses` with `{"song_id":"<objectID>"}` and stores the returned `code` in
 `library.json`. No navigation to the licenses page or supervised click needed — the song_id is the
 objectID we already pass to `download`. (Mapped via the one-shot supervised capture
-`scripts/_license-capture.js` → `video-creation/cache/music-sourcing/recon/license-capture.json`.) Because each POST mints a fresh code,
+`scripts/_license_capture.py` → `video-creation/cache/music-sourcing/recon/license-capture.json`.) Because each POST mints a fresh code,
 `download` only fetches it once per track; the persisted `library.json` value is the source of truth.
 
 ## 6. Files
@@ -204,10 +204,41 @@ objectID we already pass to `download`. (Mapped via the one-shot supervised capt
 video-creation/skills/music-sourcing/
   SKILL.md             <- this file
   scripts/
-    soundstripe.js     <- the skill (search + download)
+    soundstripe.py     <- the skill (search + download)
     analyze-music.py   <- waveform analyzer (env sparkline / aggression / segments -> library.json, §2c)
-    _*.js              <- throwaway recon/discovery (explore, autodrive, grab, inspect)
+    algolia_key.py     <- reads the public search key (env SOUNDSTRIPE_ALGOLIA_KEY, else ../.algolia-key)
+    download_ss_sfx.py <- one Soundstripe SOUND EFFECT + its metadata sidecar
+    _playlist_enum.py, _playlist_download.py, _register_playlist.py <- the playlist flow (§2b)
+    _soundstripe_explore.py, _soundstripe_autodrive.py, _license_capture.py <- recon for when the site changes (§7)
   library.json         <- downloaded tracks + license codes (SOURCE OF TRUTH)
   (working files live in video-creation/cache/music-sourcing/: candidates.json = last search results, board.html = audition
    board, downloads/ = staging mp3s, recon/ = captured network/DOM/screenshots + session cookies; never here)
 ```
+
+## 7. 2026-11-23: the skill is Python now (no JavaScript left in this folder)
+- `soundstripe.js` -> `soundstripe.py`, and every helper likewise: same commands, flags and output files, `python`
+  where it said `node`. Playwright comes from the Python package; nothing here loads `schedule-tweets/node_modules`
+  any more.
+- **Recon kept (ported), for the next time Soundstripe changes its site:** `_soundstripe_explore.py` (you drive,
+  it records every JSON answer, audio URL and download), `_soundstripe_autodrive.py ["query"]` (drives a search
+  itself and dumps the page), `_license_capture.py` (records the exact request that returns a YouTube code).
+- **Recon deleted, not ported** (one-off probes from the 2026-06-04 mapping, each tied to something that is gone):
+  `_auth-probe.js` (one hardcoded user id and song, and it POSTed a download), `_dlhist-inspect.js` and
+  `_downloads-page-discover.js` (guessed at the downloads-page URL; the answer is in §4), `_modal-inspect.js` and
+  `_soundstripe-grab.js` (clicked `button[data-testid="song-license-btn"]`, gone from the site since 2026-10).
+- **Behavior changes, all small:** a download is saved after the click flow, waiting for the file to finish (the
+  JS saved inside the event and could close Chrome mid-file); `_playlist_download.py` unzips with Python (no
+  `unzip` program needed); `download_ss_sfx.py` defaults `--dest` to `cache/music-sourcing/downloads/` (the JS
+  default was a `downloads/` folder inside this skill, against the file-placement rule) and re-injects the saved
+  session like the other commands; `_register_playlist.py` leaves numbers as the analyzer wrote them (`-14.0`
+  stays `-14.0`; the JS respelled it `-14`, the same value).
+- **Checked on 2026-11-23:** `search` byte for byte against the JS on 7 queries (candidates.json, board.html, the
+  printed lines); `_register_playlist.py` against the JS on all 14 saved playlists, add path and update path (same
+  catalog data); `_playlist_download.py` against the JS with stand-in downloaders (same progress file, folders and
+  log on full runs, resumes, skips and failures); on the real site, signed out, `download`, `download-alt`,
+  `login`, `_playlist_enum.py` and `_soundstripe_autodrive.py` do what the JS does; `_soundstripe_explore.py` and
+  `_license_capture.py` record and exit when their window is closed.
+- **NOT checked on the real site, because the Soundstripe session was signed out that day:** an actual `download`,
+  `download-alt` or `download_ss_sfx.py`. Their click flow, file saving, license-code capture (both routes), library
+  entry, zips and SFX sidecar were run against a local stand-in for the site's pages instead, and passed. After
+  `python scripts/soundstripe.py login`, treat the first real download as the live proof: read its output.

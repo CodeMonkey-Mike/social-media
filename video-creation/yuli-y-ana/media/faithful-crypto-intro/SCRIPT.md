@@ -56,7 +56,7 @@ even = Ana, except chunk 9 (Yuli) and the unison pairs 3/4 and 10/11.
 
 ## Production notes
 - Voice: Higgsfield Seed Speech presets **YULI-1** and **ANA-2** via `../../../skills/higgsfield-voice/`
-  (`_batch-generate.js` with `HF_VOICE`, gated against this file). ANA-2 renders slow: atempo per ANA-SPEC.
+  (`_batch_generate.py` with `HF_VOICE`, gated against this file). ANA-2 renders slow: atempo per ANA-SPEC.
 - Face clips: Seedance 2.0 `--start-image <studio still> --audio <chunk> --resolution 480p --aspect_ratio 9:16`,
   MINIMAL prompt, duration = max(4, ceil(audio)). Short lines are padded with silence to the clip length.
 - Edit: Remotion comp `FaithfulCryptoIntro` (1920x1080, 30 fps), arial-black karaoke captions (Caption2),

@@ -12,7 +12,7 @@ curation pass**, it is what the curation step actually applies._
 | Tab | Lane | Source | Config |
 |---|---|---|---|
 | Creator Watch List | Lane 3 | YouTube RSS per creator (precise dates + views) | `creators.json` |
-| News Clips | Lane 2 | yt-dlp pages ~400 uploads per outlet channel, titles filtered by crypto keywords | `outlets.json` + `CRYPTO_RE` regex in `build-dashboard.js` |
+| News Clips | Lane 2 | yt-dlp pages ~400 uploads per outlet channel, titles filtered by crypto keywords | `outlets.json` + `CRYPTO_RE` regex in `build_dashboard.py` |
 | Crypto Sites | article radar | Site RSS feeds | `sites.json` |
 | Policy Radar | regulation | Polymarket search API (odds cards) + cached X posts from policy reporters | `polymarket.json`, `x-accounts.json` |
 
@@ -28,7 +28,7 @@ two CAPS power words, an active verb with teeth, a parenthetical second hook, **
 
 1. *(Optional, only if Chrome is free — NEVER while any posting script runs; uses the shared
    xbot-profile)* `python video-creation/topic-radar/fetch-x-policy.py` → recaches X policy posts.
-2. `node video-creation/topic-radar/build-dashboard.js` (~2-3 min; `--days N` to widen the window).
+2. `python video-creation/topic-radar/build_dashboard.py` (~2-3 min; `--days N` to widen the window).
    Polymarket odds refresh automatically on every build.
 3. **Curation pass** (the human-value step, do not skip): read the new News Clips + Crypto Sites
    items, pick stories that clear the topic-selection filter in `PLAYBOOK.md`, cross-reference
@@ -53,7 +53,7 @@ two CAPS power words, an active verb with teeth, a parenthetical second hook, **
 | File | What it is |
 |---|---|
 | `PLAYBOOK.md` | The doctrine: lanes, case studies, selection filter, watchlists |
-| `build-dashboard.js` | The builder → writes `dashboard.html` |
+| `build_dashboard.py` | The builder → writes `dashboard.html` (Python since 2026-11-23; its page was checked byte for byte against the JS builder it replaced, on that day's live data and on stress inputs) |
 | `fetch-x-policy.py` | Recaches X policy-reporter posts → `x-policy.json` (shared xbot-profile) |
 | `dashboard.html` | **Generated.** Never hand-edit; rebuild instead |
 | `creators.json` · `outlets.json` · `sites.json` · `polymarket.json` · `x-accounts.json` | Source config (hand-edited) |

@@ -22,7 +22,7 @@ recording exists or is needed. The short lane's `scripts/mix_short.py` reads it 
 - **Reuse the take. Do not regenerate per project** — it costs credits and, more importantly, a re-roll
   drifts the delivery, so shorts from different videos would end on subtly different readings.
 - **Regenerate only when the LINE changes**, or when Mike rejects the reading. Then update `CTA-SCRIPT.md`
-  first and let `verify-tts.js` prove `tts-chunks.json` still matches before spending a credit.
+  first and let `verify_tts.py` prove `tts-chunks.json` still matches before spending a credit.
 - **Consumers reference this path, never a project-local copy.** Canonical consumer:
   `longform-edited/skills/longform-to-short/longform-to-short.md` §4.
 
@@ -35,7 +35,7 @@ Eleven v3), confirm the Voice Preset is **MIKE-CLONE**, then:
 
 ```bash
 cd video-creation/skills/higgsfield-voice
-node _batch-generate.js ../../assets/vo/tts-chunks.json ../../assets/vo ../../assets/vo/CTA-SCRIPT.md
+python _batch_generate.py ../../assets/vo/tts-chunks.json ../../assets/vo ../../assets/vo/CTA-SCRIPT.md
 # then curl the URL from _manifest.json, and whisper-QA the take before it ships
 ```
 

@@ -102,7 +102,7 @@ what the primary source says, for Mike's own accuracy, never an on-camera correc
 
 ## Flow B: A SESSION (Mike wants to record)
 
-1. **Feeds.** `discussion.py scan` · `node video-creation/topic-radar/build-dashboard.js --days 7` (outlets, watchlist
+1. **Feeds.** `discussion.py scan` · `python video-creation/topic-radar/build_dashboard.py --days 7` (outlets, watchlist
    creators, sites, Polymarket; read `articles.json` and the dashboard's tabs) · web search on the week's stories and
    on Mike's stack (`persona/persona.json` `stacking_lineup`). Read recent titles in `schedule-tweets/data/longs.json`,
    `shorts.json` and the latest `repurpose/output/*-lane3-plan.json` so nothing is repeated. Search his transcripts for
