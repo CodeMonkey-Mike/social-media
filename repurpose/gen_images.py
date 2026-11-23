@@ -81,6 +81,61 @@ FILE_ID_RE = re.compile(r"id=(file_[A-Za-z0-9]+)")
 DIAG_DIR = Path(tempfile.gettempdir()) / "chatgpt-diag"
 COMPOSER_COOLDOWN_MS = 60000   # wait before the one reload + re-click (429 windows are short)
 
+# ChatGPT's IMAGE CAP replies (seen live 2026-11-23, batch evaa-pieverse): "You're out of image
+# creations for now. Try again in 15 minutes." and "... will be available after 10:59 AM. Do you
+# want to try ...". The capture loop used to read either as a hung render: ~8 min of reload/API
+# waits, the one retry, then IMG FAIL, so the cap ate the row's attempts (and a caller re-running
+# the list kept poking the cap). Now the reply is recognised, the run WAITS until the stated time
+# and re-sends the same item (no image was made, so a re-send cannot duplicate one).
+IMAGE_LIMIT_RE = re.compile(
+    r"out of image creations|image (?:generation|creation)s?\s+limit|"
+    r"(?:hit|reached)\s+(?:the|your)\s+(?:\w+\s+)?limit|\brate limit", re.I)
+LIMIT_AFTER_RE = re.compile(
+    r"available\s+(?:again\s+)?after\s+(\d{1,2}):(\d{2})\s*([AaPp])?\.?\s*[Mm]?\.?", re.I)
+LIMIT_IN_RE = re.compile(
+    r"(?:try again|available(?: again)?)\s+in\s+(?:about\s+|around\s+|roughly\s+)?(\d+)\s*"
+    r"(seconds?|secs?|minutes?|mins?|hours?|hrs?)", re.I)
+LIMIT_DEFAULT_WAIT_S = 15 * 60       # a cap reply that names no time
+LIMIT_MARGIN_S = 60                  # wait a minute past the stated time
+LIMIT_MAX_TOTAL_S = 3 * 3600         # past this the row fails loudly instead of waiting on
+
+_ASSISTANT_TEXTS_JS = """
+() => Array.from(document.querySelectorAll('[data-message-author-role="assistant"]'))
+  .map(m => m.innerText || '')
+"""
+
+
+def image_limit_wait_s(text, now=None):
+    """Seconds to wait when `text` is ChatGPT's image-cap reply, else None. `now` = a naive local
+    datetime (tests pass one; the clock times ChatGPT prints are the browser's local time)."""
+    import datetime as _dt
+    t = " ".join((text or "").split())
+    if not t or not (IMAGE_LIMIT_RE.search(t) or LIMIT_AFTER_RE.search(t)):
+        return None
+    now = now or _dt.datetime.now()
+    m = LIMIT_AFTER_RE.search(t)
+    if m:
+        hh, mm, ap = int(m.group(1)), int(m.group(2)), (m.group(3) or "").lower()
+        if ap == "p" and hh < 12:
+            hh += 12
+        elif ap == "a" and hh == 12:
+            hh = 0
+        if hh < 24 and mm < 60:
+            target = now.replace(hour=hh, minute=mm, second=0, microsecond=0)
+            if target < now - _dt.timedelta(minutes=5):
+                # an earlier clock time than now: no AM/PM given and it means the evening, or
+                # it is tomorrow's time. Take the next occurrence (12 h steps when no AM/PM).
+                step = _dt.timedelta(hours=12 if not ap else 24)
+                while target < now - _dt.timedelta(minutes=5):
+                    target += step
+            return max(0, int((target - now).total_seconds())) + LIMIT_MARGIN_S
+    m = LIMIT_IN_RE.search(t)
+    if m:
+        n, unit = int(m.group(1)), m.group(2).lower()
+        mult = 1 if unit.startswith("s") else 3600 if unit.startswith("h") else 60
+        return n * mult + LIMIT_MARGIN_S
+    return LIMIT_DEFAULT_WAIT_S
+
 _GET_GEN_IMGS_JS = """
 () => Array.from(document.querySelectorAll('img')).map(i => i.src)
   .filter(s => s.includes('estuary/content') || s.includes('oaiusercontent'))
@@ -421,6 +476,8 @@ class Generator:
         self.pending_fresh = False   # fresh chat awaiting registration (at its first send)
         self.born_url = None         # chat registered by THIS run (zero-image rule)
         self.run_id = None           # journal window id (chat_pool.journal_start)
+        self.limit_wait_s = None     # set by gen_one when ChatGPT answers with its image cap
+        self.limit_waited_s = 0      # total cap wait this run (bounded by LIMIT_MAX_TOTAL_S)
         self._route = f"**/*{IMAGE_URL_PATTERN}*"
 
     def out_path(self, item) -> Path:
@@ -510,6 +567,38 @@ class Generator:
 
     # ── one image (port of genOne, all gates intact) ──────────────────────────
 
+    def _assistant_texts(self):
+        try:
+            return self.page.evaluate(_ASSISTANT_TEXTS_JS) or []
+        except Exception:
+            return []
+
+    def _after_limit(self, item, r):
+        """gen_one returned "limited": wait out ChatGPT's image cap, then send the SAME item again
+        (the cap reply means no image was made). Repeats while the cap keeps answering, up to
+        LIMIT_MAX_TOTAL_S of waiting in this run; past that the item fails loudly. Any other
+        result is passed through untouched."""
+        while r == "limited":
+            wait = int(self.limit_wait_s or LIMIT_DEFAULT_WAIT_S)
+            if self.limit_waited_s + wait > LIMIT_MAX_TOTAL_S:
+                print(f"IMG LIMIT purpose={self.prefix} slug={item['slug']} gave up: the cap would "
+                      f"need {wait // 60} more min after {self.limit_waited_s // 60} min waited")
+                return False
+            until = time.strftime("%H:%M", time.localtime(time.time() + wait))
+            print(f"IMG LIMIT purpose={self.prefix} slug={item['slug']} waiting {wait // 60} min "
+                  f"(until {until}), then re-sending the same prompt", flush=True)
+            end = time.monotonic() + wait
+            while time.monotonic() < end:                 # a heartbeat line every 5 min
+                time.sleep(min(300, max(1, end - time.monotonic())))
+                left = int(end - time.monotonic())
+                if left > 0:
+                    print(f"   image cap: {left // 60} min left", flush=True)
+            self.limit_waited_s += wait
+            self.limit_wait_s = None
+            self.ensure_chat()
+            r = self.gen_one(item)
+        return r
+
     def gen_one(self, item):
         page = self.page
         out_path = self.out_path(item)
@@ -532,6 +621,7 @@ class Generator:
             # re-render mid-typing swallows the rest of the keystrokes (seen live 2026-09-10)
             page.wait_for_timeout(5000)
         before = {file_id(s) for s in get_gen_imgs(page)}
+        asst_before = len(self._assistant_texts())    # only replies AFTER this send can be a cap reply
         want = " ".join(item["prompt"].split())
         typed_ok = False
         for attempt in range(1, 4):
@@ -676,6 +766,14 @@ class Generator:
                 if finish(src):
                     page.wait_for_timeout(2000)
                     return True
+            # The image cap answers in text within seconds; catch it here instead of spending
+            # phase 2's reload/API waits on a render that will never come.
+            for reply in self._assistant_texts()[asst_before:]:
+                wait = image_limit_wait_s(reply)
+                if wait is not None:
+                    self.limit_wait_s = wait
+                    print(f"   IMAGE CAP reply: \"{' '.join(reply.split())[:140]}\"")
+                    return "limited"
         # PHASE 2: hung past 80s -> RELOAD to surface the server-side-finished image.
         print(f"   >80s no new image in live DOM (hung) -> reloading to capture "
               f"{item['slug']}")
@@ -806,10 +904,10 @@ class Generator:
                         self._emit(item, "skip")
                         continue
                     self.ensure_chat()
-                    r = self.gen_one(item)
+                    r = self._after_limit(item, self.gen_one(item))
                     if r is False:
                         print("   retry once...")   # side-effect-safe for image gen
-                        r = self.gen_one(item)
+                        r = self._after_limit(item, self.gen_one(item))
                     if r is True:
                         if self.pending_fresh:
                             reg = pool.confirm_and_register(

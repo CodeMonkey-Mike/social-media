@@ -23,9 +23,16 @@ Usage (from any build agent, repo root):
     ... remotion render ...      # at most 2 builders are ever inside this section
     python video-creation/shorts/_tooling/stage_lock.py release render  --owner <slug>
 
-`acquire` blocks (polling) until free, then writes the lock. Stale locks older than --stale-min
-(default 90) are broken automatically so a crashed agent cannot wedge the pipeline forever.
-`release` is safe to call when you do not hold it (no-op with a warning).
+`acquire` blocks (polling) until free, then writes the lock. `release` is safe to call when you do
+not hold it (no-op with a warning).
+
+STALE LOCKS. A caller that lives for the whole locked section passes `--holder-pid <its own pid>`
+(the batch graph does). Such a slot is broken ONLY when that process is dead, never for its age:
+on 2026-11-23 (batch `evaa-pieverse`) clip 2's image round sat out a ChatGPT image cap for 146 min
+inside the graph, the 90-minute age rule broke its live lock, and clip 3's generator started on the
+same Chrome profile (it only survived because the generator waits for the profile). A slot with no
+holder pid (an agent calling this from a shell that exits right away) still falls back to the age
+rule, --stale-min (default 90), so a crashed agent cannot wedge the pipeline forever.
 """
 import argparse
 import json
@@ -65,6 +72,49 @@ def read_slot(stage, i):
         return None
 
 
+def pid_alive(pid):
+    """True when process `pid` is running. Windows: OpenProcess + GetExitCodeProcess (no tasklist
+    spawn per poll); elsewhere os.kill(pid, 0)."""
+    try:
+        pid = int(pid)
+    except (TypeError, ValueError):
+        return False
+    if pid <= 0:
+        return False
+    if os.name == "nt":
+        import ctypes
+        from ctypes import wintypes
+        k32 = ctypes.WinDLL("kernel32", use_last_error=True)
+        k32.OpenProcess.restype = wintypes.HANDLE
+        h = k32.OpenProcess(0x1000, False, pid)          # PROCESS_QUERY_LIMITED_INFORMATION
+        if not h:
+            return ctypes.get_last_error() == 5           # ACCESS_DENIED = it exists, not ours
+        try:
+            code = wintypes.DWORD()
+            if not k32.GetExitCodeProcess(h, ctypes.byref(code)):
+                return True
+            return code.value == 259                      # STILL_ACTIVE
+        finally:
+            k32.CloseHandle(h)
+    try:
+        os.kill(pid, 0)
+        return True
+    except OSError:
+        return False
+
+
+def stale_reason(cur, stale_min, now=None):
+    """Why this held slot may be broken, or None when it must be left alone."""
+    now = time.time() if now is None else now
+    hp = cur.get("holder_pid")
+    if hp:
+        return None if pid_alive(hp) else f"its holder process {hp} is gone"
+    age = (now - cur.get("ts", 0)) / 60.0
+    if age > stale_min:
+        return f"held {age:.0f} min with no holder pid (> {stale_min} stale threshold)"
+    return None
+
+
 def holders(stage):
     """[(slot_index, lock_dict)] for every currently held slot of this stage."""
     out = []
@@ -75,8 +125,9 @@ def holders(stage):
     return out
 
 
-def acquire(stage, owner, stale_min, timeout_min, poll_s):
-    """Take one of this stage's slots, blocking until one frees. Capacity is the hard ceiling."""
+def acquire(stage, owner, stale_min, timeout_min, poll_s, holder_pid=None):
+    """Take one of this stage's slots, blocking until one frees. Capacity is the hard ceiling.
+    `holder_pid`: the long-lived process that owns the slot (see STALE LOCKS above)."""
     os.makedirs(LOCK_DIR, exist_ok=True)
     cap = capacity(stage)
     waited = 0.0
@@ -90,10 +141,9 @@ def acquire(stage, owner, stale_min, timeout_min, poll_s):
         # break stale slots first
         for i in range(cap):
             cur = read_slot(stage, i)
-            if cur and (time.time() - cur.get("ts", 0)) / 60.0 > stale_min:
-                print(f"lock '{stage}' slot {i} held by {cur.get('owner')} for "
-                      f"{(time.time() - cur.get('ts', 0)) / 60:.0f} min "
-                      f"(> {stale_min} stale threshold) - breaking it")
+            why = stale_reason(cur, stale_min) if cur else None
+            if why:
+                print(f"lock '{stage}' slot {i} held by {cur.get('owner')}: {why} - breaking it")
                 try:
                     os.unlink(slot_path(stage, i))
                 except OSError:
@@ -115,8 +165,11 @@ def acquire(stage, owner, stale_min, timeout_min, poll_s):
         i = free[0]
         tmp = slot_path(stage, i) + f".{os.getpid()}.tmp"
         with open(tmp, "w", encoding="utf-8") as f:
-            json.dump({"owner": owner, "pid": os.getpid(), "ts": time.time(),
-                       "stage": stage, "slot": i}, f)
+            rec = {"owner": owner, "pid": os.getpid(), "ts": time.time(),
+                   "stage": stage, "slot": i}
+            if holder_pid:
+                rec["holder_pid"] = int(holder_pid)
+            json.dump(rec, f)
         try:
             os.replace(tmp, slot_path(stage, i))
         except OSError:
@@ -174,11 +227,14 @@ if __name__ == "__main__":
     ap.add_argument("--stale-min", type=float, default=90)
     ap.add_argument("--timeout-min", type=float, default=180)
     ap.add_argument("--poll-s", type=float, default=20)
+    ap.add_argument("--holder-pid", type=int, default=None,
+                    help="pid of the long-lived process that owns the slot; the slot is then "
+                         "broken only when that process is dead, never for its age")
     a = ap.parse_args()
     if a.action == "status":
         sys.exit(status())
     if not a.stage:
         ap.error("stage is required for acquire/release")
     if a.action == "acquire":
-        sys.exit(acquire(a.stage, a.owner, a.stale_min, a.timeout_min, a.poll_s))
+        sys.exit(acquire(a.stage, a.owner, a.stale_min, a.timeout_min, a.poll_s, a.holder_pid))
     sys.exit(release(a.stage, a.owner))

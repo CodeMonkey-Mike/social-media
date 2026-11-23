@@ -56,16 +56,17 @@ generated, verified b-roll stills.
 ## Output location (comp-build.md §10 merged layout)
 - `media/<project>/assets/img/<IMG-id>-<slug>.png`.
 
-## Livestream SHORTS (the batch graph calls you per clip, 2026-11-18)
-You are also the image agent for the livestream shorts lane. There the delegation hands you a ready
-worklist, `video-creation/shorts/<batch>/<clip>/broll-images.json` (`[{file, prompt, beat, ref?}]`,
-authored by the `remotion-builder` with its `BROLL-PLAN.md`), and the rules that govern are the
-b-roll section of `video-creation/livestream-repurpose/skills/remotion-shorts-build/SKILL.md`
-(steps 2a and 5), not the longform BROLL-PLAN / COVER-PLAN above. Generate with
-`python repurpose/gen_batch.py --list <worklist> --prefix broll --batch <batch>`; each image lands
-at its item's `file` path. **The graph already holds the `chatgpt` stage lock: never acquire, release
-or wait on a lock, and never end your turn to wait.** You may correct a `prompt` in the worklist to
-fix a wrong image; you never edit the plan or the composition.
+## Livestream SHORTS (the batch graph calls you only for FIX ROUNDS, since 2026-11-23)
+In the livestream shorts lane the batch graph runs the generator itself, in code
+(`repurpose/gen_batch.py --list <worklist> --prefix broll --batch <batch>`), and calls you ONLY when
+`visual-qa` failed some of a clip's images. By then the graph has already moved the failed files into
+`<clip>/_qa/rejected/`. Your one job is to rewrite the `prompt` of each failed item in
+`video-creation/shorts/<batch>/<clip>/broll-images.json` so the reported defect cannot recur, under
+the b-roll rules of `video-creation/livestream-repurpose/skills/remotion-shorts-build/SKILL.md`
+(steps 2a and 5). **Do not run any generator or browser, and never acquire, release or wait on a
+lock:** the graph regenerates the missing files the moment you finish. You never edit the plan, the
+composition, or any other item or field. (Why: a 10-minute tool-call ceiling cut every generator run
+you made after one or two images, and Chrome restarted each time; 146 min on one clip, 2026-11-23.)
 
 ## Return contract
 - Per slot: file path · prompt used · QA note. Skipped slots (+ why) and any regeneration retries.

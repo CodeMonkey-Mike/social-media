@@ -82,10 +82,21 @@ def parse_clip(spec):
     return (parts[0], parts[1]) if len(parts) == 2 else None
 
 
+def safe_name(job_id, index):
+    """A temp-file name for a job id. Ids are free text (a builder used 'k5|A'), and Windows
+    refuses | : * ? " < > \\ / in file names: ffmpeg failed, precut returned None and the job
+    silently decoded the WHOLE file (slow, and the 'window' result was the full clip's text).
+    Seen on two evaa-pieverse builders, 2026-11-23. The index keeps two ids that clean to the
+    same name apart."""
+    import re
+    return f"{index:04d}-{re.sub(r'[^A-Za-z0-9._-]+', '_', str(job_id))[:60]}"
+
+
 def precut(src, start, end, tmpdir, job_id):
     """Cut [start,end) to a 16 kHz mono WAV so whisper loads seconds, not the whole file.
 
-    Returns the WAV path, or None if ffmpeg fails (caller falls back to the full file).
+    `job_id` must already be file-safe (see safe_name). Returns the WAV path, or None if ffmpeg
+    fails; the caller then refuses to decode the whole file for a window job (see main).
     """
     dst = os.path.join(tmpdir, f"{job_id}.wav")
     cmd = ["ffmpeg", "-nostdin", "-v", "error", "-y",
@@ -115,6 +126,7 @@ def main():
             sys.exit(f"job[{i}] missing 'audio'")
         j.setdefault("id", f"job{i}")
         j.setdefault("model", "medium.en")
+        j["_tmpname"] = safe_name(j["id"], i)
 
     import torch      # heavy imports after arg validation
     import whisper
@@ -156,9 +168,17 @@ def main():
                               f"{clamped:.2f} (file is {dur:.2f}s; guard)", flush=True)
                         end = clamped
                 if end > start:
-                    cut = precut(j["audio"], start, end, tmpdir, j["id"])
+                    cut = precut(j["audio"], start, end, tmpdir, j["_tmpname"])
                     if cut:
                         src, offset = cut, start
+                    else:
+                        # Never fall back to decoding the whole file for a WINDOW job: it is
+                        # slow and its text is the whole clip's, which reads as a real result.
+                        print(f"[whisper_jobs]   {j['id']}: SKIPPED, the window could not be cut",
+                              flush=True)
+                        results[j["id"]] = {"text": "", "segments": [], "decode_s": 0,
+                                            "error": "precut failed; window not decoded"}
+                        continue
 
             t1 = time.time()
             r = model.transcribe(src, **kw)

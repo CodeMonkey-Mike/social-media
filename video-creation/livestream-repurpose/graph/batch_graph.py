@@ -49,6 +49,7 @@ import re
 import shutil
 import subprocess
 import sys
+import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime
@@ -99,6 +100,7 @@ class BatchState(TypedDict, total=False):
     missed: Optional[str]        # --missed "...": what the clip-strategist should have found (evals recall)
     missed_gate: str             # the gate that --missed was said at
     max_builders: int
+    max_prep: int                # clips in steps 1-3 (plan, images, image check) at once; env BATCH_MAX_PREP
     build_clips: List[int]       # per-run --clips scope for lane2_build (empty = every surviving clip)
     lane3_brief: Optional[str]
     clip_brief: Optional[str]
@@ -864,15 +866,31 @@ def _built(c: dict) -> bool:
 # ── the per-clip build pipeline (Mike, 2026-11-17, built 2026-11-18) ────────────
 # One agent per decision, plain code where there is nothing to decide:
 #   1 PLAN    remotion-builder writes BROLL-PLAN.md + broll-images.json and stops
-#   2 IMAGES  the `chatgpt` stage lock is taken HERE, in code, then image-gen generates
-#   3 QA      visual-qa opens every image; a FAIL goes back to image-gen (BROLL_QA_ROUNDS)
+#   2 IMAGES  the `chatgpt` stage lock is taken HERE, in code, and gen_batch.py runs HERE, in code
+#             (2026-11-23: no agent around the generator; see _run_generator)
+#   3 QA      visual-qa opens every image; on a FAIL the failed files are moved aside in code, an
+#             image-gen agent rewrites only those prompts, and step 2 runs again (BROLL_QA_ROUNDS)
 #   4 BUILD   remotion-builder builds the composition from the images on disk
 # Before this the builder did all four itself: a builder once quit while waiting on the lock
 # (archie-promo 2026-09-24), nobody but the builder ever looked at a short's images, and the
 # image work ran at the builder's Opus/xhigh tier. Every stage is resumable from disk.
+#
+# SCHEDULING (Mike, 2026-11-23, batch evaa-pieverse took ~9 h for five shorts): steps 1-3 ("prep")
+# and step 4 ("build") have SEPARATE worker pools. Every clip's prep starts at once (BATCH_MAX_PREP,
+# default 3), so ChatGPT works through the clips back to back; a clip's build is queued the moment
+# its prep ends and at most `max_builders` (default 2, the render ceiling) build at a time. Before,
+# ONE pool of 2 ran each clip's whole chain, so clip 3 could not even plan until clip 1 or 2 had
+# finished BUILDING, and ChatGPT sat idle ~1.5 h waiting on builders' caption checks.
 BUILD_SKILL = "video-creation/livestream-repurpose/skills/remotion-shorts-build/SKILL.md"
 STAGE_LOCK = SHORTS / "_tooling" / "stage_lock.py"
+GEN_BATCH = REPO_ROOT / "repurpose" / "gen_batch.py"
 BROLL_QA_ROUNDS = 2
+PREP_WORKERS_DEFAULT = 3
+# The generator bounds itself (each image ~8 min of capture waits + one retry; an image cap is
+# waited out up to 3 h; another run holding the Chrome profile up to 30 min). This is only the
+# backstop for a wedged process: per image to make, plus the cap and profile allowances.
+GEN_MIN_PER_IMAGE = 20
+GEN_ALLOWANCE_MIN = 3 * 60 + 30
 
 
 def clip_dir(batch: str, slug: str) -> Path:
@@ -930,33 +948,23 @@ def _plan_prompt(state: BatchState, c: dict) -> str:
     )
 
 
-def _images_prompt(state: BatchState, c: dict, redo_report: Optional[Path]) -> str:
+def _fix_prompts_prompt(state: BatchState, c: dict, report: Path, moved: List[str]) -> str:
+    """The fix round's ONE judgment step: rewrite the failed items' prompts. The agent never runs
+    the generator (the graph does, in code, right after) and never moves files (done in code)."""
     batch = state["batch"]
     lst = broll_list_path(batch, c["slug"])
-    redo = ""
-    if redo_report:
-        redo = (
-            f"\nThis is a FIX ROUND. visual-qa failed some images: read `{redo_report}`. For every FAILED "
-            f"file: move the bad png into `{clip_dir(batch, c['slug']) / '_qa' / 'rejected'}` (never delete, "
-            f"never overwrite), correct that item's `prompt` in the worklist so the defect cannot recur, then "
-            f"run the generator again (it regenerates only the files that are missing). Leave PASSED images alone."
-        )
+    names = ", ".join(Path(f).name for f in moved)
     return (
-        f"Generate the ChatGPT b-roll images for vertical SHORT clip {c['n']} `{c['slug']}` of livestream batch "
-        f"`{batch}`. This is a shorts job, not a longform one: the worklist is `{lst}` (already authored, with "
-        f"its plan `{broll_plan_path(batch, c['slug'])}`), and every image goes to the `file` path its item names. "
-        f"Run the canonical generator from the repo root, in the FOREGROUND with a long timeout:\n"
-        f"`python repurpose/gen_batch.py --list \"{lst}\" --prefix broll --batch {batch}`\n"
-        f"The batch graph ALREADY HOLDS the `chatgpt` stage lock for you: do not acquire, release or wait on "
-        f"any lock, and never end your turn to wait for anything. One attempt per run: if the generator seems "
-        f"stuck, read its output, never relaunch blind. It skips files that exist, so a re-run after a partial "
-        f"result is safe. When it finishes: md5sum the pngs (a duplicate is a mis-capture: move it aside and "
-        f"regenerate), and OPEN every image to check it against its prompt (the named asset, house style, no "
-        f"unrequested real logo or real face, no stray text). Fix a wrong image by correcting the prompt in the "
-        f"worklist and regenerating that one file. Do not edit the BROLL-PLAN, the composition or anything "
-        f"else.{redo}\n"
-        f"Your final message is one JSON object: per file `path`, `ok` and a QA note, plus `failed` (files "
-        f"you could not get right)."
+        f"FIX ROUND for the ChatGPT b-roll of vertical SHORT clip {c['n']} `{c['slug']}` of livestream batch "
+        f"`{batch}`. visual-qa failed these images: {names}. Its report is `{report}`; the plan is "
+        f"`{broll_plan_path(batch, c['slug'])}`. The failed files are ALREADY moved aside into "
+        f"`{clip_dir(batch, c['slug']) / '_qa' / 'rejected'}` (open them there to see the defect).\n"
+        f"Your ONLY job: in the worklist `{lst}`, rewrite the `prompt` of each of those items so the reported "
+        f"defect cannot recur (say plainly what the image must and must not show, keep the house style, keep "
+        f"`file`, `beat` and `ref` as they are). Touch no other item, no other field, no other file.\n"
+        f"Do NOT run any generator or browser and do NOT touch the ChatGPT profile or any lock: the batch graph "
+        f"generates the missing files itself as soon as you finish.\n"
+        f"Your final message is one JSON object: per rewritten item its `file` name and a one-line `change`."
     )
 
 
@@ -992,13 +1000,23 @@ def _build_prompt(state: BatchState, c: dict, notes: str = "") -> str:
         f"(`finalized_short_gate.py --clip {c['n']}`) and self-QA. A beat whose image is missing or still "
         f"FAILED in the image check is remapped to another clean image of this clip, a code-drawn card or a "
         f"base-showing beat (update the BROLL-PLAN to match, zero orphans) and named in your report.{notes} "
+        f"WHISPER QA BUDGET (Mike, 2026-11-23): about 15 minutes in all, per the skill's \"Whisper QA budget\" "
+        f"section: medium.en only (no large-v3 on this machine), every decode batched through `whisper_jobs.py` "
+        f"with `--device cpu`, job ids of letters, digits, dot, dash and underscore only. One SFX-masking batch "
+        f"and one caption verify on the final render; a word still in doubt after that goes into `needs_review` "
+        f"for Mike instead of another sweep. "
         f"Project folder: `{SHORTS / batch}`; progress: `{prog_path(batch)}`. Respect the `render` stage lock "
         f"(render_short.py takes it itself). Done means progress.json shows this clip phase 7-built with a PASS gate."
     )
 
 
 def _stage_lock(action: str, stage: str, owner: str) -> int:
-    r = subprocess.run([sys.executable, "-u", str(STAGE_LOCK), action, stage, "--owner", owner],
+    """Acquire records THIS process as the holder: the slot is then broken only if the batch
+    process dies, never for its age (a clip waiting out a ChatGPT image cap holds it for hours).
+    Every clip's prep now waits on this one lock, so a waiter may queue behind several clips'
+    images: the wait timeout is 12 h, not the tool's 3 h default."""
+    extra = ["--holder-pid", str(os.getpid()), "--timeout-min", "720"] if action == "acquire" else []
+    r = subprocess.run([sys.executable, "-u", str(STAGE_LOCK), action, stage, "--owner", owner] + extra,
                        cwd=str(REPO_ROOT), stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                        text=True, encoding="utf-8", errors="replace")
     if r.returncode != 0:
@@ -1040,21 +1058,32 @@ def _clip_images(state: BatchState, node: str, c: dict) -> str:
     first = done_rounds + 1 if redo else 1
     verdict = None
     for rnd in range(first, BROLL_QA_ROUNDS + 1):
-        if _broll_missing(items) or redo:
+        if redo:
+            # FIX ROUND: the failed files go aside in code; an agent rewrites ONLY their prompts.
+            failed = _failed_files(redo.read_text(encoding="utf-8"), items)
+            if not failed:
+                print(f"[batch] {node}: clip {n} image check FAILED but names no worklist file; "
+                      f"not regenerating blind", flush=True)
+                break
+            _move_aside(batch, slug, failed, rnd)
+            spawn_agent(state, node, "image-gen", _fix_prompts_prompt(state, c, redo, failed),
+                        f"agent-image-gen-{batch}-{n}.log", marker=marker)
+            items = broll_items(batch, slug) or items       # the corrected prompts
+        missing = _broll_missing(items)
+        if missing:
             owner = f"{batch}-{slug}-images"
             _beat(state, node, f"clip {n}: waiting for the ChatGPT browser")
             if _stage_lock("acquire", "chatgpt", owner) != 0:
                 raise RuntimeError("could not take the chatgpt stage lock")
             try:
-                spawn_agent(state, node, "image-gen", _images_prompt(state, c, redo),
-                            f"agent-image-gen-{batch}-{n}.log", marker=marker)
+                _run_generator(state, node, c, len(missing), marker)
             finally:
                 _stage_lock("release", "chatgpt", owner)
-            items = broll_items(batch, slug) or items       # a fix round may have corrected prompts
+            items = broll_items(batch, slug) or items
         present = [it for it in items if Path(it["file"]).is_file()]
         if not present:
-            raise RuntimeError(f"image-gen produced none of the {len(items)} images "
-                               f"(log agent-image-gen-{batch}-{n}.log)")
+            raise RuntimeError(f"the generator produced none of the {len(items)} images "
+                               f"(log gen-{batch}-{n}.log)")
         rc, out = spawn_agent(state, node, "visual-qa", _broll_qa_prompt(state, c, items),
                               f"agent-visual-qa-{batch}-clip{n}.log", marker=marker)
         verdict = _qa_verdict(out)
@@ -1071,15 +1100,100 @@ def _clip_images(state: BatchState, node: str, c: dict) -> str:
     return _images_note(verdict, [Path(f).name for f in _broll_missing(items)], BROLL_QA_ROUNDS)
 
 
+def _failed_files(report_text: str, items: List[dict]) -> List[str]:
+    """The worklist `file` paths visual-qa FAILED (`FAIL: <file name> | <defect> | <fix>`)."""
+    names = {m.strip() for m in re.findall(r"^\W*FAIL:\s*([^|\n]+?)\s*\|", report_text or "", flags=re.M)}
+    return [it["file"] for it in items if Path(it["file"]).name in names]
+
+
+def _move_aside(batch: str, slug: str, files: List[str], rnd: int) -> None:
+    """Move failed images into <clip>/_qa/rejected/ (never deleted, never overwritten) so the
+    generator, which only makes MISSING files, regenerates exactly these."""
+    rej = clip_dir(batch, slug) / "_qa" / "rejected"
+    rej.mkdir(parents=True, exist_ok=True)
+    for f in files:
+        src = Path(f)
+        if not src.is_file():
+            continue                                        # already aside (a resumed fix round)
+        k, dst = rnd, rej / f"{src.stem}.rejected-{rnd}{src.suffix}"
+        while dst.exists():
+            k += 1
+            dst = rej / f"{src.stem}.rejected-{k}{src.suffix}"
+        shutil.move(str(src), str(dst))
+
+
+def _kill_tree(pid: int) -> None:
+    if os.name == "nt":
+        subprocess.run(["taskkill", "/PID", str(pid), "/T", "/F"], capture_output=True)
+    else:
+        try:
+            os.kill(pid, 9)
+        except OSError:
+            pass
+
+
+def _run_generator(state: BatchState, node: str, c: dict, n_missing: int,
+                   marker: Optional[Path] = None) -> int:
+    """Step 2 in CODE: run gen_batch.py on the clip's worklist, caller holding the chatgpt lock.
+    No agent wraps it any more (2026-11-23): the image-gen agent ran it in a tool call that its
+    CLI cuts off at 10 min, so every clip's run died after one or two images, Chrome closed and
+    reopened, and the agent re-ran it (clip 2 of evaa-pieverse: 146 min). gen_batch skips files
+    that exist, rejects a captured reference or a duplicate sibling itself, and waits out
+    ChatGPT's image cap itself, so there is nothing here to decide."""
+    batch, slug, n = state["batch"], c["slug"], c["n"]
+    lst = broll_list_path(batch, slug)
+    log = DATA / f"gen-{batch}-{n}.log"
+    cmd = [sys.executable, "-u", str(GEN_BATCH), "--list", str(lst), "--prefix", "broll",
+           "--batch", batch]
+    limit_s = (GEN_MIN_PER_IMAGE * max(1, n_missing) + GEN_ALLOWANCE_MIN) * 60
+    print(f"[batch] {node}: clip {n} generating {n_missing} image(s) (log {log.name})", flush=True)
+    env = dict(os.environ, PYTHONIOENCODING="utf-8")
+    t0 = time.monotonic()
+    with open(log, "a", encoding="utf-8") as fh:
+        fh.write(f"\n===== gen_batch @ {_now_iso()} =====\n")
+        fh.flush()
+        proc = subprocess.Popen(cmd, cwd=str(REPO_ROOT), stdin=subprocess.DEVNULL, stdout=fh,
+                                stderr=subprocess.STDOUT, env=env)
+        if marker is not None:
+            try:
+                marker.parent.mkdir(parents=True, exist_ok=True)
+                marker.write_text(f"{proc.pid} {_now_iso()}", encoding="utf-8")
+            except OSError:
+                pass
+        beat_at = 0.0
+        try:
+            while proc.poll() is None:
+                time.sleep(10)
+                el = time.monotonic() - t0
+                if el - beat_at >= 300:
+                    _beat(state, node, f"clip {n}: generating images ({int(el // 60)} min)")
+                    beat_at = el
+                if el > limit_s:
+                    print(f"[batch] {node}: clip {n} generator still running after {int(el // 60)} min "
+                          f"(backstop {limit_s // 60} min): stopping it", flush=True)
+                    _kill_tree(proc.pid)
+                    break
+        finally:
+            rc = proc.wait()
+            if marker is not None:
+                try:
+                    marker.unlink()
+                except OSError:
+                    pass
+    print(f"[batch] {node}: clip {n} generator exit {rc} after {(time.monotonic() - t0) / 60:.1f} min",
+          flush=True)
+    return rc
+
+
 def _images_note(verdict: Optional[str], missing: List[str], rounds: int) -> str:
     return (f" NOTE FROM THE GRAPH: after {rounds} image round(s) the image check ended "
             f"{verdict or 'with no verdict'}" + (f" and these images are missing: {missing}" if missing else "")
             + ". Read the image check first and remap those beats.")
 
 
-def _build_clip(state: BatchState, node: str, c: dict) -> Optional[str]:
-    """The whole per-clip pipeline. Returns an error string, or None (the caller still
-    verifies 7-built PASS from progress.json)."""
+def _prep_clip(state: BatchState, node: str, c: dict):
+    """Steps 1-3 for one clip (plan, images, image check). Returns (error or None, notes for
+    the builder)."""
     batch, slug, n = state["batch"], c["slug"], c["n"]
     marker = build_marker(batch, slug)
     log = f"agent-remotion-builder-{batch}-{n}.log"
@@ -1088,12 +1202,51 @@ def _build_clip(state: BatchState, node: str, c: dict) -> Optional[str]:
             spawn_agent(state, node, "remotion-builder", _plan_prompt(state, c), log, marker=marker)
             if not broll_plan_path(batch, slug).is_file() or broll_items(batch, slug) is None:
                 return (f"clip {n}: the builder's plan stage left no valid BROLL-PLAN.md + "
-                        f"broll-images.json in {clip_dir(batch, slug)} (log {log})")
-        notes = _clip_images(state, node, c)
-        spawn_agent(state, node, "remotion-builder", _build_prompt(state, c, notes), log, marker=marker)
+                        f"broll-images.json in {clip_dir(batch, slug)} (log {log})"), ""
+        return None, _clip_images(state, node, c)
+    except Exception as e:
+        return f"clip {n}: {type(e).__name__}: {e}", ""
+
+
+def _build_stage(state: BatchState, node: str, c: dict, notes: str) -> Optional[str]:
+    """Step 4 for one clip. Returns an error string, or None (the caller still verifies
+    7-built PASS from progress.json)."""
+    batch, slug, n = state["batch"], c["slug"], c["n"]
+    log = f"agent-remotion-builder-{batch}-{n}.log"
+    try:
+        spawn_agent(state, node, "remotion-builder", _build_prompt(state, c, notes), log,
+                    marker=build_marker(batch, slug))
     except Exception as e:
         return f"clip {n}: {type(e).__name__}: {e}"
     return None
+
+
+def _build_all(state: BatchState, node: str, todo: List[dict], prep_workers: int,
+               build_workers: int) -> List[str]:
+    """Run steps 1-3 for every clip in one pool and step 4 in another: a clip's build is queued
+    the moment its prep ends, so a slow builder never holds up the next clip's images, and the
+    builds still never exceed `build_workers` (the render ceiling). Returns the errors."""
+    errors: List[str] = []
+    guard = threading.Lock()
+    with ThreadPoolExecutor(max_workers=build_workers) as build_ex:
+        builds = []
+
+        def prep_then_queue(c):
+            err, notes = _prep_clip(state, node, c)
+            if err:
+                return err
+            print(f"[batch] {node}: clip {c['n']} images done; queued for build", flush=True)
+            with guard:
+                builds.append(build_ex.submit(_build_stage, state, node, c, notes))
+            return None
+
+        with ThreadPoolExecutor(max_workers=prep_workers) as prep_ex:
+            errors += [e for e in prep_ex.map(prep_then_queue, todo) if e]
+        for f in builds:
+            e = f.result()
+            if e:
+                errors.append(e)
+    return errors
 
 
 def build_marker(batch: str, slug: str) -> Path:
@@ -1108,18 +1261,21 @@ def _marker_pid(marker: Path) -> Optional[int]:
 
 
 def lane2_build(state: BatchState) -> BatchState:
-    """One build pipeline per clip (`_build_clip`: plan -> image-gen under the chatgpt lock ->
-    visual-qa -> build), `max_builders` at a time (state value,
-    overridable per run via env BATCH_MAX_BUILDERS so a resumed supervisor can change
-    it). A clip whose `.building.pid` marker points at a LIVE process is being built by
-    someone else (a previous supervisor incarnation, or a hand-spawned builder): it is
-    not re-spawned, it is WAITED for. Verification covers EVERY surviving clip."""
+    """Every clip through plan -> images (chatgpt lock, generator in code) -> image check ->
+    build (`_build_all`): steps 1-3 for up to `max_prep` clips at once (env BATCH_MAX_PREP,
+    default 3), step 4 for at most `max_builders` (env BATCH_MAX_BUILDERS, default 2), each
+    overridable per run so a resumed supervisor can change it. A clip whose `.building.pid`
+    marker points at a LIVE process is being built by someone else (a previous supervisor
+    incarnation, or a hand-spawned builder): it is not re-spawned, it is WAITED for.
+    Verification covers EVERY surviving clip."""
     node = "lane2_build"
     batch = state["batch"]
     if state.get("stub"):
         return {"steps": _step(state, node, "stub")}
     workers = int(os.environ.get("BATCH_MAX_BUILDERS") or state.get("max_builders") or 2)
     workers = max(1, workers)
+    prep_workers = max(1, int(os.environ.get("BATCH_MAX_PREP") or state.get("max_prep")
+                              or PREP_WORKERS_DEFAULT))
     surviving = [c for c in prog(batch).get("clips", [])
                  if not str(c.get("gate", "")).startswith("deleted")]
     # --clips scope (Mike, 2026-11-02, batch kaspa-cocktails: "only clip 1 into the queue, the others later",
@@ -1145,15 +1301,15 @@ def lane2_build(state: BatchState) -> BatchState:
     if not todo and not external:
         return {"steps": _step(state, node, "skipped",
                                "every " + ("scoped" if scope else "surviving") + " clip is 7-built PASS")}
-    print(f"[batch] {node}: {len(todo)} to build ({workers} at a time)"
+    print(f"[batch] {node}: {len(todo)} to build (images for {prep_workers} at a time, "
+          f"builds {workers} at a time)"
           + (f"; {len(external)} already building elsewhere: "
              f"{[(c['n'], pid) for c, pid in external]}" if external else ""), flush=True)
     _beat(state, node, f"building {len(todo)} clip(s), {workers} concurrent")
 
     errors = []
     if todo:
-        with ThreadPoolExecutor(max_workers=workers) as ex:
-            errors = [e for e in ex.map(lambda c: _build_clip(state, node, c), todo) if e]
+        errors = _build_all(state, node, todo, prep_workers, workers)
         for e in errors:
             print(f"[batch] {node}: {e}", flush=True)
     waited = 0

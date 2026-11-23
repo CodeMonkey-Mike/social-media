@@ -30,14 +30,27 @@ One agent per decision, plain code where there is nothing to decide. `lane2_buil
 | # | Step | Who | Leaves on disk |
 |---|---|---|---|
 | 1 | PLAN | `remotion-builder`, stage 1 | `<clip>/BROLL-PLAN.md` + `<clip>/broll-images.json` (`[{file, prompt, beat, ref?}]`, `file` absolute, in the batch's `render-assets/`) |
-| 2 | IMAGES | the graph takes the `chatgpt` lock IN CODE, then `image-gen` runs `gen_batch.py` on the worklist | the pngs |
-| 3 | IMAGE CHECK | `visual-qa` opens every image; a FAIL goes back to step 2 (two rounds at most) | `<clip>/broll-visual-qa.md` |
+| 2 | IMAGES | the graph takes the `chatgpt` lock IN CODE and runs `gen_batch.py` on the worklist IN CODE (no agent; it waits out ChatGPT's image cap itself) | the pngs, log `graph/data/gen-<batch>-<n>.log` |
+| 3 | IMAGE CHECK | `visual-qa` opens every image. On a FAIL the graph moves the failed files to `<clip>/_qa/rejected/`, an `image-gen` agent rewrites ONLY their prompts (it never runs the generator), and step 2 runs again (two rounds at most) | `<clip>/broll-visual-qa.md` |
 | 4 | BUILD | `remotion-builder`, stage 2: composition, SFX, captions, render, gate | the render, `7-built` PASS |
 
 The builder never generates an image and never touches the ChatGPT browser. An image still missing
 or FAILED after the rounds is remapped by the builder at step 4 (another clean image, a code-drawn
 card, a base-showing beat). Every step is skipped when its files already exist, so a re-driven
 batch picks up where it stopped. Clips still run in parallel: only step 2 takes turns.
+
+**Two worker pools (Mike, 2026-11-23).** Steps 1-3 ("prep") run for up to 3 clips at once
+(`--max-prep`, env `BATCH_MAX_PREP`), so ChatGPT works through the clips back to back; a clip's
+step 4 is queued the moment its prep ends, at most 2 at a time (`--max-builders`, the render
+ceiling). Batch `evaa-pieverse` ran ONE pool of 2 over the whole chain: clips 3-5 could not plan
+until clip 1 or 2 had finished building, ChatGPT sat idle ~1.5 h, five shorts took ~9 h.
+
+**Why the generator runs in code, not in an agent (2026-11-23).** The `image-gen` agent ran
+`gen_batch.py` in a tool call its CLI cuts off at 10 minutes: every run died after one or two
+images, Chrome closed, and the agent re-ran it (clip 2 of `evaa-pieverse`: 146 min). The
+generator already skips existing files, rejects a captured reference or a duplicate sibling,
+and now waits out ChatGPT's image cap ("You're out of image creations for now. Try again in
+15 minutes."), so there was nothing for an agent to decide around it.
 
 ## Batch builds run IN PARALLEL — use the stage lock, never serialize
 
@@ -294,6 +307,22 @@ guessed-after-the-fact numbers are not):
 The point is visibility, not precision: the two historically invisible costs are `whisper_qa` and
 the authoring/reasoning stages, and they routinely rival or exceed `image_generation`. A report
 whose timings sum to wildly less than the agent's wall-clock should say where the rest went.
+
+### Whisper QA budget: about 15 minutes per clip (Mike, 2026-11-23)
+
+Batch `evaa-pieverse` spent 46, 70 and 100 minutes per builder on Whisper checks, most of it
+re-sweeping words that were already fine, and the builders' own timing notes say a large share was
+self-inflicted (a large-v3 sweep too slow for this machine, job ids with `|` that made every window
+decode the whole file). The method in row 7a stands; its SIZE is capped:
+
+- **medium.en only.** No large-v3 while sibling builders run.
+- **Batched, on CPU** (`whisper_jobs.py --device cpu`, see below), job ids of letters, digits, `.`,
+  `-`, `_` only (`whisper_jobs.py` now cleans them, and skips a window it cannot cut instead of
+  decoding the whole file).
+- **One SFX-masking batch** (staggered windows + the encode-matched control, only for cues that land
+  within ~0.3 s of a spoken word) and **one caption verify on the final render.**
+- **A word still in doubt after that goes into `needs_review` for Mike**, with its timestamp. Do not
+  run another sweep to settle it: Mike watches every short anyway.
 
 ### Whisper decodes — ALWAYS batch them (Mike, 2026-08-19)
 
