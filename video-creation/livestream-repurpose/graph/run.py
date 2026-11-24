@@ -1520,7 +1520,7 @@ def main_post():
 #   python run.py batch --source "<recording>" [--min-sil 0.5] [--shorts-min-sil 0.25]
 #       [--skip-longform] [--until 4b|2nd|finish|build|publish] [--approve 4b,2nd]
 #       [--delete N,N] [--lane3-brief "..."] [--clip-brief "..."] [--publish-date D]
-#       [--max-builders 2] [--max-prep 3] [--thread ID] [--resume] [--stub ok|fail]
+#       [--max-builders 2] [--max-prep 4] [--thread ID] [--resume] [--stub ok|fail]
 #   python run.py batch --batch <b> --resume --approve 4b [--delete 2,5]   (after a gate)
 #       [--missed "12:30-14:10 the ETF rant; 45:00 kaspa hashrate" | --missed none]   (evals recall:
 #        what the clip-strategist should have found; skills/clip-evals/clip-evals.md)
@@ -1599,8 +1599,8 @@ def main_batch():
     ap.add_argument("--clip-brief", default=None, help="Mike's clip-selection overrides")
     ap.add_argument("--publish-date", default=None)
     ap.add_argument("--max-builders", type=int, default=2)
-    ap.add_argument("--max-prep", type=int, default=3,
-                    help="clips planned + imaged at once at lane2_build (builds stay at --max-builders)")
+    ap.add_argument("--max-prep", type=int, default=None,
+                    help="clips planned + imaged at once at lane2_build (default 4 = batch_graph.PREP_WORKERS_DEFAULT; builds stay at --max-builders)")
     ap.add_argument("--clips", default="",
                     help="build ONLY these clip numbers at lane2_build, e.g. 1 or 2,3 (the rest are held, not deleted)")
     ap.add_argument("--thread", default=None)

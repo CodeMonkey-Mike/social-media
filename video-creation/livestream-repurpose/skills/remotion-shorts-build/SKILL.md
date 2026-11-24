@@ -39,11 +39,20 @@ or FAILED after the rounds is remapped by the builder at step 4 (another clean i
 card, a base-showing beat). Every step is skipped when its files already exist, so a re-driven
 batch picks up where it stopped. Clips still run in parallel: only step 2 takes turns.
 
-**Two worker pools (Mike, 2026-11-23).** Steps 1-3 ("prep") run for up to 3 clips at once
+**Two worker pools (Mike, 2026-11-23).** Steps 1-3 ("prep") run for up to 4 clips at once
 (`--max-prep`, env `BATCH_MAX_PREP`), so ChatGPT works through the clips back to back; a clip's
 step 4 is queued the moment its prep ends, at most 2 at a time (`--max-builders`, the render
 ceiling). Batch `evaa-pieverse` ran ONE pool of 2 over the whole chain: clips 3-5 could not plan
-until clip 1 or 2 had finished building, ChatGPT sat idle ~1.5 h, five shorts took ~9 h.
+until clip 1 or 2 had finished building, ChatGPT sat idle ~1.5 h, five shorts took ~9 h. The first
+run on the two pools (batch `nvidia`, 2026-11-24, 4 shorts, 168 s) took 3 h 28 min. It had 3 prep
+slots, and a slot is held through the image check, so clip 4 could not plan until clip 1's images
+passed; the default is 4 since.
+
+**Remakes go first (2026-11-24).** Inside a batch, a clip's REMAKE (step 3's fix round, usually one
+or two images) gets the next ChatGPT turn ahead of any clip's first round, then first come, first
+served (`ChatGPTTurns` in `batch_graph.py`; the cross-process `chatgpt` lock is still taken inside
+the turn). A remake is the only thing holding up that clip's build: in batch `nvidia`, clip 1's
+one-image remake was passed over for clip 3's whole 7-image first round.
 
 **Why the generator runs in code, not in an agent (2026-11-23).** The `image-gen` agent ran
 `gen_batch.py` in a tool call its CLI cuts off at 10 minutes: every run died after one or two

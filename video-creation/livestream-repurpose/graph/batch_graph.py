@@ -49,9 +49,12 @@ import re
 import shutil
 import subprocess
 import sys
+import heapq
+import itertools
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import contextmanager
 from datetime import date, datetime
 from pathlib import Path
 from typing import List, Optional, TypedDict
@@ -877,15 +880,20 @@ def _built(c: dict) -> bool:
 #
 # SCHEDULING (Mike, 2026-11-23, batch evaa-pieverse took ~9 h for five shorts): steps 1-3 ("prep")
 # and step 4 ("build") have SEPARATE worker pools. Every clip's prep starts at once (BATCH_MAX_PREP,
-# default 3), so ChatGPT works through the clips back to back; a clip's build is queued the moment
+# default 4), so ChatGPT works through the clips back to back; a clip's build is queued the moment
 # its prep ends and at most `max_builders` (default 2, the render ceiling) build at a time. Before,
 # ONE pool of 2 ran each clip's whole chain, so clip 3 could not even plan until clip 1 or 2 had
 # finished BUILDING, and ChatGPT sat idle ~1.5 h waiting on builders' caption checks.
+# Inside the batch, ChatGPT turns go to a REMAKE (fix round) before any clip's first round
+# (`ChatGPTTurns`): a remake is one or two images and is the only thing holding up that clip's build.
 BUILD_SKILL = "video-creation/livestream-repurpose/skills/remotion-shorts-build/SKILL.md"
 STAGE_LOCK = SHORTS / "_tooling" / "stage_lock.py"
 GEN_BATCH = REPO_ROOT / "repurpose" / "gen_batch.py"
 BROLL_QA_ROUNDS = 2
-PREP_WORKERS_DEFAULT = 3
+# 4, not 3 (batch nvidia, 2026-11-24): a prep slot is held through the image check, so with 3 slots
+# clip 4 of 4 could not even PLAN until clip 1's images passed, 1 h 50 min into the build step.
+# A slot that waits for ChatGPT costs nothing; the image work itself still takes turns on the lock.
+PREP_WORKERS_DEFAULT = 4
 # The generator bounds itself (each image ~8 min of capture waits + one retry; an image cap is
 # waited out up to 3 h; another run holding the Chrome profile up to 30 min). This is only the
 # backstop for a wedged process: per image to make, plus the cap and profile allowances.
@@ -1025,6 +1033,40 @@ def _stage_lock(action: str, stage: str, owner: str) -> int:
     return r.returncode
 
 
+class ChatGPTTurns:
+    """In-process turn order for the ChatGPT browser among this batch's clips: a remake (fix
+    round) goes before any clip's first round, then first come, first served. The cross-process
+    `chatgpt` stage lock is still taken INSIDE the turn, so another process (Lane 3, a longform
+    image job) is still waited for. Batch nvidia, 2026-11-24: the stage lock alone is a polling
+    mutex, so clip 1's one-image remake (ready 10:25) was passed over at 11:02 for clip 3's whole
+    first round (7 images, 29 min), and clip 1's build started that much later."""
+
+    def __init__(self):
+        self._cv = threading.Condition()
+        self._waiting: List[tuple] = []          # heap of (priority, seq)
+        self._seq = itertools.count()
+        self._busy = False
+
+    @contextmanager
+    def turn(self, remake: bool):
+        with self._cv:
+            ticket = (0 if remake else 1, next(self._seq))
+            heapq.heappush(self._waiting, ticket)
+            while self._busy or self._waiting[0] != ticket:
+                self._cv.wait()
+            heapq.heappop(self._waiting)
+            self._busy = True
+        try:
+            yield
+        finally:
+            with self._cv:
+                self._busy = False
+                self._cv.notify_all()
+
+
+CHATGPT_TURNS = ChatGPTTurns()
+
+
 def _qa_verdict(out: str) -> Optional[str]:
     m = re.findall(r"^\W*VERDICT:\s*(PASS|FAIL)\b", out or "", flags=re.M | re.I)
     return m[-1].upper() if m else None
@@ -1072,13 +1114,15 @@ def _clip_images(state: BatchState, node: str, c: dict) -> str:
         missing = _broll_missing(items)
         if missing:
             owner = f"{batch}-{slug}-images"
-            _beat(state, node, f"clip {n}: waiting for the ChatGPT browser")
-            if _stage_lock("acquire", "chatgpt", owner) != 0:
-                raise RuntimeError("could not take the chatgpt stage lock")
-            try:
-                _run_generator(state, node, c, len(missing), marker)
-            finally:
-                _stage_lock("release", "chatgpt", owner)
+            _beat(state, node, f"clip {n}: waiting for the ChatGPT browser"
+                               + (" (remake, goes first)" if redo else ""))
+            with CHATGPT_TURNS.turn(remake=bool(redo)):
+                if _stage_lock("acquire", "chatgpt", owner) != 0:
+                    raise RuntimeError("could not take the chatgpt stage lock")
+                try:
+                    _run_generator(state, node, c, len(missing), marker)
+                finally:
+                    _stage_lock("release", "chatgpt", owner)
             items = broll_items(batch, slug) or items
         present = [it for it in items if Path(it["file"]).is_file()]
         if not present:
@@ -1263,7 +1307,7 @@ def _marker_pid(marker: Path) -> Optional[int]:
 def lane2_build(state: BatchState) -> BatchState:
     """Every clip through plan -> images (chatgpt lock, generator in code) -> image check ->
     build (`_build_all`): steps 1-3 for up to `max_prep` clips at once (env BATCH_MAX_PREP,
-    default 3), step 4 for at most `max_builders` (env BATCH_MAX_BUILDERS, default 2), each
+    default 4), step 4 for at most `max_builders` (env BATCH_MAX_BUILDERS, default 2), each
     overridable per run so a resumed supervisor can change it. A clip whose `.building.pid`
     marker points at a LIVE process is being built by someone else (a previous supervisor
     incarnation, or a hand-spawned builder): it is not re-spawned, it is WAITED for.
