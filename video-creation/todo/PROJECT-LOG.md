@@ -220,6 +220,10 @@ code) stay in `demos/`, which is gitignored. Here they are only summarized.
 **Repo engineering gaps** (full list in `aiEngineeringSimplified.md`)
 - 1, prompt injection: agents that read the open web run with skipped permissions. Fix before filming.
 - 2 to 5: token and cost tracking, tracing inside agents, native structured outputs, cost-based model routing.
+- 2 and 3, the plan (added 2026-11-24): the token data already exists in each headless agent's session file, only
+  the link to the agent and batch is missing. Steps a to d: pass a `--session-id` per spawn and report from the
+  session files, live progress via `stream-json`, a start and a duration per step in `lane_runs.json`, and never commit
+  a raw session file.
 
 **Ideas from the work demos** (in `demos/ideas.md`, nothing started)
 - Top three there: a token and cost dashboard for the agent pipelines, a health report for our agents and settings,

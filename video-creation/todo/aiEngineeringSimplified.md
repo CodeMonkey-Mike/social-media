@@ -70,10 +70,34 @@ logs have no clip numbers. The old prompt versions could not be recovered, so al
    reads scraped X posts and has Bash and Write; how it gets launched wasn't checked. This comes from reading the config;
    no attack was tested. **Fix before filming.**
 2. **Token and cost tracking.** The three headless spawners (`common.py`, `batch_graph.py`, `find_jobs.py`) all use
-   `--output-format text`, which throws away usage data. We can't say which agent burns the Fable allowance or what a
-   video costs in tokens.
+   `--output-format text`, so the usage data never reaches the graph. It is not lost, though (corrected 2026-11-24):
+   every headless run also saves its session file under `~/.claude/projects/<repo slug>/<session id>.jsonl`, with the
+   tokens of every model call (input, output, cache reads and writes, thinking), every tool call and the timestamps.
+   What's missing is the link: nothing records which session file belongs to which agent, node and batch, so we still
+   can't say which agent burns the Fable allowance or what a video costs in tokens.
 3. **Tracing inside an agent.** No LangSmith, Langfuse or OpenTelemetry. The dashboard shows the current node, but a
-   headless agent prints nothing until it finishes.
+   headless agent prints nothing until it finishes. Today there's one log file per agent run
+   (`graph/data/agent-<name>-<batch>.log`) and a run log per batch, so we can see what happened, not what each agent
+   did inside its run or what it cost.
+
+   Steps to close gaps 2 and 3 (added 2026-11-24, from the livestream-aws video's CloudWatch chapter):
+   - **a. Link each run to its session file.** Each spawner passes its own `--session-id <uuid>` and writes that id
+     into the run record next to the agent, node and batch. Then one script reads the session files and reports
+     tokens per agent, cost per video, the cache hit rate (video idea 7) and a timeline of each agent's tool calls.
+     This one step covers most of both gaps, with no LangSmith account and no change to how the agents run. The
+     Fable-limit respawn (`check-fable-fallback.py`) must keep working: a respawn is a second session, so it gets its
+     own id.
+   - **b. Live progress from a running agent.** `--output-format stream-json` prints each step as it happens, so the
+     dashboard could show "remotion-builder, tool call 14, rendering" instead of nothing until the end. The spawners
+     still need the final text, so they'd read the last result event instead of plain stdout (and
+     `persist_agent_json`, gap 4, reads from there).
+   - **c. Node timings across runs.** `graph/data/lane_runs.json` keeps the last 500 runs with a start, an end and a
+     duration for each run, but each step only has a status and a finish time (`at`), no start. Record each step's
+     start and duration too, so we can compare step times across batches (like the 4 h 38 min build) and see whether
+     a change made a run faster.
+   - **d. Keep traces private.** The session files hold the full prompts and outputs, and the repo is public. A
+     tracing tool writes its reports to the project folder or `video-creation/cache/<tool>/`, and never commits a raw
+     session file or a prompt excerpt.
 4. **Native structured outputs.** Agents return text and `persist_agent_json` regexes the JSON out of it.
 5. **Cost-based model routing.** No agent uses Haiku. `job-fit-reviewer` runs classification on Opus. An eval could show
    whether a cheaper model holds up.
