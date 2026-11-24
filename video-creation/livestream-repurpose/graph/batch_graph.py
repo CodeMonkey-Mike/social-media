@@ -253,15 +253,27 @@ def shorts_queued(batch: str) -> int:
 
 
 def queue_counts(batch: str) -> dict:
-    files = {"x-tweets.json": "tweets", "x-threads.json": "threads", "x-polls.json": "polls",
-             "yt-posts.json": "posts", "yt-text-polls.json": "polls",
-             "ig-single-image.json": "posts"}
+    """How many of this batch's Lane 3 entries sit in each queue file (pending or posted).
+
+    Lane 3 rows carry no `batch` field: the queue writer writes the plan's own entries, keyed
+    by id, else image_id, else the tweet text (`queue_writer._entry_key`). So a row counts
+    when its key is one of the entries in `<batch>-lane3-plan.json`; a row that does carry
+    `batch` counts too. The old `batch`-field-only match reported 0 for every Lane 3 queue
+    (found on batch nvidia, 2026-11-24). An entry the repurpose graph held back is not in
+    the queue, so it is not counted."""
+    sys.path.insert(0, str(REPO_ROOT / "repurpose"))
+    from queue_writer import QUEUE_FILES, _entry_key  # noqa: E402
+    plan = _read_json(lane3_plan_path(batch), None)
+    plan = plan if isinstance(plan, dict) else {}
     out = {}
-    for fn, key in files.items():
+    for plan_key, (fn, listkey) in QUEUE_FILES.items():
+        own = {_entry_key(plan_key, e) for e in plan.get(plan_key) or [] if isinstance(e, dict)}
+        own.discard(None)
         d = _read_json(REPO_ROOT / "schedule-tweets" / "data" / fn, None)
-        items = (d.get(key) if isinstance(d, dict) else d) or []
+        items = (d.get(listkey) if isinstance(d, dict) else d) or []
         out[fn.replace(".json", "")] = sum(
-            1 for x in items if isinstance(x, dict) and x.get("batch") == batch)
+            1 for x in items if isinstance(x, dict)
+            and (x.get("batch") == batch or _entry_key(plan_key, x) in own))
     return out
 
 
