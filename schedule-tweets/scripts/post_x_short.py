@@ -42,6 +42,7 @@ import json
 import math
 import os
 import random
+import re
 import sys
 import time
 from datetime import datetime, timezone
@@ -154,10 +155,21 @@ def save_error_evidence(page, label):
     print(f"  Evidence saved: {png}", flush=True)
 
 
+CASHTAG_RE = re.compile(r"\$[A-Za-z][A-Za-z0-9_]*")
+
+
 def same_text(a, b):
     # Draft.js reports blank lines between blocks inconsistently in innerText, so compare
     # with every whitespace run collapsed: this still proves the caption landed in full.
-    return " ".join((a or "").split()) == " ".join((b or "").split())
+    # X also rewrites a cashtag that matches a listed crypto token to that token's own symbol
+    # case: $PIPPIN becomes $pippin whether it is typed, typed with the suggestion list closed
+    # by Escape, or pasted in one go (probed in the composer 2026-11-24, after the
+    # calls-ripping-on-a-red-day short failed this check twice on 2026-11-20). So cashtags
+    # compare without case; every other character must still match.
+    def norm(s):
+        s = " ".join((s or "").split())
+        return CASHTAG_RE.sub(lambda m: m.group(0).lower(), s)
+    return norm(a) == norm(b)
 
 
 def wait_for_home_or_login(page, timeout_ms=30000):
