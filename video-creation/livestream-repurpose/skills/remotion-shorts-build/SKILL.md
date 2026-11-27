@@ -258,7 +258,7 @@ cinematic), meme images, animated coin/logo graphics, abstract motion, real arti
      clip end to end"; see "One clip = FOUR steps" above). The batch graph holds the `chatgpt` lock
      around it. The reload/`file_id`/URL/modal handling above makes it reliable enough to run
      unattended. It gets stuck ONLY if you use the old JS DOM-poll scripts; use `gen_batch.py`.
-   - The old JS (`generate-broll-reload.js`, `gen-batch-freshchat.js`, `gen-images.js`,
+   - The old JS (`generate-broll-reload.js`, `gen-batch-freshchat.js`,
      `generate-broll-batch.js`) is frozen rollback only — do not reach for it unless the Python
      stack is broken and the rollback is deliberate.
    - **Sanctioned fallback (Mike, 2026-07-08):** when ChatGPT is fully down, use Higgsfield

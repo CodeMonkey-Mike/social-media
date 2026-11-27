@@ -38,7 +38,7 @@
 #
 # Retired chats are MOVED to `retired` (never silently dropped) and deleted in the UI by
 # chat_delete.sweep_retired; anything missed is swept by repurpose/delete_chats.py via
-# cleanup/cleanup.js (Python since 2026-09-17; delete-chats.js is the frozen rollback).
+# cleanup/cleanup.js (Python since 2026-09-17; delete-chats.js was deleted 2026-11-27).
 
 import contextlib
 import json

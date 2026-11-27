@@ -17,8 +17,8 @@ description: Turns long-form content (livestream transcripts, podcast episodes, 
 > (`queue_writer.py`, emoji-safe), a persona-lint gate per touched file, and the batches.json
 > `pipelines.repurpose=done` flip. The validator mechanically enforces: no em dashes, no chart
 > emojis, image-id uniqueness vs ALL queues+images, **IG = Kaspa only**, **X polls =
-> Kaspa/TAO/Toncoin/Golden Kitty only**, threads 5-8 tweets. The JS stack (`gen-images.js` / `chat-pool.js` /
-> `chat-delete.js`) is **FROZEN rollback** — builder b-roll scripts still use their own JS against
+> Kaspa/TAO/Toncoin/Golden Kitty only**, threads 5-8 tweets. The JS generator `gen-images.js` was deleted 2026-11-27; `chat-pool.js` /
+> `chat-delete.js` are **FROZEN rollback**: builder b-roll scripts still use their own JS against
 > the same shared chat registry. Ad-hoc single drafts outside a batch may still append directly per
 > the sections below.
 
@@ -91,7 +91,7 @@ The map needs to be filled in over time — most handles are currently `null`. W
 
 > **⛔ HARD RULE #2 — ALL IMAGE GENERATION RUNS THROUGH THE POOL-MANAGED GENERATOR. NEVER loop `generate-image.js`.**
 > **Canonical since 2026-08-09: the PYTHON port `repurpose/gen_images.py`** (the JS twin
-> `gen-images.js` is FROZEN rollback with identical behavior). It consults the chat registry
+> `gen-images.js` was deleted 2026-11-27). It consults the chat registry
 > **`chatgpt-image-chats.json`** (repo root) via `repurpose/chat_pool.py`: it reuses the active ChatGPT
 > chat for that `--prefix`/purpose while it's under the cap (~25 images), and **auto-rotates to a fresh
 > chat when full, dead, or missing** — capturing and recording the new chat URL itself. Chats are isolated
@@ -111,11 +111,11 @@ The map needs to be filled in over time — most handles are currently `null`. W
 >
 > **⚠️ ALWAYS state the target ASPECT RATIO / orientation in EVERY b-roll prompt — GPT-Image DEFAULTS TO PORTRAIT (1024×1536) (Mike, 2026-07-10).** Omit it and you get vertical stills that don't fit the frame. For a **16:9 track** (longform-edited / longform-presentation) START the prompt with *"Wide landscape 16:9 horizontal image."* and end with *"Horizontal landscape orientation."* (yields ~1672×941 / 1536×1024 landscape). For **9:16 shorts / vertical-ai-persona** say *"vertical 9:16 portrait."* This bit the Clarity-Act longform b-roll (portrait 1024×1536 → fixed to 1672×941 by adding the landscape instruction). Same rule as the X-image aspect note below — but the b-roll generator needs it stated too, because b-roll prompts are atmosphere descriptions that easily forget it.
 >
-> **⚠️ ChatGPT image generation GETS STUCK in the automated (bot-detected) browser — RELOAD the chat after ~80s to unstick it (Mike, 2026-07-09).** After a prompt is sent, the automated Chrome's live DOM often never surfaces the finished image (it just spins) even though the image IS finished server-side — you can confirm by opening the same chat in a normal/Edge browser and seeing it there. **The fix: wait up to ~80s, then RELOAD the chat room and grab the finished image from the reloaded page** (do NOT re-send the prompt — that starts a duplicate generation). `generate-broll-reload.js` does exactly this and also: keys capture on the stable estuary `file_id` (so it never grabs a wrong/pre-existing image); waits for a fresh chat's `/c/<id>` URL before reloading (else the first image of a fresh chat is lost); and dismisses the full-screen "Compare responses" A/B modal (`role=dialog`, `inset-0`) that ChatGPT sometimes overlays on the composer and hangs the next prompt. The older scripts (`gen-images.js`, `generate-broll-wlw.js`) do NOT reload and so hang / mis-capture — prefer `generate-broll-reload.js`, or port this reload-after-~80s behavior into them, for any ChatGPT image run.
+> **⚠️ ChatGPT image generation GETS STUCK in the automated (bot-detected) browser — RELOAD the chat after ~80s to unstick it (Mike, 2026-07-09).** After a prompt is sent, the automated Chrome's live DOM often never surfaces the finished image (it just spins) even though the image IS finished server-side — you can confirm by opening the same chat in a normal/Edge browser and seeing it there. **The fix: wait up to ~80s, then RELOAD the chat room and grab the finished image from the reloaded page** (do NOT re-send the prompt — that starts a duplicate generation). `generate-broll-reload.js` does exactly this and also: keys capture on the stable estuary `file_id` (so it never grabs a wrong/pre-existing image); waits for a fresh chat's `/c/<id>` URL before reloading (else the first image of a fresh chat is lost); and dismisses the full-screen "Compare responses" A/B modal (`role=dialog`, `inset-0`) that ChatGPT sometimes overlays on the composer and hangs the next prompt. The older script `generate-broll-wlw.js` does NOT reload and so hangs / mis-captures: use the Python stack (`gen_images.py` / `gen_batch.py`, which carries this reload-after-~80s behavior) for any ChatGPT image run.
 > **Background (why the pool exists):** a ChatGPT chat degrades past ~25 images — it either stops rendering
 > OR returns off-prompt/style-contaminated images (e.g. the b-roll chat forced icy/Bitcoin motifs onto every
 > prompt, 2026-06-07). The pool caps + rotates to prevent both. Always QA a generated frame regardless.
-> `gen-batch.js` / `gen-batch-freshchat.js` / `generate-broll-reload.js` are SUPERSEDED by the Python stack
+> `gen-batch-freshchat.js` / `generate-broll-reload.js` (and `gen-batch.js`, deleted 2026-11-27) are SUPERSEDED by the Python stack
 > (`gen_images.py` for queue images, `gen_batch.py` for builder b-roll / one-off `--fresh` batches) and kept
 > only as frozen rollback. **Do NOT loop `generate-image.js`** (a new chat per image = orphan-chat sprawl).
 >
@@ -156,8 +156,8 @@ The map needs to be filled in over time — most handles are currently `null`. W
 > registers + retires + sweeps the conversation the probe created). Never `page.goto("https://chatgpt.com/")`
 > by hand — `scripts/chatgpt-open-lint.py` (run by every cleanup) flags every opener outside the
 > pool. Smoke test: `python repurpose/test_chat_lifecycle.py` (creates + cleans its own throwaway
-> chats on a temp registry; needs the profile free). JS-era tools (`list-chats-api.js`,
-> `test-chat-lifecycle.js`, `delete-chats.js`) remain as frozen fallback.
+> chats on a temp registry; needs the profile free). The JS-era `list-chats-api.js` remains as frozen
+> fallback (`test-chat-lifecycle.js` and `delete-chats.js` were deleted 2026-11-27).
 >
 > **Spent chats are DELETED, not abandoned** (Mike, 2026-07-08 — the sidebar was drowning in dead image
 > chats; safe because every image downloads to the project folder at generation time). Two mechanisms,
@@ -170,7 +170,7 @@ The map needs to be filled in over time — most handles are currently `null`. W
 >    `repurpose/delete_chats.py` (Python since 2026-09-17) once that batch is completed/archived. Cleanup runs it automatically
 >    (`cleanup/cleanup.js --target video-creation|all`); dry-run prints the plan, live run opens the
 >    chatgpt-profile browser. No `batch` = evergreen purpose (rotation-only); a `batch` matching no
->    batches.json entry is kept. Manual one-off: `node repurpose/delete-chats.js --retire <purpose>`.
+>    batches.json entry is kept. Manual one-off: `python repurpose/delete_chats.py --retire <purpose>`.
 
 **Canonical coin lineup lives in `../persona/persona.json` → `stacking_lineup`.** When generating images that depict Mike's portfolio / favorites / "coins I'm stacking", use that lineup; render **$KAS as the hero** (larger / more prominent when coins share a frame). Never include $BTC, $ETH, $SOL, $BNB in a favorites image (persona covers why) — they're macro-commentary subjects, not stacking picks.
 
@@ -194,7 +194,7 @@ Filenames follow the project name (e.g. `LAB.png`, `toshi.png`, `DogInMe.png`, `
 
 **Brand-safety — when a project has multiple reference variants, pick the brand-safe one for monetized YT/TikTok.** Some references have a risqué and a clean variant (e.g. ElizaOS: the orange-tee `ElizaOS-ai16z.webp` is brand-safe; `ElizaOS-ai16z-2.png` is the risqué one). Default to the clean variant for any monetized short/post.
 
-**Multi-coin lineup — use `gen-images.js` with an ARRAY `ref` (fixed 2026-08-08).** `generate-image.js` still accepts only a single `--reference-image`, so for any frame needing reference logos for **two or more** lesser-known coins, use the canonical `gen-images.js` instead and pass `ref` as an array of paths in the items JSON:
+**Multi-coin lineup — use `gen_images.py` with an ARRAY `ref` (fixed 2026-08-08).** `generate-image.js` still accepts only a single `--reference-image`, so for any frame needing reference logos for **two or more** lesser-known coins, use the canonical `gen_images.py` instead and pass `ref` as an array of paths in the items JSON:
 
 ```json
 [{ "image_id":"8dd08cf4", "slug":"calls-miss-downside",
@@ -206,7 +206,7 @@ ChatGPT's composer takes several attachments in one go; the old "one logo per im
 
 > **Real miss this rule exists to prevent (2026-08-07 batch, caught by Mike):** the $LAB/Velvet image shipped with $LAB correctly flasked and **Velvet as a blank gold coin** — `velvet.png` was sitting in the reference folder unused. Scan the tweet text for EVERY project name and match each one against the live reference folder, not just the first.
 >
-> **Regenerating replaces, it does not add:** `gen-images.js` SKIPs when the output file already exists, so move the old file aside before the run, and reuse the same `image_id`/filename so the queue reference stays stable.
+> **Regenerating replaces, it does not add:** `gen_images.py` SKIPs when the output file already exists, so move the old file aside before the run, and reuse the same `image_id`/filename so the queue reference stays stable.
 >
 > A logo on a character's FACE is a **regen, never a pixel inpaint** (faces have structure; see the 2026-08-07 note above).
 
@@ -1099,7 +1099,7 @@ Near-black background, dramatic lighting, bold all-caps white + neon green typog
 >
 > **FIXED 2026-05-24:** all three batch scripts (`generate-yt-post-images-batch.js`, `generate-broll-batch.js`, `generate-tweet-images-batch.js`) now set `CHAT_URL = 'https://chatgpt.com/'` (a **fresh chat per run**, no history to mis-grab) plus a guard that forces a new conversation if redirected to `/c/`. Verified: re-running the YT carousels produced correctly-placed slides. **Keep batch chats fresh; still spot-check 1–2 slides per run.**
 >
-> **⛔ REGRESSED IN `gen-images.js` — RE-CONFIRMED 2026-07-14. The cross-assignment above is BACK, for a
+> **⛔ REGRESSED IN `gen-images.js` (the JS generator, deleted 2026-11-27; `gen_images.py` carries the guards below) — RE-CONFIRMED 2026-07-14. The cross-assignment above is BACK, for a
 > second reason, and the pool is what reinstated it.** `gen-images.js` types prompt N+1 **before image N has
 > landed**, so two generations are in flight at once, finish out of order, and bind to the WRONG filenames
 > (confirmed: two finished tweet images came back cleanly SWAPPED; both renders were fine, only the binding
@@ -1114,7 +1114,7 @@ Near-black background, dramatic lighting, bold all-caps white + neon green typog
 >   the 2026-07-11 session wrongly concluded "ChatGPT reproduces the carousel exemplar verbatim" and logged
 >   it as an unresolved model quirk — it was this capture bug all along (see the carousel section; the
 >   must-attach-version-ref rule STANDS). Test with PIL: `np.abs(a-b).max()==0` means it IS the reference.
-> - **Two guards now in `gen-images.js` (2026-07-14):** the ref is uploaded BEFORE the baseline snapshot,
+> - **Two guards (added to `gen-images.js` 2026-07-14, carried into `gen_images.py`):** the ref is uploaded BEFORE the baseline snapshot,
 >   and a **post-send re-baseline** folds everything on the page 3s after Enter into `before` (a generation
 >   never completes in 3s, so anything present is by definition not the result).
 > - This defect is INVISIBLE to anyone who does not open the file and compare it to the intended subject.
@@ -1581,13 +1581,12 @@ These delays are the defaults. When generating in a posting-burst session, keep 
 
 - **An OVERLOADED persistent chat stops rendering images entirely — symptom is a wall of `FAIL (timeout)`; this is the #1 cause and it WILL recur (observed 2026-06-05).** The persistent chats are long-lived conversations that accumulate every image ever generated in them. Once a chat holds enough images, it can stop producing new ones: mid-run, the YT Images chat (`.../69ffc14c...`) suddenly timed out on every remaining `gen-batch.js` slide (no image element ever appeared in the DOM), on both the first attempt and the retry, for 15+ min. **It is NOT a rate cap** (a real ChatGPT cap takes hundreds of gens) and **NOT prompt-specific** — the whole conversation is overloaded. Re-running the same 5 prompts in a **fresh chat** generated all 5 in ~5 min, first try.
 
-  **Immediate fix (one run):** regenerate in a fresh `chatgpt.com/` chat. `gen-batch.js` refuses fresh chats by design; use `_gen-353x-redo.js` (fresh-chat pattern) or its carousel-output copy `_gen-neutral-freshchat.js` (writes `yt-posts-<id>-<slug>.png` into `images/yt/`). Succeeded files from the bad run are real (md5-unique, on disk); the fresh-chat regen skips them via its exists-check and fills only the missing ones.
+  **Immediate fix (one run):** regenerate in a fresh `chatgpt.com/` chat. (`gen-batch.js`, deleted 2026-11-27, refused fresh chats by design.) Use `_gen-353x-redo.js` (fresh-chat pattern) or its carousel-output copy `_gen-neutral-freshchat.js` (writes `yt-posts-<id>-<slug>.png` into `images/yt/`). Succeeded files from the bad run are real (md5-unique, on disk); the fresh-chat regen skips them via its exists-check and fills only the missing ones.
 
   **⚠ STANDING INSTRUCTION — the recorded YT Images chat (`.../69ffc14c...`) is RETIRED as of 2026-06-05 (overloaded).** Do not expect it to work. **On the NEXT YT image generation, launch a brand-new chat, then record that new chat's URL as the persistent YT Images chat in all the places below, and reuse THAT one every time afterwards** (until it too overloads, then repeat). Until it has been re-recorded, generate YT carousels via the fresh-chat tool above.
 
-  **Durable fix (when a persistent chat overloads, RETIRE it and register a NEW one):** start a brand-new ChatGPT conversation, do one generation in it, copy its `https://chatgpt.com/c/<new-id>` URL, then replace the old URL **everywhere it is recorded** so future `gen-batch.js`/`generate-image.js` runs use the healthy chat:
-  - `repurpose/gen-batch.js` → `PERSISTENT_CHATS` (`yt-posts` **and** `ig-carousel` share the YT chat; `x-tweets` is separate).
-  - `repurpose/generate-image.js` → `PERSISTENT_CHATS` (same keys; note `ig-single` shares the X-tweets chat).
+  **Durable fix (when a persistent chat overloads, RETIRE it and register a NEW one):** start a brand-new ChatGPT conversation, do one generation in it, copy its `https://chatgpt.com/c/<new-id>` URL, then replace the old URL **everywhere it is recorded** so future `generate-image.js` runs use the healthy chat:
+  - `repurpose/generate-image.js` → `PERSISTENT_CHATS` (`yt-posts` **and** `ig-carousel` share the YT chat; `ig-single` shares the X-tweets chat).
   - This doc's inline URLs (search `69ffc14c` for the YT chat, `69fe9134` for the X-tweets chat).
   The X-tweets/IG-single chat (`.../69fe9134...`) will eventually overload the same way — same procedure applies to it.
 

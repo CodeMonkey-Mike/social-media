@@ -50,8 +50,8 @@ function syncBatchStatus(dryRun) {
 // ChatGPT image chats are cleaned alongside files: a chat tied (via its `batch` property in
 // chatgpt-image-chats.json) to a completed/archived batch is deleted in the ChatGPT UI, plus any
 // rotation leftovers on the registry's `retired` list. The browser work lives in
-// repurpose/delete_chats.py (Python, 2026-09-17 port of delete-chats.js, which stays as frozen
-// rollback) — this engine only spawns it. A LIVE run also RECONCILES the registry against the
+// repurpose/delete_chats.py (Python, 2026-09-17 port of delete-chats.js, which was deleted
+// 2026-11-27) — this engine only spawns it. A LIVE run also RECONCILES the registry against the
 // live account in the same browser session (DEAD / DRIFTED / ORPHAN / REVIEW classes, see
 // repurpose/reconcile_chats.py; --fix = its safe repairs) so an unregistered automation chat
 // surfaces HERE, not in Mike's sidebar; --dry-run prints the plan plus the last reconcile

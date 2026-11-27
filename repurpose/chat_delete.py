@@ -5,7 +5,7 @@
 # 2026-07-08). Chats are disposable — every generated image is downloaded to the project
 # folder at generation time — so a chat that leaves the registry gets DELETED, not
 # orphaned. The JS twin (chat-delete.js) stays frozen as rollback and continues to serve
-# the still-JS callers (builder b-roll scripts, delete-chats.js via cleanup).
+# the still-JS callers (the builder b-roll scripts).
 #
 # TWO HARD RULES (Mike, 2026-07-22 — earned, do not relax):
 #   1. TITLE GATE: the chat's LIVE title must start with "b-roll" or "social"

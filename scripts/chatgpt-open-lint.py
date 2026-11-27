@@ -21,15 +21,17 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-# The pool + the scripts built on it (Python canonical) and the FROZEN JS rollback twins.
+# The pool + the scripts built on it (Python canonical) and the JS that is still on the pool's JS
+# half (chat-pool.js / chat-delete.js, kept only while gen-batch-freshchat.js, generate-broll-reload.js
+# and generate-broll-wlw.js load them; the other JS twins were deleted 2026-11-27).
 ALLOW = {
     "repurpose/chat_pool.py", "repurpose/chat_delete.py", "repurpose/gen_images.py",
     "repurpose/gen_batch.py", "repurpose/reconcile_chats.py", "repurpose/delete_chats.py",
     "repurpose/test_chat_lifecycle.py",
-    "repurpose/chat-pool.js", "repurpose/chat-delete.js", "repurpose/delete-chats.js",
-    "repurpose/gen-images.js", "repurpose/gen-batch-freshchat.js",
+    "repurpose/chat-pool.js", "repurpose/chat-delete.js",
+    "repurpose/gen-batch-freshchat.js",
     "repurpose/generate-broll-reload.js", "repurpose/generate-broll-wlw.js",
-    "repurpose/list-chats-api.js", "repurpose/test-chat-lifecycle.js",
+    "repurpose/list-chats-api.js",
     "repurpose/setup-chatgpt.js", "repurpose/diag-chatgpt.js",
 }
 SKIP_DIRS = {"node_modules", ".git", "archive", "_superseded", "out", "dist", "build"}

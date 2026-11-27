@@ -1,4 +1,4 @@
-"""Where a tool's SHARED cache goes (Mike, 2026-11-09). The JavaScript twin is cache-path.js.
+"""Where a tool's SHARED cache goes (Mike, 2026-11-09). The only copy: the JavaScript twin was deleted 2026-11-27.
 
 The rule: a file that belongs to ONE video (search results, picks, previews, downloads, QA stills, logs) goes in that
 video's project folder. Only a file several projects share, or a tool's own throwaway diagnostics (debug screenshots,

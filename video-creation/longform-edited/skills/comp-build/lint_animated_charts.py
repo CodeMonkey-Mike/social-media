@@ -2,7 +2,7 @@
 """
 lint_animated_charts.py — MECHANICAL gate: every `chart` cover must render a LIVE animated component
 in the comp, never a static PNG (charts.md "animated in the draft too"; comp-build.md §7).
-Python port of lint-animated-charts.js (2026-09-28; the JS twin is frozen rollback).
+Python port of lint-animated-charts.js (2026-09-28; the JS twin was deleted 2026-11-27).
 
   python video-creation/longform-edited/skills/comp-build/lint_animated_charts.py <comp.tsx> [<covers.ts>]
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 download_envato.py — download (license + save) ONE Envato Elements item into a target directory.
-Python port of download-envato.js (2026-09-28, Mike's Python-first rule; the JS twin is frozen rollback).
+Python port of download-envato.js (2026-09-28, Mike's Python-first rule; the JS twin was deleted 2026-11-27).
 
 Run: python video-creation/skills/envato-broll/download_envato.py "https://app.envato.com/search/stock-video/<uuid>?..."
        --dir "<project>/assets/vid" [--name <slot-slug>] [--debug]

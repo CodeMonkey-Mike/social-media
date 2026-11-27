@@ -1,5 +1,5 @@
 # gen_images.py — CANONICAL pool-managed ChatGPT image generator (Python port of
-# gen-images.js, Wave 6 Lane 3 migration 2026-08-09; the JS twin is FROZEN rollback).
+# gen-images.js, Wave 6 Lane 3 migration 2026-08-09; the JS twin was deleted 2026-11-27).
 #
 # Drives the SHARED chatgpt-profile Chrome via Playwright. Callers that can overlap a
 # remotion-builder MUST hold the `chatgpt` stage lock around the run (lane3_batch.py

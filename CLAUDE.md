@@ -94,7 +94,7 @@ Prefix every command with `cd C:\Users\mnede\Documents\Claude\social-media &&` (
 - **Where files go (Mike, 2026-11-09).** (1) A file that belongs to ONE video (search results, picks, previews,
   downloads, QA stills, logs) goes in that video's project folder. (2) Only what several projects share, or a tool's
   own throwaway diagnostics (debug screenshots, recon dumps, session cookies), goes in `video-creation/cache/<tool>/`
-  (gitignored; build the path with `video-creation/skills/cache-path.js` / `cache_path.py`). (3) Never the repo root,
+  (gitignored; build the path with `video-creation/skills/cache_path.py`). (3) Never the repo root,
   never inside a `skills/` folder (code and docs only), never D:. A temp file that lives only while one command runs
   may use `%TEMP%`. A Chrome profile lives only in `%LOCALAPPDATA%\Google\Chrome\<name>-profile`: a folder named
   `Users...AppData...` in the repo is that path with its backslashes lost in a shell, so quote Windows paths.

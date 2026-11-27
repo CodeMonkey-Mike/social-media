@@ -14,7 +14,7 @@ System-design DIAGRAMS are exempt (declare them in the comp as `// DIAGRAM_REFS:
 
   python lint-deck-containers.py <comp.tsx> <render-assets/deck>
 
-Exits non-zero on any violation. Wire into the PRE-RENDER GATE alongside lint-covers.js.
+Exits non-zero on any violation. Wire into the PRE-RENDER GATE alongside lint_covers.py.
 """
 import sys, re, glob, os
 import numpy as np

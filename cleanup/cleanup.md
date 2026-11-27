@@ -141,7 +141,7 @@ so the cleanup job knows that it should check for those"). After the file target
 ### ChatGPT image chats (runs with the `video-creation` target)
 
 After the file targets, cleanup spawns **`repurpose/delete_chats.py`** (Python since 2026-09-17;
-`delete-chats.js` is the frozen rollback; skipped under `--only`, which scopes a run to file
+the JS twin was deleted 2026-11-27; skipped under `--only`, which scopes a run to file
 paths). It deletes no-longer-needed ChatGPT image chats from the registry
 `chatgpt-image-chats.json`:
 

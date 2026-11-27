@@ -2,7 +2,7 @@
 """
 search_envato.py — search Envato Elements (app.envato.com) stock video and dump result candidates as
 JSON so Claude can evaluate and pick clips. READ-ONLY: no downloads, no licensing.
-Python port of search-envato.js (2026-09-28, Mike's Python-first rule; the JS twin is frozen rollback).
+Python port of search-envato.js (2026-09-28, Mike's Python-first rule; the JS twin was deleted 2026-11-27).
 
 Run: python video-creation/skills/envato-broll/search_envato.py "bank vault door closing" [--max 12]
        [--type stock-video] [--out results.json] [--portrait] [--debug]
