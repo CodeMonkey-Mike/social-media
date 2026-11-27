@@ -4,7 +4,7 @@
 Run from repo root, prefixing `cd C:\Users\mnede\Documents\Claude\social-media &&`.
 
 ## Scripts
-All Python since 2026-11-27 (the JS generators in `repurpose/` were deleted or archived), all on one capture stack.
+All Python since 2026-11-27 (the JS generators in `repurpose/` were deleted), all on one capture stack.
 - **Batch (the default, 2+ images):** `python repurpose/gen_images.py --list <items.json> --prefix x-tweets|yt-posts|ig-single|ig-carousel` — resumable (skips existing files).
 - **Single image:** `python repurpose/generate_image.py --image-id <8hex> --slug <slug> --prompt "..."` — `--reference-image <path>` may be repeated.
 - **B-roll / one-off project batch:** `python repurpose/gen_batch.py --list <items.json> --prefix broll --batch <id>` (or `--outdir <project folder>`, `--fresh` for a brand-new chat).

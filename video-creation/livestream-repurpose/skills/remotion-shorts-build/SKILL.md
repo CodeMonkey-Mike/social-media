@@ -258,7 +258,7 @@ cinematic), meme images, animated coin/logo graphics, abstract motion, real arti
      clip end to end"; see "One clip = FOUR steps" above). The batch graph holds the `chatgpt` lock
      around it. The reload/`file_id`/URL/modal handling above makes it reliable enough to run
      unattended.
-   - The old JS generators are gone (deleted or archived 2026-11-27): `gen_batch.py` is the only
+   - The old JS generators are gone (deleted 2026-11-27): `gen_batch.py` is the only
      way, there is no JS rollback to reach for.
    - **Sanctioned fallback (Mike, 2026-07-08):** when ChatGPT is fully down, use Higgsfield
      `gpt_image_2` (`--image <ref>` for references, `--wait --json`, download the `hf_`-prefixed OUTPUT

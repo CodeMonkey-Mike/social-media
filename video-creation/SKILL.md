@@ -671,7 +671,7 @@ NOT loose in the root — both retired 2026-06-25). It is self-contained, holdin
   Never re-encode the clip folder's spine itself; reference `staticFile('<slug>.mp4')`. (The GOP re-encode is
   mandatory: desilenced spines ship a 250-frame GOP with B-frames and Remotion's concurrent OffthreadVideo
   seeks then die with "No frame found at position N", 2026-08-05.)
-- **b-roll** — generate STRAIGHT into it: `python repurpose/gen_batch.py --list <items> --prefix broll --batch <id>` (canonical Python, 2026-08-11; the JS generators in `repurpose/` were deleted or archived 2026-11-27); reference `staticFile('foo.png')`.
+- **b-roll** — generate STRAIGHT into it: `python repurpose/gen_batch.py --list <items> --prefix broll --batch <id>` (canonical Python, 2026-08-11; the JS generators in `repurpose/` were deleted 2026-11-27); reference `staticFile('foo.png')`.
 - **shared sfx/logos** — COPIED in (NOT junctioned) by `python video-creation/livestream-repurpose/scripts/setup_render_assets.py <batch> --data <dataFile>`, which copies every `staticFile('X')` the comp references from `assets/X` → `render-assets/X`. Reference unchanged (`staticFile('sfx/Foo.wav')`, `staticFile('logo-kaspa.png')`).
 
 ⛔ **Never junction the shared library into `render-assets/`** — cleanup recycles the WHOLE `shorts/<batch>/` folder
@@ -868,7 +868,7 @@ In CSS: `bottom` values must be `≥ 240px`.
 ## Tools & Scripts
 
 ### Image generation — paths, profile, gotchas (corrected 2026-05-25)
-- **Scripts live in `C:\Users\mnede\Documents\Claude\social-media\repurpose\`** (NOT `Claude\repurpose\` — that path is stale): `gen_batch.py`, `gen_images.py`, `generate_asset.py`, `generate_image.py` (Python only since 2026-11-27; the JS there was deleted or archived).
+- **Scripts live in `C:\Users\mnede\Documents\Claude\social-media\repurpose\`** (NOT `Claude\repurpose\` — that path is stale): `gen_batch.py`, `gen_images.py`, `generate_asset.py`, `generate_image.py` (Python only since 2026-11-27; the JS there was deleted).
 - **Playwright is installed only in `social-media\repurpose\node_modules`.** To run a generator that lives elsewhere (e.g. the in-project `video-creation\generate-broll-batch.js`), set `$env:NODE_PATH = "C:\Users\mnede\Documents\Claude\social-media\repurpose\node_modules"` before `node`.
 - **Use the `chatgpt-profile` Chrome profile, NOT `xbot-profile`.** `xbot-profile` is used for X posting and is usually already open → `launchPersistentContext` fails with "Target page/context/browser has been closed" (profile lock). The in-project `video-creation\generate-broll-batch.js` had `xbot-profile` hardcoded — fixed to `chatgpt-profile`.
 - **B-roll chat URL** (route prompts here): `https://chatgpt.com/c/6a0deddf-1bac-83ea-8107-0e419a2c44ac`. ~25–30s per image.
