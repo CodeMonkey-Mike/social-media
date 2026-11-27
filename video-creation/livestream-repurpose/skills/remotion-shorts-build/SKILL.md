@@ -24,8 +24,11 @@ documented standard. Hours were lost. This file makes that impossible to repeat.
 
 ## One clip = FOUR steps, three agents (Mike, 2026-11-17; in the graph since 2026-11-18)
 
-One agent per decision, plain code where there is nothing to decide. `lane2_build` in
-`graph/batch_graph.py` runs every clip through `_build_clip`:
+One agent per decision, plain code where there is nothing to decide. In `graph/batch_graph.py` the
+four steps are the four nodes of the `clip_build` SUBGRAPH (since 2026-11-27): `lane2_build` sends
+every clip to its own run of it with LangGraph's `Send` (map-reduce), the image check's fix round is
+a conditional edge from `image_check` back to `images`, and `lane2_build_join` verifies every clip
+from `progress.json` once all the runs have ended:
 
 | # | Step | Who | Leaves on disk |
 |---|---|---|---|
@@ -37,12 +40,16 @@ One agent per decision, plain code where there is nothing to decide. `lane2_buil
 The builder never generates an image and never touches the ChatGPT browser. An image still missing
 or FAILED after the rounds is remapped by the builder at step 4 (another clean image, a code-drawn
 card, a base-showing beat). Every step is skipped when its files already exist, so a re-driven
-batch picks up where it stopped. Clips still run in parallel: only step 2 takes turns.
+batch picks up where it stopped. Clips still run in parallel: only step 2 takes turns. A clip's
+failure is recorded and the other clips go on. After any change to this step, run
+`python scripts/check-lane2-build.py` (fake agents, the real graph, about 15 s).
 
-**Two worker pools (Mike, 2026-11-23).** Steps 1-3 ("prep") run for up to 4 clips at once
+**Two limits (Mike, 2026-11-23).** Steps 1-3 ("prep") run for up to 4 clips at once
 (`--max-prep`, env `BATCH_MAX_PREP`), so ChatGPT works through the clips back to back; a clip's
-step 4 is queued the moment its prep ends, at most 2 at a time (`--max-builders`, the render
-ceiling). Batch `evaa-pieverse` ran ONE pool of 2 over the whole chain: clips 3-5 could not plan
+step 4 starts the moment its prep ends, at most 2 at a time (`--max-builders`, the render
+ceiling). Both are semaphores in code (`_slots`), because LangGraph's one `max_concurrency` number
+cannot say two different limits. Until 2026-11-27 they were two thread pools inside the one
+`lane2_build` node. Batch `evaa-pieverse` ran ONE pool of 2 over the whole chain: clips 3-5 could not plan
 until clip 1 or 2 had finished building, ChatGPT sat idle ~1.5 h, five shorts took ~9 h. The first
 run on the two pools (batch `nvidia`, 2026-11-24, 4 shorts, 168 s) took 3 h 28 min. It had 3 prep
 slots, and a slot is held through the image check, so clip 4 could not plan until clip 1's images

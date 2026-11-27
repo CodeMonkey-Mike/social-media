@@ -13,8 +13,12 @@
 #
 #   START -> intake -> register -> launch_lane3 -> lane2_select -> lane2_cut
 #         -> gate_4b (HITL: interrupt unless approved) -> lane2_tighten_plan -> lane2_tighten
-#         -> gate_2nd (HITL) -> lane2_finish -> lane2_build -> lane2_publish
-#         -> join_lane3 -> verify_batch -> END
+#         -> gate_2nd (HITL) -> lane2_finish -> lane2_build =Send per short=> clip_build
+#         -> lane2_build_join -> lane2_publish -> join_lane3 -> verify_batch -> END
+#
+#   * clip_build    = a SUBGRAPH, one run per short (map-reduce with Send): plan -> images ->
+#                     image_check -> build, image_check looping back to images for a fix round.
+#                     See "the per-short build subgraph" below.
 #
 #   * intake        = the Wave 1 intake graph, run as a subprocess (`run.py --source`).
 #   * launch_lane3  = Lane 3 runs CONCURRENTLY as its own detached process
@@ -53,14 +57,13 @@ import heapq
 import itertools
 import threading
 import time
-from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
 from datetime import date, datetime
 from pathlib import Path
-from typing import List, Optional, TypedDict
+from typing import Annotated, List, Optional, TypedDict
 
 from langgraph.graph import END, START, StateGraph
-from langgraph.types import interrupt
+from langgraph.types import Overwrite, Send, interrupt
 
 import intake_graph as ig
 from intake_graph import (  # noqa: F401
@@ -88,6 +91,12 @@ if os.name == "nt":
     _DETACHED = subprocess.CREATE_NEW_PROCESS_GROUP | getattr(subprocess, "DETACHED_PROCESS", 0x8)
 
 
+def _add_clip_results(old: Optional[list], new: Optional[list]) -> list:
+    """Reducer for `clip_results`: every clip_build run adds its row. lane2_build clears the list with
+    Overwrite([]) before each fan-out, so a re-drive on the same thread never sees the last run's rows."""
+    return list(old or []) + list(new or [])
+
+
 class BatchState(TypedDict, total=False):
     batch: str
     source: str
@@ -105,6 +114,8 @@ class BatchState(TypedDict, total=False):
     max_builders: int
     max_prep: int                # clips in steps 1-3 (plan, images, image check) at once; env BATCH_MAX_PREP
     build_clips: List[int]       # per-run --clips scope for lane2_build (empty = every surviving clip)
+    build_plan: dict             # lane2_build -> lane2_build_join: the shorts sent to clip_build, awaited, verified
+    clip_results: Annotated[List[dict], _add_clip_results]   # one {n, slug, error} row per clip_build run
     lane3_brief: Optional[str]
     clip_brief: Optional[str]
     stub: str
@@ -889,13 +900,14 @@ def _built(c: dict) -> bool:
 # Before this the builder did all four itself: a builder once quit while waiting on the lock
 # (archie-promo 2026-09-24), nobody but the builder ever looked at a short's images, and the
 # image work ran at the builder's Opus/xhigh tier. Every stage is resumable from disk.
+# Since 2026-11-27 the 4 stages are the 4 nodes of the `clip_build` subgraph (below).
 #
 # SCHEDULING (Mike, 2026-11-23, batch evaa-pieverse took ~9 h for five shorts): steps 1-3 ("prep")
-# and step 4 ("build") have SEPARATE worker pools. Every clip's prep starts at once (BATCH_MAX_PREP,
-# default 4), so ChatGPT works through the clips back to back; a clip's build is queued the moment
-# its prep ends and at most `max_builders` (default 2, the render ceiling) build at a time. Before,
-# ONE pool of 2 ran each clip's whole chain, so clip 3 could not even plan until clip 1 or 2 had
-# finished BUILDING, and ChatGPT sat idle ~1.5 h waiting on builders' caption checks.
+# and step 4 ("build") have SEPARATE limits. Up to BATCH_MAX_PREP clips (default 4) prep at once, so
+# ChatGPT works through the clips back to back; a clip's build starts the moment its prep ends and
+# at most `max_builders` (default 2, the render ceiling) build at a time. Before, ONE pool of 2 ran
+# each clip's whole chain, so clip 3 could not even plan until clip 1 or 2 had finished BUILDING, and
+# ChatGPT sat idle ~1.5 h waiting on builders' caption checks.
 # Inside the batch, ChatGPT turns go to a REMAKE (fix round) before any clip's first round
 # (`ChatGPTTurns`): a remake is one or two images and is the only thing holding up that clip's build.
 BUILD_SKILL = "video-creation/livestream-repurpose/skills/remotion-shorts-build/SKILL.md"
@@ -1084,78 +1096,6 @@ def _qa_verdict(out: str) -> Optional[str]:
     return m[-1].upper() if m else None
 
 
-def _clip_images(state: BatchState, node: str, c: dict) -> str:
-    """Stages 2 + 3 for one clip. Returns a note for the builder ('' when every image exists
-    and passed); raises RuntimeError when the clip cannot go on."""
-    batch, slug, n = state["batch"], c["slug"], c["n"]
-    items = broll_items(batch, slug)
-    if not items:
-        return ""
-    report = broll_qa_path(batch, slug)
-    verdict, redo, done_rounds = None, None, 0
-    if report.is_file():
-        old = report.read_text(encoding="utf-8")
-        verdict = _qa_verdict(old)
-        m = re.search(r"visual QA, round (\d+)", old.splitlines()[0] if old else "")
-        done_rounds = int(m.group(1)) if m else 0
-        if not _broll_missing(items):
-            if verdict == "PASS":
-                return ""
-            if done_rounds >= BROLL_QA_ROUNDS:
-                # A re-driven batch: this clip already used its image rounds (batch `ripping`, 2026-11-19:
-                # clips 1, 6 and 7 ended FAIL after two rounds and their builders remapped). Do not
-                # regenerate again; the builder gets the same note. Delete the report to force new rounds.
-                return _images_note(verdict, [], done_rounds)
-            if verdict == "FAIL" and done_rounds:
-                redo = report                               # resume at the fix round, no second look first
-    marker = build_marker(batch, slug)
-    first = done_rounds + 1 if redo else 1
-    verdict = None
-    for rnd in range(first, BROLL_QA_ROUNDS + 1):
-        if redo:
-            # FIX ROUND: the failed files go aside in code; an agent rewrites ONLY their prompts.
-            failed = _failed_files(redo.read_text(encoding="utf-8"), items)
-            if not failed:
-                print(f"[batch] {node}: clip {n} image check FAILED but names no worklist file; "
-                      f"not regenerating blind", flush=True)
-                break
-            _move_aside(batch, slug, failed, rnd)
-            spawn_agent(state, node, "image-gen", _fix_prompts_prompt(state, c, redo, failed),
-                        f"agent-image-gen-{batch}-{n}.log", marker=marker)
-            items = broll_items(batch, slug) or items       # the corrected prompts
-        missing = _broll_missing(items)
-        if missing:
-            owner = f"{batch}-{slug}-images"
-            _beat(state, node, f"clip {n}: waiting for the ChatGPT browser"
-                               + (" (remake, goes first)" if redo else ""))
-            with CHATGPT_TURNS.turn(remake=bool(redo)):
-                if _stage_lock("acquire", "chatgpt", owner) != 0:
-                    raise RuntimeError("could not take the chatgpt stage lock")
-                try:
-                    _run_generator(state, node, c, len(missing), marker)
-                finally:
-                    _stage_lock("release", "chatgpt", owner)
-            items = broll_items(batch, slug) or items
-        present = [it for it in items if Path(it["file"]).is_file()]
-        if not present:
-            raise RuntimeError(f"the generator produced none of the {len(items)} images "
-                               f"(log gen-{batch}-{n}.log)")
-        rc, out = spawn_agent(state, node, "visual-qa", _broll_qa_prompt(state, c, items),
-                              f"agent-visual-qa-{batch}-clip{n}.log", marker=marker)
-        verdict = _qa_verdict(out)
-        if rc == 0 and (out or "").strip():
-            # visual-qa carries no Write tool: its report comes back as text and is persisted here.
-            report.write_text(f"# {batch} clip {n} `{slug}`: b-roll visual QA, round {rnd} "
-                              f"({_now_iso()})\n\n{out}", encoding="utf-8")
-        print(f"[batch] {node}: clip {n} image check round {rnd}: {verdict or 'no verdict'}", flush=True)
-        if verdict == "PASS" and not _broll_missing(items):
-            return ""
-        redo = report if verdict == "FAIL" and report.is_file() else None
-        if not redo and not _broll_missing(items):
-            break                                           # no verdict to act on: do not regenerate blind
-    return _images_note(verdict, [Path(f).name for f in _broll_missing(items)], BROLL_QA_ROUNDS)
-
-
 def _failed_files(report_text: str, items: List[dict]) -> List[str]:
     """The worklist `file` paths visual-qa FAILED (`FAIL: <file name> | <defect> | <fix>`)."""
     names = {m.strip() for m in re.findall(r"^\W*FAIL:\s*([^|\n]+?)\s*\|", report_text or "", flags=re.M)}
@@ -1247,64 +1187,6 @@ def _images_note(verdict: Optional[str], missing: List[str], rounds: int) -> str
             + ". Read the image check first and remap those beats.")
 
 
-def _prep_clip(state: BatchState, node: str, c: dict):
-    """Steps 1-3 for one clip (plan, images, image check). Returns (error or None, notes for
-    the builder)."""
-    batch, slug, n = state["batch"], c["slug"], c["n"]
-    marker = build_marker(batch, slug)
-    log = f"agent-remotion-builder-{batch}-{n}.log"
-    try:
-        if not (broll_plan_path(batch, slug).is_file() and broll_items(batch, slug) is not None):
-            spawn_agent(state, node, "remotion-builder", _plan_prompt(state, c), log, marker=marker)
-            if not broll_plan_path(batch, slug).is_file() or broll_items(batch, slug) is None:
-                return (f"clip {n}: the builder's plan stage left no valid BROLL-PLAN.md + "
-                        f"broll-images.json in {clip_dir(batch, slug)} (log {log})"), ""
-        return None, _clip_images(state, node, c)
-    except Exception as e:
-        return f"clip {n}: {type(e).__name__}: {e}", ""
-
-
-def _build_stage(state: BatchState, node: str, c: dict, notes: str) -> Optional[str]:
-    """Step 4 for one clip. Returns an error string, or None (the caller still verifies
-    7-built PASS from progress.json)."""
-    batch, slug, n = state["batch"], c["slug"], c["n"]
-    log = f"agent-remotion-builder-{batch}-{n}.log"
-    try:
-        spawn_agent(state, node, "remotion-builder", _build_prompt(state, c, notes), log,
-                    marker=build_marker(batch, slug))
-    except Exception as e:
-        return f"clip {n}: {type(e).__name__}: {e}"
-    return None
-
-
-def _build_all(state: BatchState, node: str, todo: List[dict], prep_workers: int,
-               build_workers: int) -> List[str]:
-    """Run steps 1-3 for every clip in one pool and step 4 in another: a clip's build is queued
-    the moment its prep ends, so a slow builder never holds up the next clip's images, and the
-    builds still never exceed `build_workers` (the render ceiling). Returns the errors."""
-    errors: List[str] = []
-    guard = threading.Lock()
-    with ThreadPoolExecutor(max_workers=build_workers) as build_ex:
-        builds = []
-
-        def prep_then_queue(c):
-            err, notes = _prep_clip(state, node, c)
-            if err:
-                return err
-            print(f"[batch] {node}: clip {c['n']} images done; queued for build", flush=True)
-            with guard:
-                builds.append(build_ex.submit(_build_stage, state, node, c, notes))
-            return None
-
-        with ThreadPoolExecutor(max_workers=prep_workers) as prep_ex:
-            errors += [e for e in prep_ex.map(prep_then_queue, todo) if e]
-        for f in builds:
-            e = f.result()
-            if e:
-                errors.append(e)
-    return errors
-
-
 def build_marker(batch: str, slug: str) -> Path:
     return SHORTS / batch / slug / ".building.pid"
 
@@ -1316,18 +1198,301 @@ def _marker_pid(marker: Path) -> Optional[int]:
         return None
 
 
+# ── the per-short build SUBGRAPH (Mike, 2026-11-22; built 2026-11-27) ─────────────────────────────
+# The 4 steps above are the 4 nodes of ONE small graph per short, and `lane2_build` fans the shorts
+# out to it with Send (map-reduce):
+#
+#   lane2_build ==Send(short)==> clip_build:  START -> plan -> images -> image_check --pass--> build -> END
+#        |                                                    ^              |
+#        |                                                    +----fail------+  (at most BROLL_QA_ROUNDS)
+#        +-- nothing to send --> lane2_build_join <== every clip_build run ==+
+#
+# A SUBGRAPH, not 4 nodes in the batch graph: LangGraph runs in supersteps, so 4 fanned-out nodes
+# would move in lockstep (every short's plan done before any short's images start). One subgraph
+# run per short lets each short move on its own, as the old thread pools did. It is compiled
+# without a checkpointer, so it uses the batch graph's: a checkpoint after every node, under that
+# short's own namespace.
+#
+# Kept in plain code, because a graph has no knob for them:
+#   * the TWO limits. A short holds one of `max_prep` slots from its plan until its images are
+#     settled (the old prep pool: a slot waiting on ChatGPT costs nothing), and at most
+#     `max_builders` builders run at once (the render ceiling). LangGraph's `max_concurrency` is
+#     one number for a whole superstep and cannot say both, so each is a semaphore (`_slots`).
+#   * the ChatGPT turn order (`ChatGPTTurns`: a remake first) and the cross-process `chatgpt`
+#     stage lock, taken in code with its `finally`.
+#   * resume FROM DISK: each node reads what its files already say (the plan files, the image
+#     check's report and its round number), so a batch re-driven on a fresh run skips what is done.
+# A node never raises: a short's failure becomes its row in `clip_results` and the other shorts
+# go on. lane2_build_join verifies every short from progress.json, never from an agent's text.
+
+CLIP_NODE = "lane2_build"   # the label in the batch log and on the dashboard heartbeat, as before
+
+
+class ClipBuildState(TypedDict, total=False):
+    # sent in by lane2_build (the Send payload)
+    batch: str
+    stub: str
+    clip: dict                   # the short's progress.json row (n, slug, ...)
+    max_prep: int
+    max_builders: int
+    # the short's own working state
+    round: int                   # the image round last started (0 = none yet in this run)
+    remake: bool                 # the next images visit is a fix round
+    verdict: Optional[str]       # the last image check's verdict in this run
+    items: List[dict]            # the last valid image worklist (if a fix agent breaks the file)
+    images_done: bool            # the images are settled: go build
+    notes: str                   # what the builder is told about the images
+    error: Optional[str]
+    # handed back to the batch graph: the ONLY key that leaves the subgraph
+    clip_results: Annotated[List[dict], _add_clip_results]
+
+
+class ClipBuildOutput(TypedDict, total=False):
+    clip_results: Annotated[List[dict], _add_clip_results]
+
+
+_SLOTS: dict = {}                # batch -> {"prep": semaphore, "build": semaphore, "held": {clip n}}
+_SLOTS_GUARD = threading.Lock()
+
+
+def _new_slots(max_prep: int, max_builders: int) -> dict:
+    return {"prep": threading.BoundedSemaphore(max(1, int(max_prep))),
+            "build": threading.BoundedSemaphore(max(1, int(max_builders))), "held": set()}
+
+
+def _slots(state: ClipBuildState) -> dict:
+    """This batch's two limits. lane2_build makes them fresh before every fan-out (a re-driven batch
+    with a new --max-prep / --max-builders gets the new numbers); a run resumed from a checkpoint
+    straight into clip_build makes them from the numbers its Send carried."""
+    with _SLOTS_GUARD:
+        s = _SLOTS.get(state["batch"])
+        if s is None:
+            s = _SLOTS[state["batch"]] = _new_slots(state.get("max_prep") or PREP_WORKERS_DEFAULT,
+                                                    state.get("max_builders") or 2)
+        return s
+
+
+def _hold_prep(state: ClipBuildState) -> None:
+    """Take this short's steps 1-3 slot, unless it holds one already (each of plan, images and
+    image_check calls this, so a run resumed into any of them still takes its slot)."""
+    s, n = _slots(state), state["clip"]["n"]
+    with _SLOTS_GUARD:
+        if n in s["held"]:
+            return
+    s["prep"].acquire()
+    with _SLOTS_GUARD:
+        s["held"].add(n)
+
+
+def _free_prep(state: ClipBuildState) -> None:
+    s, n = _slots(state), state["clip"]["n"]
+    with _SLOTS_GUARD:
+        if n not in s["held"]:
+            return
+        s["held"].discard(n)
+    s["prep"].release()
+
+
+def _clip_failed(state: ClipBuildState, error: str) -> dict:
+    """End this short's run with an error row; the other shorts go on."""
+    _free_prep(state)
+    c = state["clip"]
+    return {"error": error, "clip_results": [{"n": c["n"], "slug": c["slug"], "error": error}]}
+
+
+def _enter(state: ClipBuildState, step: str, detail: str = "") -> None:
+    print(f"[batch] {CLIP_NODE}: clip {state['clip']['n']} -> {step}" + (f" ({detail})" if detail else ""),
+          flush=True)
+
+
+def clip_plan(state: ClipBuildState) -> dict:
+    """Node `plan` (step 1): the builder writes BROLL-PLAN.md + broll-images.json and stops. Skipped
+    when both are on disk."""
+    c = state["clip"]
+    batch, slug, n = state["batch"], c["slug"], c["n"]
+    _hold_prep(state)
+    try:
+        if broll_plan_path(batch, slug).is_file() and broll_items(batch, slug) is not None:
+            _enter(state, "plan", "on disk, skipped")
+            return {}
+        _enter(state, "plan")
+        log = f"agent-remotion-builder-{batch}-{n}.log"
+        spawn_agent(state, CLIP_NODE, "remotion-builder", _plan_prompt(state, c), log,
+                    marker=build_marker(batch, slug))
+        if not broll_plan_path(batch, slug).is_file() or broll_items(batch, slug) is None:
+            return _clip_failed(state, f"clip {n}: the builder's plan stage left no valid BROLL-PLAN.md + "
+                                       f"broll-images.json in {clip_dir(batch, slug)} (log {log})")
+        return {}
+    except Exception as e:
+        return _clip_failed(state, f"clip {n}: {type(e).__name__}: {e}")
+
+
+def clip_images(state: ClipBuildState) -> dict:
+    """Node `images` (step 2, one round): on a fix round, move the failed images aside and have
+    image-gen rewrite ONLY their prompts; then make every missing image with gen_batch.py, in code,
+    in this short's ChatGPT turn and under the cross-process `chatgpt` lock. Its first visit resumes
+    where the files on disk say the last run stopped, and may find nothing left to do."""
+    c = state["clip"]
+    batch, slug, n = state["batch"], c["slug"], c["n"]
+    _hold_prep(state)
+    try:
+        items = broll_items(batch, slug)
+        report = broll_qa_path(batch, slug)
+        rnd, remake, verdict = int(state.get("round") or 0), bool(state.get("remake")), state.get("verdict")
+        if rnd == 0:
+            if not items:
+                _enter(state, "images", "no images to make")
+                return {"images_done": True, "notes": ""}
+            done_rounds, remake = 0, False
+            if report.is_file():
+                old = report.read_text(encoding="utf-8")
+                on_disk = _qa_verdict(old)
+                m = re.search(r"visual QA, round (\d+)", old.splitlines()[0] if old else "")
+                done_rounds = int(m.group(1)) if m else 0
+                if not _broll_missing(items):
+                    if on_disk == "PASS":
+                        _enter(state, "images", "passed on disk, skipped")
+                        return {"images_done": True, "notes": ""}
+                    if done_rounds >= BROLL_QA_ROUNDS:
+                        # A re-driven batch: this clip already used its image rounds (batch `ripping`, 2026-11-19:
+                        # clips 1, 6 and 7 ended FAIL after two rounds and their builders remapped). Do not
+                        # regenerate again; the builder gets the same note. Delete the report to force new rounds.
+                        _enter(state, "images", f"{done_rounds} rounds on disk, none left")
+                        return {"images_done": True, "notes": _images_note(on_disk, [], done_rounds)}
+                    remake = on_disk == "FAIL" and done_rounds > 0   # resume AT the fix round, no second look first
+            rnd, verdict = (done_rounds + 1 if remake else 1), None
+        else:
+            rnd += 1
+        _enter(state, "images", f"round {rnd}" + (", remake" if remake else ""))
+        marker = build_marker(batch, slug)
+        if remake:
+            # FIX ROUND: the failed files go aside in code; an agent rewrites ONLY their prompts.
+            failed = _failed_files(report.read_text(encoding="utf-8"), items)
+            if not failed:
+                print(f"[batch] {CLIP_NODE}: clip {n} image check FAILED but names no worklist file; "
+                      f"not regenerating blind", flush=True)
+                return {"round": rnd, "images_done": True,
+                        "notes": _images_note(verdict, [Path(f).name for f in _broll_missing(items)],
+                                              BROLL_QA_ROUNDS)}
+            _move_aside(batch, slug, failed, rnd)
+            spawn_agent(state, CLIP_NODE, "image-gen", _fix_prompts_prompt(state, c, report, failed),
+                        f"agent-image-gen-{batch}-{n}.log", marker=marker)
+            items = broll_items(batch, slug) or items       # the corrected prompts
+        missing = _broll_missing(items)
+        if missing:
+            owner = f"{batch}-{slug}-images"
+            _beat(state, CLIP_NODE, f"clip {n}: waiting for the ChatGPT browser"
+                                    + (" (remake, goes first)" if remake else ""))
+            with CHATGPT_TURNS.turn(remake=remake):
+                if _stage_lock("acquire", "chatgpt", owner) != 0:
+                    raise RuntimeError("could not take the chatgpt stage lock")
+                try:
+                    _run_generator(state, CLIP_NODE, c, len(missing), marker)
+                finally:
+                    _stage_lock("release", "chatgpt", owner)
+            items = broll_items(batch, slug) or items
+        return {"round": rnd, "remake": remake, "verdict": verdict, "items": items, "images_done": False}
+    except Exception as e:
+        return _clip_failed(state, f"clip {n}: {type(e).__name__}: {e}")
+
+
+def clip_image_check(state: ClipBuildState) -> dict:
+    """Node `image_check` (step 3, one round): visual-qa opens every image against its prompt. PASS
+    -> build. FAIL with rounds left -> back to images for a fix round (the conditional edge after
+    this node is the evaluator-optimizer loop). No verdict to act on, or no rounds left -> build,
+    and the builder is told to remap."""
+    c = state["clip"]
+    batch, slug, n = state["batch"], c["slug"], c["n"]
+    rnd = int(state.get("round") or 1)
+    _hold_prep(state)
+    _enter(state, "image_check", f"round {rnd}")
+    try:
+        items = broll_items(batch, slug) or state.get("items") or []
+        if not any(Path(it["file"]).is_file() for it in items):
+            raise RuntimeError(f"the generator produced none of the {len(items)} images "
+                               f"(log gen-{batch}-{n}.log)")
+        report = broll_qa_path(batch, slug)
+        rc, out = spawn_agent(state, CLIP_NODE, "visual-qa", _broll_qa_prompt(state, c, items),
+                              f"agent-visual-qa-{batch}-clip{n}.log", marker=build_marker(batch, slug))
+        verdict = _qa_verdict(out)
+        if rc == 0 and (out or "").strip():
+            # visual-qa carries no Write tool: its report comes back as text and is persisted here.
+            report.write_text(f"# {batch} clip {n} `{slug}`: b-roll visual QA, round {rnd} "
+                              f"({_now_iso()})\n\n{out}", encoding="utf-8")
+        print(f"[batch] {CLIP_NODE}: clip {n} image check round {rnd}: {verdict or 'no verdict'}", flush=True)
+        missing = _broll_missing(items)
+        if verdict == "PASS" and not missing:
+            return {"verdict": verdict, "images_done": True, "notes": ""}
+        remake = verdict == "FAIL" and report.is_file()
+        if (not remake and not missing) or rnd >= BROLL_QA_ROUNDS:
+            # nothing to act on (never regenerate blind), or no rounds left: build, and the builder remaps
+            return {"verdict": verdict, "images_done": True,
+                    "notes": _images_note(verdict, [Path(f).name for f in missing], BROLL_QA_ROUNDS)}
+        return {"verdict": verdict, "remake": remake, "items": items, "images_done": False}
+    except Exception as e:
+        return _clip_failed(state, f"clip {n}: {type(e).__name__}: {e}")
+
+
+def clip_build_short(state: ClipBuildState) -> dict:
+    """Node `build` (step 4): the builder builds and renders the short from what is on disk, at most
+    `max_builders` at once. Success is verified later from progress.json (lane2_build_join)."""
+    c = state["clip"]
+    batch, slug, n = state["batch"], c["slug"], c["n"]
+    _free_prep(state)                # the images are settled: the next short may start its plan
+    print(f"[batch] {CLIP_NODE}: clip {n} images done; queued for build", flush=True)
+    try:
+        with _slots(state)["build"]:
+            _enter(state, "build")
+            spawn_agent(state, CLIP_NODE, "remotion-builder", _build_prompt(state, c, state.get("notes") or ""),
+                        f"agent-remotion-builder-{batch}-{n}.log", marker=build_marker(batch, slug))
+    except Exception as e:
+        return _clip_failed(state, f"clip {n}: {type(e).__name__}: {e}")
+    return {"clip_results": [{"n": n, "slug": slug, "error": None}]}
+
+
+def _after_plan(state: ClipBuildState) -> str:
+    return END if state.get("error") else "images"
+
+
+def _after_images(state: ClipBuildState) -> str:
+    if state.get("error"):
+        return END
+    return "build" if state.get("images_done") else "image_check"
+
+
+def _after_image_check(state: ClipBuildState) -> str:
+    """The fix-round loop: back to images while the check failed and rounds are left."""
+    if state.get("error"):
+        return END
+    return "build" if state.get("images_done") else "images"
+
+
+def build_clip_graph():
+    """ONE short: plan -> images -> image_check -> build, image_check -> images being the fix round."""
+    g = StateGraph(ClipBuildState, output_schema=ClipBuildOutput)
+    g.add_node("plan", clip_plan)
+    g.add_node("images", clip_images)
+    g.add_node("image_check", clip_image_check)
+    g.add_node("build", clip_build_short)
+    g.add_edge(START, "plan")
+    g.add_conditional_edges("plan", _after_plan, ["images", END])
+    g.add_conditional_edges("images", _after_images, ["image_check", "build", END])
+    g.add_conditional_edges("image_check", _after_image_check, ["images", "build", END])
+    g.add_edge("build", END)
+    return g.compile()
+
+
 def lane2_build(state: BatchState) -> BatchState:
-    """Every clip through plan -> images (chatgpt lock, generator in code) -> image check ->
-    build (`_build_all`): steps 1-3 for up to `max_prep` clips at once (env BATCH_MAX_PREP,
-    default 4), step 4 for at most `max_builders` (env BATCH_MAX_BUILDERS, default 2), each
-    overridable per run so a resumed supervisor can change it. A clip whose `.building.pid`
+    """FAN-OUT: pick the shorts to build and send each to its own clip_build run (`_send_clips`).
+    Up to `max_prep` shorts are in plan / images / image_check at once (env BATCH_MAX_PREP, default
+    4) and at most `max_builders` build at once (env BATCH_MAX_BUILDERS, default 2), each
+    overridable per run so a resumed supervisor can change it. A short whose `.building.pid`
     marker points at a LIVE process is being built by someone else (a previous supervisor
-    incarnation, or a hand-spawned builder): it is not re-spawned, it is WAITED for.
-    Verification covers EVERY surviving clip."""
+    incarnation, or a hand-spawned builder): it is not sent, lane2_build_join WAITS for it."""
     node = "lane2_build"
     batch = state["batch"]
     if state.get("stub"):
-        return {"steps": _step(state, node, "stub")}
+        return {"build_plan": {"stub": True}, "clip_results": Overwrite([])}
     workers = int(os.environ.get("BATCH_MAX_BUILDERS") or state.get("max_builders") or 2)
     workers = max(1, workers)
     prep_workers = max(1, int(os.environ.get("BATCH_MAX_PREP") or state.get("max_prep")
@@ -1349,34 +1514,62 @@ def lane2_build(state: BatchState) -> BatchState:
         m = build_marker(batch, c["slug"])
         pid = _marker_pid(m) if m.is_file() else None
         if pid and pid_alive(pid):
-            external.append((c, pid))
+            external.append({"n": c["n"], "slug": c["slug"], "pid": pid})
         else:
             if m.is_file():
                 m.unlink()          # stale marker from a dead builder
             todo.append(c)
+    plan = {"todo": todo, "external": external, "scoped": bool(scope),
+            "surviving": [{"n": c["n"], "slug": c["slug"]} for c in surviving],
+            "max_prep": prep_workers, "max_builders": workers}
     if not todo and not external:
-        return {"steps": _step(state, node, "skipped",
-                               "every " + ("scoped" if scope else "surviving") + " clip is 7-built PASS")}
+        return {"build_plan": {**plan, "skip": True}, "clip_results": Overwrite([])}
     print(f"[batch] {node}: {len(todo)} to build (images for {prep_workers} at a time, "
           f"builds {workers} at a time)"
           + (f"; {len(external)} already building elsewhere: "
-             f"{[(c['n'], pid) for c, pid in external]}" if external else ""), flush=True)
+             f"{[(x['n'], x['pid']) for x in external]}" if external else ""), flush=True)
     _beat(state, node, f"building {len(todo)} clip(s), {workers} concurrent")
+    with _SLOTS_GUARD:
+        _SLOTS[batch] = _new_slots(prep_workers, workers)
+    return {"build_plan": plan, "clip_results": Overwrite([])}
 
-    errors = []
-    if todo:
-        errors = _build_all(state, node, todo, prep_workers, workers)
-        for e in errors:
-            print(f"[batch] {node}: {e}", flush=True)
+
+def _send_clips(state: BatchState):
+    """The conditional edge after lane2_build: one Send per short to build, else straight to the join."""
+    plan = state.get("build_plan") or {}
+    if not plan.get("todo"):
+        return "lane2_build_join"
+    return [Send("clip_build", {"batch": state["batch"], "stub": state.get("stub") or "", "clip": c,
+                                "max_prep": plan["max_prep"], "max_builders": plan["max_builders"]})
+            for c in plan["todo"]]
+
+
+def lane2_build_join(state: BatchState) -> BatchState:
+    """FAN-IN: runs once every clip_build run has ended. Waits for the shorts outside builders are
+    building, then verifies EVERY surviving short from progress.json. The step keeps the name
+    `lane2_build` (run.py's re-drive list, the run queue and the dashboard read that name)."""
+    node = "lane2_build"
+    batch = state["batch"]
+    plan = state.get("build_plan") or {}
+    if state.get("stub") or plan.get("stub"):
+        return {"steps": _step(state, node, "stub")}
+    if plan.get("skip"):
+        return {"steps": _step(state, node, "skipped",
+                               "every " + ("scoped" if plan.get("scoped") else "surviving") + " clip is 7-built PASS")}
+    rows = sorted(state.get("clip_results") or [], key=lambda r: r.get("n") or 0)
+    errors = [r["error"] for r in rows if r.get("error")]
+    for e in errors:
+        print(f"[batch] {node}: {e}", flush=True)
     waited = 0
-    for c, pid in external:
-        while pid_alive(pid):
-            _beat(state, node, f"waiting on external builder pid {pid} (clip {c['n']}, {waited // 60} min)")
+    for x in plan.get("external") or []:
+        while pid_alive(x["pid"]):
+            _beat(state, node, f"waiting on external builder pid {x['pid']} (clip {x['n']}, {waited // 60} min)")
             time.sleep(30)
             waited += 30
-        m = build_marker(batch, c["slug"])
+        m = build_marker(batch, x["slug"])
         if m.is_file():
             m.unlink()
+    surviving = plan.get("surviving") or []
     fresh = {c["n"]: c for c in prog(batch).get("clips", [])}
     still = [c["slug"] for c in surviving if not _built(fresh.get(c["n"], {}))]
     if still:
@@ -1384,7 +1577,8 @@ def lane2_build(state: BatchState) -> BatchState:
               ("; " + "; ".join(errors) if errors else "")
         return {"status": "failed", "error": err, "steps": _step(state, node, "failed", err)}
     return {"steps": _step(state, node, "ran",
-                           f"{len(todo)} built here, {len(external)} awaited; all {len(surviving)} 7-built PASS")}
+                           f"{len(plan.get('todo') or [])} built here, {len(plan.get('external') or [])} awaited; "
+                           f"all {len(surviving)} 7-built PASS")}
 
 
 def _queued_slugs(batch: str) -> set:
@@ -1547,7 +1741,8 @@ def build_batch_graph(checkpointer=None):
                      ("lane2_cut", lane2_cut), ("gate_4b", gate_4b),
                      ("lane2_tighten_plan", lane2_tighten_plan), ("lane2_tighten", lane2_tighten),
                      ("gate_2nd", gate_2nd), ("lane2_finish", lane2_finish),
-                     ("lane2_build", lane2_build), ("lane2_publish", lane2_publish),
+                     ("lane2_build", lane2_build), ("clip_build", build_clip_graph()),
+                     ("lane2_build_join", lane2_build_join), ("lane2_publish", lane2_publish),
                      ("join_lane3", join_lane3), ("verify_batch", verify_batch)]:
         g.add_node(name, fn)
     g.add_edge(START, "intake")
@@ -1561,7 +1756,10 @@ def build_batch_graph(checkpointer=None):
     g.add_conditional_edges("lane2_tighten", _after("lane2_tighten", "gate_2nd", until_key="2nd"))
     g.add_conditional_edges("gate_2nd", _after("gate_2nd", "lane2_finish"))
     g.add_conditional_edges("lane2_finish", _after("lane2_finish", "lane2_build", until_key="finish"))
-    g.add_conditional_edges("lane2_build", _after("lane2_build", "lane2_publish", until_key="build"))
+    # the build step: fan out one clip_build subgraph run per short (Send), fan back in at the join
+    g.add_conditional_edges("lane2_build", _send_clips, ["clip_build", "lane2_build_join"])
+    g.add_edge("clip_build", "lane2_build_join")
+    g.add_conditional_edges("lane2_build_join", _after("lane2_build_join", "lane2_publish", until_key="build"))
     g.add_conditional_edges("lane2_publish", _after("lane2_publish", "join_lane3"))
     g.add_conditional_edges("join_lane3", _after("join_lane3", "verify_batch"))
     g.add_edge("verify_batch", END)
