@@ -1,1 +1,0 @@
-var e=new Set([`discover-agent-type`,`agent-in-a-box`,`neon-lp-season`,`end-of-summer-sale`,`agent-commerce`,`bnb-survivor-quest`,`pieverse-okx-game`,`okx-red-packet`,`okx-redpacket`,`spring-sale`,`seoul-campaign`]);function t(t){return!!(t&&e.has(t))}var n=new Set([`agent-passport`,`monad-agent`,`sui-agent`,`okx-wallet`]);function r(e){return!e||n.has(e)}export{t as n,r as t};
