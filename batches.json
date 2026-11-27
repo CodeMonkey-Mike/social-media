@@ -1591,7 +1591,7 @@
     {
       "batch": "peach",
       "track": "livestream-repurpose",
-      "status": "active",
+      "status": "completed",
       "date": "2026-11-15",
       "livestream_title": "peach LOW BPS VERTICAL",
       "title": null,
@@ -1617,7 +1617,7 @@
     {
       "batch": "ripping",
       "track": "livestream-repurpose",
-      "status": "active",
+      "status": "completed",
       "date": "2026-11-18",
       "livestream_title": "ripping LOW BPS VERTICAL",
       "title": null,
@@ -1643,7 +1643,7 @@
     {
       "batch": "evaa-reveal",
       "track": "livestream-repurpose",
-      "status": "active",
+      "status": "completed",
       "date": "2026-11-22",
       "livestream_title": "evaa-reveal LOW BPS VERTICAL",
       "title": null,
@@ -1651,19 +1651,74 @@
       "source_media": "video-creation/livestream-repurpose/media/evaa-reveal/evaa-reveal LOW BPS VERTICAL.mp4",
       "transcript_plain": "video-creation/livestream-repurpose/transcripts/evaa-reveal LOW BPS VERTICAL/evaa-reveal LOW BPS VERTICAL_plain.txt",
       "transcripts_dir": "video-creation/livestream-repurpose/transcripts/evaa-reveal LOW BPS VERTICAL",
-      "dashboard": null,
+      "dashboard": "video-creation/shorts/evaa-reveal/dashboard.html",
       "directories": [
+        "video-creation/remotion/out/evaa-reveal",
         "video-creation/shorts/evaa-reveal"
       ],
       "pipelines": {
         "shorts": "active",
-        "repurpose": "pending",
+        "repurpose": "done",
         "longform": "skip"
       },
-      "note": "registered by the batch orchestrator 2026-11-22",
+      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-11-22.",
       "briefs": {
         "lane3": "Limit threads to exactly 1 thread. Create 3 quiz questions (YT quizzes).",
         "clips": "Limit to 5 clips maximum. Every clip must be under 45 seconds."
+      }
+    },
+    {
+      "batch": "evaa-pieverse",
+      "track": "livestream-repurpose",
+      "status": "completed",
+      "date": "2026-11-23",
+      "livestream_title": "evaa-pieverse LOW BPS VERTICAL",
+      "title": null,
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/evaa-pieverse/evaa-pieverse LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/evaa-pieverse LOW BPS VERTICAL/evaa-pieverse LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/evaa-pieverse LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/evaa-pieverse/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/evaa-pieverse",
+        "video-creation/shorts/evaa-pieverse"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done",
+        "longform": "skip"
+      },
+      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-11-23.",
+      "briefs": {
+        "lane3": "Limit X threads to exactly 1 thread. Limit YT posts (data/yt-posts.json) to exactly 1 YT post.",
+        "clips": "Limit to 5 clips maximum. Every clip must be 50 seconds or shorter."
+      }
+    },
+    {
+      "batch": "nvidia",
+      "track": "livestream-repurpose",
+      "status": "active",
+      "date": "2026-11-23",
+      "livestream_title": "nvidia LOW BPS VERTICAL",
+      "title": null,
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/nvidia/nvidia LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/nvidia LOW BPS VERTICAL/nvidia LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/nvidia LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/nvidia/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/nvidia",
+        "video-creation/shorts/nvidia"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done",
+        "longform": "skip"
+      },
+      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-11-23.",
+      "briefs": {
+        "lane3": "Do not create any YouTube posts (no YT community posts or carousels). Only one X thread.",
+        "clips": "Limit the clips to four."
       }
     }
   ]

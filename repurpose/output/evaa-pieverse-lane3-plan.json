@@ -1,0 +1,434 @@
+{
+  "batch": "evaa-pieverse",
+  "date": "2026-11-23",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/evaa-pieverse LOW BPS VERTICAL/evaa-pieverse LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-11-23",
+  "brief": "Limit X threads to exactly 1 thread. Limit YT posts (data/yt-posts.json) to exactly 1 YT post.",
+  "brief_reading": "Read as: exactly 1 X thread (the default is 2) and exactly 1 long YT community post with its carousel (the default is 2); the thread is built from that one YT post. Kaspa gets both, per the Kaspa-first weighting. Every other format stays at its default: 4 multi-line X tweets, 2 one-liners, IG companions for the 2 Kaspa tweets, 2 YT polls, X polls for the eligible ones (kaspa, tao).",
+  "fact_check": [
+    {
+      "claim": "Recording date versus batch date",
+      "verdict": "the batch is dated 2026-11-23 but the recording file evaa-pieverse.mkv was written on 2026-11-21 at 19:12 Eastern, so the stream is from the evening of November 21 and every market number in it is around a day and a half old at drafting (2026-11-23, 05:03 UTC). Mike's on-stream time references resolve against November 21: the HTX listing he dates to the day before is November 20, and the overnight TAO dip is the early hours of November 21. Copy uses dates and never a day-relative word.",
+      "source": "video-creation/livestream-repurpose/media/evaa-pieverse/evaa-pieverse.mkv (file time); batches.json"
+    },
+    {
+      "claim": "'Pieverse... it's actually back over a billion in market cap... we're at like a 17.5x... it just got HTX and Poloniex... we might be hitting a new lifetime high... I think it's going to at least double... very realistic that we're going to see multiple billions' (transcript)",
+      "verdict": "verified, and the story moved forward after the stream. At stream time (November 21, around 23:00 UTC) $PIEVERSE was $3.43: $942M on CoinGecko's 274.75M circulating supply and around $1.03B on CoinMarketCap's 300.35M, so 'back over a billion' is the CoinMarketCap basis. On November 22 it printed a new all-time high of $5.33 (CoinGecko ath_date 2026-11-22; hourly print $4.96 at 10:00 UTC, market cap $1.36B), then fell to $2.96 by 14:00 UTC (around 40% under the 10:00 print, my calc) and recovered to $3.60 to $3.76. At drafting: $3.76 on the markets endpoint ($1.03B, rank 67, +100% on 7 days, +253% on 30 days, 29.5% under the high) and $3.46 on the 04:00 UTC hourly print ($949M). Listings: HTX announced PIEVERSE/USDT for November 20 2026 (trading from 13:00 UTC); Poloniex added it in the same window (CoinGecko news feed 'Pieverse lists on Poloniex and HTX'; CoinGabbar cites both exchanges' X posts captured November 21 08:20 UTC; one commentary dates the spot open to the 21st). Copy: 'On November 22 it printed $5.33 and went back over a $1 billion market cap', 'It gave a chunk of that back the same day', 'HTX and Poloniex both listed it that week'. 'Might be headed for a new all-time high' is Mike's on-stream line and it came true the next morning. The 17.5x is a market cap ratio ($1.05B over the $60M call level; the price multiple is lower because supply grew, see the ripping ledger) and is NOT printed; copy keeps 'I called this one near a $60 million market cap' (CoinGecko: $59.8M to $65.2M on November 24 to 29 2025). 'At least double' has not happened ($3.43 to $5.33 is +55%) and is NOT drafted; 'multiple billions' is not drafted either. OPERATOR NOTE: Pieverse moved more than 30% inside 24 hours on November 22 (coin-research event window rule); re-check the Pieverse tweet against the live price before it posts.",
+      "source": "api.coingecko.com coins/markets, coins/pieverse/market_chart days=7 (hourly) and days=365 (daily), read 2026-11-23 05:03 to 05:20 UTC; coingecko.com/en/coins/pieverse (news feed, fetched 2026-11-23); htx.com.pk/support (HTX listing notice, search result); coingabbar.com/en/pieverse-price-prediction-htx-poloniex-listings; okx.com/en-us/orbit/insight/93474297155104; repurpose/output/ripping-lane3-plan.json fact_check"
+    },
+    {
+      "claim": "'payments... Pieverse is agent to agent payments, that's x402 too' (transcript)",
+      "verdict": "product re-checked on the project's own live page (coin-research row 8): pieverse.io/llms.txt still lists live agent payments and x402-style agent transactions as deferred, and describes the live product as web3-native AI agents deployed to messaging channels. No copy in this batch makes a product or usage claim about Pieverse; the tweet is price, listings and Mike's call only.",
+      "source": "pieverse.io/llms.txt (fetched 2026-11-23); video-creation/longform-edited/media/pieverse/DATA.md"
+    },
+    {
+      "claim": "'Pippin starts getting all these centralized exchanges at the end of November... it continued December, January and Pippin was ripping... if Pieverse is going to go through the same thing' (transcript)",
+      "verdict": "price path verified, coin NOT named. CoinGecko daily: $PIPPIN $0.028 on November 24 2025, $0.151 on December 1, $0.514 on January 5 2026, all-time high $0.897 on February 26 2026, so the run that started with the late November listings lasted around three months. It is $0.017 at drafting, 98% under that high, so naming it as the precedent would misread; the exchange listing dates themselves were not pulled. Copy carries Mike's experience in general form only: 'I've seen this with my plays before: the listings keep coming and the run keeps going.'",
+      "source": "api.coingecko.com coins/pippin/market_chart days=365 and coins/markets (2026-11-23); transcript"
+    },
+    {
+      "claim": "'EVAA... six dollars and forty cents... a hundred and fourteen [million] market cap... our lowest entry point was 2.9 million... it is like a 39x' and 'I sold like 10% a couple of times... I might want to take another handful out' (transcript)",
+      "verdict": "verified for stream time, OVERTAKEN since, NOT drafted. At stream time $EVAA was $6.38 to $6.44 (CoinGecko hourly), which is $114M on CoinMarketCap's self-reported 17.85M circulating supply and around $42M on CoinGecko's 6.62M; '39x' is $114M over the $2.9M low, two different supply bases (see the evaa-reveal ledger). On November 22 it fell from $6.44 at 00:00 UTC to $3.10 by 08:00 UTC and $2.25 at 18:00 UTC. At drafting: $2.74, -39.9% on 24 hours, +6.5% on 7 days, 79.9% under its all-time high, market cap $18.2M (CoinGecko). The run, the drop and 'I take profits on the way up' already shipped from the evaa-reveal batch (tweet posted November 23; a YT post, a YT poll, an X poll and a second EVAA tweet are still pending), so a new EVAA item would either repeat it or print a 39x that is no longer true. No EVAA item is drafted in this batch. OPERATOR NOTE for Mike: the pending 'Great Scott... 35x call' tweet and its YT copy were written before the drop.",
+      "source": "api.coingecko.com coins/evaa-protocol/market_chart days=7 and coins/markets (2026-11-23 05:03 UTC); repurpose/output/evaa-reveal-lane3-plan.json fact_check; schedule-tweets/data x-tweets.json, yt-posts.json, x-polls.json and yt-text-polls.json (read 2026-11-23); video-creation/longform-presentation/media/standard/evaa/RESEARCH.md"
+    },
+    {
+      "claim": "viewer question on the upcoming EVAA token unlock; Mike: 'it's been unlocking for the entire year... only 17 million EVAA in circulation... it's going to go to 50 million as a max supply' (transcript)",
+      "verdict": "NOT drafted. The 50M max supply is verified; circulating supply is disputed (6.62M on CoinGecko, 17.85M self-reported on CoinMarketCap, around 29.7M unlocked on CoinMarketCap's own panel) and the next unlock on that self-reported panel is around 535,000 EVAA on November 27 2026 (longform dossier). A post that waves off the unlock would land days before or after it, right after a drop of more than 50%.",
+      "source": "video-creation/longform-presentation/media/standard/evaa/RESEARCH.md (sections 1.1 and 5.3); api.coingecko.com coins/markets (2026-11-23)"
+    },
+    {
+      "claim": "'I have been dying to get TAO below $170... I put in another 300... somebody in my community said TAO's at $169... right now it's 185... 169, 167 actually at one point' (transcript)",
+      "verdict": "verified: CoinGecko hourly shows $TAO at $169.40 at 04:00 UTC and $167.81 at 06:00 UTC on November 21 2026 (the low of the week, around 1 a.m. Eastern), $174.06 by 08:00 UTC, $188.35 at 14:00 UTC and $185.98 at 18:00 UTC; $190.70 at drafting (-1.0% on 7 days, 74.8% under its $757.60 all-time high). Copy: 'It printed $167 in the middle of the night and was back at $185 by the afternoon.' The level is the one Mike has put on record twice ('a nice big buy under $170': the November 19 tweet and the November 18 polls), so this is the follow-up. He did not get the large buy under $170 (he added $300 the day before, above $170), so copy never says he bought the low and never frames it as a miss: 'that's where I want my big buy'. 'If stocks keep sliding, I think we see that level again' is his own forward view from the stream. No TAO product or usage claim is made.",
+      "source": "api.coingecko.com coins/bittensor/market_chart days=7 and coins/markets (2026-11-23 05:03 UTC); schedule-tweets/data x-tweets.json and x-polls.json (November 18 and 19 entries); transcript"
+    },
+    {
+      "claim": "'this bridge situation with Trestly, it bridges USDT to kUSDT' (transcript; Whisper wrote 'Tress Lee' and 'USCT to K USCT')",
+      "verdict": "verified, project NOT named in copy (persona verified_claims_only: an unproven project is described, not named). Trestly launched kUSDT on Kaspa on November 15 2026: a KCC-20 covenant token on the Kaspa L1, backed by USDT locked in vaults on Ethereum or BNB Chain; three of five signers approve a mint or a release, four of five a rule change; a wallet to wallet transfer needs no signer. It is not a Tether product. Trestly says it has not completed an independent security audit. Product check (coin-research row 8): trestly.io and trestly.io/status return an app shell to a plain fetch (HTTP 200, 6,705 bytes, 'Loading Trestly'); /llms.txt, /api/status and /status.json are 404; the sitemap lists bridge, swap, pool, reserves, activity and network pages; the app bundle itself carries 'The deployment must list 5 signers' and 'Approved by {threshold} of {count} bridge signers', which confirms the five-signer design from the project's own code. The three of five threshold, the launch date and the audit status rest on dated coverage that quotes Trestly's own pages. No reserve, volume or user figure is printed (one monitor read put the float near 6,000 kUSDT on November 19: tiny, not printed). Copy: 'went live on November 15', 'You lock USDT in a vault on Ethereum and a dollar token gets minted on the Kaspa L1', 'three of the five have to approve'.",
+      "source": "captainaltcoin.com/why-redeeming-100-kusdt-from-kaspa-can-leave-you-with-95-usdt-on-ethereum/ (November 22 2026); captainaltcoin.com/usdt-backed-stablecoin-goes-live-on-kaspa/; theindustryspread.com/trestly-opens-kusdt-on-kaspa-with-usdt-locked-in-vaults/; finance.biggo.com (kUSDT debut coverage); trestly.io, trestly.io/status, trestly.io/sitemap.xml and trestly.io/assets/index-DMH4IHy-.js (probed 2026-11-23)"
+    },
+    {
+      "claim": "'I also found this one, Kozmic Bridge, a bridge between Ethereum and Kaspa using USDC... Kaspa verifies Ethereum's own finality' (transcript; Whisper wrote 'cosmic bridge')",
+      "verdict": "verified on the project's own repository, project NOT named in copy. The kasperolabs/kozmic-bridge README: 'USDC between Ethereum and Kaspa L1, both ways, verified by zero-knowledge proofs alone'; live on mainnet in both directions since 2026-11-16 (a first instance ran with real USDC from 2026-11-15 and is closed to new deposits); a Kaspa covenant verifies a zero-knowledge proof of Ethereum's finality, and Ethereum verifies Kaspa's proof of work on the way back; no custodian, no multisig, no admin key, no pause function; 'New and not audited by a paid firm. Move only what you can afford to lose'. The Kaspa developer roundup of November 22 says the team published the code, tested moving real USDC and plans 'a few more rounds of testing before opening it to the public'. Copy therefore says 'on mainnet since November 16' and 'the team says it wants a few more rounds of testing before it opens it up to everybody', never that it is open to everybody. Not printed: Circle can freeze the Ethereum vault under USDC's own terms; the design reviews in the repository's docs folder were not read. 'Neither one has been audited by an outside firm yet' covers both bridges as each project states it.",
+      "source": "github.com/kasperolabs/kozmic-bridge and its raw README (fetched 2026-11-23); kucoin.com/news/insight/KAS/6b0337009278e40007d91222 (Kaspa dev roundup, November 22 2026, sourced to the Kaspa Unchained account on X)"
+    },
+    {
+      "claim": "'a little bit overly complex right now... we just want to rest assured that everything works and we can trust it... they do have to undergo their audits, some independent audits... you don't want people saying Kaspa doesn't have this when everybody's coming into the crypto market... right now is a good time for this to be happening, at the bottom, nobody's around... we're getting there' (transcript)",
+      "verdict": "Mike's own position, drafted in first person in YT post 1, the thread, the Kaspa one-liner, IG caption 2 and both Kaspa polls. It moves his own story forward: his November 16 tweet asked why Kaspa needs its own dollar instead of USDT and USDC, and his November 19 tweet carried the answer that bringing USDT over means trusting a bridge; this batch reports that the bridges now exist and where he lands. 'Both of them sit on the Kaspa L1 itself, on the covenants that went live in June' rests on the kcc20-live ledger (covenants live since the Toccata upgrade at the end of June 2026) and on both projects describing covenant-based tokens.",
+      "source": "transcript; schedule-tweets/data/x-tweets.json (November 16 and 19 tweets); repurpose/output/kcc20-live-lane3-plan.json fact_check"
+    },
+    {
+      "claim": "viewer: '100K Kaspa... add every week'; Mike: 'don't DCA randomly every week, hold that dry powder... put in like a 400 here in case this is the bottom... another 300... the remaining 300' and 'when will Kaspa take off? We don't know... we know it will in the long run' (transcript)",
+      "verdict": "Mike's own method, drafted in first person with his own $1,000 example (400, 300, 300). $KAS is $0.02580 at drafting, market cap $718M, rank 81, -3.9% on 7 days, -30.1% on 30 days, 87.6% under its all-time high ($0.2074, July 31 2024). Copy: 'around 2.6 cents', 'around 88% under its all-time high'. Proof of work, the fair launch and 10 blocks per second (IG caption 1) are per prior ledgers and persona core_theses. The viewer's Kaspa holding is quoted as he gave it; his holding of another coin is left out. Mike's 'probably won't take off anytime soon' line is not drafted.",
+      "source": "api.coingecko.com coins/markets (2026-11-23 05:03 UTC); transcript; persona/persona.json core_theses; repurpose/output/ripping-lane3-plan.json fact_check"
+    },
+    {
+      "claim": "'we exited the bear market in September and we're in a new bear market... 11 weekly closes above the 200-day moving average... above the 50-week for like six weeks... we closed below it, and one week later we went below the 200-week... two bear markets and two crypto winters in the same year, nobody points it out' (transcript)",
+      "verdict": "verified on Kraken XBTUSD daily candles, weeks closed on Sunday (my calc). Weekly closes above the 50-week SMA: September 20 2026 ($81,164 against $78,789) through November 1 ($78,239 against $75,731), seven closes across six weeks; before that Bitcoin had closed under it every week since early November 2025. It lost the line again on November 8 ($74,738 against $75,490), and the next weekly close, November 15 ($65,315), was under the 200-week SMA (around $68,400). The first close under the 200-week SMA this year came in June 2026 (Sunday close of June 28, $59,490 against around $62,800). Weekly closes above the 200-day SMA: August 23 through November 8, twelve by this data (Mike said 11; not printed). So the first bear market by Mike's rule ran from November 2025 to September 2026, the second began in November 2026, and Bitcoin has closed under its 200-week SMA in two separate stretches of 2026. Copy: 'closed back above its 50-week SMA in September and held it for around six weeks', 'In early November it lost the 50-week SMA again', 'One week later it closed under the 200-week SMA, for the second time this year', 'two bear markets and two crypto winters inside the same year' (his words; crypto winter is his name for trading under the 200-week SMA). 'Never happened before' is not claimed. $BTC is $61,240 at drafting, -5.9% on 7 days, 51.4% under its $126,080 all-time high; no price is printed.",
+      "source": "api.kraken.com/0/public/OHLC pair=XBTUSD interval=1440 and interval=10080 (read 2026-11-23); api.coingecko.com coins/markets (2026-11-23); schedule-tweets/data/yt-text-polls.json (September 21 2026 poll: first close above the 50-week SMA in 45 weeks)"
+    },
+    {
+      "claim": "'Bitcoin for the first time broke below the minimum support level of the power law... on June 30th it went down to 57k... now it went down to 56k... there was no cycle top and not even a mid-cycle top... the first two cycles were two and a half years... all-time high before the halving in 2024' (transcript)",
+      "verdict": "NOT drafted. The price lows hold (Kraken: $58,100 on June 30 2026 and $57,740 on July 1; $55,100 on November 21 2026), but the power law support line is a model whose exact level was not reproduced, and 'no cycle top' stays unresolved while Bitcoin sits 51% under its October 6 2025 high (see the evaa-reveal ledger). The four-year cycle survives only as the named opposition in the Bitcoin tweet.",
+      "source": "api.kraken.com OHLC XBTUSD (2026-11-23); repurpose/output/evaa-reveal-lane3-plan.json fact_check"
+    },
+    {
+      "claim": "'the NASDAQ 100 is officially in a bear market... the S&P is 12% down from its recent all-time high... if it goes to 20% it takes us down to the March low... then Bitcoin is going to go down a little bit more' (transcript)",
+      "verdict": "corrected, no figure printed. On November 20 2026 the Nasdaq-100 fell 5.6% and touched the 20% line intraday; the tallies found have it closing around 19.8% under its record, so 'officially in a bear market' does not hold on a closing basis. The S&P 500 closed in correction, 11.6% under its October 6 record close; the Nasdaq Composite lost 10% on the week, its worst week since March 2020, and is negative for 2026. Futures were bouncing on November 22. Copy uses only Mike's conditional, with no number: 'If stocks keep sliding, I think we see that level again' (the TAO tweet and both TAO polls). The March low target was not checked and is not printed.",
+      "source": "cnbc.com/2026/11/20/sp-500-correction-market-sell-off.html (fetched 2026-11-23); cnbc.com/2026/11/19/stock-market-today-live-updates.html; finance.yahoo.com live blog of November 20; bloomberg.com/news/articles/2026-11-22/asia-braces-for-more-volatility-after-us-selloff-markets-wrap (search results, 2026-11-23)"
+    },
+    {
+      "claim": "viewer: 'thinking about an ICP swing trade'; Mike: 'the issue with ICP is that there's no max supply... it's already a billion, so how many multipliers can you get... over a 4x if it goes back to last year's high... a 9x to the 2024 high... I stay away from ICP simply because the max supply is infinite and the market cap is already huge' (transcript)",
+      "verdict": "verified for what is printed: CoinGecko lists no max supply for Internet Computer (total and circulating both 559.1M), market cap $1.12B, rank 63, price $2.00, and a fresh all-time low of $1.86 on November 22 2026 (99.7% under its 2021 high). Copy: 'ICP has no max supply and it's already a billion-dollar coin. Even at the bottom, that's why I stay away from it.' The 4x and 9x arithmetic to the 2025 and 2024 highs is not printed (the 365 day series starts November 24 2025, after last year's spike, so those highs were not re-read), and neither are his softer lines on ICP's AI narrative. No product or usage claim is made. This is the batch's deliberate engagement-bait item: a defensible take that ICP holders will push back on (the burn mechanics), with no manufactured error.",
+      "source": "api.coingecko.com coins/markets and coins/internet-computer/market_chart days=365 (2026-11-23 05:03 UTC); transcript"
+    },
+    {
+      "claim": "'Trump getting ill advised by his military advisors... a massive ground invasion... the Strait of Hormuz... they vote the Democrats into Congress... 100K Bitcoin by the end of the year was very realistic' (transcript)",
+      "verdict": "NOT drafted: political and war tangent (persona avoid_in_drafts; dark register stays out of YT posts and polls, and no tweet was built on it). The AI productivity and lower rates counterfactual shipped in earlier batches.",
+      "source": "transcript; persona/persona.json avoid_in_drafts; repurpose/SKILL.md (dark register rule)"
+    },
+    {
+      "claim": "The community pitch and the plays list: the exchange-listing tracker, the new degen buy alerts channel ('30, 40, 50% failure ratio... 500x and 1000x'), PEAQ ('could be an easy 100x... 52 million market cap'), LAB ('we got in around 20 million... I thought a 20x... it went to 7 billion, a 353x'), MYX 550x, DeAgentAI 230x, the 2024 list, the courses, the follow-me plug, the channel growth talk, the silver line he read off a post, and the remark about other KOLs using the public as exit liquidity (transcript)",
+      "verdict": "NOT drafted: membership pitch and trader-portfolio framing (persona no_rotation_framing), and remarks about other creators are never drafted. For the record: $PEAQ is $0.0202 with a $52.9M market cap (matches the stream) and 97% under its high; $LAB is $0.032, at an all-time low set November 20 2026; the DeAgentAI multiple differs from earlier streams (130x); the silver line was not verified.",
+      "source": "transcript; persona/persona.json avoid_in_drafts; api.coingecko.com coins/markets (2026-11-23)"
+    },
+    {
+      "claim": "'Litecoin... $39... if Litecoin goes to $500... Arbitrum still has some room to go down... Ethereum is becoming an extreme powerhouse... Solana... the DTCC... its partnership just announced with Zelle... Ethereum is 1600... you might get a $1300 Ethereum... 16,000 in a couple of years' (transcript)",
+      "verdict": "NOT drafted. Prices at drafting: $LTC $40.38, $ARB $0.1157, $ETH $1,727, $SOL $71.33. The ETH long-term call (November 20 one-liner) and the Solana, Zelle and DTCC item (November 19 tweet and polls) shipped from the ripping batch, the price targets are forecasts with no new fact behind them, and ETH and SOL are never framed as stacking picks.",
+      "source": "api.coingecko.com coins/markets (2026-11-23); schedule-tweets/data/x-tweets.json (November 19 and 20 entries); persona/persona.json stacking_lineup"
+    },
+    {
+      "claim": "'a lot of these things make a comeback, like Zcash... dead coin... they made a comeback, NEAR made a comeback' (transcript)",
+      "verdict": "UNRESOLVED: possible zKAS mishear, ask Mike; no content drafted",
+      "source": "persona/persona.json ticker_corrections.zkas_not_zcash; lane 3 hard gate"
+    },
+    {
+      "claim": "viewer: 'Kaspa is king but it needs exchange listings or a workaround to get more exposure' (transcript)",
+      "verdict": "NOT drafted as its own item: the tier one listings story shipped from the evaa-reveal batch (tweet and thread posted November 23; the YT post, a one-liner and two IG posts are still pending). This batch's Kaspa items are new ground: the two dollar bridges and the dry powder method.",
+      "source": "schedule-tweets/data (read 2026-11-23); repurpose/output/evaa-reveal-lane3-plan.json"
+    },
+    {
+      "claim": "Whisper mishears audited: 'hi verse' / 'pie verse' / 'Pyverse' / 'pivers' / 'five verse' = Pieverse; 'eva' / 'Ava' / 'Envah' = EVAA; 'towel' / 'tower' / 'talent' / 'town' / 'Tenzer' = TAO (Bittensor); 'Tress Lee' = Trestly; 'USCT to K USCT' = USDT to kUSDT; 'cosmic bridge' = Kozmic Bridge; 'PoloniX' / 'the lonely acts' = Poloniex; '80 HTX' = HTX; 'L bank' = LBank; 'peak' / 'peek' = PEAQ; 'lab' / 'labs' = LAB; 'parallel' / 'power loss' = power law; 'having' = halving; 'terror season' = tariff season; 'light coin' = Litecoin; 'arb' / 'average' = Arbitrum; 'Zell' = Zelle; 'the Asian AI' = DeAgentAI; 'bio alerts' / 'buylers' / 'boiler' = buy alerts; 'straight of our moves' = Strait of Hormuz; '50 week moving average' is written 50-week SMA",
+      "verdict": "corrected everywhere in copy. Weighting: Kaspa first (one X tweet and one one-liner, both with IG companions, YT post 1 on Version 4, the one thread, one YT poll and one X poll), then TAO (one tweet, one YT poll and one X poll); Toncoin came up only through EVAA (not drafted, see above); Housecoin and Pengu were not discussed; the rest follows the stream: one Pieverse tweet, one ICP one-liner, and one Bitcoin tweet as the non-project item. Five of the six X tweets are about a crypto project.",
+      "source": "transcript; persona/persona.json terminology_rules and ticker_corrections"
+    },
+    {
+      "claim": "Image references",
+      "verdict": "ls of schedule-tweets/images/reference/ done live on 2026-11-23. kaspa-logo.png is cited on both Kaspa X images and their IG 4:5 companions and, first in the array with version4/hook.png, on the V4 hook of YT post 1; version4/slide.png anchors V4 slides 2 to 5. pieverse.jpg (the plush white cat mascot) is cited on the Pieverse image and bittensor-tao.png on the TAO image. Bitcoin is a well-known brand: named in its prompt with its real logo, no reference. evaa.png is now on disk but no EVAA image is generated this batch. No Internet Computer reference exists, so the ICP image is entity-free (a generic minting machine and plain coins) and is listed under missing_references. The two bridges are drawn as a guarded stone bridge and an unguarded bridge of light carrying plain gold coins, with no stablecoin or project logos. The two no-reference X images are listed first so they run before the reference-attached items.",
+      "source": "schedule-tweets/images/reference (ls 2026-11-23); repurpose/SKILL.md; persona/persona.json image_generation"
+    }
+  ],
+  "carousel_versions": {
+    "yt-post-2026-11-23-kaspa-usdt-and-usdc-bridges-at-the-bottom": "version4 (the extra V4 weight applies: images/reference/kaspa-logo.png, the 3D Kaspa coin render, is a usable topic photo and Kaspa is the subject, so slide 1 cites BOTH kaspa-logo.png and version4/hook.png as an array and slides 2 to 5 cite version4/slide.png. The post is a side by side fact walk (bridge one, bridge two, what is still missing, an A/B/C question), which maps onto V4's three stat boxes plus insight box. The only figures on the data slides are two dates and two small counts (NOV 15, 5, 3, NOV 16), each pinned in its prompt, and the centre panels are simple shapes with nothing for the model to override; QA slides 2 and 3 for figure drift before attaching. V2 was the runner-up for the analytical tone and is the fallback if a V4 data slide comes back with a changed figure; V1 rejected because a news-flash look would oversell two bridges that have no outside audit yet.)"
+  },
+  "missing_references": [
+    "Internet Computer ($ICP) logo: no reference file in schedule-tweets/images/reference/. The ICP one-liner image is entity-free (no ICP coin rendered); add a logo file only if Mike wants the token rendered in a later batch."
+  ],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "7b96929a",
+      "slug": "bitcoin-two-bear-markets-one-year",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A snowy mountain pass at night with heavy snow falling. In the centre a Bitcoin coin character with arms and legs, an orange coin whose face shows the official Bitcoin logo (the white tilted B with two vertical strokes on an orange circle), stands with its fists clenched and a defiant glare. Behind it, a huge brown bear lies slumped asleep at the mouth of a dark cave the coin has just walked out of, with the coin's footprints leading away from it through the snow. Directly ahead, a second, even bigger bear rises up on its hind legs out of the blizzard and blocks the path, its shadow falling across the coin. Deep navy near-black background. Dramatic cinematic lighting. Warm orange rim light on the Bitcoin coin and a cold blue glow on the snow and the two bears. Defiant and tense: out of one bear and straight into the next. No text or words anywhere in the image other than the Bitcoin logo."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "f8996e29",
+      "slug": "endless-supply-walk-away",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A giant industrial minting machine at night stamps out an endless river of small silver coins that pours down a chute and floods a dark valley, piling up into hills as far as the eye can see; the machine has no off switch, only one big lever locked in the on position. In the foreground a Pixar-style man with bright green eyes, short dark hair and a black hoodie walks away from the flood toward the viewer with his hands in his pockets and a calm, skeptical half smile, glancing back over his shoulder. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. The machine carries no signs, no labels, no numbers and no logos. Deep navy near-black background. Dramatic cinematic lighting. A cold silver glow from the coins and a cool blue rim light on the man. Calm and unimpressed: a supply that never stops. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "08e0c9bb",
+      "slug": "pieverse-new-high-more-doors-open",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. The plush white cat mascot exactly as shown in the attached reference (a round fluffy white cat with small black button eyes, tiny whiskers and a slim glowing blue headband across its forehead) stands on the very top of a steep mountain peak high above a sea of clouds at night, one paw raised in triumph and the other planting a tall pole with a plain blank blue pennant that carries no markings. Along the winding path just below the summit, a row of tall doorways set into the rock swing open one after another, each one spilling warm light onto the path; the doorways are blank, with no signs, no letters, no numbers and no logos. Keep the cat's likeness faithful to the reference: same proportions, same headband, same fur; use the reference only for the cat, not its desk, its city or its panel text. Deep navy near-black background. Dramatic cinematic lighting with a cool blue rim light from the headband and a warm gold glow from the opening doors. Triumphant: a new high, and more doors opening behind it. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\pieverse.jpg"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "9b54b2e4",
+      "slug": "tao-touched-167-and-bounced",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A deep dark ravine under a crescent moon and a sky full of stars. At the very bottom of the ravine a TAO coin character with arms and legs, a clean white coin whose face shows the dark tau-shaped TAO emblem exactly as shown in the attached reference image, has just hit a glowing springboard and is already launching straight back up, arms stretched high and a hungry, determined grin on its face, a streak of white light trailing beneath it. High on the rim of the ravine a Pixar-style man with bright green eyes, short dark hair and a black hoodie crouches at the edge holding a big open canvas sack, watching the coin with a calm, focused look. Deep navy near-black background. Dramatic cinematic lighting. Cool white rim light on the TAO coin and a soft violet glow from the springboard. Hungry and patient: it touched the bottom and bounced before sunrise. Use the attached reference only as the source for the emblem; do not reproduce the reference image itself. The coin carries no other symbol or lettering, and the sack is plain with no markings. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\bittensor-tao.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "0ea3ef38",
+      "slug": "kaspa-dry-powder-for-the-bottoms",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. The floor of a deep canyon at night, where three wide stone steps lead down into the rock. At the bottom of the steps a large Kaspa coin, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, sits half buried in the canyon floor and lights up the walls. On the top step a Pixar-style man with bright green eyes, short dark hair and a black hoodie kneels calmly and sets down one leather sack of gold coins, while two more sacks wait beside him, saved for the lower steps. Every gold coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind, and the sacks carry no markings. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light from the Kaspa coin and a warm gold glow from the sacks. Calm and patient: the dry powder gets spent one step at a time, at the bottom. Use the attached reference only as the source for the Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "0ea3ef38",
+      "slug": "kaspa-dry-powder-for-the-bottoms",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. The floor of a deep canyon at night, where three wide stone steps lead down into the rock. At the bottom of the steps a large Kaspa coin, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, sits half buried in the canyon floor and lights up the walls. On the top step a Pixar-style man with bright green eyes, short dark hair and a black hoodie kneels calmly and sets down one leather sack of gold coins, while two more sacks wait beside him, saved for the lower steps. Every gold coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind, and the sacks carry no markings. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light from the Kaspa coin and a warm gold glow from the sacks. Calm and patient: the dry powder gets spent one step at a time, at the bottom. Use the attached reference only as the source for the Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "e5f9d9b1",
+      "slug": "kaspa-two-bridges-at-the-bottom",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A quiet island at night in the middle of dark water, with no crowds anywhere. On the shore stands a Kaspa coin character with arms and legs, wearing a small builder's hard hat, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, with its hands on its hips and a calm, satisfied grin as it looks over two brand new bridges that reach the island from a bright distant city on the horizon. The left bridge is a solid stone bridge with a small gatehouse where five tiny guard figures stand watch. The right bridge is a sleek bridge made of pure glowing light, with no guards and no gate at all. Across both bridges, small carts loaded with gold coins roll toward the island. Every gold coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind, and the bridges, the carts and the gatehouse carry no signs. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin, warm gold light on the carts and a soft white glow from the bridge of light. Calm and satisfied: the plumbing gets built while nobody is watching. Use the attached reference only as the source for the Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "e5f9d9b1",
+      "slug": "kaspa-two-bridges-at-the-bottom",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A quiet island at night in the middle of dark water, with no crowds anywhere. On the shore stands a Kaspa coin character with arms and legs, wearing a small builder's hard hat, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, with its hands on its hips and a calm, satisfied grin as it looks over two brand new bridges that reach the island from a bright distant city on the horizon. The left bridge is a solid stone bridge with a small gatehouse where five tiny guard figures stand watch. The right bridge is a sleek bridge made of pure glowing light, with no guards and no gate at all. Across both bridges, small carts loaded with gold coins roll toward the island. Every gold coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind, and the bridges, the carts and the gatehouse carry no signs. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin, warm gold light on the carts and a soft white glow from the bridge of light. Calm and satisfied: the plumbing gets built while nobody is watching. Use the attached reference only as the source for the Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "158a3000",
+      "slug": "01-hook",
+      "prompt": "Single editorial hook image for a carousel, 1:1 square. TWO REFERENCE IMAGES ARE ATTACHED. Use the FIRST attached reference (the dark 3D Kaspa coin with the glowing greenish cyan backwards-K logo bursting with greenish cyan light on a black background) as the full-bleed background image, keeping the coin and its backwards-K logo faithful, cropped to a square with the coin centred in the upper two thirds of the frame. Use the SECOND attached reference ONLY as the layout and typography key: match its bold all-caps bottom text treatment, its small circular chart bubble overlay and its bottom SWIPE FOR MORE bar. In the top right corner place a small circular bubble overlay containing one simple green line chart that slopes down and then runs flat along the bottom, with no numbers or axis labels. Bold all-caps text across the bottom: 'USDT AND USDC NOW BRIDGE TO KASPA' in white on the first line, then 'AND NOBODY IS WATCHING' in bright green on the second line. Small white all-caps 'SWIPE FOR MORE' text at the very bottom. No pagination dots, no carousel indicators. Keep every line of text inside a margin of at least 8 percent of the frame width. Render NO watermark, no @handle, no username, no shield badge, no artist signature and no initials anywhere in the frame or in any corner; the second attached reference carries a small badge and page dots and they must NOT be reproduced. No em dashes anywhere in the rendered text, use colons or commas instead. Do not invent any numbers, tickers, logos or lettering beyond the exact text specified above; render no text other than the text specified here.",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\hook.png"
+      ]
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "c3d98218",
+      "slug": "02-usdt-bridge",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Bridge one: USDT'. Stat boxes: 'LIVE SINCE: NOV 15', 'SIGNERS: 5', 'NEEDED TO APPROVE: 3'. Centre panel: one simple flat diagram: a plain vault outline on the left, a single arrow pointing right to a plain round token outline on the right, and under the arrow a row of five small circles, three of them filled green and two hollow, with no numbers and no labels. Bottom green box labelled 'HOW IT WORKS' with two bullets: 'USDT gets locked in a vault on Ethereum.' and 'A dollar token gets minted on the Kaspa L1.'. Page number 2 in a circle at the top right. Use every figure exactly as written here and do not change, round or add any number. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. The page number 2 appears exactly once and nowhere else. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa, Tether, USDC or Bitcoin logos, no company logos, and render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "a8695913",
+      "slug": "03-usdc-bridge",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Bridge two: USDC'. Stat boxes: 'ON MAINNET SINCE: NOV 16', 'SIGNERS: NONE', 'ADMIN KEY: NONE'. Centre panel: one simple flat diagram: two plain rounded blocks side by side joined by a single two-way arrow, with one small green check mark shield sitting on the middle of the arrow, with no numbers and no labels. Bottom green box labelled 'HOW IT WORKS' with two bullets: 'Kaspa checks a zero-knowledge proof from Ethereum.' and 'Ethereum checks the Kaspa proof of work on the way back.'. Page number 3 in a circle at the top right. Use every figure exactly as written here and do not change, round or add any number. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. The page number 3 appears exactly once and nowhere else. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa, Tether, USDC or Bitcoin logos, no company logos, and render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "aeacac5a",
+      "slug": "04-still-missing",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'What is still missing'. Stat boxes: 'BRIDGE ONE, OUTSIDE AUDIT: NOT YET', 'BRIDGE TWO, OUTSIDE AUDIT: NOT YET', 'BRIDGE TWO: STILL IN TESTING'. Centre panel: one large plain clipboard outline holding three empty checkboxes in a column, with no words, no numbers and no labels. Bottom green box labelled 'WHY I LIKE THE TIMING' with two bullets: 'This is the bottom and nobody is around.' and 'Build it and audit it before the crowd comes back.'. Page number 4 in a circle at the top right. Use every figure exactly as written here and do not change, round or add any number. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. The page number 4 appears exactly once and nowhere else. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa, Tether, USDC or Bitcoin logos, no company logos, and render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "077068e0",
+      "slug": "05-question",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Which bridge would you trust?'. Stat boxes: 'A: THE FIVE SIGNERS', 'B: THE ZERO-KNOWLEDGE PROOFS', 'C: NEITHER UNTIL AUDITED'. Centre panel: three plain rounded panels side by side, each headed A, B and C, otherwise empty. Bottom green box labelled 'TELL ME IN THE COMMENTS' with one bullet: 'Pick one and tell me why.'. Page number 5 in a circle at the top right. Use every figure exactly as written here and do not change, round or add any number. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. The page number 5 appears exactly once and nowhere else. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa, Tether, USDC or Bitcoin logos, no company logos, and render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "A viewer told me he's sitting on 100K Kaspa and adds more every week.\n\nI don't buy on a calendar. When the chart is pumping, I hold the cash. When the bottoms show up, I spend it in pieces: $400 here, $300 if it drops again, $300 if it drops after that.\n\n$KAS is around 2.6 cents, around 88% under its all-time high. This is the kind of zone the dry powder is for. Never financial advice.\n\n#kaspa #kas",
+      "hook": "A viewer told me he's sitting on 100K Kaspa and adds more every week.",
+      "image_id": "0ea3ef38",
+      "notes": "Kaspa subject; IG companion shares the image. No Follow line (Kaspa). The $400 / $300 / $300 split is Mike's own $1,000 example from the stream; the viewer's 100K is quoted as he gave it (quantity framing). Price and drawdown are drafting values (CoinGecko, November 23)."
+    },
+    {
+      "tweet": "On November 21 I said on stream that Pieverse might be headed for a new all-time high. $PIEVERSE\n\nOn November 22 it printed $5.33 and went back over a $1 billion market cap. It gave a chunk of that back the same day, and that's what these runs look like. 🚀\n\nHTX and Poloniex both listed it that week. I've seen this with my plays before: the listings keep coming and the run keeps going. I called this one near a $60 million market cap. Never financial advice.\n\n#pieverse #crypto",
+      "hook": "On November 21 I said on stream that Pieverse might be headed for a new all-time high. $PIEVERSE",
+      "image_id": "08e0c9bb",
+      "notes": "Pieverse subject. Pieverse is not in persona project_handles, so no Follow line (add the handle to the map if Mike wants the tag). No IG (not Kaspa). Dated facts only: no 17.5x and no 'at least double' (see fact_check). RE-CHECK before posting: Pieverse swung around 40% inside a few hours on November 22. Image cites pieverse.jpg."
+    },
+    {
+      "tweet": "I said I wanted $TAO under $170. On November 21 it got there.\n\nIt printed $167 in the middle of the night and was back at $185 by the afternoon. That's how fast the bottoms go.\n\nIf stocks keep sliding, I think we see that level again, and that's where I want my big buy. Never financial advice.\n\n#bittensor #tao",
+      "hook": "I said I wanted $TAO under $170. On November 21 it got there.",
+      "image_id": "9b54b2e4",
+      "notes": "TAO subject; project_handles tao = null, so no Follow line; no IG. Follow-up to the November 19 tweet ('a nice big buy under $170'). Copy never says Mike bought the low and never frames it as a miss. Image cites bittensor-tao.png."
+    },
+    {
+      "tweet": "Bitcoin closed back above its 50-week SMA in September and held it for around six weeks. By that rule, the bear market was over. $BTC\n\nIn early November it lost the 50-week SMA again. One week later it closed under the 200-week SMA, for the second time this year.\n\nThat's two bear markets and two crypto winters inside the same year. Nobody is pointing it out, and the four-year cycle zombies have no explanation for it.\n\n#bitcoin #btc",
+      "hook": "Bitcoin closed back above its 50-week SMA in September and held it for around six weeks.",
+      "image_id": "7b96929a",
+      "notes": "Non-project macro item (Bitcoin structure, pattern-break framing, named opposition). Every moving average claim is verified on Kraken weekly closes (see fact_check). No price printed. No handle, no IG. Bitcoin is a well-known brand: named in the prompt with its real logo, no reference."
+    },
+    {
+      "tweet": "ICP has no max supply and it's already a billion-dollar coin. Even at the bottom, that's why I stay away from it. $ICP 🤔\n\n#icp #crypto",
+      "hook": "ICP has no max supply and it's already a billion-dollar coin.",
+      "image_id": "f8996e29",
+      "notes": "Single-line image-first. Engagement note: correction-bait technique #1 (strong, defensible-but-debatable take): THE deliberate 1-in-10 bait item for this batch. Both facts are verified (no max supply, $1.12B market cap); ICP holders will answer with the burn mechanics. ICP is not in persona project_handles, so no Follow line; no IG. Image is entity-free (no ICP logo reference exists)."
+    },
+    {
+      "tweet": "Kaspa got a USDT bridge and a USDC bridge within days of each other, at 2.6 cents, while nobody's watching... that's exactly when you want the plumbing built and audited. $KAS 😎\n\n#kaspa #kas",
+      "hook": "Kaspa got a USDT bridge and a USDC bridge within days of each other, at 2.6 cents, while nobody's watching...",
+      "image_id": "e5f9d9b1",
+      "notes": "Single-line image-first. Kaspa subject; IG companion shares the image. No Follow line (Kaspa). Neither bridge is named (unproven projects are described, not named) and 'built and audited' signals the audits are still ahead. Trailing ellipsis is the persona signature device."
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-11-23-kaspa-usdt-and-usdc-bridges-at-the-bottom",
+      "topic": "Two bridges brought dollars onto Kaspa within days of each other (USDT with three of five signers, USDC with zero-knowledge proofs and no signers): what is live, what is still missing, and why Mike likes that it is happening at the bottom (built from YT post 1)",
+      "variation_label": "A (news hook, the recap, bridge one, bridge two, the caveat, the timing)",
+      "tweets": [
+        {
+          "text": "Two bridges that bring dollars onto Kaspa went live within days of each other.\n\nOne for USDT. One for USDC. They work in completely different ways, and almost nobody noticed.\n\nHere's what's there, and why I like the timing:",
+          "hook": "Two bridges that bring dollars onto Kaspa went live within days of each other."
+        },
+        {
+          "text": "In mid-November I asked why Kaspa needs its own dollar instead of just USDT and USDC.\n\nThe best answer I got back: bringing USDT over means trusting a bridge, and a bridge is one more thing that can break.\n\nWell, the bridges showed up."
+        },
+        {
+          "text": "Bridge one went live on November 15.\n\nYou lock USDT in a vault on Ethereum and a dollar token gets minted on the Kaspa L1.\n\nFive signers stand behind it. Three of the five have to approve every mint and every release."
+        },
+        {
+          "text": "Bridge two takes USDC and has no signers at all. No custodian, no admin key.\n\nKaspa itself checks a zero-knowledge proof that your deposit is final on Ethereum. Ethereum checks Kaspa's proof of work on the way back.\n\nOn mainnet since November 16, still being tested."
+        },
+        {
+          "text": "Here's the thing: neither one has been audited by an outside firm yet.\n\nAnd to me it's all still a little overly complex. We don't want to think about any of this. We want to rest assured that it works and that we can trust it."
+        },
+        {
+          "text": "That's why I like the timing.\n\n$KAS is around 2.6 cents and nobody's around. This is when you want the tech built, tested and audited.\n\nSo when the crowd comes flooding back, nobody gets to say Kaspa doesn't have this."
+        },
+        {
+          "text": "If this caught you up on what's getting built on Kaspa...\n\nFollow me for Kaspa and macro takes that ignore the four-year cycle echo chamber.\n\n🧠 + 😎"
+        }
+      ]
+    }
+  ],
+  "x_polls": [
+    {
+      "id": "poll-2026-11-23-which-kaspa-bridge-would-you-trust",
+      "topic": "Two dollar bridges on Kaspa: three of five signers (USDT) or zero-knowledge proofs with no signers (USDC)",
+      "eligible_topic": "kaspa",
+      "tweet_text": "Kaspa got a USDT bridge and a USDC bridge within days of each other. $KAS\n\nOne runs on three of five signers. The other has no signers at all, just zero-knowledge proofs. Neither has an outside audit yet.\n\nWhich one would you trust with your dollars?",
+      "hook": "Kaspa got a USDT bridge and a USDC bridge within days of each other. $KAS",
+      "options": [
+        "Signers (3 of 5)",
+        "ZK proofs, no signers",
+        "Neither until audited",
+        "Neither, KAS is money"
+      ],
+      "duration": "1d"
+    },
+    {
+      "id": "poll-2026-11-23-was-167-the-tao-bottom",
+      "topic": "TAO printed $167 on November 21 and bounced: was that the bottom",
+      "eligible_topic": "tao",
+      "tweet_text": "I said I wanted $TAO under $170. On November 21 it printed $167, then bounced back to $185 the same day.\n\nIf stocks keep sliding, I think we see that level again.\n\nWas $167 the bottom?",
+      "hook": "I said I wanted $TAO under $170. On November 21 it printed $167, then bounced back to $185 the same day.",
+      "options": [
+        "$167 was the bottom",
+        "Back under $170",
+        "$150 or lower"
+      ],
+      "duration": "1d"
+    }
+  ],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-11-23-which-kaspa-bridge-would-you-trust",
+      "topic": "Two dollar bridges on Kaspa: three of five signers (USDT) or zero-knowledge proofs with no signers (USDC)",
+      "source_post": "yt-post-2026-11-23-kaspa-usdt-and-usdc-bridges-at-the-bottom",
+      "question_text": "Two bridges that bring dollars onto Kaspa went live within days of each other in mid-November.\n\nOne brings USDT over, and three of five signers have to approve every mint. The other brings USDC over with no signers at all: Kaspa itself checks a zero-knowledge proof from Ethereum. Neither one has been audited by an outside firm yet, and $KAS is sitting around 2.6 cents while all of this gets built.\n\nWhich one would you trust with your own dollars?",
+      "hook": "Two bridges that bring dollars onto Kaspa went live within days of each other in mid-November.",
+      "options": [
+        "The signer bridge: three of five have to approve",
+        "The zero-knowledge bridge: no signers, just proofs",
+        "Neither one until the audits are done",
+        "Neither, ever: Kaspa is money, not a DeFi chain"
+      ]
+    },
+    {
+      "id": "yt-text-poll-2026-11-23-was-167-the-tao-bottom",
+      "topic": "TAO printed $167 on November 21 and bounced: was that the bottom",
+      "source_post": null,
+      "question_text": "I've been saying I want TAO under $170. On November 21 it got there: it printed $167 in the middle of the night and was back at $185 by the afternoon.\n\nIf stocks keep sliding, I think Bitcoin goes a little lower and $TAO goes with it. That's where I want my big buy.\n\nWas $167 the bottom for TAO?",
+      "hook": "I've been saying I want TAO under $170. On November 21 it got there: it printed $167 in the middle of the night and was back at $185 by the afternoon.",
+      "options": [
+        "Yes, $167 was the bottom",
+        "No, it goes back under $170",
+        "No, it goes to $150 or lower",
+        "I don't care, I'm buying all the way down"
+      ]
+    }
+  ],
+  "yt_posts": [
+    {
+      "id": "yt-post-2026-11-23-kaspa-usdt-and-usdc-bridges-at-the-bottom",
+      "topic": "Two bridges brought dollars onto Kaspa within days of each other (USDT with three of five signers, USDC with zero-knowledge proofs and no signers): what is live, what is still missing, and why Mike likes that it is happening at the bottom",
+      "variation_label": "A + CTA1",
+      "body_style": "news hook, the recap of his own question, bridge one, bridge two, the caveat, the timing, the comment ask",
+      "cta_target": "subscribe_youtube",
+      "body": "Two bridges that bring dollars onto Kaspa went live within days of each other, and almost nobody noticed. One is for USDT, one is for USDC, and they work in completely different ways. Here's what's actually there, and why I'm glad it's happening now.\n\nQuick recap. In mid-November I asked why Kaspa needs its own dollar instead of just USDT and USDC. The best answer I got back was that bringing USDT over means trusting a bridge, and a bridge is one more thing that can break.\n\nWell, the bridges showed up. Both of them sit on the Kaspa L1 itself, on the covenants that went live in June.\n\nThe first one went live on November 15. You lock USDT in a vault on Ethereum and a dollar token gets minted on the Kaspa L1. Five signers stand behind it, and three of the five have to approve before anything gets minted or released.\n\nThe second one takes USDC, and it has no signers at all. No custodian, no admin key. Kaspa itself checks a zero-knowledge proof that your deposit is final on Ethereum, and Ethereum checks Kaspa's proof of work on the way back. It has been on mainnet since November 16, and the team says it wants a few more rounds of testing before it opens it up to everybody.\n\nHere's the thing: neither one has been audited by an outside firm yet. And to me the whole setup is still a little overly complex. We don't want to have to think about any of this. We want to rest assured that it works and that we can trust it.\n\nThat's why I like the timing. This is the bottom. $KAS is around 2.6 cents and nobody's around. This is exactly when you want the tech built, tested and audited, so that when everybody comes flooding back into crypto, nobody gets to say Kaspa doesn't have this, or it wasn't audited, or you have to jump through an extra hoop.\n\nWe're getting there. Never financial advice.\n\nSo tell me: which one would you trust with your own dollars, the bridge with five signers or the one that runs on zero-knowledge proofs with no signers at all? Or neither until the audits are done? Drop it in the comments.\n\nIf this caught you up on what's getting built on Kaspa, hit like and subscribe for more.",
+      "engagement_question": "Which one would you trust with your own dollars: the bridge with five signers, the one that runs on zero-knowledge proofs with no signers, or neither until the audits are done?",
+      "images": [
+        {
+          "image_id": "158a3000",
+          "slide_text": "USDT AND USDC NOW BRIDGE TO KASPA / AND NOBODY IS WATCHING"
+        },
+        {
+          "image_id": "c3d98218",
+          "slide_text": "Bridge one: USDT. Live since November 15, five signers, three needed to approve"
+        },
+        {
+          "image_id": "a8695913",
+          "slide_text": "Bridge two: USDC. On mainnet since November 16, no signers, no admin key"
+        },
+        {
+          "image_id": "aeacac5a",
+          "slide_text": "What is still missing: outside audits. Why I like the timing: this is the bottom"
+        },
+        {
+          "image_id": "077068e0",
+          "slide_text": "Which bridge would you trust?"
+        }
+      ]
+    }
+  ],
+  "ig_single": [
+    {
+      "id": "ig-2026-11-23-kaspa-dry-powder-for-the-bottoms",
+      "kaspa_subject": true,
+      "image_id": "0ea3ef38",
+      "aspect_ratio": "4:5",
+      "hook": "A viewer told me he's sitting on 100K Kaspa and adds more every week.",
+      "caption": "A viewer told me he's sitting on 100K Kaspa and adds more every week.\n\nI don't buy on a calendar. When the chart is pumping, I hold the cash. When the bottoms show up, I spend it in pieces.\n\nHere's the example I gave on stream. Say you have $1,000. You put $400 in where you think the bottom is. If it drops again, you put in another $300. If it drops after that, the last $300. And if it never drops again, you still have dry powder left for the next play.\n\n$KAS is around 2.6 cents, around 88% under its all-time high. Same proof of work, same fair launch, same 10 blocks per second. This is the kind of zone the dry powder is for. Never financial advice.\n\nDo you buy on a schedule, or do you wait for the bottoms?",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#krc20",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "A viewer told me he's sitting on 100K Kaspa and adds more every week."
+    },
+    {
+      "id": "ig-2026-11-23-kaspa-two-bridges-at-the-bottom",
+      "kaspa_subject": true,
+      "image_id": "e5f9d9b1",
+      "aspect_ratio": "4:5",
+      "hook": "Kaspa got a USDT bridge and a USDC bridge within days of each other, at 2.6 cents, while nobody's watching...",
+      "caption": "Kaspa got a USDT bridge and a USDC bridge within days of each other, at 2.6 cents, while nobody's watching... that's exactly when you want the plumbing built and audited.\n\nOne went live on November 15: USDT locked on Ethereum, a dollar token minted on the Kaspa L1, three of five signers approving every mint.\n\nThe other takes USDC with no signers at all: Kaspa itself checks a zero-knowledge proof from Ethereum.\n\nNeither one has an outside audit yet. I'd rather see that done now, at the bottom for $KAS, than when the crowd comes back.\n\nWhich one would you trust?",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#kcc20",
+        "#stablecoins",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Kaspa got a USDT bridge and a USDC bridge within days of each other, at 2.6 cents, while nobody's watching..."
+    }
+  ]
+}

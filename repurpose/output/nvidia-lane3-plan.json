@@ -1,0 +1,371 @@
+{
+  "batch": "nvidia",
+  "date": "2026-11-23",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/nvidia LOW BPS VERTICAL/nvidia LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-11-23",
+  "brief": "Do not create any YouTube posts (no YT community posts or carousels). Only one X thread.",
+  "brief_reading": "Read as: 0 yt_posts and 0 carousel slides (the default is 2 posts with 4 to 6 slides each), and exactly 1 X thread (the default is 2). With no YT post to build from, the one thread is written straight from the transcript. Every other format stays at its default: 4 multi-line X tweets, 2 one-liners, IG companions for the 2 Kaspa tweets, 2 YT polls (yt_text_polls) and X polls for the eligible ones (kaspa, tao). The 2 YT polls are kept because the brief's own parenthetical scopes 'YouTube posts' to community posts and carousels, and the two earlier batches briefed with the same words (was-i-right and best-time) kept their YT polls. If Mike meant no YouTube community content of any kind, delete the two yt_text_polls entries; no image depends on them. Thread topic: the thread follows the stream's main argument (the Nvidia day, the stack of bad news, the midterm lows) and not Kaspa, because Kaspa took around two minutes of this stream (the poll result and the god candle), which carries two tweets, two IG posts and a poll but not a 5 to 8 tweet thread without padding from outside the transcript.",
+  "fact_check": [
+    {
+      "claim": "Recording date versus batch date",
+      "verdict": "the batch is dated 2026-11-23 and the recording file nvidia.mkv was written on 2026-11-23 at 18:36 Eastern, so the stream is from the late afternoon of Monday November 23 (Mike says Bitcoin's daily close is an hour and ten minutes away, which puts that moment near 22:50 UTC). Drafting time is 2026-11-24 around 04:15 UTC, a few hours after the stream. Copy uses dates and never a day-relative word.",
+      "source": "video-creation/livestream-repurpose/media/nvidia/nvidia.mkv (file time); batches.json; transcript"
+    },
+    {
+      "claim": "'Jensen Huang reinstated at Nvidia... we had a small pump, but it got eaten up. The Nasdaq 100 closed red, SPX closed green but hardly even did anything' (transcript)",
+      "verdict": "CORRECTED. The reinstatement is verified: Nvidia's board restored Jensen Huang as president, CEO and director on Monday November 23 2026, effective immediately (Nvidia press release; CNBC, CNN, NBC, Al Jazeera). The stock market read is wrong on a close to close basis: $NVDA closed up 31% (31.48% to $165.05 per The Motley Fool, after +28% in premarket), the S&P 500 closed at 7,237.17 (+4.73%), the Nasdaq Composite at 24,089.56 (+6.51%) and the Dow +3.01%; CNBC says the S&P 500 and the Nasdaq Composite both had their best day since April 2025. The gains held into the close; Mike was most likely reading the colour of the daily candle bodies after a large gap up at the open. Copy never says stocks closed red or flat. Copy: '$NVDA closed up 31%', 'the S&P 500 and the Nasdaq both had their best day since April 2025', 'stocks had their best day since April 2025'. The Nasdaq-100 close is reported two ways (+6.2% and around +7%) and is NOT printed.",
+      "source": "investor.nvidia.com press release 'NVIDIA Board Reinstates Jensen Huang as President, CEO and Board Director'; cnbc.com/2026/11/23/nvidia-jensen-huang-ceo.html; cnbc.com/2026/11/22/stock-market-today-live-updates.html (closing levels, fetched 2026-11-24 UTC); fool.com Stock Market Today, Nov. 23 (search result); cnn.com/2026/11/23/business/live-news/jensen-huang-reinstated-as-ceo-of-nvidia"
+    },
+    {
+      "claim": "'Bitcoin is going to close in an hour and ten minutes, and it's red... that crazy pump that got eaten up... it didn't even do anything' (transcript)",
+      "verdict": "verified in shape, corrected in wording: the daily candle closed flat, not red. Kraken XBTUSD hourly on November 23 (UTC): $61,257 at the 13:00 open, $63,804 at the 13:00 close, a high of $64,520 in the 14:00 hour (around +5.3% from $61,257, my calc), back to $61,605 by the 17:00 close and a low of $60,680 in the 19:00 hour (2 p.m. Eastern). Daily candle: open $61,170, high $64,520, close $61,214 on Kraken (+0.07%); open $61,163, high $64,534, close $61,190 on Coinbase (+0.04%). The move started as Nvidia's news hit in premarket, so copy ties it to the day by timing only ('that morning'). Copy: 'Bitcoin couldn't hold a 5% pump', 'jumped from around $61,000 to $64,500 that morning and gave every dollar back by the afternoon', 'It closed the day flat'. At drafting $BTC is $60,397 (CoinGecko, -6.5% on 7 days, 52.1% under its $126,080 all-time high); the November 24 low so far is $59,363.",
+      "source": "api.kraken.com/0/public/OHLC pair=XBTUSD interval=60 and interval=1440 (read 2026-11-24 04:14 UTC); api.exchange.coinbase.com products/BTC-USD/candles granularity=86400; api.coingecko.com coins/markets (2026-11-24 04:13 UTC)"
+    },
+    {
+      "claim": "'we had the fraud created around Jensen Huang resigning, and that pushed [the market] down' (transcript)",
+      "verdict": "the resignation is verified, the word 'fraud' is NOT used. Per CNBC, Huang resigned as CEO on November 13 2026 after reports about his personal life (the stock began falling on November 8), and the board that had accepted the resignation reversed itself on November 23. Sources disagree on the length of the gap (CNBC's dates give ten days; Al Jazeera says a little more than a week; NBC says two weeks). None of the personal detail is drafted (persona avoid_in_drafts: personal tangents), nothing is called a fraud, and the open investigations around Nvidia are not mentioned. Copy: 'Nvidia losing its CEO for more than a week', 'the board brought Jensen Huang back as CEO'.",
+      "source": "cnbc.com/2026/11/23/nvidia-jensen-huang-ceo.html (fetched 2026-11-24 UTC); aljazeera.com/economy/2026/11/23/nvidia-board-reinstates-jensen-huang-as-ceo and nbcnews.com (search results); persona/persona.json avoid_in_drafts"
+    },
+    {
+      "claim": "'a whole bunch of negative things... the Binance hack... the election with the Dems winning... Jensen Huang resigning... individually not a black swan event, but cumulatively it equals what would happen in a black swan event' (transcript)",
+      "verdict": "each event verified, the framing is Mike's own. Binance: around $6.3 billion drained from its hot wallets on the evening of October 29 2026, reported as the biggest crypto heist in history (Al Jazeera headline 'Binance says $6.3bn stolen in biggest crypto heist in history'; TRM Labs has $6.36 billion; some early estimates were lower). Midterms: November 3 2026; Democrats won both chambers of Congress. Copy names 'the midterms' with no party and no partisan judgment ('the Dems are not good for the markets' is NOT drafted). Thread tweet 4: 'The biggest heist in crypto history at Binance on October 29. The midterms. Nvidia losing its CEO for more than a week. None of those is a black swan by itself. Together they hit like one.'",
+      "source": "aljazeera.com/economy/2026/10/30 (Binance, search result); socradar.io/blog/binance-hack-6-3b-hot-wallet-theft; opb.org/article/2026/11/04/2026-midterms-democrats-win-the-senate; repurpose/output/stock-market-lane3-plan.json fact_check; transcript"
+    },
+    {
+      "claim": "'November 21, 2022, bear market bottom, down 28% in 15 days. November 21, 2026, down 28% in 15 days... I think it's coincidental' (transcript, reading a post from another account)",
+      "verdict": "verified on Coinbase BTC-USD daily candles (my calc). 2022: high of $21,366 on November 6, low of $15,460 on November 21 (the low of that bear market), -27.6% in 15 days; the midterms were November 8 2022, 13 days before the low. 2026: high of $76,306 on November 6, low of $55,106 on November 21 ($55,100 on Kraken), -27.8% in 15 days; the midterms were November 3 2026. November 21 is also the 2026 low so far: it undercut the June 30 and July 1 lows of $58,100 and $57,740 (evaa-pieverse ledger). Copy rounds both to 'a 28% drop in 15 days' and says 'this year's low so far'; it never calls November 21 2026 the bottom. The account Mike read it from is not named, and 'I think the matching date is a coincidence' is Mike's own line.",
+      "source": "api.exchange.coinbase.com products/BTC-USD/candles granularity=86400 for November 2022 and November 2026 (read 2026-11-24 UTC); api.kraken.com OHLC XBTUSD interval=1440; repurpose/output/evaa-pieverse-lane3-plan.json fact_check"
+    },
+    {
+      "claim": "'throughout history, not just with Bitcoin... a lot of times there's a bottom that happens right after the midterm... a year later stocks are up significantly... after Bitcoin, a year later Bitcoin is like double the price' (transcript)",
+      "verdict": "verified and made specific. Bitcoin (Coinbase daily, my calc): the 2018 midterms were November 6 2018 and the bear market low was $3,129 on December 15 2018, 39 days later; one year on (December 15 2019) it closed at $7,111, 2.27x. The 2022 low was $15,460 on November 21 2022, 13 days after the midterms; one year on (November 21 2023) it closed at $35,752, 2.31x. Stocks: the S&P 500 has had no negative one-year return after any midterm election since 1950 (Capital Group; a second tally measured from the last close before Election Day finds the same for every midterm from 1946 to 2022). Copy: '2018: Bitcoin bottomed on December 15, 39 days after the midterms', '2022: it bottomed 13 days after them', 'One year after each of those lows, $BTC had more than doubled', 'The S&P 500 has been higher one year after every single midterm election since 1950'. The line that stocks did this decades before Bitcoin existed follows from the 1950 start date. Nothing in copy says the same must happen this time.",
+      "source": "api.exchange.coinbase.com products/BTC-USD/candles (December 2018, December 2019, November 2022, November 2023); capitalgroup.com/advisor/insights/articles/midterm-elections-markets-5-charts.html; davemanuel.com/2026/10/21/stocks-after-midterm-elections/ (search results, 2026-11-24 UTC)"
+    },
+    {
+      "claim": "'The single biggest thing is the Strait of Hormuz. If that gets resolved next week, then we're all set... the market starts pricing in that things are going to get better within six months... we'd go up instantly and then retrace to a higher low... we could be down for months... a new bottom next week or in two months, who knows, I don't want to bet on it' (transcript)",
+      "verdict": "Mike's own forward view, drafted in first person in thread tweets 6 and 7 only (dark register stays at tweet tier on X; it is in no poll and no IG caption). Status check: the strait is still heavily disrupted as of November 22 to 23 2026 (traffic far below the pre-war level, indirect talks through Qatar stalled, Iran saying it could reopen within around two days if its demands are met), so 'the single biggest thing I'm watching' still holds. Copy carries no claim about the war itself, no casualty or strategy talk and none of Mike's remarks about how the war was decided.",
+      "source": "washingtontimes.com/news/2026/nov/23/united-arab-emirates-steps-efforts-shuttle-oil-strait-hormuz/; cbsnews.com live updates; straits.live/briefs/2026-11-22 (search results, 2026-11-24 UTC); transcript; repurpose/SKILL.md (dark register rule)"
+    },
+    {
+      "claim": "'the NASDAQ 100 is already in the bear market, down 20% from its all-time high... if we do the same with the S&P, a 20% drop takes us back to the low of March... we would get a few more red candles' (transcript)",
+      "verdict": "NOT drafted: overtaken by the November 23 session. The Nasdaq-100 ended November 20 almost 20% under its high (CNBC: close to a bear market, and around 19.8% on a closing basis per the evaa-pieverse ledger), then gained more than 6% on November 23, so 'already in the bear market' does not hold at drafting. The March low target was not checked. The thread keeps only Mike's conditional about crypto ('I'm open to a lower low'), with no stock index level.",
+      "source": "cnbc.com/2026/11/22/stock-market-today-live-updates.html; repurpose/output/evaa-pieverse-lane3-plan.json fact_check"
+    },
+    {
+      "claim": "'I had a poll that closed on X, the Kaspa Dollar proposal... what does Kaspa need. The majority of people said both. And the interesting part is 15% says neither, KAS is money... that implies it has to be really, really stable... both; there's still plenty of time to work all this stuff out' (transcript)",
+      "verdict": "the poll itself is verified from the queue: poll-2026-11-15-kaspa-dollar-or-usdt, posted November 16 2026 with a one-day duration, options 'A KAS-backed dollar', 'Just USDT and USDC', 'Both', 'Neither, KAS is money'. The result is Mike's own reading of his own poll on screen: x.com is not reachable from this machine (HTTP 402) and the queue's results field is empty, so the two figures rest on the transcript. They are internally consistent (a majority for 'Both' and 15% for 'Neither'). Copy: 'Most of you said both', 'Around 15% said neither: KAS is money'. OPERATOR NOTE: check the 15% against the live poll before the Kaspa tweet posts; Whisper can blur fifteen and fifty. The proposal recap in the IG caption (minted against locked KAS, priced by the miners, no admin key in the design) is the wording already verified and posted on November 16.",
+      "source": "schedule-tweets/data/x-polls.json and x-tweets.json (November 16 entries); transcript; repurpose/output/peach-lane3-plan.json fact_check (Kaspa Dollar whitepaper)"
+    },
+    {
+      "claim": "'Kaspa has been relatively low for a long, long time. There is going to be a day, mark my word, when there's going to be a god candle with Kaspa, and that's when we're going to get our yachts' and 'a Kaspa yacht, that's when Kaspa goes to like $3 or more' (transcript)",
+      "verdict": "Mike's own prediction, drafted in first person (one-liner, IG caption 2, both Kaspa polls). $KAS at drafting: $0.02668, market cap $742M, rank 80, +3.4% on 24 hours, -0.7% on 7 days, -25.6% on 30 days, 87.1% under its all-time high ($0.2074, July 31 2024); the 7 day range is $0.0244 (November 21) to $0.0284 (November 23). Copy: 'around 2.7 cents', 'around 87% under its all-time high'. '$3 is only around an $83 billion market cap': $742M over $0.02668 is around 27.8 billion KAS in circulation, times $3 is around $83.5 billion (my calc; the same figure ran in the November 4 tweet). Proof of work, the fair launch with no premine and 10 blocks per second are per persona core_theses and earlier ledgers. The old community joke that Kaspa is a stablecoin is not drafted.",
+      "source": "api.coingecko.com coins/markets and coins/kaspa/market_chart days=7 (2026-11-24 04:13 UTC); transcript; persona/persona.json core_theses; schedule-tweets/data/x-tweets.json (November 4 tweet)"
+    },
+    {
+      "claim": "'Elon Musk warns next year's AI compute funding shortage could be very severe... the cash shortage is also going to be nuts next year. Even cumulative industry delays of a few months between paying for compute and getting it reliable enough to generate revenue will mean hundreds of billions of incremental dollars just for working capital. Where will that come from?' (transcript, reading the post)",
+      "verdict": "verified. Musk posted it on X on November 21 2026 in reply to Francois Chollet (the embedded post in the coverage carries that date; some write-ups say November 22). Verbatim: 'Getting this amount of compute turned on, cooled and working reliably is incredibly hard. The cash shortage is also going to be nuts next year. Even cumulative industry delays of a few months between paying for compute and getting it reliable enough to generate revenue will mean hundreds of billions of incremental dollars just for working capital. Where will that come from?' Copy quotes only the fragment 'is also going to be nuts next year' and paraphrases the rest. Musk's post says nothing about AI prices rising (it was Chollet who said GPU spot prices were still rising), so 'AI gets more expensive' is written as Mike's read ('My read:'), never as Musk's claim.",
+      "source": "officechai.com/ai/elon-musk-predicts-cash-shortage-for-ai-buildout-next-year/ (fetched 2026-11-24 UTC); finance.yahoo.com 'Musk Warns AI's Cash Shortage Is Also Going to Be Nuts Next Year'; benzinga.com and cryptobriefing.com/elon-musk-ai-industry-cash-shortage/ (search results)"
+    },
+    {
+      "claim": "'the cost of AI might actually go up next year, so a lot of people are going to move towards the open source models... this means TAO, maybe TAO is going to have its day next year... that huge pump with TAO next year rather than the following year' and 'what's TAO doing right now? 189. Why can't it go back down to like 168' (transcript)",
+      "verdict": "Mike's own thesis, drafted as his read with explicit years ('Maybe its huge pump comes in 2027, not 2028'). 'Open, decentralized alternatives. That's $TAO' rests on persona core_theses ($TAO as the neutral AI layer nobody owns); no Bittensor product, usage or pricing claim is made, so no product telemetry was needed. $TAO at drafting: $190.41, market cap $2.23B, rank 38, -0.7% on 7 days, 74.9% under its $757.60 all-time high; it touched $198 on November 23 and the 7 day low is $167.81 on November 21. No TAO price is printed in this batch: the $167 print and the under $170 buy level already ship in the pending November 23 tweet and polls.",
+      "source": "api.coingecko.com coins/markets and coins/bittensor/market_chart days=7 (2026-11-24 04:13 UTC); persona/persona.json core_theses; schedule-tweets/data/x-tweets.json and x-polls.json (pending TAO entries); transcript"
+    },
+    {
+      "claim": "'AI cracks the Riemann hypothesis in 35 days with a massive proof... 17 million lines of code... this dude was saying it would take humans plus AI until the year 2050, and then 35 days later it gets solved' (transcript, reading a trending headline and a video clip)",
+      "verdict": "CORRECTED and narrowed. Verified: on Friday November 20 2026 Levent Alpoge, a mathematician on Anthropic's technical staff, posted a four-page note saying 'I believe I have, working with Claude, discovered a proof of the Riemann Hypothesis'; the argument is released as around 17 million lines of Lean code; the problem was posed by Bernhard Riemann in 1859 (167 years). His own timeline runs from October 6 to November 16 2026, 41 days, described as around six weeks; '35 days' is the wording of an X trending headline and is NOT printed. Status: outside mathematicians are still working through it (Kevin Buzzard: 'we don't even know why the theorem is true'; some coverage says the Lean and Mathlib communities confirmed that the code checks; no human-readable proof is published; a separate all-human proof was announced the same day and is not mentioned). The '2050' speaker in the clip could not be identified and is not referenced or called out; the general form is sourced to Abhishek Saha (Queen Mary University of London), who said the belief was that a proof would need new theories developed over the next few decades. Copy: 'sat unsolved for 167 years', 'On November 20, a mathematician at Anthropic said he and Claude found a proof in around six weeks', 'around 17 million lines of code, and mathematicians are still working through it', 'A lot of them thought a proof was decades away'. '100 years of discoveries in under five' is Mike's forecast and is written as 'I think'.",
+      "source": "aljazeera.com/news/2026/11/21/riemann-hypothesis-has-the-worlds-most-famous-maths-problem-been-cracked (fetched 2026-11-24 UTC); officechai.com/ai/riemann-hypothesis-in-41-days-levent-alpoges-timeline-shows-how-fast-claude-helped-crack-the-167-year-old-problem/ (fetched); therundown.ai/news/claude-riemann-hypothesis-proof; nature.com/articles/d41586-026-03812-7 and science.org (search results); x.com/i/trending/2124000775961784415 (the '35 days' headline)"
+    },
+    {
+      "claim": "'recursive self-improvement... Claude is already producing a lot of the code for the next Claude... like 75% of all code at Anthropic is produced by AI; 12 months ago it was like 3%' (transcript)",
+      "verdict": "NOT printed. Anthropic's own published figure is that Claude wrote more than 80% of the code merged into its production codebase in May 2026 (reported June 4 2026), with a company-wide range of 70% to 90% given in January 2026; no source supports 3% a year earlier. The AI tweet leans on the Riemann news alone and carries no code percentage.",
+      "source": "thenextweb.com/news/anthropic-claude-recursive-self-improvement-code; fortune.com/2026/01/29 (search results, 2026-11-24 UTC)"
+    },
+    {
+      "claim": "The health run-through from January 2024 (a partial transplant, a new class of antibiotic against superbugs, focused ultrasound with plaque-reducing drugs for Alzheimer's, AI predicting diabetic eye disease), 'longevity escape velocity... we're probably going to achieve that within five years', 'almost everything can be cured' and the 80-year-old with a 20-year-old body line (transcript)",
+      "verdict": "NOT drafted: none of the individual medical items was verified, and the cure and longevity lines are forecasts with no checkable fact behind them. The AI tweet keeps only Mike's general forecast, as his opinion: 'I think we get 100 years of discoveries in under five.'",
+      "source": "transcript; persona/persona.json verified_claims_only"
+    },
+    {
+      "claim": "'Doggie Mode... crazy, 65K... but they're active, one hour ago they're posting, 22nd, 21st, 20th... we're still in the game at a 65K market cap' (transcript, reading the project's X page)",
+      "verdict": "market cap verified: Doggie Mode ($DOGGIE) on the Robinhood chain, contract 0xa9eFe2Fc94dE79734C03051515F48f254Ce61e18, market cap $65,223 with around $59,600 of liquidity and around $980 of 24 hour volume (DexScreener, read 2026-11-24 UTC); the pair lists the X account @DoggieMode. 'The team is still posting every single day' is Mike's own reading of that account on screen on November 23 (posts dated the 20th, 21st, 22nd and one from an hour earlier); x.com is not reachable from this machine, so it rests on the transcript. Copy is an observation, not a buy call: his '$20 lottery ticket' and '20 or 30 million market cap' lines are NOT drafted (trader-portfolio framing). OPERATOR NOTE: the market cap of a coin this small can move a lot in a day; re-check $65K before it posts. Doggie Mode is not in persona project_handles, so there is no Follow line (add @DoggieMode to the map if Mike wants the tag).",
+      "source": "api.dexscreener.com/latest/dex/search?q=doggie%20mode (read 2026-11-24 UTC); transcript; persona/persona.json project_handles"
+    },
+    {
+      "claim": "The other Robinhood chain names he scrolled through: Tendies ('down like two million'), Kitsu ('236K, dead chart'), YOLO, Cash Cat ('about 40 million... probably the best time to buy it'), Index, Pons ('I can't imagine this thing not making a comeback... the best entry you can get, assuming it doesn't die'), 'perps food' at 40K, and 'Orbeo... one of my favorites on Robinhood, not a meme, still above my initial call' (transcript)",
+      "verdict": "NOT drafted. These are passing reads off a screen with buy-or-not framing (persona no_rotation_framing), their figures were not pulled, and two of the names could not be identified with confidence from the audio ('Orbeo' / 'Oreo' / 'Orbea', and 'perps food'). Reference images exist for Tendies, Kitsu, Cash Cat and Pons if Mike wants any of them drafted later.",
+      "source": "transcript; persona/persona.json avoid_in_drafts; schedule-tweets/images/reference (ls 2026-11-24 UTC)"
+    },
+    {
+      "claim": "'Pieverse... still at a billion... a 14x from my call in terms of price... it would have been like a 20x because of the market cap, 65 million to a billion' and 'EVAA... in retracement territory... $2.96 right now, I want to see if it goes down to that dollar territory again before I buy back in' (transcript)",
+      "verdict": "NOT drafted. Both stories shipped from the last three batches (Pieverse tweets posted November 19 and 24, EVAA tweets posted November 23 and 24, plus threads and polls), so a new item would repeat them, and both prices are still moving fast. At drafting $PIEVERSE is $3.30 ($907M on CoinGecko's supply, rank 72, -9.5% on 24 hours, 38% under its November 22 high of $5.33) and $EVAA is $2.23 (-15.8% on 24 hours, -35.8% on 7 days, $14.8M on CoinGecko's supply). The 14x price multiple and the buy-back level are position talk and are not printed.",
+      "source": "api.coingecko.com coins/markets (2026-11-24 04:13 UTC); schedule-tweets/data/x-tweets.json (November 19 to 24 entries); repurpose/output/evaa-pieverse-lane3-plan.json and evaa-reveal-lane3-plan.json fact_check"
+    },
+    {
+      "claim": "'John Williams indicates higher interest rates may be needed over time to bring inflation back to 2%... the high prices have been caused by a supply chain... why strangle businesses, why not just stop the QE' and 'gas passed $5 a gallon in New York back in 2006, before the money supply tripled... it would be like $15 a gallon... because of AI a lot of things are becoming cheaper' and 'ISM PMI... trending sideways in expansionary territory above 50' (transcript)",
+      "verdict": "NOT drafted. The Williams remark and the QE argument were not verified and Fed content has no X poll path; the 2006 date for $5 gasoline in New York was not checked (the national price spike came in 2008) and the $15 figure is a rough multiplication, so neither is printed. The ISM tenth-month line and the AI productivity argument already shipped (November 15 and 16 tweets, evaa-reveal quiz).",
+      "source": "transcript; repurpose/output/evaa-reveal-lane3-plan.json fact_check (ISM October 2026: 55.5, tenth month above 50)"
+    },
+    {
+      "claim": "'Democrats plan to unwind Trump's tariffs and tax cuts... I'm going to veto them', the 10% cap on credit card interest ('a bad idea... government interference never works out well'), the New York City delivery bill and Amazon's $5 fee, and the remarks about how the Iran war was decided (transcript)",
+      "verdict": "NOT drafted: political and personal tangents (persona avoid_in_drafts). Surfaced here as material Mike can post himself; the premises were not researched.",
+      "source": "transcript; persona/persona.json avoid_in_drafts"
+    },
+    {
+      "claim": "'somebody said Solana is probably going to pump before TAO... the DTCC and Zelle', the GTA 6 and Avengers meme coins ('there's no volume, nobody's around to buy'), the unnamed new call ('three or four weeks old... those insiders are holding'), the VC-backed insider plays line, the viewer count remarks and the link-in-the-description pitch (transcript)",
+      "verdict": "NOT drafted. Solana, Zelle and the DTCC shipped on November 19 (tweet and polls); the meme coin remarks name nothing that could be checked; the new call is not named on stream and is a members' item; the rest is membership pitch and stream housekeeping.",
+      "source": "transcript; schedule-tweets/data/x-tweets.json and x-polls.json (November 19 and 20 entries)"
+    },
+    {
+      "claim": "Whisper mishears audited: 'Jensen Long' / 'Jensen Wong' = Jensen Huang; 'CAS' / 'Cass' / 'Dreamcast' = Kaspa ($KAS); 'towel' / 'town' / 'TOW' / 'top' = TAO (Bittensor); 'Pyverse' / 'PiVerse' / 'Papyrus' / 'high verse' = Pieverse; 'Eva' / 'Ava' / 'Aviva' = EVAA; 'Reimann' / 'reman' / 'Freeman' = Riemann; 'cloud' = Claude; 'in that topic' = at Anthropic; 'straight of the moves' / 'trade-off of moons' = Strait of Hormuz; 'ISMPMI' = ISM PMI; 'Zell' / 'Woodzell' = Zelle; 'my Donnie' = Mamdani; 'Robberhood' / 'Robert Hallows' = Robinhood (chain and wallets); 'doggy mode' = Doggie Mode; 'ponds' = Pons; 'L bank' = LBank; 'class of AI' = cost of AI; 'Eucrystal folks' = you crypto folks; 'new all-time iron pie verse' = new all-time high on Pieverse. No 'Zcash' appears in this transcript, so there is no zKAS question to raise.",
+      "verdict": "corrected everywhere in copy. Weighting: Kaspa first (one multi-line tweet and one one-liner, both with IG companions, one YT poll and one X poll), then TAO (one multi-line tweet, one YT poll and one X poll); Toncoin came up only through EVAA (not drafted), Housecoin and Pengu were not discussed; the rest follows the stream: one Bitcoin and Nvidia tweet, one Doggie Mode one-liner, one AI tweet as the non-project item, and the one thread on Bitcoin and the midterm lows. Five of the six X tweets name a coin.",
+      "source": "transcript; persona/persona.json terminology_rules and ticker_corrections"
+    },
+    {
+      "claim": "Image references",
+      "verdict": "ls of schedule-tweets/images/reference/ done live at drafting. kaspa-logo.png is cited on both Kaspa X images and their IG 4:5 companions, bittensor-tao.png on the TAO image and doggie-mode.jpg (the glossy white balloon-style dog; the file also carries ticker lettering, which the prompt tells the model not to reproduce) on the Doggie Mode image. Nvidia and Bitcoin are well-known brands: both are named in the prompt with their real logos and need no reference. The AI image is entity-free on purpose (a generic robot, no Anthropic or Claude mark). The two no-reference images are listed first so they run before the reference-attached items. No carousel exists in this batch, so no carousel exemplar is cited.",
+      "source": "schedule-tweets/images/reference (ls 2026-11-24 UTC); repurpose/SKILL.md; persona/persona.json image_generation"
+    }
+  ],
+  "carousel_versions": {},
+  "missing_references": [],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "5e271f0d",
+      "slug": "nvidia-rockets-bitcoin-lands-back",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A launch pad at night under a sky full of stars. On the left, an Nvidia character: a chunky green and black graphics chip mascot with arms and legs, whose chest shows the official Nvidia logo (the green eye-shaped swirl mark), blasts straight up into the sky on a column of bright green flame with a huge triumphant grin. On the right, a Bitcoin coin character with arms and legs, an orange coin whose face shows the official Bitcoin logo (the white tilted B with two vertical strokes on an orange circle), has just bounced off a small round trampoline and is already dropping back down onto the exact same spot, arms crossed, with an annoyed, defiant glare as it watches the Nvidia character fly away. Deep navy near-black background. Dramatic cinematic lighting. Bright green rim light from the rocket flame on the Nvidia character and a warm orange rim light on the Bitcoin coin. Defiant and frustrated: one of them took off and the other landed right back where it started. No text or words anywhere in the image other than the Nvidia logo and the Bitcoin logo."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "7168ff9f",
+      "slug": "ai-opens-the-167-year-vault",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. Deep inside a dark stone hall, a colossal ancient vault door wrapped in broken rusted chains and thick cobwebs has just swung open, and warm golden light pours out of it across the floor. In the doorway stands a small friendly robot with a rounded white body and a softly glowing blue core in its chest, holding up one glowing golden key and looking back over its shoulder with a calm, proud smile. Behind it, three elderly Pixar-style professors in tweed jackets and round glasses stare with wide eyes and dropped jaws, one of them letting a stack of blank loose papers slide out of his hands. The papers, the walls, the door and the robot are completely blank: no equations, no numbers, no symbols, no letters, no logos and no markings of any kind. Deep navy near-black background. Dramatic cinematic lighting. Warm gold light from the open vault and a cool blue rim light from the robot's core. Awe and triumph: the door nobody could open for generations is open. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "5fff3a9b",
+      "slug": "tao-lights-on-when-the-cash-runs-short",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A wide valley at night. On the left, one enormous dark corporate data center tower looms over the valley with most of its windows gone dark and a giant fuel gauge on its side sitting on empty; the gauge is a plain dial with a needle and no numbers or letters. On the right, on a hilltop in the foreground, a TAO coin character with arms and legs, a clean white coin whose face shows the dark tau-shaped TAO emblem exactly as shown in the attached reference image, stands calm and confident holding up a bright lantern. Behind it, thousands of small warm lights are spread across the hills and connected to each other by thin glowing lines, like a living network that needs no tower. Deep navy near-black background. Dramatic cinematic lighting. Cool white rim light on the TAO coin and a soft violet glow from the network of lights. Calm and hungry: the big tower is running short and the open network is all lit up. Use the attached reference only as the source for the emblem; do not reproduce the reference image itself. The coin carries no other symbol or lettering, and the tower carries no signs, no logos and no lettering. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\bittensor-tao.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "149e59f1",
+      "slug": "doggie-mode-still-in-the-game",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A frozen, snowed-in little town at night in the middle of a blizzard, every window dark and every street empty. In the centre, standing on a wooden crate under the single street lamp that is still lit, is the glossy white balloon-style dog exactly as shown in the attached reference image (a smooth white body, two tall rounded ears, a big round nose, small simple eyes, a thin curved smile and a short stubby tail), holding a megaphone up in one front paw and calling out into the storm with a cheerful, defiant grin. Small warm sparks of light drift out of the megaphone into the falling snow. Keep the dog faithful to the reference: same proportions, same smooth white surface, same simple face. Use the reference only for the dog character; do NOT reproduce the lettering or ticker text that appears beside it in the reference. Deep navy near-black background. Dramatic cinematic lighting. Warm amber light from the street lamp and a cold blue rim light from the snow. Defiant and cheerful: the whole town went quiet and this one is still out here. The crate, the megaphone, the lamp and the buildings carry no signs, no logos and no lettering. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\doggie-mode.jpg"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "a5403598",
+      "slug": "kaspa-poll-says-both",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A grand dark hall at night with two tall open doorways side by side. Warm gold light pours out of the left doorway and soft white light pours out of the right one, and a stream of gold coins rolls out of each doorway across the floor. In the centre, between the two streams, stands a Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, with both arms stretched out wide to welcome both streams at once and a calm, confident grin. Every gold coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind, and the doorways and walls carry no signs. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin, warm gold light from the left doorway and soft white light from the right. Calm and confident: it does not have to pick one door, it takes both. Use the attached reference only as the source for the Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "a5403598",
+      "slug": "kaspa-poll-says-both",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A grand dark hall at night with two tall open doorways side by side. Warm gold light pours out of the left doorway and soft white light pours out of the right one, and a stream of gold coins rolls out of each doorway across the floor. In the centre, between the two streams, stands a Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, with both arms stretched out wide to welcome both streams at once and a calm, confident grin. Every gold coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind, and the doorways and walls carry no signs. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin, warm gold light from the left doorway and soft white light from the right. Calm and confident: it does not have to pick one door, it takes both. Use the attached reference only as the source for the Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "6132edeb",
+      "slug": "kaspa-god-candle-yacht",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A calm dark ocean at night. Far out on the horizon, one colossal pillar of greenish cyan light shaped like a single tall rectangular candle bar rises out of the water and shoots straight up through the clouds, lighting the whole sky. In the foreground, a sleek white luxury yacht cuts toward it, and on the bow stands a Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, with both fists raised to the sky and a huge triumphant grin. The pillar of light is a plain glowing bar: no chart axes, no grid, no numbers and no labels, and the yacht carries no name, no flag markings and no lettering. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light from the pillar on the Kaspa coin and on the yacht, with bright reflections across the water. Triumphant: the day the candle finally prints. Use the attached reference only as the source for the Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "6132edeb",
+      "slug": "kaspa-god-candle-yacht",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A calm dark ocean at night. Far out on the horizon, one colossal pillar of greenish cyan light shaped like a single tall rectangular candle bar rises out of the water and shoots straight up through the clouds, lighting the whole sky. In the foreground, a sleek white luxury yacht cuts toward it, and on the bow stands a Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, with both fists raised to the sky and a huge triumphant grin. The pillar of light is a plain glowing bar: no chart axes, no grid, no numbers and no labels, and the yacht carries no name, no flag markings and no lettering. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light from the pillar on the Kaspa coin and on the yacht, with bright reflections across the water. Triumphant: the day the candle finally prints. Use the attached reference only as the source for the Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "Nvidia closed up 31% on November 23, and Bitcoin couldn't hold a 5% pump. $NVDA $BTC\n\nThe board brought Jensen Huang back as CEO. The S&P 500 and the Nasdaq both had their best day since April 2025.\n\nBitcoin jumped from around $61,000 to $64,500 that morning and gave every dollar back by the afternoon. It closed the day flat.\n\nWhen a day like that can't lift it, I'm open to one more leg down. If we get it, that's more deals.\n\n#bitcoin #btc #nvidia",
+      "hook": "Nvidia closed up 31% on November 23, and Bitcoin couldn't hold a 5% pump. $NVDA $BTC",
+      "image_id": "5e271f0d",
+      "notes": "Bitcoin and Nvidia, the stream's headline topic. Mike's on-stream read that stocks closed red or flat is CORRECTED to the real closes (see fact_check): only Bitcoin gave the move back. No personal detail about the resignation. No handle, no IG. Nvidia and Bitcoin are well-known brands: named in the prompt with their real logos, no reference."
+    },
+    {
+      "tweet": "My Kaspa Dollar poll closed. I asked what Kaspa needs: its own KAS-backed dollar, USDT and USDC, both, or neither.\n\nMost of you said both. Around 15% said neither: KAS is money.\n\nThat's a high bar. For KAS to be the money, it has to be really, really stable. I'm with the majority: both. $KAS is around 2.7 cents, so there's plenty of time to work it all out before the crowd comes back.\n\n#kaspa #kas #stablecoins",
+      "hook": "My Kaspa Dollar poll closed. I asked what Kaspa needs: its own KAS-backed dollar, USDT and USDC, both, or neither.",
+      "image_id": "a5403598",
+      "notes": "Kaspa subject; IG companion shares the image. No Follow line (Kaspa). Moves his own story forward: the November 16 poll, now with its result. The two result figures are Mike's on-screen reading of his own poll (X is not reachable from this machine): check the 15% against the live poll before posting. Price is the drafting value (CoinGecko, $0.0267)."
+    },
+    {
+      "tweet": "Elon Musk, November 21: the cash shortage for AI \"is also going to be nuts next year.\"\n\nHis point: even a few months of delay between paying for compute and getting it to generate revenue means hundreds of billions of extra dollars just for working capital. Where does that come from?\n\nMy read: AI gets more expensive, and people start looking at open, decentralized alternatives. That's $TAO. Maybe its huge pump comes in 2027, not 2028.\n\n#bittensor #tao #AI",
+      "hook": "Elon Musk, November 21: the cash shortage for AI \"is also going to be nuts next year.\"",
+      "image_id": "5fff3a9b",
+      "notes": "TAO subject; project_handles tao = null, so no Follow line; no IG. The quoted fragment is verbatim from Musk's post; 'AI gets more expensive' is Mike's read, never attributed to Musk. No TAO price printed (the $167 story is already pending). Image cites bittensor-tao.png."
+    },
+    {
+      "tweet": "The Riemann hypothesis sat unsolved for 167 years. On November 20, a mathematician at Anthropic said he and Claude found a proof in around six weeks.\n\nIt's around 17 million lines of code, and mathematicians are still working through it. A lot of them thought a proof was decades away.\n\nI think we get 100 years of discoveries in under five. A lot of people are going to get caught off-guard and find themselves without a paycheck. That's why I'm here buying assets.\n\n#AI #crypto #investing",
+      "hook": "The Riemann hypothesis sat unsolved for 167 years.",
+      "image_id": "7168ff9f",
+      "notes": "Non-project item (AI and assets). The stream's '35 days' is a trending headline and is replaced by the documented timeline (around six weeks); the proof is reported as claimed and still being worked through, never as settled. The unnamed '2050' speaker from the clip is not referenced. No handle, no IG. Image is entity-free."
+    },
+    {
+      "tweet": "Doggie Mode on the Robinhood chain is sitting at a $65K market cap in the middle of a crypto winter, and the team is still posting every single day... that's what still in the game looks like. $DOGGIE 🐶\n\n#robinhood #memecoins",
+      "hook": "Doggie Mode on the Robinhood chain is sitting at a $65K market cap in the middle of a crypto winter, and the team is still posting every single day...",
+      "image_id": "149e59f1",
+      "notes": "Single-line image-first. Doggie Mode subject: market cap verified on DexScreener ($65,223 at drafting); the posting activity is Mike's on-screen read from the stream. An observation, not a buy call. RE-CHECK the market cap before posting. Doggie Mode is not in persona project_handles, so no Follow line (add @DoggieMode to the map if Mike wants the tag). No IG. Image cites doggie-mode.jpg. Trailing ellipsis is the persona signature device."
+    },
+    {
+      "tweet": "Kaspa has been sitting near the lows for a long, long time. Mark my word: there's going to be a day it prints a god candle... and that's when we get our yachts. $KAS 🚀\n\n#kaspa #kas",
+      "hook": "Kaspa has been sitting near the lows for a long, long time.",
+      "image_id": "6132edeb",
+      "notes": "Single-line image-first. Kaspa subject; IG companion shares the image. No Follow line (Kaspa). Engagement note: correction-bait technique #5 (provocative prediction): THE deliberate 1-in-10 bait item for this batch. It cannot be wrong yet and it pulls both defenders and skeptics; no manufactured error."
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-11-23-bitcoin-midterm-lows-and-one-more-leg-down",
+      "topic": "Bitcoin's November 21 low against November 21 2022 (the same 28% drop in 15 days, both right after the midterms): what the year after the midterms has looked like for Bitcoin and for stocks, the stack of bad news, the Nvidia day that Bitcoin could not hold, the Strait of Hormuz, and why Mike is open to a lower low and buying anyway (written from the transcript; no YT post this batch per the brief)",
+      "variation_label": "A (historical parallel hook, the pattern, the pre-Bitcoin proof, the stack of bad news, the Nvidia day, the one open question, what he does)",
+      "tweets": [
+        {
+          "text": "Bitcoin's last bear market bottom: November 21, 2022, after a 28% drop in 15 days. Right after the midterms.\n\nThis year's low so far: November 21, 2026, after a 28% drop in 15 days. Right after the midterms.\n\nHere's what I make of it:",
+          "hook": "Bitcoin's last bear market bottom: November 21, 2022, after a 28% drop in 15 days. Right after the midterms."
+        },
+        {
+          "text": "I think the matching date is a coincidence. The midterms aren't.\n\n2018: Bitcoin bottomed on December 15, 39 days after the midterms.\n2022: it bottomed 13 days after them.\n\nOne year after each of those lows, $BTC had more than doubled."
+        },
+        {
+          "text": "And it isn't just Bitcoin.\n\nThe S&P 500 has been higher one year after every single midterm election since 1950.\n\nThe four-year cycle zombies will call it the halving. Stocks were doing this decades before Bitcoin existed."
+        },
+        {
+          "text": "So why am I still open to a lower low?\n\nThe bad news keeps stacking. The biggest heist in crypto history at Binance on October 29. The midterms. Nvidia losing its CEO for more than a week.\n\nNone of those is a black swan by itself. Together they hit like one."
+        },
+        {
+          "text": "Then on November 23 Nvidia brought Jensen Huang back. $NVDA closed up 31% and stocks had their best day since April 2025.\n\nBitcoin jumped to $64,500 that morning and gave all of it back by the afternoon.\n\nGood news isn't sticking to crypto yet."
+        },
+        {
+          "text": "The single biggest thing I'm watching is the Strait of Hormuz.\n\nIf that gets resolved, the market starts pricing in that things get better within six months. We go up fast, then retrace to a higher low.\n\nUntil then, we can chop sideways down here for a while."
+        },
+        {
+          "text": "So I don't bet on a date. A new bottom could come next week or two months from now. Nobody knows.\n\nWhat I know is how the year after the midterms has gone. If we go lower first, that's more deals, and I'm buying assets down here either way."
+        },
+        {
+          "text": "If this changed how you look at this drop...\n\nFollow me for Bitcoin, Kaspa and macro takes that ignore the four-year cycle echo chamber.\n\n🧠 + 😎"
+        }
+      ]
+    }
+  ],
+  "x_polls": [
+    {
+      "id": "poll-2026-11-23-what-sets-off-the-kaspa-god-candle",
+      "topic": "Kaspa god candle: what sets it off (a tier one listing, Bitcoin turning, the next upgrade, or stablecoins on the L1)",
+      "eligible_topic": "kaspa",
+      "tweet_text": "Kaspa has been sitting near the lows for a long, long time.\n\nMark my word: there's going to be a day when $KAS prints a god candle.\n\nWhat sets it off?",
+      "hook": "Kaspa has been sitting near the lows for a long, long time.",
+      "options": [
+        "A tier one listing",
+        "Bitcoin turning around",
+        "The next big upgrade",
+        "Stablecoins on the L1"
+      ],
+      "duration": "1d"
+    },
+    {
+      "id": "poll-2026-11-23-when-does-tao-get-its-huge-pump",
+      "topic": "TAO: does the AI cash shortage Musk warned about pull its big run into 2027",
+      "eligible_topic": "tao",
+      "tweet_text": "Elon Musk says the cash shortage for AI \"is also going to be nuts next year.\"\n\nMy read: AI gets more expensive, and people start looking at open, decentralized alternatives.\n\nWhen does $TAO get its huge pump?",
+      "hook": "Elon Musk says the cash shortage for AI \"is also going to be nuts next year.\"",
+      "options": [
+        "2027",
+        "2028 or later",
+        "Never, Big Tech wins"
+      ],
+      "duration": "1d"
+    }
+  ],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-11-23-what-sets-off-the-kaspa-god-candle",
+      "topic": "Kaspa god candle: what sets it off (a tier one listing, Bitcoin turning, the next upgrade, or stablecoins on the L1)",
+      "source_post": null,
+      "question_text": "Kaspa has been sitting near the lows for a long, long time. $KAS is around 2.7 cents, around 87% under its all-time high.\n\nMark my word: there's going to be a day when Kaspa prints a god candle, and that's when we get our yachts.\n\nWhat sets it off?",
+      "hook": "Kaspa has been sitting near the lows for a long, long time.",
+      "options": [
+        "A Binance or Coinbase spot listing",
+        "Bitcoin turning around and the whole market running",
+        "The next big Kaspa upgrade going live",
+        "Stablecoins and real DeFi volume on the Kaspa L1"
+      ]
+    },
+    {
+      "id": "yt-text-poll-2026-11-23-when-does-tao-get-its-huge-pump",
+      "topic": "TAO: does the AI cash shortage Musk warned about pull its big run into 2027",
+      "source_post": null,
+      "question_text": "Elon Musk said on November 21 that the cash shortage for AI \"is also going to be nuts next year\": even a few months of delay between paying for compute and getting it to generate revenue means hundreds of billions of extra dollars just for working capital.\n\nMy read: AI gets more expensive, and people start looking at open, decentralized alternatives. That could pull TAO's huge pump into 2027 instead of 2028.\n\nWhen does $TAO get its huge pump?",
+      "hook": "Elon Musk said on November 21 that the cash shortage for AI \"is also going to be nuts next year\"",
+      "options": [
+        "2027: the cash squeeze sends people to decentralized AI",
+        "2028 or later: the whole market has to run first",
+        "Never: Big Tech finds the money and keeps the lead"
+      ]
+    }
+  ],
+  "yt_posts": [],
+  "ig_single": [
+    {
+      "id": "ig-2026-11-23-kaspa-poll-says-both",
+      "kaspa_subject": true,
+      "image_id": "a5403598",
+      "aspect_ratio": "4:5",
+      "hook": "My Kaspa Dollar poll closed. I asked what Kaspa needs: its own KAS-backed dollar, USDT and USDC, both, or neither.",
+      "caption": "My Kaspa Dollar poll closed. I asked what Kaspa needs: its own KAS-backed dollar, USDT and USDC, both, or neither.\n\nMost of you said both. Around 15% said neither: KAS is money.\n\nQuick recap of the proposal: a stablecoin minted against locked KAS, priced by the miners, with no admin key in the design. My first reaction was to ask why we don't just bring USDT and USDC over.\n\nOn the 15%: that's a high bar. For KAS to be the money, it has to be really, really stable.\n\nSo I'm with the majority: both. $KAS is around 2.7 cents, around 87% under its all-time high, and nobody's around. That means there's plenty of time to work all of this out before the crowd comes back.\n\nWhich camp are you in?",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#stablecoins",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "My Kaspa Dollar poll closed. I asked what Kaspa needs: its own KAS-backed dollar, USDT and USDC, both, or neither."
+    },
+    {
+      "id": "ig-2026-11-23-kaspa-god-candle-yacht",
+      "kaspa_subject": true,
+      "image_id": "6132edeb",
+      "aspect_ratio": "4:5",
+      "hook": "Kaspa has been sitting near the lows for a long, long time.",
+      "caption": "Kaspa has been sitting near the lows for a long, long time. Mark my word: there's going to be a day it prints a god candle... and that's when we get our yachts.\n\n$KAS is around 2.7 cents, around 87% under its all-time high. Same proof of work, same fair launch with no premine, same 10 blocks per second.\n\nMy yacht number is $3 or more. A $3 Kaspa is only around an $83 billion market cap.\n\nNobody knows the day. I just want to be holding when it prints.\n\nWhat do you think sets it off?",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#krc20",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Kaspa has been sitting near the lows for a long, long time."
+    }
+  ]
+}

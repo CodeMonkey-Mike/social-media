@@ -1,0 +1,619 @@
+{
+  "batch": "evaa-reveal",
+  "date": "2026-11-22",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/evaa-reveal LOW BPS VERTICAL/evaa-reveal LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-11-22",
+  "brief": "Limit threads to exactly 1 thread. Create 3 quiz questions (YT quizzes).",
+  "brief_reading": "Read as: exactly 1 X thread (the default is 2), built from YT post 1 (Kaspa, per the Kaspa-first weighting); every other format at its default: 4 multi-line X tweets, 2 one-liners, IG companions for the 2 Kaspa tweets, 2 YT polls, X polls for the eligible ones (kaspa, toncoin), 2 YT posts with carousels. 3 YT quizzes under yt_quizzes: three quizzes for this batch were already pending in yt-quizzes.json when this plan was drafted, so the plan carries those same three ids with fact-checked text instead of three more (3 total, no doubling). See the fact_check entry on the quizzes.",
+  "fact_check": [
+    {
+      "claim": "Recording date versus batch date",
+      "verdict": "the batch is dated 2026-11-22 but the recording file evaa-reveal.mkv was written on 2026-11-19 at 18:50 Eastern, so the stream is from the evening of November 19 and every market number in it is three days old at drafting. Copy uses dates ('On November 19 I revealed...') and never a day-relative word.",
+      "source": "video-creation/livestream-repurpose/media/evaa-reveal/evaa-reveal.mkv (file time); batches.json"
+    },
+    {
+      "claim": "'this is a 95 million right now... almost like a 30x at this point... my lowest entry was a four million market cap... you might have caught it at a 2.9 million' (transcript, on EVAA)",
+      "verdict": "PARTLY verified, and the multiple is NOT printed. At stream time (Nov 19 to 20) $EVAA traded around $5.20; CoinMarketCap's self-reported circulating supply (17.85M) makes that around $95M, while CoinGecko's circulating supply (6.62M) makes it around $34M. The low market caps are CoinGecko-basis figures: $2.7M to $4.0M on many days in March, April, June and October 2026 (price $0.41 to $0.60; all-time low $0.2818 on June 5 2026). So '30x' is $95M on one supply figure over $2.9M to $4M on the other. On price it was around 9x to 12x at stream time. Copy prints dated prices only: 51 cents on October 27 2026 (CoinGecko daily $0.5101) to above $6.60 on November 21 (CoinGecko hourly high $6.62 at 09:00 UTC) = 12.97x, written 'around 13x in under four weeks' (25 days, my calc). 'My lowest entry was near a $4 million market cap' and 'days it traded under $3 million' are Mike's own entries and match the CoinGecko series. OPERATOR NOTE: ask Mike which multiple he wants on record before a '30x' goes into any copy.",
+      "source": "api.coingecko.com coins/evaa-protocol, market_chart days=7 (hourly) and days=365 (daily), read 2026-11-22 15:36 to 15:40 UTC; coinmarketcap.com/currencies/evaa-protocol (fetched 2026-11-22)"
+    },
+    {
+      "claim": "EVAA after the stream (coin-research event window rule: a move of more than 30% in 24 hours)",
+      "verdict": "MATERIAL CHANGE since the stream. $EVAA climbed from $5.20 at stream time to a high of $6.62 on November 21, then fell from $6.44 at 00:00 UTC on November 22 to $3.09 by 08:00 UTC, bounced to $4.10 at 13:00 UTC and was $2.57 at 15:36 UTC: -57.4% in 24 hours (CoinGecko), -57.7% (CoinMarketCap), around 61% under the November 21 high, and still falling at drafting. Market cap at drafting: $17.1M (CoinGecko) or $46.2M (CoinMarketCap); FDV $129.5M on 50M total supply. It is still around 5x the October 27 price and +396% on 30 days. No dated primary source names a cause for the run or the drop, and the project's own Telegram channels posted nothing about the token or its price through November 20 (longform dossier). Every EVAA item is therefore written to this reality: the run AND the drop, as dated facts, with Mike's own on-stream lines ('I already took some profits on the way up', 'it could just come back down like right now... then I'm just going to buy back in'). Nothing says EVAA is ripping. OPERATOR NOTE: re-check the EVAA tweet, YT post 2, its five slides, both EVAA polls and quiz 1 against the live price before they post.",
+      "source": "api.coingecko.com coins/evaa-protocol market_chart days=7, read 2026-11-22 15:36 UTC; coinmarketcap.com/currencies/evaa-protocol; kraken.com/prices/evaa-protocol and coinglass.com/currencies/EVAA (search results, 2026-11-22); video-creation/longform-presentation/media/standard/evaa/RESEARCH.md (the longform coin dossier, compiled 2026-11-20)"
+    },
+    {
+      "claim": "'Eva protocol. It is a ton token... a liquidity protocol integrated with Telegram designed to make yield, payments and borrowing simple... a DeFi super-layer on Telegram... via the telegram mini app or web app... insider tokens, lots of VCs... I traded on BNB because it's bridged on BNB' (transcript)",
+      "verdict": "verified, product checked on its own pages (coin-research row 8). The project site and DefiLlama both describe EVAA as 'the first decentralized lending protocol on TON'; CoinMarketCap: a liquidity protocol integrated with Telegram, used through a Telegram Mini App or web app to earn yield, pay and borrow. Token contracts on TON and BNB Chain (CoinGecko platforms). Backers: TON Ventures, Animoca Brands, Polymorphic Capital, CMT Digital, Mythos Ventures, WAGMI Ventures (private token sale of $2.5M, January 2025; seed led by TONcoin.fund). TGE October 3 2025; all-time high $13.62 on October 26 2025. Live usage: TVL $6.48M with $3.28M borrowed (DefiLlama, read 2026-11-22), down from a peak of $84.3M on January 31 2025; the home page returned only its tagline to a plain fetch (app shell), so no user, wallet or volume count was read. Checked: evaa.finance (tagline only), token.evaa.finance (search result), api.llama.fi/protocol/evaa-protocol (200), /protocol/evaa and /protocol/evaa-finance (not found). The longform dossier ran the full telemetry sweep two days earlier: every standard path on the site returns the app shell, the project API exposes supply and price but no user, revenue or live TVL endpoint, and the home page's own counters ('300K+ unique wallets', '1.4B+ transaction volume', '118M+ total deposit at the peak') are hard-coded, undated project claims. Copy states what it is and who backs it and prints NO usage, TVL or customer claim.",
+      "source": "evaa.finance (fetched 2026-11-22); api.llama.fi/protocol/evaa-protocol (2026-11-22); coinmarketcap.com/currencies/evaa-protocol About; api.coingecko.com coins/evaa-protocol; video-creation/longform-presentation/media/standard/evaa/RESEARCH.md (the longform coin dossier, compiled 2026-11-20)"
+    },
+    {
+      "claim": "EVAA supply and unlocks (coin-research rows 3 and 12)",
+      "verdict": "conflict recorded, nothing printed. Total and max supply 50M. Circulating: 6,617,972 (CoinGecko), 17,854,338 self-reported (CoinMarketCap), around 19.05M (DYOR), and Phemex's unlock panel shows around 29.7M unlocked. CoinMarketCap's self-reported panel lists around 535,000 EVAA unlocking on November 27 2026. The 17.85M figure is fed by the project's own API, and 49.05M is minted on-chain (19.05M on TON, 30M on BNB Chain) per the longform dossier. This is why the two trackers show market caps 2.7x apart and why no market cap figure for EVAA appears in copy (only Mike's own entry level).",
+      "source": "coinmarketcap.com/currencies/evaa-protocol; api.coingecko.com; phemex.com/academy/evaa-protocol-evaa-lending-ton; dyor.io token page; coinlaunch.space vesting page (search, 2026-11-22); video-creation/longform-presentation/media/standard/evaa/RESEARCH.md (the longform coin dossier, compiled 2026-11-20)"
+    },
+    {
+      "claim": "'it is my expectation that this is going to go over a billion... if this goes to a 300 million market cap it's a hundred x... three billion, that's a thousand x... I can't imagine in the long run less than a 200x, that's why I put it in the thumbnail' (transcript)",
+      "verdict": "Mike's own forward view. Only the first line is drafted, attributed to the stream and placed after the drop is stated: 'long term I expect this one over a $1 billion market cap' (YT post 2 only). The 100x, 200x, 300x and 1000x arithmetic depends on the mixed market cap basis above and is NOT drafted.",
+      "source": "transcript"
+    },
+    {
+      "claim": "'they're in a short squeeze right now... market makers keep pushing up the price' (transcript)",
+      "verdict": "NOT drafted. Secondary coverage ties the November 16 jump (+82%) to a 155% rise in open interest, and CoinGlass reads the November 22 drop as new shorts; no venue-level open interest or funding series was pulled (Binance futures is not reachable from this machine per coin-research), so no derivatives claim appears anywhere. For the record, the longform dossier's Gate read is consistent with Mike's line (the long/short account ratio fell from 1.04 on November 13 to around 0.33 to 0.36 by November 18 to 20, and open interest on three reachable venues, around $45.8M, was larger than the CoinGecko market cap on November 20), but it is venue-specific and names no cause.",
+      "source": "bingx.com/en/news/post/why-is-evaa-protocol-evaa-up-today-november-open-interest-surge-fuels-speculative-rally; coinglass.com/currencies/EVAA (search results, 2026-11-22); video-creation/skills/coin-research/coin-research.md; video-creation/longform-presentation/media/standard/evaa/RESEARCH.md (the longform coin dossier, compiled 2026-11-20)"
+    },
+    {
+      "claim": "'Lab went to 7 billion... my prediction of only a 20x was blown out of the water, we did a 353x in a bear market... lab bottomed in December, we caught the bottom' (transcript)",
+      "verdict": "verified as history: 353x is Mike's community result on record in persona.json; CoinGecko daily data shows LAB's market cap peaking at $7.98B on May 31 2026 (all-time high $27.48 on June 2 2026), and a December 2025 price near 9 to 11 cents is consistent with a 353x. Copy: 'I expected a 20x and it did 353x, past a $7 billion market cap' (YT post 2, slide 4, quiz 3). Context not printed: $LAB is $0.033 at drafting, an all-time low on November 20 2026.",
+      "source": "persona/persona.json; api.coingecko.com coins/lab market_chart days=365 and coins/markets (2026-11-22)"
+    },
+    {
+      "claim": "'something similar happened with Velvet, but only did a 58X... it was a month after Lab... it didn't go into the billions' (transcript)",
+      "verdict": "PARTLY verified, multiple NOT printed. Velvet's all-time high was $2.08 on June 29 2026, four weeks after LAB's, with a peak market cap of $792M (CoinGecko daily), so 'ran a month later and topped out under $1 billion' holds. A 58x cannot be reproduced from price data (all-time low $0.0413 to $2.08 is around 50x) and earlier streams said 68x and 130x.",
+      "source": "api.coingecko.com coins/velvet market_chart days=365 and coins/markets (2026-11-22); repurpose/output/ripping-lane3-plan.json fact_check"
+    },
+    {
+      "claim": "viewer: 'anticipate tier one listings 2027'; Mike: 'the tier ones don't want to list until the market is flying... it is within their best interest to suppress Kaspa's price until the time is right... in quarter one, quarter two of 2025 I was thinking Kaspa was not going to be listed on Coinbase or Binance for a long time... they start attacking me' (transcript)",
+      "verdict": "verified where it is a fact: CoinGecko's 46 KAS spot markets include no Binance, Coinbase, OKX or Upbit market; Binance carries a KASUSDT futures contract only. So 'no spot listing on Binance or Coinbase' and 'it's late 2026 and neither one has listed it' hold, and Mike's 2025 call is drafted as vindicated. 'No premine means nobody paid for a listing' is the persona core thesis (fair launch, no premine, no presale, no insider allocation). The 'suppress the price' line is an unprovable motive and is NOT drafted; copy says 'they list what brings them volume, when the market is flying' as Mike's read. Robinhood was not checked and appears only as a YT poll option.",
+      "source": "api.coingecko.com coins/kaspa/tickers pages 1 and 2 (2026-11-22 15:45 UTC); dropstab.com/coins/kaspa/exchanges; cryptoticker.io/en/buy-kaspa-kas-euro/ (Oct 27 2026); persona/persona.json core_theses"
+    },
+    {
+      "claim": "'Kaspa's biggest exchange from this point of view is HTX... HTX highest 1.1 million... Pionex only 200,000' and the viewer's 'HTX listing around Christmas' (transcript)",
+      "verdict": "NOT reproduced, not printed. At drafting the largest KAS spot venues by 24h volume are Kraken (11.0%), Bybit (9.1%), CoinW (8.3%), Gate (8.2%), MEXC (7.2%); HTX is eighth at 4.9% ($269K) and KuCoin ninth. The viewer corrected himself on stream (KAS was already on HTX). Copy lists venues without ranking them: 'Kraken, Bybit, Gate, MEXC, KuCoin and HTX'.",
+      "source": "api.coingecko.com coins/kaspa/tickers (2026-11-22 15:45 UTC)"
+    },
+    {
+      "claim": "Kaspa price and rank",
+      "verdict": "updated to drafting values: $KAS $0.02559, market cap $712M, rank 82, -6.1% on 7 days, 87.7% under its all-time high ($0.2074, July 31 2024). Copy: 'around 2.6 cents', 'top 100', 'around 88% under its all-time high' (IG caption 2 only).",
+      "source": "api.coingecko.com coins/markets (2026-11-22 15:35 UTC)"
+    },
+    {
+      "claim": "'there was no cycle top... these people think the local top in October was a cycle top' (transcript)",
+      "verdict": "NOT drafted. Bitcoin's all-time high is still $126,080 on October 6 2025 and it trades 51.8% under it, so 'no cycle top' is unresolved and would read as a contestable claim. The four-year cycle reference survives only as the dated moment of the listing call ('back when I dropped the four-year cycle idea').",
+      "source": "api.coingecko.com coins/markets (2026-11-22)"
+    },
+    {
+      "claim": "'Bitcoin dropped below 62k a couple hours ago... it hits 61k... I'm still skeptical it's going to go down to 57k... what I'm really skeptical of is that stocks retrace by 20%... if that does happen, Bitcoin is going to go below 57K' (transcript)",
+      "verdict": "OVERTAKEN, not drafted. After the stream $BTC fell to around $55.7K on November 21 (CoinGecko hourly low $55,711 at 06:00 UTC) and is $60,756 at drafting (-6.9% on 7 days, -25.6% on 30 days). The S&P 500 closed at 6,910.39 on November 20 after a 3.7% drop and an 8.6% week, in correction, around 10% to 11.5% under its October 6 record close, not a 20% bear market. So Bitcoin went under $57K without the 20% stock drop; no item is built on the $57K line and nothing frames it as a miss. The only Bitcoin figure in copy is 'Bitcoin fell more than 20% over the same stretch' (around $79,800 on October 27 per the best-time ledger to under $60K on November 21).",
+      "source": "api.coingecko.com coins/bitcoin market_chart days=7 (2026-11-22); cnbc.com/2026/11/19/stock-market-today-live-updates.html; ceoeconomy.com/article/sp-500-correction-nasdaq-plunges-ai-chip-selloff-nov-20-2026; stocktitan.net/articles/stock-market-today-live-november-20-2026; repurpose/output/best-time-lane3-plan.json fact_check"
+    },
+    {
+      "claim": "'four years in economic contraction... now that we've come above it, we don't skyrocket like we typically do... it's creeping up after an entire year, never happened before' (transcript, on the ISM PMI chart)",
+      "verdict": "corrected. The ISM Manufacturing PMI printed 55.5 for October 2026 (released November 2), the tenth straight month above 50 after ten months of contraction; before that it was under 50 from November 2022 through December 2024 with a two-month break in early 2025, so 'most of three years', not four, and it is the manufacturing index (ISM says the overall economy grew for the 24th straight month). The link to crypto is Mike's thesis and is written as 'usually'. No X or YT post is built on it this batch (the November 15 tweet already ran the tenth-month line); only quiz 2 uses it, with the corrected wording.",
+      "source": "webull.com/news/15854774774635520 (ISM October 2026 release); investinglive.com/news/us-ism-manufacturing-pmi-for-october-55-5-versus-54-5-estimate/; manufacturingdive.com (tenth month); repurpose/output/stock-market-lane3-plan.json fact_check"
+    },
+    {
+      "claim": "'US layoffs remain low, but 1.7 million Americans claim jobless benefits... lots of cases of jobs being eliminated... not many layoffs either' (transcript, reading a headline)",
+      "verdict": "verified and sharpened: initial claims 203,000 for the week ending November 14 (forecasts around 197,000 to 199,000); continuing claims 1,763,000 for the week ending November 7, up 70,000, the largest weekly rise since January 2024 (Labor Department, released November 19 2026). Copy: '203,000 new jobless claims in the week of November 14' and 'continuing claims jumped to 1.76 million, the biggest weekly rise since January 2024'. 'AI is eliminating jobs quietly' is written as Mike's read.",
+      "source": "newsquawk.com/headlines/us-continuing-jobless-claims-nov07-1763k-vs-exp-1710k-prev-1693k; investinglive.com/news/us-initial-jobless-claims-203k-vs-197k-estimate/; pro.thestreet.com/market-commentary/continuing-jobless-claims-jump-by-the-most-since-january-2024"
+    },
+    {
+      "claim": "'the biggest problem has been the supply crunch caused by the Strait of Hormuz... once we fix that, prices go down and interest rates go down... AI productivity... the Dems won the midterms... the Anthropic IPO, everybody's rotating out' (transcript)",
+      "verdict": "Mike's macro read. The jobs tweet keeps one generic line ('prices come down, rates come down, investment flies and new jobs get created') with no war framing and no Strait of Hormuz (dark register stays out of YT posts and polls). The midterms line is political and the Anthropic IPO rotation shipped in the peach batch (YT post and thread, November 15 to 16); neither is drafted.",
+      "source": "transcript; repurpose/SKILL.md (dark register rule); repurpose/output/peach-lane3-plan.json"
+    },
+    {
+      "claim": "'a clip from the CEO of Ledger saying everybody will get hacked... I had my Phantom wallet hacked, that's why I never used browser extension wallets again... I was a VP at a privacy and security company from 2010 until the end of 2015, something like that... I put the VPN on a travel router' (transcript)",
+      "verdict": "verified: Ledger chairman and CEO Pascal Gauthier said 'Everybody will be hacked at some point' on Bloomberg Crypto on November 10 2026, in a segment about the Binance hack; he later posted context on X. The hack, the job and the travel router are Mike's own statements and are drafted in first person. The VPN brand he named is not printed, and no cause is assigned to the wallet hack.",
+      "source": "bloomberg.com/news/videos/2026-11-10/everybody-will-be-hacked-at-some-point-ledger-ceo-video; crypto.news/ledger-ceo-faces-backlash-after-saying-everybody-will-be-hacked-at-some-point/; benzinga.com (Ledger CEO, November 2026)"
+    },
+    {
+      "claim": "'one of my top favorites, top just behind Kaspa and TAO, is Toncoin, now known as Gram... Telegram is a powerhouse' (transcript)",
+      "verdict": "verified: CoinGecko lists 'Gram (prev. Toncoin)', ticker GRAM, $0.98, rank 31, market cap $2.82B (the rename dates to June 15 2026 per the ripping ledger). 'Lending and borrowing living inside the app' is the EVAA mini app above. No price is printed in the one-liner.",
+      "source": "api.coingecko.com coins/markets and search (2026-11-22); repurpose/output/ripping-lane3-plan.json fact_check"
+    },
+    {
+      "claim": "The $20 plays compounding walk-through, the DEX alert and insider alert bots, the plays list (Pippin, Pieverse, Giggle Fund 30x, Velvet, Turbo, Fartcoin, Neiro, Peanut, Moodeng, MYX 550x, DeAgentAI 130x), the buy alerts, the exchange-listing tracker, the lifetime membership pricing and the skit video (transcript)",
+      "verdict": "NOT drafted: trader-portfolio framing (persona no_rotation_framing) wrapped in the membership pitch, which the lane 3 rules exclude. The only trace is 'My bot flagged $EVAA around its launch in October 2025' in YT post 2 (Mike: the DEX alert bot called EVAA and Pieverse).",
+      "source": "transcript; persona/persona.json avoid_in_drafts"
+    },
+    {
+      "claim": "'other communities, some KOL buys a coin really low, calls it and gets the public to buy... you're not exit liquidity'; 'CG pushing the Hellhound meme coin... AMD stock is going to pump when GTA 6 is released... AMD stock crashes 13% in 30 minutes'; the Big Guy and Glitch rugs (transcript)",
+      "verdict": "NOT drafted. Remarks about other creators are never drafted (persona: no calling out a creator). The AMD headline and the GTA 6 launch-day link were not verified and sit inside that same passage.",
+      "source": "transcript; persona/persona.json avoid_in_drafts"
+    },
+    {
+      "claim": "Viewer questions and asides: Pearl ('a new layer one... 864 million market cap', Mike: 'I don't know anything about Pearl'), 'the only coins worth buying are Bitcoin, Solana and Kaspa', the tech stocks list (Oracle, SanDisk), the peach Minute Maid, the yacht and the Koenigsegg (transcript)",
+      "verdict": "NOT drafted: an unverified project Mike did not know, a viewer opinion whose reply would frame SOL and ETH as picks, unverified percentages, and personal tangents.",
+      "source": "transcript; persona/persona.json stacking_lineup and avoid_in_drafts"
+    },
+    {
+      "claim": "Zcash",
+      "verdict": "no occurrence of Zcash, ZEC or zKAS in this transcript (searched); nothing to resolve and nothing drafted.",
+      "source": "transcript search, 2026-11-22"
+    },
+    {
+      "claim": "The three YT quizzes the brief asks for",
+      "verdict": "three quizzes for this batch were ALREADY pending in schedule-tweets/data/yt-quizzes.json when this plan was drafted (created 2026-11-22T10:35:09: yt-quiz-2026-11-22-evaa-ton, -pmi-50-line, -lab-353x). To keep the total at three, yt_quizzes carries the same three ids with fact-checked text rather than three more. Two queued rows need a text fix before they post (quiz 1: the stale '95 million... close to a 30x' opener; quiz 2: 'four years in contraction') and one is optional (quiz 3: 'Velvet did a 58x'). Each entry's notes field says exactly what differs. yt_quizzes is not one of queue_writer.QUEUE_FILES, so the graph will not write it.",
+      "source": "schedule-tweets/data/yt-quizzes.json (read 2026-11-22); schedule-tweets/skills/yt-post-quiz.md"
+    },
+    {
+      "claim": "Whisper mishears audited: 'Eva' / 'Ava' / 'Eva protocol' = EVAA; 'towel' / 'tower' = TAO; 'Graham Tunk coin' / 'Graham' = Gram (Toncoin); 'pie verse' / 'Pyverse' / 'pi versus' = Pieverse; 'cast' = Kaspa; 'straighter for moves' / 'straight-of-home move' / 'short of a move' = Strait of Hormuz; 'Elbank' / 'out bang' = LBank; 'cool coin' = KuCoin; 'pine X' / 'Pinex' = Pionex; 'Far Coin' / 'front coin' = Fartcoin; 'Nero' = Neiro; 'Moodang' = Moodeng; 'D-Agent AI' = DeAgentAI; 'hundred of media' = Hunterbrook Media; 'acts' = x; 'by alerts' = buy alerts",
+      "verdict": "corrected everywhere in copy. Weighting: Kaspa first (two X tweets with IG companions, YT post 1 on Version 4, the one thread, one YT poll, one X poll), then Toncoin through EVAA and Gram (one tweet, one one-liner, YT post 2, one YT poll, one toncoin X poll, quiz 1); TAO was only named, Housecoin and Pengu were not discussed; the rest is one security tweet and one jobs tweet.",
+      "source": "transcript; persona/persona.json terminology_rules and ticker_corrections"
+    },
+    {
+      "claim": "Image references",
+      "verdict": "ls of schedule-tweets/images/reference/ done live on 2026-11-22. kaspa-logo.png is cited on both Kaspa X images and their IG 4:5 companions and, first in the array with version4/hook.png, on the V4 hook of YT post 1; version4/slide.png anchors V4 slides 2 to 5. toncoin-ton.png is cited on the Gram image. Binance, Coinbase and Telegram are well-known brands, named in the prompts with their real logos and no reference. No EVAA reference exists, so the EVAA tweet image is entity-free (a generic rider with bright green eyes and plain coins) and YT post 2 is Version 2, code-rendered from five specs (no prompt, no ref). The three no-reference X images are listed first so they run before the reference-attached items.",
+      "source": "schedule-tweets/images/reference (ls 2026-11-22); repurpose/SKILL.md; persona/persona.json image_generation"
+    }
+  ],
+  "carousel_versions": {
+    "yt-post-2026-11-22-kaspa-no-tier-one-listings-still-top-100": "version4 (the extra V4 weight applies: images/reference/kaspa-logo.png, the 3D Kaspa coin render, is a usable topic photo and Kaspa is the subject, so slide 1 cites BOTH kaspa-logo.png and version4/hook.png as an array and slides 2 to 5 cite version4/slide.png. The post is a fact card walk (where it trades, the three fair launch facts, the timeline, an A/B/C question), which maps onto V4's three stat boxes plus insight box; the stat boxes carry words and two years, no price figures for the model to override, and the centre panels are simple shapes. V1 was the runner-up for the defiant tone; V2 rejected because a topic photo exists.)",
+    "yt-post-2026-11-22-evaa-13x-then-half-in-a-day": "version2 (analytical / editorial: a dated price walk, the drop, the precedent and a question. It is number-dense and the numbers must be exactly the ledger's because the coin is moving fast, so the code-rendered V2 is the safe carrier. V4 was weighed first but there is no EVAA photo, mascot or logo in images/reference/ (toncoin-ton.png is a flat logo of a different asset), so a V4 hook cannot be anchored on the subject; V1 rejected because its coin icons would invite an invented EVAA logo and its news-flash tone would oversell a coin that fell more than 50% in a day. Five code-v2 specs, no prompt and no ref.)"
+  },
+  "missing_references": [
+    "EVAA Protocol ($EVAA) logo: no reference file in schedule-tweets/images/reference/. The EVAA tweet image is entity-free (no EVAA coin rendered) and the EVAA carousel is Version 2 code-rendered text; add a logo file only if Mike wants the token rendered in a later batch."
+  ],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "bb6e271e",
+      "slug": "evaa-profits-before-the-drop",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A huge roller coaster at night. In the front car sits a Pixar-style man with bright green eyes, short dark hair and a black hoodie, right at the crest of an enormous climb, with a calm half smile. One arm rests on a small canvas sack of gold coins that is strapped safely into the seat beside him, the other hand sits loosely on the bar. Just ahead of the car the track plunges almost straight down into the dark, and behind him the long steep climb glows faintly. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. The car, the track and the sack carry no signs and no markings. Deep navy near-black background. Dramatic cinematic lighting. A cool blue rim light on the rider and a warm gold glow from the coins. Calm: the profits were secured before the drop. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "50a5a803",
+      "slug": "everybody-gets-hacked",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A dark hotel room at night. A Pixar-style man with bright green eyes, short dark hair and a black hoodie sits at the desk with a laptop and a small travel router with a single glowing blue light, and a translucent blue shield dome glows around the desk, the laptop and the router. He looks back over his shoulder in surprise: behind him, outside the shield, a small glowing window floats in the air like an open hatch, and a shadowy gloved hand reaches out of it holding a little leather wallet with a few gold coins spilling from it. The laptop screen and the floating window show only abstract glowing shapes with no letters, numbers or symbols. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background. Dramatic cinematic lighting. A cool blue glow from the shield and a faint red glow from the hatch. Tense: every door was locked and they still got in. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "7f7c4852",
+      "slug": "jobless-claims-ai-jobs",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A city street just before dawn. A long quiet line of Pixar-style office workers holding cardboard boxes and briefcases waits outside a plain glass door. Through the big window beside the door a sleek friendly robot sits at a desk working calmly, small sparks of light at its fingertips. At the far end of the street the sky is just starting to glow with a warm sunrise, and a few cranes and the steel frames of new buildings stand against it. The door, the window, the boxes and every building are blank: no signs, no letters, no numbers, no logos. Deep navy near-black background. Dramatic cinematic lighting. Cool blue light from the window and warm gold light from the horizon. Calm and determined: the old jobs are going and the new ones are still being built. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "f34d742c",
+      "slug": "kaspa-tier-one-listings",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A night street outside two grand exchange buildings standing side by side, each with one tall closed door. The left door is Binance yellow and carries the official Binance logo (the yellow diamond made of smaller diamonds). The right door is Coinbase blue and carries the official Coinbase logo (the white letter C mark on a blue circle). In the foreground, in the middle of the street, a Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, stands with its arms folded and a calm confident grin, half turned away from the doors and completely unbothered. Around it a big cheering crowd of tiny coin characters has gathered, lifting their arms toward the Kaspa coin instead of the doors; their faces are completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. A thin line of warm light shows under one of the doors, as if it is about to open. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin and a soft warm glow from the doorways. Defiant and calm: it does not need the doors to open. Use the attached reference only as the source for the Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image other than the two exchange logos.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "f34d742c",
+      "slug": "kaspa-tier-one-listings",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A night street outside two grand exchange buildings standing side by side, each with one tall closed door. The left door is Binance yellow and carries the official Binance logo (the yellow diamond made of smaller diamonds). The right door is Coinbase blue and carries the official Coinbase logo (the white letter C mark on a blue circle). In the foreground, in the middle of the street, a Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, stands with its arms folded and a calm confident grin, half turned away from the doors and completely unbothered. Around it a big cheering crowd of tiny coin characters has gathered, lifting their arms toward the Kaspa coin instead of the doors; their faces are completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. A thin line of warm light shows under one of the doors, as if it is about to open. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin and a soft warm glow from the doorways. Defiant and calm: it does not need the doors to open. Use the attached reference only as the source for the Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image other than the two exchange logos.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "1304b219",
+      "slug": "kaspa-top-100-without-them",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A steep dark mountain at night, high above a sea of clouds. A Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, climbs the last stretch of the ridge on foot with a hungry determined grin, carrying nothing on its back. Far below at a small base camp two unused jetpacks stand on a rack, both switched off and dark: one painted Binance yellow with the official Binance logo (the yellow diamond made of smaller diamonds) on its side, and one painted Coinbase blue with the official Coinbase logo (the white letter C mark on a blue circle) on its side. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin and a faint cold moonlight on the clouds. Hungry and triumphant: it got this high on foot. Use the attached reference only as the source for the Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image other than the two exchange logos.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "1304b219",
+      "slug": "kaspa-top-100-without-them",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A steep dark mountain at night, high above a sea of clouds. A Kaspa coin character with arms and legs, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, climbs the last stretch of the ridge on foot with a hungry determined grin, carrying nothing on its back. Far below at a small base camp two unused jetpacks stand on a rack, both switched off and dark: one painted Binance yellow with the official Binance logo (the yellow diamond made of smaller diamonds) on its side, and one painted Coinbase blue with the official Coinbase logo (the white letter C mark on a blue circle) on its side. Deep navy near-black background. Dramatic cinematic lighting. Greenish cyan rim light on the Kaspa coin and a faint cold moonlight on the clouds. Hungry and triumphant: it got this high on foot. Use the attached reference only as the source for the Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image other than the two exchange logos.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "b6f7f45b",
+      "slug": "gram-telegram-top-three",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A giant smartphone stands upright like a building at night, its screen swung open like a round bank vault door with warm light pouring out. In the doorway stands a sky blue coin character with arms and legs, its face showing the white logo exactly as shown in the attached reference image (a white rounded downward pointing triangle with a centre line on a sky blue circle), hands on its hips and a proud triumphant smile. Inside the vault behind it, tiny coin characters queue at two small glowing counters, handing coins across and getting coins back; their faces are completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. A white paper plane, the Telegram logo, glides overhead leaving a soft trail of light. The phone shows no interface, no letters and no numbers. Deep navy near-black background. Dramatic cinematic lighting. Sky blue rim light on the coin character and a warm gold glow from the vault. Triumphant: a bank living inside the app. Use the attached reference only as the source for the logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\toncoin-ton.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "35d0766a",
+      "slug": "01-hook",
+      "prompt": "Single editorial hook image for a carousel, 1:1 square. TWO REFERENCE IMAGES ARE ATTACHED. Use the FIRST attached reference (the dark 3D Kaspa coin with the glowing greenish cyan backwards-K logo bursting with greenish cyan light on a black background) as the full-bleed background image, keeping the coin and its backwards-K logo faithful, cropped to a square with the coin centred in the upper two thirds of the frame. Use the SECOND attached reference ONLY as the layout and typography key: match its bold all-caps bottom text treatment, its small circular chart bubble overlay and its bottom SWIPE FOR MORE bar. In the top right corner place a small circular bubble overlay containing one simple green line chart that runs flat and level along a dashed horizontal line, with no numbers or axis labels. Bold all-caps text across the bottom: 'NO BINANCE SPOT. NO COINBASE.' in white on the first line, then 'KASPA IS STILL TOP 100' in bright green on the second line. Small white all-caps 'SWIPE FOR MORE' text at the very bottom. No pagination dots, no carousel indicators. Keep every line of text inside a margin of at least 8 percent of the frame width. Render NO watermark, no @handle, no username, no shield badge, no artist signature and no initials anywhere in the frame or in any corner; the second attached reference carries a small badge and page dots and they must NOT be reproduced. No em dashes anywhere in the rendered text, use colons or commas instead. Do not invent any numbers, tickers, logos or lettering beyond the exact text specified above; render no text other than the text specified here.",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\hook.png"
+      ]
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "56ed9eaa",
+      "slug": "02-where-it-trades",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Where Kaspa trades right now'. Stat boxes: 'BINANCE SPOT: NO', 'COINBASE SPOT: NO', 'MARKET CAP RANK: TOP 100'. Centre panel: six plain rounded tiles in two rows of three, labelled 'KRAKEN', 'BYBIT', 'GATE', 'MEXC', 'KUCOIN' and 'HTX' in plain dark capital letters, with no logos, no numbers and no other labels. Bottom green box labelled 'THE GAP' with two bullets: 'Binance lists a futures market only.' and 'No spot pair on either tier one.'. Page number 2 in a circle at the top right. Use every figure exactly as written here and do not change, round or add any number. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. The page number 2 appears exactly once and nowhere else. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "cb8362c4",
+      "slug": "03-why-they-waited",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Why the tier ones waited'. Stat boxes: 'PREMINE: NONE', 'PRESALE: NONE', 'INSIDER ALLOCATION: NONE'. Centre panel: one large plain outline of an open vault with nothing inside it, with no numbers and no labels. Bottom green box labelled 'THE RECEIPT' with two bullets: 'No premine means nobody paid for a listing.' and 'To me, the missing listings are the receipt.'. Page number 3 in a circle at the top right. Use every figure exactly as written here and do not change, round or add any number. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. The page number 3 appears exactly once and nowhere else. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "8b8a155e",
+      "slug": "04-when-they-list",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'When do they list?'. Stat boxes: 'I SAID IT IN: 2025', 'LATE 2026: STILL NO LISTING', 'A VIEWER SAYS: 2027'. Centre panel: one horizontal timeline line with three evenly spaced round markers, the first two filled green and the third hollow, with no dates, numbers or labels on the line. Bottom green box labelled 'MY READ' with two bullets: 'Tier ones list when the market is flying.' and 'I buy the bottoms before they show up.'. Page number 4 in a circle at the top right. Use every figure exactly as written here and do not change, round or add any number. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. The page number 4 appears exactly once and nowhere else. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "9b0b0c26",
+      "slug": "05-question",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Who lists Kaspa first?'. Stat boxes: 'A: BINANCE SPOT', 'B: COINBASE', 'C: NEITHER BEFORE 2028'. Centre panel: three plain rounded panels side by side, each headed A, B and C, otherwise empty. Bottom green box labelled 'TELL ME IN THE COMMENTS' with one bullet: 'Pick one and give me the year.'. Page number 5 in a circle at the top right. Use every figure exactly as written here and do not change, round or add any number. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. The page number 5 appears exactly once and nowhere else. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "8b23ac46",
+      "slug": "01-hook",
+      "render": "code-v2",
+      "spec": {
+        "label": "1 OF 5",
+        "title": "13x in under\nfour weeks",
+        "accent": "Then over 50% gone in one day",
+        "box_label": "THE REVEAL",
+        "box": [
+          "EVAA: the first lending protocol on TON.",
+          "Built right into Telegram."
+        ]
+      }
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "abfe3729",
+      "slug": "02-the-run",
+      "render": "code-v2",
+      "spec": {
+        "label": "2 OF 5",
+        "title": "51 cents to\nabove $6.60",
+        "accent": "Oct 27 to Nov 21: around 13x",
+        "box_label": "THE RUN",
+        "box": [
+          "In it since the October 2025 launch.",
+          "My lowest entry: near a $4 million market cap.",
+          "Bitcoin fell more than 20% over the same stretch."
+        ]
+      }
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "9e03c41e",
+      "slug": "03-the-drop",
+      "render": "code-v2",
+      "spec": {
+        "label": "3 OF 5",
+        "title": "Then it dropped\nmore than 50%\nin one day",
+        "accent": "Why I take profits on the way up",
+        "box_label": "NOVEMBER 22",
+        "box": [
+          "I said it on stream before the drop:",
+          "it can come right back down.",
+          "If it does, I buy back in."
+        ]
+      }
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "42e09d06",
+      "slug": "04-the-precedent",
+      "render": "code-v2",
+      "spec": {
+        "label": "4 OF 5",
+        "title": "Nobody knows\nhow far\na play runs",
+        "accent": "LAB did 353x. Velvet topped out under $1 billion.",
+        "box_label": "THE PRECEDENT",
+        "box": [
+          "I expected a 20x from LAB.",
+          "It went past a $7 billion market cap.",
+          "Same kind of setup, different ending."
+        ]
+      }
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "26edbea5",
+      "slug": "05-question",
+      "render": "code-v2",
+      "spec": {
+        "label": "5 OF 5",
+        "title": "What do you\ndo with a\n13x play?",
+        "accent": "Take profits, hold, or buy the drop?",
+        "box_label": "TELL ME IN THE COMMENTS",
+        "box": [
+          "Pick one and tell me why."
+        ]
+      }
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "A viewer told me he expects tier one listings for Kaspa in 2027. I think he's right.\n\nI've been saying it since the first half of 2025: no Binance spot and no Coinbase for $KAS for a long time. People came after me for it. It's late 2026 and neither one has listed it.\n\nNo premine means nobody paid for a listing. They'll show up when the market is flying, and Kaspa is still a top 100 coin without them.\n\n#kaspa #kas",
+      "hook": "A viewer told me he expects tier one listings for Kaspa in 2027. I think he's right.",
+      "image_id": "f34d742c",
+      "notes": "Kaspa subject; IG companion shares the image. No Follow line (Kaspa). The listing call is Mike's own (first half of 2025) and is true at drafting: CoinGecko shows no KAS spot market on Binance or Coinbase. The 'suppress the price' line from the stream is not drafted; only 'they show up when the market is flying'."
+    },
+    {
+      "tweet": "On November 19 I revealed one of my community's plays on stream: EVAA, the first lending protocol on TON, built right into Telegram. $EVAA\n\nIt was 51 cents on October 27. On November 21 it traded above $6.60. That's around 13x in under four weeks.\n\nOn November 22 it dropped more than 50% in a single day. That's why I take profits on the way up. I said it on stream before the drop: it can come right back down, and if it does I buy back in. Never financial advice.\n\n#evaa #ton #telegram",
+      "hook": "On November 19 I revealed one of my community's plays on stream: EVAA, the first lending protocol on TON, built right into Telegram. $EVAA",
+      "image_id": "bb6e271e",
+      "notes": "EVAA / TON subject. EVAA is not in persona project_handles, so no Follow line (the project's X account per CoinGecko is @evaaprotocol; add it to the map if Mike wants the tag). No IG (not Kaspa). Written to the post-stream reality: dated prices only, no 30x and no market cap printed (see fact_check). RE-CHECK before posting: EVAA was still falling at drafting. Image is entity-free (no EVAA logo reference exists)."
+    },
+    {
+      "tweet": "The CEO of Ledger said it on Bloomberg in November: everybody will be hacked at some point.\n\nI was a VP at a privacy and security company for around five years. In hotels my devices go through a travel router with a VPN on it, never the hotel Wi-Fi. My Phantom wallet still got hacked.\n\nI haven't used a browser wallet since. What am I missing? 🤔\n\n#crypto #security #selfcustody",
+      "hook": "The CEO of Ledger said it on Bloomberg in November: everybody will be hacked at some point.",
+      "image_id": "50a5a803",
+      "notes": "Engagement note: correction-bait technique #3 ('What am I missing?' closer): THE deliberate 1-in-10 bait item for this batch. Non-project item (crypto security). The Ledger quote is verified (Bloomberg, November 10 2026); the hack, the VP role and the travel router are Mike's own words on stream. No handle, no IG."
+    },
+    {
+      "tweet": "US layoffs are still low: 203,000 new jobless claims in the week of November 14.\n\nBut continuing claims jumped to 1.76 million, the biggest weekly rise since January 2024. My read: AI is eliminating jobs quietly, and the people who lose one take longer to land the next.\n\nWhat fixes it: prices come down, rates come down, investment flies and new jobs get created. That's when crypto flies too.\n\n#macro #jobs #crypto",
+      "hook": "US layoffs are still low: 203,000 new jobless claims in the week of November 14.",
+      "image_id": "7f7c4852",
+      "notes": "Non-project macro item (jobs). Claims figures are the November 19 2026 Labor Department release; the AI line is written as Mike's read. No war framing, no Strait of Hormuz. No handle, no IG."
+    },
+    {
+      "tweet": "No Binance spot. No Coinbase. Kaspa is a top 100 coin anyway... imagine it with them. $KAS 😎\n\n#kaspa #kas",
+      "hook": "No Binance spot. No Coinbase. Kaspa is a top 100 coin anyway... imagine it with them.",
+      "image_id": "1304b219",
+      "notes": "Single-line image-first. Kaspa subject; IG companion shares the image. No Follow line (Kaspa). Trailing ellipsis is the persona signature device."
+    },
+    {
+      "tweet": "Telegram already has lending and borrowing living inside the app. That's why Gram sits in my top three, right behind Kaspa and $TAO. $GRAM 🔥\n\n#gram #ton #telegram",
+      "hook": "Telegram already has lending and borrowing living inside the app.",
+      "image_id": "b6f7f45b",
+      "notes": "Single-line image-first. Gram (Toncoin) subject; project_handles ton = null, so no Follow line; no IG (the subject is Gram, Kaspa is only named). Image cites toncoin-ton.png."
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-11-22-kaspa-no-tier-one-listings-still-top-100",
+      "topic": "Kaspa has no spot listing on Binance or Coinbase and is still a top 100 coin: where it trades, the 2025 call, the fair launch reason, how Mike plays it (built from YT post 1)",
+      "variation_label": "A (stat hook, where it trades, the call, the why, the play)",
+      "tweets": [
+        {
+          "text": "Kaspa is a top 100 coin with no spot listing on Binance or Coinbase.\n\nA viewer told me he expects the tier ones in 2027. I think he's right.\n\nHere's why they waited, and why I'm not waiting for them:",
+          "hook": "Kaspa is a top 100 coin with no spot listing on Binance or Coinbase."
+        },
+        {
+          "text": "Where $KAS trades right now: Kraken, Bybit, Gate, MEXC, KuCoin and HTX.\n\nBinance has a futures market for it and no spot pair. Coinbase has no spot listing.\n\nIt's still inside the top 100, at around 2.6 cents."
+        },
+        {
+          "text": "I've been saying this since the first half of 2025: Kaspa doesn't get Binance spot or Coinbase for a long time.\n\nPeople didn't want to hear it. Some came after me for it.\n\nIt's late 2026. Neither one has listed it."
+        },
+        {
+          "text": "Why? Kaspa was a fair launch. No premine, no presale, no insider allocation.\n\nThat means no pile of free coins to fund a listing.\n\nTo me, the missing listings are the receipt that the launch was fair."
+        },
+        {
+          "text": "And the tier ones are businesses. They list what brings them volume.\n\nThat happens when the market is flying, not at the bottom.\n\nI expect them to show up when Kaspa is already running."
+        },
+        {
+          "text": "So you have two choices.\n\nWait for the announcement and buy the listing pump with everybody else.\n\nOr buy the bottoms on the exchanges that already have it. That's what I've been doing. Never financial advice."
+        },
+        {
+          "text": "If this changed how you see the Kaspa listing story...\n\nFollow me for Kaspa and macro takes that ignore the four-year cycle echo chamber.\n\n🧠 + 😎"
+        }
+      ]
+    }
+  ],
+  "x_polls": [
+    {
+      "id": "poll-2026-11-22-who-lists-kaspa-first",
+      "topic": "Who lists Kaspa first: Binance spot or Coinbase",
+      "eligible_topic": "kaspa",
+      "tweet_text": "No Binance spot. No Coinbase. $KAS is still a top 100 coin without either one.\n\nI think the tier ones list Kaspa when the market is flying, not before.\n\nWho lists Kaspa first?",
+      "hook": "No Binance spot. No Coinbase. $KAS is still a top 100 coin without either one.",
+      "options": [
+        "Binance spot",
+        "Coinbase",
+        "Neither before 2028"
+      ],
+      "duration": "1d"
+    },
+    {
+      "id": "poll-2026-11-22-what-do-you-do-with-a-13x",
+      "topic": "EVAA on TON: 13x in under four weeks, then half gone in a day; what is your move",
+      "eligible_topic": "toncoin",
+      "tweet_text": "EVAA, the lending protocol built into Telegram on TON, ran around 13x in under four weeks, then dropped more than 50% in a single day. $EVAA\n\nI took profits on the way up.\n\nWhat's your move on a play like that?",
+      "hook": "EVAA, the lending protocol built into Telegram on TON, ran around 13x in under four weeks, then dropped more than 50% in a single day. $EVAA",
+      "options": [
+        "Profits on the way up",
+        "Hold for the long run",
+        "Buy the drop",
+        "Stay away"
+      ],
+      "duration": "1d"
+    }
+  ],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-11-22-who-lists-kaspa-first",
+      "topic": "Who lists Kaspa first: Binance spot or Coinbase",
+      "source_post": "yt-post-2026-11-22-kaspa-no-tier-one-listings-still-top-100",
+      "question_text": "Kaspa has no spot listing on Binance and no spot listing on Coinbase, and it's still a top 100 coin, trading on Kraken, Bybit, Gate, MEXC, KuCoin and HTX.\n\nI think the tier ones list $KAS when the market is flying, not before. A viewer on my stream says 2027.\n\nWho lists Kaspa first?",
+      "hook": "Kaspa has no spot listing on Binance and no spot listing on Coinbase, and it's still a top 100 coin, trading on Kraken, Bybit, Gate, MEXC, KuCoin and HTX.",
+      "options": [
+        "Binance spot lists it first",
+        "Coinbase lists it first",
+        "Robinhood beats them both",
+        "Neither one before 2028"
+      ]
+    },
+    {
+      "id": "yt-text-poll-2026-11-22-what-do-you-do-with-a-13x",
+      "topic": "EVAA on TON: 13x in under four weeks, then half gone in a day; what do you do",
+      "source_post": "yt-post-2026-11-22-evaa-13x-then-half-in-a-day",
+      "question_text": "EVAA, the lending protocol built into Telegram on TON, went from 51 cents on October 27 to above $6.60 on November 21. Around 13x in under four weeks. Then it dropped more than 50% in a single day.\n\nI took profits on the way up, and I said on stream that if it came back down I would buy back in.\n\nWhen a play runs 13x in a month, what do you do?",
+      "hook": "EVAA, the lending protocol built into Telegram on TON, went from 51 cents on October 27 to above $6.60 on November 21. Around 13x in under four weeks. Then it dropped more than 50% in a single day.",
+      "options": [
+        "Take profits on the way up",
+        "Hold it for the long run",
+        "Wait and buy the drop",
+        "Stay away from plays like this"
+      ]
+    }
+  ],
+  "yt_posts": [
+    {
+      "id": "yt-post-2026-11-22-kaspa-no-tier-one-listings-still-top-100",
+      "topic": "Kaspa has no spot listing on Binance or Coinbase and is still a top 100 coin: where it trades, Mike's 2025 call, the fair launch reason, when the tier ones show up",
+      "variation_label": "A + CTA1",
+      "body_style": "stat hook, where it trades, the call, the fair launch reason, the play, the comment ask",
+      "cta_target": "subscribe_youtube",
+      "body": "Kaspa is a top 100 coin with no spot listing on Binance and no spot listing on Coinbase. A viewer told me he expects the tier one listings in 2027. I think he's right, and the reason they've waited this long is the same reason I'm in it.\n\nStart with where things stand. $KAS trades on Kraken, Bybit, Gate, MEXC, KuCoin and HTX. Binance has a futures market for it and no spot pair. Coinbase has no spot listing at all. In Europe it trades against the euro on Kraken and Bitvavo. With both of the big two missing, Kaspa still sits inside the top 100 by market cap, at around 2.6 cents, and it's doing that around 88% under its all-time high.\n\nI've been saying this since the first half of 2025. Back when I dropped the four-year cycle idea, I said Kaspa wasn't getting listed on Binance spot or Coinbase for a long time. People didn't want to hear it. Some of them came after me for it. Look where we are: it's late 2026 and neither listing has happened.\n\nHere's why. Kaspa was a fair launch. No premine, no presale, no insider allocation. That means there's no pile of free coins sitting anywhere to fund a listing. To me, the missing listings are the receipt that the launch was fair.\n\nAnd the tier ones are businesses. They list what brings them volume, and that happens when the market is flying, not at the bottom. I don't expect them to show up while everything is down. I expect them to show up when Kaspa is already running and they can't ignore it anymore.\n\nSo what do you do with that? You can wait for the announcement and buy the listing pump with everybody else. Or you can do what I've been doing: buy the bottoms, on the exchanges that already have it, while the big ones are still on the sidelines. Never financial advice.\n\nSo tell me: who lists Kaspa first, Binance spot or Coinbase? And what year? Drop it in the comments.\n\nIf this helped you see the listing story differently, hit like and subscribe for more.",
+      "engagement_question": "Who lists Kaspa first, Binance spot or Coinbase, and what year?",
+      "images": [
+        {
+          "image_id": "35d0766a",
+          "slide_text": "NO BINANCE SPOT. NO COINBASE. / KASPA IS STILL TOP 100"
+        },
+        {
+          "image_id": "56ed9eaa",
+          "slide_text": "Where Kaspa trades: Kraken, Bybit, Gate, MEXC, KuCoin, HTX. Binance spot: no. Coinbase spot: no."
+        },
+        {
+          "image_id": "cb8362c4",
+          "slide_text": "Why the tier ones waited: no premine, no presale, no insider allocation"
+        },
+        {
+          "image_id": "8b8a155e",
+          "slide_text": "When do they list? Said it in 2025, still no listing in late 2026, a viewer says 2027"
+        },
+        {
+          "image_id": "9b0b0c26",
+          "slide_text": "Who lists Kaspa first?"
+        }
+      ]
+    },
+    {
+      "id": "yt-post-2026-11-22-evaa-13x-then-half-in-a-day",
+      "topic": "The EVAA reveal: a TON lending protocol inside Telegram that ran around 13x in under four weeks and then dropped more than 50% in a day, how the call went, and why Mike takes profits on the way up (LAB and Velvet as precedent)",
+      "variation_label": "B + CTA1",
+      "body_style": "the reveal, what it is, how the call went, the run and the drop, the precedent, the comment ask",
+      "cta_target": "subscribe_youtube",
+      "body": "On November 19 I revealed a play my community has been in for over a year. It ran around 13x in under four weeks. Then it dropped more than 50% in a single day. Both of those things are the lesson, so let me walk you through it.\n\nThe play is EVAA. It's the first lending protocol on TON, and it lives right inside Telegram: you open a mini app and you can lend, borrow and earn yield without leaving the chat. It's backed by TON Ventures, Animoca Brands and Polymorphic Capital. Telegram is a powerhouse, and that's why Gram, the old Toncoin, sits in my top three right behind Kaspa and TAO.\n\nHere's how the call went. My bot flagged $EVAA around its launch in October 2025. It spiked, it came back down, and we kept buying the bottoms for a year. My lowest entry was near a $4 million market cap, and there were days it traded under $3 million.\n\nThen it moved. On October 27 it was sitting at 51 cents. On November 21 it traded above $6.60. That's around 13x in 25 days, while Bitcoin fell more than 20% over the same stretch.\n\nAnd on November 22 it dropped more than 50% in one day.\n\nHere's the thing: I said that on stream before it happened. I said it could come right back down, that I had already taken profits on the way up, and that if it did come back down I would buy back in, because long term I expect this one over a $1 billion market cap.\n\nYou never know how far one of these runs. LAB is the one I always go back to. I expected a 20x and it did 353x, past a $7 billion market cap. Velvet ran a month later and topped out under $1 billion. Same kind of setup, completely different ending. That's why I sell some on the way up. Never financial advice.\n\nSo tell me: when a play runs 13x in a month, what do you do? Take profits on the way up, hold for the long run, or wait and buy the drop? Drop it in the comments.\n\nIf this helped you think about how these runs work, hit like and subscribe so you catch the next one.",
+      "engagement_question": "When a play runs 13x in a month, what do you do: take profits on the way up, hold, or wait and buy the drop?",
+      "images": [
+        {
+          "image_id": "8b23ac46",
+          "slide_text": "13x in under four weeks, then over 50% gone in one day"
+        },
+        {
+          "image_id": "abfe3729",
+          "slide_text": "51 cents to above $6.60: October 27 to November 21"
+        },
+        {
+          "image_id": "9e03c41e",
+          "slide_text": "Then it dropped more than 50% in one day: why I take profits on the way up"
+        },
+        {
+          "image_id": "42e09d06",
+          "slide_text": "Nobody knows how far a play runs: LAB did 353x, Velvet topped out under $1 billion"
+        },
+        {
+          "image_id": "26edbea5",
+          "slide_text": "What do you do with a 13x play?"
+        }
+      ]
+    }
+  ],
+  "ig_single": [
+    {
+      "id": "ig-2026-11-22-kaspa-tier-one-listings",
+      "kaspa_subject": true,
+      "image_id": "f34d742c",
+      "aspect_ratio": "4:5",
+      "hook": "A viewer told me he expects tier one listings for Kaspa in 2027. I think he's right.",
+      "caption": "A viewer told me he expects tier one listings for Kaspa in 2027. I think he's right.\n\nI've been saying it since the first half of 2025: no Binance spot and no Coinbase for $KAS for a long time. People came after me for it. It's late 2026 and neither one has listed it.\n\nHere's why. Kaspa was a fair launch: no premine, no presale, no insider allocation. That means there's no pile of free coins anywhere to fund a listing. To me, the missing listings are the receipt.\n\nRight now Kaspa trades on Kraken, Bybit, Gate, MEXC, KuCoin and HTX, and it's still a top 100 coin. The tier ones show up when the market is flying, not before.\n\nWho lists Kaspa first: Binance or Coinbase?",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#krc20",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "A viewer told me he expects tier one listings for Kaspa in 2027. I think he's right."
+    },
+    {
+      "id": "ig-2026-11-22-kaspa-top-100-without-them",
+      "kaspa_subject": true,
+      "image_id": "1304b219",
+      "aspect_ratio": "4:5",
+      "hook": "No Binance spot. No Coinbase. Kaspa is a top 100 coin anyway... imagine it with them.",
+      "caption": "No Binance spot. No Coinbase. Kaspa is a top 100 coin anyway... imagine it with them.\n\n$KAS trades on Kraken, Bybit, Gate, MEXC, KuCoin and HTX. Binance only has a futures market for it. No spot pair on either of the two exchanges everybody is waiting for.\n\nAnd it still sits inside the top 100 by market cap, at around 2.6 cents, around 88% under its all-time high.\n\nSame proof of work. Same fair launch. No premine to pay for a listing.\n\nWhen do the tier ones show up?",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#blockdag",
+        "#krc20",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "No Binance spot. No Coinbase. Kaspa is a top 100 coin anyway... imagine it with them."
+    }
+  ],
+  "yt_quizzes": [
+    {
+      "id": "yt-quiz-2026-11-22-evaa-ton",
+      "topic": "EVAA Protocol is a TON token",
+      "source_post": null,
+      "question_text": "EVAA ran from 51 cents on October 27 to above $6.60 on November 21, around 13x in under four weeks, before dropping more than 50% in a single day.\n\nEVAA is a lending protocol built into Telegram. Which chain is it native to?",
+      "hook": "Which chain is EVAA native to?",
+      "options": [
+        "Solana",
+        "TON",
+        "Kaspa",
+        "Base"
+      ],
+      "correct_option_index": 1,
+      "explanation": "EVAA is a TON token, the Telegram chain. I traded it on BNB because it is bridged there.",
+      "capture_results_after_days": 14,
+      "notes": "ALREADY IN THE QUEUE: a row with this id has been pending in schedule-tweets/data/yt-quizzes.json since 2026-11-22T10:35:09 (written before this plan). This entry is the fact-checked version of it; the queued question opens 'EVAA just ripped to a 95 million market cap, close to a 30x from where my community got in', which is stale (EVAA fell around 57% in 24 hours on November 22) and the 30x is a market cap ratio across two different supply figures. Options, answer and explanation are unchanged. Patch the queued question_text to this one before it posts."
+    },
+    {
+      "id": "yt-quiz-2026-11-22-pmi-50-line",
+      "topic": "PMI 50 line, expansion vs contraction",
+      "source_post": null,
+      "question_text": "The ISM manufacturing PMI spent most of three years in contraction, and it has now been in expansion for ten straight months.\n\nOn a PMI reading, which number is the line between expansion and contraction?",
+      "hook": "Which PMI number splits expansion from contraction?",
+      "options": [
+        "0",
+        "25",
+        "50",
+        "100"
+      ],
+      "correct_option_index": 2,
+      "explanation": "Above 50 is expansion, below 50 is contraction. October printed 55.5. Usually crypto flies after that. Not this time, yet.",
+      "capture_results_after_days": 14,
+      "notes": "ALREADY IN THE QUEUE: a row with this id has been pending in schedule-tweets/data/yt-quizzes.json since 2026-11-22T10:35:09 (written before this plan). This entry is the fact-checked version of it; the queued question says 'The economy spent four years in contraction, and now it is barely creeping into expansion'. The index is the manufacturing PMI, it was under 50 for most of November 2022 to December 2025 (around three years), and October 2026 printed 55.5, the tenth straight month above 50. Options and answer are unchanged. Also note the batch kcc20-live quiz of October 21 asked nearly the same question ('What does a PMI above 50 mean?')."
+    },
+    {
+      "id": "yt-quiz-2026-11-22-lab-353x",
+      "topic": "LAB run off the December bottom",
+      "source_post": null,
+      "question_text": "We caught the LAB bottom in December. I predicted a 20x.\n\nHow big did the LAB run end up being, in a bear market?",
+      "hook": "How big was the LAB run?",
+      "options": [
+        "20x",
+        "58x",
+        "353x",
+        "1000x"
+      ],
+      "correct_option_index": 2,
+      "explanation": "LAB did a 353x in a bear market and went past a $7 billion market cap. Velvet ran a month later and topped out under $1 billion.",
+      "capture_results_after_days": 14,
+      "notes": "ALREADY IN THE QUEUE: a row with this id has been pending in schedule-tweets/data/yt-quizzes.json since 2026-11-22T10:35:09 (written before this plan). This entry is the fact-checked version of it; question, options and answer are unchanged. The queued explanation ends 'Velvet did a 58x a month later': a 58x on Velvet cannot be reproduced from price data (CoinGecko all-time low $0.0413 to all-time high $2.08 is around 50x) and earlier streams said 68x and 130x, so this version states the peak market cap instead. Patch the queued explanation if Mike agrees."
+    }
+  ]
+}

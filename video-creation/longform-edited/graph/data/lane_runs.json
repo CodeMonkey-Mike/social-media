@@ -32859,5 +32859,2379 @@
       }
     },
     "error": null
+  },
+  {
+    "run_id": "longform-plan-to-make-millions@2026-11-22T17:05:53",
+    "lane": 1,
+    "lane_name": "longform",
+    "thread": "longform-plan-to-make-millions",
+    "started_at": "2026-11-22T17:05:53",
+    "ended_at": "2026-11-22T20:03:43",
+    "duration_s": 10670.8,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "plan-to-make-millions",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "plan-to-make-millions",
+      "last_node": "screenplay",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "plan-to-make-millions: folder + PROJECT-LOG ready",
+          "at": "2026-11-22T18:57:37"
+        },
+        "research": {
+          "status": "ran",
+          "detail": "DATA.md written (88 source links)",
+          "at": "2026-11-22T19:35:12"
+        },
+        "screenplay": {
+          "status": "ran",
+          "detail": "SCREENPLAY.md written, lint PASS (8 FACE beat(s))",
+          "at": "2026-11-22T20:03:42"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-plan-to-make-millions@2026-11-23T19:01:00",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "longform-plan-to-make-millions",
+    "started_at": "2026-11-23T19:01:00",
+    "ended_at": "2026-11-23T20:03:09",
+    "duration_s": 3728.4,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "plan-to-make-millions",
+      "until": "",
+      "approve": [
+        "screenplay"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "plan-to-make-millions",
+      "last_node": "desilence_coarse",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "plan-to-make-millions: folder + PROJECT-LOG ready",
+          "at": "2026-11-22T18:57:37"
+        },
+        "research": {
+          "status": "ran",
+          "detail": "DATA.md written (88 source links)",
+          "at": "2026-11-22T19:35:12"
+        },
+        "screenplay": {
+          "status": "ran",
+          "detail": "SCREENPLAY.md written, lint PASS (8 FACE beat(s))",
+          "at": "2026-11-22T20:03:42"
+        },
+        "gate_screenplay": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-11-23T19:01:00"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-11-23T19:01:00"
+        },
+        "compress": {
+          "status": "ran",
+          "detail": "ALL.lowbps.mp4 (2127.3s) = 2 takes joined in name order: 2026-11-23 11-06-42.mkv, 2026-11-23 11-30-38.mkv",
+          "at": "2026-11-23T19:04:08"
+        },
+        "defumble": {
+          "status": "ran",
+          "detail": "ALL.a.defumbled.mp4 (1196.3s)",
+          "at": "2026-11-23T19:45:54"
+        },
+        "cover_blackout": {
+          "status": "ran",
+          "detail": "ALL.b.blackout.mp4 (1196.3s)",
+          "at": "2026-11-23T19:58:23"
+        },
+        "desilence_coarse": {
+          "status": "ran",
+          "detail": "ALL.c.desilenced.mp4 (591.7s)",
+          "at": "2026-11-23T20:03:08"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "short-langgraph-updates@2026-11-23T20:22:52",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-langgraph-updates",
+    "started_at": "2026-11-23T20:22:52",
+    "ended_at": "2026-11-23T21:02:58",
+    "duration_s": 2405.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "langgraph-updates",
+      "seconds": 30.0,
+      "approve": [],
+      "redo": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "langgraph-updates",
+      "last_node": "s_deliver",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 317.81s == spine 317.81s; FINAL-TIME transcript written (105 segments)",
+          "at": "2026-11-23T20:22:53"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "3 spans, 27.8s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-11-23T20:34:38"
+        },
+        "gate_short_plan": {
+          "status": "ran",
+          "detail": "auto-approved (no plan gate: Mike reviews the finished short)",
+          "at": "2026-11-23T20:34:38"
+        },
+        "s_paint_16x9": {
+          "status": "skipped",
+          "detail": "not 16:9-sourced (a delivered vertical is the master)",
+          "at": "2026-11-23T20:34:38"
+        },
+        "s_variants": {
+          "status": "skipped",
+          "detail": "presentation project: no Envato / ChatGPT covers, its cards are already native vertical",
+          "at": "2026-11-23T20:34:38"
+        },
+        "s_vertical_cards": {
+          "status": "skipped",
+          "detail": "the delivered vertical already carries native-vertical assets",
+          "at": "2026-11-23T20:34:38"
+        },
+        "s_extract": {
+          "status": "ran",
+          "detail": "3 intermediates, 27.8s of spans",
+          "at": "2026-11-23T20:34:48"
+        },
+        "s_captions": {
+          "status": "ran",
+          "detail": "39 caption groups over 3 COVER-sourced window(s) -> LanggraphUpdatesShortCaptions.ts",
+          "at": "2026-11-23T20:34:49"
+        },
+        "s_comp": {
+          "status": "ran",
+          "detail": "LanggraphUpdatesShort.tsx registered (30.8s)",
+          "at": "2026-11-23T20:57:07"
+        },
+        "s_verify_comp": {
+          "status": "ran",
+          "detail": "gates PASS on LanggraphUpdatesShort.tsx",
+          "at": "2026-11-23T20:57:08"
+        },
+        "s_render": {
+          "status": "ran",
+          "detail": "langgraph-updates-SHORT-30s-v1-video.mp4 (30.80s)",
+          "at": "2026-11-23T21:00:10"
+        },
+        "s_mix": {
+          "status": "ran",
+          "detail": "langgraph-updates-SHORT-30s-v1.mp4: VO spans crossfaded + shared CTA + bed",
+          "at": "2026-11-23T21:00:22"
+        },
+        "s_verify_final": {
+          "status": "ran",
+          "detail": "langgraph-updates-SHORT-30s-v1.mp4: 30.80s, -21.6 LUFS, peak -5.9 dBFS",
+          "at": "2026-11-23T21:01:06"
+        },
+        "s_qa_final": {
+          "status": "ran",
+          "detail": "langgraph-updates-SHORT-30s-v1.mp4: final visual-qa PASS on 4 contact sheet(s)",
+          "at": "2026-11-23T21:02:56"
+        },
+        "gate_short": {
+          "status": "ran",
+          "detail": "auto-approved: langgraph-updates-SHORT-30s-v1.mp4 passed verify",
+          "at": "2026-11-23T21:02:56"
+        },
+        "s_deliver": {
+          "status": "ran",
+          "detail": "promoted -> langgraph-updates-SHORT-30s.mp4 (14 MB); not queued",
+          "at": "2026-11-23T21:02:56"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-plan-to-make-millions@2026-11-23T20:33:53",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "longform-plan-to-make-millions",
+    "started_at": "2026-11-23T20:33:53",
+    "ended_at": "2026-11-23T21:18:15",
+    "duration_s": 2662.2,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "plan-to-make-millions",
+      "until": "",
+      "approve": [
+        "spine_review"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "plan-to-make-millions",
+      "last_node": "enhance_handoff",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "plan-to-make-millions: folder + PROJECT-LOG ready",
+          "at": "2026-11-22T18:57:37"
+        },
+        "research": {
+          "status": "ran",
+          "detail": "DATA.md written (88 source links)",
+          "at": "2026-11-22T19:35:12"
+        },
+        "screenplay": {
+          "status": "ran",
+          "detail": "SCREENPLAY.md written, lint PASS (8 FACE beat(s))",
+          "at": "2026-11-22T20:03:42"
+        },
+        "gate_screenplay": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-11-23T19:01:00"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-11-23T19:01:00"
+        },
+        "compress": {
+          "status": "ran",
+          "detail": "ALL.lowbps.mp4 (2127.3s) = 2 takes joined in name order: 2026-11-23 11-06-42.mkv, 2026-11-23 11-30-38.mkv",
+          "at": "2026-11-23T19:04:08"
+        },
+        "defumble": {
+          "status": "ran",
+          "detail": "ALL.a.defumbled.mp4 (1196.3s)",
+          "at": "2026-11-23T19:45:54"
+        },
+        "cover_blackout": {
+          "status": "ran",
+          "detail": "ALL.b.blackout.mp4 (1196.3s)",
+          "at": "2026-11-23T19:58:23"
+        },
+        "desilence_coarse": {
+          "status": "ran",
+          "detail": "ALL.c.desilenced.mp4 (591.7s)",
+          "at": "2026-11-23T20:03:08"
+        },
+        "gate_spine_review": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-11-23T21:03:06"
+        },
+        "burst_removal": {
+          "status": "ran",
+          "detail": "ALL.d.cleaned.mp4 (590.3s)",
+          "at": "2026-11-23T21:12:16"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "final definition = the coarse pass (0.600 s, whole video): ALL.d.cleaned.mp4 is the final spine",
+          "at": "2026-11-23T21:12:16"
+        },
+        "transcribe": {
+          "status": "ran",
+          "detail": "ALL.d.cleaned.medium-words.json (0.0s)",
+          "at": "2026-11-23T21:18:12"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.d.cleaned.mp4 ok (590.3s), 1696 words, fps 30, chain lowbps+a+b+c+d",
+          "at": "2026-11-23T21:18:13"
+        },
+        "enhance_handoff": {
+          "status": "ran",
+          "detail": "WAV for Adobe Podcast Studio: C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\spine\\plan-to-make-millions FINAL.wav (590.3s). Enhance it and drop the result into C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\spine with 'enhanced' in its name, or Adobe's own export name (wav / mp3 / m4a / mp4, the same length)",
+          "at": "2026-11-23T21:18:14"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "short-langgraph-updates@2026-11-23T21:04:08",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-langgraph-updates",
+    "started_at": "2026-11-23T21:04:08",
+    "ended_at": "2026-11-23T21:22:45",
+    "duration_s": 1117.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "langgraph-updates",
+      "seconds": 30.0,
+      "approve": [],
+      "redo": [
+        "s_extract",
+        "s_captions",
+        "s_render",
+        "s_qa_final"
+      ],
+      "resume": false
+    },
+    "summary": {
+      "batch": "langgraph-updates",
+      "last_node": "s_deliver",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 317.81s == spine 317.81s; FINAL-TIME transcript written (105 segments)",
+          "at": "2026-11-23T21:18:20"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "3 spans, 27.8s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-11-23T21:18:22"
+        },
+        "gate_short_plan": {
+          "status": "ran",
+          "detail": "auto-approved (no plan gate: Mike reviews the finished short)",
+          "at": "2026-11-23T21:18:22"
+        },
+        "s_paint_16x9": {
+          "status": "skipped",
+          "detail": "not 16:9-sourced (a delivered vertical is the master)",
+          "at": "2026-11-23T21:18:22"
+        },
+        "s_variants": {
+          "status": "skipped",
+          "detail": "presentation project: no Envato / ChatGPT covers, its cards are already native vertical",
+          "at": "2026-11-23T21:18:22"
+        },
+        "s_vertical_cards": {
+          "status": "skipped",
+          "detail": "the delivered vertical already carries native-vertical assets",
+          "at": "2026-11-23T21:18:22"
+        },
+        "s_extract": {
+          "status": "ran",
+          "detail": "3 intermediates, 27.8s of spans",
+          "at": "2026-11-23T21:18:33"
+        },
+        "s_captions": {
+          "status": "ran",
+          "detail": "39 caption groups over 3 COVER-sourced window(s) -> LanggraphUpdatesShortCaptions.ts",
+          "at": "2026-11-23T21:18:34"
+        },
+        "s_comp": {
+          "status": "ran",
+          "detail": "LanggraphUpdatesShort.tsx registered (30.8s)",
+          "at": "2026-11-23T21:18:34"
+        },
+        "s_verify_comp": {
+          "status": "ran",
+          "detail": "gates PASS on LanggraphUpdatesShort.tsx",
+          "at": "2026-11-23T21:18:34"
+        },
+        "s_render": {
+          "status": "ran",
+          "detail": "langgraph-updates-SHORT-30s-v2-video.mp4 (30.80s)",
+          "at": "2026-11-23T21:20:41"
+        },
+        "s_mix": {
+          "status": "ran",
+          "detail": "langgraph-updates-SHORT-30s-v2.mp4: VO spans crossfaded + shared CTA + bed",
+          "at": "2026-11-23T21:20:46"
+        },
+        "s_verify_final": {
+          "status": "ran",
+          "detail": "langgraph-updates-SHORT-30s-v2.mp4: 30.80s, -21.6 LUFS, peak -5.9 dBFS",
+          "at": "2026-11-23T21:21:10"
+        },
+        "s_qa_final": {
+          "status": "ran",
+          "detail": "langgraph-updates-SHORT-30s-v2.mp4: final visual-qa PASS on 4 contact sheet(s)",
+          "at": "2026-11-23T21:22:44"
+        },
+        "gate_short": {
+          "status": "ran",
+          "detail": "auto-approved: langgraph-updates-SHORT-30s-v2.mp4 passed verify",
+          "at": "2026-11-23T21:22:44"
+        },
+        "s_deliver": {
+          "status": "ran",
+          "detail": "promoted -> langgraph-updates-SHORT-30s.mp4 (14 MB); not queued",
+          "at": "2026-11-23T21:22:44"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-plan-to-make-millions@2026-11-23T21:24:07",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "longform-plan-to-make-millions",
+    "started_at": "2026-11-23T21:24:07",
+    "ended_at": "2026-11-23T21:25:34",
+    "duration_s": 87.4,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "plan-to-make-millions",
+      "until": "",
+      "approve": [
+        "spine"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "plan-to-make-millions",
+      "last_node": "enhance_remux",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "plan-to-make-millions: folder + PROJECT-LOG ready",
+          "at": "2026-11-22T18:57:37"
+        },
+        "research": {
+          "status": "ran",
+          "detail": "DATA.md written (88 source links)",
+          "at": "2026-11-22T19:35:12"
+        },
+        "screenplay": {
+          "status": "ran",
+          "detail": "SCREENPLAY.md written, lint PASS (8 FACE beat(s))",
+          "at": "2026-11-22T20:03:42"
+        },
+        "gate_screenplay": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-11-23T19:01:00"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-11-23T19:01:00"
+        },
+        "compress": {
+          "status": "ran",
+          "detail": "ALL.lowbps.mp4 (2127.3s) = 2 takes joined in name order: 2026-11-23 11-06-42.mkv, 2026-11-23 11-30-38.mkv",
+          "at": "2026-11-23T19:04:08"
+        },
+        "defumble": {
+          "status": "ran",
+          "detail": "ALL.a.defumbled.mp4 (1196.3s)",
+          "at": "2026-11-23T19:45:54"
+        },
+        "cover_blackout": {
+          "status": "ran",
+          "detail": "ALL.b.blackout.mp4 (1196.3s)",
+          "at": "2026-11-23T19:58:23"
+        },
+        "desilence_coarse": {
+          "status": "ran",
+          "detail": "ALL.c.desilenced.mp4 (591.7s)",
+          "at": "2026-11-23T20:03:08"
+        },
+        "gate_spine_review": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-11-23T21:03:06"
+        },
+        "burst_removal": {
+          "status": "ran",
+          "detail": "ALL.d.cleaned.mp4 (590.3s)",
+          "at": "2026-11-23T21:12:16"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "final definition = the coarse pass (0.600 s, whole video): ALL.d.cleaned.mp4 is the final spine",
+          "at": "2026-11-23T21:12:16"
+        },
+        "transcribe": {
+          "status": "ran",
+          "detail": "ALL.d.cleaned.medium-words.json (0.0s)",
+          "at": "2026-11-23T21:18:12"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.d.cleaned.mp4 ok (590.3s), 1696 words, fps 30, chain lowbps+a+b+c+d",
+          "at": "2026-11-23T21:18:13"
+        },
+        "enhance_handoff": {
+          "status": "ran",
+          "detail": "WAV for Adobe Podcast Studio: C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\spine\\plan-to-make-millions FINAL.wav (590.3s). Enhance it and drop the result into C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\spine with 'enhanced' in its name, or Adobe's own export name (wav / mp3 / m4a / mp4, the same length)",
+          "at": "2026-11-23T21:18:14"
+        },
+        "gate_spine": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-11-23T21:24:07"
+        },
+        "enhance_remux": {
+          "status": "failed",
+          "detail": "remux of plan-to-make-millions FINAL-esv2-75p-bg-10p-music-10p.wav onto ALL.d.cleaned.mp4 did not verify (length mismatch, or the video stream changed); the spine is unchanged",
+          "at": "2026-11-23T21:25:33"
+        }
+      }
+    },
+    "error": "enhance_remux: remux of plan-to-make-millions FINAL-esv2-75p-bg-10p-music-10p.wav onto ALL.d.cleaned.mp4 did not verify (length mismatch, or the video stream changed); the spine is unchanged\nEDIT video 590.212s  enhanced audio 590.276s  delta +0.063s\nframes EDIT 17686 out 17686; video stream identical: True\n  audio offset at   90.8s: +0.00 ms\n  audio offset at  181.6s: +0.04 ms\n  audio offset at  272.5s: -43.42 ms\n  audio offset at  363.3s: -43.44 ms\n  audio offset at  454.1s: -43.44 ms\nspine -> C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\spine\\ALL.e.enhanced.mp4 CHECK FAILED, do not use\n"
+  },
+  {
+    "run_id": "longform-plan-to-make-millions-b@2026-11-23T21:29:14",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-plan-to-make-millions-b",
+    "started_at": "2026-11-23T21:29:14",
+    "ended_at": "2026-11-23T22:53:23",
+    "duration_s": 5049.7,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "plan-to-make-millions",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "plan-to-make-millions",
+      "last_node": "music_plan",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "plan-to-make-millions: folder + PROJECT-LOG ready",
+          "at": "2026-11-23T21:29:14"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-11-23T21:29:14"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (8 FACE beat(s))",
+          "at": "2026-11-23T21:29:14"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T19:01:00",
+          "at": "2026-11-23T21:29:14"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-11-23T21:29:14"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-11-23T21:29:14"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-11-23T21:29:15"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-11-23T21:29:15"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-11-23T21:29:15"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T21:03:06",
+          "at": "2026-11-23T21:29:15"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-11-23T21:29:16"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "final definition = the coarse pass (0.600 s, whole video): ALL.d.cleaned.mp4 is the final spine",
+          "at": "2026-11-23T21:29:16"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.medium-words.json present",
+          "at": "2026-11-23T21:29:16"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.d.cleaned.mp4 ok (590.3s), 1696 words, fps 30, chain lowbps+a+b+c+d",
+          "at": "2026-11-23T21:29:16"
+        },
+        "enhance_handoff": {
+          "status": "ran",
+          "detail": "WAV for Adobe Podcast Studio: C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\spine\\plan-to-make-millions FINAL.wav (590.3s). Enhance it and drop the result into C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\spine with 'enhanced' in its name, or Adobe's own export name (wav / mp3 / m4a / mp4, the same length)",
+          "at": "2026-11-23T21:29:16"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T21:24:07",
+          "at": "2026-11-23T21:29:16"
+        },
+        "enhance_remux": {
+          "status": "ran",
+          "detail": "plan-to-make-millions FINAL-esv2-75p-bg-10p-music-10p.wav remuxed onto ALL.d.cleaned.mp4 -> ALL.e.enhanced.mp4 (video stream copied, sidecars .medium-words.json+.segments.txt carried); the FINAL spine is now ALL.e.enhanced.mp4",
+          "at": "2026-11-23T21:30:26"
+        },
+        "as_recorded": {
+          "status": "ran",
+          "detail": "AS-RECORDED.md written, lint PASS (8 FACE windows)",
+          "at": "2026-11-23T21:36:29"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (97 cover beats, 4 clip insert(s), 1 whiteboard beat(s) 24s = 4% of the runtime), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-11-23T22:17:13"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (15 beds over 5 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-11-23T22:53:23"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-plan-to-make-millions-b@2026-11-23T22:55:01",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-plan-to-make-millions-b",
+    "started_at": "2026-11-23T22:55:01",
+    "ended_at": "2026-11-24T01:50:00",
+    "duration_s": 10499.1,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "plan-to-make-millions",
+      "until": "",
+      "approve": [
+        "plan"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "plan-to-make-millions",
+      "last_node": "verify_assets",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "plan-to-make-millions: folder + PROJECT-LOG ready",
+          "at": "2026-11-24T01:43:34"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-11-24T01:43:34"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (8 FACE beat(s))",
+          "at": "2026-11-24T01:43:34"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T19:01:00",
+          "at": "2026-11-24T01:43:34"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-11-24T01:43:34"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-11-24T01:43:34"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-11-24T01:43:34"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-11-24T01:43:35"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-11-24T01:43:35"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T21:03:06",
+          "at": "2026-11-24T01:43:35"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-11-24T01:43:36"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "final definition = the coarse pass (0.600 s, whole video): ALL.d.cleaned.mp4 is the final spine",
+          "at": "2026-11-24T01:43:36"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.e.enhanced.medium-words.json present",
+          "at": "2026-11-24T01:43:36"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.enhanced.mp4 ok (590.2s), 1696 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-11-24T01:43:36"
+        },
+        "enhance_handoff": {
+          "status": "skipped",
+          "detail": "ALL.e.enhanced.mp4 already carries the enhanced track",
+          "at": "2026-11-24T01:43:36"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T21:24:07",
+          "at": "2026-11-24T01:43:36"
+        },
+        "enhance_remux": {
+          "status": "skipped",
+          "detail": "ALL.e.enhanced.mp4 already carries the enhanced track",
+          "at": "2026-11-24T01:43:36"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (8 FACE windows)",
+          "at": "2026-11-24T01:43:36"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (97 cover beats, 4 clip insert(s), 1 whiteboard beat(s) 24s = 4% of the runtime), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-11-24T01:44:37"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (15 beds over 5 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-11-24T01:44:38"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T23:33:03",
+          "at": "2026-11-24T01:44:39"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "84 asset id(s) built (1 builder(s) dispatched), visual-qa PASS on 199 file(s)",
+          "at": "2026-11-24T01:49:55"
+        },
+        "verify_assets": {
+          "status": "failed",
+          "detail": "1 reconcile problem(s): CLIP-8-fox-historically-bad-day.mp4 is 3.60s, the plan says 5.80s",
+          "at": "2026-11-24T01:49:59"
+        }
+      }
+    },
+    "error": "verify_assets: 1 reconcile problem(s): CLIP-8-fox-historically-bad-day.mp4 is 3.60s, the plan says 5.80s"
+  },
+  {
+    "run_id": "longform-plan-to-make-millions-c@2026-11-24T01:54:50",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-plan-to-make-millions-c",
+    "started_at": "2026-11-24T01:54:50",
+    "ended_at": "2026-11-24T02:35:31",
+    "duration_s": 2441.7,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "plan-to-make-millions",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "plan-to-make-millions",
+      "last_node": "reconcile_docs",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "plan-to-make-millions: folder + PROJECT-LOG ready",
+          "at": "2026-11-24T01:54:50"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-11-24T01:54:50"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (8 FACE beat(s))",
+          "at": "2026-11-24T01:54:50"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T19:01:00",
+          "at": "2026-11-24T01:54:50"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-11-24T01:54:50"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-11-24T01:54:50"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-11-24T01:54:51"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-11-24T01:54:51"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-11-24T01:54:52"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T21:03:06",
+          "at": "2026-11-24T01:54:52"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-11-24T01:54:52"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "final definition = the coarse pass (0.600 s, whole video): ALL.d.cleaned.mp4 is the final spine",
+          "at": "2026-11-24T01:54:52"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.e.enhanced.medium-words.json present",
+          "at": "2026-11-24T01:54:52"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.enhanced.mp4 ok (590.2s), 1696 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-11-24T01:54:52"
+        },
+        "enhance_handoff": {
+          "status": "skipped",
+          "detail": "ALL.e.enhanced.mp4 already carries the enhanced track",
+          "at": "2026-11-24T01:54:52"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T21:24:07",
+          "at": "2026-11-24T01:54:52"
+        },
+        "enhance_remux": {
+          "status": "skipped",
+          "detail": "ALL.e.enhanced.mp4 already carries the enhanced track",
+          "at": "2026-11-24T01:54:52"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (8 FACE windows)",
+          "at": "2026-11-24T01:54:53"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (97 cover beats, 4 clip insert(s), 1 whiteboard beat(s) 24s = 4% of the runtime), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-11-24T01:55:53"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (15 beds over 5 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-11-24T01:55:55"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T23:33:03",
+          "at": "2026-11-24T01:55:55"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "84 asset id(s) built (0 builder(s) dispatched), visual-qa PASS on 199 file(s)",
+          "at": "2026-11-24T01:56:12"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "84 ids / 199 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-11-24T01:56:15"
+        },
+        "edit_plan": {
+          "status": "ran",
+          "detail": "EDIT-PLAN.md (492 events) + CUE-SHEET.md written, lint PASS (0 warning(s))",
+          "at": "2026-11-24T02:10:46"
+        },
+        "transitions": {
+          "status": "ran",
+          "detail": "TRANSITION-PLAN.json ok (110 scene changes), variety PASS (0 fails, 0 warns), TRANSITIONS.md rendered, lint PASS",
+          "at": "2026-11-24T02:35:30"
+        },
+        "reconcile_docs": {
+          "status": "failed",
+          "detail": "blueprint set does not reconcile (see FAIL lines above; fix the named rows by hand, then re-drive)",
+          "at": "2026-11-24T02:35:31"
+        }
+      }
+    },
+    "error": "reconcile_docs: blueprint set does not reconcile (see FAIL lines above; fix the named rows by hand, then re-drive)\n  warn  no plan row matches the placeholder at 0:07.7: no event line to carry hand:cut (container-cut)\n  warn  no plan row matches the placeholder at 0:08.4: no event line to carry hand:cut (container-cut)\n  warn  no plan row matches the placeholder at 0:09.0: no event line to carry hand:cut (container-cut)\n  warn  no plan row matches the placeholder at 3:21.4: no event line to carry lib:melt-rgb-soft-2 (MELT-transform)\n  warn  no plan row matches the placeholder at 5:26.1: no event line to carry lib:melt-rgb-soft-short-2 (MELT-transform)\n  warn  no plan row matches the placeholder at 7:24.6: no event line to carry lib:spin-center-swinging-cw (SPIN-newfacet)\n  note  resolved 103 placeholder(s) in EDIT-PLAN.md; CUE-SHEET TRANSITIONS section unchanged\n\nreconcile_docs — plan-to-make-millions\n----------------------------------------------------------------\n  FAIL  plan id lib:melt-rgb-soft-2 (MELT-transform at 201.45s) never appears in EDIT-PLAN.md\n  FAIL  plan id lib:melt-rgb-soft-short-2 (MELT-transform at 326.05s) never appears in EDIT-PLAN.md\n  FAIL  plan id lib:spin-center-swinging-cw (SPIN-newfacet at 444.58s) never appears in EDIT-PLAN.md\n----------------------------------------------------------------\nRECONCILE FAIL resolved=103 placeholders_left=0 fails=3\n"
+  },
+  {
+    "run_id": "longform-plan-to-make-millions-d@2026-11-24T02:36:49",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-plan-to-make-millions-d",
+    "started_at": "2026-11-24T02:36:49",
+    "ended_at": "2026-11-24T02:38:18",
+    "duration_s": 89.3,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "plan-to-make-millions",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "plan-to-make-millions",
+      "last_node": "lint_docset",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "plan-to-make-millions: folder + PROJECT-LOG ready",
+          "at": "2026-11-24T02:36:49"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-11-24T02:36:49"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (8 FACE beat(s))",
+          "at": "2026-11-24T02:36:49"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T19:01:00",
+          "at": "2026-11-24T02:36:49"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-11-24T02:36:49"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-11-24T02:36:49"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-11-24T02:36:49"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-11-24T02:36:50"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-11-24T02:36:50"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T21:03:06",
+          "at": "2026-11-24T02:36:50"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-11-24T02:36:51"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "final definition = the coarse pass (0.600 s, whole video): ALL.d.cleaned.mp4 is the final spine",
+          "at": "2026-11-24T02:36:51"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.e.enhanced.medium-words.json present",
+          "at": "2026-11-24T02:36:51"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.enhanced.mp4 ok (590.2s), 1696 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-11-24T02:36:51"
+        },
+        "enhance_handoff": {
+          "status": "skipped",
+          "detail": "ALL.e.enhanced.mp4 already carries the enhanced track",
+          "at": "2026-11-24T02:36:51"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T21:24:07",
+          "at": "2026-11-24T02:36:51"
+        },
+        "enhance_remux": {
+          "status": "skipped",
+          "detail": "ALL.e.enhanced.mp4 already carries the enhanced track",
+          "at": "2026-11-24T02:36:51"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (8 FACE windows)",
+          "at": "2026-11-24T02:36:51"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (97 cover beats, 4 clip insert(s), 1 whiteboard beat(s) 24s = 4% of the runtime), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-11-24T02:37:52"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (15 beds over 5 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-11-24T02:37:54"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T23:33:03",
+          "at": "2026-11-24T02:37:54"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "84 asset id(s) built (0 builder(s) dispatched), visual-qa PASS on 199 file(s)",
+          "at": "2026-11-24T02:38:11"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "84 ids / 199 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-11-24T02:38:14"
+        },
+        "edit_plan": {
+          "status": "ran",
+          "detail": "EDIT-PLAN.md (492 events) + CUE-SHEET.md written, lint PASS (0 warning(s))",
+          "at": "2026-11-24T02:38:15"
+        },
+        "transitions": {
+          "status": "ran",
+          "detail": "TRANSITION-PLAN.json ok (110 scene changes), variety PASS (0 fails, 0 warns), TRANSITIONS.md rendered, lint PASS",
+          "at": "2026-11-24T02:38:16"
+        },
+        "reconcile_docs": {
+          "status": "ran",
+          "detail": "0 transition pick(s) fanned into the event log, cross-check PASS, both lints PASS",
+          "at": "2026-11-24T02:38:17"
+        },
+        "lint_docset": {
+          "status": "ran",
+          "detail": "docset PASS (1 warning(s) to review)",
+          "at": "2026-11-24T02:38:17"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-plan-to-make-millions-d@2026-11-24T02:38:43",
+    "lane": 4,
+    "lane_name": "longform",
+    "thread": "longform-plan-to-make-millions-d",
+    "started_at": "2026-11-24T02:38:43",
+    "ended_at": "2026-11-24T04:31:29",
+    "duration_s": 6765.6,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "plan-to-make-millions",
+      "until": "",
+      "approve": [
+        "blueprint"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "plan-to-make-millions",
+      "last_node": "mix_audio",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "plan-to-make-millions: folder + PROJECT-LOG ready",
+          "at": "2026-11-24T02:36:49"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-11-24T02:36:49"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (8 FACE beat(s))",
+          "at": "2026-11-24T02:36:49"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T19:01:00",
+          "at": "2026-11-24T02:36:49"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-11-24T02:36:49"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-11-24T02:36:49"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-11-24T02:36:49"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-11-24T02:36:50"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-11-24T02:36:50"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T21:03:06",
+          "at": "2026-11-24T02:36:50"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-11-24T02:36:51"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "final definition = the coarse pass (0.600 s, whole video): ALL.d.cleaned.mp4 is the final spine",
+          "at": "2026-11-24T02:36:51"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.e.enhanced.medium-words.json present",
+          "at": "2026-11-24T02:36:51"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.enhanced.mp4 ok (590.2s), 1696 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-11-24T02:36:51"
+        },
+        "enhance_handoff": {
+          "status": "skipped",
+          "detail": "ALL.e.enhanced.mp4 already carries the enhanced track",
+          "at": "2026-11-24T02:36:51"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T21:24:07",
+          "at": "2026-11-24T02:36:51"
+        },
+        "enhance_remux": {
+          "status": "skipped",
+          "detail": "ALL.e.enhanced.mp4 already carries the enhanced track",
+          "at": "2026-11-24T02:36:51"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (8 FACE windows)",
+          "at": "2026-11-24T02:36:51"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (97 cover beats, 4 clip insert(s), 1 whiteboard beat(s) 24s = 4% of the runtime), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-11-24T02:37:52"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (15 beds over 5 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-11-24T02:37:54"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T23:33:03",
+          "at": "2026-11-24T02:37:54"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "84 asset id(s) built (0 builder(s) dispatched), visual-qa PASS on 199 file(s)",
+          "at": "2026-11-24T02:38:11"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "84 ids / 199 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-11-24T02:38:14"
+        },
+        "edit_plan": {
+          "status": "ran",
+          "detail": "EDIT-PLAN.md (492 events) + CUE-SHEET.md written, lint PASS (0 warning(s))",
+          "at": "2026-11-24T02:38:15"
+        },
+        "transitions": {
+          "status": "ran",
+          "detail": "TRANSITION-PLAN.json ok (110 scene changes), variety PASS (0 fails, 0 warns), TRANSITIONS.md rendered, lint PASS",
+          "at": "2026-11-24T02:38:16"
+        },
+        "reconcile_docs": {
+          "status": "ran",
+          "detail": "0 transition pick(s) fanned into the event log, cross-check PASS, both lints PASS",
+          "at": "2026-11-24T02:38:17"
+        },
+        "lint_docset": {
+          "status": "ran",
+          "detail": "docset PASS (1 warning(s) to review)",
+          "at": "2026-11-24T02:38:17"
+        },
+        "gate_blueprint": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-11-24T02:38:43"
+        },
+        "card_pauses": {
+          "status": "ran",
+          "detail": "3 card pause(s) x 1.5s + 0 beat pause(s) + 4 clip insert(s) baked -> ALL.g.paused.mp4 (607.64s), gate PASS, copied to assets/spine.mp4",
+          "at": "2026-11-24T02:44:47"
+        },
+        "captions": {
+          "status": "ran",
+          "detail": "24 caption groups over 3 window(s) (every FACE hold) -> PlanToMakeMillionsCaptions.ts",
+          "at": "2026-11-24T02:44:55"
+        },
+        "comp_build": {
+          "status": "ran",
+          "detail": "PlanToMakeMillions.tsx registered, draft plan-to-make-millions-draft-v1.mp4 (607.63s, audio ok)",
+          "at": "2026-11-24T04:30:16"
+        },
+        "verify_comp": {
+          "status": "ran",
+          "detail": "9 gate(s) PASS on PlanToMakeMillions.tsx, draft plan-to-make-millions-draft-v1.mp4 matches the spine",
+          "at": "2026-11-24T04:30:22"
+        },
+        "mix_audio": {
+          "status": "ran",
+          "detail": "plan-to-make-millions-draft-v1-mix.mp4 (607.66s, peak -1.5 dBFS) from MUSIC-PLAN + event-log SFX",
+          "at": "2026-11-24T04:31:28"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-plan-to-make-millions-d@2026-11-24T04:42:15",
+    "lane": 5,
+    "lane_name": "longform",
+    "thread": "longform-plan-to-make-millions-d",
+    "started_at": "2026-11-24T04:42:15",
+    "ended_at": "2026-11-24T05:15:54",
+    "duration_s": 2019.5,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "plan-to-make-millions",
+      "until": "",
+      "approve": [
+        "draft"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "plan-to-make-millions",
+      "last_node": "definition_of_done",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "plan-to-make-millions: folder + PROJECT-LOG ready",
+          "at": "2026-11-24T05:12:26"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-11-24T05:12:26"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (8 FACE beat(s))",
+          "at": "2026-11-24T05:12:26"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T19:01:00",
+          "at": "2026-11-24T05:12:26"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-11-24T05:12:26"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-11-24T05:12:26"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-11-24T05:12:27"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-11-24T05:12:27"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-11-24T05:12:28"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T21:03:06",
+          "at": "2026-11-24T05:12:28"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-11-24T05:12:28"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "final definition = the coarse pass (0.600 s, whole video): ALL.d.cleaned.mp4 is the final spine",
+          "at": "2026-11-24T05:12:28"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.e.enhanced.medium-words.json present",
+          "at": "2026-11-24T05:12:28"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.enhanced.mp4 ok (590.2s), 1696 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-11-24T05:12:28"
+        },
+        "enhance_handoff": {
+          "status": "skipped",
+          "detail": "ALL.e.enhanced.mp4 already carries the enhanced track",
+          "at": "2026-11-24T05:12:28"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T21:24:07",
+          "at": "2026-11-24T05:12:28"
+        },
+        "enhance_remux": {
+          "status": "skipped",
+          "detail": "ALL.e.enhanced.mp4 already carries the enhanced track",
+          "at": "2026-11-24T05:12:28"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (8 FACE windows)",
+          "at": "2026-11-24T05:12:29"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (97 cover beats, 4 clip insert(s), 1 whiteboard beat(s) 24s = 4% of the runtime), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-11-24T05:13:30"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (15 beds over 5 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-11-24T05:13:31"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-11-23T23:33:03",
+          "at": "2026-11-24T05:13:32"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "84 asset id(s) built (0 builder(s) dispatched), visual-qa PASS on 199 file(s)",
+          "at": "2026-11-24T05:13:48"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "84 ids / 199 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-11-24T05:13:52"
+        },
+        "edit_plan": {
+          "status": "ran",
+          "detail": "EDIT-PLAN.md (492 events) + CUE-SHEET.md written, lint PASS (0 warning(s))",
+          "at": "2026-11-24T05:13:52"
+        },
+        "transitions": {
+          "status": "ran",
+          "detail": "TRANSITION-PLAN.json ok (110 scene changes), variety PASS (0 fails, 0 warns), TRANSITIONS.md rendered, lint PASS",
+          "at": "2026-11-24T05:13:54"
+        },
+        "reconcile_docs": {
+          "status": "ran",
+          "detail": "0 transition pick(s) fanned into the event log, cross-check PASS, both lints PASS",
+          "at": "2026-11-24T05:13:55"
+        },
+        "lint_docset": {
+          "status": "ran",
+          "detail": "docset PASS (1 warning(s) to review)",
+          "at": "2026-11-24T05:13:55"
+        },
+        "gate_blueprint": {
+          "status": "skipped",
+          "detail": "approved 2026-11-24T02:38:43",
+          "at": "2026-11-24T05:13:55"
+        },
+        "card_pauses": {
+          "status": "ran",
+          "detail": "3 card pause(s) x 1.5s + 0 beat pause(s) + 4 clip insert(s) baked -> ALL.g.paused.mp4 (607.64s), gate PASS, copied to assets/spine.mp4",
+          "at": "2026-11-24T05:15:02"
+        },
+        "captions": {
+          "status": "ran",
+          "detail": "23 caption groups over 3 window(s) (every FACE hold) -> PlanToMakeMillionsCaptions.ts",
+          "at": "2026-11-24T05:15:02"
+        },
+        "comp_build": {
+          "status": "ran",
+          "detail": "PlanToMakeMillions.tsx registered, draft plan-to-make-millions-draft-v1.mp4 (607.63s, audio ok)",
+          "at": "2026-11-24T05:15:02"
+        },
+        "verify_comp": {
+          "status": "ran",
+          "detail": "9 gate(s) PASS on PlanToMakeMillions.tsx, draft plan-to-make-millions-draft-v1.mp4 matches the spine",
+          "at": "2026-11-24T05:15:08"
+        },
+        "mix_audio": {
+          "status": "ran",
+          "detail": "plan-to-make-millions-draft-v1-mix.mp4 (607.66s, peak -3.5 dBFS) from MUSIC-PLAN + event-log SFX",
+          "at": "2026-11-24T05:15:08"
+        },
+        "gate_draft": {
+          "status": "skipped",
+          "detail": "approved 2026-11-24T04:42:15",
+          "at": "2026-11-24T05:15:08"
+        },
+        "final_render": {
+          "status": "ran",
+          "detail": "plan-to-make-millions-final-v1.mp4 (crf 18) + music/SFX -> plan-to-make-millions-final-v1-mix.mp4 (607.66s)",
+          "at": "2026-11-24T05:15:08"
+        },
+        "verify_final": {
+          "status": "ran",
+          "detail": "plan-to-make-millions-final-v1-mix.mp4 verified (607.66s, -20.2 LUFS, peak -3.5 dBFS)",
+          "at": "2026-11-24T05:15:53"
+        },
+        "definition_of_done": {
+          "status": "failed",
+          "detail": "YT-DELIVERY FAIL: write yt-delivery.json at the project root (the title, a two-sentence description whose first sentence is an open loop, 2-3 hashtags, names for the uncarded chapters, exactly 10 keyword phrases + their common misspellings; scripts/yt_delivery.py docstring), re-drive, then hand Mike the block",
+          "at": "2026-11-24T05:15:53"
+        }
+      }
+    },
+    "error": "definition_of_done: YT-DELIVERY FAIL: write yt-delivery.json at the project root (the title, a two-sentence description whose first sentence is an open loop, 2-3 hashtags, names for the uncarded chapters, exactly 10 keyword phrases + their common misspellings; scripts/yt_delivery.py docstring), re-drive, then hand Mike the block\nTITLE\n\n\nDESCRIPTION\n\n\n\n\nCHAPTERS\n0:00 The Hook\n1:32 Why Everything Dumped\n4:40 The Trades\n6:28 How I Find Them\n8:07 The Plan to 2028\n\nYT MUSIC CODES\n5WH8X4RII7CDAU05|3PNUTPGKFO9NSTVH|5S5Z7G59FWXCILBA|ETEORPHXRJHTSO60\n\nKEYWORDS (0 keywords + 0 common misspellings, 0 of 500 tag characters)\n\n\n  FAIL  no title: write `title` in yt-delivery.json (Mike's locked title)\n  FAIL  yt-delivery.json `description` needs exactly 2 sentences (a list of two, the FIRST an open loop), it has 0\n  FAIL  yt-delivery.json `hashtags` needs 2 or 3, it has 0\n  FAIL  yt-delivery.json needs exactly 10 keyword phrases, it has 0 (the main loop writes them)\n  FAIL  yt-delivery.json `misspellings` needs 3 or more common misspellings of the keywords, it has 0\nYT-DELIVERY FAIL title=0 description=0 hashtags=0 chapters=5 codes=4 keywords=0 misspellings=0 tag_chars=0\n"
+  },
+  {
+    "run_id": "short-plan-to-make-millions@2026-11-24T15:32:26",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-plan-to-make-millions",
+    "started_at": "2026-11-24T15:32:26",
+    "ended_at": "2026-11-24T16:20:09",
+    "duration_s": 2863.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "plan-to-make-millions",
+      "seconds": 30.0,
+      "approve": [],
+      "redo": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "plan-to-make-millions",
+      "last_node": "s_deliver",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 607.63s == spine 607.64s; FINAL-TIME transcript written (224 segments)",
+          "at": "2026-11-24T16:18:30"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "5 spans, 27.8s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-11-24T16:18:32"
+        },
+        "gate_short_plan": {
+          "status": "ran",
+          "detail": "auto-approved (no plan gate: Mike reviews the finished short)",
+          "at": "2026-11-24T16:18:32"
+        },
+        "s_paint_16x9": {
+          "status": "skipped",
+          "detail": "master already painted from this plan",
+          "at": "2026-11-24T16:18:32"
+        },
+        "s_variants": {
+          "status": "ran",
+          "detail": "no span carries an Envato clip or ChatGPT image; no variants needed",
+          "at": "2026-11-24T16:18:32"
+        },
+        "s_vertical_cards": {
+          "status": "ran",
+          "detail": "2 card(s) rebuilt 1080x1920, 1 face hold(s) -> vertical-cards.json",
+          "at": "2026-11-24T16:18:32"
+        },
+        "s_extract": {
+          "status": "skipped",
+          "detail": "spans.json present",
+          "at": "2026-11-24T16:18:32"
+        },
+        "s_captions": {
+          "status": "ran",
+          "detail": "32 caption groups over 5 COVER-sourced window(s) -> PlanToMakeMillionsShortCaptions.ts",
+          "at": "2026-11-24T16:18:32"
+        },
+        "s_comp": {
+          "status": "ran",
+          "detail": "PlanToMakeMillionsShort.tsx registered (30.8s)",
+          "at": "2026-11-24T16:18:32"
+        },
+        "s_verify_comp": {
+          "status": "ran",
+          "detail": "gates PASS on PlanToMakeMillionsShort.tsx",
+          "at": "2026-11-24T16:18:32"
+        },
+        "s_render": {
+          "status": "skipped",
+          "detail": "plan-to-make-millions-SHORT-30s-v1-video.mp4 present",
+          "at": "2026-11-24T16:18:32"
+        },
+        "s_mix": {
+          "status": "ran",
+          "detail": "plan-to-make-millions-SHORT-30s-v1.mp4: VO spans crossfaded + shared CTA + bed",
+          "at": "2026-11-24T16:18:32"
+        },
+        "s_verify_final": {
+          "status": "ran",
+          "detail": "plan-to-make-millions-SHORT-30s-v1.mp4: 30.80s, -21.7 LUFS, peak -5.4 dBFS, hook face 51%",
+          "at": "2026-11-24T16:18:43"
+        },
+        "s_qa_final": {
+          "status": "ran",
+          "detail": "plan-to-make-millions-SHORT-30s-v1.mp4: final visual-qa PASS on 4 contact sheet(s)",
+          "at": "2026-11-24T16:20:08"
+        },
+        "gate_short": {
+          "status": "ran",
+          "detail": "auto-approved: plan-to-make-millions-SHORT-30s-v1.mp4 passed verify",
+          "at": "2026-11-24T16:20:08"
+        },
+        "s_deliver": {
+          "status": "ran",
+          "detail": "promoted -> plan-to-make-millions-SHORT-30s.mp4 (23 MB); not queued",
+          "at": "2026-11-24T16:20:08"
+        }
+      }
+    },
+    "error": "s_qa_final: final visual-qa FAILED 2 defect(s): 18.9s Pieverse chart PAYOFF IS A BLINK. The span shows the chart from 13.5 s, but the price line; 13.5s Same root cause: from 13.5 to ~16.0 s the chart is EMPTY axes (no line, no badge, only the (full list C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\_previews\\short\\qa\\final-visual-qa.json)"
+  },
+  {
+    "run_id": "short-plan-to-make-millions@2026-11-24T16:28:48",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-plan-to-make-millions",
+    "started_at": "2026-11-24T16:28:48",
+    "ended_at": "2026-11-24T16:32:47",
+    "duration_s": 239.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "plan-to-make-millions",
+      "seconds": 30.0,
+      "approve": [],
+      "redo": [
+        "s_render"
+      ],
+      "resume": false
+    },
+    "summary": {
+      "batch": "plan-to-make-millions",
+      "last_node": "s_deliver",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 607.63s == spine 607.64s; FINAL-TIME transcript written (224 segments)",
+          "at": "2026-11-24T16:28:48"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "5 spans, 27.8s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-11-24T16:28:50"
+        },
+        "gate_short_plan": {
+          "status": "ran",
+          "detail": "auto-approved (no plan gate: Mike reviews the finished short)",
+          "at": "2026-11-24T16:28:50"
+        },
+        "s_paint_16x9": {
+          "status": "skipped",
+          "detail": "master already painted from this plan",
+          "at": "2026-11-24T16:28:50"
+        },
+        "s_variants": {
+          "status": "ran",
+          "detail": "no span carries an Envato clip or ChatGPT image; no variants needed",
+          "at": "2026-11-24T16:28:50"
+        },
+        "s_vertical_cards": {
+          "status": "ran",
+          "detail": "2 card(s) rebuilt 1080x1920, 1 face hold(s) -> vertical-cards.json",
+          "at": "2026-11-24T16:28:50"
+        },
+        "s_extract": {
+          "status": "skipped",
+          "detail": "spans.json present",
+          "at": "2026-11-24T16:28:50"
+        },
+        "s_captions": {
+          "status": "ran",
+          "detail": "32 caption groups over 5 COVER-sourced window(s) -> PlanToMakeMillionsShortCaptions.ts",
+          "at": "2026-11-24T16:28:50"
+        },
+        "s_comp": {
+          "status": "ran",
+          "detail": "PlanToMakeMillionsShort.tsx registered (30.8s)",
+          "at": "2026-11-24T16:28:50"
+        },
+        "s_verify_comp": {
+          "status": "ran",
+          "detail": "gates PASS on PlanToMakeMillionsShort.tsx",
+          "at": "2026-11-24T16:28:51"
+        },
+        "s_render": {
+          "status": "ran",
+          "detail": "plan-to-make-millions-SHORT-30s-v2-video.mp4 (30.80s)",
+          "at": "2026-11-24T16:30:50"
+        },
+        "s_mix": {
+          "status": "ran",
+          "detail": "plan-to-make-millions-SHORT-30s-v2.mp4: VO spans crossfaded + shared CTA + bed",
+          "at": "2026-11-24T16:30:54"
+        },
+        "s_verify_final": {
+          "status": "ran",
+          "detail": "plan-to-make-millions-SHORT-30s-v2.mp4: 30.80s, -21.7 LUFS, peak -5.4 dBFS, hook face 51%",
+          "at": "2026-11-24T16:31:11"
+        },
+        "s_qa_final": {
+          "status": "ran",
+          "detail": "plan-to-make-millions-SHORT-30s-v2.mp4: final visual-qa PASS on 4 contact sheet(s)",
+          "at": "2026-11-24T16:32:46"
+        },
+        "gate_short": {
+          "status": "ran",
+          "detail": "auto-approved: plan-to-make-millions-SHORT-30s-v2.mp4 passed verify",
+          "at": "2026-11-24T16:32:46"
+        },
+        "s_deliver": {
+          "status": "ran",
+          "detail": "promoted -> plan-to-make-millions-SHORT-30s.mp4 (23 MB); not queued",
+          "at": "2026-11-24T16:32:46"
+        }
+      }
+    },
+    "error": "s_qa_final: final visual-qa FAILED 2 defect(s): 18.9s Pieverse chart PAYOFF IS A BLINK. The span shows the chart from 13.5 s, but the price line; 13.5s Same root cause: from 13.5 to ~16.0 s the chart is EMPTY axes (no line, no badge, only the (full list C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\_previews\\short\\qa\\final-visual-qa.json)"
+  },
+  {
+    "run_id": "ytpost-plan-to-make-millions-20261124-171716@2026-11-24T17:17:16",
+    "lane": 1,
+    "lane_name": "longform",
+    "thread": "ytpost-plan-to-make-millions-20261124-171716",
+    "started_at": "2026-11-24T17:17:16",
+    "ended_at": "2026-11-24T17:20:57",
+    "duration_s": 221.8,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "ytpost",
+      "project": "plan-to-make-millions",
+      "url": "https://youtu.be/Wf-5-UoAr4E",
+      "redo": []
+    },
+    "summary": {
+      "batch": "plan-to-make-millions",
+      "last_node": "y_build",
+      "steps": {
+        "y_preflight": {
+          "status": "ran",
+          "detail": "https://youtu.be/Wf-5-UoAr4E = \"The Crypto Strategy I'm Using to Make Millions by 2028\" on @CodeMonkeyMike (queue yt-posts.json); face thumbnail/refs/mike-portrait-plate.png; logo none",
+          "at": "2026-11-24T17:20:31"
+        },
+        "y_plan": {
+          "status": "ran",
+          "detail": "10 slides; post headline \"Crypto is dumping, and this is exactly where I plan to make millions by 2028.\"",
+          "at": "2026-11-24T17:20:31"
+        },
+        "y_build": {
+          "status": "failed",
+          "detail": "build_yt_post.py FAILED (layout / spec problems above): fix YT-POST.json and re-drive",
+          "at": "2026-11-24T17:20:57"
+        }
+      }
+    },
+    "error": "y_build: build_yt_post.py FAILED (layout / spec problems above): fix YT-POST.json and re-drive\nwrote C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\yt-post\\slides\\01.png\nwrote C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\yt-post\\slides\\02.png\nwrote C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\yt-post\\slides\\03.png\nwrote C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\yt-post\\slides\\04.png\nwrote C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\yt-post\\slides\\05.png\nwrote C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\yt-post\\slides\\06.png\nwrote C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\yt-post\\slides\\07.png\nwrote C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\yt-post\\slides\\08.png\nwrote C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\yt-post\\slides\\09.png\nwrote C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\yt-post\\slides\\10.png\nPROBLEMS:\nslide 3: runs into the footer: rows flow\nYT-POST-BUILD FAIL slides=10 problems=1\n"
+  },
+  {
+    "run_id": "ytpost-plan-to-make-millions-20261124-172544@2026-11-24T17:25:44",
+    "lane": 1,
+    "lane_name": "longform",
+    "thread": "ytpost-plan-to-make-millions-20261124-172544",
+    "started_at": "2026-11-24T17:25:44",
+    "ended_at": "2026-11-24T17:31:48",
+    "duration_s": 364.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "ytpost",
+      "project": "plan-to-make-millions",
+      "url": "https://youtu.be/Wf-5-UoAr4E",
+      "redo": []
+    },
+    "summary": {
+      "batch": "plan-to-make-millions",
+      "last_node": "y_queue",
+      "steps": {
+        "y_preflight": {
+          "status": "ran",
+          "detail": "https://youtu.be/Wf-5-UoAr4E = \"The Crypto Strategy I'm Using to Make Millions by 2028\" on @CodeMonkeyMike (queue yt-posts.json); face thumbnail/refs/mike-portrait-plate.png; logo none",
+          "at": "2026-11-24T17:25:44"
+        },
+        "y_plan": {
+          "status": "ran",
+          "detail": "10 slides; post headline \"Crypto is dumping, and this is exactly where I plan to make millions by 2028.\"",
+          "at": "2026-11-24T17:25:44"
+        },
+        "y_build": {
+          "status": "ran",
+          "detail": "10 slides rendered 1080x1080 -> yt-post/slides/",
+          "at": "2026-11-24T17:26:10"
+        },
+        "y_qa": {
+          "status": "ran",
+          "detail": "10 slides PASS visual-qa (round 2)",
+          "at": "2026-11-24T17:31:47"
+        },
+        "y_queue": {
+          "status": "ran",
+          "detail": "yt-post-2026-11-24-plan-to-make-millions-video appended in yt-posts.json (the crypto channel, dashboard tab \"YT Posts\"), 10 images, pending position 4/4 (posts on Mike's next YT post run)",
+          "at": "2026-11-24T17:31:47"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "ytpost-plan-to-make-millions-20261124-173224@2026-11-24T17:32:24",
+    "lane": 1,
+    "lane_name": "longform",
+    "thread": "ytpost-plan-to-make-millions-20261124-173224",
+    "started_at": "2026-11-24T17:32:24",
+    "ended_at": "2026-11-24T17:40:35",
+    "duration_s": 490.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "ytpost",
+      "project": "plan-to-make-millions",
+      "url": "https://youtu.be/Wf-5-UoAr4E",
+      "redo": []
+    },
+    "summary": {
+      "batch": "plan-to-make-millions",
+      "last_node": "y_queue",
+      "steps": {
+        "y_preflight": {
+          "status": "ran",
+          "detail": "https://youtu.be/Wf-5-UoAr4E = \"The Crypto Strategy I'm Using to Make Millions by 2028\" on @CodeMonkeyMike (queue yt-posts.json); face thumbnail/refs/mike-portrait-plate.png; logo none",
+          "at": "2026-11-24T17:32:25"
+        },
+        "y_plan": {
+          "status": "ran",
+          "detail": "10 slides; post headline \"Crypto is dumping, and this is exactly where I plan to make millions by 2028.\"",
+          "at": "2026-11-24T17:32:25"
+        },
+        "y_build": {
+          "status": "ran",
+          "detail": "10 slides rendered 1080x1080 -> yt-post/slides/",
+          "at": "2026-11-24T17:32:51"
+        },
+        "y_qa": {
+          "status": "ran",
+          "detail": "10 slides PASS visual-qa (round 2)",
+          "at": "2026-11-24T17:40:33"
+        },
+        "y_queue": {
+          "status": "ran",
+          "detail": "yt-post-2026-11-24-plan-to-make-millions-video replaced in yt-posts.json (the crypto channel, dashboard tab \"YT Posts\"), 10 images, pending position 4/4 (posts on Mike's next YT post run)",
+          "at": "2026-11-24T17:40:34"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "short-livestream-aws@2026-11-25T14:08:36",
+    "lane": 1,
+    "lane_name": "longform",
+    "thread": "short-livestream-aws",
+    "started_at": "2026-11-25T14:08:36",
+    "ended_at": "2026-11-25T14:46:16",
+    "duration_s": 2260.0,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "livestream-aws",
+      "seconds": 30.0,
+      "approve": [],
+      "redo": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "livestream-aws",
+      "last_node": "s_qa_final",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 388.40s == spine 388.40s; FINAL-TIME transcript written (140 segments)",
+          "at": "2026-11-25T14:44:36"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "3 spans, 27.5s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-11-25T14:44:37"
+        },
+        "gate_short_plan": {
+          "status": "ran",
+          "detail": "auto-approved (no plan gate: Mike reviews the finished short)",
+          "at": "2026-11-25T14:44:37"
+        },
+        "s_paint_16x9": {
+          "status": "skipped",
+          "detail": "not 16:9-sourced (a delivered vertical is the master)",
+          "at": "2026-11-25T14:44:37"
+        },
+        "s_variants": {
+          "status": "skipped",
+          "detail": "presentation project: no Envato / ChatGPT covers, its cards are already native vertical",
+          "at": "2026-11-25T14:44:37"
+        },
+        "s_vertical_cards": {
+          "status": "skipped",
+          "detail": "the delivered vertical already carries native-vertical assets",
+          "at": "2026-11-25T14:44:37"
+        },
+        "s_extract": {
+          "status": "skipped",
+          "detail": "spans.json present",
+          "at": "2026-11-25T14:44:37"
+        },
+        "s_captions": {
+          "status": "skipped",
+          "detail": "LivestreamAwsShortCaptions.ts present (newer than spans.json); --redo s_captions regenerates it",
+          "at": "2026-11-25T14:44:37"
+        },
+        "s_comp": {
+          "status": "ran",
+          "detail": "LivestreamAwsShort.tsx registered (30.6s)",
+          "at": "2026-11-25T14:44:37"
+        },
+        "s_verify_comp": {
+          "status": "ran",
+          "detail": "gates PASS on LivestreamAwsShort.tsx",
+          "at": "2026-11-25T14:44:38"
+        },
+        "s_render": {
+          "status": "skipped",
+          "detail": "livestream-aws-SHORT-30s-v1-video.mp4 present",
+          "at": "2026-11-25T14:44:38"
+        },
+        "s_mix": {
+          "status": "ran",
+          "detail": "livestream-aws-SHORT-30s-v1.mp4: VO spans crossfaded + shared CTA + bed",
+          "at": "2026-11-25T14:44:38"
+        },
+        "s_verify_final": {
+          "status": "ran",
+          "detail": "livestream-aws-SHORT-30s-v1.mp4: 30.57s, -22.8 LUFS, peak -6.1 dBFS",
+          "at": "2026-11-25T14:44:47"
+        },
+        "s_qa_final": {
+          "status": "failed",
+          "detail": "final visual-qa FAILED 1 defect(s): 21.0s Leftover 16:9 frames show through the takeaway-card-to-face transition (about 20.95 to 21. (full list C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-presentation\\media\\standard\\livestream-aws\\_previews\\short\\qa\\final-visual-qa.json)",
+          "at": "2026-11-25T14:46:14"
+        }
+      }
+    },
+    "error": "s_qa_final: final visual-qa FAILED 1 defect(s): 21.0s Leftover 16:9 frames show through the takeaway-card-to-face transition (about 20.95 to 21. (full list C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-presentation\\media\\standard\\livestream-aws\\_previews\\short\\qa\\final-visual-qa.json)"
+  },
+  {
+    "run_id": "short-livestream-aws@2026-11-25T15:03:46",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-livestream-aws",
+    "started_at": "2026-11-25T15:03:46",
+    "ended_at": "2026-11-25T15:07:54",
+    "duration_s": 248.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "livestream-aws",
+      "seconds": 30.0,
+      "approve": [],
+      "redo": [
+        "s_extract",
+        "s_render",
+        "s_mix",
+        "s_verify_final",
+        "s_qa_final"
+      ],
+      "resume": false
+    },
+    "summary": {
+      "batch": "livestream-aws",
+      "last_node": "s_deliver",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 388.40s == spine 388.40s; FINAL-TIME transcript written (140 segments)",
+          "at": "2026-11-25T15:03:46"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "3 spans, 27.5s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-11-25T15:03:48"
+        },
+        "gate_short_plan": {
+          "status": "ran",
+          "detail": "auto-approved (no plan gate: Mike reviews the finished short)",
+          "at": "2026-11-25T15:03:48"
+        },
+        "s_paint_16x9": {
+          "status": "skipped",
+          "detail": "not 16:9-sourced (a delivered vertical is the master)",
+          "at": "2026-11-25T15:03:48"
+        },
+        "s_variants": {
+          "status": "skipped",
+          "detail": "presentation project: no Envato / ChatGPT covers, its cards are already native vertical",
+          "at": "2026-11-25T15:03:48"
+        },
+        "s_vertical_cards": {
+          "status": "skipped",
+          "detail": "the delivered vertical already carries native-vertical assets",
+          "at": "2026-11-25T15:03:48"
+        },
+        "s_extract": {
+          "status": "ran",
+          "detail": "3 intermediates, 27.567s of spans",
+          "at": "2026-11-25T15:03:59"
+        },
+        "s_captions": {
+          "status": "ran",
+          "detail": "35 caption groups over 3 COVER-sourced window(s) -> LivestreamAwsShortCaptions.ts",
+          "at": "2026-11-25T15:03:59"
+        },
+        "s_comp": {
+          "status": "ran",
+          "detail": "LivestreamAwsShort.tsx registered (30.6s)",
+          "at": "2026-11-25T15:03:59"
+        },
+        "s_verify_comp": {
+          "status": "ran",
+          "detail": "gates PASS on LivestreamAwsShort.tsx",
+          "at": "2026-11-25T15:04:00"
+        },
+        "s_render": {
+          "status": "ran",
+          "detail": "livestream-aws-SHORT-30s-v2-video.mp4 (30.57s)",
+          "at": "2026-11-25T15:05:55"
+        },
+        "s_mix": {
+          "status": "ran",
+          "detail": "livestream-aws-SHORT-30s-v2.mp4: VO spans crossfaded + shared CTA + bed",
+          "at": "2026-11-25T15:05:59"
+        },
+        "s_verify_final": {
+          "status": "ran",
+          "detail": "livestream-aws-SHORT-30s-v2.mp4: 30.57s, -22.8 LUFS, peak -6.1 dBFS",
+          "at": "2026-11-25T15:06:20"
+        },
+        "s_qa_final": {
+          "status": "ran",
+          "detail": "livestream-aws-SHORT-30s-v2.mp4: final visual-qa PASS on 4 contact sheet(s)",
+          "at": "2026-11-25T15:07:53"
+        },
+        "gate_short": {
+          "status": "ran",
+          "detail": "auto-approved: livestream-aws-SHORT-30s-v2.mp4 passed verify",
+          "at": "2026-11-25T15:07:53"
+        },
+        "s_deliver": {
+          "status": "ran",
+          "detail": "promoted -> livestream-aws-SHORT-30s.mp4 (15 MB); not queued",
+          "at": "2026-11-25T15:07:53"
+        }
+      }
+    },
+    "error": "s_qa_final: final visual-qa FAILED 1 defect(s): 21.0s Leftover 16:9 frames show through the takeaway-card-to-face transition (about 20.95 to 21. (full list C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-presentation\\media\\standard\\livestream-aws\\_previews\\short\\qa\\final-visual-qa.json)"
+  },
+  {
+    "run_id": "ytpost-livestream-aws-20261125-170230@2026-11-25T17:02:30",
+    "lane": 1,
+    "lane_name": "longform",
+    "thread": "ytpost-livestream-aws-20261125-170230",
+    "started_at": "2026-11-25T17:02:30",
+    "ended_at": "2026-11-25T17:02:31",
+    "duration_s": 1.8,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "ytpost",
+      "project": "livestream-aws",
+      "url": "https://youtu.be/joUlFD5Xe3A",
+      "redo": []
+    },
+    "summary": {
+      "batch": "livestream-aws",
+      "last_node": "y_preflight",
+      "steps": {
+        "y_preflight": {
+          "status": "failed",
+          "detail": "no face still for slide 1 (none found under thumbnail/stills/): pass --face <a real frame of Mike, project-relative> (never an AI image)",
+          "at": "2026-11-25T17:02:30"
+        }
+      }
+    },
+    "error": "y_preflight: no face still for slide 1 (none found under thumbnail/stills/): pass --face <a real frame of Mike, project-relative> (never an AI image)"
+  },
+  {
+    "run_id": "ytpost-livestream-aws-20261125-170338@2026-11-25T17:03:38",
+    "lane": 1,
+    "lane_name": "longform",
+    "thread": "ytpost-livestream-aws-20261125-170338",
+    "started_at": "2026-11-25T17:03:38",
+    "ended_at": "2026-11-25T17:16:20",
+    "duration_s": 762.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "ytpost",
+      "project": "livestream-aws",
+      "url": "https://youtu.be/joUlFD5Xe3A",
+      "redo": []
+    },
+    "summary": {
+      "batch": "livestream-aws",
+      "last_node": "y_queue",
+      "steps": {
+        "y_preflight": {
+          "status": "ran",
+          "detail": "https://youtu.be/joUlFD5Xe3A = \"How I'd Run My LangGraph Agent Pipeline on AWS\" on @aiEngineeringSimplified (queue ai-yt-posts.json); face thumbnail/yt-post-face-full.png; logo none",
+          "at": "2026-11-25T17:03:38"
+        },
+        "y_plan": {
+          "status": "ran",
+          "detail": "10 slides; post headline \"How I'd move a 7-agent LangGraph pipeline from one PC to AWS\"",
+          "at": "2026-11-25T17:05:45"
+        },
+        "y_build": {
+          "status": "ran",
+          "detail": "10 slides rendered 1080x1080 -> yt-post/slides/",
+          "at": "2026-11-25T17:06:15"
+        },
+        "y_qa": {
+          "status": "ran",
+          "detail": "10 slides PASS visual-qa (round 3)",
+          "at": "2026-11-25T17:16:19"
+        },
+        "y_queue": {
+          "status": "ran",
+          "detail": "ai-yt-post-2026-11-25-livestream-aws-video appended in ai-yt-posts.json (AI Engineering Simplified, dashboard tab \"AI YouTube Posts\"), 10 images, pending position 1/1 (posts when Mike asks: post_yt_community.py --channel ai)",
+          "at": "2026-11-25T17:16:19"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "ytpost-longest-bear-20261125-220240@2026-11-25T22:02:40",
+    "lane": 1,
+    "lane_name": "longform",
+    "thread": "ytpost-longest-bear-20261125-220240",
+    "started_at": "2026-11-25T22:02:40",
+    "ended_at": "2026-11-25T22:02:42",
+    "duration_s": 1.6,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "ytpost",
+      "project": "longest-bear",
+      "url": "https://youtu.be/ewONo6zVER4",
+      "redo": []
+    },
+    "summary": {
+      "batch": "longest-bear",
+      "last_node": "y_preflight",
+      "steps": {
+        "y_preflight": {
+          "status": "failed",
+          "detail": "the link https://youtu.be/ewONo6zVER4 plays \"The Longest Crypto Bear Market Ever - But What Happens Next Is Insane!\" (CodeMonkey Mike - Crypto), not this video \"The Longest Crypto Bear Market Ever\": pass the link of THIS video",
+          "at": "2026-11-25T22:02:41"
+        }
+      }
+    },
+    "error": "y_preflight: the link https://youtu.be/ewONo6zVER4 plays \"The Longest Crypto Bear Market Ever - But What Happens Next Is Insane!\" (CodeMonkey Mike - Crypto), not this video \"The Longest Crypto Bear Market Ever\": pass the link of THIS video"
+  },
+  {
+    "run_id": "ytpost-longest-bear-20261125-220306@2026-11-25T22:03:06",
+    "lane": 1,
+    "lane_name": "longform",
+    "thread": "ytpost-longest-bear-20261125-220306",
+    "started_at": "2026-11-25T22:03:06",
+    "ended_at": "2026-11-25T22:13:34",
+    "duration_s": 627.9,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "ytpost",
+      "project": "longest-bear",
+      "url": "https://youtu.be/ewONo6zVER4",
+      "redo": []
+    },
+    "summary": {
+      "batch": "longest-bear",
+      "last_node": "y_queue",
+      "steps": {
+        "y_preflight": {
+          "status": "ran",
+          "detail": "https://youtu.be/ewONo6zVER4 = \"The Longest Crypto Bear Market Ever - But What Happens Next Is Insane!\" on @CodeMonkeyMike (queue yt-posts.json); face thumbnail/refs/mike-portrait-plate.png; logo none",
+          "at": "2026-11-25T22:03:07"
+        },
+        "y_plan": {
+          "status": "ran",
+          "detail": "10 slides; post headline \"Is this the longest crypto bear market ever, or were there two?\"",
+          "at": "2026-11-25T22:04:49"
+        },
+        "y_build": {
+          "status": "ran",
+          "detail": "10 slides rendered 1080x1080 -> yt-post/slides/",
+          "at": "2026-11-25T22:05:45"
+        },
+        "y_qa": {
+          "status": "ran",
+          "detail": "10 slides PASS visual-qa (round 2)",
+          "at": "2026-11-25T22:13:33"
+        },
+        "y_queue": {
+          "status": "ran",
+          "detail": "yt-post-2026-11-25-longest-bear-video appended in yt-posts.json (the crypto channel, dashboard tab \"YT Posts\"), 10 images, pending position 1/1 (posts on Mike's next YT post run)",
+          "at": "2026-11-25T22:13:33"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "short-longest-bear@2026-11-25T22:05:17",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-longest-bear",
+    "started_at": "2026-11-25T22:05:17",
+    "ended_at": "2026-11-25T22:42:42",
+    "duration_s": 2244.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "longest-bear",
+      "seconds": 30.0,
+      "approve": [],
+      "redo": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "longest-bear",
+      "last_node": "s_deliver",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 867.43s == spine 867.50s; FINAL-TIME transcript written (168 segments)",
+          "at": "2026-11-25T22:05:18"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "5 spans, 27.7s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-11-25T22:24:17"
+        },
+        "gate_short_plan": {
+          "status": "ran",
+          "detail": "auto-approved (no plan gate: Mike reviews the finished short)",
+          "at": "2026-11-25T22:24:17"
+        },
+        "s_paint_16x9": {
+          "status": "skipped",
+          "detail": "not 16:9-sourced (a delivered vertical is the master)",
+          "at": "2026-11-25T22:24:17"
+        },
+        "s_variants": {
+          "status": "skipped",
+          "detail": "presentation project: no Envato / ChatGPT covers, its cards are already native vertical",
+          "at": "2026-11-25T22:24:17"
+        },
+        "s_vertical_cards": {
+          "status": "skipped",
+          "detail": "the delivered vertical already carries native-vertical assets",
+          "at": "2026-11-25T22:24:17"
+        },
+        "s_extract": {
+          "status": "ran",
+          "detail": "5 intermediates, 27.767s of spans",
+          "at": "2026-11-25T22:24:31"
+        },
+        "s_captions": {
+          "status": "ran",
+          "detail": "25 caption groups over 5 COVER-sourced window(s) -> LongestBearShortCaptions.ts",
+          "at": "2026-11-25T22:24:31"
+        },
+        "s_comp": {
+          "status": "ran",
+          "detail": "LongestBearShort.tsx registered (30.8s)",
+          "at": "2026-11-25T22:38:30"
+        },
+        "s_verify_comp": {
+          "status": "ran",
+          "detail": "gates PASS on LongestBearShort.tsx",
+          "at": "2026-11-25T22:38:31"
+        },
+        "s_render": {
+          "status": "ran",
+          "detail": "longest-bear-SHORT-30s-v1-video.mp4 (30.77s)",
+          "at": "2026-11-25T22:40:27"
+        },
+        "s_mix": {
+          "status": "ran",
+          "detail": "longest-bear-SHORT-30s-v1.mp4: VO spans crossfaded + shared CTA + bed",
+          "at": "2026-11-25T22:40:32"
+        },
+        "s_verify_final": {
+          "status": "ran",
+          "detail": "longest-bear-SHORT-30s-v1.mp4: 30.77s, -21.8 LUFS, peak -1.6 dBFS",
+          "at": "2026-11-25T22:40:55"
+        },
+        "s_qa_final": {
+          "status": "ran",
+          "detail": "longest-bear-SHORT-30s-v1.mp4: final visual-qa PASS on 4 contact sheet(s)",
+          "at": "2026-11-25T22:42:41"
+        },
+        "gate_short": {
+          "status": "ran",
+          "detail": "auto-approved: longest-bear-SHORT-30s-v1.mp4 passed verify",
+          "at": "2026-11-25T22:42:41"
+        },
+        "s_deliver": {
+          "status": "ran",
+          "detail": "promoted -> longest-bear-SHORT-30s.mp4 (21 MB); not queued",
+          "at": "2026-11-25T22:42:41"
+        }
+      }
+    },
+    "error": null
   }
 ]

@@ -154,9 +154,50 @@ code) stay in `demos/`, which is gitignored. Here they are only summarized.
   Mike: "solana and bitcoin are common. there is no need for their images". The drafter's rule now names well-known
   brands and asks for the real logo; the two tweet images were regenerated.
 
+**2026-11-23: three video skills and the Topic Radar builder moved to Python** (commit `43717ee5`, on `master`, pushed).
+- Mike picked four folders for the day: `higgsfield-voice`, `elevenlabs-lipsync`, `music-sourcing`, `topic-radar`. 41 JS
+  files and one shell script went; 34 Python files replace them. The work was done in a separate git worktree, because
+  a livestream batch (`evaa-pieverse`) was building on `master` in the main folder the whole time.
+- Not everything was ported. Three Higgsfield scripts tied to the page layout before 2026-10-17 and five Soundstripe
+  probes from the 2026-06-04 mapping were deleted; each is listed, with the reason, in its skill doc.
+- Each port was compared with the JS before the JS was deleted. The Topic Radar page came out byte for byte the same
+  (that day's live data, and stress inputs). The script-match gate, Soundstripe search and the playlist steps gave the
+  same results. The Higgsfield and ElevenLabs probes, fetches and gates behaved the same on the live sites.
+- Two bugs in the ports, caught by the live runs and fixed: the Soundstripe `download` command crashed before it started
+  (an event handler written in a form the Python browser library rejects), and the ElevenLabs login helper quit at
+  once when run with no keyboard.
+- Three scripts whose JS had quietly stopped working do work again: `_generate.py` (Higgsfield stopped mounting the
+  audio element it waited for), `_grab_recent.py` (ElevenLabs moved the renders off the Assets page) and
+  `_login_probe.py` (the site's "Login" button is "Get started" now).
+- **Still to prove live, and each needs Mike:** the Higgsfield Generate step (the `hfbot-profile` is logged out of
+  Higgsfield and of Google, and it spends credits), ElevenLabs `--generate` (spends the video allowance), and a real
+  Soundstripe download (signed out: `python video-creation/skills/music-sourcing/scripts/soundstripe.py login`). The
+  download's mechanics passed against a local stand-in for the site. Details: the "2026-11-23" section of each skill doc.
+
+**2026-11-27: the 4 shorts build steps became real LangGraph nodes** (commit `e37c9012`, on `master`, pushed).
+- `lane2_build` was one node that ran plan, images, image check and build as plain Python in thread pools. The 4 steps
+  are now the nodes of a `clip_build` subgraph, one run per short, fanned out with `Send` (map-reduce). The image
+  check's retry is a conditional edge back to `images`, and `lane2_build_join` fans back in and verifies every short from
+  `progress.json`. A subgraph, not 4 nodes in the batch graph: with super-steps, every short would wait for the slowest.
+- The scheduling did not change (up to 4 shorts in steps 1 to 3, 2 builds, remakes first). LangGraph's
+  `max_concurrency` is one number per run, so the two limits are semaphores in code. The to-do entry predated the
+  2026-11-23/24 two-pool change, so the design was checked against the code as it stood that day.
+- The proof: `scripts/check-lane2-build.py`, 69 checks in around 15 s, the real batch graph with fake agents, generator,
+  lock and heartbeat. It passed on the old one-node step and on the subgraph, and caught 6 deliberate breakages of the
+  new one. Built in the worktree `.claude/worktrees/sg`, rebased onto `master` and merged the same day.
+- **Still to prove live:** no livestream has run through it yet. The next batch is its first real test.
+- The deck-lecture folder `Crypto vs. The Traditional Financial System/` is now `traditional/` (commit `1cefee26`, Mike's
+  rename): it held the repo's deepest path, which capped a worktree's folder name at 2 or 3 letters. The cap is 35 now.
+
 ## Open (where we left off)
 
 **AI Engineering Simplified**
+- **additional-nodes (new, 2026-11-27): the script is at Mike's gate.** A scripted standard video, at most 3 minutes,
+  that keeps langgraph-updates' teaser ("those 4 steps become real LangGraph nodes"). Folder
+  `video-creation/longform-presentation/media/standard/additional-nodes/`: `RESEARCH.md` and `SCRIPT.md` (487 spoken
+  words, around 2:44, lint PASS), committed `2da31f21`. Open: the silence definition and Enhance Speech (written in as
+  the track preset and on), then the 8 cards and 3 deck slides. No extras named. Its close says the change hasn't run
+  on a real livestream: record with that line, or after the next batch with a new close.
 - **langgraph-updates (new, 2026-11-19): at Mike's gate.** A freeform recording on the image-agent split, set up as the
   first AI-channel session of the longform-discussion track (`"channel": "ai"`, with `code` tabs that open a repo file
   at a line in VS Code). Folder: `video-creation/longform-discussion/media/langgraph-updates/`: `TOPICS.docx` (9 topics,
@@ -186,22 +227,9 @@ code) stay in `demos/`, which is gitignored. Here they are only summarized.
     instead of FAIL, and only content defects (wrong subject, invented logo or text, off-model mascot) go back to
     `image-gen`.
   - The browser is the bottleneck of the whole build (3.9 h of 4.6 h), so the fix-round policy sets the batch time.
-- **Make the 4 build steps real LangGraph nodes** (Mike, 2026-11-22, while scripting langgraph-updates: the current
-  shape came from a Claude session's recommendation while he was learning LangGraph, and a seasoned LangGraph
-  developer would ask why the steps aren't nodes). Today `lane2_build` is ONE node: `_build_clip` runs plan, images
-  (under the `chatgpt` lock), image check (a Python `for` loop, at most `BROLL_QA_ROUNDS` = 2) and build as plain
-  Python, 2 shorts at a time in a thread pool. Target: a **per-short subgraph** (nodes plan, images, image_check, build;
-  image_check back to images as a conditional edge capped at 2 rounds) fanned out from `lane2_build` with `Send`
-  ([docs](https://docs.langchain.com/oss/python/langgraph/graph-api-send-command#use-send-for-map-reduce)). Not 4 nodes
-  in the main graph: LangGraph runs in supersteps, so every short's plan would finish before any short's images start.
-  Must keep: the resume from disk (plan files present, the round number in the image check's report), the wait on
-  `.building.pid` builders started outside the graph, the cap of 2 (likely the run config's `max_concurrency`; check),
-  the cross-process `chatgpt` lock taken in code with its `finally`, and per-short failures gathered without stopping
-  the other shorts. First step: turn the fake-agent test below into a `scripts/check-*.py` and prove the subgraph
-  against it before a live batch. Video: langgraph-updates is recorded as built (its script says the 4 steps are
-  plain Python inside one node); the refactor can be its own before-and-after video.
-- The fake-agent test of `_build_clip` (twelve cases) lives only in a temp folder. Worth keeping as
-  `scripts/check-*.py` next to the spawner check if Mike wants it.
+- **The 4 build steps are real LangGraph nodes** (Mike's to-do of 2026-11-22, built 2026-11-27; the timeline entry has
+  the details). Open: its first live batch. The old twelve-case fake-agent test is replaced by
+  `scripts/check-lane2-build.py`; run it after any change to the build step.
 - The cut tool has no single-clip redo (`cut_topics.py` re-cuts every clip), so clip 7's raw `-full.mp4` on the
   clip-review dashboard is still the old cut. The tightened, final and staged files are the repaired ones.
 - The tighten-strategist took 46 min for four clips, most of it re-transcribing with Whisper large-v3 to check its
@@ -244,8 +272,9 @@ code) stay in `demos/`, which is gitignored. Here they are only summarized.
 
 **Repo housekeeping**
 - **Change the JavaScript files over to Python** (Mike, 2026-11-17: "this is a python repo. we should not be using
-  javascript unless it is a remotion file"). 315 tracked `.js` files outside `remotion/` on 2026-11-17, **265 on
-  2026-11-22** after `schedule-tweets/scripts/` was done (first row). Where a Python twin exists (same name, `_` for
+  javascript unless it is a remotion file"). 315 tracked `.js` files outside `remotion/` on 2026-11-17, 265 on
+  2026-11-22 after `schedule-tweets/scripts/` was done (first row), **224 on 2026-11-23** after `higgsfield-voice`,
+  `music-sourcing`, `elevenlabs-lipsync` and `topic-radar` (the other rows marked DONE). Where a Python twin exists (same name, `_` for
   `-`) the work is switching callers and docs to the Python one and retiring the JS:
 
   | Folder | JS files | Python twin exists | Note |
@@ -255,20 +284,20 @@ code) stay in `demos/`, which is gitignored. Here they are only summarized.
   | `repurpose/archive/` | 43 | 0 | archived: delete or leave, not port |
   | `video-creation/longform-edited/media/` | 39 | 0 | per-video files, go with each project folder after publish |
   | `repurpose/` | 23 | 6 | |
-  | `video-creation/skills/higgsfield-voice/` | 19 | 0 | |
-  | `video-creation/skills/music-sourcing/` | 14 | 0 | |
+  | `video-creation/skills/higgsfield-voice/` | **0** | all | **DONE 2026-11-23** (commit `43717ee5`): 16 ported, 3 deleted with no port (tied to the page layout before 2026-10-17), plus the shell script that drove one of them. The Generate step has not run live in Python yet: it spends credits and the profile is logged out. |
+  | `video-creation/skills/music-sourcing/` | **0** | all | **DONE 2026-11-23**: 9 ported, 5 one-off probes deleted with no port. A real download has not run in Python yet (Soundstripe was signed out); its mechanics passed against a local stand-in for the site. |
   | `video-creation/ai-engineering/media/` | 8 | 0 | per-video |
-  | `video-creation/skills/elevenlabs-lipsync/` | 7 | 0 | |
+  | `video-creation/skills/elevenlabs-lipsync/` | **0** | all | **DONE 2026-11-23**: all 7 ported. `--generate` has not run live in Python yet (it spends the video allowance). |
   | `video-creation/longform-edited/skills/` | 5 | 5 | frozen twins of the Python lints |
-  | everything else (`cleanup/`, `scripts/`, `x-reply-guy/`, `topic-radar/`, a few skills) | 20 | 5 | |
+  | everything else (`cleanup/`, `scripts/`, `x-reply-guy/`, a few skills) | 19 | 5 | `topic-radar/` left this row on 2026-11-23: its builder is `build_dashboard.py` now, checked byte for byte against the JS one |
 
   First steps: (1) DONE 2026-11-22: the crypto channel's YT posts go through `post_yt_community.py` (the JS poster is
   deleted; the first live crypto post through it is still to come); (2) HALF DONE 2026-11-22: `CLAUDE.md`'s
   Python-first rule no longer lists the `schedule-tweets` posters as a JS exception. Still open, for Mike to rule on:
   the LinkedIn and reply-guy exception, the "edit data/*.json with Node" line (Python with `ensure_ascii=False` keeps
   emoji just as safely), and the `node -e` queue-reset snippets in the posting docs. Note `schedule-tweets/package.json`
-  + `node_modules` must stay for now: 15 JS files elsewhere (music-sourcing, ai-engineering media) load Playwright
-  from there. Recount with `git ls-files "*.js"` minus `remotion/`.
+  + `node_modules` must stay for now: 4 JS files (the `render-containers*.js` copies in `ai-engineering/media/`) still
+  load Playwright from there; `music-sourcing` and `higgsfield-voice` no longer do (2026-11-23). Recount with `git ls-files "*.js"` minus `remotion/`.
 - Orphan Markdown files: Mike wants to go through them one by one before deleting any ("maybe there's some information
   that we wanted to put in there").
 - The clip-evals video, the short-lane change and the AI channel's YouTube-post queue are **not committed yet**. Commit
@@ -291,6 +320,8 @@ code) stay in `demos/`, which is gitignored. Here they are only summarized.
   staged, 2026-11-19). Spec: `video-creation/livestream-repurpose/skills/remotion-shorts-build/SKILL.md`, "One clip
   = FOUR steps".
 - Livestream batch `ripping` run end to end: 7 shorts staged, 16 text and image entries queued (2026-11-19).
+- The shorts build steps as a per-short LangGraph subgraph, with `scripts/check-lane2-build.py` (2026-11-27, commit
+  `e37c9012`; not yet run on a live batch).
 
 - Topic backlog file created (2026-11-06).
 - Branch cleanup, repo recreated with clean identity, secrets and private data purged (2026-11-06 to 11-09).
