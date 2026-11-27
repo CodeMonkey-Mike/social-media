@@ -12,9 +12,9 @@ source, read 2026-11-27._
   LangGraph nodes." This video shows that change. (Both lines are from its SCRIPT.md, as recorded in the Claude Code
   session that wrote it; its project folder was deleted after publishing.)
 - **The series:** clip-evals (U26NDilqCDo), langgraph-updates (qYn6c4tOLiw), livestream-aws (joUlFD5Xe3A), this one.
-- **Where the change is:** commit `356701b8` "Make the shorts build steps real LangGraph nodes", branch
-  `feat/lane2-build-subgraph`, 2026-11-27. Not merged into master on that date. **Not yet run on a real livestream**
-  (Mike had no new livestream to process). Proven only by the check in section 2.
+- **Where the change is:** commit `e37c9012` "Make the shorts build steps real LangGraph nodes", on master since
+  2026-11-27 (built on the branch `feat/lane2-build-subgraph`, rebased and merged the same day). **Not yet run on a
+  real livestream** (Mike had no new livestream to process). Proven only by the check in section 2.
 - **Channel rules:** present with authority, never as a co-beginner (`video-creation/ai-engineering/ai_channel_plan.md`);
   no em dashes on screen; numbers as digits. Target: 3 minutes at most (Mike, 2026-11-27).
 
