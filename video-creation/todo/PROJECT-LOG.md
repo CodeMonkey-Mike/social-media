@@ -274,22 +274,25 @@ code) stay in `demos/`, which is gitignored. Here they are only summarized.
 - **Change the JavaScript files over to Python** (Mike, 2026-11-17: "this is a python repo. we should not be using
   javascript unless it is a remotion file"). 315 tracked `.js` files outside `remotion/` on 2026-11-17, 265 on
   2026-11-22 after `schedule-tweets/scripts/` was done (first row), **224 on 2026-11-23** after `higgsfield-voice`,
-  `music-sourcing`, `elevenlabs-lipsync` and `topic-radar` (the other rows marked DONE). Where a Python twin exists (same name, `_` for
+  `music-sourcing`, `elevenlabs-lipsync` and `topic-radar`, **148 on 2026-11-27** on branch `js-to-python` after
+  `repurpose/`, its `archive/`, the frozen lint twins and five skill tools (116 once that branch meets `master`, which
+  dropped the finished pieverse project and gained seven per-video chart scripts). The rows marked DONE say what
+  happened. Where a Python twin exists (same name, `_` for
   `-`) the work is switching callers and docs to the Python one and retiring the JS:
 
   | Folder | JS files | Python twin exists | Note |
   |---|---|---|---|
   | `schedule-tweets/scripts/` | **0** | all | **DONE 2026-11-22** (branch `chore/schedule-tweets-js-to-python`): all 49 JS files deleted. 19 already had a twin, 14 were ported that day (the read-only check and diagnostic tools + `yt_reauth.py`), 16 were deleted with no port (banned, a one-off, or already replaced: the table in `schedule-tweets/skills/SKILL.md`). Ten posters have not posted live in Python yet (that doc's live-proof ledger); the new check tools have not been run yet either. |
   | `video-creation/assets/transitions/` | 87 | 0 | checked 2026-11-22: none is Remotion-side (Remotion code names them only in comments), so all are portable build tools |
-  | `repurpose/archive/` | 43 | 0 | archived: delete or leave, not port |
+  | `repurpose/archive/` | **0** | none | **DONE 2026-11-27** (commit `b566782e`): all 50 deleted with no port (the 43, plus 7 one-time scripts moved in from `repurpose/` the same day). Nothing ran, loaded or pointed at any of them. The 149 gen lists and prompt files in the folder stay. |
   | `video-creation/longform-edited/media/` | 39 | 0 | per-video files, go with each project folder after publish |
-  | `repurpose/` | 23 | 6 | |
+  | `repurpose/` | **0** | all | **DONE 2026-11-27** (commits `6fddeb4c`, `2fe6b67d`): 6 ported (`generate_image.py`, `generate_asset.py`, `setup_chatgpt.py`, `diag_chatgpt.py`, `list_chats_api.py`, `probe_first_prompts.py`), 10 deleted because the Python stack already did the job (`gen_images.py`, `gen_batch.py`, `chat_pool.py`, `chat_delete.py`, `delete_chats.py`, `test_chat_lifecycle.py`), 7 one-time scripts deleted with no port. `x-reply-guy/generate_reply_images.js` now runs `gen_batch.py --fresh`. Tested in the generator's `--fake` sandbox only: the two single-image tools and the reply-guy image step have not run against the live ChatGPT profile in Python yet. |
   | `video-creation/skills/higgsfield-voice/` | **0** | all | **DONE 2026-11-23** (commit `43717ee5`): 16 ported, 3 deleted with no port (tied to the page layout before 2026-10-17), plus the shell script that drove one of them. The Generate step has not run live in Python yet: it spends credits and the profile is logged out. |
   | `video-creation/skills/music-sourcing/` | **0** | all | **DONE 2026-11-23**: 9 ported, 5 one-off probes deleted with no port. A real download has not run in Python yet (Soundstripe was signed out); its mechanics passed against a local stand-in for the site. |
   | `video-creation/ai-engineering/media/` | 8 | 0 | per-video |
   | `video-creation/skills/elevenlabs-lipsync/` | **0** | all | **DONE 2026-11-23**: all 7 ported. `--generate` has not run live in Python yet (it spends the video allowance). |
-  | `video-creation/longform-edited/skills/` | 5 | 5 | frozen twins of the Python lints |
-  | everything else (`cleanup/`, `scripts/`, `x-reply-guy/`, a few skills) | 19 | 5 | `topic-radar/` left this row on 2026-11-23: its builder is `build_dashboard.py` now, checked byte for byte against the JS one |
+  | `video-creation/longform-edited/skills/` | **0** | all | **DONE 2026-11-27** (commit `6fddeb4c`): the 5 frozen twins of the Python lints deleted; the graphs already ran only the Python ones. |
+  | everything else (`cleanup/`, `scripts/`, `x-reply-guy/`, a few skills) | 14 | 1 | 2026-11-27 (commit `6fddeb4c`): the 5 with twins deleted (`cache-path.js`, the 3 `envato-broll` scripts, `receipt-capture/capture.js`). Left: `cleanup/` 4, `scripts/` 2, `x-reply-guy/` 1, `video-creation/` root 3, `ai-engineering/skills/` 2, and 2 that run in a browser page and stay JS (`schedule-tweets/vendor/mermaid.min.js`, one chart page script). `scripts/setup-batch-render-assets.js` already has its Python replacement under another name (`livestream-repurpose/scripts/setup_render_assets.py`), so it only needs deleting; `scripts/reconcile-batch-status.js` is live (cleanup runs it) and ports together with `cleanup/`. `topic-radar/` left this row on 2026-11-23: its builder is `build_dashboard.py` now, checked byte for byte against the JS one |
 
   First steps: (1) DONE 2026-11-22: the crypto channel's YT posts go through `post_yt_community.py` (the JS poster is
   deleted; the first live crypto post through it is still to come); (2) HALF DONE 2026-11-22: `CLAUDE.md`'s
