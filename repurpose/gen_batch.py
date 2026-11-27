@@ -1,6 +1,6 @@
 # gen_batch.py — CANONICAL builder-facing ChatGPT batch image generator (Python port
-# of gen-batch-freshchat.js + generate-broll-reload.js, 2026-08-11; both JS twins are
-# FROZEN rollback). This closes the last still-JS execution path in the livestream
+# of gen-batch-freshchat.js + generate-broll-reload.js, 2026-08-11; both JS twins were
+# deleted 2026-11-27). This closes the last still-JS execution path in the livestream
 # lanes — the Phase 7 builder b-roll pipeline.
 #
 # It is a thin routing/semantics wrapper over gen_images.Generator, which already

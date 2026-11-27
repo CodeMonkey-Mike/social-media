@@ -189,7 +189,7 @@ relaunch** (a "failed" post may already be live), YT Shorts via API only.
 | `fbbot-profile` | post_fb_short.py, upload_longform_facebook.py |
 | `rumblebot-profile` | post_rumble_short.py, upload_longform_rumble.py |
 | `bitchutebot-profile` | post_bitchute_short.py, upload_longform_bitchute.py |
-| `chatgpt-profile` | generate-image.js, generate-image-batch.js |
+| `chatgpt-profile` | repurpose/gen_images.py, gen_batch.py, generate_image.py, generate_asset.py |
 | `tiktokbot-profile` (real Chrome over CDP 9224) | post_tiktok_short.py |
 
 ---

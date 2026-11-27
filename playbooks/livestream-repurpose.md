@@ -95,8 +95,7 @@ IG single-image → `schedule-tweets/data/*.json` (`x-tweets`, `x-threads`, `x-p
 > `batches.json pipelines.repurpose=done`. Visual-QA the images after the run; Mike reviews the
 > pending entries on the :8766 Social tab. Hard gates in the plan validator: em dashes, chart
 > emojis, image-id uniqueness, IG = Kaspa ONLY, X polls = Kaspa/TAO/Toncoin ONLY, threads 5-8.
-> The JS twin `gen-images.js` was deleted 2026-11-27; `chat-pool.js`/`chat-delete.js` stay only while the JS
-> b-roll scripts still load them.
+> The JS twins (`gen-images.js`/`chat-pool.js`/`chat-delete.js`) were deleted 2026-11-27.
 - **Canonical detail:** `repurpose/SKILL.md`.
 - **Playbooks:** `playbooks/repurpose.md` · images `playbooks/image-gen.md`.
 

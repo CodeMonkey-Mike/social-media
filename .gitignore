@@ -25,7 +25,7 @@ node_modules/
 # Bin (cleanup-images), the git "recovery safety net" is no longer needed, so we
 # do NOT track them. (gitignore can't filter by raw size; these dirs hold all the
 # >50KB generated output.) Reference logos in images/reference/ are small, needed
-# by generate-image.js --reference-image, and NOT reproducible — those stay tracked.
+# by generate_image.py --reference-image, and NOT reproducible — those stay tracked.
 schedule-tweets/images/x/
 schedule-tweets/images/ig/
 schedule-tweets/images/yt/

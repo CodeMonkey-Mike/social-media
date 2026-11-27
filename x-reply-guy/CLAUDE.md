@@ -154,7 +154,7 @@ reports it, so run `node generate_reply_images.js` and post again.
 | `data/replies_to_post.json` | The **single** active queue of **approved/pending** replies — text, emoji, AND GIF (GIF entries carry a `gif_search` field). `post_replies.py` posts all three types. Entries are removed one at a time as they are processed; use `--limit N` to post a subset across sessions |
 | `data/posted_replies.json` | Permanent archive of all posted replies |
 | `example-images/library.json` | **Canonical image-reply style index** (32 styles, when-to-use signals, prompt skeletons, exemplar files). Human overview: `image-reply-styles.md` |
-| `generate_reply_images.js` | Generates images for queued image replies via `repurpose/gen-batch-freshchat.js`; writes `image_path` back into the queue |
+| `generate_reply_images.js` | Generates images for queued image replies via `python repurpose/gen_batch.py --fresh` (the Python generator; `gen-batch-freshchat.js` was deleted 2026-11-27); writes `image_path` back into the queue |
 | `post_image_reply.py` | Image-attach helper used by `post_replies.py` (not standalone) |
 | `data/reply-images/` | Generated reply images (`reply-<id>-<style>.png`) |
 | `../persona/persona.json` | Mike's full voice, style, and terminology rules (project-wide single source of truth — no longer in this folder's `config/`) |

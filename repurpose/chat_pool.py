@@ -1,11 +1,10 @@
 # chat_pool.py — Python port of chat-pool.js (Wave 6 Lane 3 migration, 2026-08-09).
 # Shared helper for the ChatGPT image-chat registry (../chatgpt-image-chats.json).
 #
-# THE REGISTRY FILE IS SHARED WITH THE FROZEN JS STACK (chat-pool.js is rollback and
-# still imported by the remotion-builder b-roll scripts gen-batch-freshchat.js /
-# generate-broll-reload.js until Phase 7 ports). Every write here is byte-compatible:
-# same keys, same "Z"-suffixed ISO-millisecond timestamps, 2-space indent, so either
-# language can read what the other wrote. Do not "improve" the schema.
+# The registry file keeps the schema chat-pool.js wrote (the JS was deleted 2026-11-27,
+# once nothing loaded it): same keys, same "Z"-suffixed ISO-millisecond timestamps,
+# 2-space indent, so entries written by either era read the same. Do not "improve"
+# the schema.
 #
 # TITLE CONVENTION + DELETION GATE (Mike, 2026-07-22): every automation-created chat is
 # RENAMED at registration to start with "b-roll" (video b-roll purposes) or "social"

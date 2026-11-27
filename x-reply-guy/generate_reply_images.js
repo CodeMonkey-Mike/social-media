@@ -3,9 +3,10 @@
 // Reads data/replies_to_post.json, finds entries with an image_prompt but no
 // image_path, builds a gen-batch items list (reference image = the style's
 // exemplar from example-images/library.json), runs the ONE ChatGPT image
-// engine (repurpose/gen-batch-freshchat.js — never gpt_image_2 via Higgsfield),
-// then writes each generated file's absolute path back into the queue entry
-// as image_path.
+// engine (python repurpose/gen_batch.py --fresh, the Python generator that
+// replaced gen-batch-freshchat.js on 2026-11-27 — never gpt_image_2 via
+// Higgsfield), then writes each generated file's absolute path back into the
+// queue entry as image_path.
 //
 // Usage:
 //   node generate_reply_images.js            # generate + record image_path
@@ -28,7 +29,7 @@ const QUEUE      = path.join(HERE, 'data', 'replies_to_post.json');
 const LIB        = path.join(HERE, 'example-images', 'library.json');
 const EXEMPLARS  = path.join(HERE, 'example-images');
 const OUTDIR     = path.join(HERE, 'data', 'reply-images');
-const GENERATOR  = path.join(HERE, '..', 'repurpose', 'gen-batch-freshchat.js');
+const GENERATOR  = path.join(HERE, '..', 'repurpose', 'gen_batch.py');
 const PREFIX     = 'reply';
 
 const dryRun = process.argv.includes('--dry-run');
@@ -91,11 +92,15 @@ fs.mkdirSync(OUTDIR, { recursive: true });
 const listPath = path.join(OUTDIR, '_batch-items.json');
 fs.writeFileSync(listPath, JSON.stringify(items, null, 2));
 
-const res = spawnSync(process.execPath,
-  [GENERATOR, `--list=${listPath}`, `--prefix=${PREFIX}`, `--outdir=${OUTDIR}`, '--purpose=reply-images'],
+// --fresh = one brand-new chat for the whole list (what gen-batch-freshchat.js did);
+// it saves each image as <outdir>/<prefix>-<image_id>-<slug>.png, the name read back below.
+const res = spawnSync('python',
+  [GENERATOR, '--list', listPath, '--prefix', PREFIX, '--outdir', OUTDIR, '--purpose', 'reply-images', '--fresh'],
   { stdio: 'inherit', cwd: path.join(HERE, '..') });
-if (res.status !== 0) {
-  console.error(`\ngen-batch-freshchat.js exited with ${res.status} — recording whatever finished.`);
+if (res.error) {
+  console.error(`\ncould not start python (${res.error.message}) — nothing generated.`);
+} else if (res.status !== 0) {
+  console.error(`\ngen_batch.py exited with ${res.status} — recording whatever finished.`);
 }
 
 // Re-read the queue (the run takes minutes) and record generated files.

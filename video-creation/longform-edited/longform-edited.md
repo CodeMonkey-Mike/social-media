@@ -290,7 +290,7 @@ The base cut (`spine/<scope>.c.desilenced.mp4`) is the spoken spine. The edit la
 already in the repo to draw from — don't reinvent:
 
 - **B-roll:** ChatGPT image b-roll via the `image-gen` agent (`repurpose/gen_batch.py` / `repurpose/gen_images.py`, the
-  Python browser pipeline; the old `generate-broll-batch.js` flow is frozen), Higgsfield
+  Python browser pipeline; the old `generate-broll-batch.js` flow is archived), Higgsfield
   (`higgsfield-generate` skill, Seedance video) for AI b-roll of Mike's likeness or concept shots.
   **Stock video b-roll:** `video-creation/skills/envato-broll/SKILL.md` (Envato Elements search +
   license + download, Playwright). Full-screen image b-roll: ChatGPT image gen (repurpose
