@@ -35,8 +35,10 @@ carousels, and cross-platform posts — then manages the publishing queue and po
 
 ## Stack
 
-- **Node.js** — Playwright (browser automation for posting & image generation), [Remotion](https://www.remotion.dev/) (programmatic video rendering).
-- **Python** — transcript processing, Whisper captions, caption/image builders.
+**This is a Python repo.** The main exception is [Remotion](https://www.remotion.dev/) (TypeScript/React), which renders the video compositions.
+
+- **Python** — posting scripts, transcript processing, Whisper captions, caption/image builders.
+- **Node.js** — Remotion, plus the LinkedIn and X reply-guy automation, which are still JavaScript until they are ported to Python.
 - **Windows** — paths and tooling assume a Windows host.
 
 ## Conventions
