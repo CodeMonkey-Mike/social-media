@@ -1,0 +1,80 @@
+{
+  "id": "ai-yt-post-2026-11-25-livestream-aws-video",
+  "topic": "Promo carousel for the live video \"How I'd Run My LangGraph Agent Pipeline on AWS\"",
+  "source_transcript": null,
+  "variation_label": "video promo carousel",
+  "body_style": "watch-the-full-video link + headline + two arrow points + hashtags",
+  "cta_target": "watch_video",
+  "created_at": "2026-11-25T17:16:19",
+  "status": "pending",
+  "posted_at": null,
+  "post_url": null,
+  "body": "▶ Watch the full video: https://youtu.be/joUlFD5Xe3A\n\nHow I'd move a 7-agent LangGraph pipeline from one PC to AWS\n\n→ A 9-hour human gate survives an 8-hour AgentCore session\n→ EC2 runs only the heavy work, on Spot at up to 90% off\n\n#AIEngineering #LangGraph #AWS",
+  "engagement_question": null,
+  "char_count": 263,
+  "images": [
+    {
+      "seq": 1,
+      "image_id": "f6a24150",
+      "image_path": "schedule-tweets/images/ai-yt/ai-yt-posts-f6a24150-01-my-langgraph-pipeline-on-aws.png",
+      "slide_text": "My LangGraph pipeline on AWS"
+    },
+    {
+      "seq": 2,
+      "image_id": "2fd7c4a1",
+      "image_path": "schedule-tweets/images/ai-yt/ai-yt-posts-2fd7c4a1-02-today-it-runs-on-one-pc.png",
+      "slide_text": "Today it runs on one PC / The graph and its checkpoints, 7 agents in Claude Code, one browser for images, Whisper on my GPU, the renders."
+    },
+    {
+      "seq": 3,
+      "image_id": "483f0e5e",
+      "image_path": "schedule-tweets/images/ai-yt/ai-yt-posts-483f0e5e-03-layer-1-ingest.png",
+      "slide_text": "Layer 1, ingest"
+    },
+    {
+      "seq": 4,
+      "image_id": "53fbbc57",
+      "image_path": "schedule-tweets/images/ai-yt/ai-yt-posts-53fbbc57-04-a-gate-longer-than-a-session.png",
+      "slide_text": "A gate longer than a session / 9 / An AgentCore Runtime session lasts up to 8 hours. So the graph saves state to DynamoDB, and my approval resumes it in a new session."
+    },
+    {
+      "seq": 5,
+      "image_id": "089d5819",
+      "image_path": "schedule-tweets/images/ai-yt/ai-yt-posts-089d5819-05-the-agents-on-bedrock.png",
+      "slide_text": "The agents on Bedrock"
+    },
+    {
+      "seq": 6,
+      "image_id": "632de4ca",
+      "image_path": "schedule-tweets/images/ai-yt/ai-yt-posts-632de4ca-06-no-browser-no-lock.png",
+      "slide_text": "No browser, no lock / One browser was busy 3.9 hours of the build. On AWS, an image model on Bedrock, and the 7 shorts stop taking turns."
+    },
+    {
+      "seq": 7,
+      "image_id": "4601b6a7",
+      "image_path": "schedule-tweets/images/ai-yt/ai-yt-posts-4601b6a7-07-does-it-run-on-ec2.png",
+      "slide_text": "Does it run on EC2? / 90% / Yes, but only the heavy work. AWS Batch starts servers when a job arrives, and every step skips what's done."
+    },
+    {
+      "seq": 8,
+      "image_id": "85fa3c5d",
+      "image_path": "schedule-tweets/images/ai-yt/ai-yt-posts-85fa3c5d-08-the-renders-fan-out.png",
+      "slide_text": "The renders fan out / Remotion Lambda splits one render across up to 200 Lambda functions. Remotion's example: a 10-minute HD video for around 10 cents."
+    },
+    {
+      "seq": 9,
+      "image_id": "bf8fc9df",
+      "image_path": "schedule-tweets/images/ai-yt/ai-yt-posts-bf8fc9df-09-what-changes-is-around-it.png",
+      "slide_text": "What changes is around it"
+    },
+    {
+      "seq": 10,
+      "image_id": "2c3b666e",
+      "image_path": "schedule-tweets/images/ai-yt/ai-yt-posts-2c3b666e-10-watch-the-full-video.png",
+      "slide_text": "Watch the full video / How I'd Run My LangGraph Agent Pipeline on AWS"
+    }
+  ],
+  "carousel_version": "video-promo",
+  "source": "longform-edited ytpost lane (livestream-aws)",
+  "video_url": "https://youtu.be/joUlFD5Xe3A"
+}

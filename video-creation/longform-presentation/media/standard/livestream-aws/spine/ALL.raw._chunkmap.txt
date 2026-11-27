@@ -1,0 +1,244 @@
+[000]    2.14-   5.43 ( 3.3s) gap 2.1  My livestream pipeline runs on one PC.
+[001]   11.99-  12.75 ( 0.8s) gap 6.6  All right, let's redo that.
+[002]   14.17-  15.50 ( 1.3s) gap 1.4  My livestream pipeline.
+[003]   15.96-  17.61 ( 1.6s) gap 0.5  runs on one PC.
+[004]   18.52-  22.52 ( 4.0s) gap 0.9  So what I want to do here is show you how I would set this up.
+[005]   23.04-  26.58 ( 3.5s) gap 0.5  on AWS and like a real production environment.
+[006]   48.76-  51.10 ( 2.3s) gap22.2  to be interesting, so let's get into it.
+[007]   52.02-  54.24 ( 2.2s) gap 0.9  Today, everything lives in one box.
+[008]   55.31-  55.85 ( 0.5s) gap 1.1  the graph.
+[009]   56.18-  59.28 ( 3.1s) gap 0.3  and his checkpoints, seven agents and cloud code.
+[010]   60.00-  63.15 ( 3.1s) gap 0.7  One browser for images, whisper on my GPU.
+[011]   63.69-  64.45 ( 0.8s) gap 0.5  renders.
+[012]   65.04-  65.98 ( 0.9s) gap 0.6  and the Posting Script.
+[013]   87.35-  88.28 ( 0.9s) gap21.4  for every piece.
+[014]   88.65-  90.29 ( 1.6s) gap 0.4  I'll show you what I do today.
+[015]   90.85-  93.59 ( 2.7s) gap 0.6  and the AWS service that I would do it with.
+[016]   94.37-  96.28 ( 1.9s) gap 0.8  in five layers. Injust.
+[017]   96.71-  97.18 ( 0.5s) gap 0.4  graph.
+[018]   97.85-  98.54 ( 0.7s) gap 0.7  the agents.
+[019]   98.89-  99.51 ( 0.6s) gap 0.4  The Heavy Work.
+[020]  100.30- 101.01 ( 0.7s) gap 0.8  and publishing.
+[021]  119.68- 121.52 ( 1.8s) gap18.7  and I'll answer the question that.
+[022]  121.98- 123.08 ( 1.1s) gap 0.5  Everybody acts first.
+[023]  123.88- 124.54 ( 0.7s) gap 0.8  does this.
+[024]  133.55- 133.89 ( 0.3s) gap 9.0  And.
+[025]  134.19- 135.50 ( 1.3s) gap 0.3  I'll answer the question that.
+[026]  135.84- 137.00 ( 1.2s) gap 0.3  Everybody acts first.
+[027]  137.50- 139.17 ( 1.7s) gap 0.5  Does this run on EC2?
+[028]  148.60- 150.12 ( 1.5s) gap 9.4  Alright, so layer one.
+[029]  150.47- 151.03 ( 0.6s) gap 0.3  in jest.
+[030]  151.66- 154.23 ( 2.6s) gap 0.6  Today the recording sits in my folder in my PC.
+[031]  154.86- 157.10 ( 2.2s) gap 0.6  On AWS, it goes to S3.
+[032]  157.43- 158.77 ( 1.3s) gap 0.3  which is Amazon Stores.
+[033]  162.36- 164.44 ( 2.1s) gap 3.6  On AWS, it goes to S3.
+[034]  164.99- 166.32 ( 1.3s) gap 0.5  which is Amazon's file store.
+[035]  168.95- 172.28 ( 3.3s) gap 2.6  S3 can announce every new file to EventBridge.
+[036]  173.63- 176.05 ( 2.4s) gap 1.3  EventBridge is the event router in Amazon.
+[037]  177.99- 180.21 ( 2.2s) gap 1.9  The event bridge calls a lambda function.
+[038]  180.53- 181.70 ( 1.2s) gap 0.3  a small piece of code.
+[039]  186.03- 191.13 ( 5.1s) gap 4.3  EventBridge calls a lambda function, a small piece of code, AWS runs only.
+[040]  192.36- 192.76 ( 0.4s) gap 1.2  
+[041]  194.27- 195.21 ( 0.9s) gap 1.5  Alright, let's redo again.
+[042]  196.33- 197.30 ( 1.0s) gap 1.1  EventBridge run.
+[043]  198.73- 200.42 ( 1.7s) gap 1.4  EventBridge runs as well.
+[044]  201.23- 203.06 ( 1.8s) gap 0.8  EventBridge runs a lambda function.
+[045]  203.62- 207.06 ( 3.4s) gap 0.6  A small piece of code, AWS runs only when something calls it.
+[046]  208.80- 209.32 ( 0.5s) gap 1.7  And that's...
+[047]  209.87- 210.55 ( 0.7s) gap 0.5  starts the graph.
+[048]  217.52- 218.09 ( 0.6s) gap 7.0  Today.
+[049]  218.52- 220.44 ( 1.9s) gap 0.4  FFmpeg makes a little bit
+[050]  224.59- 225.17 ( 0.6s) gap 4.1  Today.
+[051]  225.52- 227.95 ( 2.4s) gap 0.3  FFmpeg makes the low bitrate master.
+[052]  228.81- 229.89 ( 1.1s) gap 0.9  on AWS.
+[053]  230.38- 231.26 ( 0.9s) gap 0.5  That's media converge.
+[054]  231.81- 233.25 ( 1.4s) gap 0.5  which is Amazon's video converter.
+[055]  237.23- 239.48 ( 2.3s) gap 4.0  My face tracker makes the vertical crop.
+[056]  240.13- 242.31 ( 2.2s) gap 0.6  on AWS recognition.
+[057]  243.75- 247.44 ( 3.7s) gap 1.4  Amazon's image and video analysis service. Fries my face in a video.
+[058]  251.24- 252.83 ( 1.6s) gap 3.8  And Whisper writes the transcript.
+[059]  253.52- 255.67 ( 2.1s) gap 0.7  on AWS Best Transcribed.
+[060]  256.15- 257.42 ( 1.3s) gap 0.5  Amazon Speech to Text.
+[061]  259.90- 260.92 ( 1.0s) gap 2.5  It gives a time stamp.
+[062]  261.29- 262.26 ( 1.0s) gap 0.4  on every word.
+[063]  262.71- 264.51 ( 1.8s) gap 0.4  and the words Whisper Keeps gets wrong.
+[064]  265.40- 266.35 ( 1.0s) gap 0.9  like a towel.
+[065]  269.94- 270.76 ( 0.8s) gap 3.6  go to custom.
+[066]  272.63- 273.84 ( 1.2s) gap 1.9  go into Custom blijrat.
+[067]  275.39- 276.99 ( 1.6s) gap 1.6  go into its custom vocabulary.
+[068]  279.75- 280.71 ( 1.0s) gap 2.8  Layer 2.
+[069]  281.35- 281.93 ( 0.6s) gap 0.6  The Graph.
+[070]  283.03- 285.37 ( 2.3s) gap 1.1  Today, it's a Python process on myPT.
+[071]  287.25- 288.39 ( 1.1s) gap 1.9  Today it's a Python.
+[072]  290.36- 292.61 ( 2.2s) gap 2.0  Today it's a Python process I might be seeing.
+[073]  293.24- 294.35 ( 1.1s) gap 0.6  Haunted WS.
+[074]  294.76- 296.39 ( 1.6s) gap 0.4  It runs on Agent Core runtime.
+[075]  296.73- 298.15 ( 1.4s) gap 0.3  Amazon Hosting for Agents.
+[076]  302.40- 304.48 ( 2.1s) gap 4.2  Each run gets its own micro-VM.
+[077]  304.82- 306.80 ( 2.0s) gap 0.3  a small isolated virtual machine.
+[078]  307.44- 308.52 ( 1.1s) gap 0.6  for up to eight hours.
+[079]  309.19- 310.46 ( 1.3s) gap 0.7  It builds by the second.
+[080]  310.89- 314.33 ( 3.4s) gap 0.4  and the GPU charge drops to zero while it waits on a model.
+[081]  316.96- 318.97 ( 2.0s) gap 2.6  and the CPU charge drops to zero.
+[082]  319.41- 320.40 ( 1.0s) gap 0.4  trial rates on a model.
+[083]  325.91- 327.23 ( 1.3s) gap 5.5  The checkpoints move too.
+[084]  328.01- 329.43 ( 1.4s) gap 0.8  Today they're in SQLite.
+[085]  331.62- 334.49 ( 2.9s) gap 2.2  on AWS, they will go into DynamoDB.
+[086]  335.15- 336.64 ( 1.5s) gap 0.7  Amazon's managed database.
+[087]  346.89- 347.60 ( 0.7s) gap10.3  on anybody else.
+[088]  349.80- 352.78 ( 3.0s) gap 2.2  On AWS, they go to DynamoDB.
+[089]  353.38- 358.52 ( 5.1s) gap 0.6  Amazon's managed database through a LandGraph package called LandGraph Checkpoint AWS.
+[090]  376.54- 381.01 ( 4.5s) gap18.0  Now the human gates. My first gate once waited nine hours for me.
+[091]  381.59- 384.89 ( 3.3s) gap 0.6  Right? So that session is last eight hours, right? So.
+[092]  388.90- 390.12 ( 1.2s) gap 4.0  Now they're human gates.
+[093]  390.59- 391.11 ( 0.5s) gap 0.5  Bye.
+[094]  393.13- 394.32 ( 1.2s) gap 2.0  Now the human gates.
+[095]  395.01- 398.05 ( 3.0s) gap 0.7  My first gay once waited nine hours for me.
+[096]  400.15- 401.36 ( 1.2s) gap 2.1  Now the human gates.
+[097]  401.88- 404.98 ( 3.1s) gap 0.5  My first gait once waited nine hours for me.
+[098]  405.44- 406.46 ( 1.0s) gap 0.5  session last eight hours.
+[099]  412.16- 413.06 ( 0.9s) gap 5.7  So at the gate.
+[100]  413.43- 415.59 ( 2.2s) gap 0.4  The graph saves the state the dynamoDB.
+[101]  416.03- 416.99 ( 1.0s) gap 0.4  And the session ends.
+[102]  417.79- 420.43 ( 2.6s) gap 0.8  SMS, Amazon Notification Service.
+[103]  420.80- 421.63 ( 0.8s) gap 0.4  sends me an email.
+[104]  425.12- 426.41 ( 1.3s) gap 3.5  I approve on the dashboard.
+[105]  426.74- 428.47 ( 1.7s) gap 0.3  A lambda function resumes a graph.
+[106]  430.65- 432.07 ( 1.4s) gap 2.2  I approve on the dashboard.
+[107]  432.57- 435.29 ( 2.7s) gap 0.5  A lambda function resumes a graph on the same thread.
+[108]  435.74- 436.56 ( 0.8s) gap 0.4  in a new session.
+[109]  438.92- 439.54 ( 0.6s) gap 2.4  Layer 3.
+[110]  440.00- 440.71 ( 0.7s) gap 0.5  the agents.
+[111]  441.49- 444.05 ( 2.6s) gap 0.8  Today, Cloud Code calls in Tropic directly.
+[112]  445.61- 446.18 ( 0.6s) gap 1.6  I need a burger.
+[113]  447.36- 449.68 ( 2.3s) gap 1.2  On AWS, it calls bedrock.
+[114]  450.02- 452.03 ( 2.0s) gap 0.3  Amazon service for running AI models.
+[115]  452.35- 453.02 ( 0.7s) gap 0.3  and fable.
+[116]  453.56- 455.65 ( 2.1s) gap 0.5  copious Sonnet... role on it! you
+[117]  457.99- 458.76 ( 0.8s) gap 2.3  It's one setting.
+[118]  461.66- 463.38 ( 1.7s) gap 2.9  Code, code, use bedrock.
+[119]  465.02- 466.53 ( 1.5s) gap 1.6  and each agent runs.
+[120]  468.52- 470.82 ( 2.3s) gap 2.0  and each agent runs through the clod.
+[121]  471.90- 474.68 ( 2.8s) gap 1.1  And each agent runs through the Cloud SDK.
+[122]  476.62- 478.74 ( 2.1s) gap 1.9  And each agent runs through the cord.
+[123]  480.23- 483.50 ( 3.3s) gap 1.5  And each agent runs through the Cloud Agent SDK.
+[124]  483.86- 485.93 ( 2.1s) gap 0.4  which is core code as a library.
+[125]  486.60- 487.81 ( 1.2s) gap 0.7  in its own runtime session.
+[126]  492.72- 494.62 ( 1.9s) gap 4.9  Their tools go behind Agent Core.
+[127]  497.58- 499.68 ( 2.1s) gap 3.0  Their tools go behind Agent Core Gateway.
+[128]  500.27- 503.76 ( 3.5s) gap 0.6  which turns my APIs and functions into MCP tools.
+[129]  504.20- 506.37 ( 2.2s) gap 0.4  the open standard agents use to call tools.
+[130]  524.79- 526.89 ( 2.1s) gap18.4  And the laggons go into agent core identity.
+[131]  527.60- 529.94 ( 2.3s) gap 0.7  They vote for agent keys and tokens.
+[132]  532.16- 534.75 ( 2.6s) gap 2.2  Each agent also gets an IAM role.
+[133]  535.58- 538.27 ( 2.7s) gap 0.8  I am is how AWS decides who can tell.
+[134]  539.60- 542.52 ( 2.9s) gap 1.3  IM is how AWS decides who can call what.
+[135]  543.44- 545.85 ( 2.4s) gap 0.9  and it will list exactly what the agent.
+[136]  547.98- 551.43 ( 3.4s) gap 2.1  and a row lists exactly what one agent is allowed to call.
+[137]  554.33- 554.85 ( 0.5s) gap 2.9  Today.
+[138]  555.36- 555.97 ( 0.6s) gap 0.5  The Builder.
+[139]  558.87- 559.46 ( 0.6s) gap 2.9  Today.
+[140]  559.82- 562.51 ( 2.7s) gap 0.4  The builder doesn't make images, but nothing stops it.
+[141]  563.14- 567.20 ( 4.1s) gap 0.6  On AWS, its role only allows cloud models, so it can't.
+[142]  571.67- 575.71 ( 4.0s) gap 4.5  On AWS, its role only allows cloud models, so it can't.
+[143]  586.23- 588.23 ( 2.0s) gap10.5  Now the bottleneck for my last video.
+[144]  588.67- 591.64 ( 3.0s) gap 0.4  one browser, make any images, busy port.
+[145]  592.98- 593.38 ( 0.4s) gap 1.3  Cough.
+[146]  594.56- 595.13 ( 0.6s) gap 1.2  All right, redo.
+[147]  596.80- 598.92 ( 2.1s) gap 1.7  Now the bottleneck from my last video.
+[148]  599.37- 605.39 ( 6.0s) gap 0.4  one browser making the images busy for 3.9 hours of a 4 hour and 30 minute build.
+[149]  609.95- 613.72 ( 3.8s) gap 4.6  On AWS, I dropped the browser and call an image model on...
+[150]  614.90- 616.93 ( 2.0s) gap 1.2  On AWS, I dropped about.
+[151]  618.03- 622.00 ( 4.0s) gap 1.1  On AWS, I dropped the browser and call an image model on Bedrock.
+[152]  628.93- 631.16 ( 2.2s) gap 6.9  and the seven shorts stopped taking turns.
+[153]  631.74- 632.50 ( 0.8s) gap 0.6  No browser.
+[154]  632.92- 633.43 ( 0.5s) gap 0.4  Not that.
+[155]  663.39- 665.61 ( 2.2s) gap30.0  So does it run on EC2?
+[156]  666.35- 668.56 ( 2.2s) gap 0.7  Well, yes, but only the heavy work.
+[157]  668.95- 670.28 ( 1.3s) gap 0.4  and only while the job runs.
+[158]  678.42- 680.43 ( 2.0s) gap 8.1  So does it run on AC too?
+[159]  681.17- 683.53 ( 2.4s) gap 0.7  Well, yes, but only the heavy work.
+[160]  686.46- 688.65 ( 2.2s) gap 2.9  So does it run on AC2?
+[161]  689.32- 691.95 ( 2.6s) gap 0.7  Well, yes, but only the heavy work.
+[162]  692.50- 694.15 ( 1.7s) gap 0.5  and only when there's a job to run.
+[163]  701.91- 705.31 ( 3.4s) gap 7.8  The graph's agent on agent core, and the models are on bedrock.
+[164]  705.83- 707.73 ( 1.9s) gap 0.5  The FFMPEG jobs go to AWA-
+[165]  708.80- 713.65 ( 4.8s) gap 1.1  The FFmpeg jobs go to AWS batch, a job queue that starts the servers.
+[166]  715.17- 718.90 ( 3.7s) gap 1.5  A job queue that starts the servers when the work arrives and stops them after.
+[167]  720.86- 723.27 ( 2.4s) gap 2.0  Those servers are EC2 spot instances.
+[168]  730.16- 732.54 ( 2.4s) gap 6.9  Those servers are EC2 spot instances.
+[169]  733.18- 735.49 ( 2.3s) gap 0.6  Sparse capacity Amazon sells for
+[170]  737.05- 738.48 ( 1.4s) gap 1.6  up to 90% or all.
+[171]  740.19- 741.32 ( 1.1s) gap 1.7  Right, it can take.
+[172]  750.09- 752.43 ( 2.3s) gap 8.8  Those servers are AC2 spot instances.
+[173]  754.09- 757.29 ( 3.2s) gap 1.7  Spare capacity Amazon sells for up to 90% off.
+[174]  758.13- 760.35 ( 2.2s) gap 0.8  But it can take one back within two minutes warning.
+[175]  762.55- 764.66 ( 2.1s) gap 2.2  But it can take one back with two minutes warning.
+[176]  772.33- 776.32 ( 4.0s) gap 7.7  That's fine here, because every step reads what's already done and skips it.
+[177]  776.83- 779.53 ( 2.7s) gap 0.5  On AWS, what's done lives in S3.
+[178]  783.13- 783.54 ( 0.4s) gap 3.6  Whisper.
+[179]  784.06- 785.67 ( 1.6s) gap 0.5  If I keep it over transcribed...
+[180]  786.13- 786.84 ( 0.7s) gap 0.5  needs a seat.
+[181]  789.30- 792.42 ( 3.1s) gap 2.5  Whisper, if I keep it over transcribed, needs a GPU.
+[182]  792.90- 794.01 ( 1.1s) gap 0.5  on AWS.
+[183]  796.89- 799.31 ( 2.4s) gap 2.9  On AWS, that's a G6 instance.
+[184]  801.19- 803.15 ( 2.0s) gap 1.9  an AC2 server with NVIDIA.
+[185]  805.26- 810.59 ( 5.3s) gap 2.1  On AWS, that's a G6 instance with an EC2 server with an NVIDIA L4.
+[186]  814.50- 816.59 ( 2.1s) gap 3.9  Today, Remotion renders on my PC.
+[187]  817.13- 817.99 ( 0.9s) gap 0.5  in one minute, Sean.
+[188]  818.83- 820.97 ( 2.1s) gap 0.8  on AWS, Remotion Lambda.
+[189]  822.96- 823.99 ( 1.0s) gap 2.0  on AWS.
+[190]  825.98- 827.09 ( 1.1s) gap 2.0  All right, let's go.
+[191]  827.62- 828.40 ( 0.8s) gap 0.5  redo this one.
+[192]  829.15- 832.82 ( 3.7s) gap 0.8  On AWS, remotion lambda splits a render across a
+[193]  834.31- 837.26 ( 3.0s) gap 1.5  AWS, Remotion Lambda, Spitzer...
+[194]  839.64- 841.38 ( 1.7s) gap 2.4  Okie dokie, I keep getting it wrong.
+[195]  842.00- 843.22 ( 1.2s) gap 0.6  on AWS.
+[196]  843.65- 845.11 ( 1.5s) gap 0.4  Emotion lambda spits out-
+[197]  846.07- 851.87 ( 5.8s) gap 1.0  On AWS, Remotion Lambda splits a render across up to 200 Lambda functions at once.
+[198]  854.32- 855.74 ( 1.4s) gap 2.5  at least 20 frames each.
+[199]  857.96- 862.42 ( 4.5s) gap 2.2  Remotion Zone example is a 10 minute HD video for around 10 cents.
+[200]  864.57- 867.15 ( 2.6s) gap 2.1  Each render has to finish in sides 15 minutes.
+[201]  872.00- 873.34 ( 1.3s) gap 4.9  Layer 5 Publishing.
+[202]  873.90- 876.08 ( 2.2s) gap 0.6  Today, the post went in JSON file.
+[203]  876.52- 879.34 ( 2.8s) gap 0.4  On AWS, their role is in DynamoDB.
+[204]  889.93- 892.93 ( 3.0s) gap10.6  Each post gets one time schedule and an event page schedule.
+[205]  894.53- 897.88 ( 3.3s) gap 1.6  East Post gets a one-time schedule and an events-bid scheduler.
+[206]  898.60- 900.02 ( 1.4s) gap 0.7  Amazon's alarm clock.
+[207]  902.16- 905.62 ( 3.5s) gap 2.1  Each post gets a one-time schedule and event bridge scheduler.
+[208]  907.07- 908.18 ( 1.1s) gap 1.4  Amazon's alarm clock.
+[209]  908.62- 909.18 ( 0.6s) gap 0.4  code.
+[210]  909.86- 912.80 ( 2.9s) gap 0.7  At that time, it fires a lambda function that posts it.
+[211]  943.68- 945.00 ( 1.3s) gap30.9  I don't wanna do the next line.
+[212]  946.80- 948.12 ( 1.3s) gap 1.8  about YouTube and X.
+[213]  948.79- 949.89 ( 1.1s) gap 0.7  So let's skip that line.
+[214]  953.91- 955.72 ( 1.8s) gap 4.0  Today, I read log files.
+[215]  956.26- 960.05 ( 3.8s) gap 0.5  On AWS, every agent is run and traced into CloudWatch.
+[216]  960.45- 961.82 ( 1.4s) gap 0.4  Amazon's monitoring service.
+[217]  962.42- 964.68 ( 2.3s) gap 0.6  latency, token usage, and errors.
+[218]  965.07- 965.55 ( 0.5s) gap 0.4  session.
+[219]  972.62- 976.12 ( 3.5s) gap 7.1  The media bill for a 63 minute live stream on my last video.
+[220]  976.59- 977.29 ( 0.7s) gap 0.5  transcript.
+[221]  977.76- 978.60 ( 0.8s) gap 0.5  83 cents.
+[222]  979.34- 979.80 ( 0.5s) gap 0.7  The ситуations are harder.
+[223]  981.98- 982.85 ( 0.9s) gap 2.2  The media bill.
+[224]  983.20- 985.62 ( 2.4s) gap 0.3  for a 63 minute live stream from my last video.
+[225]  986.05- 986.73 ( 0.7s) gap 0.4  transcript.
+[226]  987.30- 990.35 ( 3.1s) gap 0.6  The image is $1.6.
+[227]  990.66- 992.10 ( 1.4s) gap 0.3  renders a few pennies.
+[228] 1001.48-1003.00 ( 1.5s) gap 9.4  That's before the model tokens.
+[229] 1003.42-1005.38 ( 2.0s) gap 0.4  was I'd watch per agent in CloudWatch.
+[230] 1026.86-1030.79 ( 3.9s) gap21.5  So the graph barely changes. What changes is everything around it.
+[231] 1059.40-1063.65 ( 4.3s) gap28.6  where the state lives, who holds the keys, everything that runs in parallel.
+[232] 1064.32-1065.93 ( 1.6s) gap 0.7  That's just production work.
+[233] 1071.16-1073.63 ( 2.5s) gap 5.2  Where the state lives, who holds the keys.
+[234] 1074.21-1075.36 ( 1.1s) gap 0.6  What runs in parallel?
+[235] 1076.27-1077.24 ( 1.0s) gap 0.9  That's the production work.
+[236] 1095.04-1097.60 ( 2.6s) gap17.8  If you haven't seen the last two videos on this graph.
+[237] 1098.01-1100.06 ( 2.1s) gap 0.4  I would say start right there, here's a playlist.
+[238] 1103.93-1107.99 ( 4.1s) gap 3.9  If you haven't seen the last two videos on this graph, I would say start right here.
+[239] 1108.42-1110.16 ( 1.7s) gap 0.4  It's a playlist all about line graphs.
+[240] 1110.77-1117.12 ( 6.4s) gap 0.6  Make sure you subscribe if you're new here and you can check this playlist right here because we got tons of stuff related to-
+[241] 1117.56-1118.60 ( 1.0s) gap 0.4  AI engineering.
+[242] 1118.90-1120.04 ( 1.1s) gap 0.3  on this channel called...
+[243] 1120.59-1121.97 ( 1.4s) gap 0.6  AI engineering simplified.

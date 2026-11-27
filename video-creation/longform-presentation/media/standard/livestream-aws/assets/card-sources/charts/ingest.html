@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>livestream-aws chart: ingest (trigger, convert, face, words)</title>
+<!--
+  SYSTEM-DESIGN CHART, full-frame cover, 1920x1080, 4 states. SCRIPT.md CARDS row `ingest`, CH2, TODAY beside ON AWS:
+    trigger "S3 can announce every new file to EventBridge, Amazon's event router. EventBridge calls a Lambda function,
+            a small piece of code AWS runs only when something calls it, and that starts the graph."
+            -> the folder on my PC -> S3 -> EventBridge -> Lambda -> the graph, lit
+    convert "Today, ffmpeg makes the low-bitrate master. On AWS, that's MediaConvert, Amazon's video converter."
+    face    "My face tracker makes the vertical crop. On AWS, Rekognition, Amazon's image and video analysis service,
+            finds my face in the video."
+    words   "And Whisper writes the transcript. On AWS, that's Transcribe, Amazon's speech to text. It gives a timestamp
+            on every word, and the words Whisper keeps getting wrong, like TAO, go into its custom vocabulary."
+  Facts: RESEARCH.md section 2 (today) and 3 (S3 events to EventBridge; Transcribe word timestamps and custom
+  vocabularies). TODAY pieces light white, AWS pieces cyan; the dashed arrow is the swap. The word strip under
+  "a timestamp on every word" is a drawing, no times printed. TAO in mono (a ticker), spelled the token's way.
+  Shoot (from this folder): python shoot.py ingest.html --out ../../diagrams
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chart.css">
+<link rel="stylesheet" href="group1.css">
+<style>
+.td.side{display:flex;align-items:center;gap:18px;padding:0 22px}
+.td .tx{display:flex;flex-direction:column}
+.td .ts{text-wrap:balance}
+/* a row's output on AWS */
+.res{display:flex;align-items:center;gap:16px;padding:0 24px}
+.res .tn{font-size:26px;font-weight:600;color:var(--rest-sub)}
+.res.on .tn{color:var(--text-primary)}
+.res .ico{color:var(--text-secondary)}
+.res.on .ico{color:var(--accent-cyan)}
+.tn{font-family:'DM Sans';font-weight:700;font-size:28px;line-height:1.15}
+.ts{font-family:'DM Sans';font-weight:500;font-size:24px;line-height:1.25;color:var(--rest-sub);margin-top:5px}
+.td.on .ts{color:var(--lit-sub)}
+.gnode{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.gnode .tn{font-size:27px}
+.gnode .ico{color:var(--text-secondary)}
+.gnode.on .ico{color:var(--accent-cyan)}
+/* Transcribe, with its two features inside the box */
+.node.svc.tr{flex-direction:row;align-items:stretch;justify-content:flex-start;padding:0;text-align:left}
+.tr .main{width:246px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  border-right:2px solid var(--rest-edge)}
+.tr.on .main{border-right-color:rgba(0,194,255,.45)}
+.feat{display:flex;flex-direction:column;justify-content:center;padding:0 30px;gap:12px}
+.ft{font-family:'DM Sans';font-weight:600;font-size:24px;line-height:1.2;color:var(--rest-sub);white-space:nowrap}
+.tr.on .ft{color:var(--text-primary)}
+.strip{display:flex;align-items:flex-end;gap:7px;height:30px}
+.strip i{display:block;height:14px;border-radius:4px;background:rgba(136,146,164,.38);position:relative}
+.strip i::before{content:"";position:absolute;left:0;top:-12px;width:2px;height:10px;border-radius:1px;background:rgba(136,146,164,.7)}
+.tr.on .strip i{background:rgba(232,234,240,.42)}
+.tr.on .strip i::before{background:var(--accent-cyan)}
+.voc{display:flex;align-items:center;gap:12px}
+.tok{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:26px;line-height:1;padding:9px 16px;border-radius:10px;
+  border:1.5px solid var(--rest-edge);color:var(--rest-sub);background:rgba(10,12,16,.6)}
+.tr.on .tok{border-color:var(--accent-cyan);color:var(--accent-cyan);background:rgba(0,194,255,.10);box-shadow:0 0 22px rgba(0,194,255,.25)}
+.sep{width:2px;align-self:stretch;margin:22px 0;background:var(--rest-edge)}
+.tr.on .sep{background:rgba(0,194,255,.35)}
+</style>
+</head>
+<body>
+<template id="chart"></template>
+<script src="chart.js"></script>
+<script src="group1.js"></script>
+<script>
+(function () {
+  var ROW = [352, 528, 704, 880], BH = 128;                 // row centres, box height
+  var TX = 146, TW = 360;                                   // the TODAY pieces
+  var AX = 608, AW = 250;                                   // the AWS column (the swap target of every row)
+  var h = [];
+  h.push('<div class="stage">');
+  h.push('<div class="orb" style="width:640px;height:640px;background:var(--accent-cyan);opacity:.12;left:-300px;top:-320px"></div>');
+  h.push('<div class="orb" style="width:620px;height:620px;background:var(--accent-green);opacity:.06;left:1520px;top:760px"></div>');
+  h.push('<div class="head"><h1>Ingest, today and on AWS</h1><div class="divider"></div></div>');
+
+  // the two columns
+  h.push('<div class="zone tz" style="left:120px;top:202px;width:414px;height:790px"></div>');
+  h.push('<div class="zone" style="left:578px;top:202px;width:1222px;height:790px"></div>');
+  h.push('<div class="colh today" data-own style="left:150px;top:222px">' + ICO("pc", 32, "", 2.2) + 'TODAY<span class="hs">my PC</span></div>');
+  h.push('<div class="colh aws" data-own style="left:' + AX + 'px;top:222px">ON AWS</div>');
+
+  // wires
+  var w = [], y;
+  ROW.forEach(function (c, i) {
+    var k = ["trigger", "convert", "face", "words"][i];
+    w.push(WIRE(k, 'M' + (TX + TW + 4) + ',' + c + ' L' + (AX - 5) + ',' + c, "swap"));
+  });
+  y = ROW[0];
+  var S3 = [AX, AX + 210], EB = [938, 1158], LA = [1248, 1500], GR = [1604, 1770];   // gaps 120, 90, 104: each label clears by 16 px+
+  var RX = [AX + AW, AX + AW + 110, 1400];  // rows 2, 3: the AWS box, the arrow, the output
+  w.push(WIRE("trigger", 'M' + (S3[1] + 3) + ',' + y + ' L' + (EB[0] - 5) + ',' + y));
+  w.push(WIRE("trigger", 'M' + (EB[1] + 3) + ',' + y + ' L' + (LA[0] - 5) + ',' + y));
+  w.push(WIRE("trigger", 'M' + (LA[1] + 3) + ',' + y + ' L' + (GR[0] - 5) + ',' + y));
+  [1, 2].forEach(function (i) { var k = ["convert", "face"][i - 1]; w.push(WIRE(k, 'M' + (RX[0] + 3) + ',' + ROW[i] + ' L' + (RX[1] - 5) + ',' + ROW[i])); });
+  h.push('<svg class="wires" width="1920" height="1080" viewBox="0 0 1920 1080">' + w.join('') + '</svg>');
+  function wl(k, x0, x1, t) {
+    h.push('<div class="wl" data-k="' + k + '" style="left:' + x0 + 'px;width:' + (x1 - x0) + 'px;top:' + (y - 46) + 'px;text-align:center">' + t + '</div>');
+  }
+  wl("trigger", S3[1], EB[0], "new file"); wl("trigger", EB[1], LA[0], "calls"); wl("trigger", LA[1], GR[0], "starts");
+
+  // TODAY pieces
+  var T = [
+    ["trigger", "folder", "a folder on my PC", "the recording sits here"],
+    ["convert", "terminal", "ffmpeg", "makes the <span style=\"white-space:nowrap\">low-bitrate</span> master"],
+    ["face", "face", "my face tracker", "makes the vertical crop"],
+    ["words", "wave", "Whisper", "writes the transcript"]
+  ];
+  T.forEach(function (t, i) {
+    h.push('<div class="node td side" data-k="' + t[0] + '" style="left:' + TX + 'px;top:' + (ROW[i] - BH / 2) + 'px;width:' + TW + 'px;height:' + BH + 'px">' +
+      ICO(t[1], 42, "", 2) + '<div class="tx"><div class="tn">' + t[2] + '</div><div class="ts">' + t[3] + '</div></div></div>');
+  });
+
+  // ON AWS: row 1, the trigger chain
+  var top1 = ROW[0] - BH / 2;
+  h.push(SVC({ k: "trigger", x: S3[0], y: top1, w: S3[1] - S3[0], h: BH, name: "S3", desc: "file storage" }));
+  h.push(SVC({ k: "trigger", x: EB[0], y: top1, w: EB[1] - EB[0], h: BH, name: "EventBridge", desc: "event router" }));
+  h.push(SVC({ k: "trigger", x: LA[0], y: top1, w: LA[1] - LA[0], h: BH, name: "Lambda", desc: "code that runs when called" }));
+  h.push('<div class="node gnode" data-k="trigger" style="left:' + GR[0] + 'px;top:' + top1 + 'px;width:' + (GR[1] - GR[0]) + 'px;height:' + BH + 'px">' +
+    ICO("graph", 40, "", 2) + '<div class="tn">the graph</div></div>');
+  // rows 2 and 3
+  h.push(SVC({ k: "convert", x: AX, y: ROW[1] - BH / 2, w: AW, h: BH, name: "MediaConvert", desc: "video converter" }));
+  h.push(SVC({ k: "face", x: AX, y: ROW[2] - BH / 2, w: AW, h: BH, name: "Rekognition", desc: "image and video analysis" }));
+  [[1, "convert", "makes", "film", "the low-bitrate master"], [2, "face", "finds", "face", "my face in the video"]].forEach(function (r) {
+    h.push('<div class="wl" data-k="' + r[1] + '" style="left:' + RX[0] + 'px;width:' + (RX[1] - RX[0]) + 'px;top:' + (ROW[r[0]] - 46) + 'px;text-align:center">' + r[2] + '</div>');
+    h.push('<div class="node res" data-k="' + r[1] + '" style="left:' + RX[1] + 'px;top:' + (ROW[r[0]] - 44) + 'px;width:' + (RX[2] - RX[1]) + 'px;height:88px">' +
+      ICO(r[3], 38, "", 2) + '<div class="tn">' + r[4] + '</div></div>');
+  });
+  // row 4: Transcribe and its two features
+  var strip = '<div class="strip"><i style="width:44px"></i><i style="width:70px"></i><i style="width:34px"></i><i style="width:58px"></i>' +
+    '<i style="width:26px"></i><i style="width:64px"></i><i style="width:40px"></i></div>';
+  h.push('<div class="node svc tr" data-k="words" style="left:' + AX + 'px;top:' + (ROW[3] - BH / 2) + 'px;width:' + (1770 - AX) + 'px;height:' + BH + 'px">' +
+    '<div class="main"><div class="sn">Transcribe</div><div class="sd">speech to text</div></div>' +
+    '<div class="feat" style="width:420px">' + strip + '<div class="ft">a timestamp on every word</div></div>' +
+    '<div class="sep"></div>' +
+    '<div class="feat"><div class="voc"><span class="ft">custom vocabulary</span><span class="tok">TAO</span></div>' +
+    '<div class="ft" style="font-weight:500">the words Whisper gets wrong</div></div></div>');
+  h.push('</div>');
+  document.getElementById("chart").innerHTML = h.join("");
+
+  buildChart({
+    "ingest-trigger": { on: ["trigger"] },
+    "ingest-convert": { on: ["convert"] },
+    "ingest-face":    { on: ["face"] },
+    "ingest-words":   { on: ["words"] }
+  });
+})();
+</script>
+</body>
+</html>

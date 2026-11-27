@@ -1,0 +1,83 @@
+{
+  "verdict": "PASS",
+  "assets": [
+    {
+      "path": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-presentation/media/standard/longest-bear/yt-post/slides/01.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "Hook: 'Longest bear market ever?' on 2 lines with no orphan word, and 'ever' in the accent cyan (Playfair 900). The headline sits under his chin, bottom-left, clear of his eyes, nose and mouth. The face is whole: only hair touches the top and right edges. The label, link, Swipe and the 1-of-10 progress bar are aligned on the 65 px margin. No text is clipped."
+    },
+    {
+      "path": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-presentation/media/standard/longest-bear/yt-post/slides/02.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "Round-1 bars are FIXED: the image box edges sample at RGB ~(14,16,20), the same as the chart, with no black strips. Bar heights are to scale (406/364/378/415 measured). The caption matches the spec word for word, and 406, 364, 378 and 415 are in JetBrains Mono. The headline 'Side one: past them all' fits on one line. The chart reads at phone size. Header shows 2/10 and the progress bar has 2 segments lit."
+    },
+    {
+      "path": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-presentation/media/standard/longest-bear/yt-post/slides/03.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "Body matches the spec word for word. 50 and 200 are in JetBrains Mono (slashed/dotted zeros confirmed at zoom). 'the rule' is in the accent colour. Header shows 3/10 and the progress bar has 3 segments lit. The empty lower half is how the text kind is designed."
+    },
+    {
+      "path": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-presentation/media/standard/longest-bear/yt-post/slides/04.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "All 4 rows match the spec. The highlight is on Leg 2 (index 3), and money is written with the word, no $. Header shows 4/10. Minor, does not block: the Rally value wraps and leaves 'dollars' alone on line 2. Only 1 of 4 rows wraps, inside the rule's limit of 2."
+    },
+    {
+      "path": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-presentation/media/standard/longest-bear/yt-post/slides/05.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "75 and 81 render in JetBrains Mono: at zoom, the '1' in 81 has the mono foot bar, the same face as 50 and 200 on slide 3. The file is the same size as in round 1 (453890 bytes), so round 1's 'DM Sans fallback' call on this slide was most likely a false positive, not a re-shoot. The body matches the spec, with no $ and no em dash. 'hurt twice' is in the accent colour. Header shows 5/10."
+    },
+    {
+      "path": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-presentation/media/standard/longest-bear/yt-post/slides/06.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "All 4 rows match the spec and the highlight is on 'The catch' (index 3). Header shows 6/10. Minor, does not block: 'September' sits alone on line 2 of the highlighted row (1 wrapped row, within the rule)."
+    },
+    {
+      "path": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-presentation/media/standard/longest-bear/yt-post/slides/07.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "Now a rows slide. Round-1 defects (the $68K card, the bars, the orphan 'floor.') are gone. The rows match the spec: 'Around 68 thousand dollars' is written with the word, no $. The highlight is on 'Now' (index 3). The headline 'The 200-week line' has '200-week' in the accent colour. Header shows 7/10 and the progress bar has 7 segments lit."
+    },
+    {
+      "path": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-presentation/media/standard/longest-bear/yt-post/slides/08.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "Round-1 bars are FIXED: the box edges sample at ~(15,17,21), with no black strips. Bar lengths are to scale (1,127/1,080/847/415 measured). The caption matches the spec, and 847, 1,080, 1,127 and 415 are in mono. The caption's last line, 'and counting.', is 2 words, not an orphan. The headline highlight is 'a new high'. Header shows 8/10."
+    },
+    {
+      "path": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-presentation/media/standard/longest-bear/yt-post/slides/09.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "Body matches the spec word for word. 'I think' is in the accent colour. Header shows 9/10 and the progress bar has 9 segments lit. No em dash and no dollar sign."
+    },
+    {
+      "path": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-presentation/media/standard/longest-bear/yt-post/slides/10.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "Round-1 overlap is FIXED: the stack flows headline, then title (one line, 'The Longest Crypto Bear Market Ever', per the spec sub), then the 'Link in the post' pill, then the link, with clean gaps and nothing overlapping. 'full video' is in the accent colour. The face is centred and whole, with the hair just inside the top edge, and the headline sits below his chin, clear of his eyes, nose and mouth. The play badge top-left stays off his hair."
+    }
+  ],
+  "summary": {
+    "checked": 10,
+    "passed": 10,
+    "failed": 0
+  },
+  "must_fix": [],
+  "stamp": "01.png:1376685;02.png:804648;03.png:446744;04.png:505428;05.png:453890;06.png:498660;07.png:465845;08.png:792329;09.png:457983;10.png:1297256",
+  "round": 2
+}

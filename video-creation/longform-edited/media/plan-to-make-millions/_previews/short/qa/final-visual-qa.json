@@ -1,0 +1,24 @@
+{
+  "asset": "video-creation/longform-edited/media/plan-to-make-millions/_previews/short/plan-to-make-millions-SHORT-30s-v2.mp4",
+  "checked": "4 contact sheets (62 frames, 0.0-30.5 s every 0.5 s) + full-res frames at 0.0, 7.0, 13.5, 16.0, 19.0, 19.5, 27.5, 28.0, 29.5 and the last frame (30.77 s); 1080x1920, 30 fps, 30.80 s",
+  "verdict": "PASS",
+  "blocking_defects": 0,
+  "defects": [
+    {
+      "t": 26.5,
+      "severity": "minor (not blocking)",
+      "what": "The caption 'that's my plan.' (26.5-27.9 s) is 3 words, and 'that's' has 6 letters. captions.md line 9 allows 2 words per line, or up to 4 only when every word is 4 letters or fewer. Every other caption in the short follows the rule.",
+      "fix": "Optional: split it into 'that's my' / 'plan.' in the short's caption track, then re-render only that window with render_short.py splice-style partial re-render (frames ~795-837). Mike may accept it as is because it is the closing line."
+    }
+  ],
+  "notes": [
+    "Edges: no caption, card text, chart label or footnote is cut at the left/right/top/bottom at any sampled time. Chart footnote ('...never market cap') wraps inside the margin.",
+    "Native vertical layouts: the Pieverse chart (13.5-18.9 s) and the 'THE BOTTOM' card (19.0-22.9 s) are built at 9:16 (full-width chart, card fills the frame). They are not cropped 16:9 assets. No leftover 16:9 captions are burned in under the short's own captions.",
+    "Captions sit in empty space: on the chart between the x-axis and the footnote, on the card below 'low entries.'. They never cover card or chart text. Lowercase Montserrat with a thick black stroke, bottom-center, readable on dark and light backgrounds.",
+    "Content: market-cap ticker runs 69M -> 112M -> 158M -> 228M -> 355M -> 676M -> OVER 1B. The callout reads 'MY CALL, AROUND A 65M CAP', which matches the spoken '65 million market cap'. No em dashes. The accent words ('called early' gold, 'low entries.' blue) are colored. The light containers are a deliberate theme and match each other.",
+    "Face: centered and fully in frame in every face beat (0-12.9 s, 23.0-27.9 s). Only the top of the hair is trimmed, which is normal for a vertical crop. A hand enters the left edge at 10.0 s from Mike's own gesture, not from the crop.",
+    "Transitions: the orange flashes at 7.0 s, 13.5 s and 27.5 s are the film-burn transition, not exposure faults. At 28.0 s the face cross-dissolves into the outro.",
+    "Outro: 'WATCH THE / FULL VIDEO' card is intact from 28.0 s to the last frame (30.77 s). The divider and the green-cyan down arrow animate in by 28.5 s. There are no black or blank frames anywhere, including the tail."
+  ],
+  "short": "plan-to-make-millions-SHORT-30s-v2.mp4:22616818"
+}

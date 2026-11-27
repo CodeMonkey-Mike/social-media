@@ -1,0 +1,144 @@
+{
+ "src": "ALL.c.desilenced.mp4",
+ "out": "ALL.d.cleaned.mp4",
+ "skill": "video-creation/skills/burst-removal/burst-removal.md",
+ "method": "ONE sync-safe filter_complex (trim/atrim + concat, 4 segments), audio+video cut together; libx264 crf18 + aac 192k 44.1k; -fps_mode vfr -enc_time_base:v 1/15360 so every frame keeps its source timestamp (r_frame_rate 30/1 kept, the input's own 0.023 s video start offset and its doubled-duration frames preserved); every cut edge on a video frame pts, inside digital-silence troughs",
+ "time_base": "c (ALL.c.desilenced.mp4) seconds; t_d = t_c for t_c < 7.089648; t_c - 0.466667 for 7.556315 <= t_c < 445.095638; t_c - 0.933333 for 445.562305 <= t_c < 463.362305; t_c - 1.5 for t_c >= 463.928971",
+ "cuts": [
+  {
+   "n": 1,
+   "mike_span": [
+    7.18,
+    7.46
+   ],
+   "kind": "speech island / burst between sentences (short voiced hump, not named by Whisper as a separate word)",
+   "word_a": "2028.",
+   "word_b": "Just",
+   "context": "...where I plan to make millions in 2028. [island] Just listen to the last few weeks of headlines.",
+   "word_a_decay_sil": 7.01,
+   "burst_hump": [
+    7.18,
+    7.47
+   ],
+   "burst_peak_db": -22.7,
+   "word_b_onset": 7.67,
+   "trough_before": [
+    7.02,
+    7.17
+   ],
+   "trough_after": [
+    7.47,
+    7.66
+   ],
+   "cut_start": 7.089648,
+   "cut_end": 7.556315,
+   "removed_s": 0.466667,
+   "rms_at_edges_db": {
+    "cut_start": -99,
+    "cut_end": -99
+   },
+   "visual": "both edges in blacked COVER (blackdetect c 7.023-10.356); no head jump possible",
+   "verified_on_output": {
+    "join_rms": "continuous <SIL valley d 7.01-7.20 (floor -99..-215 dB), no hump; 'Just' onset d 7.21",
+    "whisper": "...make millions in 2028. Just listen to the last few weeks of headlines. (2028. p=0.94, Just p=0.92)"
+   }
+  },
+  {
+   "n": 2,
+   "mike_span": [
+    445.19,
+    445.34
+   ],
+   "kind": "speech island / burst after the sentence end (short voiced hump)",
+   "word_a": "Pyverse.",
+   "word_b": "Then",
+   "context": "...That's exactly what I did with Pyverse. [island] Then the swing trading software takes over.",
+   "word_a_decay_sil": 444.88,
+   "burst_hump": [
+    445.19,
+    445.33
+   ],
+   "burst_peak_db": -20.1,
+   "word_b_onset": 445.65,
+   "trough_before": [
+    445.03,
+    445.18
+   ],
+   "trough_after": [
+    445.34,
+    445.64
+   ],
+   "cut_start": 445.095638,
+   "cut_end": 445.562305,
+   "removed_s": 0.466667,
+   "rms_at_edges_db": {
+    "cut_start": -123,
+    "cut_end": -99
+   },
+   "visual": "both edges in blacked COVER (blackdetect c 359.862-466.029); no head jump possible",
+   "verified_on_output": {
+    "join_rms": "continuous <SIL valley d 444.42-444.71 (join -174/-228 dB), no hump; 'Then' onset d 444.72",
+    "whisper": "...what I did with PyVerse. Then the swing trading software takes over. (PyVerse. p=0.66, Then p=0.98)"
+   }
+  },
+  {
+   "n": 3,
+   "mike_span": [
+    463.51,
+    463.69
+   ],
+   "kind": "speech island / false-start stub before '34' (Whisper merged it into the gap)",
+   "word_a": "calls.",
+   "word_b": "34",
+   "context": "...on my public showcase, there are 56 calls. [island] 34 of them were called by a bot.",
+   "word_a_decay_sil": 463.21,
+   "burst_hump": [
+    463.51,
+    463.68
+   ],
+   "burst_peak_db": -21.8,
+   "word_b_onset": 464.01,
+   "trough_before": [
+    463.22,
+    463.5
+   ],
+   "trough_after": [
+    463.69,
+    464.0
+   ],
+   "cut_start": 463.362305,
+   "cut_end": 463.928971,
+   "removed_s": 0.566666,
+   "rms_at_edges_db": {
+    "cut_start": -136,
+    "cut_end": -99
+   },
+   "visual": "both edges in blacked COVER (blackdetect c 359.862-466.029); no head jump possible",
+   "verified_on_output": {
+    "join_rms": "continuous <SIL valley d 462.27-462.50 (join -144 dB), no hump; '34' onset d 462.51",
+    "whisper": "...there are 56 calls. 34 of them were called by a bot. (calls. p=0.99, 34 p=0.66)"
+   }
+  }
+ ],
+ "removed_total_s": 1.5,
+ "shift": "c >= 7.5563 -> -0.4667 s; c >= 445.5623 -> -0.9333 s; c >= 463.9290 -> -1.5000 s",
+ "verified_on_output_global": {
+  "audio_xcorr": "residual vs expected shift: c3.0 +0.00 ms, c100 +0.13, c300 +0.13, c450 +0.13, c520 +0.25, c585 +0.25 (corr 0.98-1.00)",
+  "video_edges": "all 14 black/face edges match input within 1 ms after the expected shift"
+ },
+ "frames": {
+  "in": 17731,
+  "out": 17686
+ },
+ "durations": {
+  "in_format": 591.742222,
+  "out_format": 590.261995,
+  "in_video": 591.712305,
+  "out_video": 590.2125
+ },
+ "fps": {
+  "in_r_frame_rate": "30/1",
+  "out_r_frame_rate": "30/1"
+ },
+ "backup": "input ALL.c.desilenced.mp4 left untouched (it is the pre-cut copy; no separate .bak-burst.mp4 needed)"
+}

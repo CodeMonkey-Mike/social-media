@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>livestream-aws chart: agents (models, tools, role)</title>
+<!--
+  SYSTEM-DESIGN CHART, full-frame cover, 1920x1080, 3 states. SCRIPT.md CARDS row `agents`, CH4, TODAY beside ON AWS:
+    models "It's one setting, CLAUDE_CODE_USE_BEDROCK. And each agent runs through the Claude Agent SDK, which is Claude
+           Code as a library, in its own Runtime session."
+           -> TODAY Claude Code -> Anthropic; ON AWS the agent (Claude Agent SDK, the setting) -> Bedrock with Fable, Opus,
+              Sonnet (3 model families); the setting and the Agent SDK lit
+    tools  "Their tools go behind AgentCore Gateway, which turns my APIs and functions into MCP tools ... And the logins
+           go in AgentCore Identity, a vault for the agents' keys and tokens."   -> Gateway and Identity lit
+    role   "Each agent also gets an IAM role ... Today, the builder doesn't make images, but nothing stops it. On AWS,
+           its role only allows the Claude models, so it can't."
+           -> the IAM role lit; the builder's role allows only the Claude models (green), the image model crossed out (red)
+  Each agent in its own Runtime session = the stack of session cards (the front one is the builder). The image model
+  on Bedrock is shown as "an image model" (the words the script uses; the map names it Stable Image Core). Facts:
+  RESEARCH.md section 2 (headless Claude Code per agent) and 3 (Claude on Bedrock: Fable, Opus, Sonnet; the setting;
+  the Agent SDK; Gateway; Identity; least privilege, one identity per agent). Never the old Agents product name (say
+  AgentCore); no token price.
+  Shoot (from this folder): python shoot.py agents.html --out ../../diagrams
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chart.css">
+<link rel="stylesheet" href="group1.css">
+<style>
+.tn{font-family:'DM Sans';font-weight:700;font-size:28px;line-height:1.15}
+.ts{font-family:'DM Sans';font-weight:500;font-size:24px;line-height:1.25;color:var(--rest-sub);margin-top:4px;text-wrap:balance}
+.on .ts{color:var(--lit-sub)}
+.side{display:flex;align-items:center;gap:16px;padding:0 20px}
+.tx{display:flex;flex-direction:column}
+.hold{display:block;padding:0}
+/* a TODAY piece, icon over its words (the TODAY column is narrow so the ON AWS column gets the room) */
+.stk{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:4px;padding:0 16px}
+.stk .ico{margin-bottom:4px}
+/* the session stack */
+.ghost{border-style:dashed;border-color:rgba(136,146,164,.30);background:rgba(18,21,28,.6)}
+.sesl{font-family:'DM Sans';font-weight:700;font-size:22px;letter-spacing:.10em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap}
+.agn{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:28px;color:var(--rest-title);white-space:nowrap}
+.agn.lit{color:var(--text-primary)}
+/* chips inside Bedrock / Gateway */
+.mch{font-family:'DM Sans';font-weight:700;font-size:26px;line-height:1;padding:11px 18px;border-radius:12px;border:1.5px solid var(--rest-edge);
+  background:rgba(10,12,16,.6);color:var(--rest-sub);white-space:nowrap;display:inline-flex;align-items:center;gap:8px;position:relative}
+.on .mch{color:var(--text-primary);border-color:rgba(0,194,255,.6);background:rgba(0,194,255,.08)}
+.mch.ok{border-color:rgba(0,230,138,.85);color:var(--text-primary);background:rgba(0,230,138,.10);box-shadow:0 0 22px rgba(0,230,138,.18)}
+.mch.no{border-color:rgba(255,64,96,.85);color:rgba(255,64,96,.95);background:rgba(255,64,96,.08)}
+.mch .ico{color:currentColor;opacity:1}
+.grl{font-family:'DM Sans';font-weight:700;font-size:22px;letter-spacing:.10em;text-transform:uppercase;color:var(--text-secondary);white-space:nowrap}
+.grl .mono{letter-spacing:0;font-size:24px}
+.on .grl{color:var(--lit-sub)}
+.strike{height:3px;background:var(--accent-red);border-radius:2px;transform:rotate(-8deg);box-shadow:0 0 10px rgba(255,64,96,.6)}
+.mk{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%}
+.mk.ok{background:var(--accent-green);color:var(--bg-deep)}
+.mk.no{background:var(--accent-red);color:var(--bg-deep)}
+.mk .ico{color:currentColor}
+/* the role card */
+.role{display:block;padding:0;border-color:rgba(0,230,138,.55)}
+.role .rt{position:absolute;left:20px;top:16px;display:flex;align-items:center;gap:12px}
+.role .rr{position:absolute;left:20px;display:flex;align-items:center;gap:10px;font-family:'DM Sans';font-weight:600;font-size:24px;color:var(--text-primary);white-space:nowrap}
+.mini{font-family:'DM Sans';font-weight:600;font-size:22px;color:var(--rest-sub);white-space:nowrap}
+.on .mini{color:var(--lit-sub)}
+.flowa{color:var(--text-secondary)}
+.on .flowa{color:var(--accent-cyan)}
+</style>
+</head>
+<body>
+<template id="chart"></template>
+<script src="chart.js"></script>
+<script src="group1.js"></script>
+<script>
+(function () {
+  var h = [];
+  h.push('<div class="stage">');
+  h.push('<div class="orb" style="width:640px;height:640px;background:var(--accent-cyan);opacity:.12;left:-300px;top:-320px"></div>');
+  h.push('<div class="orb" style="width:620px;height:620px;background:var(--accent-green);opacity:.06;left:1520px;top:760px"></div>');
+  h.push('<div class="head"><h1>The agents: models, tools, roles</h1><div class="divider"></div></div>');
+
+  // columns: TODAY 120-452, ON AWS 482-1800 (inner 512-1770)
+  h.push('<div class="zone tz" style="left:120px;top:202px;width:332px;height:790px"></div>');
+  h.push('<div class="zone" style="left:482px;top:202px;width:1318px;height:790px"></div>');
+  h.push('<div class="colh today" data-own style="left:146px;top:222px">' + ICO("pc", 32, "", 2.2) + 'TODAY<span class="hs">my PC</span></div>');
+  h.push('<div class="colh aws" data-own style="left:512px;top:222px">ON AWS</div>');
+
+  // geometry (explicit px)
+  var TX = [146, 426];                   // the TODAY pieces
+  var CC = [284, 418], AN = [500, 634], BU = [742, 920];   // Claude Code, Anthropic, the builder (top, bottom)
+  var S = [512, 942, 296, 700];          // the front session card: left, right, top, bottom
+  var BR = [1042, 1770, 290, 548];       // Bedrock
+  var GW = [1042, 1362, 640, 950];       // AgentCore Gateway
+  var ID = [1462, 1770, 640, 950];       // AgentCore Identity
+  var ccMid = (CC[0] + CC[1]) / 2;
+  var w = [];
+  w.push(WIRE("models", 'M' + (TX[1] + 3) + ',' + ccMid + ' L' + (S[0] - 5) + ',' + ccMid, "swap"));   // today -> on AWS
+  w.push(WIRE("models", 'M190,' + (CC[1] + 3) + ' L190,' + (AN[0] - 5)));                            // Claude Code -> Anthropic
+  w.push(WIRE("models", 'M' + (S[1] + 3) + ',418 L' + (BR[0] - 5) + ',418'));                       // the agent -> Bedrock
+  w.push(WIRE("tools", 'M' + (S[1] + 3) + ',676 L' + (GW[0] - 5) + ',676'));                        // the agent -> Gateway
+  w.push(WIRE("tools", 'M' + (ID[0] - 3) + ',800 L' + (GW[1] + 5) + ',800'));                       // Identity -> Gateway: the logins
+  h.push('<svg class="wires" width="1920" height="1080" viewBox="0 0 1920 1080">' + w.join('') + '</svg>');
+  h.push('<div class="wl" data-k="models" style="left:206px;top:' + ((CC[1] + AN[0]) / 2 - 15) + 'px">calls directly</div>');
+  h.push('<div class="wl" data-k="models" style="left:' + S[1] + 'px;width:' + (BR[0] - S[1]) + 'px;top:372px;text-align:center">calls</div>');
+  h.push('<div class="wl" data-k="tools" style="left:' + S[1] + 'px;width:' + (GW[0] - S[1]) + 'px;top:630px;text-align:center">tools</div>');
+  h.push('<div class="wl" data-k="tools" style="left:' + GW[1] + 'px;width:' + (ID[0] - GW[1]) + 'px;top:754px;text-align:center">logins</div>');
+
+  // TODAY
+  function today(k, y, ico, name, sub, cls) {
+    h.push('<div class="node td stk' + (cls || '') + '" data-k="' + k + '" style="left:' + TX[0] + 'px;top:' + y[0] + 'px;width:' + (TX[1] - TX[0]) +
+      'px;height:' + (y[1] - y[0]) + 'px">' + ico + '<div class="tn">' + name + '</div><div class="ts">' + sub + '</div></div>');
+  }
+  today("models", CC, ICO("terminal", 34, "", 2), "Claude Code", "runs each agent");
+  today("models", AN, ICO("bolt", 34, "", 2), "Anthropic", "the Claude models");
+  today("role troleshow", BU, ICO("shield", 34, "", 2), "the builder", "doesn\'t make images, but nothing stops it", " ap");
+
+  // ON AWS: each agent, its own Runtime session (the stack, the other sessions peek out on top); the front card is the builder
+  var SW = S[1] - S[0], SH = S[3] - S[2];
+  h.push('<div class="node ghost" style="left:' + (S[0] + 20) + 'px;top:' + (S[2] - 20) + 'px;width:' + (SW - 40) + 'px;height:' + (SH - 60) + 'px"></div>');
+  h.push('<div class="node ghost" style="left:' + (S[0] + 10) + 'px;top:' + (S[2] - 10) + 'px;width:' + (SW - 20) + 'px;height:' + (SH - 40) + 'px"></div>');
+  h.push('<div class="node hold sess" data-k="sess" style="left:' + S[0] + 'px;top:' + S[2] + 'px;width:' + SW + 'px;height:' + SH + 'px">' +
+    '<div class="sesl" style="position:absolute;left:22px;top:16px">its own Runtime session</div>' +
+    '<div class="agn" data-k="agname" style="position:absolute;left:22px;top:50px">remotion-builder</div></div>');
+  h.push(SVC({ k: "models", x: S[0] + 20, y: S[2] + 92, w: SW - 40, h: 104, name: "Claude Agent SDK", desc: "Claude Code as a library" }));
+  h.push('<div class="cd" data-k="models" style="left:' + (S[0] + 20) + 'px;top:' + (S[2] + 212) + 'px">CLAUDE_CODE_USE_BEDROCK</div>');
+  h.push('<div class="node svc row" data-k="role" style="left:' + (S[0] + 20) + 'px;top:' + (S[2] + 277) + 'px;width:' + (SW - 40) +
+    'px;height:96px;padding:0 20px">' + ICO("shieldok", 40, "", 2) +
+    '<div class="tx"><div class="sn">IAM role</div><div class="sd" style="margin-top:2px">who can call what</div></div></div>');
+
+  // Bedrock: the Claude models (3 families) and an image model; the role marks sit in the rows (laid out in every state, shown in `role`)
+  h.push('<div class="node svc hold" data-k="models" style="left:' + BR[0] + 'px;top:' + BR[2] + 'px;width:' + (BR[1] - BR[0]) + 'px;height:' + (BR[3] - BR[2]) + 'px">' +
+    '<div style="position:absolute;left:24px;top:16px;display:flex;align-items:baseline;gap:16px"><span class="sn">Bedrock</span><span class="sd" style="margin-top:0">AI models as a service</span></div>' +
+    '<div class="grl" style="position:absolute;left:24px;top:76px">Claude, <span class="mono">3</span> model families</div>' +
+    '<div style="position:absolute;left:24px;top:114px;display:flex;align-items:center;gap:10px">' +
+      '<span class="mch" data-k="claude">Fable</span><span class="mch" data-k="claude">Opus</span><span class="mch" data-k="claude">Sonnet</span>' +
+      '<span class="mk ok ap" data-k="okmark">' + ICO("check", 22, "", 3) + '</span></div>' +
+    '<div style="position:absolute;left:24px;top:186px;display:flex;align-items:center;gap:10px">' +
+      '<span class="mch" data-k="imgm">' + ICO("film", 26, "", 2) + 'an image model' +
+        '<span class="strike ap" data-k="strike" style="position:absolute;left:8px;right:8px;top:50%;margin-top:-1px"></span></span>' +
+      '<span class="mk no ap" data-k="nomark">' + ICO("cross", 20, "", 3) + '</span></div>' +
+    '</div>');
+
+  // AgentCore Gateway: my APIs and functions become MCP tools
+  h.push('<div class="node svc hold" data-k="tools" style="left:' + GW[0] + 'px;top:' + GW[2] + 'px;width:' + (GW[1] - GW[0]) + 'px;height:' + (GW[3] - GW[2]) + 'px">' +
+    '<div class="sn" style="position:absolute;left:0;right:0;top:16px;text-align:center">AgentCore Gateway</div>' +
+    '<div class="sd" style="position:absolute;left:0;right:0;top:54px;text-align:center">my APIs as MCP tools</div>' +
+    '<div style="position:absolute;left:0;right:0;top:116px;display:flex;justify-content:center;gap:10px">' +
+      '<span class="mch" style="font-size:24px;padding:9px 14px">my APIs</span><span class="mch" style="font-size:24px;padding:9px 14px">functions</span></div>' +
+    '<div class="flowa" style="position:absolute;left:0;right:0;top:170px;display:flex;justify-content:center">' + ICO("down", 28, "", 2.4) + '</div>' +
+    '<div style="position:absolute;left:0;right:0;top:206px;display:flex;justify-content:center">' +
+      '<span class="mch" style="font-size:24px;padding:9px 14px">' + ICO("tool", 22, "", 2) + 'MCP tools</span></div>' +
+    '</div>');
+  // AgentCore Identity: a vault for keys and tokens
+  h.push('<div class="node svc hold" data-k="tools" style="left:' + ID[0] + 'px;top:' + ID[2] + 'px;width:' + (ID[1] - ID[0]) + 'px;height:' + (ID[3] - ID[2]) + 'px">' +
+    '<div class="sn" style="position:absolute;left:0;right:0;top:16px;text-align:center">AgentCore Identity</div>' +
+    '<div class="sd" style="position:absolute;left:20px;right:20px;top:54px;text-align:center">a vault for keys and tokens</div>' +
+    '<div class="flowa" style="position:absolute;left:0;right:0;top:150px;display:flex;justify-content:center;gap:18px">' +
+      ICO("vault", 64, "", 1.8) + ICO("key", 56, "", 1.9) + '</div>' +
+    '</div>');
+
+  // the builder's role (appears in `role`)
+  h.push('<div class="node role ap" data-k="rolecard" style="left:' + S[0] + 'px;top:' + (S[3] + 36) + 'px;width:' + SW + 'px;height:218px">' +
+    '<div class="rt"><span class="tn">the builder\'s role</span></div>' +
+    '<div class="rr" style="top:76px"><span class="mk ok">' + ICO("check", 20, "", 3) + '</span>allows only the Claude models</div>' +
+    '<div class="rr" style="top:136px"><span class="mk no">' + ICO("cross", 18, "", 3) + '</span><span style="color:var(--accent-red);text-decoration:line-through;text-decoration-thickness:2px">an image model</span></div>' +
+    '</div>');
+  h.push('</div>');
+  document.getElementById("chart").innerHTML = h.join("");
+
+  buildChart({
+    "agents-models": { on: ["models"] },
+    "agents-tools":  { on: ["tools"] },
+    "agents-role":   { on: ["role"], show: ["troleshow", "okmark", "strike", "nomark", "rolecard"],
+                       cls: { claude: "ok", imgm: "no", agname: "lit" } }
+  });
+})();
+</script>
+</body>
+</html>

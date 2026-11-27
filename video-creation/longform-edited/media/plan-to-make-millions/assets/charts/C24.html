@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>C24 (plan-to-make-millions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<!-- ANIMATION / STATE SPEC (also in the .spec.md / _state-cues.md beside this file)
+C24 (Type 1 animated, CH5 cyan), beat CH5@489.20-495.60 (6.4 s), headline 'More than doubled within a year'. Two bars on a 0x baseline with a dashed 1x = THE LOW line:
+2018 low close (3,237, DEC 15, 2018) -> 2.21x after 12 months; 2022 low close (15,787, NOV 21, 2022) -> 2.27x after 12 months (DATA.md Pillar 5, recomputed from yahoo-btc-max.json).
+489.20 frame in with axes + both bar labels; 490.72 the pill 'THE LAST TWO TIMES' (already on at start in the still) fades/lifts in = start;
+491.80-493.70 both bars GROW together from 0 (ease-out; mid = 55%); 493.84 '2.21x' and '2.27x' + 'AFTER 12 MONTHS' land on 'more than doubled' = payoff; hold to 495.60.
+GUARD: no 24-month figure (6x) anywhere; the words 'THE LAST TWO TIMES' stay on screen throughout.
+-->
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+</style>
+<style>
+/* LIGHT THEME (loaded after the canonical sheet) */
+/* ============================================================================
+   container-canonical-light.css: the LIGHT THEME override (Mike, 2026-10-25, first used on `inference`).
+   A PER-VIDEO option, never the default. Load it AFTER container-canonical.css (same <head>, second <style> /
+   <link>): every token below replaces the dark one, every other rule of the locked stylesheet stays untouched
+   (layout, type, sizes, anatomy, components). Promoted from the 2026-10-25 look test in _light-mode-experiment/
+   (three containers rendered dark and light, Mike: "I like the light mode version").
+   Switch: GRAPH-PROGRESS.json settings.container_theme = "light" (run.py --container-theme light); the graph
+   tells slide-builder / chart-builder / visual-qa, and visual-qa judges palette drift against THIS file.
+   Contrast: every text token >= 4.5:1 on the page (#F6F4EE) and on a white card; strokes >= 3:1.
+   ============================================================================ */
+:root{
+  --bg-deep:#F6F4EE; --bg-card:#FFFFFF; --bg-card-hover:#F1EFE9;
+  --accent-green:#007A55; --accent-cyan:#006A9E; --accent-gold:#8F6500;
+  --accent-red:#C41E3A; --accent-purple:#7C3AED; --accent-teal:#0E7A6C; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#14161A; --text-secondary:#4A5263; --text-muted:#5E6676;
+  --border:#DDD9CF;
+  /* light-only helpers for charts / diagrams (dark has no equivalent: there the wire IS --border) */
+  --grid:#D6D2C7; --axis:#7A808B; --wire:#8A877E; --ink:#14161A;
+}
+body{background:#E4E1D8}
+
+/* the film grain stays, multiplied so it reads as paper tooth instead of lifting the blacks */
+.frame::after{opacity:.05;mix-blend-mode:multiply}
+
+/* accent orbs: same position and blur, a pale tint instead of a saturated bloom */
+.orb{opacity:.18}
+
+/* surfaces: a card is white with a hairline border and a soft lifted shadow (the dark 120 px black drop is gone) */
+.card,.col,.panel,.ecard,.nd,.node,.box{
+  background:var(--bg-card);border-color:var(--border);
+  box-shadow:0 1px 2px rgba(20,22,26,.05),0 14px 34px rgba(20,22,26,.08)}
+
+/* GLOW -> RING. On white a glow reads as a smear, so every "lit / on / hot" state becomes a tinted ring + a lifted
+   shadow in the element's accent (set --acc-rgb per chapter accent, default = cyan). */
+.frame{--acc-rgb:0,106,158}
+.lit,.on,.hot,.chip.on,.nd.lit,.node.on,.box.on,.ecard.on{
+  box-shadow:0 0 0 4px rgba(var(--acc-rgb),.12),0 12px 28px rgba(20,22,26,.12)}
+.hot,.nd.hot{box-shadow:0 0 0 6px rgba(var(--acc-rgb),.22),0 16px 34px rgba(20,22,26,.18)}
+.chip.on{background:rgba(var(--acc-rgb),.08)}
+.role,.rl,h1,h2{text-shadow:none}
+
+/* SVG diagrams / charts: wires and axes on the light ground. Lit wires use the accent token, resting wires --wire;
+   drop the SVG glow filter (filter="url(#g)") in the light build; hollow point centres fill white, the neutral
+   "ink" line is near-black; grid lines --grid; area fills under a line at .13 to .16 alpha of the accent. */
+svg .wire,svg line.wire,svg path.wire{stroke:var(--wire)}
+svg .grid{stroke:var(--grid)} svg .axis{stroke:var(--axis)}
+svg .ink{stroke:var(--ink);fill:var(--ink)}
+
+</style>
+<style>
+/* ---- chart / diagram layer on top of the locked stylesheet + the LIGHT override (layout only; tokens unchanged) ---- */
+.frame.ch{display:block;padding:0;margin:0 0 40px 0}
+.frame.ch>*:not(.orb){position:absolute}
+.hdr{left:120px;top:64px;max-width:1560px}
+.hdr .ey{font-size:24px;margin-bottom:14px}
+.hdr h1{font-size:64px;line-height:1.06}
+.hdr .divider{margin:22px 0 0 0;background:linear-gradient(90deg,var(--acc),rgba(var(--acc-rgb),.25))}
+.acc{color:var(--acc)} .red{color:var(--accent-red)} .grn{color:var(--accent-green)}
+.src{left:120px;bottom:40px;font-family:'JetBrains Mono',monospace;font-size:17px;color:var(--text-muted);max-width:1680px;line-height:1.45}
+svg.plot{left:0;top:0;width:1920px;height:1080px;overflow:visible}
+svg text{font-family:'JetBrains Mono',monospace}
+svg .tk{font-size:19px;fill:var(--text-muted);font-weight:400}
+svg .axl{font-family:'DM Sans',sans-serif;font-size:17px;letter-spacing:.18em;font-weight:600;fill:var(--text-muted)}
+svg .lbl{font-size:20px;font-weight:600;fill:var(--ink)}
+svg .lblm{font-size:18px;font-weight:600;fill:var(--text-muted)}
+svg .cap{font-family:'DM Sans',sans-serif;font-size:19px;letter-spacing:.12em;font-weight:700;fill:var(--ink)}
+.pill{font-family:'DM Sans',sans-serif;font-weight:700;font-size:19px;letter-spacing:.12em;text-transform:uppercase;
+  padding:8px 18px;border-radius:100px;border:1.5px solid var(--border);background:#fff;color:var(--text-secondary);white-space:nowrap}
+.pill.acc{border-color:rgba(var(--acc-rgb),.55);color:var(--acc);background:rgba(var(--acc-rgb),.06)}
+.pill.redp{border-color:rgba(196,30,58,.55);color:var(--accent-red);background:rgba(196,30,58,.06)}
+.pill.grnp{border-color:rgba(0,122,85,.55);color:var(--accent-green);background:rgba(0,122,85,.06)}
+.pill.dash{border-style:dashed}
+/* callout card: white, hairline, accent left rule when lit; dim = landed earlier, still on screen */
+.co{background:#fff;border:1px solid var(--border);border-left:5px solid var(--acc);border-radius:12px;padding:11px 18px 12px 16px;
+  box-shadow:0 1px 2px rgba(20,22,26,.05),0 10px 26px rgba(20,22,26,.08);white-space:nowrap}
+.co .d{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:17px;color:var(--text-muted);letter-spacing:.02em}
+.co .e{font-family:'DM Sans',sans-serif;font-weight:700;font-size:24px;color:var(--ink);letter-spacing:.03em;margin-top:2px}
+.co .t{font-family:'DM Sans',sans-serif;font-weight:600;font-size:18px;color:var(--text-secondary);letter-spacing:.06em;margin-top:4px}
+.co .t.acc{color:var(--acc)}
+.co.on{box-shadow:0 0 0 5px rgba(var(--acc-rgb),.14),0 14px 30px rgba(20,22,26,.14)}
+.co.dim{border-left-color:var(--wire);opacity:.62;box-shadow:0 1px 2px rgba(20,22,26,.04)}
+.co.dim .e{color:var(--text-secondary)}
+.endlbl{font-family:'JetBrains Mono',monospace;font-weight:600}
+.big{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--ink)}
+.hide{opacity:0!important}
+/* system-design nodes */
+.nd{background:#fff;border:1.5px solid var(--border);border-radius:16px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;box-shadow:0 1px 2px rgba(20,22,26,.05),0 12px 30px rgba(20,22,26,.07)}
+.nd .t{font-family:'DM Sans',sans-serif;font-weight:700;color:var(--ink);letter-spacing:.06em;text-transform:uppercase;line-height:1.22}
+.nd .s{font-family:'DM Sans',sans-serif;font-weight:600;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;font-size:17px;margin-top:8px}
+.nd.lit{border:2.5px solid var(--acc);background:linear-gradient(135deg,rgba(var(--acc-rgb),.10),rgba(var(--acc-rgb),.03)),#fff}
+.nd.hot{border:3px solid var(--acc);background:linear-gradient(135deg,rgba(var(--acc-rgb),.14),rgba(var(--acc-rgb),.04)),#fff;
+  box-shadow:0 0 0 7px rgba(var(--acc-rgb),.16),0 16px 34px rgba(20,22,26,.16)}
+.nd.hot .t,.nd.lit .t{color:var(--ink)} .nd.hot .s{color:var(--acc)}
+.nd.ghost{opacity:.38;box-shadow:none}
+.nd.ghost .t{color:var(--text-muted)}
+
+</style>
+</head><body>
+<div class="frame ch" id="C24-start" style="--acc:#006A9E;--acc-rgb:0,106,158"><div class="orb" style="width:760px;height:760px;right:-300px;top:-380px;background:rgba(0,106,158,.55)"></div><div class="orb" style="width:520px;height:520px;left:-260px;bottom:-300px;background:#c9cfd8;opacity:.22"></div><div class="hdr" style="top:64px"><div class="ey">Bitcoin after its last two bear market lows</div><h1>More than <span class="acc">doubled</span> within a year</h1><div class="divider"></div></div><svg class="plot" viewBox="0 0 1920 1080"><line x1="420" x2="1560" y1="660" y2="660" stroke="#14161A" stroke-width="2" stroke-dasharray="9 7" opacity="0.55"/><text class="tk" x="400" y="666" text-anchor="end">1x</text><line x1="420" x2="1560" y1="460" y2="460" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7" opacity="1"/><text class="tk" x="400" y="466" text-anchor="end">2x</text><text class="lblm" x="1560" y="646" text-anchor="end">1x = THE LOW</text><line x1="420" x2="1560" y1="860" y2="860" stroke="#7A808B" stroke-width="2"/><rect x="550" y="860.00" width="220" height="0.00" rx="6" fill="var(--acc)" style="opacity:0"/><text class="cap" x="660" y="904" text-anchor="middle">2018 BEAR MARKET LOW</text><text class="lblm" x="660" y="934" text-anchor="middle" style="font-size:17px">LOW CLOSE 3,237, DEC 15, 2018</text><rect x="1050" y="860.00" width="220" height="0.00" rx="6" fill="var(--acc)" style="opacity:0"/><text class="cap" x="1160" y="904" text-anchor="middle">2022 BEAR MARKET LOW</text><text class="lblm" x="1160" y="934" text-anchor="middle" style="font-size:17px">LOW CLOSE 15,787, NOV 21, 2022</text></svg><div class="endlbl hide" style="left:660px;top:402.1px;transform:translate(-50%,-100%);"><span class="mono" style="font-size:60px;font-weight:600;color:var(--acc)">2.21x</span><div style="font-family:'DM Sans';font-weight:700;font-size:20px;letter-spacing:.12em;color:var(--text-secondary);text-align:center">AFTER 12 MONTHS</div></div><div class="endlbl hide" style="left:1160px;top:390.3px;transform:translate(-50%,-100%);"><span class="mono" style="font-size:60px;font-weight:600;color:var(--acc)">2.27x</span><div style="font-family:'DM Sans';font-weight:700;font-size:20px;letter-spacing:.12em;color:var(--text-secondary);text-align:center">AFTER 12 MONTHS</div></div><div class="pill acc" style="left:1560px;top:236px;transform:translateX(-100%);font-size:22px;padding:10px 22px">THE LAST TWO TIMES</div><div class="src">Bitcoin (BTC-USD) daily closes: Yahoo Finance, read 2026-11-22 · the 2018 and 2022 bear market low closes vs the close 12 months later · two samples</div></div>
+<div class="frame ch" id="C24-mid" style="--acc:#006A9E;--acc-rgb:0,106,158"><div class="orb" style="width:760px;height:760px;right:-300px;top:-380px;background:rgba(0,106,158,.55)"></div><div class="orb" style="width:520px;height:520px;left:-260px;bottom:-300px;background:#c9cfd8;opacity:.22"></div><div class="hdr" style="top:64px"><div class="ey">Bitcoin after its last two bear market lows</div><h1>More than <span class="acc">doubled</span> within a year</h1><div class="divider"></div></div><svg class="plot" viewBox="0 0 1920 1080"><line x1="420" x2="1560" y1="660" y2="660" stroke="#14161A" stroke-width="2" stroke-dasharray="9 7" opacity="0.55"/><text class="tk" x="400" y="666" text-anchor="end">1x</text><line x1="420" x2="1560" y1="460" y2="460" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7" opacity="1"/><text class="tk" x="400" y="466" text-anchor="end">2x</text><text class="lblm" x="1560" y="646" text-anchor="end">1x = THE LOW</text><line x1="420" x2="1560" y1="860" y2="860" stroke="#7A808B" stroke-width="2"/><rect x="550" y="616.93" width="220" height="243.07" rx="6" fill="var(--acc)"/><text class="cap" x="660" y="904" text-anchor="middle">2018 BEAR MARKET LOW</text><text class="lblm" x="660" y="934" text-anchor="middle" style="font-size:17px">LOW CLOSE 3,237, DEC 15, 2018</text><rect x="1050" y="610.46" width="220" height="249.54" rx="6" fill="var(--acc)"/><text class="cap" x="1160" y="904" text-anchor="middle">2022 BEAR MARKET LOW</text><text class="lblm" x="1160" y="934" text-anchor="middle" style="font-size:17px">LOW CLOSE 15,787, NOV 21, 2022</text></svg><div class="endlbl hide" style="left:660px;top:402.1px;transform:translate(-50%,-100%);"><span class="mono" style="font-size:60px;font-weight:600;color:var(--acc)">2.21x</span><div style="font-family:'DM Sans';font-weight:700;font-size:20px;letter-spacing:.12em;color:var(--text-secondary);text-align:center">AFTER 12 MONTHS</div></div><div class="endlbl hide" style="left:1160px;top:390.3px;transform:translate(-50%,-100%);"><span class="mono" style="font-size:60px;font-weight:600;color:var(--acc)">2.27x</span><div style="font-family:'DM Sans';font-weight:700;font-size:20px;letter-spacing:.12em;color:var(--text-secondary);text-align:center">AFTER 12 MONTHS</div></div><div class="pill acc" style="left:1560px;top:236px;transform:translateX(-100%);font-size:22px;padding:10px 22px">THE LAST TWO TIMES</div><div class="src">Bitcoin (BTC-USD) daily closes: Yahoo Finance, read 2026-11-22 · the 2018 and 2022 bear market low closes vs the close 12 months later · two samples</div></div>
+<div class="frame ch" id="C24-payoff" style="--acc:#006A9E;--acc-rgb:0,106,158"><div class="orb" style="width:760px;height:760px;right:-300px;top:-380px;background:rgba(0,106,158,.55)"></div><div class="orb" style="width:520px;height:520px;left:-260px;bottom:-300px;background:#c9cfd8;opacity:.22"></div><div class="hdr" style="top:64px"><div class="ey">Bitcoin after its last two bear market lows</div><h1>More than <span class="acc">doubled</span> within a year</h1><div class="divider"></div></div><svg class="plot" viewBox="0 0 1920 1080"><line x1="420" x2="1560" y1="660" y2="660" stroke="#14161A" stroke-width="2" stroke-dasharray="9 7" opacity="0.55"/><text class="tk" x="400" y="666" text-anchor="end">1x</text><line x1="420" x2="1560" y1="460" y2="460" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7" opacity="1"/><text class="tk" x="400" y="466" text-anchor="end">2x</text><text class="lblm" x="1560" y="646" text-anchor="end">1x = THE LOW</text><line x1="420" x2="1560" y1="860" y2="860" stroke="#7A808B" stroke-width="2"/><rect x="550" y="418.06" width="220" height="441.94" rx="6" fill="var(--acc)"/><text class="cap" x="660" y="904" text-anchor="middle">2018 BEAR MARKET LOW</text><text class="lblm" x="660" y="934" text-anchor="middle" style="font-size:17px">LOW CLOSE 3,237, DEC 15, 2018</text><rect x="1050" y="406.30" width="220" height="453.70" rx="6" fill="var(--acc)"/><text class="cap" x="1160" y="904" text-anchor="middle">2022 BEAR MARKET LOW</text><text class="lblm" x="1160" y="934" text-anchor="middle" style="font-size:17px">LOW CLOSE 15,787, NOV 21, 2022</text></svg><div class="endlbl" style="left:660px;top:402.1px;transform:translate(-50%,-100%);"><span class="mono" style="font-size:60px;font-weight:600;color:var(--acc)">2.21x</span><div style="font-family:'DM Sans';font-weight:700;font-size:20px;letter-spacing:.12em;color:var(--text-secondary);text-align:center">AFTER 12 MONTHS</div></div><div class="endlbl" style="left:1160px;top:390.3px;transform:translate(-50%,-100%);"><span class="mono" style="font-size:60px;font-weight:600;color:var(--acc)">2.27x</span><div style="font-family:'DM Sans';font-weight:700;font-size:20px;letter-spacing:.12em;color:var(--text-secondary);text-align:center">AFTER 12 MONTHS</div></div><div class="pill acc" style="left:1560px;top:236px;transform:translateX(-100%);font-size:22px;padding:10px 22px">THE LAST TWO TIMES</div><div class="src">Bitcoin (BTC-USD) daily closes: Yahoo Finance, read 2026-11-22 · the 2018 and 2022 bear market low closes vs the close 12 months later · two samples</div></div>
+<script type="application/json" id="chart-data">{"id": "C24", "multiples_12m": {"2018": 2.21, "2022": 2.269}, "geom": {"baseline_y": 860, "px_per_x": 200, "bar_cx": [660, 1160], "bar_w": 220}}</script>
+</body></html>

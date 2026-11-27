@@ -1,0 +1,15 @@
+{
+  "verdict": "PASS",
+  "defects": [],
+  "checked": "4 contact sheets, 62 frames at 0.5 s (0.0-30.5) + full-size stills at 2, 6, 10, 11.8, 13, 15, 15.5, 22, 25, 26.0, 26.5, 28.5, 30.5, 30.7 s; duration 30.767 s, 1080x1920",
+  "notes": [
+    "0.0-4.5 s: AI intro (polar-bear kick), full-bleed vertical, no captions shown. Nothing clipped.",
+    "5.0-12.0 s: Mike's cutout over the snow scene, then a snow-burst transition to his room. Head and shoulders fully in frame. Captions are Montserrat, lowercase, 2-4 word groups, bottom-center with a black stroke.",
+    "12.5-15.0 s: 'Peak to Bottom, in Days' bar chart is a NATIVE vertical layout (72 px margins, bar grows to 414, NOW label in gold). The caption sits below the source line, not on chart text. The bottom ~300 px is empty dark, which is the Shorts UI zone, so it's acceptable.",
+    "15.5-24.0 s: 'Two bear markets?' card on top, webcam tile below. The caption sits in the gap between 'Bear 2' and the webcam and never touches card text. The 15.5 s frame catches the zoom/wash entry transition (left margin ~22 px for a few frames); once settled the margins are ~50 px. Transient, not a defect.",
+    "24.5-27.5 s: 'Two Bear Markets' price chart is a native vertical layout. Legend, 'ABOVE BOTH 51 DAYS', '+48% TO 86K' and the 'NOV' axis label all sit inside the frame (rightmost glyph ~x=1005). The smaller 'bear market' caption on the 26.0 s sheet frame is the caption pop-in scale, gone by 26.5 s.",
+    "28.0-30.77 s: the WATCH THE FULL VIDEO outro card is intact (Playfair, white plus gold, gold rule, glowing down arrow) over the dimmed, blurred chart, through to the last frame. No black or blank frames anywhere.",
+    "No leftover 16:9 captions, no cropped 16:9 cards, no edge-clipped text in any frame."
+  ],
+  "short": "longest-bear-SHORT-30s-v1.mp4:20741735"
+}

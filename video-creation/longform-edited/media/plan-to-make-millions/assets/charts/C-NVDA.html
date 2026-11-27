@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>C-NVDA (plan-to-make-millions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<!-- ANIMATION / STATE SPEC (also in the .spec.md / _state-cues.md beside this file)
+C-NVDA (Type 1 animated, CH2 red), beat CH2@172.30-176.55 (4.25 s), headline 'Down from its October high'.
+Line = Yahoo NVDA daily closes SEP 1 -> NOV 20, 2026. 172.30 frame in with the line drawn SEP 1 -> OCT 6 and the '239.24 / OCT 6, 2026, THE RECORD CLOSE'
+card lit = start; 172.40-173.90 the line draws OCT 6 -> NOV 20 (ease-in, it falls; mid = NOV 5); 174.02 on '47%': the dashed record reference, the drop arrow,
+'MINUS 47.5%' and the '125.53 / NOV 20, 2026 CLOSE' card land together = payoff; hold to 176.55. Dated, never 'now': the stock rose on 2026-11-23.
+-->
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+</style>
+<style>
+/* LIGHT THEME (loaded after the canonical sheet) */
+/* ============================================================================
+   container-canonical-light.css: the LIGHT THEME override (Mike, 2026-10-25, first used on `inference`).
+   A PER-VIDEO option, never the default. Load it AFTER container-canonical.css (same <head>, second <style> /
+   <link>): every token below replaces the dark one, every other rule of the locked stylesheet stays untouched
+   (layout, type, sizes, anatomy, components). Promoted from the 2026-10-25 look test in _light-mode-experiment/
+   (three containers rendered dark and light, Mike: "I like the light mode version").
+   Switch: GRAPH-PROGRESS.json settings.container_theme = "light" (run.py --container-theme light); the graph
+   tells slide-builder / chart-builder / visual-qa, and visual-qa judges palette drift against THIS file.
+   Contrast: every text token >= 4.5:1 on the page (#F6F4EE) and on a white card; strokes >= 3:1.
+   ============================================================================ */
+:root{
+  --bg-deep:#F6F4EE; --bg-card:#FFFFFF; --bg-card-hover:#F1EFE9;
+  --accent-green:#007A55; --accent-cyan:#006A9E; --accent-gold:#8F6500;
+  --accent-red:#C41E3A; --accent-purple:#7C3AED; --accent-teal:#0E7A6C; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#14161A; --text-secondary:#4A5263; --text-muted:#5E6676;
+  --border:#DDD9CF;
+  /* light-only helpers for charts / diagrams (dark has no equivalent: there the wire IS --border) */
+  --grid:#D6D2C7; --axis:#7A808B; --wire:#8A877E; --ink:#14161A;
+}
+body{background:#E4E1D8}
+
+/* the film grain stays, multiplied so it reads as paper tooth instead of lifting the blacks */
+.frame::after{opacity:.05;mix-blend-mode:multiply}
+
+/* accent orbs: same position and blur, a pale tint instead of a saturated bloom */
+.orb{opacity:.18}
+
+/* surfaces: a card is white with a hairline border and a soft lifted shadow (the dark 120 px black drop is gone) */
+.card,.col,.panel,.ecard,.nd,.node,.box{
+  background:var(--bg-card);border-color:var(--border);
+  box-shadow:0 1px 2px rgba(20,22,26,.05),0 14px 34px rgba(20,22,26,.08)}
+
+/* GLOW -> RING. On white a glow reads as a smear, so every "lit / on / hot" state becomes a tinted ring + a lifted
+   shadow in the element's accent (set --acc-rgb per chapter accent, default = cyan). */
+.frame{--acc-rgb:0,106,158}
+.lit,.on,.hot,.chip.on,.nd.lit,.node.on,.box.on,.ecard.on{
+  box-shadow:0 0 0 4px rgba(var(--acc-rgb),.12),0 12px 28px rgba(20,22,26,.12)}
+.hot,.nd.hot{box-shadow:0 0 0 6px rgba(var(--acc-rgb),.22),0 16px 34px rgba(20,22,26,.18)}
+.chip.on{background:rgba(var(--acc-rgb),.08)}
+.role,.rl,h1,h2{text-shadow:none}
+
+/* SVG diagrams / charts: wires and axes on the light ground. Lit wires use the accent token, resting wires --wire;
+   drop the SVG glow filter (filter="url(#g)") in the light build; hollow point centres fill white, the neutral
+   "ink" line is near-black; grid lines --grid; area fills under a line at .13 to .16 alpha of the accent. */
+svg .wire,svg line.wire,svg path.wire{stroke:var(--wire)}
+svg .grid{stroke:var(--grid)} svg .axis{stroke:var(--axis)}
+svg .ink{stroke:var(--ink);fill:var(--ink)}
+
+</style>
+<style>
+/* ---- chart / diagram layer on top of the locked stylesheet + the LIGHT override (layout only; tokens unchanged) ---- */
+.frame.ch{display:block;padding:0;margin:0 0 40px 0}
+.frame.ch>*:not(.orb){position:absolute}
+.hdr{left:120px;top:64px;max-width:1560px}
+.hdr .ey{font-size:24px;margin-bottom:14px}
+.hdr h1{font-size:64px;line-height:1.06}
+.hdr .divider{margin:22px 0 0 0;background:linear-gradient(90deg,var(--acc),rgba(var(--acc-rgb),.25))}
+.acc{color:var(--acc)} .red{color:var(--accent-red)} .grn{color:var(--accent-green)}
+.src{left:120px;bottom:40px;font-family:'JetBrains Mono',monospace;font-size:17px;color:var(--text-muted);max-width:1680px;line-height:1.45}
+svg.plot{left:0;top:0;width:1920px;height:1080px;overflow:visible}
+svg text{font-family:'JetBrains Mono',monospace}
+svg .tk{font-size:19px;fill:var(--text-muted);font-weight:400}
+svg .axl{font-family:'DM Sans',sans-serif;font-size:17px;letter-spacing:.18em;font-weight:600;fill:var(--text-muted)}
+svg .lbl{font-size:20px;font-weight:600;fill:var(--ink)}
+svg .lblm{font-size:18px;font-weight:600;fill:var(--text-muted)}
+svg .cap{font-family:'DM Sans',sans-serif;font-size:19px;letter-spacing:.12em;font-weight:700;fill:var(--ink)}
+.pill{font-family:'DM Sans',sans-serif;font-weight:700;font-size:19px;letter-spacing:.12em;text-transform:uppercase;
+  padding:8px 18px;border-radius:100px;border:1.5px solid var(--border);background:#fff;color:var(--text-secondary);white-space:nowrap}
+.pill.acc{border-color:rgba(var(--acc-rgb),.55);color:var(--acc);background:rgba(var(--acc-rgb),.06)}
+.pill.redp{border-color:rgba(196,30,58,.55);color:var(--accent-red);background:rgba(196,30,58,.06)}
+.pill.grnp{border-color:rgba(0,122,85,.55);color:var(--accent-green);background:rgba(0,122,85,.06)}
+.pill.dash{border-style:dashed}
+/* callout card: white, hairline, accent left rule when lit; dim = landed earlier, still on screen */
+.co{background:#fff;border:1px solid var(--border);border-left:5px solid var(--acc);border-radius:12px;padding:11px 18px 12px 16px;
+  box-shadow:0 1px 2px rgba(20,22,26,.05),0 10px 26px rgba(20,22,26,.08);white-space:nowrap}
+.co .d{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:17px;color:var(--text-muted);letter-spacing:.02em}
+.co .e{font-family:'DM Sans',sans-serif;font-weight:700;font-size:24px;color:var(--ink);letter-spacing:.03em;margin-top:2px}
+.co .t{font-family:'DM Sans',sans-serif;font-weight:600;font-size:18px;color:var(--text-secondary);letter-spacing:.06em;margin-top:4px}
+.co .t.acc{color:var(--acc)}
+.co.on{box-shadow:0 0 0 5px rgba(var(--acc-rgb),.14),0 14px 30px rgba(20,22,26,.14)}
+.co.dim{border-left-color:var(--wire);opacity:.62;box-shadow:0 1px 2px rgba(20,22,26,.04)}
+.co.dim .e{color:var(--text-secondary)}
+.endlbl{font-family:'JetBrains Mono',monospace;font-weight:600}
+.big{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--ink)}
+.hide{opacity:0!important}
+/* system-design nodes */
+.nd{background:#fff;border:1.5px solid var(--border);border-radius:16px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;box-shadow:0 1px 2px rgba(20,22,26,.05),0 12px 30px rgba(20,22,26,.07)}
+.nd .t{font-family:'DM Sans',sans-serif;font-weight:700;color:var(--ink);letter-spacing:.06em;text-transform:uppercase;line-height:1.22}
+.nd .s{font-family:'DM Sans',sans-serif;font-weight:600;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;font-size:17px;margin-top:8px}
+.nd.lit{border:2.5px solid var(--acc);background:linear-gradient(135deg,rgba(var(--acc-rgb),.10),rgba(var(--acc-rgb),.03)),#fff}
+.nd.hot{border:3px solid var(--acc);background:linear-gradient(135deg,rgba(var(--acc-rgb),.14),rgba(var(--acc-rgb),.04)),#fff;
+  box-shadow:0 0 0 7px rgba(var(--acc-rgb),.16),0 16px 34px rgba(20,22,26,.16)}
+.nd.hot .t,.nd.lit .t{color:var(--ink)} .nd.hot .s{color:var(--acc)}
+.nd.ghost{opacity:.38;box-shadow:none}
+.nd.ghost .t{color:var(--text-muted)}
+
+</style>
+</head><body>
+<div class="frame ch" id="C-NVDA-start" style="--acc:#C41E3A;--acc-rgb:196,30,58"><div class="orb" style="width:760px;height:760px;right:-300px;top:-380px;background:rgba(196,30,58,.55)"></div><div class="orb" style="width:520px;height:520px;left:-260px;bottom:-300px;background:#c9cfd8;opacity:.22"></div><div class="hdr" style="top:64px"><div class="ey">Nvidia, daily close</div><h1>Down from its <span class="acc">October high</span></h1><div class="divider"></div></div><svg class="plot" viewBox="0 0 1920 1080"><defs><marker id="ah-w" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="#8A877E"/></marker><marker id="ah-a" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="var(--acc)"/></marker><marker id="ah-ws" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="#8A877E"/></marker><marker id="ah-as" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="var(--acc)"/></marker><marker id="ah-g" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="#007A55"/></marker><clipPath id="nv-start"><rect x="214" y="0" width="511.83" height="1080"/></clipPath></defs><line x1="220" x2="1440" y1="794.06" y2="794.06" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="202" y="800.06" text-anchor="end">125</text><line x1="220" x2="1440" y1="708.12" y2="708.12" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="202" y="714.12" text-anchor="end">150</text><line x1="220" x2="1440" y1="622.19" y2="622.19" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="202" y="628.19" text-anchor="end">175</text><line x1="220" x2="1440" y1="536.25" y2="536.25" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="202" y="542.25" text-anchor="end">200</text><line x1="220" x2="1440" y1="450.31" y2="450.31" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="202" y="456.31" text-anchor="end">225</text><line x1="220" x2="1440" y1="364.38" y2="364.38" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="202" y="370.38" text-anchor="end">250</text><line x1="220" x2="1440" y1="880" y2="880" stroke="#7A808B" stroke-width="2"/><line x1="220.0" x2="220.0" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="220.0" y="920" text-anchor="middle">SEP 1</text><line x1="655.71" x2="655.71" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="655.71" y="920" text-anchor="middle">OCT 1</text><line x1="1105.95" x2="1105.95" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="1105.95" y="920" text-anchor="middle">NOV 1</text><text class="axl" x="120" y="290">USD A SHARE</text><path d="M220.0,880 L220.0,476.3 L234.52,452.34 L249.05,438.45 L263.57,431.89 L321.67,447.8 L336.19,454.88 L350.71,473.14 L365.24,473.38 L408.81,498.57 L423.33,494.42 L437.86,488.47 L452.38,469.77 L466.9,459.7 L510.48,442.13 L525.0,437.01 L539.52,448.56 L554.05,451.76 L568.57,450.07 L612.14,437.04 L626.67,442.72 L641.19,438.69 L655.71,430.17 L670.24,419.55 L713.81,402.53 L728.33,401.36 L742.86,407.45 L757.38,431.48 L771.9,435.6 L815.48,445.77 L830.0,438.21 L844.52,463.03 L859.05,477.02 L873.57,487.68 L917.14,477.5 L931.67,479.63 L946.19,460.73 L960.71,494.28 L975.24,498.57 L1018.81,481.25 L1033.33,474.58 L1047.86,483.38 L1062.38,489.29 L1076.9,520.3 L1120.48,529.17 L1135.0,513.25 L1149.52,535.8 L1164.05,599.5 L1178.57,582.18 L1222.14,609.57 L1236.67,643.19 L1251.19,626.55 L1265.71,652.47 L1280.24,663.95 L1323.81,687.02 L1338.33,689.36 L1352.86,704.82 L1367.38,721.94 L1381.9,792.24 L1381.9,880 Z" fill="rgba(196,30,58,.10)" clip-path="url(#nv-start)"/><path d="M220.0,476.3 L234.52,452.34 L249.05,438.45 L263.57,431.89 L321.67,447.8 L336.19,454.88 L350.71,473.14 L365.24,473.38 L408.81,498.57 L423.33,494.42 L437.86,488.47 L452.38,469.77 L466.9,459.7 L510.48,442.13 L525.0,437.01 L539.52,448.56 L554.05,451.76 L568.57,450.07 L612.14,437.04 L626.67,442.72 L641.19,438.69 L655.71,430.17 L670.24,419.55 L713.81,402.53 L728.33,401.36 L742.86,407.45 L757.38,431.48 L771.9,435.6 L815.48,445.77 L830.0,438.21 L844.52,463.03 L859.05,477.02 L873.57,487.68 L917.14,477.5 L931.67,479.63 L946.19,460.73 L960.71,494.28 L975.24,498.57 L1018.81,481.25 L1033.33,474.58 L1047.86,483.38 L1062.38,489.29 L1076.9,520.3 L1120.48,529.17 L1135.0,513.25 L1149.52,535.8 L1164.05,599.5 L1178.57,582.18 L1222.14,609.57 L1236.67,643.19 L1251.19,626.55 L1265.71,652.47 L1280.24,663.95 L1323.81,687.02 L1338.33,689.36 L1352.86,704.82 L1367.38,721.94 L1381.9,792.24" fill="none" stroke="var(--acc)" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" clip-path="url(#nv-start)"/><g style="opacity:0"><line x1="728.33" x2="1441.9" y1="401.36" y2="401.36" stroke="#14161A" stroke-width="1.6" stroke-dasharray="7 6" opacity=".5"/><path d="M1441.9,409.36 L1441.9,776.24" stroke="var(--acc)" stroke-width="3" marker-end="url(#ah-a)" fill="none"/></g><g><circle cx="728.33" cy="401.36" r="9" fill="#fff" stroke="var(--acc)" stroke-width="4"/></g><g style="opacity:0"><circle cx="1381.9" cy="792.24" r="24" fill="var(--acc)" opacity=".16"/><circle cx="1381.9" cy="792.24" r="11" fill="var(--acc)" stroke="var(--acc)" stroke-width="4"/></g></svg><div class="co on" style="left:748.3px;top:395.4px;transform:translateY(-100%);"><div class="d">OCT 6, 2026, THE RECORD CLOSE</div><div class="e mono" style="font-family:'JetBrains Mono';font-size:32px">239.24</div></div><div class="co dim hide" style="left:1357.9px;top:796.2px;transform:translate(-100%,-50%);"><div class="d">NOV 20, 2026 CLOSE</div><div class="e mono" style="font-family:'JetBrains Mono';font-size:32px">125.53</div></div><div class="endlbl hide" style="left:1465.9px;top:596.8px;transform:translateY(-50%);color:var(--acc);font-family:'JetBrains Mono'"><span class="mono" style="font-size:54px;font-weight:600">MINUS 47.5%</span></div><div class="src">Nvidia (NVDA) daily close: Yahoo Finance, read 2026-11-22 · OCT 6, 2026 record close to the NOV 20, 2026 close (dated: the stock moved after this)</div></div>
+<div class="frame ch" id="C-NVDA-mid" style="--acc:#C41E3A;--acc-rgb:196,30,58"><div class="orb" style="width:760px;height:760px;right:-300px;top:-380px;background:rgba(196,30,58,.55)"></div><div class="orb" style="width:520px;height:520px;left:-260px;bottom:-300px;background:#c9cfd8;opacity:.22"></div><div class="hdr" style="top:64px"><div class="ey">Nvidia, daily close</div><h1>Down from its <span class="acc">October high</span></h1><div class="divider"></div></div><svg class="plot" viewBox="0 0 1920 1080"><defs><marker id="ah-w" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="#8A877E"/></marker><marker id="ah-a" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="var(--acc)"/></marker><marker id="ah-ws" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="#8A877E"/></marker><marker id="ah-as" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="var(--acc)"/></marker><marker id="ah-g" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="#007A55"/></marker><clipPath id="nv-mid"><rect x="214" y="0" width="947.55" height="1080"/></clipPath></defs><line x1="220" x2="1440" y1="794.06" y2="794.06" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="202" y="800.06" text-anchor="end">125</text><line x1="220" x2="1440" y1="708.12" y2="708.12" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="202" y="714.12" text-anchor="end">150</text><line x1="220" x2="1440" y1="622.19" y2="622.19" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="202" y="628.19" text-anchor="end">175</text><line x1="220" x2="1440" y1="536.25" y2="536.25" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="202" y="542.25" text-anchor="end">200</text><line x1="220" x2="1440" y1="450.31" y2="450.31" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="202" y="456.31" text-anchor="end">225</text><line x1="220" x2="1440" y1="364.38" y2="364.38" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="202" y="370.38" text-anchor="end">250</text><line x1="220" x2="1440" y1="880" y2="880" stroke="#7A808B" stroke-width="2"/><line x1="220.0" x2="220.0" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="220.0" y="920" text-anchor="middle">SEP 1</text><line x1="655.71" x2="655.71" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="655.71" y="920" text-anchor="middle">OCT 1</text><line x1="1105.95" x2="1105.95" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="1105.95" y="920" text-anchor="middle">NOV 1</text><text class="axl" x="120" y="290">USD A SHARE</text><path d="M220.0,880 L220.0,476.3 L234.52,452.34 L249.05,438.45 L263.57,431.89 L321.67,447.8 L336.19,454.88 L350.71,473.14 L365.24,473.38 L408.81,498.57 L423.33,494.42 L437.86,488.47 L452.38,469.77 L466.9,459.7 L510.48,442.13 L525.0,437.01 L539.52,448.56 L554.05,451.76 L568.57,450.07 L612.14,437.04 L626.67,442.72 L641.19,438.69 L655.71,430.17 L670.24,419.55 L713.81,402.53 L728.33,401.36 L742.86,407.45 L757.38,431.48 L771.9,435.6 L815.48,445.77 L830.0,438.21 L844.52,463.03 L859.05,477.02 L873.57,487.68 L917.14,477.5 L931.67,479.63 L946.19,460.73 L960.71,494.28 L975.24,498.57 L1018.81,481.25 L1033.33,474.58 L1047.86,483.38 L1062.38,489.29 L1076.9,520.3 L1120.48,529.17 L1135.0,513.25 L1149.52,535.8 L1164.05,599.5 L1178.57,582.18 L1222.14,609.57 L1236.67,643.19 L1251.19,626.55 L1265.71,652.47 L1280.24,663.95 L1323.81,687.02 L1338.33,689.36 L1352.86,704.82 L1367.38,721.94 L1381.9,792.24 L1381.9,880 Z" fill="rgba(196,30,58,.10)" clip-path="url(#nv-mid)"/><path d="M220.0,476.3 L234.52,452.34 L249.05,438.45 L263.57,431.89 L321.67,447.8 L336.19,454.88 L350.71,473.14 L365.24,473.38 L408.81,498.57 L423.33,494.42 L437.86,488.47 L452.38,469.77 L466.9,459.7 L510.48,442.13 L525.0,437.01 L539.52,448.56 L554.05,451.76 L568.57,450.07 L612.14,437.04 L626.67,442.72 L641.19,438.69 L655.71,430.17 L670.24,419.55 L713.81,402.53 L728.33,401.36 L742.86,407.45 L757.38,431.48 L771.9,435.6 L815.48,445.77 L830.0,438.21 L844.52,463.03 L859.05,477.02 L873.57,487.68 L917.14,477.5 L931.67,479.63 L946.19,460.73 L960.71,494.28 L975.24,498.57 L1018.81,481.25 L1033.33,474.58 L1047.86,483.38 L1062.38,489.29 L1076.9,520.3 L1120.48,529.17 L1135.0,513.25 L1149.52,535.8 L1164.05,599.5 L1178.57,582.18 L1222.14,609.57 L1236.67,643.19 L1251.19,626.55 L1265.71,652.47 L1280.24,663.95 L1323.81,687.02 L1338.33,689.36 L1352.86,704.82 L1367.38,721.94 L1381.9,792.24" fill="none" stroke="var(--acc)" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" clip-path="url(#nv-mid)"/><g style="opacity:0"><line x1="728.33" x2="1441.9" y1="401.36" y2="401.36" stroke="#14161A" stroke-width="1.6" stroke-dasharray="7 6" opacity=".5"/><path d="M1441.9,409.36 L1441.9,776.24" stroke="var(--acc)" stroke-width="3" marker-end="url(#ah-a)" fill="none"/></g><g><circle cx="728.33" cy="401.36" r="9" fill="#fff" stroke="var(--acc)" stroke-width="4"/></g><g style="opacity:0"><circle cx="1381.9" cy="792.24" r="24" fill="var(--acc)" opacity=".16"/><circle cx="1381.9" cy="792.24" r="11" fill="var(--acc)" stroke="var(--acc)" stroke-width="4"/></g></svg><div class="co on" style="left:748.3px;top:395.4px;transform:translateY(-100%);"><div class="d">OCT 6, 2026, THE RECORD CLOSE</div><div class="e mono" style="font-family:'JetBrains Mono';font-size:32px">239.24</div></div><div class="co dim hide" style="left:1357.9px;top:796.2px;transform:translate(-100%,-50%);"><div class="d">NOV 20, 2026 CLOSE</div><div class="e mono" style="font-family:'JetBrains Mono';font-size:32px">125.53</div></div><div class="endlbl hide" style="left:1465.9px;top:596.8px;transform:translateY(-50%);color:var(--acc);font-family:'JetBrains Mono'"><span class="mono" style="font-size:54px;font-weight:600">MINUS 47.5%</span></div><div class="src">Nvidia (NVDA) daily close: Yahoo Finance, read 2026-11-22 · OCT 6, 2026 record close to the NOV 20, 2026 close (dated: the stock moved after this)</div></div>
+<div class="frame ch" id="C-NVDA-payoff" style="--acc:#C41E3A;--acc-rgb:196,30,58"><div class="orb" style="width:760px;height:760px;right:-300px;top:-380px;background:rgba(196,30,58,.55)"></div><div class="orb" style="width:520px;height:520px;left:-260px;bottom:-300px;background:#c9cfd8;opacity:.22"></div><div class="hdr" style="top:64px"><div class="ey">Nvidia, daily close</div><h1>Down from its <span class="acc">October high</span></h1><div class="divider"></div></div><svg class="plot" viewBox="0 0 1920 1080"><defs><marker id="ah-w" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="#8A877E"/></marker><marker id="ah-a" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="var(--acc)"/></marker><marker id="ah-ws" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="#8A877E"/></marker><marker id="ah-as" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="var(--acc)"/></marker><marker id="ah-g" viewBox="0 0 12 12" refX="10" refY="6" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="#007A55"/></marker><clipPath id="nv-payoff"><rect x="214" y="0" width="1165.4" height="1080"/></clipPath></defs><line x1="220" x2="1440" y1="794.06" y2="794.06" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="202" y="800.06" text-anchor="end">125</text><line x1="220" x2="1440" y1="708.12" y2="708.12" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="202" y="714.12" text-anchor="end">150</text><line x1="220" x2="1440" y1="622.19" y2="622.19" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="202" y="628.19" text-anchor="end">175</text><line x1="220" x2="1440" y1="536.25" y2="536.25" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="202" y="542.25" text-anchor="end">200</text><line x1="220" x2="1440" y1="450.31" y2="450.31" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="202" y="456.31" text-anchor="end">225</text><line x1="220" x2="1440" y1="364.38" y2="364.38" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="202" y="370.38" text-anchor="end">250</text><line x1="220" x2="1440" y1="880" y2="880" stroke="#7A808B" stroke-width="2"/><line x1="220.0" x2="220.0" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="220.0" y="920" text-anchor="middle">SEP 1</text><line x1="655.71" x2="655.71" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="655.71" y="920" text-anchor="middle">OCT 1</text><line x1="1105.95" x2="1105.95" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="1105.95" y="920" text-anchor="middle">NOV 1</text><text class="axl" x="120" y="290">USD A SHARE</text><path d="M220.0,880 L220.0,476.3 L234.52,452.34 L249.05,438.45 L263.57,431.89 L321.67,447.8 L336.19,454.88 L350.71,473.14 L365.24,473.38 L408.81,498.57 L423.33,494.42 L437.86,488.47 L452.38,469.77 L466.9,459.7 L510.48,442.13 L525.0,437.01 L539.52,448.56 L554.05,451.76 L568.57,450.07 L612.14,437.04 L626.67,442.72 L641.19,438.69 L655.71,430.17 L670.24,419.55 L713.81,402.53 L728.33,401.36 L742.86,407.45 L757.38,431.48 L771.9,435.6 L815.48,445.77 L830.0,438.21 L844.52,463.03 L859.05,477.02 L873.57,487.68 L917.14,477.5 L931.67,479.63 L946.19,460.73 L960.71,494.28 L975.24,498.57 L1018.81,481.25 L1033.33,474.58 L1047.86,483.38 L1062.38,489.29 L1076.9,520.3 L1120.48,529.17 L1135.0,513.25 L1149.52,535.8 L1164.05,599.5 L1178.57,582.18 L1222.14,609.57 L1236.67,643.19 L1251.19,626.55 L1265.71,652.47 L1280.24,663.95 L1323.81,687.02 L1338.33,689.36 L1352.86,704.82 L1367.38,721.94 L1381.9,792.24 L1381.9,880 Z" fill="rgba(196,30,58,.10)" clip-path="url(#nv-payoff)"/><path d="M220.0,476.3 L234.52,452.34 L249.05,438.45 L263.57,431.89 L321.67,447.8 L336.19,454.88 L350.71,473.14 L365.24,473.38 L408.81,498.57 L423.33,494.42 L437.86,488.47 L452.38,469.77 L466.9,459.7 L510.48,442.13 L525.0,437.01 L539.52,448.56 L554.05,451.76 L568.57,450.07 L612.14,437.04 L626.67,442.72 L641.19,438.69 L655.71,430.17 L670.24,419.55 L713.81,402.53 L728.33,401.36 L742.86,407.45 L757.38,431.48 L771.9,435.6 L815.48,445.77 L830.0,438.21 L844.52,463.03 L859.05,477.02 L873.57,487.68 L917.14,477.5 L931.67,479.63 L946.19,460.73 L960.71,494.28 L975.24,498.57 L1018.81,481.25 L1033.33,474.58 L1047.86,483.38 L1062.38,489.29 L1076.9,520.3 L1120.48,529.17 L1135.0,513.25 L1149.52,535.8 L1164.05,599.5 L1178.57,582.18 L1222.14,609.57 L1236.67,643.19 L1251.19,626.55 L1265.71,652.47 L1280.24,663.95 L1323.81,687.02 L1338.33,689.36 L1352.86,704.82 L1367.38,721.94 L1381.9,792.24" fill="none" stroke="var(--acc)" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" clip-path="url(#nv-payoff)"/><g><line x1="728.33" x2="1441.9" y1="401.36" y2="401.36" stroke="#14161A" stroke-width="1.6" stroke-dasharray="7 6" opacity=".5"/><path d="M1441.9,409.36 L1441.9,776.24" stroke="var(--acc)" stroke-width="3" marker-end="url(#ah-a)" fill="none"/></g><g><circle cx="728.33" cy="401.36" r="9" fill="#fff" stroke="var(--acc)" stroke-width="4"/></g><g><circle cx="1381.9" cy="792.24" r="24" fill="var(--acc)" opacity=".16"/><circle cx="1381.9" cy="792.24" r="11" fill="var(--acc)" stroke="var(--acc)" stroke-width="4"/></g></svg><div class="co dim" style="left:748.3px;top:395.4px;transform:translateY(-100%);"><div class="d">OCT 6, 2026, THE RECORD CLOSE</div><div class="e mono" style="font-family:'JetBrains Mono';font-size:32px">239.24</div></div><div class="co dim" style="left:1357.9px;top:796.2px;transform:translate(-100%,-50%);"><div class="d">NOV 20, 2026 CLOSE</div><div class="e mono" style="font-family:'JetBrains Mono';font-size:32px">125.53</div></div><div class="endlbl" style="left:1465.9px;top:596.8px;transform:translateY(-50%);color:var(--acc);font-family:'JetBrains Mono'"><span class="mono" style="font-size:54px;font-weight:600">MINUS 47.5%</span></div><div class="src">Nvidia (NVDA) daily close: Yahoo Finance, read 2026-11-22 · OCT 6, 2026 record close to the NOV 20, 2026 close (dated: the stock moved after this)</div></div>
+<script type="application/json" id="chart-data">{"id": "C-NVDA", "series": [["2026-09-01", 217.44], ["2026-09-02", 224.41], ["2026-09-03", 228.45], ["2026-09-04", 230.36], ["2026-09-08", 225.73], ["2026-09-09", 223.67], ["2026-09-10", 218.36], ["2026-09-11", 218.29], ["2026-09-14", 210.96], ["2026-09-15", 212.17], ["2026-09-16", 213.9], ["2026-09-17", 219.34], ["2026-09-18", 222.27], ["2026-09-21", 227.38], ["2026-09-22", 228.87], ["2026-09-23", 225.51], ["2026-09-24", 224.58], ["2026-09-25", 225.07], ["2026-09-28", 228.86], ["2026-09-29", 227.21], ["2026-09-30", 228.38], ["2026-10-01", 230.86], ["2026-10-02", 233.95], ["2026-10-05", 238.9], ["2026-10-06", 239.24], ["2026-10-07", 237.47], ["2026-10-08", 230.48], ["2026-10-09", 229.28], ["2026-10-12", 226.32], ["2026-10-13", 228.52], ["2026-10-14", 221.3], ["2026-10-15", 217.23], ["2026-10-16", 214.13], ["2026-10-19", 217.09], ["2026-10-20", 216.47], ["2026-10-21", 221.97], ["2026-10-22", 212.21], ["2026-10-23", 210.96], ["2026-10-26", 216.0], ["2026-10-27", 217.94], ["2026-10-28", 215.38], ["2026-10-29", 213.66], ["2026-10-30", 204.64], ["2026-11-02", 202.06], ["2026-11-03", 206.69], ["2026-11-04", 200.13], ["2026-11-05", 181.6], ["2026-11-06", 186.64], ["2026-11-09", 178.67], ["2026-11-10", 168.89], ["2026-11-11", 173.73], ["2026-11-12", 166.19], ["2026-11-13", 162.85], ["2026-11-16", 156.14], ["2026-11-17", 155.46], ["2026-11-18", 150.96], ["2026-11-19", 145.98], ["2026-11-20", 125.53]], "plot": {"x0": 220, "x1": 1440, "y0": 330, "y1": 880, "dmin": "2026-09-01", "dmax": "2026-11-24", "vmin": 100, "vmax": 260}}</script>
+</body></html>

@@ -1,0 +1,1116 @@
+{
+ "script": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-presentation\\media\\standard\\livestream-aws\\SCRIPT.md",
+ "words": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-presentation\\media\\standard\\livestream-aws\\spine\\livestream-aws EDIT.enhanced.medium-words.json",
+ "spine": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-presentation\\media\\standard\\livestream-aws\\spine\\livestream-aws EDIT.enhanced.mp4",
+ "duration": 388.4,
+ "lead_s": 0.3,
+ "allow_missing": true,
+ "pins": {
+  "111": 231.78
+ },
+ "project": "livestream-aws",
+ "extras": {
+  "vertical": true,
+  "short": 30,
+  "yt_post": true
+ },
+ "cards": {
+  "today-pc": {
+   "kind": "chart-still",
+   "states": []
+  },
+  "aws-map": {
+   "kind": "chart-still",
+   "states": [
+    "all",
+    "ingest",
+    "graph",
+    "agents",
+    "compute",
+    "publish"
+   ]
+  },
+  "ingest": {
+   "kind": "chart-still",
+   "states": [
+    "trigger",
+    "convert",
+    "face",
+    "words"
+   ]
+  },
+  "graph-home": {
+   "kind": "chart-still",
+   "states": [
+    "runtime",
+    "checkpoint"
+   ]
+  },
+  "gate": {
+   "kind": "chart-still",
+   "states": [
+    "wait",
+    "resume"
+   ]
+  },
+  "agents": {
+   "kind": "chart-still",
+   "states": [
+    "models",
+    "tools",
+    "role"
+   ]
+  },
+  "images": {
+   "kind": "chart-still",
+   "states": [
+    "before",
+    "after"
+   ]
+  },
+  "ec2-answer": {
+   "kind": "card",
+   "states": []
+  },
+  "batch-spot": {
+   "kind": "chart-still",
+   "states": [
+    "reclaim",
+    "gpu"
+   ]
+  },
+  "render-fanout": {
+   "kind": "chart-still",
+   "states": []
+  },
+  "publish": {
+   "kind": "chart-still",
+   "states": [
+    "schedule",
+    "browser"
+   ]
+  },
+  "watch": {
+   "kind": "chart-still",
+   "states": []
+  },
+  "bill": {
+   "kind": "card",
+   "states": []
+  },
+  "same-graph": {
+   "kind": "card",
+   "states": []
+  }
+ },
+ "inserts": [],
+ "lines": [
+  {
+   "n": 57,
+   "tag": "FACE",
+   "card": null,
+   "state": null,
+   "text": "My livestream pipeline runs on one PC. Here's how I'd run the same LangGraph on AWS, Amazon's cloud, as a real production system.",
+   "status": "CHANGED",
+   "score": 0.565,
+   "tIn": 0.0,
+   "tOut": 16.0,
+   "said_in": 0.0,
+   "said_out": 13.22,
+   "heard": "My livestream pipeline runs on one PC. What I wanna do here is show you how I would set this up on AWS and like a real production environment."
+  },
+  {
+   "n": 58,
+   "tag": "COVER",
+   "card": "today-pc",
+   "state": null,
+   "text": "Today, everything lives in one box: the graph and its checkpoints, 7 agents in Claude Code, one browser for the images, Whisper on my GPU, the renders and the posting scripts.",
+   "status": "CHANGED",
+   "score": 0.839,
+   "tIn": 16.0,
+   "tOut": 29.54,
+   "said_in": 16.14,
+   "said_out": 29.54,
+   "heard": "Today, everything lives in one box. A graph and its checkpoints, seven agents and cloud code, one browser for images, Whisper on my GPU, the renders and the posting scripts."
+  },
+  {
+   "n": 60,
+   "tag": "COVER",
+   "card": "aws-map",
+   "state": "all",
+   "text": "For every piece, I'll show you what I do today and the AWS service that would do it, in 5 layers: ingest, the graph, the agents, the heavy work, and publishing.",
+   "status": "KEPT",
+   "score": 0.935,
+   "tIn": 29.54,
+   "tOut": 42.88,
+   "said_in": 29.54,
+   "said_out": 42.82,
+   "heard": "For every piece, I'll show you what I do today and the AWS service that I would do it with in five layers. Injust, the graph, the agents, the heavy work and publishing."
+  },
+  {
+   "n": 63,
+   "tag": "SCREENSHARE",
+   "card": null,
+   "state": null,
+   "text": "And I'll answer the question everyone asks first: does any of this run on EC2, Amazon's virtual servers?",
+   "status": "CHANGED",
+   "score": 0.667,
+   "tIn": 42.88,
+   "tOut": 50.04,
+   "said_in": 43.18,
+   "said_out": 50.04,
+   "heard": "And I'll answer the question that everybody asks first, does this run on EC2? All right, so"
+  },
+  {
+   "n": 67,
+   "tag": "COVER",
+   "card": "aws-map",
+   "state": "ingest",
+   "text": "Layer 1, ingest. Today the recording sits in a folder on my PC. On AWS, it goes to S3, Amazon's file storage.",
+   "status": "KEPT",
+   "score": 0.909,
+   "tIn": 50.04,
+   "tOut": 59.24,
+   "said_in": 50.04,
+   "said_out": 59.24,
+   "heard": "layer one, ingest. Today, the recording sits in my folder on my PC. On AWS, it goes to S3, which is Amazon's file storage."
+  },
+  {
+   "n": 69,
+   "tag": "COVER",
+   "card": "ingest",
+   "state": "trigger",
+   "text": "S3 can announce every new file to EventBridge, Amazon's event router. EventBridge calls a Lambda function, a small piece of code AWS runs only when something calls it, and that starts the graph.",
+   "status": "KEPT",
+   "score": 0.939,
+   "tIn": 59.24,
+   "tOut": 73.86,
+   "said_in": 59.24,
+   "said_out": 73.86,
+   "heard": "S3 can announce every new file to EventBridge. EventBridge is the event router in Amazon. EventBridge runs a Lambda function, a small piece of code. AWS runs only when something calls it and that starts the graph."
+  },
+  {
+   "n": 71,
+   "tag": "COVER",
+   "card": "ingest",
+   "state": "convert",
+   "text": "Today, ffmpeg makes the low-bitrate master. On AWS, that's MediaConvert, Amazon's video converter.",
+   "status": "KEPT",
+   "score": 0.929,
+   "tIn": 73.86,
+   "tOut": 82.3,
+   "said_in": 74.16,
+   "said_out": 82.22,
+   "heard": "Today, FFmpeg makes the low bit rate master. On AWS, that's MediaConvert, which is Amazon's video converter."
+  },
+  {
+   "n": 73,
+   "tag": "COVER",
+   "card": "ingest",
+   "state": "face",
+   "text": "My face tracker makes the vertical crop. On AWS, Rekognition, Amazon's image and video analysis service, finds my face in the video.",
+   "status": "KEPT",
+   "score": 0.909,
+   "tIn": 82.3,
+   "tOut": 91.66,
+   "said_in": 82.6,
+   "said_out": 91.66,
+   "heard": "My face tracker makes the vertical crop. On AWS, recognition, Amazon's image and video analysis service finds my face in a video."
+  },
+  {
+   "n": 75,
+   "tag": "COVER",
+   "card": "ingest",
+   "state": "words",
+   "text": "And Whisper writes the transcript. On AWS, that's Transcribe, Amazon's speech to text. It gives a timestamp on every word, and the words Whisper keeps getting wrong, like TAO, go into its custom vocabulary.",
+   "status": "KEPT",
+   "score": 0.941,
+   "tIn": 91.66,
+   "tOut": 106.24,
+   "said_in": 91.94,
+   "said_out": 106.18,
+   "heard": "And Whisper writes the transcript. On AWS, that's Transcribe, Amazon's speech to text. It gives a timestamp on every word and the words Whisper keeps gets wrong, like towel, go into its custom vocabulary."
+  },
+  {
+   "n": 80,
+   "tag": "COVER",
+   "card": "aws-map",
+   "state": "graph",
+   "text": "Layer 2, the graph. Today it's a Python process on my PC. On AWS, it runs on AgentCore Runtime, Amazon's hosting for agents.",
+   "status": "KEPT",
+   "score": 0.87,
+   "tIn": 106.24,
+   "tOut": 116.84,
+   "said_in": 106.54,
+   "said_out": 116.78,
+   "heard": "Layer two, the graph. Today, it's a Python process on my PC. On AWS, it runs on Agent Core Runtime, Amazon hosting for agents."
+  },
+  {
+   "n": 82,
+   "tag": "COVER",
+   "card": "graph-home",
+   "state": "runtime",
+   "text": "Each run gets its own microVM, a small, isolated virtual machine, for up to 8 hours. It bills by the second, and the CPU charge drops to zero while it waits on a model.",
+   "status": "KEPT",
+   "score": 0.941,
+   "tIn": 116.84,
+   "tOut": 129.04,
+   "said_in": 117.14,
+   "said_out": 128.96,
+   "heard": "Each run gets its own MicroVM, a small, isolated virtual machine, for up to eight hours. It builds by the second and the CPU charge drops to zero while it waits on a model."
+  },
+  {
+   "n": 84,
+   "tag": "COVER",
+   "card": "graph-home",
+   "state": "checkpoint",
+   "text": "The checkpoints move too. Today they're in a SQLite file. On AWS, they go to DynamoDB, Amazon's managed database, through a LangGraph package called langgraph-checkpoint-aws.",
+   "status": "KEPT",
+   "score": 0.852,
+   "tIn": 129.04,
+   "tOut": 141.96,
+   "said_in": 129.34,
+   "said_out": 141.76,
+   "heard": "The checkpoints move too. Today, they're in SQLite. On AWS, they go to DynamoDB, Amazon's managed database, through a LandGraph package called LandGraph Checkpoint AWS."
+  },
+  {
+   "n": 87,
+   "tag": "SCREENSHARE",
+   "card": null,
+   "state": null,
+   "text": "Now the human gates. My first gate once waited 9 hours for me. A session lasts 8.",
+   "status": "CHANGED",
+   "score": 0.824,
+   "tIn": 141.96,
+   "tOut": 148.72,
+   "said_in": 142.26,
+   "said_out": 148.36,
+   "heard": "Now the human gates. My first gate once waited nine hours for me. The session lasts eight"
+  },
+  {
+   "n": 88,
+   "tag": "COVER",
+   "card": "gate",
+   "state": "wait",
+   "text": "So at the gate, the graph saves its state to DynamoDB and the session ends. SNS, Amazon's notification service, sends me an email.",
+   "status": "KEPT",
+   "score": 0.87,
+   "tIn": 148.72,
+   "tOut": 158.28,
+   "said_in": 148.88,
+   "said_out": 158.28,
+   "heard": "So at the gate, the graph saves the state to DynamoDB and the session ends. SMS, Amazon notification service, sends me an email."
+  },
+  {
+   "n": 90,
+   "tag": "COVER",
+   "card": "gate",
+   "state": "resume",
+   "text": "I approve on the dashboard, and a Lambda function resumes the graph on the same thread, in a new session.",
+   "status": "KEPT",
+   "score": 0.9,
+   "tIn": 158.28,
+   "tOut": 164.66,
+   "said_in": 158.56,
+   "said_out": 164.6,
+   "heard": "I'll approve on the dashboard. A Lambda function resumes the graph on the same thread in a new session."
+  },
+  {
+   "n": 95,
+   "tag": "COVER",
+   "card": "aws-map",
+   "state": "agents",
+   "text": "Layer 3, the agents. Today Claude Code calls Anthropic directly. On AWS, it calls Bedrock, Amazon's service for running AI models, and Fable, Opus and Sonnet are all on it.",
+   "status": "KEPT",
+   "score": 0.9,
+   "tIn": 164.66,
+   "tOut": 178.82,
+   "said_in": 164.96,
+   "said_out": 178.82,
+   "heard": "Layer three, the agents. Today, Cloud Code calls Anthropic directly. On AWS, it calls Bedrock, Amazon service for running AI models and Fable, Opus, and Sonnet are all on it."
+  },
+  {
+   "n": 97,
+   "tag": "COVER",
+   "card": "agents",
+   "state": "models",
+   "text": "It's one setting, CLAUDE_CODE_USE_BEDROCK. And each agent runs through the Claude Agent SDK, which is Claude Code as a library, in its own Runtime session.",
+   "status": "KEPT",
+   "score": 0.893,
+   "tIn": 178.82,
+   "tOut": 189.88,
+   "said_in": 178.98,
+   "said_out": 189.8,
+   "heard": "It's one-setting. Cloud Code use Bedrock and each agent runs through the Cloud Agent SDK, which is called code as a library in its own runtime session."
+  },
+  {
+   "n": 99,
+   "tag": "COVER",
+   "card": "agents",
+   "state": "tools",
+   "text": "Their tools go behind AgentCore Gateway, which turns my APIs and functions into MCP tools, the open standard agents use to call tools.",
+   "status": "KEPT",
+   "score": 0.913,
+   "tIn": 189.88,
+   "tOut": 198.92,
+   "said_in": 190.18,
+   "said_out": 198.92,
+   "heard": "There are tools go behind Agent Core Gateway, which turns my APIs and functions into MCP tools, the open standard agents use to call tools."
+  },
+  {
+   "n": 100,
+   "tag": "COVER",
+   "card": "agents",
+   "state": "tools",
+   "text": "And the logins go in AgentCore Identity, a vault for the agents' keys and tokens.",
+   "status": "CHANGED",
+   "score": 0.733,
+   "tIn": 198.92,
+   "tOut": 204.32,
+   "said_in": 199.12,
+   "said_out": 204.22,
+   "heard": "And the logins go into Agent Core Identity, a vault for agent keys and tokens."
+  },
+  {
+   "n": 102,
+   "tag": "COVER",
+   "card": "agents",
+   "state": "role",
+   "text": "Each agent also gets an IAM role. IAM is how AWS decides who can call what, and a role lists exactly what one agent is allowed to call.",
+   "status": "KEPT",
+   "score": 1.0,
+   "tIn": 204.32,
+   "tOut": 214.32,
+   "said_in": 204.62,
+   "said_out": 214.24,
+   "heard": "Each agent also gets an IAM role. IAM is how AWS decides who can call what and a role lists exactly what one agent is allowed to call."
+  },
+  {
+   "n": 103,
+   "tag": "COVER",
+   "card": "agents",
+   "state": "role",
+   "text": "Today, the builder doesn't make images, but nothing stops it. On AWS, its role only allows the Claude models, so it can't.",
+   "status": "KEPT",
+   "score": 0.909,
+   "tIn": 214.32,
+   "tOut": 222.88,
+   "said_in": 214.62,
+   "said_out": 222.88,
+   "heard": "Today, the builder doesn't make images, but nothing stops it. On AWS, its role only allows Cloud models, so it can't."
+  },
+  {
+   "n": 108,
+   "tag": "COVER",
+   "card": "images",
+   "state": "before",
+   "text": "Now the bottleneck from my last video: one browser making the images, busy for 3.9 hours of a 4 hour 38 minute build.",
+   "status": "KEPT",
+   "score": 0.917,
+   "tIn": 222.88,
+   "tOut": 231.78,
+   "said_in": 223.0,
+   "said_out": 231.52,
+   "heard": "Now the bottleneck from my last video, one browser making the images, busy for 3.9 hours of a four hour and 30 minute build."
+  },
+  {
+   "n": 110,
+   "tag": "COVER",
+   "card": "images",
+   "state": "after",
+   "text": "On AWS, I'd drop the browser and call an image model on Bedrock. Stable Image Core, from Stability AI, is 4 cents an image, so that run's 41 images come to 1.64 dollars.",
+   "status": "MISSING",
+   "score": 0.0,
+   "tIn": null,
+   "tOut": null,
+   "said_in": null,
+   "said_out": null,
+   "heard": ""
+  },
+  {
+   "n": 111,
+   "tag": "COVER",
+   "card": "images",
+   "state": "after",
+   "text": "And the 7 shorts stop taking turns. No browser, no lock.",
+   "status": "CHANGED (pinned)",
+   "score": 0.727,
+   "tIn": 231.78,
+   "tOut": 240.72,
+   "said_in": 235.92,
+   "said_out": 240.72,
+   "heard": "and the seven shorts stopped taking turns. No browser, no log."
+  },
+  {
+   "n": 117,
+   "tag": "SCREENSHARE",
+   "card": null,
+   "state": null,
+   "text": "So, does it run on EC2? Yes, but only the heavy work, and only while there's a job to run.",
+   "status": "KEPT",
+   "score": 0.95,
+   "tIn": 240.72,
+   "tOut": 248.74,
+   "said_in": 241.02,
+   "said_out": 248.74,
+   "heard": "So does it run on EC2? Well, yes, but only the heavy work and only when there's a job to run."
+  },
+  {
+   "n": 118,
+   "tag": "COVER",
+   "card": "aws-map",
+   "state": "compute",
+   "text": "That's layer 4, the heavy work.",
+   "status": "MISSING",
+   "score": 0.0,
+   "tIn": null,
+   "tOut": null,
+   "said_in": null,
+   "said_out": null,
+   "heard": ""
+  },
+  {
+   "n": 120,
+   "tag": "COVER",
+   "card": "ec2-answer",
+   "state": null,
+   "text": "The graph's on AgentCore and the models are on Bedrock. The ffmpeg jobs go to AWS Batch, a job queue that starts servers when work arrives and stops them after.",
+   "status": "KEPT",
+   "score": 0.867,
+   "tIn": 248.74,
+   "tOut": 259.64,
+   "said_in": 249.0,
+   "said_out": 259.6,
+   "heard": "The graphs agent on Agent Core and the models are on Bedrock. The FFMPIC jobs go to AWS batch, a job queue that starts the servers when the work arrives and stops them after."
+  },
+  {
+   "n": 122,
+   "tag": "COVER",
+   "card": "batch-spot",
+   "state": "reclaim",
+   "text": "Those servers are EC2 Spot instances: spare capacity Amazon sells for up to 90 percent off, but it can take one back with 2 minutes' warning.",
+   "status": "KEPT",
+   "score": 0.923,
+   "tIn": 259.64,
+   "tOut": 268.08,
+   "said_in": 259.94,
+   "said_out": 268.06,
+   "heard": "Those servers are EC2 spot instances. Spare capacity Amazon sells for up to 90% off, but it can take one back with two minutes warning."
+  },
+  {
+   "n": 123,
+   "tag": "COVER",
+   "card": "batch-spot",
+   "state": "reclaim",
+   "text": "That's fine here, because every step reads what's already done and skips it. On AWS, what's done lives in S3.",
+   "status": "KEPT",
+   "score": 1.0,
+   "tIn": 268.08,
+   "tOut": 275.8,
+   "said_in": 268.38,
+   "said_out": 275.8,
+   "heard": "That's fine here because every step reads what's already done and skips it. On AWS, what's done lives in S3."
+  },
+  {
+   "n": 125,
+   "tag": "COVER",
+   "card": "batch-spot",
+   "state": "gpu",
+   "text": "Whisper, if I keep it over Transcribe, needs a GPU. On AWS, that's a G6 instance, an EC2 server with an NVIDIA L4.",
+   "status": "KEPT",
+   "score": 0.957,
+   "tIn": 275.8,
+   "tOut": 284.96,
+   "said_in": 276.04,
+   "said_out": 284.96,
+   "heard": "Whisper, if I keep it over transcribed, needs a GPU. On AWS, that's a G6 instance with an EC2 server with an Nvidia L4."
+  },
+  {
+   "n": 127,
+   "tag": "COVER",
+   "card": "render-fanout",
+   "state": null,
+   "text": "Today, Remotion renders on my PC in 1-minute chunks. On AWS, Remotion Lambda splits a render across up to 200 Lambda functions at once, at least 20 frames each.",
+   "status": "KEPT",
+   "score": 0.967,
+   "tIn": 284.96,
+   "tOut": 296.46,
+   "said_in": 285.2,
+   "said_out": 296.44,
+   "heard": "Today, Remotion renders on my PC in one minute chunks. On AWS, Remotion Lambda splits a render across up to 200 Lambda functions at once, at least 20 frames each."
+  },
+  {
+   "n": 128,
+   "tag": "COVER",
+   "card": "render-fanout",
+   "state": null,
+   "text": "Remotion's own example is a 10-minute HD video for around 10 cents. Each render has to finish inside 15 minutes.",
+   "status": "KEPT",
+   "score": 1.0,
+   "tIn": 296.46,
+   "tOut": 304.22,
+   "said_in": 296.76,
+   "said_out": 304.22,
+   "heard": "Remotion's own example is a 10 minute HD video for around 10 cents. Each render has to finish inside 15 minutes."
+  },
+  {
+   "n": 133,
+   "tag": "COVER",
+   "card": "aws-map",
+   "state": "publish",
+   "text": "Layer 5, publishing. Today the posts wait in JSON files. On AWS, they're rows in DynamoDB.",
+   "status": "KEPT",
+   "score": 0.875,
+   "tIn": 304.22,
+   "tOut": 311.76,
+   "said_in": 304.48,
+   "said_out": 311.76,
+   "heard": "Layer five publishing. Today, the posts wait in JSON files. On AWS, there are rows in DynamoDB."
+  },
+  {
+   "n": 135,
+   "tag": "COVER",
+   "card": "publish",
+   "state": "schedule",
+   "text": "Each post gets a one-time schedule in EventBridge Scheduler, Amazon's alarm clock for code. At that time, it fires a Lambda function that posts it.",
+   "status": "KEPT",
+   "score": 1.0,
+   "tIn": 311.76,
+   "tOut": 321.74,
+   "said_in": 312.04,
+   "said_out": 321.74,
+   "heard": "Each post gets a one time schedule in EventBridge Scheduler, Amazon's alarm clock for code. At that time, it fires a Lambda function that posts it."
+  },
+  {
+   "n": 137,
+   "tag": "COVER",
+   "card": "publish",
+   "state": "browser",
+   "text": "YouTube and X go through their APIs. The platforms with no posting API go through AgentCore Browser, a Chrome that AWS runs for my agents, and it keeps the login between runs.",
+   "status": "MISSING",
+   "score": 0.0,
+   "tIn": null,
+   "tOut": null,
+   "said_in": null,
+   "said_out": null,
+   "heard": ""
+  },
+  {
+   "n": 142,
+   "tag": "COVER",
+   "card": "watch",
+   "state": null,
+   "text": "Today I read log files. On AWS, every agent run is traced into CloudWatch, Amazon's monitoring service: latency, token usage and errors, per session.",
+   "status": "KEPT",
+   "score": 0.917,
+   "tIn": 321.74,
+   "tOut": 333.58,
+   "said_in": 321.9,
+   "said_out": 333.58,
+   "heard": "Today, I read log files. On AWS, every agent is run and traced into CloudWatch, Amazon's monitoring servers, latency, token usage, and errors per session."
+  },
+  {
+   "n": 144,
+   "tag": "COVER",
+   "card": "bill",
+   "state": null,
+   "text": "The media bill for the 63-minute livestream from my last video: the transcript, 38 cents. The images, 1.64 dollars. The renders, a few pennies.",
+   "status": "CHANGED",
+   "score": 0.846,
+   "tIn": 333.58,
+   "tOut": 344.22,
+   "said_in": 333.86,
+   "said_out": 344.22,
+   "heard": "The media bill for a 63 minute live stream from my last video, the transcript, 38 cents. The images, $1.6. The renders, a few pennies."
+  },
+  {
+   "n": 145,
+   "tag": "COVER",
+   "card": "bill",
+   "state": null,
+   "text": "That's before the model tokens, which I'd watch per agent, in CloudWatch.",
+   "status": "KEPT",
+   "score": 1.0,
+   "tIn": 344.22,
+   "tOut": 359.2,
+   "said_in": 344.34,
+   "said_out": 348.4,
+   "heard": "That's before the model tokens, which I'd watch per agent in CloudWatch."
+  },
+  {
+   "n": 150,
+   "tag": "COVER",
+   "card": "same-graph",
+   "state": null,
+   "text": "So the graph barely changes. What changes is everything around it.",
+   "status": "KEPT",
+   "score": 1.0,
+   "tIn": 359.2,
+   "tOut": 363.58,
+   "said_in": 359.48,
+   "said_out": 363.58,
+   "heard": "So the graph barely changes. What changes is everything around it."
+  },
+  {
+   "n": 153,
+   "tag": "FACE",
+   "card": null,
+   "state": null,
+   "text": "Where the state lives, who holds the keys, and what runs in parallel. That's the production work.",
+   "status": "KEPT",
+   "score": 0.941,
+   "tIn": 363.58,
+   "tOut": 369.84,
+   "said_in": 363.58,
+   "said_out": 369.84,
+   "heard": "Where the state lives, who holds the keys, what runs in parallel, that's the production work."
+  },
+  {
+   "n": 155,
+   "tag": "SCREENSHARE",
+   "card": null,
+   "state": null,
+   "text": "If you haven't seen the last two videos on this graph, start there.",
+   "status": "KEPT",
+   "score": 0.923,
+   "tIn": 369.84,
+   "tOut": 388.4,
+   "said_in": 370.08,
+   "said_out": 373.86,
+   "heard": "If you haven't seen the last two videos on this graph, I would say start right"
+  }
+ ],
+ "adlibs": [
+  {
+   "after_line": 57,
+   "tIn": 13.46,
+   "tOut": 16.0,
+   "text": "Gonna be interesting, so let's get into it.",
+   "scene": "face scene, centred"
+  },
+  {
+   "after_line": 108,
+   "tIn": 231.78,
+   "tOut": 235.92,
+   "text": "On AWS, I dropped the browser and call an image model on Bedrock",
+   "scene": "stays on images.before"
+  },
+  {
+   "after_line": 145,
+   "tIn": 348.58,
+   "tOut": 359.2,
+   "text": "To be clear, most of the costs will go to where the model tokens are. For a one 63 minute live stream, it could get up to $80 or maybe a little bit more.",
+   "scene": "stays on bill"
+  },
+  {
+   "after_line": 155,
+   "tIn": 373.86,
+   "tOut": 388.18,
+   "text": "here. It's a playlist all about line graph. Make sure you subscribe if you're new here and you can check this playlist right here because we got tons of stuff related to AI engineering on this channel called AI Engineering Simplified.",
+   "scene": "screen share, as filmed"
+  }
+ ],
+ "number_mismatches": [
+  {
+   "n": 108,
+   "kind": "different",
+   "script_only": [
+    "38"
+   ],
+   "heard_only": [
+    "30"
+   ],
+   "text": "Now the bottleneck from my last video: one browser making the images, busy for 3.9 hours of a 4 hour 38 minute build.",
+   "heard": "Now the bottleneck from my last video, one browser making the images, busy for 3.9 hours of a four hour and 30 minute build.",
+   "tIn": 223.0
+  },
+  {
+   "n": 144,
+   "kind": "different",
+   "script_only": [
+    "1.64"
+   ],
+   "heard_only": [
+    "1.6"
+   ],
+   "text": "The media bill for the 63-minute livestream from my last video: the transcript, 38 cents. The images, 1.64 dollars. The renders, a few pennies.",
+   "heard": "The media bill for a 63 minute live stream from my last video, the transcript, 38 cents. The images, $1.6. The renders, a few pennies.",
+   "tIn": 333.86
+  }
+ ],
+ "runs": [
+  {
+   "id": "run-01",
+   "tIn": 16.0,
+   "tOut": 42.88,
+   "lines": [
+    58,
+    60
+   ],
+   "segments": [
+    {
+     "card": "today-pc",
+     "state": null,
+     "kind": "chart-still",
+     "tIn": 16.0,
+     "tOut": 29.54,
+     "lines": [
+      58
+     ]
+    },
+    {
+     "card": "aws-map",
+     "state": "all",
+     "kind": "chart-still",
+     "tIn": 29.54,
+     "tOut": 42.88,
+     "lines": [
+      60
+     ]
+    }
+   ]
+  },
+  {
+   "id": "run-02",
+   "tIn": 50.04,
+   "tOut": 141.96,
+   "lines": [
+    67,
+    69,
+    71,
+    73,
+    75,
+    80,
+    82,
+    84
+   ],
+   "segments": [
+    {
+     "card": "aws-map",
+     "state": "ingest",
+     "kind": "chart-still",
+     "tIn": 50.04,
+     "tOut": 59.24,
+     "lines": [
+      67
+     ]
+    },
+    {
+     "card": "ingest",
+     "state": "trigger",
+     "kind": "chart-still",
+     "tIn": 59.24,
+     "tOut": 73.86,
+     "lines": [
+      69
+     ]
+    },
+    {
+     "card": "ingest",
+     "state": "convert",
+     "kind": "chart-still",
+     "tIn": 73.86,
+     "tOut": 82.3,
+     "lines": [
+      71
+     ]
+    },
+    {
+     "card": "ingest",
+     "state": "face",
+     "kind": "chart-still",
+     "tIn": 82.3,
+     "tOut": 91.66,
+     "lines": [
+      73
+     ]
+    },
+    {
+     "card": "ingest",
+     "state": "words",
+     "kind": "chart-still",
+     "tIn": 91.66,
+     "tOut": 106.24,
+     "lines": [
+      75
+     ]
+    },
+    {
+     "card": "aws-map",
+     "state": "graph",
+     "kind": "chart-still",
+     "tIn": 106.24,
+     "tOut": 116.84,
+     "lines": [
+      80
+     ]
+    },
+    {
+     "card": "graph-home",
+     "state": "runtime",
+     "kind": "chart-still",
+     "tIn": 116.84,
+     "tOut": 129.04,
+     "lines": [
+      82
+     ]
+    },
+    {
+     "card": "graph-home",
+     "state": "checkpoint",
+     "kind": "chart-still",
+     "tIn": 129.04,
+     "tOut": 141.96,
+     "lines": [
+      84
+     ]
+    }
+   ]
+  },
+  {
+   "id": "run-03",
+   "tIn": 148.72,
+   "tOut": 240.72,
+   "lines": [
+    88,
+    90,
+    95,
+    97,
+    99,
+    100,
+    102,
+    103,
+    108,
+    111
+   ],
+   "segments": [
+    {
+     "card": "gate",
+     "state": "wait",
+     "kind": "chart-still",
+     "tIn": 148.72,
+     "tOut": 158.28,
+     "lines": [
+      88
+     ]
+    },
+    {
+     "card": "gate",
+     "state": "resume",
+     "kind": "chart-still",
+     "tIn": 158.28,
+     "tOut": 164.66,
+     "lines": [
+      90
+     ]
+    },
+    {
+     "card": "aws-map",
+     "state": "agents",
+     "kind": "chart-still",
+     "tIn": 164.66,
+     "tOut": 178.82,
+     "lines": [
+      95
+     ]
+    },
+    {
+     "card": "agents",
+     "state": "models",
+     "kind": "chart-still",
+     "tIn": 178.82,
+     "tOut": 189.88,
+     "lines": [
+      97
+     ]
+    },
+    {
+     "card": "agents",
+     "state": "tools",
+     "kind": "chart-still",
+     "tIn": 189.88,
+     "tOut": 204.32,
+     "lines": [
+      99,
+      100
+     ]
+    },
+    {
+     "card": "agents",
+     "state": "role",
+     "kind": "chart-still",
+     "tIn": 204.32,
+     "tOut": 222.88,
+     "lines": [
+      102,
+      103
+     ]
+    },
+    {
+     "card": "images",
+     "state": "before",
+     "kind": "chart-still",
+     "tIn": 222.88,
+     "tOut": 231.78,
+     "lines": [
+      108
+     ]
+    },
+    {
+     "card": "images",
+     "state": "after",
+     "kind": "chart-still",
+     "tIn": 231.78,
+     "tOut": 240.72,
+     "lines": [
+      111
+     ]
+    }
+   ]
+  },
+  {
+   "id": "run-04",
+   "tIn": 248.74,
+   "tOut": 363.58,
+   "lines": [
+    120,
+    122,
+    123,
+    125,
+    127,
+    128,
+    133,
+    135,
+    142,
+    144,
+    145,
+    150
+   ],
+   "segments": [
+    {
+     "card": "ec2-answer",
+     "state": null,
+     "kind": "card",
+     "tIn": 248.74,
+     "tOut": 259.64,
+     "lines": [
+      120
+     ]
+    },
+    {
+     "card": "batch-spot",
+     "state": "reclaim",
+     "kind": "chart-still",
+     "tIn": 259.64,
+     "tOut": 275.8,
+     "lines": [
+      122,
+      123
+     ]
+    },
+    {
+     "card": "batch-spot",
+     "state": "gpu",
+     "kind": "chart-still",
+     "tIn": 275.8,
+     "tOut": 284.96,
+     "lines": [
+      125
+     ]
+    },
+    {
+     "card": "render-fanout",
+     "state": null,
+     "kind": "chart-still",
+     "tIn": 284.96,
+     "tOut": 304.22,
+     "lines": [
+      127,
+      128
+     ]
+    },
+    {
+     "card": "aws-map",
+     "state": "publish",
+     "kind": "chart-still",
+     "tIn": 304.22,
+     "tOut": 311.76,
+     "lines": [
+      133
+     ]
+    },
+    {
+     "card": "publish",
+     "state": "schedule",
+     "kind": "chart-still",
+     "tIn": 311.76,
+     "tOut": 321.74,
+     "lines": [
+      135
+     ]
+    },
+    {
+     "card": "watch",
+     "state": null,
+     "kind": "chart-still",
+     "tIn": 321.74,
+     "tOut": 333.58,
+     "lines": [
+      142
+     ]
+    },
+    {
+     "card": "bill",
+     "state": null,
+     "kind": "card",
+     "tIn": 333.58,
+     "tOut": 359.2,
+     "lines": [
+      144,
+      145
+     ]
+    },
+    {
+     "card": "same-graph",
+     "state": null,
+     "kind": "card",
+     "tIn": 359.2,
+     "tOut": 363.58,
+     "lines": [
+      150
+     ]
+    }
+   ]
+  }
+ ],
+ "flags": [],
+ "face_windows": [
+  [
+   0.0,
+   13.333
+  ],
+  [
+   363.6,
+   369.9
+  ]
+ ],
+ "face_check": [
+  {
+   "n": 57,
+   "said_in": 0.0,
+   "said_out": 13.22,
+   "on_face_s": 13.22,
+   "ok": true
+  },
+  {
+   "n": 153,
+   "said_in": 363.58,
+   "said_out": 369.84,
+   "on_face_s": 6.24,
+   "ok": true
+  }
+ ],
+ "allow_face_mismatch": false,
+ "problems": [],
+ "machine": "SCRIPT-CUE PASS lines=41 kept=31 changed=7 missing=3 adlibs=4 number_mismatches=2 runs=4 faces=2"
+}

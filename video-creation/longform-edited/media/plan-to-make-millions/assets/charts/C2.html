@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>C2 (plan-to-make-millions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<!-- ANIMATION / STATE SPEC (also in the .spec.md / _state-cues.md beside this file)
+C2 INDEX CHART (Type 1 animated, CH2 red), beat CH2@206.80-216.528, headline 'Stocks dumped too'. Both indices plotted as % from their OCT 6, 2026
+record closes (Yahoo ^GSPC, ^NDX daily closes to NOV 20, 2026). S&P 500 in ink, Nasdaq-100 in red (lit).
+206.80 frame in, both at 0% with the 'OCT 6, 2026, BOTH AT RECORD CLOSES' tag = start; 206.90-208.90 both lines draw together (ease-in-out);
+209.08 'S&P 500 / MINUS 11.6%' lands on '10%' = sp500; 212.86 'NASDAQ-100 / MINUS 19.84% / NOV 20, 2026 CLOSE' lands = ndx (S&P card dims);
+215.92 the dashed MINUS 20% line draws left to right (8 frames) UNDER both lines, stopping short of the solid Nasdaq-100 end dot (no separate intraday marker:
+  the 20.2% low sits 7 px under the close at the same x), + 'INTRADAY LOW 20.2% UNDER THE RECORD' (dashed-edge card) lands on 'bear market' = payoff.
+GUARDS: no CLOSING figure of 20% or more anywhere; the S&P 500 is never called a bear market; the words 'bear market' are never printed.
+Ends on the F4 picture edge (216.528). [VERIFY] if a NOV 23 close is used at render, re-derive both labels.
+-->
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+</style>
+<style>
+/* LIGHT THEME (loaded after the canonical sheet) */
+/* ============================================================================
+   container-canonical-light.css: the LIGHT THEME override (Mike, 2026-10-25, first used on `inference`).
+   A PER-VIDEO option, never the default. Load it AFTER container-canonical.css (same <head>, second <style> /
+   <link>): every token below replaces the dark one, every other rule of the locked stylesheet stays untouched
+   (layout, type, sizes, anatomy, components). Promoted from the 2026-10-25 look test in _light-mode-experiment/
+   (three containers rendered dark and light, Mike: "I like the light mode version").
+   Switch: GRAPH-PROGRESS.json settings.container_theme = "light" (run.py --container-theme light); the graph
+   tells slide-builder / chart-builder / visual-qa, and visual-qa judges palette drift against THIS file.
+   Contrast: every text token >= 4.5:1 on the page (#F6F4EE) and on a white card; strokes >= 3:1.
+   ============================================================================ */
+:root{
+  --bg-deep:#F6F4EE; --bg-card:#FFFFFF; --bg-card-hover:#F1EFE9;
+  --accent-green:#007A55; --accent-cyan:#006A9E; --accent-gold:#8F6500;
+  --accent-red:#C41E3A; --accent-purple:#7C3AED; --accent-teal:#0E7A6C; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#14161A; --text-secondary:#4A5263; --text-muted:#5E6676;
+  --border:#DDD9CF;
+  /* light-only helpers for charts / diagrams (dark has no equivalent: there the wire IS --border) */
+  --grid:#D6D2C7; --axis:#7A808B; --wire:#8A877E; --ink:#14161A;
+}
+body{background:#E4E1D8}
+
+/* the film grain stays, multiplied so it reads as paper tooth instead of lifting the blacks */
+.frame::after{opacity:.05;mix-blend-mode:multiply}
+
+/* accent orbs: same position and blur, a pale tint instead of a saturated bloom */
+.orb{opacity:.18}
+
+/* surfaces: a card is white with a hairline border and a soft lifted shadow (the dark 120 px black drop is gone) */
+.card,.col,.panel,.ecard,.nd,.node,.box{
+  background:var(--bg-card);border-color:var(--border);
+  box-shadow:0 1px 2px rgba(20,22,26,.05),0 14px 34px rgba(20,22,26,.08)}
+
+/* GLOW -> RING. On white a glow reads as a smear, so every "lit / on / hot" state becomes a tinted ring + a lifted
+   shadow in the element's accent (set --acc-rgb per chapter accent, default = cyan). */
+.frame{--acc-rgb:0,106,158}
+.lit,.on,.hot,.chip.on,.nd.lit,.node.on,.box.on,.ecard.on{
+  box-shadow:0 0 0 4px rgba(var(--acc-rgb),.12),0 12px 28px rgba(20,22,26,.12)}
+.hot,.nd.hot{box-shadow:0 0 0 6px rgba(var(--acc-rgb),.22),0 16px 34px rgba(20,22,26,.18)}
+.chip.on{background:rgba(var(--acc-rgb),.08)}
+.role,.rl,h1,h2{text-shadow:none}
+
+/* SVG diagrams / charts: wires and axes on the light ground. Lit wires use the accent token, resting wires --wire;
+   drop the SVG glow filter (filter="url(#g)") in the light build; hollow point centres fill white, the neutral
+   "ink" line is near-black; grid lines --grid; area fills under a line at .13 to .16 alpha of the accent. */
+svg .wire,svg line.wire,svg path.wire{stroke:var(--wire)}
+svg .grid{stroke:var(--grid)} svg .axis{stroke:var(--axis)}
+svg .ink{stroke:var(--ink);fill:var(--ink)}
+
+</style>
+<style>
+/* ---- chart / diagram layer on top of the locked stylesheet + the LIGHT override (layout only; tokens unchanged) ---- */
+.frame.ch{display:block;padding:0;margin:0 0 40px 0}
+.frame.ch>*:not(.orb){position:absolute}
+.hdr{left:120px;top:64px;max-width:1560px}
+.hdr .ey{font-size:24px;margin-bottom:14px}
+.hdr h1{font-size:64px;line-height:1.06}
+.hdr .divider{margin:22px 0 0 0;background:linear-gradient(90deg,var(--acc),rgba(var(--acc-rgb),.25))}
+.acc{color:var(--acc)} .red{color:var(--accent-red)} .grn{color:var(--accent-green)}
+.src{left:120px;bottom:40px;font-family:'JetBrains Mono',monospace;font-size:17px;color:var(--text-muted);max-width:1680px;line-height:1.45}
+svg.plot{left:0;top:0;width:1920px;height:1080px;overflow:visible}
+svg text{font-family:'JetBrains Mono',monospace}
+svg .tk{font-size:19px;fill:var(--text-muted);font-weight:400}
+svg .axl{font-family:'DM Sans',sans-serif;font-size:17px;letter-spacing:.18em;font-weight:600;fill:var(--text-muted)}
+svg .lbl{font-size:20px;font-weight:600;fill:var(--ink)}
+svg .lblm{font-size:18px;font-weight:600;fill:var(--text-muted)}
+svg .cap{font-family:'DM Sans',sans-serif;font-size:19px;letter-spacing:.12em;font-weight:700;fill:var(--ink)}
+.pill{font-family:'DM Sans',sans-serif;font-weight:700;font-size:19px;letter-spacing:.12em;text-transform:uppercase;
+  padding:8px 18px;border-radius:100px;border:1.5px solid var(--border);background:#fff;color:var(--text-secondary);white-space:nowrap}
+.pill.acc{border-color:rgba(var(--acc-rgb),.55);color:var(--acc);background:rgba(var(--acc-rgb),.06)}
+.pill.redp{border-color:rgba(196,30,58,.55);color:var(--accent-red);background:rgba(196,30,58,.06)}
+.pill.grnp{border-color:rgba(0,122,85,.55);color:var(--accent-green);background:rgba(0,122,85,.06)}
+.pill.dash{border-style:dashed}
+/* callout card: white, hairline, accent left rule when lit; dim = landed earlier, still on screen */
+.co{background:#fff;border:1px solid var(--border);border-left:5px solid var(--acc);border-radius:12px;padding:11px 18px 12px 16px;
+  box-shadow:0 1px 2px rgba(20,22,26,.05),0 10px 26px rgba(20,22,26,.08);white-space:nowrap}
+.co .d{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:17px;color:var(--text-muted);letter-spacing:.02em}
+.co .e{font-family:'DM Sans',sans-serif;font-weight:700;font-size:24px;color:var(--ink);letter-spacing:.03em;margin-top:2px}
+.co .t{font-family:'DM Sans',sans-serif;font-weight:600;font-size:18px;color:var(--text-secondary);letter-spacing:.06em;margin-top:4px}
+.co .t.acc{color:var(--acc)}
+.co.on{box-shadow:0 0 0 5px rgba(var(--acc-rgb),.14),0 14px 30px rgba(20,22,26,.14)}
+.co.dim{border-left-color:var(--wire);opacity:.62;box-shadow:0 1px 2px rgba(20,22,26,.04)}
+.co.dim .e{color:var(--text-secondary)}
+.endlbl{font-family:'JetBrains Mono',monospace;font-weight:600}
+.big{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--ink)}
+.hide{opacity:0!important}
+/* system-design nodes */
+.nd{background:#fff;border:1.5px solid var(--border);border-radius:16px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;box-shadow:0 1px 2px rgba(20,22,26,.05),0 12px 30px rgba(20,22,26,.07)}
+.nd .t{font-family:'DM Sans',sans-serif;font-weight:700;color:var(--ink);letter-spacing:.06em;text-transform:uppercase;line-height:1.22}
+.nd .s{font-family:'DM Sans',sans-serif;font-weight:600;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;font-size:17px;margin-top:8px}
+.nd.lit{border:2.5px solid var(--acc);background:linear-gradient(135deg,rgba(var(--acc-rgb),.10),rgba(var(--acc-rgb),.03)),#fff}
+.nd.hot{border:3px solid var(--acc);background:linear-gradient(135deg,rgba(var(--acc-rgb),.14),rgba(var(--acc-rgb),.04)),#fff;
+  box-shadow:0 0 0 7px rgba(var(--acc-rgb),.16),0 16px 34px rgba(20,22,26,.16)}
+.nd.hot .t,.nd.lit .t{color:var(--ink)} .nd.hot .s{color:var(--acc)}
+.nd.ghost{opacity:.38;box-shadow:none}
+.nd.ghost .t{color:var(--text-muted)}
+
+</style>
+</head><body>
+<div class="frame ch" id="C2-start" style="--acc:#C41E3A;--acc-rgb:196,30,58"><div class="orb" style="width:760px;height:760px;right:-300px;top:-380px;background:rgba(196,30,58,.55)"></div><div class="orb" style="width:520px;height:520px;left:-260px;bottom:-300px;background:#c9cfd8;opacity:.22"></div><div class="hdr" style="top:64px"><div class="ey">The S&amp;P 500 and the Nasdaq-100</div><h1>Stocks <span class="acc">dumped</span> too</h1><div class="divider"></div></div><svg class="plot" viewBox="0 0 1920 1080"><defs><clipPath id="c2-start"><rect x="224" y="0" width="3.5" height="1080"/></clipPath></defs><line x1="230" x2="1360" y1="388.93" y2="388.93" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="212" y="394.93" text-anchor="end">0%</text><line x1="230" x2="1360" y1="487.14" y2="487.14" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="212" y="493.14" text-anchor="end">MINUS 5%</text><line x1="230" x2="1360" y1="585.36" y2="585.36" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="212" y="591.36" text-anchor="end">MINUS 10%</text><line x1="230" x2="1360" y1="683.57" y2="683.57" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="212" y="689.57" text-anchor="end">MINUS 15%</text><line x1="230" x2="1360" y1="880" y2="880" stroke="#7A808B" stroke-width="2"/><line x1="230.0" x2="230.0" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="230.0" y="920" text-anchor="middle">OCT 6, 2026</text><line x1="581.56" x2="581.56" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="581.56" y="920" text-anchor="middle">OCT 20</text><line x1="933.11" x2="933.11" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="933.11" y="920" text-anchor="middle">NOV 3</text><line x1="1360.0" x2="1360.0" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="1360.0" y="920" text-anchor="middle">NOV 20</text><text class="axl" x="120" y="290">FROM THE RECORD CLOSE</text><line x1="230" x2="1360" y1="388.9285714285714" y2="388.9285714285714" stroke="#7A808B" stroke-width="2"/><g style="opacity:0"><line x1="230" x2="1330.0" y1="781.79" y2="781.79" stroke="var(--acc)" stroke-width="2.5" stroke-dasharray="10 8"/><text class="tk" x="212" y="787.79" text-anchor="end" style="fill:var(--acc);font-weight:600">MINUS 20%</text></g><path d="M230.0,388.93 L255.11,393.24 L280.22,402.39 L305.33,390.79 L380.67,391.87 L405.78,392.32 L430.89,414.05 L456.0,407.74 L481.11,429.0 L556.44,421.14 L581.56,415.65 L606.67,404.44 L631.78,427.99 L656.89,437.98 L732.22,424.64 L757.33,413.13 L782.44,407.76 L807.56,413.68 L832.67,448.94 L908.0,458.65 L933.11,451.74 L958.22,421.67 L983.33,505.8 L1008.44,499.99 L1083.78,456.5 L1108.89,463.79 L1134.0,439.06 L1159.11,445.84 L1184.22,453.56 L1259.56,490.01 L1284.67,509.11 L1309.78,513.36 L1334.89,550.49 L1360.0,617.17" fill="none" stroke="#14161A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" clip-path="url(#c2-start)"/><path d="M230.0,388.93 L255.11,392.98 L280.22,420.3 L305.33,410.4 L380.67,424.14 L405.78,430.13 L430.89,469.05 L456.0,470.01 L481.11,517.07 L556.44,495.57 L581.56,498.02 L606.67,477.12 L631.78,531.47 L656.89,531.54 L732.22,511.67 L757.33,487.89 L782.44,477.71 L807.56,503.55 L832.67,567.56 L908.0,592.42 L933.11,580.44 L958.22,564.27 L983.33,677.97 L1008.44,655.31 L1083.78,597.59 L1108.89,608.08 L1134.0,568.23 L1159.11,573.58 L1184.22,595.31 L1259.56,642.28 L1284.67,654.57 L1309.78,647.37 L1334.89,685.07 L1360.0,778.68" fill="none" stroke="var(--acc)" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" clip-path="url(#c2-start)"/><g><circle cx="230.0" cy="388.93" r="9" fill="#14161A" stroke="#14161A" stroke-width="4"/></g><g style="opacity:0"><circle cx="1360.0" cy="617.17" r="9" fill="#14161A" stroke="#14161A" stroke-width="4"/></g><g style="opacity:0"><circle cx="1360.0" cy="778.68" r="23" fill="var(--acc)" opacity=".16"/><circle cx="1360.0" cy="778.68" r="10" fill="var(--acc)" stroke="var(--acc)" stroke-width="4"/></g></svg><div class="co dim" style="left:248px;top:374.9px;transform:translateY(-100%);padding:6px 14px"><div class="d">OCT 6, 2026, BOTH AT RECORD CLOSES</div></div><div class="co dim hide" style="left:1386.0px;top:617.2px;transform:translateY(-50%);border-left-color:#14161A"><div class="d">S&amp;P 500</div><div class="e mono" style="font-family:'JetBrains Mono';font-size:30px">MINUS 11.6%</div></div><div class="co dim hide" style="left:1386.0px;top:756.7px;transform:translateY(-50%);"><div class="d">NASDAQ-100</div><div class="e mono" style="font-family:'JetBrains Mono';font-size:30px;color:var(--acc)">MINUS 19.84%</div><div class="t">NOV 20, 2026 CLOSE</div></div><div class="co on hide" style="left:1386.0px;top:843.7px;border-left-style:dashed"><div class="t" style="margin-top:0">INTRADAY LOW <span class="mono">20.2%</span> UNDER THE RECORD</div></div><div class="src">S&amp;P 500 (^GSPC) and Nasdaq-100 (^NDX) daily closes: Yahoo Finance, read 2026-11-22 · from the OCT 6, 2026 record closes (7,818.93 and 31,224.47) · the Nasdaq-100 crossed 20% only intraday on NOV 20, 2026 (low 24,910.48)</div></div>
+<div class="frame ch" id="C2-sp500" style="--acc:#C41E3A;--acc-rgb:196,30,58"><div class="orb" style="width:760px;height:760px;right:-300px;top:-380px;background:rgba(196,30,58,.55)"></div><div class="orb" style="width:520px;height:520px;left:-260px;bottom:-300px;background:#c9cfd8;opacity:.22"></div><div class="hdr" style="top:64px"><div class="ey">The S&amp;P 500 and the Nasdaq-100</div><h1>Stocks <span class="acc">dumped</span> too</h1><div class="divider"></div></div><svg class="plot" viewBox="0 0 1920 1080"><defs><clipPath id="c2-sp500"><rect x="224" y="0" width="1133.5" height="1080"/></clipPath></defs><line x1="230" x2="1360" y1="388.93" y2="388.93" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="212" y="394.93" text-anchor="end">0%</text><line x1="230" x2="1360" y1="487.14" y2="487.14" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="212" y="493.14" text-anchor="end">MINUS 5%</text><line x1="230" x2="1360" y1="585.36" y2="585.36" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="212" y="591.36" text-anchor="end">MINUS 10%</text><line x1="230" x2="1360" y1="683.57" y2="683.57" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="212" y="689.57" text-anchor="end">MINUS 15%</text><line x1="230" x2="1360" y1="880" y2="880" stroke="#7A808B" stroke-width="2"/><line x1="230.0" x2="230.0" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="230.0" y="920" text-anchor="middle">OCT 6, 2026</text><line x1="581.56" x2="581.56" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="581.56" y="920" text-anchor="middle">OCT 20</text><line x1="933.11" x2="933.11" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="933.11" y="920" text-anchor="middle">NOV 3</text><line x1="1360.0" x2="1360.0" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="1360.0" y="920" text-anchor="middle">NOV 20</text><text class="axl" x="120" y="290">FROM THE RECORD CLOSE</text><line x1="230" x2="1360" y1="388.9285714285714" y2="388.9285714285714" stroke="#7A808B" stroke-width="2"/><g style="opacity:0"><line x1="230" x2="1330.0" y1="781.79" y2="781.79" stroke="var(--acc)" stroke-width="2.5" stroke-dasharray="10 8"/><text class="tk" x="212" y="787.79" text-anchor="end" style="fill:var(--acc);font-weight:600">MINUS 20%</text></g><path d="M230.0,388.93 L255.11,393.24 L280.22,402.39 L305.33,390.79 L380.67,391.87 L405.78,392.32 L430.89,414.05 L456.0,407.74 L481.11,429.0 L556.44,421.14 L581.56,415.65 L606.67,404.44 L631.78,427.99 L656.89,437.98 L732.22,424.64 L757.33,413.13 L782.44,407.76 L807.56,413.68 L832.67,448.94 L908.0,458.65 L933.11,451.74 L958.22,421.67 L983.33,505.8 L1008.44,499.99 L1083.78,456.5 L1108.89,463.79 L1134.0,439.06 L1159.11,445.84 L1184.22,453.56 L1259.56,490.01 L1284.67,509.11 L1309.78,513.36 L1334.89,550.49 L1360.0,617.17" fill="none" stroke="#14161A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" clip-path="url(#c2-sp500)"/><path d="M230.0,388.93 L255.11,392.98 L280.22,420.3 L305.33,410.4 L380.67,424.14 L405.78,430.13 L430.89,469.05 L456.0,470.01 L481.11,517.07 L556.44,495.57 L581.56,498.02 L606.67,477.12 L631.78,531.47 L656.89,531.54 L732.22,511.67 L757.33,487.89 L782.44,477.71 L807.56,503.55 L832.67,567.56 L908.0,592.42 L933.11,580.44 L958.22,564.27 L983.33,677.97 L1008.44,655.31 L1083.78,597.59 L1108.89,608.08 L1134.0,568.23 L1159.11,573.58 L1184.22,595.31 L1259.56,642.28 L1284.67,654.57 L1309.78,647.37 L1334.89,685.07 L1360.0,778.68" fill="none" stroke="var(--acc)" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" clip-path="url(#c2-sp500)"/><g><circle cx="230.0" cy="388.93" r="9" fill="#14161A" stroke="#14161A" stroke-width="4"/></g><g><circle cx="1360.0" cy="617.17" r="9" fill="#14161A" stroke="#14161A" stroke-width="4"/></g><g style="opacity:0"><circle cx="1360.0" cy="778.68" r="23" fill="var(--acc)" opacity=".16"/><circle cx="1360.0" cy="778.68" r="10" fill="var(--acc)" stroke="var(--acc)" stroke-width="4"/></g></svg><div class="co dim" style="left:248px;top:374.9px;transform:translateY(-100%);padding:6px 14px"><div class="d">OCT 6, 2026, BOTH AT RECORD CLOSES</div></div><div class="co on" style="left:1386.0px;top:617.2px;transform:translateY(-50%);border-left-color:#14161A"><div class="d">S&amp;P 500</div><div class="e mono" style="font-family:'JetBrains Mono';font-size:30px">MINUS 11.6%</div></div><div class="co dim hide" style="left:1386.0px;top:756.7px;transform:translateY(-50%);"><div class="d">NASDAQ-100</div><div class="e mono" style="font-family:'JetBrains Mono';font-size:30px;color:var(--acc)">MINUS 19.84%</div><div class="t">NOV 20, 2026 CLOSE</div></div><div class="co on hide" style="left:1386.0px;top:843.7px;border-left-style:dashed"><div class="t" style="margin-top:0">INTRADAY LOW <span class="mono">20.2%</span> UNDER THE RECORD</div></div><div class="src">S&amp;P 500 (^GSPC) and Nasdaq-100 (^NDX) daily closes: Yahoo Finance, read 2026-11-22 · from the OCT 6, 2026 record closes (7,818.93 and 31,224.47) · the Nasdaq-100 crossed 20% only intraday on NOV 20, 2026 (low 24,910.48)</div></div>
+<div class="frame ch" id="C2-ndx" style="--acc:#C41E3A;--acc-rgb:196,30,58"><div class="orb" style="width:760px;height:760px;right:-300px;top:-380px;background:rgba(196,30,58,.55)"></div><div class="orb" style="width:520px;height:520px;left:-260px;bottom:-300px;background:#c9cfd8;opacity:.22"></div><div class="hdr" style="top:64px"><div class="ey">The S&amp;P 500 and the Nasdaq-100</div><h1>Stocks <span class="acc">dumped</span> too</h1><div class="divider"></div></div><svg class="plot" viewBox="0 0 1920 1080"><defs><clipPath id="c2-ndx"><rect x="224" y="0" width="1133.5" height="1080"/></clipPath></defs><line x1="230" x2="1360" y1="388.93" y2="388.93" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="212" y="394.93" text-anchor="end">0%</text><line x1="230" x2="1360" y1="487.14" y2="487.14" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="212" y="493.14" text-anchor="end">MINUS 5%</text><line x1="230" x2="1360" y1="585.36" y2="585.36" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="212" y="591.36" text-anchor="end">MINUS 10%</text><line x1="230" x2="1360" y1="683.57" y2="683.57" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="212" y="689.57" text-anchor="end">MINUS 15%</text><line x1="230" x2="1360" y1="880" y2="880" stroke="#7A808B" stroke-width="2"/><line x1="230.0" x2="230.0" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="230.0" y="920" text-anchor="middle">OCT 6, 2026</text><line x1="581.56" x2="581.56" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="581.56" y="920" text-anchor="middle">OCT 20</text><line x1="933.11" x2="933.11" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="933.11" y="920" text-anchor="middle">NOV 3</text><line x1="1360.0" x2="1360.0" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="1360.0" y="920" text-anchor="middle">NOV 20</text><text class="axl" x="120" y="290">FROM THE RECORD CLOSE</text><line x1="230" x2="1360" y1="388.9285714285714" y2="388.9285714285714" stroke="#7A808B" stroke-width="2"/><g style="opacity:0"><line x1="230" x2="1330.0" y1="781.79" y2="781.79" stroke="var(--acc)" stroke-width="2.5" stroke-dasharray="10 8"/><text class="tk" x="212" y="787.79" text-anchor="end" style="fill:var(--acc);font-weight:600">MINUS 20%</text></g><path d="M230.0,388.93 L255.11,393.24 L280.22,402.39 L305.33,390.79 L380.67,391.87 L405.78,392.32 L430.89,414.05 L456.0,407.74 L481.11,429.0 L556.44,421.14 L581.56,415.65 L606.67,404.44 L631.78,427.99 L656.89,437.98 L732.22,424.64 L757.33,413.13 L782.44,407.76 L807.56,413.68 L832.67,448.94 L908.0,458.65 L933.11,451.74 L958.22,421.67 L983.33,505.8 L1008.44,499.99 L1083.78,456.5 L1108.89,463.79 L1134.0,439.06 L1159.11,445.84 L1184.22,453.56 L1259.56,490.01 L1284.67,509.11 L1309.78,513.36 L1334.89,550.49 L1360.0,617.17" fill="none" stroke="#14161A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" clip-path="url(#c2-ndx)"/><path d="M230.0,388.93 L255.11,392.98 L280.22,420.3 L305.33,410.4 L380.67,424.14 L405.78,430.13 L430.89,469.05 L456.0,470.01 L481.11,517.07 L556.44,495.57 L581.56,498.02 L606.67,477.12 L631.78,531.47 L656.89,531.54 L732.22,511.67 L757.33,487.89 L782.44,477.71 L807.56,503.55 L832.67,567.56 L908.0,592.42 L933.11,580.44 L958.22,564.27 L983.33,677.97 L1008.44,655.31 L1083.78,597.59 L1108.89,608.08 L1134.0,568.23 L1159.11,573.58 L1184.22,595.31 L1259.56,642.28 L1284.67,654.57 L1309.78,647.37 L1334.89,685.07 L1360.0,778.68" fill="none" stroke="var(--acc)" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" clip-path="url(#c2-ndx)"/><g><circle cx="230.0" cy="388.93" r="9" fill="#14161A" stroke="#14161A" stroke-width="4"/></g><g><circle cx="1360.0" cy="617.17" r="9" fill="#14161A" stroke="#14161A" stroke-width="4"/></g><g><circle cx="1360.0" cy="778.68" r="23" fill="var(--acc)" opacity=".16"/><circle cx="1360.0" cy="778.68" r="10" fill="var(--acc)" stroke="var(--acc)" stroke-width="4"/></g></svg><div class="co dim" style="left:248px;top:374.9px;transform:translateY(-100%);padding:6px 14px"><div class="d">OCT 6, 2026, BOTH AT RECORD CLOSES</div></div><div class="co dim" style="left:1386.0px;top:617.2px;transform:translateY(-50%);border-left-color:#14161A"><div class="d">S&amp;P 500</div><div class="e mono" style="font-family:'JetBrains Mono';font-size:30px">MINUS 11.6%</div></div><div class="co on" style="left:1386.0px;top:756.7px;transform:translateY(-50%);"><div class="d">NASDAQ-100</div><div class="e mono" style="font-family:'JetBrains Mono';font-size:30px;color:var(--acc)">MINUS 19.84%</div><div class="t">NOV 20, 2026 CLOSE</div></div><div class="co on hide" style="left:1386.0px;top:843.7px;border-left-style:dashed"><div class="t" style="margin-top:0">INTRADAY LOW <span class="mono">20.2%</span> UNDER THE RECORD</div></div><div class="src">S&amp;P 500 (^GSPC) and Nasdaq-100 (^NDX) daily closes: Yahoo Finance, read 2026-11-22 · from the OCT 6, 2026 record closes (7,818.93 and 31,224.47) · the Nasdaq-100 crossed 20% only intraday on NOV 20, 2026 (low 24,910.48)</div></div>
+<div class="frame ch" id="C2-payoff" style="--acc:#C41E3A;--acc-rgb:196,30,58"><div class="orb" style="width:760px;height:760px;right:-300px;top:-380px;background:rgba(196,30,58,.55)"></div><div class="orb" style="width:520px;height:520px;left:-260px;bottom:-300px;background:#c9cfd8;opacity:.22"></div><div class="hdr" style="top:64px"><div class="ey">The S&amp;P 500 and the Nasdaq-100</div><h1>Stocks <span class="acc">dumped</span> too</h1><div class="divider"></div></div><svg class="plot" viewBox="0 0 1920 1080"><defs><clipPath id="c2-payoff"><rect x="224" y="0" width="1133.5" height="1080"/></clipPath></defs><line x1="230" x2="1360" y1="388.93" y2="388.93" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="212" y="394.93" text-anchor="end">0%</text><line x1="230" x2="1360" y1="487.14" y2="487.14" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="212" y="493.14" text-anchor="end">MINUS 5%</text><line x1="230" x2="1360" y1="585.36" y2="585.36" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="212" y="591.36" text-anchor="end">MINUS 10%</text><line x1="230" x2="1360" y1="683.57" y2="683.57" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="212" y="689.57" text-anchor="end">MINUS 15%</text><line x1="230" x2="1360" y1="880" y2="880" stroke="#7A808B" stroke-width="2"/><line x1="230.0" x2="230.0" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="230.0" y="920" text-anchor="middle">OCT 6, 2026</text><line x1="581.56" x2="581.56" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="581.56" y="920" text-anchor="middle">OCT 20</text><line x1="933.11" x2="933.11" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="933.11" y="920" text-anchor="middle">NOV 3</text><line x1="1360.0" x2="1360.0" y1="880" y2="889" stroke="#7A808B" stroke-width="2"/><text class="tk" x="1360.0" y="920" text-anchor="middle">NOV 20</text><text class="axl" x="120" y="290">FROM THE RECORD CLOSE</text><line x1="230" x2="1360" y1="388.9285714285714" y2="388.9285714285714" stroke="#7A808B" stroke-width="2"/><g><line x1="230" x2="1330.0" y1="781.79" y2="781.79" stroke="var(--acc)" stroke-width="2.5" stroke-dasharray="10 8"/><text class="tk" x="212" y="787.79" text-anchor="end" style="fill:var(--acc);font-weight:600">MINUS 20%</text></g><path d="M230.0,388.93 L255.11,393.24 L280.22,402.39 L305.33,390.79 L380.67,391.87 L405.78,392.32 L430.89,414.05 L456.0,407.74 L481.11,429.0 L556.44,421.14 L581.56,415.65 L606.67,404.44 L631.78,427.99 L656.89,437.98 L732.22,424.64 L757.33,413.13 L782.44,407.76 L807.56,413.68 L832.67,448.94 L908.0,458.65 L933.11,451.74 L958.22,421.67 L983.33,505.8 L1008.44,499.99 L1083.78,456.5 L1108.89,463.79 L1134.0,439.06 L1159.11,445.84 L1184.22,453.56 L1259.56,490.01 L1284.67,509.11 L1309.78,513.36 L1334.89,550.49 L1360.0,617.17" fill="none" stroke="#14161A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" clip-path="url(#c2-payoff)"/><path d="M230.0,388.93 L255.11,392.98 L280.22,420.3 L305.33,410.4 L380.67,424.14 L405.78,430.13 L430.89,469.05 L456.0,470.01 L481.11,517.07 L556.44,495.57 L581.56,498.02 L606.67,477.12 L631.78,531.47 L656.89,531.54 L732.22,511.67 L757.33,487.89 L782.44,477.71 L807.56,503.55 L832.67,567.56 L908.0,592.42 L933.11,580.44 L958.22,564.27 L983.33,677.97 L1008.44,655.31 L1083.78,597.59 L1108.89,608.08 L1134.0,568.23 L1159.11,573.58 L1184.22,595.31 L1259.56,642.28 L1284.67,654.57 L1309.78,647.37 L1334.89,685.07 L1360.0,778.68" fill="none" stroke="var(--acc)" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" clip-path="url(#c2-payoff)"/><g><circle cx="230.0" cy="388.93" r="9" fill="#14161A" stroke="#14161A" stroke-width="4"/></g><g><circle cx="1360.0" cy="617.17" r="9" fill="#14161A" stroke="#14161A" stroke-width="4"/></g><g><circle cx="1360.0" cy="778.68" r="23" fill="var(--acc)" opacity=".16"/><circle cx="1360.0" cy="778.68" r="10" fill="var(--acc)" stroke="var(--acc)" stroke-width="4"/></g></svg><div class="co dim" style="left:248px;top:374.9px;transform:translateY(-100%);padding:6px 14px"><div class="d">OCT 6, 2026, BOTH AT RECORD CLOSES</div></div><div class="co dim" style="left:1386.0px;top:617.2px;transform:translateY(-50%);border-left-color:#14161A"><div class="d">S&amp;P 500</div><div class="e mono" style="font-family:'JetBrains Mono';font-size:30px">MINUS 11.6%</div></div><div class="co dim" style="left:1386.0px;top:756.7px;transform:translateY(-50%);"><div class="d">NASDAQ-100</div><div class="e mono" style="font-family:'JetBrains Mono';font-size:30px;color:var(--acc)">MINUS 19.84%</div><div class="t">NOV 20, 2026 CLOSE</div></div><div class="co on" style="left:1386.0px;top:843.7px;border-left-style:dashed"><div class="t" style="margin-top:0">INTRADAY LOW <span class="mono">20.2%</span> UNDER THE RECORD</div></div><div class="src">S&amp;P 500 (^GSPC) and Nasdaq-100 (^NDX) daily closes: Yahoo Finance, read 2026-11-22 · from the OCT 6, 2026 record closes (7,818.93 and 31,224.47) · the Nasdaq-100 crossed 20% only intraday on NOV 20, 2026 (low 24,910.48)</div></div>
+<script type="application/json" id="chart-data">{"id": "C2", "spx_pct": [["2026-10-06", 0.0], ["2026-10-07", -0.219], ["2026-10-08", -0.685], ["2026-10-09", -0.095], ["2026-10-12", -0.15], ["2026-10-13", -0.172], ["2026-10-14", -1.279], ["2026-10-15", -0.958], ["2026-10-16", -2.04], ["2026-10-19", -1.64], ["2026-10-20", -1.36], ["2026-10-21", -0.79], ["2026-10-22", -1.989], ["2026-10-23", -2.497], ["2026-10-26", -1.818], ["2026-10-27", -1.232], ["2026-10-28", -0.959], ["2026-10-29", -1.26], ["2026-10-30", -3.055], ["2026-11-02", -3.549], ["2026-11-03", -3.197], ["2026-11-04", -1.667], ["2026-11-05", -5.95], ["2026-11-06", -5.654], ["2026-11-09", -3.44], ["2026-11-10", -3.811], ["2026-11-11", -2.552], ["2026-11-12", -2.897], ["2026-11-13", -3.29], ["2026-11-16", -5.146], ["2026-11-17", -6.118], ["2026-11-18", -6.335], ["2026-11-19", -8.225], ["2026-11-20", -11.62]], "ndx_pct": [["2026-10-06", 0.0], ["2026-10-07", -0.206], ["2026-10-08", -1.597], ["2026-10-09", -1.093], ["2026-10-12", -1.793], ["2026-10-13", -2.098], ["2026-10-14", -4.079], ["2026-10-15", -4.128], ["2026-10-16", -6.523], ["2026-10-19", -5.429], ["2026-10-20", -5.554], ["2026-10-21", -4.49], ["2026-10-22", -7.256], ["2026-10-23", -7.26], ["2026-10-26", -6.249], ["2026-10-27", -5.038], ["2026-10-28", -4.52], ["2026-10-29", -5.835], ["2026-10-30", -9.094], ["2026-11-02", -10.359], ["2026-11-03", -9.749], ["2026-11-04", -8.927], ["2026-11-05", -14.715], ["2026-11-06", -13.561], ["2026-11-09", -10.623], ["2026-11-10", -11.157], ["2026-11-11", -9.128], ["2026-11-12", -9.401], ["2026-11-13", -10.507], ["2026-11-16", -12.898], ["2026-11-17", -13.524], ["2026-11-18", -13.157], ["2026-11-19", -15.076], ["2026-11-20", -19.842]], "plot": {"x0": 230, "x1": 1360, "y0": 330, "y1": 880, "dmin": "2026-10-06", "dmax": "2026-11-20", "vmin": -25, "vmax": 3}}</script>
+</body></html>

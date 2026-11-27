@@ -1,0 +1,3418 @@
+[
+ {
+  "start": 2.135828,
+  "end": 5.434444,
+  "sil_before": [
+   0.0,
+   2.135828
+  ],
+  "sil_after": [
+   5.434444,
+   11.988594
+  ],
+  "i": 0,
+  "text": "My livestream pipeline runs on one PC."
+ },
+ {
+  "start": 11.988594,
+  "end": 12.745918,
+  "sil_before": [
+   5.434444,
+   11.988594
+  ],
+  "sil_after": [
+   12.745918,
+   14.167256
+  ],
+  "i": 1,
+  "text": "All right, let's redo that."
+ },
+ {
+  "start": 14.167256,
+  "end": 15.502154,
+  "sil_before": [
+   12.745918,
+   14.167256
+  ],
+  "sil_after": [
+   15.502154,
+   15.962971
+  ],
+  "i": 2,
+  "text": "My livestream pipeline."
+ },
+ {
+  "start": 15.962971,
+  "end": 17.608798,
+  "sil_before": [
+   15.502154,
+   15.962971
+  ],
+  "sil_after": [
+   17.608798,
+   18.517188
+  ],
+  "i": 3,
+  "text": "runs on one PC."
+ },
+ {
+  "start": 18.517188,
+  "end": 22.515057,
+  "sil_before": [
+   17.608798,
+   18.517188
+  ],
+  "sil_after": [
+   22.515057,
+   23.035669
+  ],
+  "i": 4,
+  "text": "So what I want to do here is show you how I would set this up."
+ },
+ {
+  "start": 23.035669,
+  "end": 26.575624,
+  "sil_before": [
+   22.515057,
+   23.035669
+  ],
+  "sil_after": [
+   26.575624,
+   48.764195
+  ],
+  "i": 5,
+  "text": "on AWS and like a real production environment."
+ },
+ {
+  "start": 48.764195,
+  "end": 51.104671,
+  "sil_before": [
+   26.575624,
+   48.764195
+  ],
+  "sil_after": [
+   51.104671,
+   52.018277
+  ],
+  "i": 6,
+  "text": "to be interesting, so let's get into it."
+ },
+ {
+  "start": 52.018277,
+  "end": 54.239206,
+  "sil_before": [
+   51.104671,
+   52.018277
+  ],
+  "sil_after": [
+   54.239206,
+   55.309637
+  ],
+  "i": 7,
+  "text": "Today, everything lives in one box."
+ },
+ {
+  "start": 55.309637,
+  "end": 55.84873,
+  "sil_before": [
+   54.239206,
+   55.309637
+  ],
+  "sil_after": [
+   55.84873,
+   56.180952
+  ],
+  "i": 8,
+  "text": "the graph."
+ },
+ {
+  "start": 56.180952,
+  "end": 59.281701,
+  "sil_before": [
+   55.84873,
+   56.180952
+  ],
+  "sil_after": [
+   59.281701,
+   60.003039
+  ],
+  "i": 9,
+  "text": "and his checkpoints, seven agents and cloud code."
+ },
+ {
+  "start": 60.003039,
+  "end": 63.147619,
+  "sil_before": [
+   59.281701,
+   60.003039
+  ],
+  "sil_after": [
+   63.147619,
+   63.691837
+  ],
+  "i": 10,
+  "text": "One browser for images, whisper on my GPU."
+ },
+ {
+  "start": 63.691837,
+  "end": 64.447732,
+  "sil_before": [
+   63.147619,
+   63.691837
+  ],
+  "sil_after": [
+   64.447732,
+   65.042608
+  ],
+  "i": 11,
+  "text": "renders."
+ },
+ {
+  "start": 65.042608,
+  "end": 65.97746,
+  "sil_before": [
+   64.447732,
+   65.042608
+  ],
+  "sil_after": [
+   65.97746,
+   87.349637
+  ],
+  "i": 12,
+  "text": "and the Posting Script."
+ },
+ {
+  "start": 87.349637,
+  "end": 88.28229,
+  "sil_before": [
+   65.97746,
+   87.349637
+  ],
+  "sil_after": [
+   88.28229,
+   88.649887
+  ],
+  "i": 13,
+  "text": "for every piece."
+ },
+ {
+  "start": 88.649887,
+  "end": 90.292721,
+  "sil_before": [
+   88.28229,
+   88.649887
+  ],
+  "sil_after": [
+   90.292721,
+   90.849819
+  ],
+  "i": 14,
+  "text": "I'll show you what I do today."
+ },
+ {
+  "start": 90.849819,
+  "end": 93.594195,
+  "sil_before": [
+   90.292721,
+   90.849819
+  ],
+  "sil_after": [
+   93.594195,
+   94.371156
+  ],
+  "i": 15,
+  "text": "and the AWS service that I would do it with."
+ },
+ {
+  "start": 94.371156,
+  "end": 96.276735,
+  "sil_before": [
+   93.594195,
+   94.371156
+  ],
+  "sil_after": [
+   96.276735,
+   96.712086
+  ],
+  "i": 16,
+  "text": "in five layers. Injust."
+ },
+ {
+  "start": 96.712086,
+  "end": 97.178526,
+  "sil_before": [
+   96.276735,
+   96.712086
+  ],
+  "sil_after": [
+   97.178526,
+   97.849297
+  ],
+  "i": 17,
+  "text": "graph."
+ },
+ {
+  "start": 97.849297,
+  "end": 98.537415,
+  "sil_before": [
+   97.178526,
+   97.849297
+  ],
+  "sil_after": [
+   98.537415,
+   98.891134
+  ],
+  "i": 18,
+  "text": "the agents."
+ },
+ {
+  "start": 98.891134,
+  "end": 99.514354,
+  "sil_before": [
+   98.537415,
+   98.891134
+  ],
+  "sil_after": [
+   99.514354,
+   100.297687
+  ],
+  "i": 19,
+  "text": "The Heavy Work."
+ },
+ {
+  "start": 100.297687,
+  "end": 101.011497,
+  "sil_before": [
+   99.514354,
+   100.297687
+  ],
+  "sil_after": [
+   101.011497,
+   119.677029
+  ],
+  "i": 20,
+  "text": "and publishing."
+ },
+ {
+  "start": 119.677029,
+  "end": 121.516259,
+  "sil_before": [
+   101.011497,
+   119.677029
+  ],
+  "sil_after": [
+   121.516259,
+   121.981723
+  ],
+  "i": 21,
+  "text": "and I'll answer the question that."
+ },
+ {
+  "start": 121.981723,
+  "end": 123.081587,
+  "sil_before": [
+   121.516259,
+   121.981723
+  ],
+  "sil_after": [
+   123.081587,
+   123.876848
+  ],
+  "i": 22,
+  "text": "Everybody acts first."
+ },
+ {
+  "start": 123.876848,
+  "end": 124.536621,
+  "sil_before": [
+   123.081587,
+   123.876848
+  ],
+  "sil_after": [
+   124.536621,
+   129.799274
+  ],
+  "i": 23,
+  "text": "does this."
+ },
+ {
+  "start": 133.547324,
+  "end": 133.886281,
+  "sil_before": [
+   129.820476,
+   133.547324
+  ],
+  "sil_after": [
+   133.886281,
+   134.186395
+  ],
+  "i": 24,
+  "text": "And."
+ },
+ {
+  "start": 134.186395,
+  "end": 135.503288,
+  "sil_before": [
+   133.886281,
+   134.186395
+  ],
+  "sil_after": [
+   135.503288,
+   135.844036
+  ],
+  "i": 25,
+  "text": "I'll answer the question that."
+ },
+ {
+  "start": 135.844036,
+  "end": 137.003107,
+  "sil_before": [
+   135.503288,
+   135.844036
+  ],
+  "sil_after": [
+   137.003107,
+   137.496485
+  ],
+  "i": 26,
+  "text": "Everybody acts first."
+ },
+ {
+  "start": 137.496485,
+  "end": 139.170612,
+  "sil_before": [
+   137.003107,
+   137.496485
+  ],
+  "sil_after": [
+   139.170612,
+   148.604649
+  ],
+  "i": 27,
+  "text": "Does this run on EC2?"
+ },
+ {
+  "start": 148.604649,
+  "end": 150.121156,
+  "sil_before": [
+   139.170612,
+   148.604649
+  ],
+  "sil_after": [
+   150.121156,
+   150.470181
+  ],
+  "i": 28,
+  "text": "Alright, so layer one."
+ },
+ {
+  "start": 150.470181,
+  "end": 151.030612,
+  "sil_before": [
+   150.121156,
+   150.470181
+  ],
+  "sil_after": [
+   151.030612,
+   151.662313
+  ],
+  "i": 29,
+  "text": "in jest."
+ },
+ {
+  "start": 151.662313,
+  "end": 154.225828,
+  "sil_before": [
+   151.030612,
+   151.662313
+  ],
+  "sil_after": [
+   154.225828,
+   154.861633
+  ],
+  "i": 30,
+  "text": "Today the recording sits in my folder in my PC."
+ },
+ {
+  "start": 154.861633,
+  "end": 157.099138,
+  "sil_before": [
+   154.225828,
+   154.861633
+  ],
+  "sil_after": [
+   157.099138,
+   157.433084
+  ],
+  "i": 31,
+  "text": "On AWS, it goes to S3."
+ },
+ {
+  "start": 157.433084,
+  "end": 158.76907,
+  "sil_before": [
+   157.099138,
+   157.433084
+  ],
+  "sil_after": [
+   158.76907,
+   162.356304
+  ],
+  "i": 32,
+  "text": "which is Amazon Stores."
+ },
+ {
+  "start": 162.356304,
+  "end": 164.442132,
+  "sil_before": [
+   158.76907,
+   162.356304
+  ],
+  "sil_after": [
+   164.442132,
+   164.987596
+  ],
+  "i": 33,
+  "text": "On AWS, it goes to S3."
+ },
+ {
+  "start": 164.987596,
+  "end": 166.317483,
+  "sil_before": [
+   164.442132,
+   164.987596
+  ],
+  "sil_after": [
+   166.317483,
+   168.94907
+  ],
+  "i": 34,
+  "text": "which is Amazon's file store."
+ },
+ {
+  "start": 168.94907,
+  "end": 172.284104,
+  "sil_before": [
+   166.317483,
+   168.94907
+  ],
+  "sil_after": [
+   172.284104,
+   173.626712
+  ],
+  "i": 35,
+  "text": "S3 can announce every new file to EventBridge."
+ },
+ {
+  "start": 173.626712,
+  "end": 176.050975,
+  "sil_before": [
+   172.284104,
+   173.626712
+  ],
+  "sil_after": [
+   176.050975,
+   177.991769
+  ],
+  "i": 36,
+  "text": "EventBridge is the event router in Amazon."
+ },
+ {
+  "start": 177.991769,
+  "end": 180.210159,
+  "sil_before": [
+   176.050975,
+   177.991769
+  ],
+  "sil_after": [
+   180.210159,
+   180.533333
+  ],
+  "i": 37,
+  "text": "The event bridge calls a lambda function."
+ },
+ {
+  "start": 180.533333,
+  "end": 181.696735,
+  "sil_before": [
+   180.210159,
+   180.533333
+  ],
+  "sil_after": [
+   181.696735,
+   186.026644
+  ],
+  "i": 38,
+  "text": "a small piece of code."
+ },
+ {
+  "start": 186.026644,
+  "end": 191.133492,
+  "sil_before": [
+   181.696735,
+   186.026644
+  ],
+  "sil_after": [
+   191.133492,
+   192.361497
+  ],
+  "i": 39,
+  "text": "EventBridge calls a lambda function, a small piece of code, AWS runs only."
+ },
+ {
+  "start": 192.361497,
+  "end": 192.761088,
+  "sil_before": [
+   191.133492,
+   192.361497
+  ],
+  "sil_after": [
+   192.761088,
+   194.274898
+  ],
+  "i": 40,
+  "text": ""
+ },
+ {
+  "start": 194.274898,
+  "end": 195.207143,
+  "sil_before": [
+   192.761088,
+   194.274898
+  ],
+  "sil_after": [
+   195.207143,
+   196.332268
+  ],
+  "i": 41,
+  "text": "Alright, let's redo again."
+ },
+ {
+  "start": 196.332268,
+  "end": 197.295964,
+  "sil_before": [
+   195.207143,
+   196.332268
+  ],
+  "sil_after": [
+   197.295964,
+   198.733084
+  ],
+  "i": 42,
+  "text": "EventBridge run."
+ },
+ {
+  "start": 198.733084,
+  "end": 200.416689,
+  "sil_before": [
+   197.295964,
+   198.733084
+  ],
+  "sil_after": [
+   200.416689,
+   201.225624
+  ],
+  "i": 43,
+  "text": "EventBridge runs as well."
+ },
+ {
+  "start": 201.225624,
+  "end": 203.055465,
+  "sil_before": [
+   200.416689,
+   201.225624
+  ],
+  "sil_after": [
+   203.055465,
+   203.616531
+  ],
+  "i": 44,
+  "text": "EventBridge runs a lambda function."
+ },
+ {
+  "start": 203.616531,
+  "end": 207.05941,
+  "sil_before": [
+   203.055465,
+   203.616531
+  ],
+  "sil_after": [
+   207.05941,
+   208.802109
+  ],
+  "i": 45,
+  "text": "A small piece of code, AWS runs only when something calls it."
+ },
+ {
+  "start": 208.802109,
+  "end": 209.317415,
+  "sil_before": [
+   207.05941,
+   208.802109
+  ],
+  "sil_after": [
+   209.317415,
+   209.866735
+  ],
+  "i": 46,
+  "text": "And that's..."
+ },
+ {
+  "start": 209.866735,
+  "end": 210.553379,
+  "sil_before": [
+   209.317415,
+   209.866735
+  ],
+  "sil_after": [
+   210.553379,
+   217.51576
+  ],
+  "i": 47,
+  "text": "starts the graph."
+ },
+ {
+  "start": 217.51576,
+  "end": 218.086553,
+  "sil_before": [
+   210.553379,
+   217.51576
+  ],
+  "sil_after": [
+   218.086553,
+   218.521769
+  ],
+  "i": 48,
+  "text": "Today."
+ },
+ {
+  "start": 218.521769,
+  "end": 220.444875,
+  "sil_before": [
+   218.086553,
+   218.521769
+  ],
+  "sil_after": [
+   220.444875,
+   224.589161
+  ],
+  "i": 49,
+  "text": "FFmpeg makes a little bit"
+ },
+ {
+  "start": 224.589161,
+  "end": 225.169478,
+  "sil_before": [
+   220.444875,
+   224.589161
+  ],
+  "sil_after": [
+   225.169478,
+   225.517664
+  ],
+  "i": 50,
+  "text": "Today."
+ },
+ {
+  "start": 225.517664,
+  "end": 227.947234,
+  "sil_before": [
+   225.169478,
+   225.517664
+  ],
+  "sil_after": [
+   227.947234,
+   228.807143
+  ],
+  "i": 51,
+  "text": "FFmpeg makes the low bitrate master."
+ },
+ {
+  "start": 228.807143,
+  "end": 229.892313,
+  "sil_before": [
+   227.947234,
+   228.807143
+  ],
+  "sil_after": [
+   229.892313,
+   230.379932
+  ],
+  "i": 52,
+  "text": "on AWS."
+ },
+ {
+  "start": 230.379932,
+  "end": 231.264649,
+  "sil_before": [
+   229.892313,
+   230.379932
+  ],
+  "sil_after": [
+   231.264649,
+   231.81229
+  ],
+  "i": 53,
+  "text": "That's media converge."
+ },
+ {
+  "start": 231.81229,
+  "end": 233.2539,
+  "sil_before": [
+   231.264649,
+   231.81229
+  ],
+  "sil_after": [
+   233.2539,
+   237.231678
+  ],
+  "i": 54,
+  "text": "which is Amazon's video converter."
+ },
+ {
+  "start": 237.231678,
+  "end": 239.483197,
+  "sil_before": [
+   233.2539,
+   237.231678
+  ],
+  "sil_after": [
+   239.483197,
+   240.128141
+  ],
+  "i": 55,
+  "text": "My face tracker makes the vertical crop."
+ },
+ {
+  "start": 240.128141,
+  "end": 242.313356,
+  "sil_before": [
+   239.483197,
+   240.128141
+  ],
+  "sil_after": [
+   242.313356,
+   243.751882
+  ],
+  "i": 56,
+  "text": "on AWS recognition."
+ },
+ {
+  "start": 243.751882,
+  "end": 247.435351,
+  "sil_before": [
+   242.313356,
+   243.751882
+  ],
+  "sil_after": [
+   247.435351,
+   251.236893
+  ],
+  "i": 57,
+  "text": "Amazon's image and video analysis service. Fries my face in a video."
+ },
+ {
+  "start": 251.236893,
+  "end": 252.831587,
+  "sil_before": [
+   247.435351,
+   251.236893
+  ],
+  "sil_after": [
+   252.831587,
+   253.523787
+  ],
+  "i": 58,
+  "text": "And Whisper writes the transcript."
+ },
+ {
+  "start": 253.523787,
+  "end": 255.665828,
+  "sil_before": [
+   252.831587,
+   253.523787
+  ],
+  "sil_after": [
+   255.665828,
+   256.152154
+  ],
+  "i": 59,
+  "text": "on AWS Best Transcribed."
+ },
+ {
+  "start": 256.152154,
+  "end": 257.417959,
+  "sil_before": [
+   255.665828,
+   256.152154
+  ],
+  "sil_after": [
+   257.417959,
+   259.901814
+  ],
+  "i": 60,
+  "text": "Amazon Speech to Text."
+ },
+ {
+  "start": 259.901814,
+  "end": 260.923583,
+  "sil_before": [
+   257.417959,
+   259.901814
+  ],
+  "sil_after": [
+   260.923583,
+   261.294104
+  ],
+  "i": 61,
+  "text": "It gives a time stamp."
+ },
+ {
+  "start": 261.294104,
+  "end": 262.262132,
+  "sil_before": [
+   260.923583,
+   261.294104
+  ],
+  "sil_after": [
+   262.262132,
+   262.709773
+  ],
+  "i": 62,
+  "text": "on every word."
+ },
+ {
+  "start": 262.709773,
+  "end": 264.510317,
+  "sil_before": [
+   262.262132,
+   262.709773
+  ],
+  "sil_after": [
+   264.510317,
+   265.398209
+  ],
+  "i": 63,
+  "text": "and the words Whisper Keeps gets wrong."
+ },
+ {
+  "start": 265.398209,
+  "end": 266.354512,
+  "sil_before": [
+   264.510317,
+   265.398209
+  ],
+  "sil_after": [
+   266.354512,
+   269.93576
+  ],
+  "i": 64,
+  "text": "like a towel."
+ },
+ {
+  "start": 269.93576,
+  "end": 270.763016,
+  "sil_before": [
+   266.354512,
+   269.93576
+  ],
+  "sil_after": [
+   270.763016,
+   272.629501
+  ],
+  "i": 65,
+  "text": "go to custom."
+ },
+ {
+  "start": 272.629501,
+  "end": 273.841451,
+  "sil_before": [
+   270.763016,
+   272.629501
+  ],
+  "sil_after": [
+   273.841451,
+   275.394535
+  ],
+  "i": 66,
+  "text": "go into Custom blijrat."
+ },
+ {
+  "start": 275.394535,
+  "end": 276.992177,
+  "sil_before": [
+   273.841451,
+   275.394535
+  ],
+  "sil_after": [
+   276.992177,
+   279.747574
+  ],
+  "i": 67,
+  "text": "go into its custom vocabulary."
+ },
+ {
+  "start": 279.747574,
+  "end": 280.712381,
+  "sil_before": [
+   276.992177,
+   279.747574
+  ],
+  "sil_after": [
+   280.712381,
+   281.345918
+  ],
+  "i": 68,
+  "text": "Layer 2."
+ },
+ {
+  "start": 281.345918,
+  "end": 281.933741,
+  "sil_before": [
+   280.712381,
+   281.345918
+  ],
+  "sil_after": [
+   281.933741,
+   283.027846
+  ],
+  "i": 69,
+  "text": "The Graph."
+ },
+ {
+  "start": 283.027846,
+  "end": 285.365805,
+  "sil_before": [
+   281.933741,
+   283.027846
+  ],
+  "sil_after": [
+   285.365805,
+   287.248209
+  ],
+  "i": 70,
+  "text": "Today, it's a Python process on myPT."
+ },
+ {
+  "start": 287.248209,
+  "end": 288.393946,
+  "sil_before": [
+   285.365805,
+   287.248209
+  ],
+  "sil_after": [
+   288.393946,
+   290.364308
+  ],
+  "i": 71,
+  "text": "Today it's a Python."
+ },
+ {
+  "start": 290.364308,
+  "end": 292.61102,
+  "sil_before": [
+   288.393946,
+   290.364308
+  ],
+  "sil_after": [
+   292.61102,
+   293.23576
+  ],
+  "i": 72,
+  "text": "Today it's a Python process I might be seeing."
+ },
+ {
+  "start": 293.23576,
+  "end": 294.351429,
+  "sil_before": [
+   292.61102,
+   293.23576
+  ],
+  "sil_after": [
+   294.351429,
+   294.758163
+  ],
+  "i": 73,
+  "text": "Haunted WS."
+ },
+ {
+  "start": 294.758163,
+  "end": 296.39195,
+  "sil_before": [
+   294.351429,
+   294.758163
+  ],
+  "sil_after": [
+   296.39195,
+   296.731474
+  ],
+  "i": 74,
+  "text": "It runs on Agent Core runtime."
+ },
+ {
+  "start": 296.731474,
+  "end": 298.153424,
+  "sil_before": [
+   296.39195,
+   296.731474
+  ],
+  "sil_after": [
+   298.153424,
+   302.397188
+  ],
+  "i": 75,
+  "text": "Amazon Hosting for Agents."
+ },
+ {
+  "start": 302.397188,
+  "end": 304.479048,
+  "sil_before": [
+   298.153424,
+   302.397188
+  ],
+  "sil_after": [
+   304.479048,
+   304.819728
+  ],
+  "i": 76,
+  "text": "Each run gets its own micro-VM."
+ },
+ {
+  "start": 304.819728,
+  "end": 306.797256,
+  "sil_before": [
+   304.479048,
+   304.819728
+  ],
+  "sil_after": [
+   306.797256,
+   307.436122
+  ],
+  "i": 77,
+  "text": "a small isolated virtual machine."
+ },
+ {
+  "start": 307.436122,
+  "end": 308.516871,
+  "sil_before": [
+   306.797256,
+   307.436122
+  ],
+  "sil_after": [
+   308.516871,
+   309.185986
+  ],
+  "i": 78,
+  "text": "for up to eight hours."
+ },
+ {
+  "start": 309.185986,
+  "end": 310.455714,
+  "sil_before": [
+   308.516871,
+   309.185986
+  ],
+  "sil_after": [
+   310.455714,
+   310.890249
+  ],
+  "i": 79,
+  "text": "It builds by the second."
+ },
+ {
+  "start": 310.890249,
+  "end": 314.32932,
+  "sil_before": [
+   310.455714,
+   310.890249
+  ],
+  "sil_after": [
+   314.32932,
+   316.959093
+  ],
+  "i": 80,
+  "text": "and the GPU charge drops to zero while it waits on a model."
+ },
+ {
+  "start": 316.959093,
+  "end": 318.974467,
+  "sil_before": [
+   314.32932,
+   316.959093
+  ],
+  "sil_after": [
+   318.974467,
+   319.408141
+  ],
+  "i": 81,
+  "text": "and the CPU charge drops to zero."
+ },
+ {
+  "start": 319.408141,
+  "end": 320.402063,
+  "sil_before": [
+   318.974467,
+   319.408141
+  ],
+  "sil_after": [
+   320.402063,
+   325.912993
+  ],
+  "i": 82,
+  "text": "trial rates on a model."
+ },
+ {
+  "start": 325.912993,
+  "end": 327.227551,
+  "sil_before": [
+   320.402063,
+   325.912993
+  ],
+  "sil_after": [
+   327.227551,
+   328.005692
+  ],
+  "i": 83,
+  "text": "The checkpoints move too."
+ },
+ {
+  "start": 328.005692,
+  "end": 329.430839,
+  "sil_before": [
+   327.227551,
+   328.005692
+  ],
+  "sil_after": [
+   329.430839,
+   331.619274
+  ],
+  "i": 84,
+  "text": "Today they're in SQLite."
+ },
+ {
+  "start": 331.619274,
+  "end": 334.494535,
+  "sil_before": [
+   329.430839,
+   331.619274
+  ],
+  "sil_after": [
+   334.494535,
+   335.147324
+  ],
+  "i": 85,
+  "text": "on AWS, they will go into DynamoDB."
+ },
+ {
+  "start": 335.147324,
+  "end": 336.635488,
+  "sil_before": [
+   334.494535,
+   335.147324
+  ],
+  "sil_after": [
+   336.635488,
+   346.888163
+  ],
+  "i": 86,
+  "text": "Amazon's managed database."
+ },
+ {
+  "start": 346.888163,
+  "end": 347.603515,
+  "sil_before": [
+   336.635488,
+   346.888163
+  ],
+  "sil_after": [
+   347.603515,
+   349.799932
+  ],
+  "i": 87,
+  "text": "on anybody else."
+ },
+ {
+  "start": 349.799932,
+  "end": 352.783651,
+  "sil_before": [
+   347.603515,
+   349.799932
+  ],
+  "sil_after": [
+   352.783651,
+   353.382063
+  ],
+  "i": 88,
+  "text": "On AWS, they go to DynamoDB."
+ },
+ {
+  "start": 353.382063,
+  "end": 358.524966,
+  "sil_before": [
+   352.783651,
+   353.382063
+  ],
+  "sil_after": [
+   358.524966,
+   376.53805
+  ],
+  "i": 89,
+  "text": "Amazon's managed database through a LandGraph package called LandGraph Checkpoint AWS."
+ },
+ {
+  "start": 376.53805,
+  "end": 381.011791,
+  "sil_before": [
+   358.524966,
+   376.53805
+  ],
+  "sil_after": [
+   381.011791,
+   381.591542
+  ],
+  "i": 90,
+  "text": "Now the human gates. My first gate once waited nine hours for me."
+ },
+ {
+  "start": 381.591542,
+  "end": 384.886553,
+  "sil_before": [
+   381.011791,
+   381.591542
+  ],
+  "sil_after": [
+   384.886553,
+   388.897438
+  ],
+  "i": 91,
+  "text": "Right? So that session is last eight hours, right? So."
+ },
+ {
+  "start": 388.897438,
+  "end": 390.120385,
+  "sil_before": [
+   384.886553,
+   388.897438
+  ],
+  "sil_after": [
+   390.120385,
+   390.59288
+  ],
+  "i": 92,
+  "text": "Now they're human gates."
+ },
+ {
+  "start": 390.59288,
+  "end": 391.109977,
+  "sil_before": [
+   390.120385,
+   390.59288
+  ],
+  "sil_after": [
+   391.109977,
+   393.1339
+  ],
+  "i": 93,
+  "text": "Bye."
+ },
+ {
+  "start": 393.1339,
+  "end": 394.324399,
+  "sil_before": [
+   391.109977,
+   393.1339
+  ],
+  "sil_after": [
+   394.324399,
+   395.010408
+  ],
+  "i": 94,
+  "text": "Now the human gates."
+ },
+ {
+  "start": 395.010408,
+  "end": 398.054104,
+  "sil_before": [
+   394.324399,
+   395.010408
+  ],
+  "sil_after": [
+   398.054104,
+   400.151678
+  ],
+  "i": 95,
+  "text": "My first gay once waited nine hours for me."
+ },
+ {
+  "start": 400.151678,
+  "end": 401.358413,
+  "sil_before": [
+   398.054104,
+   400.151678
+  ],
+  "sil_after": [
+   401.358413,
+   401.883537
+  ],
+  "i": 96,
+  "text": "Now the human gates."
+ },
+ {
+  "start": 401.883537,
+  "end": 404.984603,
+  "sil_before": [
+   401.358413,
+   401.883537
+  ],
+  "sil_after": [
+   404.984603,
+   405.444263
+  ],
+  "i": 97,
+  "text": "My first gait once waited nine hours for me."
+ },
+ {
+  "start": 405.444263,
+  "end": 406.455215,
+  "sil_before": [
+   404.984603,
+   405.444263
+  ],
+  "sil_after": [
+   406.455215,
+   412.164082
+  ],
+  "i": 98,
+  "text": "session last eight hours."
+ },
+ {
+  "start": 412.164082,
+  "end": 413.064376,
+  "sil_before": [
+   406.455215,
+   412.164082
+  ],
+  "sil_after": [
+   413.064376,
+   413.430045
+  ],
+  "i": 99,
+  "text": "So at the gate."
+ },
+ {
+  "start": 413.430045,
+  "end": 415.58907,
+  "sil_before": [
+   413.064376,
+   413.430045
+  ],
+  "sil_after": [
+   415.58907,
+   416.027959
+  ],
+  "i": 100,
+  "text": "The graph saves the state the dynamoDB."
+ },
+ {
+  "start": 416.027959,
+  "end": 416.987982,
+  "sil_before": [
+   415.58907,
+   416.027959
+  ],
+  "sil_after": [
+   416.987982,
+   417.789524
+  ],
+  "i": 101,
+  "text": "And the session ends."
+ },
+ {
+  "start": 417.789524,
+  "end": 420.430272,
+  "sil_before": [
+   416.987982,
+   417.789524
+  ],
+  "sil_after": [
+   420.430272,
+   420.803175
+  ],
+  "i": 102,
+  "text": "SMS, Amazon Notification Service."
+ },
+ {
+  "start": 420.803175,
+  "end": 421.633923,
+  "sil_before": [
+   420.430272,
+   420.803175
+  ],
+  "sil_after": [
+   421.633923,
+   425.118639
+  ],
+  "i": 103,
+  "text": "sends me an email."
+ },
+ {
+  "start": 425.118639,
+  "end": 426.414014,
+  "sil_before": [
+   421.633923,
+   425.118639
+  ],
+  "sil_after": [
+   426.414014,
+   426.735215
+  ],
+  "i": 104,
+  "text": "I approve on the dashboard."
+ },
+ {
+  "start": 426.735215,
+  "end": 428.46941,
+  "sil_before": [
+   426.414014,
+   426.735215
+  ],
+  "sil_after": [
+   428.46941,
+   430.646304
+  ],
+  "i": 105,
+  "text": "A lambda function resumes a graph."
+ },
+ {
+  "start": 430.646304,
+  "end": 432.071905,
+  "sil_before": [
+   428.46941,
+   430.646304
+  ],
+  "sil_after": [
+   432.071905,
+   432.566553
+  ],
+  "i": 106,
+  "text": "I approve on the dashboard."
+ },
+ {
+  "start": 432.566553,
+  "end": 435.290408,
+  "sil_before": [
+   432.071905,
+   432.566553
+  ],
+  "sil_after": [
+   435.290408,
+   435.73737
+  ],
+  "i": 107,
+  "text": "A lambda function resumes a graph on the same thread."
+ },
+ {
+  "start": 435.73737,
+  "end": 436.557755,
+  "sil_before": [
+   435.290408,
+   435.73737
+  ],
+  "sil_after": [
+   436.557755,
+   438.917755
+  ],
+  "i": 108,
+  "text": "in a new session."
+ },
+ {
+  "start": 438.917755,
+  "end": 439.535283,
+  "sil_before": [
+   436.557755,
+   438.917755
+  ],
+  "sil_after": [
+   439.535283,
+   439.996349
+  ],
+  "i": 109,
+  "text": "Layer 3."
+ },
+ {
+  "start": 439.996349,
+  "end": 440.70839,
+  "sil_before": [
+   439.535283,
+   439.996349
+  ],
+  "sil_after": [
+   440.70839,
+   441.490658
+  ],
+  "i": 110,
+  "text": "the agents."
+ },
+ {
+  "start": 441.490658,
+  "end": 444.050771,
+  "sil_before": [
+   440.70839,
+   441.490658
+  ],
+  "sil_after": [
+   444.050771,
+   445.605397
+  ],
+  "i": 111,
+  "text": "Today, Cloud Code calls in Tropic directly."
+ },
+ {
+  "start": 445.605397,
+  "end": 446.178481,
+  "sil_before": [
+   444.050771,
+   445.605397
+  ],
+  "sil_after": [
+   446.178481,
+   447.360249
+  ],
+  "i": 112,
+  "text": "I need a burger."
+ },
+ {
+  "start": 447.360249,
+  "end": 449.679887,
+  "sil_before": [
+   446.178481,
+   447.360249
+  ],
+  "sil_after": [
+   449.679887,
+   450.023175
+  ],
+  "i": 113,
+  "text": "On AWS, it calls bedrock."
+ },
+ {
+  "start": 450.023175,
+  "end": 452.030726,
+  "sil_before": [
+   449.679887,
+   450.023175
+  ],
+  "sil_after": [
+   452.030726,
+   452.3461
+  ],
+  "i": 114,
+  "text": "Amazon service for running AI models."
+ },
+ {
+  "start": 452.3461,
+  "end": 453.019229,
+  "sil_before": [
+   452.030726,
+   452.3461
+  ],
+  "sil_after": [
+   453.019229,
+   453.564082
+  ],
+  "i": 115,
+  "text": "and fable."
+ },
+ {
+  "start": 453.564082,
+  "end": 455.651315,
+  "sil_before": [
+   453.019229,
+   453.564082
+  ],
+  "sil_after": [
+   455.651315,
+   457.985147
+  ],
+  "i": 116,
+  "text": "copious Sonnet... role on it! you"
+ },
+ {
+  "start": 457.985147,
+  "end": 458.759569,
+  "sil_before": [
+   455.651315,
+   457.985147
+  ],
+  "sil_after": [
+   458.759569,
+   461.6578
+  ],
+  "i": 117,
+  "text": "It's one setting."
+ },
+ {
+  "start": 461.6578,
+  "end": 463.377007,
+  "sil_before": [
+   458.759569,
+   461.6578
+  ],
+  "sil_after": [
+   463.377007,
+   465.024694
+  ],
+  "i": 118,
+  "text": "Code, code, use bedrock."
+ },
+ {
+  "start": 465.024694,
+  "end": 466.534898,
+  "sil_before": [
+   463.377007,
+   465.024694
+  ],
+  "sil_after": [
+   466.534898,
+   468.523061
+  ],
+  "i": 119,
+  "text": "and each agent runs."
+ },
+ {
+  "start": 468.523061,
+  "end": 470.824739,
+  "sil_before": [
+   466.534898,
+   468.523061
+  ],
+  "sil_after": [
+   470.824739,
+   471.900068
+  ],
+  "i": 120,
+  "text": "and each agent runs through the clod."
+ },
+ {
+  "start": 471.900068,
+  "end": 474.683401,
+  "sil_before": [
+   470.824739,
+   471.900068
+  ],
+  "sil_after": [
+   474.683401,
+   476.6178
+  ],
+  "i": 121,
+  "text": "And each agent runs through the Cloud SDK."
+ },
+ {
+  "start": 476.6178,
+  "end": 478.739116,
+  "sil_before": [
+   474.683401,
+   476.6178
+  ],
+  "sil_after": [
+   478.739116,
+   480.226168
+  ],
+  "i": 122,
+  "text": "And each agent runs through the cord."
+ },
+ {
+  "start": 480.226168,
+  "end": 483.496349,
+  "sil_before": [
+   478.739116,
+   480.226168
+  ],
+  "sil_after": [
+   483.496349,
+   483.86254
+  ],
+  "i": 123,
+  "text": "And each agent runs through the Cloud Agent SDK."
+ },
+ {
+  "start": 483.86254,
+  "end": 485.927846,
+  "sil_before": [
+   483.496349,
+   483.86254
+  ],
+  "sil_after": [
+   485.927846,
+   486.59839
+  ],
+  "i": 124,
+  "text": "which is core code as a library."
+ },
+ {
+  "start": 486.59839,
+  "end": 487.812426,
+  "sil_before": [
+   485.927846,
+   486.59839
+  ],
+  "sil_after": [
+   487.812426,
+   492.718231
+  ],
+  "i": 125,
+  "text": "in its own runtime session."
+ },
+ {
+  "start": 492.718231,
+  "end": 494.618118,
+  "sil_before": [
+   487.812426,
+   492.718231
+  ],
+  "sil_after": [
+   494.618118,
+   497.582086
+  ],
+  "i": 126,
+  "text": "Their tools go behind Agent Core."
+ },
+ {
+  "start": 497.582086,
+  "end": 499.677664,
+  "sil_before": [
+   494.618118,
+   497.582086
+  ],
+  "sil_after": [
+   499.677664,
+   500.270612
+  ],
+  "i": 127,
+  "text": "Their tools go behind Agent Core Gateway."
+ },
+ {
+  "start": 500.270612,
+  "end": 503.761882,
+  "sil_before": [
+   499.677664,
+   500.270612
+  ],
+  "sil_after": [
+   503.761882,
+   504.200748
+  ],
+  "i": 128,
+  "text": "which turns my APIs and functions into MCP tools."
+ },
+ {
+  "start": 504.200748,
+  "end": 506.372041,
+  "sil_before": [
+   503.761882,
+   504.200748
+  ],
+  "sil_after": [
+   506.372041,
+   524.790408
+  ],
+  "i": 129,
+  "text": "the open standard agents use to call tools."
+ },
+ {
+  "start": 524.790408,
+  "end": 526.89483,
+  "sil_before": [
+   506.372041,
+   524.790408
+  ],
+  "sil_after": [
+   526.89483,
+   527.604422
+  ],
+  "i": 130,
+  "text": "And the laggons go into agent core identity."
+ },
+ {
+  "start": 527.604422,
+  "end": 529.939977,
+  "sil_before": [
+   526.89483,
+   527.604422
+  ],
+  "sil_after": [
+   529.939977,
+   532.16458
+  ],
+  "i": 131,
+  "text": "They vote for agent keys and tokens."
+ },
+ {
+  "start": 532.16458,
+  "end": 534.750635,
+  "sil_before": [
+   529.939977,
+   532.16458
+  ],
+  "sil_after": [
+   534.750635,
+   535.582268
+  ],
+  "i": 132,
+  "text": "Each agent also gets an IAM role."
+ },
+ {
+  "start": 535.582268,
+  "end": 538.271678,
+  "sil_before": [
+   534.750635,
+   535.582268
+  ],
+  "sil_after": [
+   538.271678,
+   539.600952
+  ],
+  "i": 133,
+  "text": "I am is how AWS decides who can tell."
+ },
+ {
+  "start": 539.600952,
+  "end": 542.520295,
+  "sil_before": [
+   538.271678,
+   539.600952
+  ],
+  "sil_after": [
+   542.520295,
+   543.443832
+  ],
+  "i": 134,
+  "text": "IM is how AWS decides who can call what."
+ },
+ {
+  "start": 543.443832,
+  "end": 545.851542,
+  "sil_before": [
+   542.520295,
+   543.443832
+  ],
+  "sil_after": [
+   545.851542,
+   547.983968
+  ],
+  "i": 135,
+  "text": "and it will list exactly what the agent."
+ },
+ {
+  "start": 547.983968,
+  "end": 551.42805,
+  "sil_before": [
+   545.851542,
+   547.983968
+  ],
+  "sil_after": [
+   551.42805,
+   554.326735
+  ],
+  "i": 136,
+  "text": "and a row lists exactly what one agent is allowed to call."
+ },
+ {
+  "start": 554.326735,
+  "end": 554.851361,
+  "sil_before": [
+   551.42805,
+   554.326735
+  ],
+  "sil_after": [
+   554.851361,
+   555.359433
+  ],
+  "i": 137,
+  "text": "Today."
+ },
+ {
+  "start": 555.359433,
+  "end": 555.970612,
+  "sil_before": [
+   554.851361,
+   555.359433
+  ],
+  "sil_after": [
+   555.970612,
+   558.868821
+  ],
+  "i": 138,
+  "text": "The Builder."
+ },
+ {
+  "start": 558.868821,
+  "end": 559.462245,
+  "sil_before": [
+   555.970612,
+   558.868821
+  ],
+  "sil_after": [
+   559.462245,
+   559.817188
+  ],
+  "i": 139,
+  "text": "Today."
+ },
+ {
+  "start": 559.817188,
+  "end": 562.509524,
+  "sil_before": [
+   559.462245,
+   559.817188
+  ],
+  "sil_after": [
+   562.509524,
+   563.135533
+  ],
+  "i": 140,
+  "text": "The builder doesn't make images, but nothing stops it."
+ },
+ {
+  "start": 563.135533,
+  "end": 567.202109,
+  "sil_before": [
+   562.509524,
+   563.135533
+  ],
+  "sil_after": [
+   567.202109,
+   571.670748
+  ],
+  "i": 141,
+  "text": "On AWS, its role only allows cloud models, so it can't."
+ },
+ {
+  "start": 571.670748,
+  "end": 575.706372,
+  "sil_before": [
+   567.202109,
+   571.670748
+  ],
+  "sil_after": [
+   575.706372,
+   586.233016
+  ],
+  "i": 142,
+  "text": "On AWS, its role only allows cloud models, so it can't."
+ },
+ {
+  "start": 586.233016,
+  "end": 588.230476,
+  "sil_before": [
+   575.706372,
+   586.233016
+  ],
+  "sil_after": [
+   588.230476,
+   588.674376
+  ],
+  "i": 143,
+  "text": "Now the bottleneck for my last video."
+ },
+ {
+  "start": 588.674376,
+  "end": 591.642245,
+  "sil_before": [
+   588.230476,
+   588.674376
+  ],
+  "sil_after": [
+   591.642245,
+   592.980726
+  ],
+  "i": 144,
+  "text": "one browser, make any images, busy port."
+ },
+ {
+  "start": 592.980726,
+  "end": 593.381293,
+  "sil_before": [
+   591.642245,
+   592.980726
+  ],
+  "sil_after": [
+   593.381293,
+   594.558889
+  ],
+  "i": 145,
+  "text": "Cough."
+ },
+ {
+  "start": 594.558889,
+  "end": 595.125465,
+  "sil_before": [
+   593.381293,
+   594.558889
+  ],
+  "sil_after": [
+   595.125465,
+   596.800975
+  ],
+  "i": 146,
+  "text": "All right, redo."
+ },
+ {
+  "start": 596.800975,
+  "end": 598.921837,
+  "sil_before": [
+   595.125465,
+   596.800975
+  ],
+  "sil_after": [
+   598.921837,
+   599.365329
+  ],
+  "i": 147,
+  "text": "Now the bottleneck from my last video."
+ },
+ {
+  "start": 599.365329,
+  "end": 605.385079,
+  "sil_before": [
+   598.921837,
+   599.365329
+  ],
+  "sil_after": [
+   605.385079,
+   609.951882
+  ],
+  "i": 148,
+  "text": "one browser making the images busy for 3.9 hours of a 4 hour and 30 minute build."
+ },
+ {
+  "start": 609.951882,
+  "end": 613.716916,
+  "sil_before": [
+   605.385079,
+   609.951882
+  ],
+  "sil_after": [
+   613.716916,
+   614.900952
+  ],
+  "i": 149,
+  "text": "On AWS, I dropped the browser and call an image model on..."
+ },
+ {
+  "start": 614.900952,
+  "end": 616.931723,
+  "sil_before": [
+   613.716916,
+   614.900952
+  ],
+  "sil_after": [
+   616.931723,
+   618.028571
+  ],
+  "i": 150,
+  "text": "On AWS, I dropped about."
+ },
+ {
+  "start": 618.028571,
+  "end": 621.996372,
+  "sil_before": [
+   616.931723,
+   618.028571
+  ],
+  "sil_after": [
+   621.996372,
+   628.927052
+  ],
+  "i": 151,
+  "text": "On AWS, I dropped the browser and call an image model on Bedrock."
+ },
+ {
+  "start": 628.927052,
+  "end": 631.158277,
+  "sil_before": [
+   621.996372,
+   628.927052
+  ],
+  "sil_after": [
+   631.158277,
+   631.735488
+  ],
+  "i": 152,
+  "text": "and the seven shorts stopped taking turns."
+ },
+ {
+  "start": 631.735488,
+  "end": 632.502993,
+  "sil_before": [
+   631.158277,
+   631.735488
+  ],
+  "sil_after": [
+   632.502993,
+   632.919184
+  ],
+  "i": 153,
+  "text": "No browser."
+ },
+ {
+  "start": 632.919184,
+  "end": 633.434966,
+  "sil_before": [
+   632.502993,
+   632.919184
+  ],
+  "sil_after": [
+   633.434966,
+   663.39059
+  ],
+  "i": 154,
+  "text": "Not that."
+ },
+ {
+  "start": 663.39059,
+  "end": 665.614694,
+  "sil_before": [
+   633.434966,
+   663.39059
+  ],
+  "sil_after": [
+   665.614694,
+   666.350068
+  ],
+  "i": 155,
+  "text": "So does it run on EC2?"
+ },
+ {
+  "start": 666.350068,
+  "end": 668.556213,
+  "sil_before": [
+   665.614694,
+   666.350068
+  ],
+  "sil_after": [
+   668.556213,
+   668.945125
+  ],
+  "i": 156,
+  "text": "Well, yes, but only the heavy work."
+ },
+ {
+  "start": 668.945125,
+  "end": 670.276735,
+  "sil_before": [
+   668.556213,
+   668.945125
+  ],
+  "sil_after": [
+   670.276735,
+   678.418277
+  ],
+  "i": 157,
+  "text": "and only while the job runs."
+ },
+ {
+  "start": 678.418277,
+  "end": 680.431293,
+  "sil_before": [
+   670.276735,
+   678.418277
+  ],
+  "sil_after": [
+   680.431293,
+   681.169819
+  ],
+  "i": 158,
+  "text": "So does it run on AC too?"
+ },
+ {
+  "start": 681.169819,
+  "end": 683.533129,
+  "sil_before": [
+   680.431293,
+   681.169819
+  ],
+  "sil_after": [
+   683.533129,
+   686.461791
+  ],
+  "i": 159,
+  "text": "Well, yes, but only the heavy work."
+ },
+ {
+  "start": 686.461791,
+  "end": 688.650612,
+  "sil_before": [
+   683.533129,
+   686.461791
+  ],
+  "sil_after": [
+   688.650612,
+   689.317823
+  ],
+  "i": 160,
+  "text": "So does it run on AC2?"
+ },
+ {
+  "start": 689.317823,
+  "end": 691.954059,
+  "sil_before": [
+   688.650612,
+   689.317823
+  ],
+  "sil_after": [
+   691.954059,
+   692.495125
+  ],
+  "i": 161,
+  "text": "Well, yes, but only the heavy work."
+ },
+ {
+  "start": 692.495125,
+  "end": 694.146848,
+  "sil_before": [
+   691.954059,
+   692.495125
+  ],
+  "sil_after": [
+   694.146848,
+   701.914399
+  ],
+  "i": 162,
+  "text": "and only when there's a job to run."
+ },
+ {
+  "start": 701.914399,
+  "end": 705.311678,
+  "sil_before": [
+   694.146848,
+   701.914399
+  ],
+  "sil_after": [
+   705.311678,
+   705.829388
+  ],
+  "i": 163,
+  "text": "The graph's agent on agent core, and the models are on bedrock."
+ },
+ {
+  "start": 705.829388,
+  "end": 707.729955,
+  "sil_before": [
+   705.311678,
+   705.829388
+  ],
+  "sil_after": [
+   707.729955,
+   708.800159
+  ],
+  "i": 164,
+  "text": "The FFMPEG jobs go to AWA-"
+ },
+ {
+  "start": 708.800159,
+  "end": 713.64619,
+  "sil_before": [
+   707.729955,
+   708.800159
+  ],
+  "sil_after": [
+   713.64619,
+   715.16619
+  ],
+  "i": 165,
+  "text": "The FFmpeg jobs go to AWS batch, a job queue that starts the servers."
+ },
+ {
+  "start": 715.16619,
+  "end": 718.900862,
+  "sil_before": [
+   713.64619,
+   715.16619
+  ],
+  "sil_after": [
+   718.900862,
+   720.855578
+  ],
+  "i": 166,
+  "text": "A job queue that starts the servers when the work arrives and stops them after."
+ },
+ {
+  "start": 720.855578,
+  "end": 723.271361,
+  "sil_before": [
+   718.900862,
+   720.855578
+  ],
+  "sil_after": [
+   723.271361,
+   730.163946
+  ],
+  "i": 167,
+  "text": "Those servers are EC2 spot instances."
+ },
+ {
+  "start": 730.163946,
+  "end": 732.54356,
+  "sil_before": [
+   723.271361,
+   730.163946
+  ],
+  "sil_after": [
+   732.54356,
+   733.176077
+  ],
+  "i": 168,
+  "text": "Those servers are EC2 spot instances."
+ },
+ {
+  "start": 733.176077,
+  "end": 735.493878,
+  "sil_before": [
+   732.54356,
+   733.176077
+  ],
+  "sil_after": [
+   735.493878,
+   737.04805
+  ],
+  "i": 169,
+  "text": "Sparse capacity Amazon sells for"
+ },
+ {
+  "start": 737.04805,
+  "end": 738.479365,
+  "sil_before": [
+   735.493878,
+   737.04805
+  ],
+  "sil_after": [
+   738.479365,
+   740.190816
+  ],
+  "i": 170,
+  "text": "up to 90% or all."
+ },
+ {
+  "start": 740.190816,
+  "end": 741.316417,
+  "sil_before": [
+   738.479365,
+   740.190816
+  ],
+  "sil_after": [
+   741.316417,
+   750.086984
+  ],
+  "i": 171,
+  "text": "Right, it can take."
+ },
+ {
+  "start": 750.086984,
+  "end": 752.432676,
+  "sil_before": [
+   741.316417,
+   750.086984
+  ],
+  "sil_after": [
+   752.432676,
+   754.094308
+  ],
+  "i": 172,
+  "text": "Those servers are AC2 spot instances."
+ },
+ {
+  "start": 754.094308,
+  "end": 757.292154,
+  "sil_before": [
+   752.432676,
+   754.094308
+  ],
+  "sil_after": [
+   757.292154,
+   758.131587
+  ],
+  "i": 173,
+  "text": "Spare capacity Amazon sells for up to 90% off."
+ },
+ {
+  "start": 758.131587,
+  "end": 760.351451,
+  "sil_before": [
+   757.292154,
+   758.131587
+  ],
+  "sil_after": [
+   760.351451,
+   762.546825
+  ],
+  "i": 174,
+  "text": "But it can take one back within two minutes warning."
+ },
+ {
+  "start": 762.546825,
+  "end": 764.658889,
+  "sil_before": [
+   760.351451,
+   762.546825
+  ],
+  "sil_after": [
+   764.658889,
+   772.325714
+  ],
+  "i": 175,
+  "text": "But it can take one back with two minutes warning."
+ },
+ {
+  "start": 772.325714,
+  "end": 776.322562,
+  "sil_before": [
+   764.658889,
+   772.325714
+  ],
+  "sil_after": [
+   776.322562,
+   776.834286
+  ],
+  "i": 176,
+  "text": "That's fine here, because every step reads what's already done and skips it."
+ },
+ {
+  "start": 776.834286,
+  "end": 779.525488,
+  "sil_before": [
+   776.322562,
+   776.834286
+  ],
+  "sil_after": [
+   779.525488,
+   783.126395
+  ],
+  "i": 177,
+  "text": "On AWS, what's done lives in S3."
+ },
+ {
+  "start": 783.126395,
+  "end": 783.542517,
+  "sil_before": [
+   779.525488,
+   783.126395
+  ],
+  "sil_after": [
+   783.542517,
+   784.057007
+  ],
+  "i": 178,
+  "text": "Whisper."
+ },
+ {
+  "start": 784.057007,
+  "end": 785.674354,
+  "sil_before": [
+   783.542517,
+   784.057007
+  ],
+  "sil_after": [
+   785.674354,
+   786.130227
+  ],
+  "i": 179,
+  "text": "If I keep it over transcribed..."
+ },
+ {
+  "start": 786.130227,
+  "end": 786.840181,
+  "sil_before": [
+   785.674354,
+   786.130227
+  ],
+  "sil_after": [
+   786.840181,
+   789.296871
+  ],
+  "i": 180,
+  "text": "needs a seat."
+ },
+ {
+  "start": 789.296871,
+  "end": 792.415941,
+  "sil_before": [
+   786.840181,
+   789.296871
+  ],
+  "sil_after": [
+   792.415941,
+   792.902857
+  ],
+  "i": 181,
+  "text": "Whisper, if I keep it over transcribed, needs a GPU."
+ },
+ {
+  "start": 792.902857,
+  "end": 794.012993,
+  "sil_before": [
+   792.415941,
+   792.902857
+  ],
+  "sil_after": [
+   794.012993,
+   796.89415
+  ],
+  "i": 182,
+  "text": "on AWS."
+ },
+ {
+  "start": 796.89415,
+  "end": 799.310431,
+  "sil_before": [
+   794.012993,
+   796.89415
+  ],
+  "sil_after": [
+   799.310431,
+   801.191293
+  ],
+  "i": 183,
+  "text": "On AWS, that's a G6 instance."
+ },
+ {
+  "start": 801.191293,
+  "end": 803.150794,
+  "sil_before": [
+   799.310431,
+   801.191293
+  ],
+  "sil_after": [
+   803.150794,
+   805.255465
+  ],
+  "i": 184,
+  "text": "an AC2 server with NVIDIA."
+ },
+ {
+  "start": 805.255465,
+  "end": 810.590136,
+  "sil_before": [
+   803.150794,
+   805.255465
+  ],
+  "sil_after": [
+   810.590136,
+   814.500249
+  ],
+  "i": 185,
+  "text": "On AWS, that's a G6 instance with an EC2 server with an NVIDIA L4."
+ },
+ {
+  "start": 814.500249,
+  "end": 816.591633,
+  "sil_before": [
+   810.590136,
+   814.500249
+  ],
+  "sil_after": [
+   816.591633,
+   817.126825
+  ],
+  "i": 186,
+  "text": "Today, Remotion renders on my PC."
+ },
+ {
+  "start": 817.126825,
+  "end": 817.993651,
+  "sil_before": [
+   816.591633,
+   817.126825
+  ],
+  "sil_after": [
+   817.993651,
+   818.827075
+  ],
+  "i": 187,
+  "text": "in one minute, Sean."
+ },
+ {
+  "start": 818.827075,
+  "end": 820.973492,
+  "sil_before": [
+   817.993651,
+   818.827075
+  ],
+  "sil_after": [
+   820.973492,
+   822.955125
+  ],
+  "i": 188,
+  "text": "on AWS, Remotion Lambda."
+ },
+ {
+  "start": 822.955125,
+  "end": 823.991565,
+  "sil_before": [
+   820.973492,
+   822.955125
+  ],
+  "sil_after": [
+   823.991565,
+   824.504671
+  ],
+  "i": 189,
+  "text": "on AWS."
+ },
+ {
+  "start": 825.977392,
+  "end": 827.092177,
+  "sil_before": [
+   824.676871,
+   825.977392
+  ],
+  "sil_after": [
+   827.092177,
+   827.619206
+  ],
+  "i": 190,
+  "text": "All right, let's go."
+ },
+ {
+  "start": 827.619206,
+  "end": 828.396531,
+  "sil_before": [
+   827.092177,
+   827.619206
+  ],
+  "sil_after": [
+   828.396531,
+   829.151043
+  ],
+  "i": 191,
+  "text": "redo this one."
+ },
+ {
+  "start": 829.151043,
+  "end": 832.815556,
+  "sil_before": [
+   828.396531,
+   829.151043
+  ],
+  "sil_after": [
+   832.815556,
+   834.306236
+  ],
+  "i": 192,
+  "text": "On AWS, remotion lambda splits a render across a"
+ },
+ {
+  "start": 834.306236,
+  "end": 837.257914,
+  "sil_before": [
+   832.815556,
+   834.306236
+  ],
+  "sil_after": [
+   837.257914,
+   839.63746
+  ],
+  "i": 193,
+  "text": "AWS, Remotion Lambda, Spitzer..."
+ },
+ {
+  "start": 839.63746,
+  "end": 841.384989,
+  "sil_before": [
+   837.257914,
+   839.63746
+  ],
+  "sil_after": [
+   841.384989,
+   842.000635
+  ],
+  "i": 194,
+  "text": "Okie dokie, I keep getting it wrong."
+ },
+ {
+  "start": 842.000635,
+  "end": 843.222494,
+  "sil_before": [
+   841.384989,
+   842.000635
+  ],
+  "sil_after": [
+   843.222494,
+   843.652426
+  ],
+  "i": 195,
+  "text": "on AWS."
+ },
+ {
+  "start": 843.652426,
+  "end": 845.109365,
+  "sil_before": [
+   843.222494,
+   843.652426
+  ],
+  "sil_after": [
+   845.109365,
+   846.074785
+  ],
+  "i": 196,
+  "text": "Emotion lambda spits out-"
+ },
+ {
+  "start": 846.074785,
+  "end": 851.868186,
+  "sil_before": [
+   845.109365,
+   846.074785
+  ],
+  "sil_after": [
+   851.868186,
+   854.324467
+  ],
+  "i": 197,
+  "text": "On AWS, Remotion Lambda splits a render across up to 200 Lambda functions at once."
+ },
+ {
+  "start": 854.324467,
+  "end": 855.735646,
+  "sil_before": [
+   851.868186,
+   854.324467
+  ],
+  "sil_after": [
+   855.735646,
+   857.961451
+  ],
+  "i": 198,
+  "text": "at least 20 frames each."
+ },
+ {
+  "start": 857.961451,
+  "end": 862.421542,
+  "sil_before": [
+   855.735646,
+   857.961451
+  ],
+  "sil_after": [
+   862.421542,
+   864.566939
+  ],
+  "i": 199,
+  "text": "Remotion Zone example is a 10 minute HD video for around 10 cents."
+ },
+ {
+  "start": 864.566939,
+  "end": 867.145714,
+  "sil_before": [
+   862.421542,
+   864.566939
+  ],
+  "sil_after": [
+   867.145714,
+   872.002109
+  ],
+  "i": 200,
+  "text": "Each render has to finish in sides 15 minutes."
+ },
+ {
+  "start": 872.002109,
+  "end": 873.338912,
+  "sil_before": [
+   867.145714,
+   872.002109
+  ],
+  "sil_after": [
+   873.338912,
+   873.899955
+  ],
+  "i": 201,
+  "text": "Layer 5 Publishing."
+ },
+ {
+  "start": 873.899955,
+  "end": 876.075397,
+  "sil_before": [
+   873.338912,
+   873.899955
+  ],
+  "sil_after": [
+   876.075397,
+   876.523651
+  ],
+  "i": 202,
+  "text": "Today, the post went in JSON file."
+ },
+ {
+  "start": 876.523651,
+  "end": 879.33839,
+  "sil_before": [
+   876.075397,
+   876.523651
+  ],
+  "sil_after": [
+   879.33839,
+   889.933129
+  ],
+  "i": 203,
+  "text": "On AWS, their role is in DynamoDB."
+ },
+ {
+  "start": 889.933129,
+  "end": 892.933333,
+  "sil_before": [
+   879.33839,
+   889.933129
+  ],
+  "sil_after": [
+   892.933333,
+   894.531497
+  ],
+  "i": 204,
+  "text": "Each post gets one time schedule and an event page schedule."
+ },
+ {
+  "start": 894.531497,
+  "end": 897.881429,
+  "sil_before": [
+   892.933333,
+   894.531497
+  ],
+  "sil_after": [
+   897.881429,
+   898.600204
+  ],
+  "i": 205,
+  "text": "East Post gets a one-time schedule and an events-bid scheduler."
+ },
+ {
+  "start": 898.600204,
+  "end": 900.015261,
+  "sil_before": [
+   897.881429,
+   898.600204
+  ],
+  "sil_after": [
+   900.015261,
+   902.1561
+  ],
+  "i": 206,
+  "text": "Amazon's alarm clock."
+ },
+ {
+  "start": 902.1561,
+  "end": 905.620295,
+  "sil_before": [
+   900.015261,
+   902.1561
+  ],
+  "sil_after": [
+   905.620295,
+   907.065918
+  ],
+  "i": 207,
+  "text": "Each post gets a one-time schedule and event bridge scheduler."
+ },
+ {
+  "start": 907.065918,
+  "end": 908.179909,
+  "sil_before": [
+   905.620295,
+   907.065918
+  ],
+  "sil_after": [
+   908.179909,
+   908.62068
+  ],
+  "i": 208,
+  "text": "Amazon's alarm clock."
+ },
+ {
+  "start": 908.62068,
+  "end": 909.179161,
+  "sil_before": [
+   908.179909,
+   908.62068
+  ],
+  "sil_after": [
+   909.179161,
+   909.857574
+  ],
+  "i": 209,
+  "text": "code."
+ },
+ {
+  "start": 909.857574,
+  "end": 912.802608,
+  "sil_before": [
+   909.179161,
+   909.857574
+  ],
+  "sil_after": [
+   912.802608,
+   943.675737
+  ],
+  "i": 210,
+  "text": "At that time, it fires a lambda function that posts it."
+ },
+ {
+  "start": 943.675737,
+  "end": 945.001293,
+  "sil_before": [
+   912.802608,
+   943.675737
+  ],
+  "sil_after": [
+   945.001293,
+   946.795215
+  ],
+  "i": 211,
+  "text": "I don't wanna do the next line."
+ },
+ {
+  "start": 946.795215,
+  "end": 948.12415,
+  "sil_before": [
+   945.001293,
+   946.795215
+  ],
+  "sil_after": [
+   948.12415,
+   948.792857
+  ],
+  "i": 212,
+  "text": "about YouTube and X."
+ },
+ {
+  "start": 948.792857,
+  "end": 949.891429,
+  "sil_before": [
+   948.12415,
+   948.792857
+  ],
+  "sil_after": [
+   949.891429,
+   953.905147
+  ],
+  "i": 213,
+  "text": "So let's skip that line."
+ },
+ {
+  "start": 953.905147,
+  "end": 955.721202,
+  "sil_before": [
+   949.891429,
+   953.905147
+  ],
+  "sil_after": [
+   955.721202,
+   956.263787
+  ],
+  "i": 214,
+  "text": "Today, I read log files."
+ },
+ {
+  "start": 956.263787,
+  "end": 960.054989,
+  "sil_before": [
+   955.721202,
+   956.263787
+  ],
+  "sil_after": [
+   960.054989,
+   960.446395
+  ],
+  "i": 215,
+  "text": "On AWS, every agent is run and traced into CloudWatch."
+ },
+ {
+  "start": 960.446395,
+  "end": 961.822449,
+  "sil_before": [
+   960.054989,
+   960.446395
+  ],
+  "sil_after": [
+   961.822449,
+   962.421315
+  ],
+  "i": 216,
+  "text": "Amazon's monitoring service."
+ },
+ {
+  "start": 962.421315,
+  "end": 964.679841,
+  "sil_before": [
+   961.822449,
+   962.421315
+  ],
+  "sil_after": [
+   964.679841,
+   965.068912
+  ],
+  "i": 217,
+  "text": "latency, token usage, and errors."
+ },
+ {
+  "start": 965.068912,
+  "end": 965.550816,
+  "sil_before": [
+   964.679841,
+   965.068912
+  ],
+  "sil_after": [
+   965.550816,
+   972.622268
+  ],
+  "i": 218,
+  "text": "session."
+ },
+ {
+  "start": 972.622268,
+  "end": 976.120317,
+  "sil_before": [
+   965.550816,
+   972.622268
+  ],
+  "sil_after": [
+   976.120317,
+   976.593605
+  ],
+  "i": 219,
+  "text": "The media bill for a 63 minute live stream on my last video."
+ },
+ {
+  "start": 976.593605,
+  "end": 977.292494,
+  "sil_before": [
+   976.120317,
+   976.593605
+  ],
+  "sil_after": [
+   977.292494,
+   977.763651
+  ],
+  "i": 220,
+  "text": "transcript."
+ },
+ {
+  "start": 977.763651,
+  "end": 978.599297,
+  "sil_before": [
+   977.292494,
+   977.763651
+  ],
+  "sil_after": [
+   978.599297,
+   979.33712
+  ],
+  "i": 221,
+  "text": "83 cents."
+ },
+ {
+  "start": 979.33712,
+  "end": 979.796077,
+  "sil_before": [
+   978.599297,
+   979.33712
+  ],
+  "sil_after": [
+   979.796077,
+   981.982268
+  ],
+  "i": 222,
+  "text": "The \u0441\u0438\u0442\u0443ations are harder."
+ },
+ {
+  "start": 981.982268,
+  "end": 982.851927,
+  "sil_before": [
+   979.796077,
+   981.982268
+  ],
+  "sil_after": [
+   982.851927,
+   983.196757
+  ],
+  "i": 223,
+  "text": "The media bill."
+ },
+ {
+  "start": 983.196757,
+  "end": 985.621451,
+  "sil_before": [
+   982.851927,
+   983.196757
+  ],
+  "sil_after": [
+   985.621451,
+   986.052404
+  ],
+  "i": 224,
+  "text": "for a 63 minute live stream from my last video."
+ },
+ {
+  "start": 986.052404,
+  "end": 986.725079,
+  "sil_before": [
+   985.621451,
+   986.052404
+  ],
+  "sil_after": [
+   986.725079,
+   987.297166
+  ],
+  "i": 225,
+  "text": "transcript."
+ },
+ {
+  "start": 987.297166,
+  "end": 990.34746,
+  "sil_before": [
+   986.725079,
+   987.297166
+  ],
+  "sil_after": [
+   990.34746,
+   990.658367
+  ],
+  "i": 226,
+  "text": "The image is $1.6."
+ },
+ {
+  "start": 990.658367,
+  "end": 992.100794,
+  "sil_before": [
+   990.34746,
+   990.658367
+  ],
+  "sil_after": [
+   992.100794,
+   1001.483469
+  ],
+  "i": 227,
+  "text": "renders a few pennies."
+ },
+ {
+  "start": 1001.483469,
+  "end": 1003.003628,
+  "sil_before": [
+   992.100794,
+   1001.483469
+  ],
+  "sil_after": [
+   1003.003628,
+   1003.419206
+  ],
+  "i": 228,
+  "text": "That's before the model tokens."
+ },
+ {
+  "start": 1003.419206,
+  "end": 1005.379615,
+  "sil_before": [
+   1003.003628,
+   1003.419206
+  ],
+  "sil_after": [
+   1005.379615,
+   1026.857982
+  ],
+  "i": 229,
+  "text": "was I'd watch per agent in CloudWatch."
+ },
+ {
+  "start": 1026.857982,
+  "end": 1030.785374,
+  "sil_before": [
+   1005.379615,
+   1026.857982
+  ],
+  "sil_after": [
+   1030.785374,
+   1059.396327
+  ],
+  "i": 230,
+  "text": "So the graph barely changes. What changes is everything around it."
+ },
+ {
+  "start": 1059.396327,
+  "end": 1063.64678,
+  "sil_before": [
+   1030.785374,
+   1059.396327
+  ],
+  "sil_after": [
+   1063.64678,
+   1064.319365
+  ],
+  "i": 231,
+  "text": "where the state lives, who holds the keys, everything that runs in parallel."
+ },
+ {
+  "start": 1064.319365,
+  "end": 1065.92644,
+  "sil_before": [
+   1063.64678,
+   1064.319365
+  ],
+  "sil_after": [
+   1065.92644,
+   1071.163605
+  ],
+  "i": 232,
+  "text": "That's just production work."
+ },
+ {
+  "start": 1071.163605,
+  "end": 1073.631655,
+  "sil_before": [
+   1065.92644,
+   1071.163605
+  ],
+  "sil_after": [
+   1073.631655,
+   1074.21449
+  ],
+  "i": 233,
+  "text": "Where the state lives, who holds the keys."
+ },
+ {
+  "start": 1074.21449,
+  "end": 1075.361587,
+  "sil_before": [
+   1073.631655,
+   1074.21449
+  ],
+  "sil_after": [
+   1075.361587,
+   1076.270045
+  ],
+  "i": 234,
+  "text": "What runs in parallel?"
+ },
+ {
+  "start": 1076.270045,
+  "end": 1077.238844,
+  "sil_before": [
+   1075.361587,
+   1076.270045
+  ],
+  "sil_after": [
+   1077.238844,
+   1095.038957
+  ],
+  "i": 235,
+  "text": "That's the production work."
+ },
+ {
+  "start": 1095.038957,
+  "end": 1097.599048,
+  "sil_before": [
+   1077.238844,
+   1095.038957
+  ],
+  "sil_after": [
+   1097.599048,
+   1098.008889
+  ],
+  "i": 236,
+  "text": "If you haven't seen the last two videos on this graph."
+ },
+ {
+  "start": 1098.008889,
+  "end": 1100.06424,
+  "sil_before": [
+   1097.599048,
+   1098.008889
+  ],
+  "sil_after": [
+   1100.06424,
+   1103.926689
+  ],
+  "i": 237,
+  "text": "I would say start right there, here's a playlist."
+ },
+ {
+  "start": 1103.926689,
+  "end": 1107.985918,
+  "sil_before": [
+   1100.06424,
+   1103.926689
+  ],
+  "sil_after": [
+   1107.985918,
+   1108.424966
+  ],
+  "i": 238,
+  "text": "If you haven't seen the last two videos on this graph, I would say start right here."
+ },
+ {
+  "start": 1108.424966,
+  "end": 1110.164354,
+  "sil_before": [
+   1107.985918,
+   1108.424966
+  ],
+  "sil_after": [
+   1110.164354,
+   1110.765805
+  ],
+  "i": 239,
+  "text": "It's a playlist all about line graphs."
+ },
+ {
+  "start": 1110.765805,
+  "end": 1117.117732,
+  "sil_before": [
+   1110.164354,
+   1110.765805
+  ],
+  "sil_after": [
+   1117.117732,
+   1117.557392
+  ],
+  "i": 240,
+  "text": "Make sure you subscribe if you're new here and you can check this playlist right here because we got tons of stuff related to-"
+ },
+ {
+  "start": 1117.557392,
+  "end": 1118.595057,
+  "sil_before": [
+   1117.117732,
+   1117.557392
+  ],
+  "sil_after": [
+   1118.595057,
+   1118.895986
+  ],
+  "i": 241,
+  "text": "AI engineering."
+ },
+ {
+  "start": 1118.895986,
+  "end": 1120.04356,
+  "sil_before": [
+   1118.595057,
+   1118.895986
+  ],
+  "sil_after": [
+   1120.04356,
+   1120.594626
+  ],
+  "i": 242,
+  "text": "on this channel called..."
+ },
+ {
+  "start": 1120.594626,
+  "end": 1121.972018,
+  "sil_before": [
+   1120.04356,
+   1120.594626
+  ],
+  "sil_after": [
+   1121.972018,
+   1125.703401
+  ],
+  "i": 243,
+  "text": "AI engineering simplified."
+ }
+]

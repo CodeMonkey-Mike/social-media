@@ -1,0 +1,64 @@
+/* =====================================================================================================
+   livestream-aws, chart group 1 (today-pc, aws-map, ingest, graph-home, gate, agents): the pieces these six
+   charts share, ON TOP of the house chart family (chart.css, untouched). Loaded after chart.css.
+
+   THE AWS BOX: the product name as AWS writes it (DM Sans 700, mixed case, never upper-cased) and under it its
+   plain one-line description from SCRIPT.md CARDS (S3: FILE STORAGE). On the detail charts the description is an
+   upper-case label (.sd); on the dense aws-map overview it is the family's sentence-case sub (.sd.sub), see the
+   note in aws-map.html.
+   TODAY vs ON AWS: a TODAY piece is neutral (its lit look is white, never cyan); an AWS piece lights cyan. The
+   dashed arrow between them is the swap ("today this, on AWS that").
+   ===================================================================================================== */
+
+/* titles: lining figures, so a digit in a Playfair headline never drops below the line (EC2 as "EC₂") */
+.head h1{font-variant-numeric:lining-nums}
+
+/* ---- the AWS box ---- */
+.svc{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px 16px}
+.sn{font-family:'DM Sans';font-weight:700;font-size:28px;line-height:1.15;letter-spacing:0;text-transform:none}
+.sd{font-family:'DM Sans';font-weight:600;font-size:22px;line-height:1.3;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--rest-sub);margin-top:6px;text-wrap:balance}
+.on .sd,.sd.on{color:var(--accent-cyan)}
+/* the overview's sentence-case sub (aws-map only) */
+.sd.sub{font-weight:500;font-size:24px;letter-spacing:0;text-transform:none;line-height:1.25}
+.on .sd.sub{color:var(--lit-sub)}
+/* a box whose children sit left-aligned (name + description beside an icon) */
+.svc.row{flex-direction:row;justify-content:flex-start;text-align:left;gap:16px}
+.svc.row .sd{text-wrap:wrap}
+
+/* ---- a TODAY piece: lit = white (the cyan stays on AWS) ---- */
+.node.td{background:rgba(18,21,28,.92)}
+.node.td.on{border-color:rgba(232,234,240,.66);color:var(--text-primary);background:var(--bg-card-hover);
+  box-shadow:0 0 0 1px rgba(232,234,240,.10),0 0 34px rgba(232,234,240,.07)}
+.node.td.on .st{color:var(--lit-sub)}
+.node.td .ico{color:var(--text-secondary)}
+.node.td.on .ico{color:var(--text-primary);opacity:1}
+
+/* ---- the TODAY / ON AWS column heads ---- */
+.colh{display:flex;align-items:center;gap:14px;font-family:'DM Sans';font-weight:700;font-size:28px;letter-spacing:.16em;
+  text-transform:uppercase;white-space:nowrap}
+.colh.today{color:var(--text-secondary)}
+.colh.aws{color:var(--text-primary)}
+.colh .hs{font-weight:500;font-size:24px;letter-spacing:0;text-transform:none;color:var(--text-muted)}
+.colh .ico{color:currentColor;opacity:1}
+/* a column zone: TODAY is drawn flatter than ON AWS */
+.zone.tz{border-style:dashed;border-color:rgba(136,146,164,.30);background:rgba(18,21,28,.35)}
+
+/* ---- the swap arrow (today -> on AWS): dashed ---- */
+.wr.swap{stroke-dasharray:8 9}
+.wr.swap.on{stroke-dasharray:8 9}
+
+/* ---- code (an env var, a package name): mono chip ---- */
+.cd{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:24px;line-height:1;white-space:nowrap;
+  padding:11px 16px;border-radius:10px;border:1.5px solid var(--rest-edge);background:rgba(10,12,16,.75);color:var(--rest-sub)}
+.cd.on,.on .cd{border-color:rgba(0,194,255,.75);background:rgba(0,194,255,.10);color:var(--text-primary);
+  box-shadow:0 0 26px rgba(0,194,255,.20)}
+
+/* ---- a small upper-case label (a fact printed on the chart) ---- */
+.lab{font-family:'DM Sans';font-weight:700;font-size:24px;line-height:1.2;letter-spacing:.10em;text-transform:uppercase;
+  color:var(--text-secondary);white-space:nowrap}
+.lab.on{color:var(--accent-cyan)}
+.lab .mono{letter-spacing:0}
+
+/* icons: line icons in currentColor */
+svg.ico{flex:0 0 auto;display:block}

@@ -1,0 +1,132 @@
+/* langgraph-updates portrait-lg.css: the VERTICAL (1080x1920) reflow of this video's own card components.
+   Linked AFTER portrait-text.css (clip-evals, unchanged) with media="(orientation: portrait)", so a 1920x1080 shot never
+   reads it. Same phone rules: content in the band y 120..1450 where it fits, 72 px side margins, the lower third kept
+   light. Tokens only; no text, colour or state differs from the 16:9 card. */
+
+.frame.top{padding-top:130px}
+
+/* six-to-seven */
+.chg{grid-template-columns:1fr;padding:48px 0}
+.chg-l{font-size:30px;margin-bottom:22px}
+.chg-v{font-size:86px;gap:26px}
+.chg-v.big{font-size:230px}
+
+/* four-steps */
+.frame.fs{padding-top:120px}
+.fs h1.sm{font-size:64px}
+.fs .ey{font-size:22px;letter-spacing:.1em}
+.fs-node .tag{font-size:20px;padding:5px 9px;letter-spacing:.05em}
+.fs .divider{margin:22px 0}
+.fs-before{flex-wrap:wrap;padding:18px 24px;row-gap:12px}
+.fs-before .who{width:100%;font-size:27px}
+.fs-before .jobs span{font-size:24px;padding:6px 14px}
+.fs-before .count{margin-left:0;font-size:24px}
+.fs-label.now{margin-top:22px}
+.fs-strip{flex-wrap:wrap;gap:5px}
+.gn{font-size:22px;padding:6px 8px}
+.gn .gdots{display:none}
+.ge{font-size:20px}
+.gnote{order:-1;width:100%;margin:0 0 6px;font-size:23px}
+.fs-box{padding:18px 16px 10px}
+.fs-flow{grid-template-columns:1fr;position:relative;padding-right:50px}
+.fs-node{display:grid;grid-template-columns:330px 1fr;grid-template-areas:"step what" "who what";column-gap:18px;
+  padding:12px 18px;height:90px;align-content:start}
+.fs-step{grid-area:step;font-size:18px;gap:8px}
+.fs-who{grid-area:who;font-size:25px;margin:6px 0 0}
+.fs-what{grid-area:what;font-size:24px;line-height:1.35}
+.fs-code{font-size:21px;margin-top:4px}
+.fs-arrow{height:24px;line-height:24px;font-size:26px;text-align:left;padding-left:120px;transform:none}
+.fs-arrow{font-size:0}
+.fs-arrow::before{content:"\2193";font-size:22px}
+.fs-back{display:block}
+/* the gold loop on the right: from step 3 (its centre) back up to step 2 (its centre).
+   node 90, arrow row 24: step 2 centre = 90+24+45 = 159, step 3 centre = 2*90+2*24+45 = 273 (+ the box padding 18) */
+.fs-back .loop{position:absolute;right:16px;top:177px;height:114px;width:40px;margin:0;border:2px dashed var(--accent-gold);
+  border-left:none;border-radius:0 14px 14px 0}
+.fs-back .loop::before{left:-12px;top:-9px;border-top:8px solid transparent;border-bottom:8px solid transparent;
+  border-right:13px solid var(--accent-gold);border-left:none}
+.fs-back .note{text-align:left;font-size:23px;margin-top:12px}
+.fs-bottom{font-size:26px;padding:16px 24px}
+.fs .source.sm{display:none}
+
+/* why-split: the 2 columns stay side by side, tighter */
+.frame.ws{padding-top:120px}
+.ws h1.sm{font-size:64px}
+.ws-rows{grid-template-columns:1fr 36px 1fr;row-gap:16px}
+.ws-head{font-size:19px;letter-spacing:.1em}
+.ws-cell{padding:18px 18px}
+.ws-cell h3{font-size:28px}
+.ws-cell p{font-size:26px;line-height:1.36}
+.ws-arrow{font-size:24px}
+.ws-rule{font-size:28px;padding:18px 24px}
+
+/* evaluator-optimizer */
+.eo-qwrap{max-width:none}
+.eo-qwrap .quote.lg,.eo-tail{font-size:56px}
+.eo-mine{flex-direction:column;gap:12px;padding:26px 30px;margin-top:50px}
+.eo-v{font-size:32px}
+
+/* roster: judgment, builds, then the 2 stats */
+.frame.ro{padding-top:120px}
+.ro-cols{grid-template-columns:1fr;gap:20px}
+.ro-left{display:contents}
+.grp.b{order:2}
+.ro-stats{order:3}
+.grp{padding:18px 26px 6px}
+.ag{padding:9px 0}
+.ag-top{flex-wrap:nowrap;align-items:flex-start}
+.ag-tier{padding-top:6px}
+.ag-name{font-size:27px;display:block}
+.ro h1.sm{font-size:58px}
+.ag-tier{font-size:20px}
+.ag-job{font-size:24px}
+.ag.hl{margin:0 -26px;padding:9px 26px}
+.rtag{font-size:22px;display:table;margin-top:6px;padding:6px 12px;letter-spacing:.08em}
+.rstat{padding:18px 24px}
+.rstat .big{font-size:60px}
+.rstat .cap{font-size:24px}
+.ro .source.sm{font-size:21px;margin-top:16px}
+
+/* first-run */
+.frame.fr{padding-top:120px}
+.fr-cols{grid-template-columns:1fr;gap:18px}
+.fr-bars{padding:14px 24px}
+.bar{padding:7px 0;gap:4px 14px}
+.bar .name{width:292px;font-size:23px}
+.bar .track{width:330px}
+.bar .why{flex-basis:100%;padding-left:306px;white-space:normal;font-size:23px;margin-top:-2px}
+.bar.small .why{display:none}
+.fr-side{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fstat{padding:16px 18px;justify-content:flex-start}
+.fstat .big{font-size:50px}
+.fstat .cap{font-size:22px}
+.pillhead{margin:22px 0 10px}
+.pills{grid-template-columns:1fr;gap:12px}
+.pill{padding:12px 22px}
+.pill b{font-size:44px}
+.fr .source.sm{font-size:21px;margin-top:14px}
+
+/* check-caught */
+.frame.cc{padding-top:120px}
+.pairs{flex-direction:column;gap:28px}
+.pair.sq .shot{width:400px;height:400px}
+.pair.tall .shot{width:330px;height:420px}
+.imgs{justify-content:flex-start}
+.parrow{width:56px}
+.said,.pair.tall .said{max-width:none;margin-top:12px}
+.said q{font-size:26px}
+.said .note{font-size:24px}
+.cc-bottom{display:none}
+
+/* next */
+.frame.nx-f{padding-top:130px}
+.nrows.nx .nrow-t{gap:10px 14px}
+.nx-tag{font-size:22px}
+.nx-bar{grid-template-columns:1fr auto;grid-template-areas:"l v" "t t";gap:8px 16px}
+.nx-l{grid-area:l;font-size:22px}
+.nx-v{grid-area:v;font-size:24px}
+.nx-v span{font-size:30px}
+.nx-track{grid-area:t}
+.nx-chain{gap:10px;flex-wrap:wrap}
+.nx-n{font-size:22px;padding:10px 16px}
+.nx-chain .ge{font-size:22px}

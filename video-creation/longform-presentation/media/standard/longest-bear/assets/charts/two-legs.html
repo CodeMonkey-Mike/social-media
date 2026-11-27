@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>two-legs (part 1): Two Bear Markets</title>
+<!--
+  ANIMATED CHART, longest-bear CH3 (scripted standard video, cover_runs.py kind "animated-chart" = card-overlays kind "clip").
+  1920 x 1080. TIME-DRIVEN: window.setT(t) draws the exact frame for t (seconds from the start of this card's window) as a
+  pure function of t: no CSS transitions or animations, no rAF, no clock. Past its last move it HOLDS the end state.
+  Rendered by video-creation/longform-presentation/skills/card-overlays/html_clip.py (setT(f / 30) + a screenshot per frame).
+  Open with #t=12.5 in the URL to see one moment; with no hash it shows the end state.
+
+  Part 1 of 2. The drawing is two-legs-core.js (shared with two-legs-2.html, which opens on this page's last frame);
+  the data is btc-closes.js (build_chart_data.py: Yahoo daily closes + the two averages + the facts, checked against
+  research/btc-stats.json). Every figure on screen comes from that file, never from this page.
+
+  WINDOW (RE-TIMED to the recording, 2026-11-25): cues.json run-02, card two-legs, spine 135.34 to 187.367 (1561 frames;
+  script lines 70 to 73). Frame 0 is spine frame 4060, so t = 0 is spine 135.333. The clip montage cuts in HARD at 187.367:
+  every move is over by 42.97 and the finished picture (= TwoLegs.part1End(), two-legs-2.html's first frame) holds from
+  there to the last frame, t = 52.00. Each time in T below is the measured voice onset of its cue word
+  (spine/longest-bear EDIT+clips.medium-words.json, checked against the audio's 10 ms envelope and a large-v3 pass; the
+  envelope's silences win where they disagree) minus 135.333. A label never shows before its word; the line reaches a
+  date as he says it. T.draw .. T.aboveTo drive the line itself (keep them in order).
+  This page reads chart-base.css, two-legs-core.js and btc-closes.js: after changing one of them, touch this file
+  (build_chart_data.py does) so cover_runs.py re-renders its clip.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chart-base.css">
+</head>
+<body>
+<script src="btc-closes.js"></script>
+<script src="two-legs-core.js"></script>
+<script>
+(function () {
+'use strict';
+/* the moves, in seconds from the window start (spine 135.333; "(142.80)" = the cue word's spine time; the cue word is in
+   capitals). A marker that leads its T (the week rings 0.05 s, the bottom and rally dots 0.1 s) starts ON its word */
+var T = {
+  head:      0.00,   // the frame builds in as the clip fades in over the face scene: eyebrow, headline, divider, legend (to 0.85)
+  axes:      0.15,   // the time axis draws left to right, the gridlines and price labels fade in (0.15 to 1.05)
+  top:       0.57,   // "so the TOP was on" (135.90): the TOP dot on the first close
+  topLbl:    1.75,   // "on OCTOBER 6th 2025" (137.08): TOP / OCT 6, 2025
+  draw:      2.05,   // the three lines start drawing from the top
+  below:     7.47,   // "when Bitcoin closed BELOW" (142.80): the line crosses under the gold line (the first dip, Nov 4)
+  lit50:     7.91,   // "below the FIFTY-week moving average" (143.24): the gold line glows once, its legend row lights
+  wk1:      11.58,   // "the week ending November SIXTEENTH" (146.86): the line reaches it, the first weekly close under
+  wk2:      12.94,   // "and November TWENTY-THIRD" (148.22): the second; the line rests there
+  conf:     13.02,   // BEAR CONFIRMED / 2 WEEKLY CLOSES / UNDER THE 50-WEEK / NOV 16 AND NOV 23, once both weeks are said
+  fall:     13.68,   // "IT bottomed on June 30th, 2026" (149.01): the line falls to the first bottom ...
+  bottom:   14.97,   // ... and lands on it on "June THIRTIETH" (150.20): Jun 30
+  leg1:     17.53,   // "that's TWO HUNDRED SIXTY-SEVEN days from the top" (152.86): LEG 1 / 267 DAYS
+  leg1Pct:  20.69,   // "and a FIFTY-THREE percent fall" (156.02): -53%
+  rally:    22.60,   // "then BITCOIN rally 48%" (157.93): the line rises to the rally top ...
+  rallyTop: 23.73,   // ... and lands on it on "FORTY-EIGHT" (158.96): +48%
+  rallyTo:  25.31,   // "to around EIGHTY-SIX thousand" (160.64): TO 86K ("in September on September 21st" holds)
+  above:    30.00,   // "and from SEPTEMBER 18th" (165.33): the gold opens on Sep 18, the line draws on ...
+  aboveTo:  32.33,   // "through November SEVENTH" (167.66): ... and stops on Nov 7, part 1's last day
+  aboveLbl: 33.75,   // "it stayed ABOVE those averages" (169.08): the bracket draws, ABOVE BOTH
+  aboveDays: 35.92,  // "That's FIFTY-ONE days, a month and a half" (171.25): 51 DAYS
+  over:     41.77    // "by the rule that bear market was OVER" (177.10): ABOVE BOTH glows once (1.2 s), then holds to the end
+};
+
+var H = TwoLegs.h, DY = TwoLegs.DAYS, fade = H.fade, bump = H.bump;
+var cursor = H.pchip([[T.draw, DY.top], [T.below, DY.dip], [T.wk1, DY.wk1], [T.wk2, DY.wk2], [T.fall, DY.wk2], [T.bottom, DY.bottom],
+                      [T.rally, DY.bottom], [T.rallyTop, DY.rally], [T.above, DY.rally], [T.aboveTo, DY.aboveTo]]);
+
+function stateAt(t) {
+  return {
+    head: fade(t, T.head, 0.6), legend: fade(t, T.head + 0.25, 0.6), axis: H.eOut(H.prog(t, T.axes, 0.9)),
+    grid: fade(t, T.axes + 0.1, 0.7), src: fade(t, T.axes + 0.6, 0.6),
+    cur: cursor(t),
+    top: fade(t, T.top, 0.3), topLbl: fade(t, T.topLbl, 0.4),
+    lit50: bump(t, T.lit50, 1.4),
+    wk1: fade(t, T.wk1 - 0.05, 0.3), wk2: fade(t, T.wk2 - 0.05, 0.3), conf: fade(t, T.conf, 0.45),
+    bottom: fade(t, T.bottom - 0.1, 0.3), leg1: fade(t, T.leg1, 0.45), leg1Pct: fade(t, T.leg1Pct, 0.4),
+    rallyDot: fade(t, T.rallyTop - 0.1, 0.3), rally: fade(t, T.rallyTop, 0.4), rallyTo: fade(t, T.rallyTo, 0.4),
+    above: fade(t, T.above, 0.5), aboveLbl: fade(t, T.aboveLbl, 0.5), aboveDays: fade(t, T.aboveDays, 0.4),
+    abovePulse: bump(t, T.over, 1.2),
+    lost: 0, end: 0, leg2: 0, leg2Pct: 0, payoff: 0, pulse2: 0
+  };
+}
+
+window.T = T;
+window.stateAt = stateAt;
+window.setT = function (t) { TwoLegs.render(stateAt(+t || 0)); };
+var m = /t=([0-9.]+)/.exec(location.hash);
+window.setT(m ? parseFloat(m[1]) : 60);
+})();
+</script>
+</body>
+</html>

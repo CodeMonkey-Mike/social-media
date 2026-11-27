@@ -1,0 +1,42 @@
+/* chart-base.css: the frame, head and type of the longest-bear animated charts (longest-clock, two-legs, two-legs-2).
+   Tokens = video-creation/longform-edited/skills/container-reference/container-canonical.css (never re-derived), with
+   THIS VIDEO's gold and red from its deck and cards (longest-bear.html, assets/card-sources/cards.html): gold #f5b942,
+   red #e0606e, the divider gold to faded gold, so the colour holds on every cut between a card and a chart (visual-qa).
+   This video's look (SCRIPT.md header, Mike): dark mode, near-black page, white and gold ink, JetBrains Mono for every
+   number, a muted red ONLY for the falls, big type for a phone-sized viewer (nothing under 24 px).
+   A page that links this file must be touched after it changes: cover_runs.py re-renders a chart clip only when its
+   .html is newer than the clip. */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#f5b942;   /* the deck's gold */
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+  --fall:#e0606e;   /* the falls only: the deck's red (Mike: "a muted red only for the falls") */
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#0a0c10}
+body{font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;color:var(--text-primary)}
+/* the canonical film grain (static, so it is the same pixels in every frame) */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:5;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* the orb: the stylesheet's blur(120px) disc drawn as the same falloff in a radial gradient (a CSS blur re-rasterizes
+   on the GPU and breaks same-t-same-pixels; the JCT unlock-curve fix) */
+.orb{position:absolute;border-radius:50%;pointer-events:none;z-index:0}
+.head{position:absolute;left:120px;top:58px;z-index:2}
+.ey{font-family:'DM Sans',sans-serif;font-size:27px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted)}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:78px;line-height:1.07;letter-spacing:-.02em;color:var(--text-primary);margin-top:14px;white-space:nowrap}
+.divider{width:66px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent-gold),rgba(245,185,66,.18));margin-top:22px}
+.go{color:var(--accent-gold)}
+.src{position:absolute;left:120px;top:1026px;font-family:'DM Sans',sans-serif;font-weight:500;font-size:24px;color:var(--text-muted);z-index:2;white-space:nowrap}
+#plot{position:absolute;left:0;top:0;z-index:1}
+/* the HTML TEXT setT fades sits on its own layer from frame 0, so its antialiasing never flips mid-clip. NOT the orb:
+   on its own 8-bit layer its faint outer band truncates a channel by one level and draws a darker ring (measured) */
+.ey,h1,.divider,.src{will-change:opacity,transform}
+/* SVG type */
+.t-mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.t-mono4{font-family:'JetBrains Mono',monospace;font-weight:400}
+.t-sans{font-family:'DM Sans',sans-serif;font-weight:600}
+.t-bold{font-family:'DM Sans',sans-serif;font-weight:700}
+.t-caps{font-family:'DM Sans',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.06em}

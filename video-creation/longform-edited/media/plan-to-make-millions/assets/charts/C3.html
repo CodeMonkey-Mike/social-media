@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>C3 (plan-to-make-millions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<!-- ANIMATION / STATE SPEC (also in the .spec.md / _state-cues.md beside this file)
+C3 COUNT-DOWN (Type 1 animated, CH1 gold), beat CH1@16.289-23.300.
+STATES: start = 2.718T OCT 29, 2026, sparkline one point; mid = a real print mid-count (2.505T NOV 10, 2026); payoff = 2.021T NOV 21, 2026 + 'AROUND 697B GONE' + 'MINUS 25.6%'.
+WHAT MOVES: one draw head t runs over the CMC daily prints (Oct 29 -> Nov 21, 24 points). The big counter shows the value AT the head
+(interpolated between prints, 3 decimals, JetBrains Mono, tabular), the date line under it steps day by day; the gold line + area reveal by
+the clip rect at the same head; the filled head dot rides the line.
+CUES: 16.289 frame fades + scales in (opacity 0->1, scale .985->1, 10 frames) holding the start state; 16.60 count + draw start,
+ease-out cubic, end 18.60 on 2.021T (the plan's 'from 18.40' leaves 0.3 s before '700 billion' at 18.72: the count runs under
+'Look at the size of this' instead); 18.72 'AROUND 697B GONE' lands (opacity + 12 px rise, 8 frames) on '700 billion';
+18.72 the 2.021T end label fades in; 22.12 'MINUS 25.6%' pill lands on 'three weeks'; hold to 23.300.
+DO NOT: wipe a PNG; print any day-relative word. [VERIFY] re-pull cmc-global-hist at render (live drift).
+-->
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+</style>
+<style>
+/* LIGHT THEME (loaded after the canonical sheet) */
+/* ============================================================================
+   container-canonical-light.css: the LIGHT THEME override (Mike, 2026-10-25, first used on `inference`).
+   A PER-VIDEO option, never the default. Load it AFTER container-canonical.css (same <head>, second <style> /
+   <link>): every token below replaces the dark one, every other rule of the locked stylesheet stays untouched
+   (layout, type, sizes, anatomy, components). Promoted from the 2026-10-25 look test in _light-mode-experiment/
+   (three containers rendered dark and light, Mike: "I like the light mode version").
+   Switch: GRAPH-PROGRESS.json settings.container_theme = "light" (run.py --container-theme light); the graph
+   tells slide-builder / chart-builder / visual-qa, and visual-qa judges palette drift against THIS file.
+   Contrast: every text token >= 4.5:1 on the page (#F6F4EE) and on a white card; strokes >= 3:1.
+   ============================================================================ */
+:root{
+  --bg-deep:#F6F4EE; --bg-card:#FFFFFF; --bg-card-hover:#F1EFE9;
+  --accent-green:#007A55; --accent-cyan:#006A9E; --accent-gold:#8F6500;
+  --accent-red:#C41E3A; --accent-purple:#7C3AED; --accent-teal:#0E7A6C; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#14161A; --text-secondary:#4A5263; --text-muted:#5E6676;
+  --border:#DDD9CF;
+  /* light-only helpers for charts / diagrams (dark has no equivalent: there the wire IS --border) */
+  --grid:#D6D2C7; --axis:#7A808B; --wire:#8A877E; --ink:#14161A;
+}
+body{background:#E4E1D8}
+
+/* the film grain stays, multiplied so it reads as paper tooth instead of lifting the blacks */
+.frame::after{opacity:.05;mix-blend-mode:multiply}
+
+/* accent orbs: same position and blur, a pale tint instead of a saturated bloom */
+.orb{opacity:.18}
+
+/* surfaces: a card is white with a hairline border and a soft lifted shadow (the dark 120 px black drop is gone) */
+.card,.col,.panel,.ecard,.nd,.node,.box{
+  background:var(--bg-card);border-color:var(--border);
+  box-shadow:0 1px 2px rgba(20,22,26,.05),0 14px 34px rgba(20,22,26,.08)}
+
+/* GLOW -> RING. On white a glow reads as a smear, so every "lit / on / hot" state becomes a tinted ring + a lifted
+   shadow in the element's accent (set --acc-rgb per chapter accent, default = cyan). */
+.frame{--acc-rgb:0,106,158}
+.lit,.on,.hot,.chip.on,.nd.lit,.node.on,.box.on,.ecard.on{
+  box-shadow:0 0 0 4px rgba(var(--acc-rgb),.12),0 12px 28px rgba(20,22,26,.12)}
+.hot,.nd.hot{box-shadow:0 0 0 6px rgba(var(--acc-rgb),.22),0 16px 34px rgba(20,22,26,.18)}
+.chip.on{background:rgba(var(--acc-rgb),.08)}
+.role,.rl,h1,h2{text-shadow:none}
+
+/* SVG diagrams / charts: wires and axes on the light ground. Lit wires use the accent token, resting wires --wire;
+   drop the SVG glow filter (filter="url(#g)") in the light build; hollow point centres fill white, the neutral
+   "ink" line is near-black; grid lines --grid; area fills under a line at .13 to .16 alpha of the accent. */
+svg .wire,svg line.wire,svg path.wire{stroke:var(--wire)}
+svg .grid{stroke:var(--grid)} svg .axis{stroke:var(--axis)}
+svg .ink{stroke:var(--ink);fill:var(--ink)}
+
+</style>
+<style>
+/* ---- chart / diagram layer on top of the locked stylesheet + the LIGHT override (layout only; tokens unchanged) ---- */
+.frame.ch{display:block;padding:0;margin:0 0 40px 0}
+.frame.ch>*:not(.orb){position:absolute}
+.hdr{left:120px;top:64px;max-width:1560px}
+.hdr .ey{font-size:24px;margin-bottom:14px}
+.hdr h1{font-size:64px;line-height:1.06}
+.hdr .divider{margin:22px 0 0 0;background:linear-gradient(90deg,var(--acc),rgba(var(--acc-rgb),.25))}
+.acc{color:var(--acc)} .red{color:var(--accent-red)} .grn{color:var(--accent-green)}
+.src{left:120px;bottom:40px;font-family:'JetBrains Mono',monospace;font-size:17px;color:var(--text-muted);max-width:1680px;line-height:1.45}
+svg.plot{left:0;top:0;width:1920px;height:1080px;overflow:visible}
+svg text{font-family:'JetBrains Mono',monospace}
+svg .tk{font-size:19px;fill:var(--text-muted);font-weight:400}
+svg .axl{font-family:'DM Sans',sans-serif;font-size:17px;letter-spacing:.18em;font-weight:600;fill:var(--text-muted)}
+svg .lbl{font-size:20px;font-weight:600;fill:var(--ink)}
+svg .lblm{font-size:18px;font-weight:600;fill:var(--text-muted)}
+svg .cap{font-family:'DM Sans',sans-serif;font-size:19px;letter-spacing:.12em;font-weight:700;fill:var(--ink)}
+.pill{font-family:'DM Sans',sans-serif;font-weight:700;font-size:19px;letter-spacing:.12em;text-transform:uppercase;
+  padding:8px 18px;border-radius:100px;border:1.5px solid var(--border);background:#fff;color:var(--text-secondary);white-space:nowrap}
+.pill.acc{border-color:rgba(var(--acc-rgb),.55);color:var(--acc);background:rgba(var(--acc-rgb),.06)}
+.pill.redp{border-color:rgba(196,30,58,.55);color:var(--accent-red);background:rgba(196,30,58,.06)}
+.pill.grnp{border-color:rgba(0,122,85,.55);color:var(--accent-green);background:rgba(0,122,85,.06)}
+.pill.dash{border-style:dashed}
+/* callout card: white, hairline, accent left rule when lit; dim = landed earlier, still on screen */
+.co{background:#fff;border:1px solid var(--border);border-left:5px solid var(--acc);border-radius:12px;padding:11px 18px 12px 16px;
+  box-shadow:0 1px 2px rgba(20,22,26,.05),0 10px 26px rgba(20,22,26,.08);white-space:nowrap}
+.co .d{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:17px;color:var(--text-muted);letter-spacing:.02em}
+.co .e{font-family:'DM Sans',sans-serif;font-weight:700;font-size:24px;color:var(--ink);letter-spacing:.03em;margin-top:2px}
+.co .t{font-family:'DM Sans',sans-serif;font-weight:600;font-size:18px;color:var(--text-secondary);letter-spacing:.06em;margin-top:4px}
+.co .t.acc{color:var(--acc)}
+.co.on{box-shadow:0 0 0 5px rgba(var(--acc-rgb),.14),0 14px 30px rgba(20,22,26,.14)}
+.co.dim{border-left-color:var(--wire);opacity:.62;box-shadow:0 1px 2px rgba(20,22,26,.04)}
+.co.dim .e{color:var(--text-secondary)}
+.endlbl{font-family:'JetBrains Mono',monospace;font-weight:600}
+.big{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--ink)}
+.hide{opacity:0!important}
+/* system-design nodes */
+.nd{background:#fff;border:1.5px solid var(--border);border-radius:16px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;box-shadow:0 1px 2px rgba(20,22,26,.05),0 12px 30px rgba(20,22,26,.07)}
+.nd .t{font-family:'DM Sans',sans-serif;font-weight:700;color:var(--ink);letter-spacing:.06em;text-transform:uppercase;line-height:1.22}
+.nd .s{font-family:'DM Sans',sans-serif;font-weight:600;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;font-size:17px;margin-top:8px}
+.nd.lit{border:2.5px solid var(--acc);background:linear-gradient(135deg,rgba(var(--acc-rgb),.10),rgba(var(--acc-rgb),.03)),#fff}
+.nd.hot{border:3px solid var(--acc);background:linear-gradient(135deg,rgba(var(--acc-rgb),.14),rgba(var(--acc-rgb),.04)),#fff;
+  box-shadow:0 0 0 7px rgba(var(--acc-rgb),.16),0 16px 34px rgba(20,22,26,.16)}
+.nd.hot .t,.nd.lit .t{color:var(--ink)} .nd.hot .s{color:var(--acc)}
+.nd.ghost{opacity:.38;box-shadow:none}
+.nd.ghost .t{color:var(--text-muted)}
+
+</style>
+</head><body>
+<div class="frame ch" id="C3-start" style="--acc:#8F6500;--acc-rgb:143,101,0"><div class="orb" style="width:760px;height:760px;right:-300px;top:-380px;background:rgba(143,101,0,.55)"></div><div class="orb" style="width:520px;height:520px;left:-260px;bottom:-300px;background:#c9cfd8;opacity:.22"></div><div class="hdr" style="top:64px"><div class="ey">Total crypto market cap</div><h1>Wiped out in around <span class="acc">three weeks</span></h1><div class="divider"></div></div><svg class="plot" viewBox="0 0 1920 1080"><defs><clipPath id="c3c-start"><rect x="1076" y="0" width="1.5" height="1080"/></clipPath></defs><line x1="1080" x2="1780" y1="694.44" y2="694.44" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="1062" y="700.44" text-anchor="end">2.00T</text><line x1="1080" x2="1780" y1="580.56" y2="580.56" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="1062" y="586.56" text-anchor="end">2.25T</text><line x1="1080" x2="1780" y1="466.67" y2="466.67" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="1062" y="472.67" text-anchor="end">2.50T</text><line x1="1080" x2="1780" y1="352.78" y2="352.78" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="1062" y="358.78" text-anchor="end">2.75T</text><line x1="1080" x2="1780" y1="740" y2="740" stroke="#7A808B" stroke-width="2"/><line x1="1080.0" x2="1080.0" y1="740" y2="749" stroke="#7A808B" stroke-width="2"/><text class="tk" x="1080.0" y="780" text-anchor="middle">OCT 29</text><line x1="1293.04" x2="1293.04" y1="740" y2="749" stroke="#7A808B" stroke-width="2"/><text class="tk" x="1293.04" y="780" text-anchor="middle">NOV 5</text><line x1="1506.09" x2="1506.09" y1="740" y2="749" stroke="#7A808B" stroke-width="2"/><text class="tk" x="1506.09" y="780" text-anchor="middle">NOV 12</text><line x1="1780.0" x2="1780.0" y1="740" y2="749" stroke="#7A808B" stroke-width="2"/><text class="tk" x="1780.0" y="780" text-anchor="middle">NOV 21</text><path d="M1080.0,740 L1080.0,367.37 L1110.43,419.27 L1140.87,420.87 L1171.3,420.69 L1201.74,413.75 L1232.17,432.34 L1262.61,424.21 L1293.04,379.14 L1323.48,444.43 L1353.91,445.38 L1384.35,448.88 L1414.78,469.4 L1445.22,464.38 L1475.65,489.84 L1506.09,489.8 L1536.52,518.63 L1566.96,556.12 L1597.39,616.84 L1627.83,601.59 L1658.26,608.12 L1688.7,602.36 L1719.13,628.44 L1749.57,637.28 L1780.0,684.88 L1780.0,740 Z" fill="rgba(143,101,0,.13)" clip-path="url(#c3c-start)"/><path d="M1080.0,367.37 L1110.43,419.27 L1140.87,420.87 L1171.3,420.69 L1201.74,413.75 L1232.17,432.34 L1262.61,424.21 L1293.04,379.14 L1323.48,444.43 L1353.91,445.38 L1384.35,448.88 L1414.78,469.4 L1445.22,464.38 L1475.65,489.84 L1506.09,489.8 L1536.52,518.63 L1566.96,556.12 L1597.39,616.84 L1627.83,601.59 L1658.26,608.12 L1688.7,602.36 L1719.13,628.44 L1749.57,637.28 L1780.0,684.88" fill="none" stroke="var(--acc)" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" clip-path="url(#c3c-start)"/><g><circle cx="1080.0" cy="367.37" r="9" fill="#fff" stroke="var(--acc)" stroke-width="4"/></g><g><circle cx="1080.0" cy="367.37" r="23" fill="var(--acc)" opacity=".16"/><circle cx="1080.0" cy="367.37" r="10" fill="var(--acc)" stroke="var(--acc)" stroke-width="4"/></g></svg><div class="big" style="left:116px;top:330px;font-size:196px;line-height:1;letter-spacing:-.03em">2.718T</div><div class="big" style="left:124px;top:552px;font-size:34px;color:var(--text-muted)">OCT 29, 2026</div><div class="pill" style="left:124px;top:262px">From <span class="mono" style="font-weight:600">2.718T</span>, Oct 29, 2026</div><div class="big hide" style="left:120px;top:650px;font-size:92px;line-height:1;color:var(--acc);font-family:'Playfair Display',serif;font-weight:900;letter-spacing:-.01em">Around <span class="mono" style="font-size:88px">697B</span> gone</div><div class="pill acc hide" style="left:124px;top:782px;font-size:26px;padding:10px 24px">Minus <span class="mono">25.6%</span></div><div class="endlbl hide" style="left:1802px;top:668.8777777777777px;font-size:24px;color:var(--acc)">2.021T</div><div class="endlbl" style="left:1068px;top:315.3555555555555px;font-size:22px;color:var(--text-muted)">2.718T</div><div class="src">Total crypto market cap: CoinMarketCap daily prints (00:15 UTC), Oct 29 to Nov 21, 2026 · 697B and minus 25.6% = 2.718T to 2.021T · read 2026-11-22</div></div>
+<div class="frame ch" id="C3-mid" style="--acc:#8F6500;--acc-rgb:143,101,0"><div class="orb" style="width:760px;height:760px;right:-300px;top:-380px;background:rgba(143,101,0,.55)"></div><div class="orb" style="width:520px;height:520px;left:-260px;bottom:-300px;background:#c9cfd8;opacity:.22"></div><div class="hdr" style="top:64px"><div class="ey">Total crypto market cap</div><h1>Wiped out in around <span class="acc">three weeks</span></h1><div class="divider"></div></div><svg class="plot" viewBox="0 0 1920 1080"><defs><clipPath id="c3c-mid"><rect x="1076" y="0" width="366.72" height="1080"/></clipPath></defs><line x1="1080" x2="1780" y1="694.44" y2="694.44" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="1062" y="700.44" text-anchor="end">2.00T</text><line x1="1080" x2="1780" y1="580.56" y2="580.56" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="1062" y="586.56" text-anchor="end">2.25T</text><line x1="1080" x2="1780" y1="466.67" y2="466.67" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="1062" y="472.67" text-anchor="end">2.50T</text><line x1="1080" x2="1780" y1="352.78" y2="352.78" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="1062" y="358.78" text-anchor="end">2.75T</text><line x1="1080" x2="1780" y1="740" y2="740" stroke="#7A808B" stroke-width="2"/><line x1="1080.0" x2="1080.0" y1="740" y2="749" stroke="#7A808B" stroke-width="2"/><text class="tk" x="1080.0" y="780" text-anchor="middle">OCT 29</text><line x1="1293.04" x2="1293.04" y1="740" y2="749" stroke="#7A808B" stroke-width="2"/><text class="tk" x="1293.04" y="780" text-anchor="middle">NOV 5</text><line x1="1506.09" x2="1506.09" y1="740" y2="749" stroke="#7A808B" stroke-width="2"/><text class="tk" x="1506.09" y="780" text-anchor="middle">NOV 12</text><line x1="1780.0" x2="1780.0" y1="740" y2="749" stroke="#7A808B" stroke-width="2"/><text class="tk" x="1780.0" y="780" text-anchor="middle">NOV 21</text><path d="M1080.0,740 L1080.0,367.37 L1110.43,419.27 L1140.87,420.87 L1171.3,420.69 L1201.74,413.75 L1232.17,432.34 L1262.61,424.21 L1293.04,379.14 L1323.48,444.43 L1353.91,445.38 L1384.35,448.88 L1414.78,469.4 L1445.22,464.38 L1475.65,489.84 L1506.09,489.8 L1536.52,518.63 L1566.96,556.12 L1597.39,616.84 L1627.83,601.59 L1658.26,608.12 L1688.7,602.36 L1719.13,628.44 L1749.57,637.28 L1780.0,684.88 L1780.0,740 Z" fill="rgba(143,101,0,.13)" clip-path="url(#c3c-mid)"/><path d="M1080.0,367.37 L1110.43,419.27 L1140.87,420.87 L1171.3,420.69 L1201.74,413.75 L1232.17,432.34 L1262.61,424.21 L1293.04,379.14 L1323.48,444.43 L1353.91,445.38 L1384.35,448.88 L1414.78,469.4 L1445.22,464.38 L1475.65,489.84 L1506.09,489.8 L1536.52,518.63 L1566.96,556.12 L1597.39,616.84 L1627.83,601.59 L1658.26,608.12 L1688.7,602.36 L1719.13,628.44 L1749.57,637.28 L1780.0,684.88" fill="none" stroke="var(--acc)" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" clip-path="url(#c3c-mid)"/><g><circle cx="1080.0" cy="367.37" r="9" fill="#fff" stroke="var(--acc)" stroke-width="4"/></g><g><circle cx="1445.22" cy="464.38" r="23" fill="var(--acc)" opacity=".16"/><circle cx="1445.22" cy="464.38" r="10" fill="var(--acc)" stroke="var(--acc)" stroke-width="4"/></g></svg><div class="big" style="left:116px;top:330px;font-size:196px;line-height:1;letter-spacing:-.03em">2.505T</div><div class="big" style="left:124px;top:552px;font-size:34px;color:var(--text-muted)">NOV 10, 2026</div><div class="pill" style="left:124px;top:262px">From <span class="mono" style="font-weight:600">2.718T</span>, Oct 29, 2026</div><div class="big hide" style="left:120px;top:650px;font-size:92px;line-height:1;color:var(--acc);font-family:'Playfair Display',serif;font-weight:900;letter-spacing:-.01em">Around <span class="mono" style="font-size:88px">697B</span> gone</div><div class="pill acc hide" style="left:124px;top:782px;font-size:26px;padding:10px 24px">Minus <span class="mono">25.6%</span></div><div class="endlbl hide" style="left:1802px;top:668.8777777777777px;font-size:24px;color:var(--acc)">2.021T</div><div class="endlbl" style="left:1068px;top:315.3555555555555px;font-size:22px;color:var(--text-muted)">2.718T</div><div class="src">Total crypto market cap: CoinMarketCap daily prints (00:15 UTC), Oct 29 to Nov 21, 2026 · 697B and minus 25.6% = 2.718T to 2.021T · read 2026-11-22</div></div>
+<div class="frame ch" id="C3-payoff" style="--acc:#8F6500;--acc-rgb:143,101,0"><div class="orb" style="width:760px;height:760px;right:-300px;top:-380px;background:rgba(143,101,0,.55)"></div><div class="orb" style="width:520px;height:520px;left:-260px;bottom:-300px;background:#c9cfd8;opacity:.22"></div><div class="hdr" style="top:64px"><div class="ey">Total crypto market cap</div><h1>Wiped out in around <span class="acc">three weeks</span></h1><div class="divider"></div></div><svg class="plot" viewBox="0 0 1920 1080"><defs><clipPath id="c3c-payoff"><rect x="1076" y="0" width="701.5" height="1080"/></clipPath></defs><line x1="1080" x2="1780" y1="694.44" y2="694.44" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="1062" y="700.44" text-anchor="end">2.00T</text><line x1="1080" x2="1780" y1="580.56" y2="580.56" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="1062" y="586.56" text-anchor="end">2.25T</text><line x1="1080" x2="1780" y1="466.67" y2="466.67" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="1062" y="472.67" text-anchor="end">2.50T</text><line x1="1080" x2="1780" y1="352.78" y2="352.78" stroke="#D6D2C7" stroke-width="1.5" stroke-dasharray="4 7"/><text class="tk" x="1062" y="358.78" text-anchor="end">2.75T</text><line x1="1080" x2="1780" y1="740" y2="740" stroke="#7A808B" stroke-width="2"/><line x1="1080.0" x2="1080.0" y1="740" y2="749" stroke="#7A808B" stroke-width="2"/><text class="tk" x="1080.0" y="780" text-anchor="middle">OCT 29</text><line x1="1293.04" x2="1293.04" y1="740" y2="749" stroke="#7A808B" stroke-width="2"/><text class="tk" x="1293.04" y="780" text-anchor="middle">NOV 5</text><line x1="1506.09" x2="1506.09" y1="740" y2="749" stroke="#7A808B" stroke-width="2"/><text class="tk" x="1506.09" y="780" text-anchor="middle">NOV 12</text><line x1="1780.0" x2="1780.0" y1="740" y2="749" stroke="#7A808B" stroke-width="2"/><text class="tk" x="1780.0" y="780" text-anchor="middle">NOV 21</text><path d="M1080.0,740 L1080.0,367.37 L1110.43,419.27 L1140.87,420.87 L1171.3,420.69 L1201.74,413.75 L1232.17,432.34 L1262.61,424.21 L1293.04,379.14 L1323.48,444.43 L1353.91,445.38 L1384.35,448.88 L1414.78,469.4 L1445.22,464.38 L1475.65,489.84 L1506.09,489.8 L1536.52,518.63 L1566.96,556.12 L1597.39,616.84 L1627.83,601.59 L1658.26,608.12 L1688.7,602.36 L1719.13,628.44 L1749.57,637.28 L1780.0,684.88 L1780.0,740 Z" fill="rgba(143,101,0,.13)" clip-path="url(#c3c-payoff)"/><path d="M1080.0,367.37 L1110.43,419.27 L1140.87,420.87 L1171.3,420.69 L1201.74,413.75 L1232.17,432.34 L1262.61,424.21 L1293.04,379.14 L1323.48,444.43 L1353.91,445.38 L1384.35,448.88 L1414.78,469.4 L1445.22,464.38 L1475.65,489.84 L1506.09,489.8 L1536.52,518.63 L1566.96,556.12 L1597.39,616.84 L1627.83,601.59 L1658.26,608.12 L1688.7,602.36 L1719.13,628.44 L1749.57,637.28 L1780.0,684.88" fill="none" stroke="var(--acc)" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" clip-path="url(#c3c-payoff)"/><g><circle cx="1080.0" cy="367.37" r="9" fill="#fff" stroke="var(--acc)" stroke-width="4"/></g><g><circle cx="1780.0" cy="684.88" r="23" fill="var(--acc)" opacity=".16"/><circle cx="1780.0" cy="684.88" r="10" fill="var(--acc)" stroke="var(--acc)" stroke-width="4"/></g></svg><div class="big" style="left:116px;top:330px;font-size:196px;line-height:1;letter-spacing:-.03em">2.021T</div><div class="big" style="left:124px;top:552px;font-size:34px;color:var(--text-muted)">NOV 21, 2026</div><div class="pill" style="left:124px;top:262px">From <span class="mono" style="font-weight:600">2.718T</span>, Oct 29, 2026</div><div class="big" style="left:120px;top:650px;font-size:92px;line-height:1;color:var(--acc);font-family:'Playfair Display',serif;font-weight:900;letter-spacing:-.01em">Around <span class="mono" style="font-size:88px">697B</span> gone</div><div class="pill acc" style="left:124px;top:782px;font-size:26px;padding:10px 24px">Minus <span class="mono">25.6%</span></div><div class="endlbl" style="left:1802px;top:668.8777777777777px;font-size:24px;color:var(--acc)">2.021T</div><div class="endlbl" style="left:1068px;top:315.3555555555555px;font-size:22px;color:var(--text-muted)">2.718T</div><div class="src">Total crypto market cap: CoinMarketCap daily prints (00:15 UTC), Oct 29 to Nov 21, 2026 · 697B and minus 25.6% = 2.718T to 2.021T · read 2026-11-22</div></div>
+<script type="application/json" id="chart-data">{"id": "C3", "series_T": [["2026-10-29", 2.718], ["2026-10-30", 2.604], ["2026-10-31", 2.6005], ["2026-11-01", 2.6009], ["2026-11-02", 2.6162], ["2026-11-03", 2.5753], ["2026-11-04", 2.5932], ["2026-11-05", 2.6921], ["2026-11-06", 2.5488], ["2026-11-07", 2.5467], ["2026-11-08", 2.5391], ["2026-11-09", 2.494], ["2026-11-10", 2.505], ["2026-11-11", 2.4491], ["2026-11-12", 2.4492], ["2026-11-13", 2.3859], ["2026-11-14", 2.3036], ["2026-11-15", 2.1703], ["2026-11-16", 2.2038], ["2026-11-17", 2.1895], ["2026-11-18", 2.2021], ["2026-11-19", 2.1449], ["2026-11-20", 2.1255], ["2026-11-21", 2.021]], "plot": {"x0": 1080, "x1": 1780, "y0": 330, "y1": 740, "dmin": "2026-10-29 00:00:00", "dmax": "2026-11-21 00:00:00", "vmin": 1.9, "vmax": 2.8, "log": false}}</script>
+</body></html>

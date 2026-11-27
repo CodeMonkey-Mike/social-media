@@ -1,0 +1,39 @@
+{
+  "title": "How I'd Run My LangGraph Agent Pipeline on AWS",
+  "description": [
+    "My LangGraph pipeline runs 7 AI agents on one PC, and moving it to AWS as a real production system changes almost everything except the graph itself, starting with the question everyone asks first.",
+    "I walk through all 5 layers, from S3 and AgentCore Runtime to Bedrock, AWS Batch on Spot and Remotion Lambda, plus how a human gate that once waited 9 hours survives an 8-hour session and what the media bill comes to for one 63-minute livestream."
+  ],
+  "hashtags": ["#AIEngineering", "#LangGraph", "#AWS"],
+  "chapter_stamps": [
+    ["0:00", "The Open"],
+    ["0:50", "Ingest"],
+    ["1:46", "Where the Graph Runs"],
+    ["2:44", "The Agents"],
+    ["3:42", "The Images"],
+    ["4:00", "Does It Run on EC2?"],
+    ["5:04", "Publishing"],
+    ["5:21", "Watching It"],
+    ["5:59", "The Takeaway"]
+  ],
+  "keywords": [
+    "langgraph",
+    "langgraph aws",
+    "amazon bedrock agentcore",
+    "ai agents in production",
+    "amazon bedrock",
+    "claude on bedrock",
+    "ai agent architecture",
+    "langgraph deployment",
+    "aws lambda",
+    "ai engineering"
+  ],
+  "misspellings": [
+    "langraph",
+    "lang graph",
+    "agent core",
+    "aws bedrok",
+    "claud code",
+    "lang graph aws"
+  ]
+}

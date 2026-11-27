@@ -1,0 +1,126 @@
+{
+  "label": "AWS",
+  "author": "Mike",
+  "slides": [
+    {
+      "kind": "hook",
+      "headline": "My LangGraph pipeline [on AWS]"
+    },
+    {
+      "kind": "text",
+      "headline": "Today it runs on [one PC]",
+      "body": "The graph and its checkpoints, {7} agents in Claude Code, one browser for images, Whisper on my GPU, the renders."
+    },
+    {
+      "kind": "rows",
+      "headline": "Layer 1, [ingest]",
+      "rows": [
+        [
+          "Recording",
+          "S3, then EventBridge and Lambda"
+        ],
+        [
+          "FFmpeg",
+          "MediaConvert"
+        ],
+        [
+          "Face tracker",
+          "Rekognition"
+        ],
+        [
+          "Whisper",
+          "Transcribe, word timestamps"
+        ]
+      ],
+      "highlight": 3
+    },
+    {
+      "kind": "stat",
+      "headline": "A gate longer than [a session]",
+      "stat": "9",
+      "stat_sub": "hours, my first gate's wait for me",
+      "body": "An AgentCore Runtime session lasts up to {8} hours. So the graph saves state to DynamoDB, and my approval resumes it in a new session."
+    },
+    {
+      "kind": "rows",
+      "headline": "The agents on [Bedrock]",
+      "rows": [
+        [
+          "Models",
+          "Fable, Opus and Sonnet"
+        ],
+        [
+          "Tools",
+          "AgentCore Gateway, MCP tools"
+        ],
+        [
+          "Logins",
+          "AgentCore Identity vault"
+        ],
+        [
+          "Each agent",
+          "Its own IAM role"
+        ]
+      ],
+      "highlight": 3
+    },
+    {
+      "kind": "text",
+      "headline": "No browser, [no lock]",
+      "body": "One browser was busy {3.9} hours of the build. On AWS, an image model on Bedrock, and the {7} shorts stop taking turns."
+    },
+    {
+      "kind": "stat",
+      "headline": "Does it run on [EC2]?",
+      "stat": "90%",
+      "stat_sub": "max discount on EC2 Spot, {2}-minute warning",
+      "body": "Yes, but only the heavy work. AWS Batch starts servers when a job arrives, and every step skips what's done."
+    },
+    {
+      "kind": "text",
+      "headline": "The renders [fan out]",
+      "body": "Remotion Lambda splits one render across up to {200} Lambda functions. Remotion's example: a {10}-minute HD video for around {10} cents."
+    },
+    {
+      "kind": "rows",
+      "headline": "What changes is [around it]",
+      "rows": [
+        [
+          "1",
+          "Where the state lives"
+        ],
+        [
+          "2",
+          "Who holds the keys"
+        ],
+        [
+          "3",
+          "What runs in parallel"
+        ]
+      ]
+    },
+    {
+      "kind": "cta",
+      "headline": "Watch the [full video]",
+      "sub": "How I'd Run My LangGraph Agent Pipeline on AWS",
+      "button": "Link in the post"
+    }
+  ],
+  "post": {
+    "headline": "How I'd move a 7-agent LangGraph pipeline from one PC to AWS",
+    "points": [
+      "A 9-hour human gate survives an 8-hour AgentCore session",
+      "EC2 runs only the heavy work, on Spot at up to 90% off"
+    ],
+    "hashtags": [
+      "#AIEngineering",
+      "#LangGraph",
+      "#AWS"
+    ]
+  },
+  "video_url": "https://youtu.be/joUlFD5Xe3A",
+  "video_title": "How I'd Run My LangGraph Agent Pipeline on AWS",
+  "channel": "@aiEngineeringSimplified",
+  "channel_name": "AI Engineering Simplified",
+  "face": "thumbnail/yt-post-face-full.png"
+}

@@ -1,0 +1,140 @@
+    0.00 -     4.24  My livestream pipeline runs on one PC.
+    5.12 -     9.42  What I wanna do here is show you how I would set this up
+    9.42 -    13.22  on AWS and like a real production environment.
+   13.46 -    16.00  Gonna be interesting, so let's get into it.
+   16.14 -    18.54  Today, everything lives in one box.
+   18.70 -    22.80  A graph and its checkpoints, seven agents and cloud code,
+   23.44 -    26.40  one browser for images, Whisper on my GPU,
+   27.20 -    29.54  the renders and the posting scripts.
+   29.54 -    32.72  For every piece, I'll show you what I do today
+   32.72 -    37.28  and the AWS service that I would do it with in five layers.
+   37.72 -    41.56  Injust, the graph, the agents, the heavy work
+   42.18 -    42.82  and publishing.
+   43.18 -    46.68  And I'll answer the question that everybody asks first,
+   47.10 -    48.90  does this run on EC2?
+   49.20 -    51.70  All right, so layer one, ingest.
+   52.22 -    54.78  Today, the recording sits in my folder on my PC.
+   55.10 -    59.24  On AWS, it goes to S3, which is Amazon's file storage.
+   59.24 -    62.82  S3 can announce every new file to EventBridge.
+   63.14 -    65.54  EventBridge is the event router in Amazon.
+   65.82 -    69.36  EventBridge runs a Lambda function, a small piece of code.
+   69.40 -    71.86  AWS runs only when something calls it
+   71.86 -    73.86  and that starts the graph.
+   74.16 -    77.42  Today, FFmpeg makes the low bit rate master.
+   77.80 -    80.32  On AWS, that's MediaConvert,
+   80.76 -    82.22  which is Amazon's video converter.
+   82.60 -    84.86  My face tracker makes the vertical crop.
+   85.42 -    87.62  On AWS, recognition,
+   88.04 -    90.22  Amazon's image and video analysis service
+   90.22 -    91.66  finds my face in a video.
+   91.94 -    93.62  And Whisper writes the transcript.
+   94.26 -    98.12  On AWS, that's Transcribe, Amazon's speech to text.
+   98.34 -   100.76  It gives a timestamp on every word
+  100.76 -   103.04  and the words Whisper keeps gets wrong,
+  103.36 -   106.18  like towel, go into its custom vocabulary.
+  106.54 -   108.70  Layer two, the graph.
+  108.98 -   111.14  Today, it's a Python process on my PC.
+  111.86 -   115.24  On AWS, it runs on Agent Core Runtime,
+  115.48 -   116.78  Amazon hosting for agents.
+  117.14 -   119.26  Each run gets its own MicroVM,
+  119.52 -   123.30  a small, isolated virtual machine, for up to eight hours.
+  123.90 -   127.76  It builds by the second and the CPU charge drops to zero
+  127.76 -   128.96  while it waits on a model.
+  129.34 -   130.74  The checkpoints move too.
+  131.44 -   132.90  Today, they're in SQLite.
+  133.16 -   138.18  On AWS, they go to DynamoDB, Amazon's managed database,
+  138.46 -   139.62  through a LandGraph package
+  139.62 -   141.76  called LandGraph Checkpoint AWS.
+  142.26 -   143.38  Now the human gates.
+  143.92 -   147.10  My first gate once waited nine hours for me.
+  147.46 -   148.72  The session lasts eight hours.
+  148.88 -   152.24  So at the gate, the graph saves the state to DynamoDB
+  152.24 -   153.70  and the session ends.
+  154.60 -   158.28  SMS, Amazon notification service, sends me an email.
+  158.56 -   159.98  I'll approve on the dashboard.
+  160.56 -   163.24  A Lambda function resumes the graph on the same thread
+  163.24 -   164.60  in a new session.
+  164.96 -   166.60  Layer three, the agents.
+  167.40 -   170.06  Today, Cloud Code calls Anthropic directly.
+  170.36 -   172.80  On AWS, it calls Bedrock,
+  173.16 -   175.06  Amazon service for running AI models
+  175.06 -   178.82  and Fable, Opus, and Sonnet are all on it.
+  178.98 -   179.96  It's one-setting.
+  180.14 -   181.94  Cloud Code use Bedrock
+  181.94 -   185.36  and each agent runs through the Cloud Agent SDK,
+  185.88 -   187.88  which is called code as a library
+  188.52 -   189.80  in its own runtime session.
+  190.18 -   192.20  There are tools go behind Agent Core Gateway,
+  192.72 -   196.24  which turns my APIs and functions into MCP tools,
+  196.70 -   198.92  the open standard agents use to call tools.
+  199.12 -   201.80  And the logins go into Agent Core Identity,
+  202.02 -   204.22  a vault for agent keys and tokens.
+  204.62 -   207.22  Each agent also gets an IAM role.
+  207.60 -   210.52  IAM is how AWS decides who can call what
+  210.52 -   214.24  and a role lists exactly what one agent is allowed to call.
+  214.62 -   217.04  Today, the builder doesn't make images,
+  217.30 -   218.30  but nothing stops it.
+  218.54 -   221.80  On AWS, its role only allows Cloud models,
+  221.80 -   222.88  so it can't.
+  223.00 -   225.16  Now the bottleneck from my last video,
+  225.54 -   227.48  one browser making the images,
+  227.74 -   231.52  busy for 3.9 hours of a four hour and 30 minute build.
+  231.78 -   234.02  On AWS, I dropped the browser
+  234.02 -   235.92  and call an image model on Bedrock
+  235.92 -   238.56  and the seven shorts stopped taking turns.
+  238.92 -   240.72  No browser, no log.
+  241.02 -   243.16  So does it run on EC2?
+  243.80 -   246.58  Well, yes, but only the heavy work
+  246.58 -   248.74  and only when there's a job to run.
+  249.00 -   250.80  The graphs agent on Agent Core
+  250.80 -   252.48  and the models are on Bedrock.
+  252.74 -   255.42  The FFMPIC jobs go to AWS batch,
+  255.82 -   257.34  a job queue that starts the servers
+  257.34 -   259.60  when the work arrives and stops them after.
+  259.94 -   262.22  Those servers are EC2 spot instances.
+  262.50 -   265.72  Spare capacity Amazon sells for up to 90% off,
+  265.96 -   268.06  but it can take one back with two minutes warning.
+  268.38 -   270.54  That's fine here because every step reads
+  270.54 -   272.50  what's already done and skips it.
+  272.96 -   275.80  On AWS, what's done lives in S3.
+  276.04 -   279.04  Whisper, if I keep it over transcribed, needs a GPU.
+  279.04 -   282.02  On AWS, that's a G6 instance
+  282.02 -   284.96  with an EC2 server with an Nvidia L4.
+  285.20 -   288.74  Today, Remotion renders on my PC in one minute chunks.
+  288.94 -   292.08  On AWS, Remotion Lambda splits a render
+  292.08 -   294.68  across up to 200 Lambda functions at once,
+  295.02 -   296.44  at least 20 frames each.
+  296.76 -   300.06  Remotion's own example is a 10 minute HD video
+  300.06 -   301.28  for around 10 cents.
+  301.54 -   304.22  Each render has to finish inside 15 minutes.
+  304.48 -   305.70  Layer five publishing.
+  306.26 -   308.54  Today, the posts wait in JSON files.
+  308.54 -   311.76  On AWS, there are rows in DynamoDB.
+  312.04 -   314.16  Each post gets a one time schedule
+  314.16 -   318.02  in EventBridge Scheduler, Amazon's alarm clock for code.
+  318.68 -   321.74  At that time, it fires a Lambda function that posts it.
+  321.90 -   323.72  Today, I read log files.
+  324.26 -   328.16  On AWS, every agent is run and traced into CloudWatch,
+  328.56 -   329.86  Amazon's monitoring servers,
+  330.48 -   333.58  latency, token usage, and errors per session.
+  333.86 -   336.56  The media bill for a 63 minute live stream
+  336.56 -   340.08  from my last video, the transcript, 38 cents.
+  340.30 -   342.04  The images, $1.6.
+  342.52 -   344.22  The renders, a few pennies.
+  344.34 -   345.86  That's before the model tokens,
+  346.34 -   348.40  which I'd watch per agent in CloudWatch.
+  348.58 -   351.60  To be clear, most of the costs will go
+  351.60 -   353.26  to where the model tokens are.
+  353.98 -   355.96  For a one 63 minute live stream,
+  356.40 -   359.20  it could get up to $80 or maybe a little bit more.
+  359.48 -   361.42  So the graph barely changes.
+  361.66 -   363.58  What changes is everything around it.
+  363.58 -   366.16  Where the state lives, who holds the keys,
+  366.78 -   369.84  what runs in parallel, that's the production work.
+  370.08 -   372.68  If you haven't seen the last two videos on this graph,
+  372.90 -   374.18  I would say start right here.
+  374.54 -   376.40  It's a playlist all about line graph.
+  376.92 -   378.72  Make sure you subscribe if you're new here
+  378.72 -   380.94  and you can check this playlist right here
+  380.94 -   384.64  because we got tons of stuff related to AI engineering
+  384.64 -   388.18  on this channel called AI Engineering Simplified.

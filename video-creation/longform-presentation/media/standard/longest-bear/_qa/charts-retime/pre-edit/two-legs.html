@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>two-legs (part 1): Two Bear Markets</title>
+<!--
+  ANIMATED CHART, longest-bear CH3 (scripted standard video, cover_runs.py kind "animated-chart" = card-overlays kind "clip").
+  1920 x 1080. TIME-DRIVEN: window.setT(t) draws the exact frame for t (seconds from the start of this card's window) as a
+  pure function of t: no CSS transitions or animations, no rAF, no clock. Past its last move it HOLDS the end state.
+  Rendered by video-creation/longform-presentation/skills/card-overlays/html_clip.py (setT(f / 30) + a screenshot per frame).
+  Open with #t=12.5 in the URL to see one moment; with no hash it shows the end state.
+
+  Part 1 of 2. The drawing is two-legs-core.js (shared with two-legs-2.html, which opens on this page's last frame);
+  the data is btc-closes.js (build_chart_data.py: Yahoo daily closes + the two averages + the facts, checked against
+  research/btc-stats.json). Every figure on screen comes from that file, never from this page.
+
+  WINDOW (estimate, before the recording): the four [COVER] lines above "two-legs" in SCRIPT.md, 125 words at 3 words a
+  second from 0.3 s before the first word = about 42 s. Each time in T below is the estimated moment of its cue word.
+  RE-TIME after the cue step: CUE-REPORT.md section 6 gives the real window; put each cue word's time (from the spine's
+  words JSON, minus the window start) into T, keep the order, re-open the page. T.draw .. T.aboveTo drive the line itself.
+  This page reads chart-base.css, two-legs-core.js and btc-closes.js: after changing one of them, touch this file
+  (build_chart_data.py does) so cover_runs.py re-renders its clip.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chart-base.css">
+</head>
+<body>
+<script src="btc-closes.js"></script>
+<script src="two-legs-core.js"></script>
+<script>
+(function () {
+'use strict';
+/* the moves, in seconds from the window start (estimated: 3 words a second; the cue word is in capitals) */
+var T = {
+  head:      0.00,   // the frame builds in: eyebrow, headline, divider, legend (0.0 to 0.8)
+  axes:      0.15,   // the time axis draws left to right, the gridlines and price labels fade in (0.15 to 1.05)
+  top:       2.40,   // "started at that TOP" (2.63): the TOP dot on the first close
+  topLbl:    3.20,   // "on OCTOBER 6, 2025" (3.30): TOP / OCT 6, 2025
+  draw:      3.50,   // the three lines start drawing from the top
+  below:     8.30,   // "when Bitcoin closed BELOW" (8.30): the line crosses under the gold line (the first dip, Nov 4)
+  lit50:     8.80,   // "below the 50-WEEK moving average" (8.97): the gold line glows once, its legend row lights
+  wk1:      12.97,   // "the weeks ending November SIXTEEN" (12.97): the line reaches it, the first weekly close under
+  wk2:      13.97,   // "and November TWENTY-THREE" (13.97): the second; the line rests there
+  conf:     14.05,   // BEAR CONFIRMED / 2 WEEKLY CLOSES / UNDER THE 50-WEEK / NOV 16 AND NOV 23
+  fall:     14.40,   // "It BOTTOMED on June 30, 2026" (14.30): the line falls to the first bottom ...
+  bottom:   16.10,   // ... and lands on it (Jun 30)
+  leg1:     16.55,   // "That's 267 days" (16.63): LEG 1 / 267 DAYS
+  leg1Pct:  18.90,   // "and a 53 percent fall" (18.97): -53%
+  rally:    19.95,   // "Then Bitcoin RALLIED 48 percent" (19.97): the line rises to the rally top ...
+  rallyTop: 21.30,   // ... and lands on it: +48%
+  rallyTo:  22.25,   // "to around 86 THOUSAND" (22.30): TO 86K
+  above:    24.95,   // "from SEPTEMBER 18" (24.97): the gold opens on Sep 18, the line draws on ...
+  aboveTo:  26.30,   // "through NOVEMBER 7" (26.30): ... and stops on Nov 7, part 1's last day
+  aboveLbl: 27.25,   // "it stayed ABOVE BOTH averages" (27.30): the bracket draws, ABOVE BOTH
+  aboveDays: 28.60,  // "That's 51 days" (28.63): 51 DAYS
+  over:     32.90    // "that bear market was OVER" (33.30): ABOVE BOTH glows once (1.2 s), then holds to the end
+};
+
+var H = TwoLegs.h, DY = TwoLegs.DAYS, fade = H.fade, bump = H.bump;
+var cursor = H.pchip([[T.draw, DY.top], [T.below, DY.dip], [T.wk1, DY.wk1], [T.wk2, DY.wk2], [T.fall, DY.wk2], [T.bottom, DY.bottom],
+                      [T.rally, DY.bottom], [T.rallyTop, DY.rally], [T.above, DY.rally], [T.aboveTo, DY.aboveTo]]);
+
+function stateAt(t) {
+  return {
+    head: fade(t, T.head, 0.6), legend: fade(t, T.head + 0.25, 0.6), axis: H.eOut(H.prog(t, T.axes, 0.9)),
+    grid: fade(t, T.axes + 0.1, 0.7), src: fade(t, T.axes + 0.6, 0.6),
+    cur: cursor(t),
+    top: fade(t, T.top, 0.3), topLbl: fade(t, T.topLbl, 0.4),
+    lit50: bump(t, T.lit50, 1.4),
+    wk1: fade(t, T.wk1 - 0.05, 0.3), wk2: fade(t, T.wk2 - 0.05, 0.3), conf: fade(t, T.conf, 0.45),
+    bottom: fade(t, T.bottom - 0.1, 0.3), leg1: fade(t, T.leg1, 0.45), leg1Pct: fade(t, T.leg1Pct, 0.4),
+    rallyDot: fade(t, T.rallyTop - 0.1, 0.3), rally: fade(t, T.rallyTop, 0.4), rallyTo: fade(t, T.rallyTo, 0.4),
+    above: fade(t, T.above, 0.5), aboveLbl: fade(t, T.aboveLbl, 0.5), aboveDays: fade(t, T.aboveDays, 0.4),
+    abovePulse: bump(t, T.over, 1.2),
+    lost: 0, end: 0, leg2: 0, leg2Pct: 0, payoff: 0, pulse2: 0
+  };
+}
+
+window.T = T;
+window.stateAt = stateAt;
+window.setT = function (t) { TwoLegs.render(stateAt(+t || 0)); };
+var m = /t=([0-9.]+)/.exec(location.hash);
+window.setT(m ? parseFloat(m[1]) : 60);
+})();
+</script>
+</body>
+</html>

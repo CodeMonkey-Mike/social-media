@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>livestream-aws charts, group 2: images, batch-spot, render-fanout, publish, watch (16:9)</title>
+<!--
+  SYSTEM-DESIGN CHART STILLS, full-frame covers, 1920x1080. SCRIPT.md CARDS rows images, batch-spot, render-fanout,
+  publish, watch (group 2 of 2; group 1 = today-pc, aws-map, ingest, graph-home, gate, agents, another file).
+  Every number and AWS fact is from RESEARCH.md. The look is the house chart kit (chart.css / chart.js / shoot.py in
+  this folder, shared with group 1 and NOT edited): the rest muted but readable, red = the problem, green = the good
+  result, gold = a caveat.
+
+  The TODAY / ON AWS conventions are group 1's (group1.css), so the whole video reads as one set; their values are
+  COPIED into the <style> below, not linked, so an edit to group1.css never moves these layouts:
+    - TODAY beside ON AWS: TODAY on the left in a dashed, flatter zone, its head a PC icon + "my PC", ON AWS on the right. A
+      TODAY piece is neutral: lit = WHITE, never cyan. An AWS piece lights cyan. A TODAY piece and the AWS piece that
+      would replace it sit on the same row and light together; side by side, a dashed "swap" arrow joins them.
+    - An AWS box: an icon, the product name as AWS writes it (never uppercased), its plain one-line description under
+      it in small caps (cyan when lit; the CARDS wording, Remotion Lambda's = group 1's aws-map wording), then what it
+      does here. TODAY boxes are plain (no icon).
+    - A state lights its parts; anything a state REVEALS (the cost line, the retried job, the 2-MINUTE WARNING) is
+      laid out in every state and hidden (.ap), so the states are the same pixels except for what is lit.
+
+  images (CH5)        before  "Now the bottleneck from my last video: one browser making the images, busy for 3.9
+                               hours of a 4 hour 38 minute build."           -> TODAY lit (white): 7 shorts funnel into 1 lock,
+                               1 browser, the busy bar (3.9 h of 4 h 38 min = 84.2% of the bar, red)
+                      after   "On AWS, I'd drop the browser and call an image model on Bedrock. Stable Image Core ...
+                               41 images come to 1.64 dollars." / "And the 7 shorts stop taking turns. No browser, no
+                               lock."                                         -> ON AWS lit: 7 shorts side by side, 7
+                               straight calls into Stable Image Core; the cost line appears; the swap arrow lights
+  batch-spot (CH6)    reclaim "Those servers are EC2 Spot instances ... 2 minutes' warning." / "That's fine here,
+                               because every step reads what's already done and skips it. On AWS, what's done lives in
+                               S3."                                           -> the Spot instances lit, one taken back
+                               (red, 2-MINUTE WARNING), its job back on the Batch queue (retried), S3 and TODAY's disk lit
+                      gpu     "Whisper ... needs a GPU. On AWS, that's a G6 instance, an EC2 server with an NVIDIA L4."
+                                                                              -> TODAY Whisper on my GPU and the G6 lit
+  render-fanout (CH6) (one still) "Today, Remotion renders on my PC in 1-minute chunks. On AWS, Remotion Lambda splits
+                               a render across up to 200 Lambda functions at once, at least 20 frames each." / "Remotion's
+                               own example ..."                               -> both sides lit (TODAY white, AWS cyan): one render,
+                               Remotion Lambda,
+                               200 functions (40 x 5, drawn), stitched, S3; Remotion's example and limit in the gold note
+                               ("REMOTION'S LIMIT", never a Lambda limit: RESEARCH.md do-not-air)
+  publish (CH7)       schedule "Each post gets a one-time schedule in EventBridge Scheduler ... fires a Lambda function
+                               that posts it."                                -> JSON queue files beside DynamoDB ->
+                               Scheduler -> Lambda, lit
+                      browser "YouTube and X go through their APIs. The platforms with no posting API go through
+                               AgentCore Browser ..." (not in the recording; built so the set is complete)
+                                                                              -> TODAY's posting scripts beside the APIs
+                               and AgentCore Browser with the kept login, lit
+  watch (CH8)         (one still) "Today I read log files. On AWS, every agent run is traced into CloudWatch ...:
+                               latency, token usage and errors, per session." -> both sides lit (TODAY white, AWS cyan): the 7
+                               agents' runs traced
+                               into CloudWatch, its 3 readings
+  Shoot (from this folder): python shoot.py group2.html --out ../../diagrams
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chart.css">
+<style>
+/* ===== group 2 only (chart.css is the shared kit and stays as it is) ===== */
+/* Playfair's default digits are old-style (EC2 read as EC with a low 2): lining figures, as the text cards do */
+.head h1{font-variant-numeric:lining-nums}
+
+/* ---- the TODAY / ON AWS look the whole video shares: group 1's values (group1.css), COPIED here, not linked, so a
+   later edit there never moves these layouts. TODAY is neutral (lit = white); cyan stays on AWS. ---- */
+.colh{display:flex;align-items:center;gap:14px;font-family:'DM Sans';font-weight:700;font-size:28px;letter-spacing:.16em;
+  text-transform:uppercase;white-space:nowrap}
+.colh.today{color:var(--text-secondary)}
+.colh.aws{color:var(--text-primary)}
+.colh .ico{color:currentColor;opacity:1}
+.colh .hs{font-weight:500;font-size:24px;letter-spacing:0;text-transform:none;color:var(--text-muted)}
+.zone.tz{border-style:dashed;border-color:rgba(136,146,164,.30);background:rgba(18,21,28,.35)}
+.zone.tz.on{border-color:rgba(232,234,240,.42);background:rgba(18,21,28,.45);box-shadow:none}
+.node.td{background:rgba(18,21,28,.92)}
+.node.td.on{border-color:rgba(232,234,240,.66);color:var(--text-primary);background:var(--bg-card-hover);
+  box-shadow:0 0 0 1px rgba(232,234,240,.10),0 0 34px rgba(232,234,240,.07)}
+.node.td.on .st{color:var(--lit-sub)}
+.node.td .ico{color:var(--text-secondary)}
+.node.td.on .ico{color:var(--text-primary);opacity:1}
+/* the swap: a TODAY piece and the AWS piece that would replace it (dashed) */
+.wr.swap{stroke-dasharray:8 9}
+/* a TODAY wire, lit: white, its arrowhead white (chart.js defines #ah-white) */
+.wr.tw.on{stroke:var(--text-primary);marker-end:url(#ah-white)}
+.wr.tw.on.nohead{marker-end:none}
+
+/* a box: name (as AWS writes it, never uppercased), its one-line description under it, what it does here */
+.zh{display:flex;align-items:baseline;gap:18px}
+.node.bx{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:14px 26px}
+.node.bx.c{align-items:center;text-align:center}
+.node.bx.top{justify-content:flex-start;padding-top:20px}
+.nm{display:flex;align-items:center;gap:12px;font-family:'DM Sans';font-weight:700;font-size:28px;line-height:1.15;
+  white-space:nowrap}
+.nm .ico{flex:0 0 auto}
+.gh .nm{color:var(--rest-title)} .gh .nm.on{color:var(--text-primary)}
+.ds{font-family:'DM Sans';font-weight:600;font-size:22px;line-height:1.32;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--text-secondary);margin-top:8px}
+.node.on .ds,.ds.on{color:var(--accent-cyan)}
+.bx .st{margin-top:8px}
+.ct{font-family:'DM Sans';font-weight:700;font-size:28px;line-height:1.15;letter-spacing:.06em;text-transform:uppercase}
+.ct .mono{letter-spacing:0}
+.lbl{font-family:'DM Sans';font-weight:700;font-size:22px;line-height:1.2;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-secondary);white-space:nowrap}
+.lbl.on{color:var(--accent-cyan)}
+.lbl.td.on{color:var(--text-primary)}
+.lbl .mono,.ds .mono{letter-spacing:0}
+
+/* images: the 7 shorts (each tile is a phone), the busy bar, the cost line */
+.node.tile{width:72px;height:104px;border-radius:14px}
+.node.tile.on{box-shadow:0 0 0 1px rgba(0,194,255,.30),0 0 22px rgba(0,194,255,.24)}
+.node.tile.td.on{box-shadow:0 0 0 1px rgba(232,234,240,.10),0 0 20px rgba(232,234,240,.08)}
+.node.tile svg{display:block}
+.metric .mt{font-family:'DM Sans';font-weight:700;font-size:24px;line-height:1.3;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text-secondary);text-align:center;white-space:nowrap}
+.metric .mt .mono{font-size:28px;letter-spacing:0}
+.metric.on .mt{color:var(--text-primary)}
+.metric.on .bad{color:var(--accent-red)}
+.metric.on .gd{color:var(--accent-green)}
+.metric.big .mt{font-size:26px}
+.metric.big .mt .mono{font-size:32px}
+.bar{margin-top:14px;height:14px;border-radius:7px;background:rgba(136,146,164,.16)}
+.bar .fill{height:100%;border-radius:7px;background:rgba(255,64,96,.36)}
+.metric.on .bar .fill{background:var(--accent-red);box-shadow:0 0 18px rgba(255,64,96,.45)}
+.bdk{font-size:22px;border:1.5px solid var(--rest-edge);color:var(--text-secondary);margin-left:4px}
+.node.on .bdk{border-color:rgba(0,194,255,.70);color:var(--accent-cyan)}
+
+/* batch-spot: the instance taken back (red), its warning, the job back on the queue */
+.node.taken,.node.taken.on{border-color:var(--accent-red);border-style:dashed;
+  background:linear-gradient(180deg,rgba(255,64,96,.13),rgba(255,64,96,.04)),var(--bg-card);
+  box-shadow:0 0 0 1px rgba(255,64,96,.26),0 0 40px rgba(255,64,96,.24)}
+.node.taken .ico,.node.taken.on .ico{color:var(--accent-red);opacity:1}
+.node.taken .chip,.node.taken .chip.on{border-color:rgba(255,64,96,.45);background:rgba(255,64,96,.06);color:rgba(232,234,240,.55)}
+.pill.tag.warn{background:var(--accent-red);color:var(--bg-deep);letter-spacing:.06em;font-size:22px;margin-left:auto}
+.pill.tag.warn .mono{letter-spacing:0}
+.node.row{width:700px;height:62px;display:flex;align-items:center;gap:16px;padding:0 10px 0 22px;border-radius:14px}
+.tb{font-family:'DM Sans';font-weight:700;font-size:24px;color:var(--accent-red);white-space:nowrap}
+.s3r{position:absolute;left:330px;top:36px;white-space:nowrap}
+
+/* render-fanout: the chunks, the 200 functions, Remotion's note (a caveat: gold) */
+.chunk{width:200px;height:56px;border-radius:10px;border:2px solid var(--rest-edge);
+  background:repeating-linear-gradient(90deg,rgba(136,146,164,.10) 0 14px,transparent 14px 22px) top/100% 9px no-repeat,
+             repeating-linear-gradient(90deg,rgba(136,146,164,.10) 0 14px,transparent 14px 22px) bottom/100% 9px no-repeat,
+             var(--bg-card)}
+.chunk.on{border-color:rgba(232,234,240,.66);box-shadow:0 0 0 1px rgba(232,234,240,.10),0 0 22px rgba(232,234,240,.06);
+  background:repeating-linear-gradient(90deg,rgba(232,234,240,.26) 0 14px,transparent 14px 22px) top/100% 9px no-repeat,
+             repeating-linear-gradient(90deg,rgba(232,234,240,.26) 0 14px,transparent 14px 22px) bottom/100% 9px no-repeat,
+             var(--bg-card-hover)}
+.fgrid rect{fill:rgba(136,146,164,.10);stroke:rgba(136,146,164,.36);stroke-width:1.5}
+.fgrid.on rect{fill:rgba(0,194,255,.16);stroke:rgba(0,194,255,.85)}
+.fgrid.on{filter:drop-shadow(0 0 7px rgba(0,194,255,.35))}
+.node.pl{display:block;padding:0}
+.note{border:2px solid rgba(255,215,0,.42);border-radius:18px;display:flex;align-items:center;justify-content:center;gap:72px;
+  background:linear-gradient(180deg,rgba(255,215,0,.07),rgba(255,215,0,.02)),rgba(18,21,28,.62)}
+.note .it{display:flex;flex-direction:column;align-items:flex-start;gap:6px;white-space:nowrap}
+.note .sep{width:2px;height:54px;background:rgba(255,215,0,.30)}
+.note .nl{font-family:'DM Sans';font-weight:700;font-size:22px;line-height:1.2;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-gold)}
+.note .nv{font-family:'DM Sans';font-weight:700;font-size:26px;line-height:1.2;letter-spacing:.06em;text-transform:uppercase;color:var(--text-primary)}
+.note .nv .mono{font-size:29px;letter-spacing:0}
+
+/* publish */
+.chip .ico{margin-right:10px}
+.chip.key{display:inline-flex;align-items:center}
+
+/* watch: the agents (white when lit, never cyan), the readings */
+.chip.agent{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:24px;width:320px;height:50px;padding:0}
+.node.rd{display:flex;align-items:center;gap:14px;padding:0 22px}
+.rd.errs .ico{color:rgba(255,64,96,.62)} .rd.errs.on .ico{color:var(--accent-red)}
+</style>
+</head>
+<body>
+<!-- the icons: line icons in the kit's style (stroke = currentColor, muted at rest, cyan when lit) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-pc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.6" y="3.6" width="18.8" height="12.6" rx="1.8"/><path d="M8.5 20.4h7M12 16.2v4.2"/></g></symbol>
+  <symbol id="i-lock" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="14" width="20" height="14" rx="3"/><path d="M10.5 14 V10.5 a5.5 5.5 0 0 1 11 0 V14"/><path d="M16 19.5 V23"/></g></symbol>
+  <symbol id="i-browser" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="26" height="22" rx="3.5"/><path d="M3 11.5 H29"/></g><circle cx="7.5" cy="8.3" r="1.2" fill="currentColor"/><circle cx="11.5" cy="8.3" r="1.2" fill="currentColor"/></symbol>
+  <symbol id="i-image" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="24" height="20" rx="3"/><circle cx="11" cy="12.5" r="2.4"/><path d="M4.5 23 L12 16 L17 20.5 L21 17 L27.5 22.5"/></g></symbol>
+  <symbol id="i-gpu" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="16" height="16" rx="2.5"/><rect x="12.5" y="12.5" width="7" height="7" rx="1"/><path d="M12 3.5v4.5M16 3.5v4.5M20 3.5v4.5M12 24v4.5M16 24v4.5M20 24v4.5M3.5 12h4.5M3.5 16h4.5M3.5 20h4.5M24 12h4.5M24 16h4.5M24 20h4.5"/></g></symbol>
+  <symbol id="i-server" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="6" width="23" height="8.5" rx="2"/><rect x="4.5" y="17.5" width="23" height="8.5" rx="2"/></g><circle cx="9.2" cy="10.25" r="1.5" fill="currentColor"/><circle cx="9.2" cy="21.75" r="1.5" fill="currentColor"/></symbol>
+  <symbol id="i-queue" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="6" rx="1.6"/><rect x="7.5" y="13" width="17" height="6" rx="1.6"/><rect x="11.5" y="21" width="17" height="6" rx="1.6"/></g></symbol>
+  <symbol id="i-bucket" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="16" cy="8.5" rx="11" ry="3.6"/><path d="M5 8.5 L8 24.5 C8.6 27.6 23.4 27.6 24 24.5 L27 8.5"/></g></symbol>
+  <symbol id="i-clock" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="17.5" r="10.5"/><path d="M16 11.5 V17.5 L20 20.5"/><path d="M6.5 5.5 L3.5 8.5 M25.5 5.5 L28.5 8.5"/></g></symbol>
+  <symbol id="i-lambda" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 5 H12.5 L24.5 27"/><path d="M16.8 15.3 L9 27"/></g></symbol>
+  <symbol id="i-db" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="16" cy="7.5" rx="10" ry="3.5"/><path d="M6 7.5 V24.5 C6 29.2 26 29.2 26 24.5 V7.5"/><path d="M6 16 C6 20.7 26 20.7 26 16"/></g></symbol>
+  <symbol id="i-monitor" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="25" height="17.5" rx="2.5"/><path d="M8 17.5 L13 12.5 L17 15.5 L24 9"/><path d="M11.5 27.5 H20.5 M16 22.5 V27.5"/></g></symbol>
+  <symbol id="i-watch" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="18" r="10"/><path d="M16 18 V12.5 M12.5 4 H19.5 M16 4 V8"/></g></symbol>
+  <symbol id="i-bars" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 26 V18 M13 26 V11 M19 26 V15 M25 26 V6"/></g></symbol>
+  <symbol id="i-warn" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4.5 L28.5 26.5 H3.5 Z"/><path d="M16 12.5 V18.5"/></g><circle cx="16" cy="22.4" r="1.5" fill="currentColor"/></symbol>
+  <symbol id="i-video" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="25" height="17" rx="3"/><path d="M10 27.5 H22"/></g><path d="M13.5 10 L20.5 14 L13.5 18 Z" fill="currentColor"/></symbol>
+  <symbol id="i-film" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="24" height="20" rx="2.5"/><path d="M4 11.5 H28 M4 20.5 H28 M10 6 V11.5 M16 6 V11.5 M22 6 V11.5 M10 20.5 V26 M16 20.5 V26 M22 20.5 V26"/></g></symbol>
+  <symbol id="i-key" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="16" r="5.5"/><path d="M16 16 H28.5 M24.5 16 V20.5 M28.5 16 V19.5"/></g></symbol>
+  <symbol id="i-code" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8 L5 16 L12 24 M20 8 L27 16 L20 24"/></g></symbol>
+</defs></svg>
+
+<!-- ============================================ images ============================================ -->
+<template id="t-images">
+<div class="stage">
+  <div class="orb" style="width:640px;height:640px;background:var(--accent-cyan);opacity:.12;left:-300px;top:-320px"></div>
+  <div class="orb" style="width:620px;height:620px;background:var(--accent-green);opacity:.06;left:1520px;top:760px"></div>
+  <div class="head"><h1>The image bottleneck</h1><div class="divider"></div></div>
+
+  <div class="zone tz" data-k="today" style="left:120px;top:212px;width:810px;height:756px"></div>
+  <div class="zone" data-k="aws" style="left:990px;top:212px;width:810px;height:756px"></div>
+  <div class="colh today" data-own style="left:160px;top:238px"><svg class="ico" width="32" height="32"><use href="#i-pc"/></svg>TODAY<span class="hs">my PC</span></div>
+  <div class="colh aws" data-own style="left:1030px;top:238px">ON AWS<span class="hs">no browser, no lock</span></div>
+  <div class="lbl td" data-own data-k="today" style="left:160px;width:730px;top:300px;text-align:center"><span class="mono">7</span> SHORTS, IN A LINE</div>
+  <div class="lbl" data-own data-k="aws" style="left:1030px;width:730px;top:300px;text-align:center"><span class="mono">7</span> SHORTS, SIDE BY SIDE</div>
+
+  <svg class="wires" width="1920" height="1080" viewBox="0 0 1920 1080">
+    <!-- TODAY: the 7 shorts funnel into the 1 lock, one at a time into the 1 browser -->
+    <path class="wr tw nohead" data-k="today" d="M243,450 C243,496 525,474 525,520"/>
+    <path class="wr tw nohead" data-k="today" d="M337,450 C337,496 525,474 525,520"/>
+    <path class="wr tw nohead" data-k="today" d="M431,450 C431,496 525,474 525,520"/>
+    <path class="wr tw nohead" data-k="today" d="M619,450 C619,496 525,474 525,520"/>
+    <path class="wr tw nohead" data-k="today" d="M713,450 C713,496 525,474 525,520"/>
+    <path class="wr tw nohead" data-k="today" d="M807,450 C807,496 525,474 525,520"/>
+    <path class="wr tw" data-k="today" d="M525,450 L525,545"/>
+    <path class="wr tw" data-k="today" d="M525,652 L525,687"/>
+    <!-- ON AWS: each short calls the model itself, side by side -->
+    <path class="wr" data-k="aws" d="M1113,450 L1113,687"/>
+    <path class="wr" data-k="aws" d="M1207,450 L1207,687"/>
+    <path class="wr" data-k="aws" d="M1301,450 L1301,687"/>
+    <path class="wr" data-k="aws" d="M1395,450 L1395,687"/>
+    <path class="wr" data-k="aws" d="M1489,450 L1489,687"/>
+    <path class="wr" data-k="aws" d="M1583,450 L1583,687"/>
+    <path class="wr" data-k="aws" d="M1677,450 L1677,687"/>
+    <!-- the swap: the browser, replaced by the image model -->
+    <path class="wr swap" data-k="swap" d="M838,740 L1082,740"/>
+  </svg>
+
+  <!-- the 7 shorts, TODAY -->
+  <div class="node tile td" data-k="today" style="left:207px;top:344px"><svg class="ico" width="68" height="100" viewBox="0 0 68 100"><path d="M28 11 H40" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M27 38 L45 50 L27 62 Z" fill="currentColor"/></svg></div>
+  <div class="node tile td" data-k="today" style="left:301px;top:344px"><svg class="ico" width="68" height="100" viewBox="0 0 68 100"><path d="M28 11 H40" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M27 38 L45 50 L27 62 Z" fill="currentColor"/></svg></div>
+  <div class="node tile td" data-k="today" style="left:395px;top:344px"><svg class="ico" width="68" height="100" viewBox="0 0 68 100"><path d="M28 11 H40" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M27 38 L45 50 L27 62 Z" fill="currentColor"/></svg></div>
+  <div class="node tile td" data-k="today" style="left:489px;top:344px"><svg class="ico" width="68" height="100" viewBox="0 0 68 100"><path d="M28 11 H40" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M27 38 L45 50 L27 62 Z" fill="currentColor"/></svg></div>
+  <div class="node tile td" data-k="today" style="left:583px;top:344px"><svg class="ico" width="68" height="100" viewBox="0 0 68 100"><path d="M28 11 H40" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M27 38 L45 50 L27 62 Z" fill="currentColor"/></svg></div>
+  <div class="node tile td" data-k="today" style="left:677px;top:344px"><svg class="ico" width="68" height="100" viewBox="0 0 68 100"><path d="M28 11 H40" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M27 38 L45 50 L27 62 Z" fill="currentColor"/></svg></div>
+  <div class="node tile td" data-k="today" style="left:771px;top:344px"><svg class="ico" width="68" height="100" viewBox="0 0 68 100"><path d="M28 11 H40" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M27 38 L45 50 L27 62 Z" fill="currentColor"/></svg></div>
+  <!-- the 7 shorts, ON AWS -->
+  <div class="node tile" data-k="aws" style="left:1077px;top:344px"><svg class="ico" width="68" height="100" viewBox="0 0 68 100"><path d="M28 11 H40" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M27 38 L45 50 L27 62 Z" fill="currentColor"/></svg></div>
+  <div class="node tile" data-k="aws" style="left:1171px;top:344px"><svg class="ico" width="68" height="100" viewBox="0 0 68 100"><path d="M28 11 H40" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M27 38 L45 50 L27 62 Z" fill="currentColor"/></svg></div>
+  <div class="node tile" data-k="aws" style="left:1265px;top:344px"><svg class="ico" width="68" height="100" viewBox="0 0 68 100"><path d="M28 11 H40" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M27 38 L45 50 L27 62 Z" fill="currentColor"/></svg></div>
+  <div class="node tile" data-k="aws" style="left:1359px;top:344px"><svg class="ico" width="68" height="100" viewBox="0 0 68 100"><path d="M28 11 H40" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M27 38 L45 50 L27 62 Z" fill="currentColor"/></svg></div>
+  <div class="node tile" data-k="aws" style="left:1453px;top:344px"><svg class="ico" width="68" height="100" viewBox="0 0 68 100"><path d="M28 11 H40" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M27 38 L45 50 L27 62 Z" fill="currentColor"/></svg></div>
+  <div class="node tile" data-k="aws" style="left:1547px;top:344px"><svg class="ico" width="68" height="100" viewBox="0 0 68 100"><path d="M28 11 H40" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M27 38 L45 50 L27 62 Z" fill="currentColor"/></svg></div>
+  <div class="node tile" data-k="aws" style="left:1641px;top:344px"><svg class="ico" width="68" height="100" viewBox="0 0 68 100"><path d="M28 11 H40" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M27 38 L45 50 L27 62 Z" fill="currentColor"/></svg></div>
+
+  <!-- TODAY: 1 lock, 1 browser, busy -->
+  <div class="node bx c td" data-k="today" style="left:345px;top:548px;width:360px;height:102px">
+    <div class="nm"><svg class="ico" width="30" height="30"><use href="#i-lock"/></svg><span class="ct"><span class="mono">1</span> LOCK</span></div>
+    <div class="st">the <span class="mono">7</span> shorts take turns</div>
+  </div>
+  <div class="node bx c td" data-k="today" style="left:215px;top:690px;width:620px;height:100px">
+    <div class="nm"><svg class="ico" width="32" height="32"><use href="#i-browser"/></svg><span class="ct"><span class="mono">1</span> BROWSER</span></div>
+    <div class="st">one ChatGPT session in Chrome</div>
+  </div>
+  <div class="metric td" data-own data-k="today" style="left:215px;top:816px;width:620px">
+    <div class="mt">BUSY <span class="bad"><span class="mono">3.9</span> H</span> OF A <span class="mono">4</span> H <span class="mono">38</span> MIN BUILD</div>
+    <div class="bar"><div class="fill" style="width:84.2%"></div></div>
+  </div>
+
+  <!-- ON AWS: the image model, the cost -->
+  <div class="node bx c" data-k="aws" style="left:1085px;top:690px;width:620px;height:100px">
+    <div class="nm"><svg class="ico" width="32" height="32"><use href="#i-image"/></svg><span>Stable Image Core</span><span class="pill tag bdk">ON BEDROCK</span></div>
+    <div class="ds">AN IMAGE MODEL FROM STABILITY AI</div>
+  </div>
+  <div class="metric big ap" data-own data-k="cost" style="left:1085px;top:816px;width:620px">
+    <div class="mt"><span class="mono">41</span> IMAGES <span class="mono">&#215;</span> <span class="mono">4</span> CENTS <span class="mono">=</span> <span class="mono gd">1.64</span> <span class="gd">DOLLARS</span></div>
+  </div>
+</div>
+</template>
+
+<!-- ============================================ batch-spot ============================================ -->
+<template id="t-batch-spot">
+<div class="stage">
+  <div class="orb" style="width:640px;height:640px;background:var(--accent-cyan);opacity:.12;left:-300px;top:-320px"></div>
+  <div class="orb" style="width:620px;height:620px;background:var(--accent-green);opacity:.06;left:1520px;top:760px"></div>
+  <div class="head"><h1>The heavy work, on EC2</h1><div class="divider"></div></div>
+
+  <div class="zone tz" style="left:120px;top:212px;width:420px;height:756px"></div>
+  <div class="zone" style="left:600px;top:212px;width:1200px;height:756px"></div>
+  <div class="colh today" data-own style="left:160px;top:238px"><svg class="ico" width="32" height="32"><use href="#i-pc"/></svg>TODAY<span class="hs">my PC</span></div>
+  <div class="colh aws" data-own style="left:640px;top:238px">ON AWS</div>
+
+  <svg class="wires" width="1920" height="1080" viewBox="0 0 1920 1080">
+    <!-- AWS Batch starts the servers: the GPU one, and the Spot instances -->
+    <path class="wr" data-k="w-g6" d="M810,409 L810,463"/>
+    <path class="wr" data-k="w-spot" d="M1500,409 L1500,463"/>
+    <!-- reclaim: the job of the instance taken back goes back on the queue -->
+    <path class="wr ap" data-k="retry" d="M1645,527 L1645,410"/>
+    <!-- every step reads S3 first -->
+    <path class="wr" data-k="w-s3g6" d="M810,804 L810,759"/>
+    <path class="wr" data-k="w-s3spot" d="M1390,804 L1390,759"/>
+    <!-- the swaps: TODAY's piece, and the AWS piece that would replace it -->
+    <path class="wr swap" data-k="sw-gpu" d="M512,611 L637,611"/>
+    <path class="wr swap" data-k="sw-disk" d="M512,861 L637,861"/>
+  </svg>
+
+  <!-- TODAY -->
+  <div class="node bx td" data-k="whisper" style="left:150px;top:551px;width:360px;height:120px">
+    <div class="nm">Whisper</div><div class="st">on my GPU</div>
+  </div>
+  <div class="node bx td" data-k="disk" style="left:150px;top:796px;width:360px;height:130px">
+    <div class="nm">The disk</div><div class="st">every step reads it first,<br>skips what is done</div>
+  </div>
+
+  <!-- AWS Batch: the job queue -->
+  <div class="node bx" data-k="batch" style="left:640px;top:296px;width:1120px;height:110px">
+    <div class="nm"><svg class="ico" width="32" height="32"><use href="#i-queue"/></svg>AWS Batch</div>
+    <div class="ds">A JOB QUEUE THAT STARTS SERVERS WHEN WORK ARRIVES</div>
+  </div>
+  <div class="pill chip ap" data-k="retry" style="left:1546px;top:328px">its job, retried</div>
+
+  <!-- the GPU server -->
+  <div class="node bx" data-k="g6" style="left:640px;top:466px;width:340px;height:290px">
+    <div class="nm"><svg class="ico" width="32" height="32"><use href="#i-gpu"/></svg>G6</div>
+    <div class="ds">AN EC2 SERVER<br>WITH AN NVIDIA L4</div>
+    <span class="pill chip" data-k="g6" style="margin-top:22px">Whisper</span>
+  </div>
+
+  <!-- EC2 Spot: the instances, each running an ffmpeg job (the first one is the one taken back) -->
+  <div class="zone" data-k="spot" style="left:1020px;top:466px;width:740px;height:290px"></div>
+  <div class="gh zh" data-own style="left:1044px;top:480px">
+    <div class="nm" data-k="spot">EC2 Spot</div>
+    <div class="ds" data-k="spot" style="margin:0">SPARE CAPACITY, UP TO <span class="mono">90%</span> OFF</div>
+  </div>
+  <div class="node row" data-k="spot taken" style="left:1040px;top:530px">
+    <svg class="ico" width="32" height="32"><use href="#i-server"/></svg><span class="pill chip" data-k="spot">ffmpeg job</span>
+    <span class="tb ap" data-k="warn">taken back</span>
+    <span class="pill tag warn ap" data-k="warn"><span class="mono">2</span>-MINUTE WARNING</span>
+  </div>
+  <div class="node row" data-k="spot" style="left:1040px;top:604px">
+    <svg class="ico" width="32" height="32"><use href="#i-server"/></svg><span class="pill chip" data-k="spot">ffmpeg job</span>
+  </div>
+  <div class="node row" data-k="spot" style="left:1040px;top:678px">
+    <svg class="ico" width="32" height="32"><use href="#i-server"/></svg><span class="pill chip" data-k="spot">ffmpeg job</span>
+  </div>
+
+  <!-- S3: what's already done -->
+  <div class="node bx" data-k="s3" style="left:640px;top:806px;width:1120px;height:110px">
+    <div class="nm"><svg class="ico" width="32" height="32"><use href="#i-bucket"/></svg>S3</div>
+    <div class="ds">FILE STORAGE</div>
+    <div class="st s3r">what's already done: every step reads it first and skips it</div>
+  </div>
+</div>
+</template>
+
+<!-- ============================================ render-fanout ============================================ -->
+<template id="t-render-fanout">
+<div class="stage">
+  <div class="orb" style="width:640px;height:640px;background:var(--accent-cyan);opacity:.12;left:-300px;top:-320px"></div>
+  <div class="orb" style="width:620px;height:620px;background:var(--accent-green);opacity:.06;left:1520px;top:760px"></div>
+  <div class="head"><h1>The renders, fanned out</h1><div class="divider"></div></div>
+
+  <div class="zone tz" style="left:120px;top:212px;width:380px;height:668px"></div>
+  <div class="zone" style="left:560px;top:212px;width:1240px;height:668px"></div>
+  <div class="colh today" data-own style="left:160px;top:238px"><svg class="ico" width="32" height="32"><use href="#i-pc"/></svg>TODAY<span class="hs">my PC</span></div>
+  <div class="colh aws" data-own style="left:600px;top:238px">ON AWS</div>
+
+  <svg class="wires" width="1920" height="1080" viewBox="0 0 1920 1080">
+    <path class="wr tw" data-k="today" d="M310,384 L310,421"/>
+    <path class="wr" data-k="aws" d="M882,342 L927,342"/>
+    <!-- split: Remotion Lambda fans the render out -->
+    <path class="wr" data-k="aws" d="M1180,394 C1180,424 760,414 760,445"/>
+    <path class="wr" data-k="aws" d="M1180,394 C1180,424 970,414 970,445"/>
+    <path class="wr" data-k="aws" d="M1180,394 L1180,445"/>
+    <path class="wr" data-k="aws" d="M1180,394 C1180,424 1390,414 1390,445"/>
+    <path class="wr" data-k="aws" d="M1180,394 C1180,424 1600,414 1600,445"/>
+    <!-- stitched back together -->
+    <path class="wr nohead" data-k="aws" d="M760,710 C760,736 1180,724 1180,749"/>
+    <path class="wr nohead" data-k="aws" d="M970,710 C970,736 1180,724 1180,749"/>
+    <path class="wr nohead" data-k="aws" d="M1390,710 C1390,736 1180,724 1180,749"/>
+    <path class="wr nohead" data-k="aws" d="M1600,710 C1600,736 1180,724 1180,749"/>
+    <path class="wr" data-k="aws" d="M1180,710 L1180,749"/>
+    <path class="wr" data-k="aws" d="M1342,797 L1417,797"/>
+  </svg>
+
+  <!-- TODAY: Remotion on my PC, 1-minute chunks -->
+  <div class="node bx td" data-k="today" style="left:160px;top:292px;width:300px;height:90px">
+    <div class="nm">Remotion</div><div class="st">renders on my PC</div>
+  </div>
+  <div class="chunk" data-k="today" style="left:210px;top:424px"></div>
+  <div class="chunk" data-k="today" style="left:210px;top:492px"></div>
+  <div class="chunk" data-k="today" style="left:210px;top:560px"></div>
+  <div class="chunk" data-k="today" style="left:210px;top:628px"></div>
+  <div class="chunk" data-k="today" style="left:210px;top:696px"></div>
+  <div class="lbl td" data-own data-k="today" style="left:160px;width:300px;top:776px;text-align:center"><span class="mono">1</span>-MINUTE CHUNKS</div>
+
+  <!-- ON AWS -->
+  <div class="node bx" data-k="aws" style="left:630px;top:292px;width:250px;height:100px">
+    <div class="nm"><svg class="ico" width="32" height="32"><use href="#i-video"/></svg>One render</div>
+  </div>
+  <div class="node bx" data-k="aws" style="left:930px;top:292px;width:700px;height:100px">
+    <div class="nm"><svg class="ico" width="32" height="32"><use href="#i-film"/></svg>Remotion Lambda</div>
+    <div class="ds">ONE RENDER SPLIT ACROSS LAMBDA FUNCTIONS</div>
+  </div>
+  <div class="node pl" data-k="aws" style="left:620px;top:448px;width:1120px;height:260px">
+    <div class="nm" style="position:absolute;left:26px;top:16px"><span>Up to <span class="mono">200</span> Lambda functions, side by side</span></div>
+    <div class="ds" style="position:absolute;right:26px;top:22px;margin:0">CODE THAT RUNS WHEN CALLED</div>
+    <div class="lbl" data-k="aws" style="position:absolute;left:0;right:0;top:214px;text-align:center">AT LEAST <span class="mono">20</span> FRAMES EACH</div>
+  </div>
+  <svg class="fgrid" data-k="aws" width="1077" height="131" viewBox="0 0 1077 131" style="left:642px;top:516px"></svg>
+  <div class="node bx c" data-k="aws" style="left:1020px;top:752px;width:320px;height:90px">
+    <div class="nm">Stitched</div><div class="st">into one video</div>
+  </div>
+  <div class="node bx" data-k="aws" style="left:1420px;top:752px;width:320px;height:90px">
+    <div class="nm"><svg class="ico" width="32" height="32"><use href="#i-bucket"/></svg>S3</div>
+    <div class="ds" style="margin-top:4px">FILE STORAGE</div>
+  </div>
+
+  <!-- under it: Remotion's own example and Remotion's own limit (a caveat: gold) -->
+  <div class="note" data-own style="left:120px;top:900px;width:1680px;height:100px">
+    <div class="it"><span class="nl">REMOTION'S EXAMPLE</span><span class="nv"><span class="mono">10</span>-MINUTE HD VIDEO, AROUND <span class="mono">10</span> CENTS</span></div>
+    <div class="sep"></div>
+    <div class="it"><span class="nl">REMOTION'S LIMIT</span><span class="nv">EACH RENDER INSIDE <span class="mono">15</span> MINUTES</span></div>
+  </div>
+</div>
+</template>
+
+<!-- ============================================ publish ============================================ -->
+<template id="t-publish">
+<div class="stage">
+  <div class="orb" style="width:640px;height:640px;background:var(--accent-cyan);opacity:.12;left:-300px;top:-320px"></div>
+  <div class="orb" style="width:620px;height:620px;background:var(--accent-green);opacity:.06;left:1520px;top:760px"></div>
+  <div class="head"><h1>How a post goes out</h1><div class="divider"></div></div>
+
+  <div class="zone tz" style="left:120px;top:212px;width:380px;height:756px"></div>
+  <div class="zone" style="left:560px;top:212px;width:1240px;height:756px"></div>
+  <div class="colh today" data-own style="left:160px;top:238px"><svg class="ico" width="32" height="32"><use href="#i-pc"/></svg>TODAY<span class="hs">my PC</span></div>
+  <div class="colh aws" data-own style="left:600px;top:238px">ON AWS</div>
+
+  <svg class="wires" width="1920" height="1080" viewBox="0 0 1920 1080">
+    <path class="wr" data-k="w1" d="M932,381 L977,381"/>
+    <path class="wr" data-k="w2" d="M1422,381 L1467,381"/>
+    <path class="wr" data-k="w-api" d="M1615,468 L1615,627"/>
+    <path class="wr" data-k="w-br" d="M1495,468 C1495,552 880,550 880,627"/>
+    <path class="wr swap" data-k="sw1" d="M472,381 L597,381"/>
+    <path class="wr swap" data-k="sw2" d="M472,745 L597,745"/>
+  </svg>
+
+  <!-- TODAY -->
+  <div class="node bx td" data-k="json" style="left:150px;top:321px;width:320px;height:120px">
+    <div class="nm">JSON queue files</div><div class="st">the posts wait here</div>
+  </div>
+  <div class="node bx td" data-k="scripts" style="left:150px;top:670px;width:320px;height:150px">
+    <div class="nm">Posting scripts</div><div class="st">Python Playwright and the YouTube Data API</div>
+  </div>
+
+  <!-- ON AWS: the posts table, its one-time schedule, the Lambda that posts -->
+  <div class="node bx top" data-k="ddb" style="left:600px;top:296px;width:330px;height:170px">
+    <div class="nm"><svg class="ico" width="32" height="32"><use href="#i-db"/></svg>DynamoDB</div>
+    <div class="ds">MANAGED DATABASE</div>
+    <div class="st">a table of posts</div>
+  </div>
+  <div class="node bx top" data-k="sch" style="left:980px;top:296px;width:440px;height:170px">
+    <div class="nm"><svg class="ico" width="32" height="32"><use href="#i-clock"/></svg>EventBridge Scheduler</div>
+    <div class="ds">AN ALARM CLOCK FOR CODE</div>
+    <div class="st">a one-time schedule per post</div>
+  </div>
+  <div class="node bx top" data-k="lam" style="left:1470px;top:296px;width:290px;height:170px">
+    <div class="nm"><svg class="ico" width="32" height="32"><use href="#i-lambda"/></svg>Lambda</div>
+    <div class="ds">CODE THAT RUNS<br>WHEN CALLED</div>
+    <div class="st">posts it</div>
+  </div>
+
+  <!-- ON AWS: where it posts -->
+  <div class="node bx" data-k="br" style="left:600px;top:630px;width:560px;height:230px">
+    <div class="nm"><svg class="ico" width="32" height="32"><use href="#i-browser"/></svg>AgentCore Browser</div>
+    <div class="ds">A CHROME AWS RUNS FOR MY AGENTS</div>
+    <div class="st">for the platforms with no posting API</div>
+    <span class="pill chip key" data-k="br" style="margin-top:16px"><svg class="ico" width="26" height="26"><use href="#i-key"/></svg>the login, kept between runs</span>
+  </div>
+  <div class="node bx" data-k="api" style="left:1300px;top:630px;width:460px;height:160px">
+    <div class="nm"><svg class="ico" width="32" height="32"><use href="#i-code"/></svg>YouTube and X</div>
+    <div class="st">through their APIs</div>
+  </div>
+</div>
+</template>
+
+<!-- ============================================ watch ============================================ -->
+<template id="t-watch">
+<div class="stage">
+  <div class="orb" style="width:640px;height:640px;background:var(--accent-cyan);opacity:.12;left:-300px;top:-320px"></div>
+  <div class="orb" style="width:620px;height:620px;background:var(--accent-green);opacity:.06;left:1520px;top:760px"></div>
+  <div class="head"><h1>Watching every agent run</h1><div class="divider"></div></div>
+
+  <div class="zone tz" style="left:120px;top:212px;width:380px;height:756px"></div>
+  <div class="zone" style="left:560px;top:212px;width:1240px;height:756px"></div>
+  <div class="colh today" data-own style="left:160px;top:238px"><svg class="ico" width="32" height="32"><use href="#i-pc"/></svg>TODAY<span class="hs">my PC</span></div>
+  <div class="colh aws" data-own style="left:600px;top:238px">ON AWS</div>
+
+  <svg class="wires" width="1920" height="1080" viewBox="0 0 1920 1080">
+    <!-- every agent run, traced into CloudWatch -->
+    <path class="wr nohead" data-k="aws" d="M922,438 C1010,438 1010,630 1088,630"/>
+    <path class="wr nohead" data-k="aws" d="M922,502 C1010,502 1010,630 1088,630"/>
+    <path class="wr nohead" data-k="aws" d="M922,566 C1010,566 1010,630 1088,630"/>
+    <path class="wr nohead" data-k="aws" d="M922,694 C1010,694 1010,630 1088,630"/>
+    <path class="wr nohead" data-k="aws" d="M922,758 C1010,758 1010,630 1088,630"/>
+    <path class="wr nohead" data-k="aws" d="M922,822 C1010,822 1010,630 1088,630"/>
+    <path class="wr" data-k="aws" d="M922,630 L1087,630"/>
+    <!-- its 3 readings -->
+    <path class="wr" data-k="aws" d="M1372,630 C1410,630 1408,496 1447,496"/>
+    <path class="wr" data-k="aws" d="M1372,630 L1447,630"/>
+    <path class="wr" data-k="aws" d="M1372,630 C1410,630 1408,764 1447,764"/>
+  </svg>
+
+  <!-- TODAY -->
+  <div class="node bx td" data-k="today" style="left:160px;top:570px;width:300px;height:120px">
+    <div class="nm">Log files</div><div class="st">I read them</div>
+  </div>
+
+  <!-- ON AWS: the agents' runs -->
+  <div class="lbl" data-own data-k="aws" style="left:600px;top:362px">EVERY AGENT RUN</div>
+  <span class="pill chip agent" data-k="agents" style="left:600px;top:413px">clip-strategist</span>
+  <span class="pill chip agent" data-k="agents" style="left:600px;top:477px">tighten-strategist</span>
+  <span class="pill chip agent" data-k="agents" style="left:600px;top:541px">lane3-drafter</span>
+  <span class="pill chip agent" data-k="agents" style="left:600px;top:605px">remotion-builder</span>
+  <span class="pill chip agent" data-k="agents" style="left:600px;top:669px">image-gen</span>
+  <span class="pill chip agent" data-k="agents" style="left:600px;top:733px">visual-qa</span>
+  <span class="pill chip agent" data-k="agents" style="left:600px;top:797px">publish-meta-author</span>
+  <div class="wl" data-k="aws" style="left:962px;top:362px">traced</div>
+
+  <div class="node bx" data-k="aws" style="left:1090px;top:560px;width:280px;height:140px">
+    <div class="nm"><svg class="ico" width="32" height="32"><use href="#i-monitor"/></svg>CloudWatch</div>
+    <div class="ds">MONITORING</div>
+  </div>
+
+  <div class="lbl" data-own data-k="aws" style="left:1380px;width:380px;top:390px;text-align:right"><span class="mono">3</span> READINGS, PER SESSION</div>
+  <div class="node rd" data-k="aws" style="left:1450px;top:441px;width:310px;height:110px">
+    <svg class="ico" width="32" height="32"><use href="#i-watch"/></svg><span class="ct">LATENCY</span>
+  </div>
+  <div class="node rd" data-k="aws" style="left:1450px;top:575px;width:310px;height:110px">
+    <svg class="ico" width="32" height="32"><use href="#i-bars"/></svg><span class="ct">TOKEN USAGE</span>
+  </div>
+  <div class="node rd errs" data-k="aws" style="left:1450px;top:709px;width:310px;height:110px">
+    <svg class="ico" width="32" height="32"><use href="#i-warn"/></svg><span class="ct">ERRORS</span>
+  </div>
+</div>
+</template>
+
+<script src="chart.js"></script>
+<script>
+// chart.js builds a chart from ONE <template id="chart"> per buildChart() call. This file holds five charts, so each
+// chart's template takes that id for its own call (chart.js is shared with group 1 and stays untouched).
+function build(tid, states, opts) {
+  var t = document.getElementById(tid);
+  t.id = "chart";
+  buildChart(states, opts);
+  t.id = tid;
+}
+// render-fanout: up to 200 Lambda functions, drawn as 200 tiles (40 x 5), before the template is cloned
+(function () {
+  var NS = "http://www.w3.org/2000/svg", g = document.getElementById("t-render-fanout").content.querySelector(".fgrid");
+  for (var r = 0; r < 5; r++) for (var c = 0; c < 40; c++) {
+    var e = document.createElementNS(NS, "rect");
+    e.setAttribute("x", c * 27 + 1); e.setAttribute("y", r * 27 + 1);
+    e.setAttribute("width", 21); e.setAttribute("height", 21); e.setAttribute("rx", 4);
+    g.appendChild(e);
+  }
+})();
+
+build("t-images", {
+  "images-before": { on: ["today"] },
+  "images-after":  { on: ["aws", "swap", "cost"], show: ["cost"] }
+});
+build("t-batch-spot", {
+  "batch-spot-reclaim": { on: ["spot", "w-spot", "retry", "s3", "w-s3spot", "disk", "sw-disk"],
+                          show: ["retry", "warn"], cls: { taken: "taken" } },
+  "batch-spot-gpu":     { on: ["g6", "w-g6", "whisper", "sw-gpu"] }
+});
+build("t-render-fanout", { "render-fanout": { on: ["aws", "today"] } });
+build("t-publish", {
+  "publish-schedule": { on: ["json", "sw1", "ddb", "w1", "sch", "w2", "lam"] },
+  "publish-browser":  { on: ["scripts", "sw2", "br", "w-br", "api", "w-api"] }
+});
+build("t-watch", { "watch": { on: ["aws", "today"] } });
+</script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+{
+ "source_video": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-presentation/media/standard/livestream-aws/livestream-aws VERTICAL-v1.mp4",
+ "source_audio": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-presentation/media/standard/livestream-aws/spine/livestream-aws EDIT.enhanced.mp4",
+ "clock": "final-video seconds",
+ "target_seconds": 30.0,
+ "outro_seconds": 3.0,
+ "claim": "On one PC, one browser making the images was busy for 3.9 hours of the build. On AWS the shorts call an image model on Bedrock and stop taking turns, and the graph itself barely changes: what changes is everything around it.",
+ "why_this_claim": "It is the video's own takeaway (the same-graph card and the closing face line) with the one before and after that proves it in 13 seconds: a number (3.9 hours of the build), the cause (one browser), the fix (an image model on Bedrock), the result (seven shorts stop taking turns). The chart changes state on screen as he says it. Nothing from the other six minutes (the five layers, the service names, the bill) is needed to believe it, and 'where the state lives, who holds the keys' is left open for the full video.",
+ "authored_by": "short-cut-strategist, 2026-11-25",
+ "spans": [
+  {
+   "role": "hook",
+   "order": 1,
+   "start": 0.5,
+   "end": 4.42,
+   "seconds": 3.92,
+   "sourced": "COVER",
+   "sourced_detail": "FACE scene (the full-camera OBS scene, reframed on his face, full frame, no webcam pane; cues.json tags the line FACE, face window 0.00-13.33). Labelled COVER because the presentation plan check accepts only COVER or SCREENSHARE; the picture is full frame and the caption goes in the usual bottom block.",
+   "says": "My livestream pipeline runs on one PC.",
+   "on_screen": "Mike's face, full frame, for the whole span (frames 15-132): curly hair, black T-shirt, blue wall, a lamp top right. His hand is in the lower-left corner for about the first 0.3 s (seen in frames at 0.55 and 0.80). No card. His mouth sits around y 1190-1345 of 1920 and his chin reaches about y 1500 when he leans in (read off frames at 0.55, 0.80, 2.50, 4.45).",
+   "why": "The longform's own first line, on his face. It names the subject (my livestream pipeline) and the limit (one PC) that the proof then makes concrete: one PC, one browser.",
+   "self_contained": "It is the first sentence of the full video and opens it cold too. One complete sentence, no back-reference.",
+   "in_gap": 0.73,
+   "out_gap": 0.88,
+   "in_gap_note": "Whisper stamps 'My' at 0.00-1.00, so the transcript shows no gap; the measured lead silence of the spine is 0.000-0.730. Start 0.50 leaves 230 ms before his first sound. Do not move the start later than 0.55: s_captions keeps a word by its midpoint (0.50 for 'My') against start minus 0.05, so a later start drops 'My' from the caption.",
+   "out_gap_note": "Whisper gap 4.24 to 5.12 between 'PC.' and 'What'; measured quiet 4.180-5.080. End 4.42 is 240 ms after his last sound.",
+   "clear_of_transitions": true,
+   "transition_note": "No card, fade or scene change anywhere near: the face scene runs 0.00-13.33 and the span uses 0.50-4.42. The master does not fade in from black (frame 0 is already his face)."
+  },
+  {
+   "role": "body",
+   "order": 2,
+   "start": 225.37,
+   "end": 238.56,
+   "seconds": 13.19,
+   "sourced": "COVER",
+   "says": "one browser making the images, busy for 3.9 hours of a four hour and 30 minute build. On AWS, I dropped the browser and call an image model on Bedrock and the seven shorts stopped taking turns.",
+   "on_screen": "Card images (title: The image bottleneck), full frame, two states. 225.40-231.73 state before, settled: the TODAY my PC box lit: 7 SHORTS, IN A LINE feeding 1 LOCK (the 7 shorts take turns) and 1 BROWSER (one ChatGPT session in Chrome), then BUSY 3.9 H OF A 4 H 38 MIN BUILD over a red bar; the ON AWS box under it dimmed. 231.77-231.93 the card's own 6-frame cross-fade, played whole inside the span. 231.97-238.56 state after, settled: the ON AWS box lit in cyan: 7 SHORTS, SIDE BY SIDE, each with its own arrow into Stable Image Core ON BEDROCK / AN IMAGE MODEL FROM STABILITY AI, and 41 IMAGES x 4 CENTS = 1.64 DOLLARS; the TODAY box dimmed. Card content ends near y 1430 (the ON AWS box border), free below it.",
+   "why": "The proof. The problem with its number (one browser, 3.9 hours of the build), then the AWS fix and the result (the seven shorts stop taking turns), with the chart switching from the lit TODAY box to the lit ON AWS box as he says 'On AWS'.",
+   "self_contained": "Starts after the comma, so the back-reference 'Now the bottleneck from my last video' is left out and the span opens on 'one browser making the images', which reads straight off the hook: one PC, one browser. 'The seven shorts' is drawn and labelled on the card (7 SHORTS, IN A LINE). 'Bedrock' is not introduced in words; the card labels it (ON BEDROCK, AN IMAGE MODEL FROM STABILITY AI).",
+   "in_gap": 0.38,
+   "out_gap": 0.36,
+   "in_gap_note": "Whisper gap 225.16 to 225.54 between 'video,' and 'one'; measured quiet 225.015-225.495. Start 225.37 leaves 125 ms before 'one'.",
+   "out_gap_note": "Whisper gap 238.56 to 238.92 between 'turns.' and 'No'; measured quiet 238.330-238.900. End 238.56 is 230 ms after 'turns.' and 340 ms before 'No'.",
+   "clear_of_transitions": true,
+   "transition_note": "Frames 6762-7157. The 11-frame entrance of the images card ends at frame 6696 (223.23): the span starts 66 frames after it, on a settled frame (measured: identical to the frame at 228.0). The before-to-after cross-fade (frames 6953-6958) is wholly inside the span. Run-03's 0.3 s fade-out starts at frame 7213 (240.43): the span ends 55 frames before it."
+  },
+  {
+   "role": "kicker",
+   "order": 3,
+   "start": 359.42,
+   "end": 369.86,
+   "seconds": 10.44,
+   "sourced": "COVER",
+   "sourced_detail": "COVER card same-graph 359.43-363.57, then the FACE scene 363.60-369.86 (full-camera OBS scene, reframed, full frame; cues.json tags that line FACE, face window 363.60-369.90). Labelled COVER for the same reason as span 1; the usual bottom caption block for the whole span.",
+   "says": "So the graph barely changes. What changes is everything around it. Where the state lives, who holds the keys, what runs in parallel, that's the production work.",
+   "on_screen": "359.43-363.27: card same-graph, full frame: THE TAKEAWAY / The graph barely changes / WHAT CHANGES / 1 Where the state lives / 2 Who holds the keys / 3 What runs in parallel (card content ends near y 1156, the lower third is empty). 363.30-363.57: run-04's own 0.3 s fade-out, played whole inside the span; under it the screen-share layout (the Start Here slide over the webcam pane) shows through for those 9 frames. 363.60-369.86: Mike's face, full frame; his hand leaves the lower-left corner in the first 0.2 s, and he ends looking at the lens (frames at 363.63, 363.70, 363.90, 364.40, 366.80, 369.83). Mouth around y 1200-1320.",
+   "why": "The payoff. The proof changed what sits around the graph (a browser swapped for a model call, one line turned into seven side by side), not the graph. He says so, the card lists the three things that change, then he says them to the lens. 'What runs in parallel' is the item span 2 just showed; the other two are left for the full video.",
+   "self_contained": "Three complete sentences. 'So' opens it, which is why it sits after the proof and never first. 'The graph' is not explained in words (the hook says 'pipeline'), but the card on screen reads The graph barely changes while he says it.",
+   "in_gap": 0.28,
+   "out_gap": 0.24,
+   "in_gap_note": "Whisper gap 359.20 to 359.48 between 'more.' and 'So'; measured quiet 359.160-359.470. Start 359.42 is 260 ms after 'more.' and 50 ms before 'So'.",
+   "out_gap_note": "Whisper gap 369.84 to 370.08 between 'work.' and 'If' (just under the 0.25 preference); measured quiet 369.705-370.045 by RMS, 369.815-370.040 by peak. End 369.86 is 45 ms after the last peak above -45 dBFS.",
+   "clear_of_transitions": false,
+   "transition_note": "Frames 10783-11095. NOT strictly clear at the start: the same-graph card's 11-frame entrance over the bill card runs frames 10776-10786 (359.20-359.57), and the span's first frame is 10783, the 8th of the 11. Measured, that frame is about 96 percent settled (difference to the settled card 0.55, against 10.26 for the bill card and a noise floor of 0.13), the next two about 97 and 99, and I looked at it: it reads as the settled card. There is no clean alternative: his 'So' starts at 359.47 and the first fully settled frame is 359.567. Do not move the start earlier than 359.40 (each frame earlier shows more of the bill card). The card's fade-out (frames 10899-10907) is wholly inside the span. The end is 2 frames before the picture switches to the screen share (frame 11097, 369.90). Do not move the end later than 369.86."
+  }
+ ],
+ "assembled_read": "My livestream pipeline runs on one PC. one browser making the images, busy for 3.9 hours of a four hour and 30 minute build. On AWS, I dropped the browser and call an image model on Bedrock and the seven shorts stopped taking turns. So the graph barely changes. What changes is everything around it. Where the state lives, who holds the keys, what runs in parallel, that's the production work.",
+ "spans_total_seconds": 27.55,
+ "delivered_seconds": 30.55,
+ "frames_note": "At 30 fps the three spans extract as 118 + 396 + 313 = 827 frames (27.57 s), so the short delivers at about 30.57 s with the 3.0 s outro.",
+ "seams": [
+  "span 1 to span 2: his face to the images card (state before, settled). Not two card states, so the fast hit.",
+  "span 2 to span 3: the images card (state after, settled) to the same-graph card (first frame about 96 percent settled). Two cards: a plain cut works, and the fast hit would also cover the last 3 entrance frames."
+ ],
+ "outro": {
+  "line": "Click below to WATCH the full video.",
+  "card_text": "WATCH THE FULL VIDEO",
+  "seconds": 3.0,
+  "take": "C:/Users/mnede/Documents/Claude/social-media/video-creation/assets/vo/cta-watch-full.mp3",
+  "note": "Behind the card, hold the last frame of span 3: Mike's face, full frame, looking at the lens (frame 11095, 369.83). Music per MUSIC-PLAN.json: the long video's drone bed (sacral-i-feel-417-hz) at the same gain, no seam whoosh (no_sfx)."
+ },
+ "rejected": [
+  {
+   "span": "0.50-13.30",
+   "reason": "The whole face opening ('...What I wanna do here is show you how I would set this up on AWS and like a real production environment.'), 12.8 s. With the proof and the takeaway the spans come to 36 s. It is also the reworded ad-lib (cue match 0.56), and 'On AWS' arrives on its own inside span 2."
+  },
+  {
+   "span": "222.94-240.86",
+   "reason": "The bottleneck line in full, from 'Now the bottleneck from my last video' to 'No browser, no log.' Neither edge is clean: the start falls inside the 11-frame entrance of the images card (222.87-223.23) in a 0.12 s gap, and the end falls in run-03's fade-out (240.43-240.73), which sits under his last word. It also opens on a back-reference, and Whisper heard 'log' for 'lock'. The span I took is the clean middle of it."
+  },
+  {
+   "span": "363.64-369.86",
+   "reason": "The face takeaway alone ('Where the state lives, who holds the keys, what runs in parallel, that's the production work.'), 6.2 s. Both edges are clean (measured quiet 363.405-363.730 before 'Where', first face frame 363.60), and it avoids the card fade-out. But the spans then total 23.3 s, under the plan window, and the list opens without the sentence it finishes. It is the fallback if Mike wants the fade-out blip gone and a longer hook."
+  },
+  {
+   "span": "361.57-369.86",
+   "reason": "The kicker from 'What changes is everything around it.' The first frame is fully settled, but 'it' has no referent in the audio once 'So the graph barely changes' is cut, and the pause before 'What' is only 140 ms."
+  },
+  {
+   "span": "359.42-363.58",
+   "reason": "The card sentence alone as the kicker. The card's fade-out (363.30-363.57) sits under 'it.', so the span would end on a half-faded frame and the outro would hold it."
+  },
+  {
+   "span": "285.20-300.06",
+   "reason": "Remotion Lambda ('...splits a render across up to 200 Lambda functions at once... a 10 minute HD video for around 10 cents'). The second-best proof of 'what runs in parallel' and it reads cold, but the render-fanout card's entrance (284.97-285.33) is under 'Today,', and it is 15 s on one card that never changes."
+  },
+  {
+   "span": "240.80-248.70",
+   "reason": "'So does it run on EC2? Well, yes, but only the heavy work and only when there's a job to run.' (screen share). A second idea. After the hook alone the question has no AWS context, and with the proof it leaves no room for the takeaway."
+  },
+  {
+   "span": "259.94-268.06",
+   "reason": "EC2 Spot ('spare capacity Amazon sells for up to 90% off...'). Opens on 'Those servers', which nothing in the short has named."
+  },
+  {
+   "span": "333.86-344.22",
+   "reason": "The media bill (38 cents, a few pennies). A different claim (cost). He says 1.6 where the card prints 1.64, and his own ad-lib right after it says the model tokens could reach 80 dollars, so the short would undersell the cost."
+  },
+  {
+   "span": "108.90-116.80",
+   "reason": "'Today, it's a Python process on my PC. On AWS, it runs on Agent Core Runtime, Amazon hosting for agents.' Reads cold after the hook ('it' lands on the pipeline), but at 7.9 s it pushes the spans to 35 s, and it is a swap, not a proof."
+  },
+  {
+   "span": "16.14-18.54",
+   "reason": "'Today, everything lives in one box.' on the today-pc chart. Run-01's fade-in (16.00-16.37) is under 'Today,' and the gap before it is 0.14 s."
+  },
+  {
+   "span": "43.18-48.90",
+   "reason": "'And I'll answer the question that everybody asks first, does this run on EC2?' Opens on 'And', and it is a promise the short does not keep."
+  },
+  {
+   "span": "370.08-374.18",
+   "reason": "'If you haven't seen the last two videos on this graph, I would say start right here.' It sends the viewer to a different video than the CTA does."
+  }
+ ],
+ "risks": [
+  "I cannot hear delivery. What I did check: the spine's levels at all six edges (measured the way lint-short-spans.py does, every edge sits below -80 dBFS except the last at -64), the master's frames around every edge (frame differences against a settled frame), the card stills, and still frames at 0.55, 0.80, 2.50, 4.45, 359.43, 363.47, 363.63, 363.70, 363.90, 364.40, 366.80 and 369.83. Energy and intonation are not verified.",
+  "Number on screen against the voice, span 2: he says 'a four hour and 30 minute build' and the card prints 3.9 H OF A 4 H 38 MIN BUILD (CUE-REPORT section 1; it shipped that way in the long video). In the short the caption will print '30 minute' on top of a card that says 38. Mike rules: leave it, or add the timecoded line - 230.74 \"30\" -> \"38\" so the caption matches the card and not the voice. Whisper may also have misheard; I did not listen.",
+  "Whisper wording in span 2 against the script: 'I dropped the browser and call' (script: 'I'd drop') and 'stopped taking turns' (script: 'stop'). The video is a hypothetical (SCRIPT.md NOTES: never 'I run this on AWS'), so a caption reading 'i dropped the browser' says he did it. There is no '## Whisper mishears' section in SCRIPT.md or CUE-REPORT.md, so the captions will print Whisper's words unless one is added to SCRIPT.md before s_captions. The lines would be: - 233.06 \"I\" -> \"I'd\" ; - 233.28 \"dropped\" -> \"drop\" ; - 237.14 \"stopped\" -> \"stop\". That he said 'I'd drop' is inferred from the script and from the grammar of 'and call', not heard.",
+  "Span 2 opens in the middle of his sentence, after the comma ('...from my last video, | one browser making the images'). The pause there is real (0.48 s measured), but I am inferring that 'one browser' sounds like a fresh start. If it sounds like a continuation, there is no clean earlier start: the card's entrance is under 'Now'. The caption also starts on a lowercase 'one', which the house style lowercases anyway.",
+  "Span 3's first frame is inside the last 3 frames of the same-graph card's entrance (about 96 percent settled, see its transition_note). I judged that invisible and better than losing 'So the graph barely changes.' If a fully settled first frame is wanted, the builder can hold frame 10786 over the span's first 3 frames (picture only), or start at 361.57 and lose that sentence.",
+  "Inside span 3, at 363.30-363.57, the card fades out over the screen-share layout (the Start Here slide over the webcam pane) for 9 frames before the face scene cuts in at 363.60, and his hand is leaving the frame for the first 0.2 s of the face scene. That is how the delivered vertical plays. In a 30 s short it is a quarter-second blip mid-span. If Mike wants it out, the builder can hold the last settled card frame (10898, 363.27) over frames 10899-10907; the audio is untouched.",
+  "Span 3's end is tight on purpose: 369.86 is 45 ms after the last peak of 'work.' and 2 frames before the picture switches to the screen share. At 369.87 or later the span gains a 314th frame, and because the cue table starts its SCREENSHARE window at 369.84, s_captions would move the caption on that last frame into the screen-share band (y 686-871). At 369.86 the band comes out empty (I ran the frame arithmetic). If the linter moves this edge, re-check both. Listen to the seam into the CTA.",
+  "Captions over his face (spans 1 and 3): his mouth sits around y 1190-1345 and the usual block is about y 1420-1600, so it lands on his chin, neck and collar, never his mouth; the closest is about 75 px under his mouth near 0.55 s when he leans in. I did not check every frame for a lean.",
+  "Caption against card text in span 2: the ON AWS box border is near y 1428 and the 41 IMAGES x 4 CENTS line sits near y 1355-1395, so the caption block should start at or below about y 1450 on this card. On the same-graph card everything below y 1160 is free.",
+  "'The graph' and 'Bedrock' are not introduced in words inside the short (the long video introduces both earlier). The cards carry them: The graph barely changes, and ON BEDROCK / AN IMAGE MODEL FROM STABILITY AI. Mike's rule to introduce every service term on first mention cannot be met by a verbatim cut.",
+  "The sourced labels on spans 1 and 3 are approximations (COVER for a face scene), because the presentation plan check accepts only COVER or SCREENSHARE. No span sits on a screen-share scene, so no caption band is expected anywhere in this short.",
+  "Spans total 27.55 s, so the short delivers at about 30.6 s with the 3.0 s outro: inside the plan window (up to 31), above the nominal 30.",
+  "The hook is 3.4 s of speech and never says AWS; the frame arrives 6 s later with 'On AWS' in span 2, on a chart whose two boxes are labelled TODAY and ON AWS. If Mike wants AWS in the first 5 seconds, there is no short clean line for it: the opening sentence that names AWS runs to 13.2 s."
+ ]
+}

@@ -1,0 +1,640 @@
+{
+ "checks": [
+  {
+   "check": "data: vertical btc-closes.js is a byte copy of the 16:9 one",
+   "ok": true,
+   "detail": "5fc4a42c70e00715"
+  },
+  {
+   "check": "longest-clock: `var T = {` block identical to the 16:9 page",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "longest-clock: `var DUR = {` block identical to the 16:9 page",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "longest-clock: no em dash in the vertical page",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "two-legs: `var T = {` block identical to the 16:9 page",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "two-legs: `var cursor =` block identical to the 16:9 page",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "two-legs: `function stateAt(t) {` block identical to the 16:9 page",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "two-legs: no em dash in the vertical page",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "two-legs-2: `var T = {` block identical to the 16:9 page",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "two-legs-2: `var cursor =` block identical to the 16:9 page",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "two-legs-2: `function stateAt(t) {` block identical to the 16:9 page",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "two-legs-2: no em dash in the vertical page",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "two-legs-core.js: no em dash",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "chart-base.css: no em dash",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "longest-clock: window.T identical",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "longest-clock: every frame plays the 16:9 timeline (counters, labels, bar heights, lines)",
+   "ok": true,
+   "detail": "648 frames compared"
+  },
+  {
+   "check": "longest-clock: end state shows the 16:9 end state's words and figures, token for token",
+   "ok": true,
+   "detail": "45 tokens"
+  },
+  {
+   "check": "longest-clock: no two label boxes overlap",
+   "ok": true,
+   "detail": "9 boxes"
+  },
+  {
+   "check": "longest-clock: every label inside the 72 px side margins",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "longest-clock: nothing drawn below y 1500 at any cue or the last frame",
+   "ok": true,
+   "detail": "lowest drawn row y 1486"
+  },
+  {
+   "check": "longest-clock: hold frames after the last move == the last frame",
+   "ok": true,
+   "detail": "frame 594: identical, frame 620: identical, frame 646: identical"
+  },
+  {
+   "check": "two-legs: window.T identical",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "two-legs: stateAt(f / 30) identical to the 16:9 page at every frame",
+   "ok": true,
+   "detail": "1562 frames compared"
+  },
+  {
+   "check": "two-legs: end state shows the 16:9 end state's words and figures, token for token",
+   "ok": true,
+   "detail": "85 tokens"
+  },
+  {
+   "check": "two-legs: no two label boxes overlap",
+   "ok": true,
+   "detail": "6 boxes"
+  },
+  {
+   "check": "two-legs: every label inside the 72 px side margins",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "two-legs: no label within 6 px of a drawn line or 16 px of a mark centre",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "two-legs: nothing drawn below y 1500 at any cue or the last frame",
+   "ok": true,
+   "detail": "lowest drawn row y 1489"
+  },
+  {
+   "check": "two-legs: hold frames after the last move == the last frame",
+   "ok": true,
+   "detail": "frame 1291: identical, frame 1425: identical, frame 1560: identical"
+  },
+  {
+   "check": "two-legs-2: window.T identical",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "two-legs-2: stateAt(f / 30) identical to the 16:9 page at every frame",
+   "ok": true,
+   "detail": "759 frames compared"
+  },
+  {
+   "check": "two-legs-2: end state shows the 16:9 end state's words and figures, token for token",
+   "ok": true,
+   "detail": "93 tokens"
+  },
+  {
+   "check": "two-legs-2: no two label boxes overlap",
+   "ok": true,
+   "detail": "7 boxes"
+  },
+  {
+   "check": "two-legs-2: every label inside the 72 px side margins",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "two-legs-2: no label within 6 px of a drawn line or 16 px of a mark centre",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "two-legs-2: nothing drawn below y 1500 at any cue or the last frame",
+   "ok": true,
+   "detail": "lowest drawn row y 1489"
+  },
+  {
+   "check": "two-legs-2: hold frames after the last move == the last frame",
+   "ok": true,
+   "detail": "frame 397: identical, frame 577: identical, frame 757: identical"
+  },
+  {
+   "check": "SEAM: two-legs last frame (f 1561, t 52.033) == two-legs-2 frame 0, pixel for pixel",
+   "ok": true,
+   "detail": "identical"
+  },
+  {
+   "check": "SEAM: the stepped-through last frame == the directly set last frame",
+   "ok": true,
+   "detail": ""
+  }
+ ],
+ "longest-clock": {
+  "last_move_frame": 593,
+  "tokens": [
+   "2013-14",
+   "2017-18",
+   "2021-22",
+   "2025",
+   "2026.",
+   "25,",
+   "364",
+   "378",
+   "406",
+   "406",
+   "415",
+   "6,",
+   "Bitcoin",
+   "Bitcoin",
+   "Bitstamp",
+   "Bottom,",
+   "COUNTING",
+   "DAYS",
+   "Days",
+   "Finance.",
+   "NOW",
+   "NOW:",
+   "Nov",
+   "Oct",
+   "Peak",
+   "Peak",
+   "SINCE",
+   "STILL",
+   "THE",
+   "TOP",
+   "Yahoo",
+   "and",
+   "bear",
+   "bottom:",
+   "closes,",
+   "daily",
+   "days",
+   "in",
+   "markets",
+   "read",
+   "since",
+   "the",
+   "to",
+   "to",
+   "top,"
+  ],
+  "boxes": [
+   {
+    "name": "2013-14 number",
+    "x0": 109.1953125,
+    "y0": 489,
+    "x1": 238.8046875,
+    "y1": 584
+   },
+   {
+    "name": "2017-18 number",
+    "x0": 309.1953125,
+    "y0": 489,
+    "x1": 438.8046875,
+    "y1": 584
+   },
+   {
+    "name": "2021-22 number",
+    "x0": 509.1953125,
+    "y0": 489,
+    "x1": 638.8046875,
+    "y1": 584
+   },
+   {
+    "name": "2013-14",
+    "x0": 98.3984375,
+    "y0": 1267,
+    "x1": 249.6015625,
+    "y1": 1315
+   },
+   {
+    "name": "2017-18",
+    "x0": 298.3984375,
+    "y0": 1267,
+    "x1": 449.6015625,
+    "y1": 1315
+   },
+   {
+    "name": "2021-22",
+    "x0": 498.3984375,
+    "y0": 1267,
+    "x1": 649.6015625,
+    "y1": 1315
+   },
+   {
+    "name": "NOW number",
+    "x0": 754.3984375,
+    "y0": 476,
+    "x1": 905.6015625,
+    "y1": 587
+   },
+   {
+    "name": "tallest tag",
+    "x0": 685.59375,
+    "y0": 569.0999755859375,
+    "x1": 736,
+    "y1": 606.0999755859375
+   },
+   {
+    "name": "NOW caption",
+    "x0": 675.03125,
+    "y0": 1262,
+    "x1": 984.96875,
+    "y1": 1395
+   }
+  ],
+  "lowest_ink": [
+   1486,
+   1486,
+   1486,
+   1486,
+   1486,
+   1486,
+   1486,
+   1486,
+   1486,
+   1486,
+   1486,
+   1486
+  ]
+ },
+ "two-legs": {
+  "last_move_frame": 1290,
+  "tokens": [
+   "+48%",
+   "-53%",
+   "-WEEK",
+   "1",
+   "100K",
+   "120K",
+   "16",
+   "2",
+   "200",
+   "200-DAY",
+   "2025",
+   "2025",
+   "2026",
+   "2026.",
+   "23",
+   "25,",
+   "267",
+   "50",
+   "50",
+   "50-WEEK",
+   "51",
+   "6,",
+   "60K",
+   "80K",
+   "86K",
+   "ABOVE",
+   "AND",
+   "APR",
+   "AUG",
+   "AVERAGE",
+   "AVERAGE",
+   "Averages:",
+   "BEAR",
+   "BOTH",
+   "Bear",
+   "Bitcoin",
+   "Bitcoin,",
+   "CLOSE",
+   "CLOSES",
+   "CONFIRMED",
+   "DAILY",
+   "DAYS",
+   "DAYS",
+   "DEC",
+   "FEB",
+   "Finance,",
+   "JAN",
+   "JUL",
+   "JUN",
+   "LEG",
+   "MAR",
+   "MAY",
+   "Markets",
+   "NOV",
+   "NOV",
+   "NOV",
+   "NOV",
+   "Nov",
+   "OCT",
+   "OCT",
+   "OCT",
+   "PRICE,",
+   "SEP",
+   "THE",
+   "TO",
+   "TOP",
+   "Two",
+   "UNDER",
+   "WEEKLY",
+   "Yahoo",
+   "by",
+   "close,",
+   "closes,",
+   "closes.",
+   "counted",
+   "daily",
+   "daily",
+   "last",
+   "last",
+   "read",
+   "rule",
+   "the",
+   "the",
+   "the",
+   "weekly"
+  ],
+  "boxes": [
+   {
+    "name": "TOP",
+    "x0": 188,
+    "y0": 439.7099914550781,
+    "x1": 359.609375,
+    "y1": 515.7099609375
+   },
+   {
+    "name": "BEAR CONFIRMED",
+    "x0": 176,
+    "y0": 1116,
+    "x1": 499.75,
+    "y1": 1276
+   },
+   {
+    "name": "LEG 1",
+    "x0": 562.8206176757812,
+    "y0": 1116,
+    "x1": 717.4299926757812,
+    "y1": 1252
+   },
+   {
+    "name": "RALLY",
+    "x0": 758.7034912109375,
+    "y0": 762.1300048828125,
+    "x1": 978.1566162109375,
+    "y1": 810.1300048828125
+   },
+   {
+    "name": "ABOVE BOTH",
+    "x0": 771.96435546875,
+    "y0": 649.1300048828125,
+    "x1": 1007.99560546875,
+    "y1": 735.1300048828125
+   },
+   {
+    "name": "LEGEND",
+    "x0": 671.46875,
+    "y0": 374,
+    "x1": 1008,
+    "y1": 496
+   }
+  ],
+  "lowest_ink": [
+   1488,
+   1489,
+   1489,
+   1489,
+   1489,
+   1489,
+   1489,
+   1489,
+   1489,
+   1489,
+   1489,
+   1489,
+   1489,
+   1489,
+   1489,
+   1489,
+   1489,
+   1489
+  ]
+ },
+ "two-legs-2": {
+  "last_move_frame": 396,
+  "tokens": [
+   "+48%",
+   "-32%",
+   "-53%",
+   "-WEEK",
+   "1",
+   "100K",
+   "120K",
+   "16",
+   "2",
+   "2",
+   "2",
+   "200",
+   "200-DAY",
+   "2025",
+   "2025",
+   "2026",
+   "2026.",
+   "23",
+   "25,",
+   "267",
+   "50",
+   "50",
+   "50-WEEK",
+   "51",
+   "6,",
+   "60K",
+   "80K",
+   "86K",
+   "86K",
+   "ABOVE",
+   "AND",
+   "APR",
+   "AUG",
+   "AVERAGE",
+   "AVERAGE",
+   "Averages:",
+   "BEAR",
+   "BOTH",
+   "Bear",
+   "Bitcoin",
+   "Bitcoin,",
+   "CLOSE",
+   "CLOSES",
+   "CONFIRMED",
+   "DAILY",
+   "DAYS",
+   "DAYS",
+   "DEC",
+   "FEB",
+   "FROM",
+   "Finance,",
+   "JAN",
+   "JUL",
+   "JUN",
+   "LEG",
+   "LEG",
+   "MAR",
+   "MAY",
+   "Markets",
+   "NOV",
+   "NOV",
+   "NOV",
+   "NOV",
+   "Nov",
+   "OCT",
+   "OCT",
+   "OCT",
+   "OLD",
+   "PRICE,",
+   "SEP",
+   "THE",
+   "TO",
+   "TOP",
+   "Two",
+   "UNDER",
+   "WEEKLY",
+   "WEEKS",
+   "Yahoo",
+   "by",
+   "close,",
+   "closes,",
+   "closes.",
+   "counted",
+   "daily",
+   "daily",
+   "last",
+   "last",
+   "read",
+   "rule",
+   "the",
+   "the",
+   "the",
+   "weekly"
+  ],
+  "boxes": [
+   {
+    "name": "TOP",
+    "x0": 188,
+    "y0": 439.7099914550781,
+    "x1": 359.609375,
+    "y1": 515.7099609375
+   },
+   {
+    "name": "BEAR CONFIRMED",
+    "x0": 176,
+    "y0": 1116,
+    "x1": 499.75,
+    "y1": 1276
+   },
+   {
+    "name": "LEG 1",
+    "x0": 562.8206176757812,
+    "y0": 1116,
+    "x1": 717.4299926757812,
+    "y1": 1252
+   },
+   {
+    "name": "RALLY",
+    "x0": 758.7034912109375,
+    "y0": 762.1300048828125,
+    "x1": 978.1566162109375,
+    "y1": 810.1300048828125
+   },
+   {
+    "name": "ABOVE BOTH",
+    "x0": 771.96435546875,
+    "y0": 649.1300048828125,
+    "x1": 1007.99560546875,
+    "y1": 735.1300048828125
+   },
+   {
+    "name": "LEG 2",
+    "x0": 796.796875,
+    "y0": 1116,
+    "x1": 1009,
+    "y1": 1292
+   },
+   {
+    "name": "LEGEND",
+    "x0": 671.46875,
+    "y0": 374,
+    "x1": 1008,
+    "y1": 496
+   }
+  ],
+  "lowest_ink": [
+   1489,
+   1489,
+   1489,
+   1489,
+   1489,
+   1489
+  ]
+ },
+ "fails": []
+}

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>livestream-aws chart, 9:16: graph-home (runtime, checkpoint)</title>
+<!--
+  The 9:16 cut of graph-home.html: the same pieces, words, states and lit parts, re-composed for a 1080x1920 phone
+  frame. TODAY stays beside ON AWS; inside AgentCore Runtime the microVM (with the same 14-step graph) sits over the
+  CPU box instead of beside it; the checkpoints run down to the SQLite file today and to DynamoDB on AWS, through
+  langgraph-checkpoint-aws. Text 28px and up, nothing below y 1450, 72px side margins.
+  Shoot (from this folder): python shoot.py graph-home-vertical.html --out ../../vertical/diagrams --size 1080x1920
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chart.css">
+<link rel="stylesheet" href="group1.css">
+<style>
+.portrait .sn{font-size:30px;line-height:1.1}
+.portrait .sd{font-size:28px;letter-spacing:.05em;line-height:1.15}
+.portrait .colh{font-size:30px}
+.portrait .colh .hs{font-size:28px}
+.portrait .cd{font-size:28px}
+.tn{font-family:'DM Sans';font-weight:700;font-size:30px;line-height:1.15}
+.ts{font-family:'DM Sans';font-weight:500;font-size:28px;line-height:1.2;color:var(--rest-sub);margin-top:4px}
+.td.on .ts{color:var(--lit-sub)}
+.side{display:flex;align-items:center;gap:14px;padding:0 18px}
+.tx{display:flex;flex-direction:column}
+.hold{display:block;padding:0}
+.node.vm{background:var(--bg-card-hover)}
+.node.vm.on{background:linear-gradient(180deg,rgba(0,194,255,.10),rgba(0,194,255,.03)),var(--bg-card-hover)}
+.mg circle{fill:var(--bg-deep);stroke:rgba(232,234,240,.55);stroke-width:2.6}
+.mg circle.g{stroke:rgba(255,215,0,.6);fill:rgba(255,215,0,.10)}
+.mg path{stroke:rgba(136,146,164,.6);stroke-width:2.4;fill:none;stroke-linecap:round}
+.on .mg circle{stroke:var(--text-primary)}
+.on .mg circle.g{stroke:var(--accent-gold);fill:rgba(255,215,0,.18)}
+.on .mg path{stroke:rgba(232,234,240,.7)}
+.gl{position:absolute;font-family:'DM Sans';font-weight:600;font-size:28px;color:var(--rest-sub);white-space:nowrap}
+.on .gl{color:var(--text-primary)}
+.ttag{position:absolute;right:16px;top:14px;display:flex;align-items:center;gap:10px;padding:6px 14px;border-radius:999px;
+  border:1.5px solid var(--rest-edge);font-family:'DM Sans';font-weight:700;font-size:28px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--rest-sub);background:rgba(10,12,16,.6);white-space:nowrap}
+.ttag .mono{letter-spacing:0}
+.ttag .ico{color:currentColor;opacity:1}
+.on .ttag{border-color:var(--accent-cyan);color:var(--accent-cyan);background:rgba(0,194,255,.10)}
+.cpu{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px;padding:0 20px}
+.cpu .ib{display:flex;align-items:center;gap:12px}
+.cpu .ico{color:var(--text-secondary)}
+.cpu.on .ico{color:var(--accent-cyan)}
+.cpu .lab{white-space:normal;text-wrap:balance;font-size:28px;line-height:1.25;color:var(--rest-sub)}
+.cpu.on .lab{color:var(--accent-cyan)}
+.cbar{display:flex;gap:6px;height:22px;width:272px}
+.cbar i{display:block;height:22px;border-radius:5px}
+.cbar i.b{background:rgba(136,146,164,.45)}
+.cbar i.w{border:2px dashed rgba(136,146,164,.45)}
+.cpu.on .cbar i.b{background:var(--accent-cyan)}
+.cpu.on .cbar i.w{border-color:rgba(0,194,255,.55)}
+</style>
+</head>
+<body>
+<template id="chart"></template>
+<script src="chart.js"></script>
+<script src="group1.js"></script>
+<script>
+(function () {
+  function graphGlyph(dx, r) {
+    var X0 = r + 3, YT = r + 3, YB = r + 3 + Math.round(dx * 1.25), pts = {}, n;
+    for (n = 1; n <= 14; n++) pts[n] = n <= 7 ? [X0 + (n - 1) * dx, YT] : [X0 + (14 - n) * dx, YB];
+    var W = X0 * 2 + 6 * dx, H = YB + r + 3;
+    var g = ['<svg class="mg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '">'];
+    g.push('<path d="M' + pts[1][0] + ',' + YT + ' L' + pts[7][0] + ',' + YT + ' L' + pts[8][0] + ',' + YB + ' L' + pts[14][0] + ',' + YB + '"/>');
+    for (n = 1; n <= 14; n++) g.push('<circle class="' + (n === 6 || n === 9 ? 'g' : '') + '" cx="' + pts[n][0] + '" cy="' + pts[n][1] + '" r="' + r + '"/>');
+    g.push('</svg>');
+    return { svg: g.join(''), w: W, h: H };
+  }
+  var TX = 88, TW = 330, AX = 478, AW = 514;
+  var RT = [336, 668], VM = [432, 330], CP = [780, 196];          // Runtime box, microVM, CPU box (top, height)
+  var PY = [500, 300], DB = [1112, 132];                          // the Python process; the SQLite / DynamoDB row
+  var h = [];
+  h.push('<div class="stage">');
+  h.push('<div class="orb" style="width:620px;height:620px;background:var(--accent-cyan);opacity:.12;left:-300px;top:-300px"></div>');
+  h.push('<div class="orb" style="width:620px;height:620px;background:var(--accent-green);opacity:.06;left:620px;top:1460px"></div>');
+  h.push('<div class="head"><h1>Where the graph runs</h1><div class="divider"></div></div>');
+
+  h.push('<div class="zone tz" style="left:72px;top:266px;width:362px;height:1012px"></div>');
+  h.push('<div class="zone" style="left:462px;top:266px;width:546px;height:1012px"></div>');
+  h.push('<div class="colh today" data-own style="left:' + TX + 'px;top:282px">' + ICO("pc", 32, "", 2.2) + 'TODAY<span class="hs">my PC</span></div>');
+  h.push('<div class="colh aws" data-own style="left:' + AX + 'px;top:282px">ON AWS</div>');
+
+  var mid = function (r) { return r[0] + r[1] / 2; };
+  var w = [];
+  w.push(WIRE("runtime", 'M' + (TX + TW + 3) + ',' + mid(PY) + ' L' + (AX - 5) + ',' + mid(PY), "swap"));
+  w.push(WIRE("checkpoint", 'M' + (TX + TW + 3) + ',' + mid(DB) + ' L' + (AX - 5) + ',' + mid(DB), "swap"));
+  w.push(WIRE("checkpoint", 'M' + (TX + 70) + ',' + (PY[0] + PY[1] + 3) + ' L' + (TX + 70) + ',' + (DB[0] - 5)));
+  w.push(WIRE("checkpoint", 'M' + (AX + 40) + ',' + (RT[0] + RT[1] + 3) + ' L' + (AX + 40) + ',' + (DB[0] - 5)));
+  h.push('<svg class="wires" width="1080" height="1920" viewBox="0 0 1080 1920">' + w.join('') + '</svg>');
+  h.push('<div class="wl" data-k="checkpoint" style="left:' + (TX + 88) + 'px;top:' + Math.round((PY[0] + PY[1] + DB[0]) / 2 - 17) + 'px">checkpoints</div>');
+  h.push('<div class="cd" data-k="checkpoint" style="left:' + (AX + 60) + 'px;top:' + Math.round((RT[0] + RT[1] + DB[0]) / 2 - 24) + 'px">langgraph-checkpoint-aws</div>');
+
+  // TODAY
+  var gs = graphGlyph(40, 9);
+  h.push('<div class="node td" data-k="runtime" style="left:' + TX + 'px;top:' + PY[0] + 'px;width:' + TW + 'px;height:' + PY[1] + 'px">' +
+    '<div class="side" style="position:absolute;left:0;top:20px;gap:10px;padding:0 14px">' + ICO("py", 30, "", 1.9) +
+    '<div class="tx"><div class="tn">a Python process</div><div class="ts">on my PC</div></div></div>' +
+    '<div style="position:absolute;left:' + Math.round((TW - gs.w) / 2) + 'px;top:130px">' + gs.svg + '</div>' +
+    '<div class="gl" style="left:0;right:0;text-align:center;top:' + (130 + gs.h + 8) + 'px">the graph</div></div>');
+  h.push('<div class="node td side" data-k="checkpoint" style="left:' + TX + 'px;top:' + DB[0] + 'px;width:' + TW + 'px;height:' + DB[1] + 'px">' +
+    ICO("db", 40, "", 1.9) + '<div class="tx"><div class="tn">a SQLite file</div><div class="ts">the checkpoints</div></div></div>');
+
+  // ON AWS
+  h.push('<div class="node svc hold" data-k="runtime" style="left:' + AX + 'px;top:' + RT[0] + 'px;width:' + AW + 'px;height:' + RT[1] + 'px">' +
+    '<div class="sn" style="position:absolute;left:22px;top:14px">AgentCore Runtime</div>' +
+    '<div class="sd" style="position:absolute;left:22px;top:52px">hosting for agents</div></div>');
+  var gb = graphGlyph(56, 12);
+  h.push('<div class="node svc hold vm" data-k="runtime" style="left:' + (AX + 18) + 'px;top:' + VM[0] + 'px;width:' + (AW - 36) + 'px;height:' + VM[1] + 'px">' +
+    '<div class="sn" style="position:absolute;left:20px;top:16px">microVM</div>' +
+    '<div class="ttag">' + ICO("clock", 26, "", 2.2) + 'up to <span class="mono">8</span> hours</div>' +
+    '<div class="sd" style="position:absolute;left:20px;right:20px;top:62px;text-align:left">a small, isolated virtual machine</div>' +
+    '<div style="position:absolute;left:' + Math.round((AW - 36 - gb.w) / 2) + 'px;top:148px">' + gb.svg + '</div>' +
+    '<div class="gl" style="left:0;right:0;text-align:center;top:' + (148 + gb.h + 8) + 'px">the graph, <span class="mono">14</span> nodes</div></div>');
+  h.push('<div class="node cpu" data-k="runtime" style="left:' + (AX + 18) + 'px;top:' + CP[0] + 'px;width:' + (AW - 36) + 'px;height:' + CP[1] + 'px">' +
+    '<div class="ib">' + ICO("cpu", 50, "", 1.8) + ICO("pause", 36, "", 1.8) + '</div>' +
+    '<div class="cbar"><i class="b" style="width:34px"></i><i class="w" style="width:92px"></i><i class="b" style="width:24px"></i>' +
+    '<i class="w" style="width:70px"></i><i class="b" style="width:28px"></i></div>' +
+    '<div class="lab">CPU billed at zero while it waits</div></div>');
+  h.push(SVC({ k: "checkpoint", x: AX, y: DB[0], w: AW, h: DB[1], name: "DynamoDB", desc: "managed database" }));
+  h.push('</div>');
+  document.getElementById("chart").innerHTML = h.join("");
+
+  buildChart({
+    "graph-home-runtime":    { on: ["runtime"] },
+    "graph-home-checkpoint": { on: ["checkpoint"] }
+  }, { portrait: true });
+})();
+</script>
+</body>
+</html>

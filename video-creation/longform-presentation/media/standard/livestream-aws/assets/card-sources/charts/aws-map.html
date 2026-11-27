@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>livestream-aws chart: aws-map (all, ingest, graph, agents, compute, publish)</title>
+<!--
+  SYSTEM-DESIGN CHART, full-frame cover, 1920x1080, 6 states. SCRIPT.md CARDS row `aws-map`:
+    all     CH1 "For every piece, I'll show you what I do today and the AWS service that would do it, in 5 layers:
+            ingest, the graph, the agents, the heavy work, and publishing."      -> every layer lit
+    ingest  CH2 "Layer 1, ingest. ... On AWS, it goes to S3, Amazon's file storage."     -> INGEST lit, the rest dim
+    graph   CH3 "Layer 2, the graph. ... AgentCore Runtime, Amazon's hosting for agents." -> THE GRAPH lit
+    agents  CH4 "Layer 3, the agents. ... Bedrock ... Fable, Opus and Sonnet are all on it." -> THE AGENTS lit
+    compute CH6 "That's layer 4, the heavy work." (not said in the recording; built so the set is complete)
+    publish CH7 "Layer 5, publishing. ... On AWS, they're rows in DynamoDB."             -> PUBLISHING lit
+  IF IT RAN ON AWS (a hypothetical: nothing here is built). 5 layers left to right, numbered as Mike says them, the
+  flow of one batch between them. Every AWS box = the name as AWS writes it + its plain one-line description, the
+  wording of SCRIPT.md CARDS (Remotion Lambda's is the ec2-answer card's, Stable Image Core's is "an image model",
+  the words the script says for it; neither has one in the table). On this overview the description is the
+  family's sentence-case sub (.sd.sub), not the upper-case label of the detail charts: 21 described boxes only fit the
+  9:16 cut at the 28px phone floor in sentence case, and the two cuts of one card keep one look.
+  Shoot (from this folder): python shoot.py aws-map.html --out ../../diagrams
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chart.css">
+<link rel="stylesheet" href="group1.css">
+<style>
+/* the layer rail: numbered badges over the columns, the order of one batch between them */
+.lbadge{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:27px;line-height:1;
+  background:var(--bg-deep);border:2px solid var(--rest-edge);color:var(--text-secondary)}
+.lbadge.on{background:var(--accent-cyan);border-color:var(--accent-cyan);color:var(--bg-deep);box-shadow:0 0 26px rgba(0,194,255,.45)}
+.lname{text-align:center;font-family:'DM Sans';font-weight:700;font-size:26px;letter-spacing:.10em;text-transform:uppercase;
+  color:var(--rest-title);white-space:nowrap}
+.lname.on{color:var(--accent-cyan)}
+/* the services of a layer, stacked */
+.stack{display:flex;flex-direction:column;gap:10px}
+.stack .svc{position:relative;padding:11px 12px}
+.stack .sn{font-size:26px}
+/* "all": the layers lit, their services bright (cyan stays on the layer edges) */
+.node.svc.hi{border-color:rgba(232,234,240,.40);color:var(--text-primary)}
+.node.svc.hi .sd{color:var(--lit-sub)}
+/* a layer that is not the one being talked about */
+.dim{opacity:.5}
+</style>
+</head>
+<body>
+<template id="chart"></template>
+<script src="chart.js"></script>
+<script src="group1.js"></script>
+<script>
+(function () {
+  var L = [
+    { n: 1, name: "INGEST", s: [["S3", "file storage"], ["EventBridge", "event router"], ["Lambda", "code that runs when called"],
+      ["MediaConvert", "video converter"], ["Rekognition", "image and video analysis"], ["Transcribe", "speech to text"]] },
+    { n: 2, name: "THE GRAPH", s: [["AgentCore Runtime", "hosting for agents"], ["DynamoDB", "managed database"], ["SNS", "notifications"]] },
+    { n: 3, name: "THE AGENTS", s: [["Bedrock", "AI models as a service"], ["Claude Agent SDK", "Claude Code as a library"],
+      ["AgentCore Gateway", "my APIs as MCP tools"], ["AgentCore Identity", "a vault for keys and tokens"], ["IAM", "who can call what"]] },
+    { n: 4, name: "THE HEAVY WORK", s: [["AWS Batch<br>on EC2 Spot", "a job queue that starts servers when work arrives"],
+      ["Remotion Lambda", "one render split across Lambda functions"], ["Stable Image Core<br>on Bedrock", "an image model"]] },
+    { n: 5, name: "PUBLISHING", s: [["DynamoDB", "managed database"], ["EventBridge<br>Scheduler", "an alarm clock for code"],
+      ["Lambda", "code that runs when called"], ["AgentCore Browser", "a Chrome AWS runs for my agents"]] }
+  ];
+  var X = [120, 461, 803, 1145, 1486], W = 314, TOP = 252, H = 748, RAIL = 207;
+  var h = [];
+  h.push('<div class="stage">');
+  h.push('<div class="orb" style="width:640px;height:640px;background:var(--accent-cyan);opacity:.12;left:-300px;top:-320px"></div>');
+  h.push('<div class="orb" style="width:620px;height:620px;background:var(--accent-green);opacity:.06;left:1520px;top:760px"></div>');
+  h.push('<div class="head"><h1>If it ran on AWS</h1><div class="divider"></div></div>');
+
+  // the rail: badge to badge, the order of one batch
+  var w = [];
+  for (var i = 0; i < 4; i++) w.push(WIRE("flow", 'M' + (X[i] + W / 2 + 34) + ',' + RAIL + ' L' + (X[i + 1] + W / 2 - 34) + ',' + RAIL));
+  h.push('<svg class="wires" width="1920" height="1080" viewBox="0 0 1920 1080">' + w.join('') + '</svg>');
+
+  L.forEach(function (l, i) {
+    var k = 'L' + l.n, x = X[i];
+    h.push('<div class="lbadge" data-k="' + k + ' z" style="left:' + (x + W / 2 - 26) + 'px;top:' + (RAIL - 26) + 'px">' + l.n + '</div>');
+    h.push('<div class="zone" data-k="' + k + ' z" style="left:' + x + 'px;top:' + TOP + 'px;width:' + W + 'px;height:' + H + 'px"></div>');
+    h.push('<div class="lname" data-k="' + k + ' z" style="left:' + x + 'px;width:' + W + 'px;top:' + (TOP + 18) + 'px">' + l.name + '</div>');
+    var st = ['<div class="stack" data-own style="left:' + (x + 12) + 'px;top:' + (TOP + 66) + 'px;width:' + (W - 24) + 'px">'];
+    l.s.forEach(function (s) {
+      st.push('<div class="node svc" data-k="' + k + ' svc"><div class="sn">' + s[0] + '</div><div class="sd sub">' + s[1] + '</div></div>');
+    });
+    st.push('</div>');
+    h.push(st.join(''));
+  });
+  h.push('</div>');
+  document.getElementById("chart").innerHTML = h.join("");
+
+  function one(n) {
+    var cls = {};
+    for (var m = 1; m <= 5; m++) if (m !== n) cls['L' + m] = 'dim';
+    return { on: ['L' + n], cls: cls };
+  }
+  buildChart({
+    "aws-map-all":     { on: ["z", "flow"], cls: { svc: "hi" } },
+    "aws-map-ingest":  one(1),
+    "aws-map-graph":   one(2),
+    "aws-map-agents":  one(3),
+    "aws-map-compute": one(4),
+    "aws-map-publish": one(5)
+  });
+})();
+</script>
+</body>
+</html>

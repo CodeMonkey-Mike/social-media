@@ -1,0 +1,130 @@
+{
+ "deck": "../livestream-aws.html",
+ "spine": "../spine/livestream-aws EDIT.painted.mp4",
+ "out": "../livestream-aws VERTICAL-NOMUSIC.mp4",
+ "layout": {
+  "w": 1080,
+  "h": 1920,
+  "bg": "0x0a0c10",
+  "panes": [
+   {
+    "name": "deck",
+    "src": {
+     "x": 0,
+     "y": 0,
+     "w": 1371,
+     "h": 1012
+    },
+    "dst": {
+     "x": 0,
+     "y": 60,
+     "w": 1080,
+     "h": 796
+    }
+   },
+   {
+    "name": "webcam",
+    "src": {
+     "x": 1466,
+     "y": 400,
+     "w": 454,
+     "h": 680
+    },
+    "dst": {
+     "x": 206,
+     "y": 880,
+     "w": 668,
+     "h": 1000
+    }
+   }
+  ]
+ },
+ "face_reframe": {
+  "crop": {
+   "x": 822,
+   "y": 2,
+   "w": 604,
+   "h": 1076
+  },
+  "windows": [
+   [
+    0.0,
+    13.333
+   ],
+   [
+    363.6,
+    369.9
+   ]
+  ]
+ },
+ "cards": [
+  {
+   "id": "run-01",
+   "in": 16.0,
+   "out": 42.88,
+   "say": "Today, everything lives in one box. A graph and its checkpoints, seven ...  graph, the agents, the heavy work and publishing.",
+   "kind": "clip",
+   "src": "runs-v/run-01.mp4",
+   "cover_cards": [
+    "today-pc",
+    "aws-map.all"
+   ]
+  },
+  {
+   "id": "run-02",
+   "in": 50.04,
+   "out": 141.96,
+   "say": "layer one, ingest. Today, the recording sits in my folder on my PC. On ... LandGraph package called LandGraph Checkpoint AWS.",
+   "kind": "clip",
+   "src": "runs-v/run-02.mp4",
+   "cover_cards": [
+    "aws-map.ingest",
+    "ingest.trigger",
+    "ingest.convert",
+    "ingest.face",
+    "ingest.words",
+    "aws-map.graph",
+    "graph-home.runtime",
+    "graph-home.checkpoint"
+   ]
+  },
+  {
+   "id": "run-03",
+   "in": 148.72,
+   "out": 240.72,
+   "say": "So at the gate, the graph saves the state to DynamoDB and the session  ... n shorts stopped taking turns. No browser, no log.",
+   "kind": "clip",
+   "src": "runs-v/run-03.mp4",
+   "cover_cards": [
+    "gate.wait",
+    "gate.resume",
+    "aws-map.agents",
+    "agents.models",
+    "agents.tools",
+    "agents.role",
+    "images.before",
+    "images.after"
+   ]
+  },
+  {
+   "id": "run-04",
+   "in": 248.74,
+   "out": 363.6,
+   "say": "The graphs agent on Agent Core and the models are on Bedrock. The FFMP ... ely changes. What changes is everything around it.",
+   "kind": "clip",
+   "src": "runs-v/run-04.mp4",
+   "cover_cards": [
+    "ec2-answer",
+    "batch-spot.reclaim",
+    "batch-spot.gpu",
+    "render-fanout",
+    "aws-map.publish",
+    "publish.schedule",
+    "watch",
+    "bill",
+    "same-graph"
+   ],
+   "fade_out": false
+  }
+ ]
+}

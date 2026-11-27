@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>livestream-aws chart, 9:16: aws-map (all, ingest, graph, agents, compute, publish)</title>
+<!--
+  The 9:16 cut of aws-map.html: the same 21 AWS boxes, the same descriptions, the same states and lit parts,
+  re-composed for a 1080x1920 phone frame. Five layers in one column do not fit above y 1450 at the 28px phone floor
+  (21 boxes of name + description), so the layers run as a snake that keeps the 1 to 5 reading order:
+    row 1   1 INGEST (full width, three across)
+    row 2   2 THE GRAPH  ->  3 THE AGENTS
+    row 3   4 THE HEAVY WORK  ->  5 PUBLISHING
+  with the batch's flow between them (lit in `all`, as the 16:9 rail). Names and descriptions 28px, nothing below
+  y 1450, 72px side margins.
+  Shoot (from this folder): python shoot.py aws-map-vertical.html --out ../../vertical/diagrams --size 1080x1920
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chart.css">
+<link rel="stylesheet" href="group1.css">
+<style>
+.lhead{display:flex;align-items:center;gap:14px}
+.lbadge{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto;
+  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:28px;line-height:1;
+  background:var(--bg-deep);border:2px solid var(--rest-edge);color:var(--text-secondary)}
+.lbadge.on{background:var(--accent-cyan);border-color:var(--accent-cyan);color:var(--bg-deep);box-shadow:0 0 24px rgba(0,194,255,.45)}
+.lname{font-family:'DM Sans';font-weight:700;font-size:28px;letter-spacing:.10em;text-transform:uppercase;color:var(--rest-title);white-space:nowrap}
+.lname.on{color:var(--accent-cyan)}
+.grid{display:grid;gap:8px}
+.grid .svc{position:relative;padding:5px 10px;justify-content:center}
+.grid .sn{font-size:28px;line-height:1.1}
+.grid .sd.sub{font-size:28px;line-height:1.12;margin-top:1px}
+.node.svc.hi{border-color:rgba(232,234,240,.40);color:var(--text-primary)}
+.node.svc.hi .sd{color:var(--lit-sub)}
+.dim{opacity:.5}
+</style>
+</head>
+<body>
+<template id="chart"></template>
+<script src="chart.js"></script>
+<script src="group1.js"></script>
+<script>
+(function () {
+  // [name, description], the same words as aws-map.html
+  var L = {
+    1: { name: "INGEST", s: [["S3", "file storage"], ["EventBridge", "event router"], ["Lambda", "code that runs when called"],
+      ["MediaConvert", "video converter"], ["Rekognition", "image and video analysis"], ["Transcribe", "speech to text"]] },
+    2: { name: "THE GRAPH", s: [["AgentCore<br>Runtime", "hosting for agents"], ["DynamoDB", "managed database"], ["SNS", "notifications"]] },
+    3: { name: "THE AGENTS", s: [["Bedrock", "AI models as a service"], ["Claude Agent SDK", "Claude Code as a library"],
+      ["AgentCore Gateway", "my APIs as MCP tools"], ["AgentCore Identity", "a vault for keys and tokens"], ["IAM", "who can call what"]] },
+    4: { name: "THE HEAVY WORK", s: [["AWS Batch on EC2 Spot", "a job queue that starts servers when work arrives"],
+      ["Remotion Lambda", "one render split across Lambda functions"], ["Stable Image Core<br>on Bedrock", "an image model"]] },
+    5: { name: "PUBLISHING", s: [["DynamoDB", "managed database"], ["EventBridge Scheduler", "an alarm clock for code"],
+      ["Lambda", "code that runs when called"], ["AgentCore Browser", "a Chrome AWS runs for my agents"]] }
+  };
+  // the zones (explicit px): x, y, w, h, columns of the box grid
+  var Z = window.AWSV_Z || {
+    1: [72, 262, 936, 296, 3],
+    2: [72, 586, 290, 410, 1], 3: [402, 586, 606, 410, 2],
+    4: [72, 1028, 400, 432, 1], 5: [512, 1028, 496, 432, 1]
+  };
+  var h = [];
+  h.push('<div class="stage">');
+  h.push('<div class="orb" style="width:620px;height:620px;background:var(--accent-cyan);opacity:.12;left:-300px;top:-300px"></div>');
+  h.push('<div class="orb" style="width:620px;height:620px;background:var(--accent-green);opacity:.06;left:620px;top:1460px"></div>');
+  h.push('<div class="head"><h1>If it ran on AWS</h1><div class="divider"></div></div>');
+
+  // the batch's flow between the layers
+  var z1 = Z[1], z2 = Z[2], z3 = Z[3], z4 = Z[4], z5 = Z[5], w = [];
+  w.push(WIRE("flow", 'M' + (z2[0] + z2[2] / 2) + ',' + (z1[1] + z1[3] + 3) + ' L' + (z2[0] + z2[2] / 2) + ',' + (z2[1] - 4)));
+  w.push(WIRE("flow", 'M' + (z2[0] + z2[2] + 3) + ',' + (z2[1] + 29) + ' L' + (z3[0] - 4) + ',' + (z3[1] + 29)));
+  var x34 = Math.round((z3[0] + z4[0] + z4[2]) / 2);
+  w.push(WIRE("flow", 'M' + x34 + ',' + (z3[1] + z3[3] + 3) + ' L' + x34 + ',' + (z4[1] - 4)));
+  w.push(WIRE("flow", 'M' + (z4[0] + z4[2] + 3) + ',' + (z4[1] + 29) + ' L' + (z5[0] - 4) + ',' + (z5[1] + 29)));
+  h.push('<svg class="wires" width="1080" height="1920" viewBox="0 0 1080 1920">' + w.join('') + '</svg>');
+
+  [1, 2, 3, 4, 5].forEach(function (n) {
+    var l = L[n], z = Z[n], k = 'L' + n;
+    h.push('<div class="zone" data-k="' + k + ' z" style="left:' + z[0] + 'px;top:' + z[1] + 'px;width:' + z[2] + 'px;height:' + z[3] + 'px"></div>');
+    h.push('<div class="lhead" data-own style="left:' + (z[0] + 14) + 'px;top:' + (z[1] + 7) + 'px">' +
+      '<div class="lbadge" data-k="' + k + ' z">' + n + '</div><div class="lname" data-k="' + k + ' z">' + l.name + '</div></div>');
+    var g = ['<div class="grid" data-own data-zone="' + n + '" style="left:' + (z[0] + 12) + 'px;top:' + (z[1] + 56) + 'px;width:' + (z[2] - 24) +
+      'px;grid-template-columns:repeat(' + z[4] + ',1fr)">'];
+    l.s.forEach(function (s) {
+      g.push('<div class="node svc" data-k="' + k + ' svc"><div class="sn">' + s[0] + '</div><div class="sd sub">' + s[1] + '</div></div>');
+    });
+    g.push('</div>');
+    h.push(g.join(''));
+  });
+  h.push('</div>');
+  document.getElementById("chart").innerHTML = h.join("");
+
+  function one(n) {
+    var cls = {};
+    for (var m = 1; m <= 5; m++) if (m !== n) cls['L' + m] = 'dim';
+    return { on: ['L' + n], cls: cls };
+  }
+  buildChart({
+    "aws-map-all":     { on: ["z", "flow"], cls: { svc: "hi" } },
+    "aws-map-ingest":  one(1),
+    "aws-map-graph":   one(2),
+    "aws-map-agents":  one(3),
+    "aws-map-compute": one(4),
+    "aws-map-publish": one(5)
+  }, { portrait: true });
+})();
+</script>
+</body>
+</html>

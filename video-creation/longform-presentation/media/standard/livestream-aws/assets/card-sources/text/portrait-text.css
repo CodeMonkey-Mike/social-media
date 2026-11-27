@@ -1,0 +1,136 @@
+/* clip-evals portrait-text.css: the VERTICAL (1080x1920) reflow of the TEXT cards.
+   Linked from cards-pilot.html and cards-text.html with media="(orientation: portrait)", AFTER base.css and each
+   file's own <style>, so a 1920x1080 shot never reads this file and a 1080x1920 shot reflows the SAME HTML:
+   the headline wraps, rows stack, a 2-up compare stacks, a table becomes stacked rows, a flow strip runs top to bottom.
+   Shoot: python shoot.py <html> --out ../vertical/cards --size 1080x1920 --only <ids>
+   Phone rules: content block sits between y 120 and y 1450 (the lower part is under the phone UI), 72 px side margins,
+   body text 28 px or more. Tokens only (base.css :root); no colour, state or text differs from the 16:9 card.
+   The code cards are NOT covered here (they have their own portrait file). */
+
+/* ---- FRAME: 1080x1920, content centred in the safe band 120..1450 ---------------- */
+.frame{width:1080px;height:1920px;padding:120px 72px 470px}
+h1{font-size:80px;max-width:none}
+h1.sm{font-size:68px}
+/* balanced wrapping: no headline or quote leaves one word alone on its last line */
+h1,.quote,.bigstat-cap,.own{text-wrap:balance}
+.nrow-d,.flow-d,.check-tx,.note-line,.source,.formula-note,.cmp2-sub,.tbl td,.path{text-wrap:pretty}
+#last-video .quote{font-size:68px}   /* keeps the 16:9 line break: "The next layer is a dataset" fits one line */
+p,.body{max-width:none}
+.ey{font-size:26px;margin-bottom:22px}
+.divider{margin:28px 0}
+.source{font-size:27px;line-height:1.4}
+.own{font-size:34px;margin-top:38px}
+.note-line{font-size:28px;margin-top:30px}
+
+/* ---- QUOTES ---------------------------------------------------------------------- */
+.quote{max-width:none}
+.quote.lg{font-size:56px}
+.quote.xl{font-size:80px;max-width:none}
+.quote.small{font-size:28px}
+
+/* ---- NUMBERED ROWS --------------------------------------------------------------- */
+.nrows{max-width:none}
+.nrow{grid-template-columns:56px 1fr;column-gap:18px;padding:24px 28px}
+.nrow.nonum{grid-template-columns:1fr}
+.nrows.tight .nrow{padding:18px 26px}
+.nrow-n{font-size:44px}
+.nrow-t{font-size:30px}
+.nrow-d{font-size:30px}
+.nrow.kv .nrow-t{min-width:250px}
+.nrow.inl .nrow-b{row-gap:6px}
+
+/* ---- TABLES -> stacked rows ----------------------------------------------------------
+   3-column tables (six-agents, what-changed): col 1 top-left, col 3 top-right, col 2 on its own line under them.
+   The lit state moves from the cells onto the row, so the accent bar spans the whole stacked row.        */
+.tbl,.tbl tbody,.tbl thead{display:block;width:100%;max-width:none}
+.tbl colgroup{display:none}
+.tbl tr{display:grid;grid-template-columns:1fr auto;column-gap:20px;padding:16px 22px;border-bottom:1px solid var(--border)}
+.tbl th,.tbl td{display:block;padding:0 !important;border:none !important;background:transparent !important;box-shadow:none !important;width:auto !important}
+.tbl tr>:nth-child(1){grid-column:1;grid-row:1}
+.tbl tr>:nth-child(3){grid-column:2;grid-row:1;text-align:right}
+.tbl tr>:nth-child(2){grid-column:1 / span 2;grid-row:2;margin-top:6px}
+.tbl td{font-size:29px}
+.tbl.compact td{font-size:28px}
+.tbl.compact tr{padding:12px 22px}
+.tbl thead tr{padding:0 22px 14px}
+.tbl thead th:nth-child(2){margin-top:4px}
+.tbl tr.grp{display:block;padding:24px 22px 8px;border-bottom:none}
+.tbl tr.lit{background:rgba(0,194,255,.08);box-shadow:inset 6px 0 0 var(--accent-cyan)}
+.tbl tr.lit-g{background:rgba(0,230,138,.08);box-shadow:inset 6px 0 0 var(--accent-green)}
+.tbl tr.lit-re{background:rgba(255,64,96,.08);box-shadow:inset 6px 0 0 var(--accent-red)}
+
+/* noise-table (5 columns): the name on its own line, the 4 values in a row of 4 under it, the header the same shape */
+/* uneven columns: the two "(run 1 / run 2)" columns get the width that keeps that label on one line at 26 px */
+[id^="noise-table"] .tbl tr{grid-template-columns:236px 190px 236px 1fr;column-gap:18px;padding-left:14px;padding-right:14px}
+[id^="noise-table"] .tbl tr>:nth-child(1){grid-column:1 / span 4;grid-row:1;text-align:left}
+[id^="noise-table"] .tbl tr>:nth-child(2){grid-column:1;grid-row:2;margin-top:8px}
+[id^="noise-table"] .tbl tr>:nth-child(3){grid-column:2;grid-row:2;margin-top:8px}
+[id^="noise-table"] .tbl tr>:nth-child(4){grid-column:3;grid-row:2;margin-top:8px}
+[id^="noise-table"] .tbl tr>:nth-child(5){grid-column:4;grid-row:2;margin-top:8px}
+[id^="noise-table"] .tbl .r{text-align:left}
+[id^="noise-table"] .tbl th{font-size:26px;letter-spacing:0;line-height:1.25}
+[id^="noise-table"] .tbl .th-sub{letter-spacing:0;white-space:nowrap}
+[id^="noise-table"] .tbl td{font-size:28px}
+[id^="noise-table"] .tbl tbody tr{padding:18px 14px}
+
+/* ---- FLOW STRIP -> top to bottom --------------------------------------------------- */
+.flow{flex-direction:column;max-width:none}
+.flow .flow-step,#the-job .flow-step,#backfill .flow-step,#backfill .flow-step.res{flex:none;min-height:0;padding:24px 30px}
+.flow-arrow{width:3px;height:44px;margin:6px 0 6px 56px;align-self:flex-start}
+.flow-arrow::after{right:auto;left:-7px;top:auto;bottom:-4px;border-top:14px solid var(--text-muted);
+  border-left:8.5px solid transparent;border-right:8.5px solid transparent;border-bottom:none}
+.flow-t{font-size:30px}
+.flow-d,#the-job .flow-d{font-size:28px;margin-top:8px}
+.join{flex:none}
+.join-plus{padding:8px 0;text-align:left;padding-left:44px}
+
+/* ---- 2-UP COMPARE -> stacked --------------------------------------------------------- */
+.cmp2{grid-template-columns:1fr;gap:24px;max-width:none}
+.cmp2-col{padding:30px 40px 34px}
+.cmp2-big{font-size:104px;margin-top:18px}
+.cmp2-sub{font-size:30px;margin-top:16px}
+
+/* ---- BIG STAT + STAT ROW (5 stats -> 3 + 2) ------------------------------------------ */
+.bigstat-n{font-size:170px}
+.bigstat-cap{font-size:36px;max-width:none}
+.bigstat.sm .bigstat-n{font-size:110px}
+.bigstat.sm .bigstat-cap{font-size:32px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);max-width:none}
+.stat,.stat:first-child{padding:26px 0 26px 26px;border-left:1px solid var(--border)}
+.stat:nth-child(3n+1){border-left:none;padding-left:0}
+.stat:nth-child(-n+3){border-bottom:1px solid var(--border)}
+.stat-n{font-size:64px}
+.stat-l{font-size:24px}
+
+/* kills-pairs -> kills-rates share one top anchor in portrait too (kills-rates' centred position) */
+#kills-pairs,#kills-rates{justify-content:flex-start;padding-top:329.3125px}
+/* recall: the big number scaled up so the card is not sparse (stays inside the safe band) */
+#recall .bigstat-n{font-size:250px}
+#recall .bigstat-cap{font-size:42px}
+
+/* ---- CLIP BARS (kills-pairs) stacked ------------------------------------------------- */
+.clipbars{flex-direction:column;align-items:flex-start;gap:18px}
+.clipbar{font-size:26px}
+.nrow-q .source{font-size:25px}
+
+/* ---- FORMULA ------------------------------------------------------------------------- */
+.formula{font-size:34px;gap:20px}
+.formula-name{font-size:36px}
+.fblock .formula-name{min-width:210px}
+.fblock .formula-note{font-size:30px}
+
+/* ---- CHIPS, LABELS, CHECKS, PATH --------------------------------------------------- */
+.chips{max-width:none;gap:16px}
+.chip{font-size:30px;padding:14px 24px}
+.chips.sm .chip{font-size:28px;padding:10px 20px}
+.sublabel{font-size:26px}
+.detail{margin-top:26px}
+.check{grid-template-columns:52px 1fr;column-gap:22px;padding:22px 26px}
+.check-mark{width:52px;height:52px}
+.check-tx{font-size:28px}
+.path{font-size:26px;line-height:1.4}
+
+/* .pnw = no-wrap in PORTRAIT ONLY (a span in the HTML that the 16:9 card ignores): keeps "end-to-end." and
+   the inner quote "an agent," whole at the narrow width without changing the 16:9 line breaks */
+.pnw{white-space:nowrap}
+#eval-harness .quote{font-size:60px}   /* at this width "end-to-end." lands whole on one line (56 px split it at "end-") */

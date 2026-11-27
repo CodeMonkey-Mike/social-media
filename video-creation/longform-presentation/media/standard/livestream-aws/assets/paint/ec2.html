@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<link href="slides.css" rel="stylesheet">
+<title>Does It Run On EC2?</title></head><body>
+<!-- question state = this file as is; answer state = body.ans (shoot_slides.py adds it). The answers are always laid out. -->
+<div class="orb"></div>
+<div class="label">If it ran on AWS</div>
+<h1>Does It Run On <span class="c">EC2</span>?</h1>
+<div class="sub"><b>EC2:</b> Amazon's virtual servers</div>
+<div class="divider"></div>
+<div class="qrows">
+<div class="qrow"><div class="k">THE GRAPH</div><div class="a"><span class="q">?</span><h3>AgentCore Runtime</h3><p>HOSTING FOR AGENTS</p></div></div>
+<div class="qrow"><div class="k">THE MODELS</div><div class="a"><span class="q">?</span><h3>Bedrock</h3><p>AI MODELS AS A SERVICE</p></div></div>
+<div class="qrow ec2"><div class="k">THE HEAVY MEDIA</div><div class="a"><span class="q">?</span><h3>EC2 Spot <span class="thr">through</span> AWS Batch</h3><p>A JOB QUEUE THAT STARTS SERVERS WHEN WORK ARRIVES</p></div></div>
+<div class="qrow"><div class="k">THE RENDERS</div><div class="a"><span class="q">?</span><h3>Remotion Lambda</h3><p>ONE RENDER SPLIT ACROSS LAMBDA FUNCTIONS</p></div></div>
+</div>
+<div class="answer">Yes, but only the heavy work, <span>and only while there's a job to run.</span></div>
+</body></html>

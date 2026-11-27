@@ -1,0 +1,51 @@
+{
+  "project": "livestream-aws",
+  "comp_id": "LivestreamAwsShort",
+  "comp_file": "video-creation/remotion/src/LivestreamAwsShort.tsx",
+  "extra_files": ["video-creation/remotion/src/Root.tsx (registration, 1080x1920, fps 30, DUR 917)", "video-creation/remotion/src/LivestreamAwsShortCaptions.ts (generated, imported, not edited)"],
+  "mode": "SHORT (presentation project, source = livestream-aws VERTICAL-v1, spans from _previews/short/work)",
+  "card_t": [],
+  "pause_s": null,
+  "spine_secs": 27.567,
+  "dur_frames": 917,
+  "spans": [
+    {"i": 1, "file": "span-01.mp4", "from_frame": 0, "frames": 118, "on_screen": "full-camera FACE scene (hook)"},
+    {"i": 2, "file": "span-02.mp4", "from_frame": 118, "frames": 396, "on_screen": "The image bottleneck diagram (TODAY vs ON AWS)"},
+    {"i": 3, "file": "span-03.mp4", "from_frame": 514, "frames": 313, "on_screen": "same-graph card (opens on its cross-fade) then FACE"}
+  ],
+  "outro": {"from_frame": 827, "frames": 90, "what": "span-03 final frame held (top-level Freeze) + full-frame card 'WATCH THE FULL VIDEO' in the card-sources look (bg-deep, cyan orb, Playfair 900, cyan accent line, green-cyan divider, grain) with a down-arrow glyph in a cyan ring, slide-up ingress over 10 frames, no audio"},
+  "covers": 0,
+  "transitions_wired": [
+    {"tc": 3.9333, "frame": 118, "id": "hand-rolled seam hit (punch 1.10 + blur 7 px + 0.42 flash, 4 out + 5 in frames, ~0.3 s): face -> diagram, not two settled card states"},
+    {"tc": 17.1333, "frame": 514, "id": "hand-rolled seam hit (same): diagram -> a card still cross-fading in, not two settled card states"}
+  ],
+  "captions_groups": 35,
+  "captions_notes": "ZCAPTIONS + CAPTION_WINDOWS_F + CAPTION_BAND/_F imported; every comparison in whole frames (Math.round(s*30)); group hides at min(next, max(t+1.3 s, e), window end); safe-zone block bottom 320 px, maxWidth 860, Montserrat 900 lowercase, 12 px stroke, pop 0.7-1.12-1; CAPTION_BAND_F is empty for this short (no SCREENSHARE span) but the band path is wired.",
+  "gates": {
+    "COMP-IMPORTS-LINT": "COMP-IMPORTS-LINT PASS files=2 fails=0",
+    "COVERS-LINT": "COVERS-LINT PASS covers=0 fails=0 warns=0",
+    "DECK-CONTAINERS": "n/a (short lane: gates are lint_comp_imports + lint_covers)",
+    "SLIDE-BALANCE-LINT": "n/a (short lane)",
+    "ANIMATED-CHARTS-LINT": "n/a (short lane)",
+    "TRANSITION-ASSETS-LINT": "n/a (short lane, hand-rolled seams only)",
+    "SPINE-FPS": "span intermediates probed: 1080x1920 30/1, 118 / 396 / 313 frames, video only"
+  },
+  "chunks_qa": [
+    {"frames": "40", "what": "span 1 FACE + caption 'pipeline runs'", "verdict": "ok"},
+    {"frames": "115,118,120", "what": "seam 1 hit (out, seam frame, in)", "verdict": "ok: punch + blur + flash, no caption on the seam (group 'on one pc.' ends at 114)"},
+    {"frames": "256,330,490", "what": "span 2 diagram + captions", "verdict": "ok: captions below the diagram, never on card text, 'a four hour and' fits one line"},
+    {"frames": "511,514,516", "what": "seam 2 hit", "verdict": "ok: 'turns.' ends on 514 (window end), 'so the' pops at 516"},
+    {"frames": "620,800", "what": "span 3 card + face with captions", "verdict": "ok"},
+    {"frames": "826,827,830,834,860,916", "what": "last span frame, outro hold, card ingress, settled card", "verdict": "fixed: the first build froze the hold at 312 + 827 (remotion 4.0.462 Freeze adds the parent Sequence's relativeFrom) and showed the card state; moved the Freeze to the top level, 827 now equals 826's face frame, card reads WATCH THE / FULL VIDEO + down arrow inside the safe band"}
+  ],
+  "smoke_stills_dir": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-presentation/media/standard/livestream-aws/_previews/short/qa/stills",
+  "draft": null,
+  "needs_review": [
+    "The seam flash (0.42 light grey, peak on the seam frame) reads as a brief grey wash over the dark diagram/card frames; it lasts ~1-2 frames at peak, adjust HIT flash peak if it feels heavy in motion.",
+    "Span 3 opens on the same-graph card's own cross-fade from the previous card (a ghost of the earlier card's text for a few frames); it is verbatim from the vertical (nothing re-timed inside a span), masked partly by the seam hit.",
+    "Repo-wide: remotion 4.0.462 vs @remotion/google-fonts 4.0.473 version-mismatch warning on every still; pre-existing, all stills rendered correctly."
+  ],
+  "deviations": [
+    "Full render not run (per brief); draft = null."
+  ]
+}

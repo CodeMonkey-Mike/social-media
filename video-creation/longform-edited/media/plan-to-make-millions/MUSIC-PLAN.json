@@ -1,0 +1,764 @@
+{
+  "project": "plan-to-make-millions",
+  "authored": "2026-11-23 by music-placement-strategist (read-only plan; the orchestrator renders the listening copy with mix_music.py --plan-preview)",
+  "spine": "video-creation/longform-edited/media/plan-to-make-millions/spine/ALL.e.enhanced.mp4",
+  "spine_duration_sec": 590.23,
+  "timebase": "Every timecode is a FINAL-spine second (ALL.e.enhanced.mp4), before the card pauses and before the CH1 montage. The mixer routes them through sh(). File times are the decoded timeline the mixer trims on (checked: plain decode = PTS for all five files).",
+  "ruling": "Mike, PROJECT-LOG 2026-11-22: the intro (CH1) may carry the energetic bed of the video; every chapter after it gets SUBTLE music only (the subtle sections of a chill track, or a drone), no aggressive or epic section after CH1. So: Bed A = focuser, carved, CH1 only. Bed B = what-we-must, one drumless pass. Bed C = the two calm cuts of oh-mega, carved on its 2-bar figure, never its chorus. Bed D = the sacral drone, right-aligned, resolving on the last word with no epic hit. Four beds, three cards (CH2, CH3, CH5); CH4 continues Bed C as a carve.",
+  "tracks": [
+    {
+      "bed": "A",
+      "id": "focuser",
+      "title": "Focuser",
+      "artist": "Neon Beach",
+      "duration_sec": 165.87,
+      "bpm": 110,
+      "bar_sec": 2.181818,
+      "section_grid_phase_sec": 0.05,
+      "key": "Gb/F# minor",
+      "mix": "instrumental",
+      "license_code": "5WH8X4RII7CDAU05",
+      "files_used": [
+        "video-creation/assets/music/Focuser/Neon_Beach_Focuser_instrumental_2_45.mp3"
+      ],
+      "usage_ledger": "fresh (never used)",
+      "status": "screenplay pick, kept"
+    },
+    {
+      "bed": "B",
+      "id": "what-we-must",
+      "title": "What We Must",
+      "artist": "Falls",
+      "duration_sec": 287.0,
+      "bpm": 71,
+      "key": "B minor",
+      "mix": "instrumental",
+      "license_code": "3PNUTPGKFO9NSTVH",
+      "files_used": [
+        "video-creation/assets/music/What We Must/Falls_What_We_Must_instrumental_4_47.mp3"
+      ],
+      "usage_ledger": "fresh (never used)",
+      "status": "screenplay pick, kept"
+    },
+    {
+      "bed": "C",
+      "id": "oh-mega",
+      "title": "Oh, Mega!",
+      "artist": "Suiteniss",
+      "duration_sec": 181.42,
+      "bpm": 74,
+      "bar_sec": 3.243243,
+      "section_grid_phase_sec": 2.872,
+      "key": "Gb/F# major",
+      "mix": "instrumental section cuts (intro 1:01, verse 0:38)",
+      "license_code": "5S5Z7G59FWXCILBA",
+      "files_used": [
+        "video-creation/assets/music/Oh, Mega!/Suiteniss_Oh_Mega_instrumental_intro_1_01-2.wav",
+        "video-creation/assets/music/Oh, Mega!/Suiteniss_Oh_Mega_instrumental_verse_0_38-3.wav"
+      ],
+      "usage_ledger": "fresh (never used)",
+      "status": "screenplay pick, kept",
+      "catalog_note": "use_case (Mike, 2026-11-03): calm ONLY in the intro cut and the verse cut, use those WAV section cuts under VO; the master goes loud at 60 to 88 s and 126 to 178 s. This plan plays only the two WAV cuts."
+    },
+    {
+      "bed": "D",
+      "id": "sacral-i-feel-417-hz",
+      "title": "Sacral - I Feel (417 Hz)",
+      "artist": "Moments",
+      "duration_sec": 255.4,
+      "bpm": 50,
+      "key": "B major",
+      "mix": "instrumental",
+      "license_code": "ETEORPHXRJHTSO60",
+      "files_used": [
+        "video-creation/assets/music/Sacral - I Feel (417 Hz)/Moments_Sacral_-_I_Feel_417_Hz_instrumental_4_15.mp3"
+      ],
+      "usage_ledger": "fresh (never used)",
+      "status": "screenplay pick, kept",
+      "catalog_note": "use_case (Mike, 2026-11-03): continuous-tone drone bed under VO."
+    }
+  ],
+  "usage_ledger": "Report run 2026-11-23 with this project excluded: BLOCKED none (the previous video, pieverse, used no music); avoid concrete-mazes and emergence (last three videos). All four picks are fresh, none is on the avoid list, so the screenplay shortlist stands and nothing was replaced. No track considered carries a mike_note (the catalog has two, old-moon and lights-out, neither is used). No usage_waivers.",
+  "levels": {
+    "vo_lufs_integrated": -22.1,
+    "vo_note": "ffmpeg ebur128 on spine/ALL.e.enhanced.mp4 (LRA 2.6 LU, true peak -5.5 dBFS). mix_music.py raises the voice +2.0 dB by default (GRAPH-PROGRESS settings carry no voice_db), so every seat is computed against the raised voice at -20.1 LUFS. If voice_db changes, shift every remotion_gain_db by the same amount.",
+    "bed_region_lufs": {
+      "focuser groove bars 0-11 (hook)": -12.5,
+      "focuser bars 13-15": -12.0,
+      "focuser chorus 1 bars 16-29": -9.7,
+      "focuser verse bars 45-47": -12.1,
+      "focuser chorus 2 bars 48-59": -9.8,
+      "what-we-must whole pass 0-187.5": -12.9,
+      "what-we-must 0-27": -14.3,
+      "what-we-must 27-81": -14.4,
+      "what-we-must 81-138": -11.9,
+      "what-we-must 138-187.5": -12.6,
+      "oh-mega intro cut bars 1-16": -20.3,
+      "oh-mega intro bars 1-8": -20.8,
+      "oh-mega intro bars 9-16": -19.9,
+      "oh-mega intro bars 7-14 (whiteboard row)": -20.0,
+      "oh-mega verse cut bars 27-36": -20.3,
+      "sacral plateau 119.6-237.2": -12.3,
+      "sacral swell 171-179": -9.2,
+      "sacral 212-220": -12.4
+    },
+    "seats": {
+      "bed_A": {
+        "remotion_gain_db": -26.4,
+        "linear_gain": 0.0479,
+        "under_vo": "chorus 16.0, groove 18.3 to 18.8: ONE gain for the whole bed, the 2.5 LU between the two is the lift of the file itself"
+      },
+      "bed_B": {
+        "remotion_gain_db": -26.7,
+        "linear_gain": 0.0462,
+        "under_vo": "19.5 on the whole pass: 20.9 in the sparse first 80 s, 18.5 to 19.2 after"
+      },
+      "bed_C": {
+        "remotion_gain_db": -17.3,
+        "linear_gain": 0.1365,
+        "under_vo": "17.5 on the figures (17.2 to 18.0 by region), 19.2 under the whiteboard. The cuts are mastered 8 to 10 dB quieter than the other beds, hence the higher gain; between figures the file is at -26 to -32 dBFS, which is silence at this seat"
+      },
+      "bed_D": {
+        "remotion_gain_db": -27.8,
+        "linear_gain": 0.0407,
+        "under_vo": "20.0 on the plateau, 16.9 at the top of its one swell"
+      }
+    },
+    "seat_rule": "gain = (VO -20.1) - target - region LUFS. Bed A sits at the hot end of the house 16 to 18 window on its chorus because CH1 is the one energetic bed; Beds B, C, D sit at 17.5 to 20 because Mike ruled subtle music only after the intro. Remotion volume = 10**(dB/20). QA by ear on a rendered chunk, never integrated LUFS alone."
+  },
+  "energy_profile": {
+    "video-creation/assets/music/Focuser/Neon_Beach_Focuser_instrumental_2_45.mp3": {
+      "low_energy_regions": [
+        [
+          139.69,
+          157.12
+        ],
+        [
+          157.12,
+          165.87
+        ]
+      ],
+      "high_energy_regions": [
+        [
+          34.96,
+          69.87
+        ],
+        [
+          104.78,
+          139.69
+        ]
+      ],
+      "per_bar_read": {
+        "method": "one scratchpad scan (nothing written): RMS per bar and per beat, band energies, onset comb. Bar = 240 / 110 = 2.181818 s, bar n starts at file 0.050 + 2.181818 n (comb fit 110.000 bpm, first kick at 0.045; every level step of the file lands on a 16-bar line).",
+        "intro_groove_bars_0_15": "file 0.05-34.96: -11.3 to -12.8 dBFS, full from the first kick (cold_hot). A hat layer joins at bar 7. Bar 15 (32.78-34.96) is the fill: mids and highs rise into the chorus.",
+        "chorus_1_bars_16_31": "file 34.96-69.87: -8.7 to -9.5 dBFS, +2.5 LU on the groove. A second lift at bar 23 (50.23): mids +2 dB, highs +2 dB.",
+        "verse_2_bars_32_47": "file 69.87-104.78: -11.3 to -13.0. Bar 39 has a half-bar dropout (86.2-87.3, -18.5), not used. Bar 47 (102.60-104.78) is the fill before chorus 2.",
+        "chorus_2_bars_48_63": "file 104.78-139.69: -8.6 to -9.8, the same lift at bar 55 (120.05).",
+        "outro_bars_64_71": "file 139.69-157.12: the groove with the bass out (-16.4 to -18.5), not used.",
+        "ring_out_bars_72_75": "file 157.12-165.87: the last chord decays to silence (ending fade), not used."
+      },
+      "notes": "Catalog: aggression 92, opening cold_hot, ending fade, roles intro_hype / hype_peak / epic_outro. The catalog env shows a wall of 7s and 8s; per bar it is two levels, a groove at -12 and a chorus at -9.5, and the carve uses the step between them twice. The section cuts (verse, chorus, bridge, each with its own hit ending) are not used: CH1 closes on a fade under the card so no music hit competes with the card impact."
+    },
+    "video-creation/assets/music/What We Must/Falls_What_We_Must_instrumental_4_47.mp3": {
+      "low_energy_regions": [
+        [
+          0.0,
+          27.0
+        ],
+        [
+          27.0,
+          81.0
+        ],
+        [
+          81.0,
+          189.3
+        ]
+      ],
+      "high_energy_regions": [
+        [
+          189.3,
+          246.0
+        ]
+      ],
+      "per_second_read": {
+        "method": "one scratchpad scan: RMS per second and per 50 ms, band energies, smoothed swell peaks and troughs. The onset comb finds no beat (score 1.3): the piece breathes in swells about 6.8 s apart (two bars at 71 bpm), there is no pulse to keep a grid on.",
+        "bare_swells_0_27": "file 0-27: swells to -11 / -13 dBFS at 2.5, 10.2, 16.9, 22.5 s with gaps down to -29 dBFS between them. The file rises from digital silence (-46 at 0.0, -25 at 1.0, first top at 2.3).",
+        "low_tone_27_81": "file 27-81: a soft low tone enters at 27.0, the gaps fill to -23 / -26.",
+        "continuous_81_189": "file 81-189: a continuous texture, -10.5 to -16 with short dips to -19 / -23 (140.8, 148.2, 161.7, 175.7, 181.5). Loudest swell 151.2 (-9). The stretch the catalog tags high from 130 s is the same texture straddling the env boundary between 6 and 7, there is no new instrument in it.",
+        "breath_186_189": "file 186.5-189.3: the file exhales, -16 to -24 dBFS.",
+        "booms_from_189": "file 189.33: the first low boom (-20 to -4 dBFS in 50 ms, 30 dB more low band), then one every 7 to 13 s under full strings up to 246. This is the real thickening of the file. NEVER played."
+      },
+      "notes": "Catalog: aggression 27, very low energy, opening ambient, ending fade, no drums in the instrument list. Departure from the screenplay, on measurement: it asked for the first 2:10 plus a remix loop, written before the take ran 186 s. The piece has no bar pulse to loop on, and the first 187 s are one drumless build with no step at 2:10, so ONE pass covers the chapter with no seam and stops before the booms."
+    },
+    "video-creation/assets/music/Oh, Mega!/Suiteniss_Oh_Mega_instrumental_intro_1_01-2.wav": {
+      "low_energy_regions": [
+        [
+          0.0,
+          61.25
+        ]
+      ],
+      "high_energy_regions": [],
+      "per_bar_read": {
+        "method": "one scratchpad scan of the master and the two cuts: RMS per bar and per beat, onsets to 5 ms, a chord read of every figure. Cross-correlation: the intro cut is master 0.0 to 58.0 sample for sample (ncc 0.999, offset 0.000) plus its own fade tail in place of the pick-up into the chorus. Bar = 240 / 74 = 3.243243 s, bar n starts at file 2.872 + 3.243243 n.",
+        "lead_in_and_bar_0": "file 0-6.116: near silence (-31 dBFS).",
+        "figure": "A three-note figure on beats 3, 4 and 1 (odd bar beat 3 through the next bar line), measured at 7.737, 14.224, 20.710, 27.207, 33.703, 40.175, 46.661, 53.153, each note -16 to -19 dBFS. Between figures -27 to -33 dBFS. So the unit is a 2-bar CELL (6.486 s) that starts on a quiet odd bar line.",
+        "bars_1_8": "file 6.116-32.062: the sparsest half, -21.9 to -26.1 per bar.",
+        "bars_9_16": "file 32.062-58.008: a soft sustained layer under the even bars, -20.8 to -24.1.",
+        "chord_cycle": "8 bars (4 cells): the figures of bars 1/9, 3/11, 5/13, 7/15 match pairwise (cosine 0.95 to 0.99). Every splice in the plan keeps the cycle order.",
+        "tail_58_61": "file 58.0-61.25: the fade tail of the cut (-27 to -53), no riser. Not played."
+      },
+      "notes": "Catalog (intro cut): aggression 30, mean -23.4 dB, opening build, ending fade. Calm from end to end."
+    },
+    "video-creation/assets/music/Oh, Mega!/Suiteniss_Oh_Mega_instrumental_verse_0_38-3.wav": {
+      "low_energy_regions": [
+        [
+          0.0,
+          38.92
+        ]
+      ],
+      "high_energy_regions": [],
+      "per_bar_read": {
+        "method": "same scan. The verse cut is master 87.196 to 122.87 (ncc 0.995), bars 26 to 36, plus its own ring-out in place of the riser of bar 37. Cut time = master time - 87.196, so its bar lines are 0.001 + 3.243243 j.",
+        "bar_26": "cut 0-3.244: opens cold on a ringing chord (-18 dBFS). Skipped.",
+        "bars_27_36": "cut 3.244-35.677: the same three-note figure (4.871, 11.357, 17.849, 24.345, 30.707) over a soft pad, -21.9 to -25.0 per bar, -26 dBFS between figures. Same 8-bar chord cycle and the same phase as the intro (bars 27/35, 29, 31, 33 match intro bars 3/11, 5/13, 7/15, 1/9).",
+        "ring_out": "cut 35.677-38.92: fades to silence. Not played."
+      },
+      "notes": "Catalog (verse cut): aggression 35, mean -23.4 dB, opening ambient, ending fade."
+    },
+    "video-creation/assets/music/Oh, Mega!/Suiteniss_Oh_Mega_instrumental_3_01.mp3": {
+      "low_energy_regions": [
+        [
+          0.0,
+          61.25
+        ],
+        [
+          87.2,
+          126.12
+        ]
+      ],
+      "high_energy_regions": [
+        [
+          61.25,
+          87.2
+        ],
+        [
+          126.12,
+          178.0
+        ]
+      ],
+      "notes": "The MASTER is listed for reference only and is NOT a source file of this plan. Its two choruses (bars 18-25 and 38-53, -9 dBFS, aggression 94) and the two riser bars that lead into them (bar 17 from 58.0, bar 37 from 122.87) never play: the plan reads only the intro and verse WAV cuts, which do not contain them."
+    },
+    "video-creation/assets/music/Sacral - I Feel (417 Hz)/Moments_Sacral_-_I_Feel_417_Hz_instrumental_4_15.mp3": {
+      "low_energy_regions": [
+        [
+          119.6,
+          171.0
+        ],
+        [
+          178.5,
+          237.2
+        ],
+        [
+          237.2,
+          255.4
+        ]
+      ],
+      "high_energy_regions": [
+        [
+          171.0,
+          178.5
+        ]
+      ],
+      "per_second_read": {
+        "method": "one scratchpad scan: RMS per 2 s, 0.5 s and 0.1 s, band energies, smoothed swells. The onset flux is flat (95 to 105) apart from two soft textures (file 140-145 and 204-211): a drone with no pulse, so no bar grid applies.",
+        "plateau_119_171": "file 119.6-171: -13.4 to -15.5 dBFS, steady; its lowest moment 168-170 (-17).",
+        "swell_171_178": "file 171-178.5: the one swell of the stretch, -14 up to -8.5 at 176.0 and back to -13 (+3 LU over the plateau).",
+        "plateau_178_237": "file 178.5-237: -12.7 to -16.9; a small lift at 218.0-218.5 (-11.6).",
+        "ending": "The LAST TONE is struck at file 237.2 (-13 dBFS). From there the file only decays: -17 at 237.6, -20 at 238.2, -23 at 238.6, -24 at 240, -30 at 242, under -40 after 246. The catalog ending is resolve; the audible resolve is over by file 243, the last 12 s of the file are silence and never play."
+      },
+      "notes": "Catalog: aggression 26, very low energy, tags drone / calm, role explainer_bed, ending resolve. The first 119 s of the file (its slow build) are not played: the bed is right-aligned to the last word."
+    }
+  },
+  "placement_math": {
+    "bed_A_grid": "Movement 1 (the hook) starts on the first kick at frame 0 and ends in a fade under the montage, so it carries no pin. Movement 2 is pinned on ONE landing: the chorus-1 drop (bar 16 line, file 34.959) on the cut from FACE 2 to the chart, spine 16.27. That fixes video bar lines at 9.7245 + 2.181818 k, and the other landings fall on that grid by themselves: k=0 9.72 (re-entry, 0.2 s before Most), k=3 16.27 (drop), k=10 31.54 (second lift of the chorus), k=17 46.815 (FACE 3 picture starts 46.789: splice to the verse), k=20 53.361 (chorus-2 drop, It finds them early at 53.44), k=27 68.63 (lift of bar 55), k=32 79.54 (the CH2 card is at 79.48). Every splice, out and in, is on a bar line: bar 30 line out to bar 45 line in at 46.815.",
+    "bed_A_montage": "The four clips sit at ONE splice point (9.66) and add 12.9 s of paused time (measured at capture). Row 1 ends at spine 9.94, which is after the splice whichever trough the baker snaps to (9.66 to 9.94), so in the mix it runs through the montage and fades under the last clip. Row 2 starts at spine 9.94: its 0.2 s swell begins 0.08 s after the last clip ends (paused 22.61 with the measured lengths), never under a clip voice. Rows 2 to 5 are pinned to spine words only, so the measured clip lengths can change without moving any landing.",
+    "bed_B": "file = spine - 78.28. No grid (no pulse). Limits of the one free parameter: the file cannot start before its own zero (source_in >= 0 at 79.48) and the boom at file 189.33 must stay clear of the card fade (card 265.72 = file 187.44, fade to 188.04, margin 1.29 s; the card may be snapped up to 0.35 s without reaching it).",
+    "bed_C_grid": "ONE grid for CH3 and CH4, pinned on ONE landing: the first figure of the intro cut (file 7.737) on the first word of CH3 (265.72). Cells (2 bars, 6.486486 s) start at 264.098 + 6.486486 n, figures at 265.72 + 6.486486 n (n 0 to 31). Every splice is on a cell line, the quiet odd bar line (-26 to -32 dBFS on both sides): 315.990 (n 8), 367.882 (n 16), 374.369 (n 17), 387.342 (n 19), 413.288 (n 23), 432.747 (n 26), 458.693 (n 30). Chord cycle = 4 cells; the sequence keeps it in order throughout: intro bars 1-16, 1-16, 1-2, verse 27-30, intro 7-14, verse 31-36, verse 29-36, intro 13-16.",
+    "bed_C_repeats": "A repeat is written as rows that jump back to a bar line (16 bars at 315.990 and 367.882, 8 bars at 432.747), never a whole-file restart. Each intro bar is heard 2 or 3 times and each verse bar 1 or 2 times over 205 s; no cell follows itself.",
+    "bed_D": "file = spine - 351.44, pinned on the ending: the last tone (file 237.2) on the cut to the sign-off face (588.64). The other landings come out of that one parameter: the low moment on And why 2028?, the swell top on two full years to run (527.4), the small lift on that is my plan (569.44). The spine ends at file 238.79."
+  },
+  "beds": [
+    {
+      "chapter": "CH1",
+      "bed": "A",
+      "track_id": "focuser",
+      "span": [
+        0.0,
+        9.94
+      ],
+      "register": "gear-3-epic",
+      "source_file": "video-creation/assets/music/Focuser/Neon_Beach_Focuser_instrumental_2_45.mp3",
+      "source_in": 0.04,
+      "cover": "section",
+      "intensity": "aggressive",
+      "level_db_under_vo": -18.8,
+      "remotion_gain_db": -26.4,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 2.0,
+      "carve": "The intro groove from the first kick of the file (bar 0, file 0.04). On the spine it plays bars 0 to 4 (0 to 9.94 s). In the final mix the same placement runs on under the 12.9 s montage (bars 4 to 10, ducked by the mixer) and its last 2.0 s fade out under the end of the closing clip.",
+      "why": "Bed A hits cold on word one: the groove is at its seat from frame 0 under the locked hook (FACE 1, 0.00 to 7.02) and the set-up line, Just listen to the last few weeks of headlines (7.22 to 9.66). Measured -12.5 LUFS, the lower of the two levels of the file, so the lift is still ahead. This row carries the four montage inserts CLIP-1, CLIP-4, CLIP-3 and CLIP-8 (one splice point, 9.66): the mixer ducks it 14 dB under them, and the 2.0 s fade takes it out under the closing clip so the groove is gone before the face comes back."
+    },
+    {
+      "chapter": "CH1",
+      "bed": "A",
+      "track_id": "focuser",
+      "span": [
+        9.94,
+        16.27
+      ],
+      "register": "gear-3-epic",
+      "source_file": "video-creation/assets/music/Focuser/Neon_Beach_Focuser_instrumental_2_45.mp3",
+      "source_in": 28.629,
+      "cover": "section",
+      "intensity": "aggressive",
+      "level_db_under_vo": -18.3,
+      "remotion_gain_db": -26.4,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_in_sec": 0.2,
+      "fade_out_sec": 0.08,
+      "carve": "Re-entry on the bar 13 line of the file (28.414 = video bar line 9.72) as a 0.2 s swell that is full on Most (9.94): bars 13 and 14 of the groove, then bar 15, the fill bar of the file (its mids and highs rise, file 32.78 to 34.96).",
+      "why": "FACE 2, the turn (9.89 to 16.29): the groove comes back as the face does. Most people hear that and they start selling. With me (bars 13 and 14), and the fill bar sits exactly under I hear that and I start buying (14.09 to 16.27). The row is pinned to spine words, so nothing after the montage moves if the captured clips run longer or shorter than planned (measured: 12.9 s)."
+    },
+    {
+      "chapter": "CH1",
+      "bed": "A",
+      "track_id": "focuser",
+      "span": [
+        16.27,
+        46.815
+      ],
+      "register": "gear-3-epic",
+      "source_file": "video-creation/assets/music/Focuser/Neon_Beach_Focuser_instrumental_2_45.mp3",
+      "source_in": 34.959,
+      "cover": "section",
+      "intensity": "aggressive",
+      "level_db_under_vo": -16.0,
+      "remotion_gain_db": -26.4,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "carve": "Sample-continuous with the row above (the mixer merges them, no fade): CHORUS 1 of the file, bars 16 to 29 (file 34.96 to 65.50), 14 of its 16 bars, with the second lift of the file (bar 23, file 50.23) at 31.54.",
+      "why": "The first lift of the file (+2.5 LU, -12.2 to -9.7 LUFS) lands on the cut from FACE 2 to the size-of-the-dump chart, 0.05 s after buying ends and 0.2 s before Look at the size of this (16.48). The chorus carries the numbers (around 700 billion, Bitcoin down around 25%, the worst week since April 2025). Its second lift arrives on this is where my low entries come from (31.54) and stays up under the two receipts, Pieverse (34.00) and EVAA (40.00)."
+    },
+    {
+      "chapter": "CH1",
+      "bed": "A",
+      "track_id": "focuser",
+      "span": [
+        46.815,
+        53.361
+      ],
+      "register": "gear-3-epic",
+      "source_file": "video-creation/assets/music/Focuser/Neon_Beach_Focuser_instrumental_2_45.mp3",
+      "source_in": 98.232,
+      "cover": "section",
+      "intensity": "aggressive",
+      "level_db_under_vo": -18.4,
+      "remotion_gain_db": -26.4,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "carve": "Splice on the bar line: chorus bar 29 out, VERSE 2 bar 45 in (file 98.23). Bars 45 and 46 of the groove, then bar 47, the fill bar before chorus 2 (file 102.60 to 104.78). Three bars, one per phrase.",
+      "why": "FACE 3, the locked thesis (46.79 to 53.56): the bed steps DOWN 2.4 LU as the face arrives, which is the dip a face line gets inside an energetic chapter. Bar 45 = I did not find those by guessing (46.82 to 48.80), bar 46 = I built software that scans (49.20 to 51.02), the fill bar = every single token that launches (51.02 to 53.44). It is still the driving groove (-12.1 LUFS), never a quiet bed: CH1 is gear 3 from end to end."
+    },
+    {
+      "chapter": "CH1",
+      "bed": "A",
+      "track_id": "focuser",
+      "span": [
+        53.361,
+        79.48
+      ],
+      "register": "gear-3-epic",
+      "source_file": "video-creation/assets/music/Focuser/Neon_Beach_Focuser_instrumental_2_45.mp3",
+      "source_in": 104.777,
+      "cover": "section",
+      "intensity": "aggressive",
+      "level_db_under_vo": -16.1,
+      "remotion_gain_db": -26.4,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "carve": "Sample-continuous (merged): CHORUS 2 of the file, bars 48 to 59 (file 104.78 to 130.90), 12 bars. The CH2 card arrives 0.06 s before the bar 60 line and the bed fades 0.4 s from the card start.",
+      "why": "The second drop of the file lands on It finds them early (53.44), 0.08 s ahead of the word, and drives the motion-type card Buy the bottoms, sell the pumps, rotate (57.04 to 62.08), the three roadmap cards (62.42 to 73.88; the lift of bar 55 falls on my real entries, 68.63) and the handoff, So let us take it from the top (ends 79.24). The intensity is right-aligned: CH1 closes at full level and the CH2 card takes the breath."
+    },
+    {
+      "chapter": "CH2",
+      "bed": "B",
+      "track_id": "what-we-must",
+      "span": [
+        79.48,
+        265.72
+      ],
+      "register": "gear-2-explainer",
+      "source_file": "video-creation/assets/music/What We Must/Falls_What_We_Must_instrumental_4_47.mp3",
+      "source_in": 1.2,
+      "cover": "oneshot",
+      "intensity": "subtle",
+      "level_db_under_vo": -19.5,
+      "remotion_gain_db": -26.7,
+      "breath_before_sec": 0.9,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_in_sec": 1.2,
+      "fade_out_sec": 0.6,
+      "carve": "ONE pass, file 0.0 to 187.4, no loop and no join. The file starts from silence 1.2 s before the first word (under the card), its first swell tops on since October (80.8), and it leaves in its own breath (file 186.5 to 188.0, -16 to -22 dBFS) under the CH3 card, 1.3 s before the first low boom of the file (189.33), which never plays.",
+      "why": "A drumless swell piece (piano and ambient tones, aggression 27): one soft swell roughly every 6.8 s with near silence between them at first, so the dense teaching VO is never crowded. The file builds the way the chapter does, one layer per link: bare swells under the chart and the Binance hack (79.48 to 108.40, file 1 to 30), a low tone joins at file 27 as oil and the rate hike come in (108.66), the texture becomes continuous at file 81 (spine 159.3) for the midterm sell-off, Nvidia (162.78) and Anthropic (176.68). It is a level bed for the count-up (201.62), dips on its own for FACE 4, And it was not just one thing (216.53 to 223.96 = file 138.2 to 145.7, 1 dB under its surroundings), and stays level under the two ad-libs and the handoff. No drum, no hit, no added move."
+    },
+    {
+      "chapter": "CH3",
+      "bed": "C",
+      "track_id": "oh-mega",
+      "span": [
+        265.72,
+        315.99
+      ],
+      "register": "gear-2-explainer",
+      "source_file": "video-creation/assets/music/Oh, Mega!/Suiteniss_Oh_Mega_instrumental_intro_1_01-2.wav",
+      "source_in": 7.737,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -17.5,
+      "remotion_gain_db": -17.3,
+      "breath_before_sec": 1.1,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_in_sec": 0.5,
+      "fade_out_sec": 0.08,
+      "carve": "The INTRO cut, first pass: the first three-note figure of the file (bar 1 beat 3, file 7.737) on the first word, then bars 1 to 16 straight through to the bar 17 line (file 58.008). One figure every 2 bars (6.49 s), near silence between figures.",
+      "why": "Bed C starts on the card with its own figure on Let us start with Pieverse (265.72). The figures fall close to sentence starts by themselves: Right after it launched (272.21 against 272.32), We have been swing trading it ever since (285.18), Now, EVAA and since it launched (304.64). Bars 9 to 16 are the slightly fuller half of the intro (-19.9 against -20.8 LUFS) and arrive at 290.0 for it touched 1 billion and the multiples. This is the calm cut Mike named in the catalog note for this track: the chorus that starts at 1:01 of the master is not in this file at all."
+    },
+    {
+      "chapter": "CH3",
+      "bed": "C",
+      "track_id": "oh-mega",
+      "span": [
+        315.99,
+        367.882
+      ],
+      "register": "gear-2-explainer",
+      "source_file": "video-creation/assets/music/Oh, Mega!/Suiteniss_Oh_Mega_instrumental_intro_1_01-2.wav",
+      "source_in": 6.116,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -17.5,
+      "remotion_gain_db": -17.3,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "carve": "REMIX jump back, 16 bars (51.89 s), on the quiet bar line: bar 17 line out, bar 1 line in (file 6.116, -32 dBFS on both sides). Second pass of bars 1 to 16.",
+      "why": "The second half of CH3 hears the same 16 bars once more, 52 s later. Figures land on On October 27th (330.58 against 331.02) and exactly on Then on November 22nd, it dropped (343.56 against 343.52). FACE 5, But I am absolutely fine with that (348.40 to 359.40), sits on bars 11 to 14: two figures (350.04 on I took profits, 356.53 on when it gets lower), no lift, no drop on the face line. The last figure of the pass (363.02) closes still up around a four to five X."
+    },
+    {
+      "chapter": "CH3",
+      "bed": "C",
+      "track_id": "oh-mega",
+      "span": [
+        367.882,
+        374.369
+      ],
+      "register": "gear-2-explainer",
+      "source_file": "video-creation/assets/music/Oh, Mega!/Suiteniss_Oh_Mega_instrumental_intro_1_01-2.wav",
+      "source_in": 6.116,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -17.5,
+      "remotion_gain_db": -17.3,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "carve": "Jump back 16 bars again (bar 17 line out, bar 1 line in) for ONE cell, bars 1 and 2 (file 6.116 to 12.602). It enters inside CH3 and runs 2.05 s into CH4 so the grid never re-phases.",
+      "why": "Keeps the two-bar pulse unbroken across the cardless CH3 to CH4 turn: its figure (369.50) falls in the breath before and getting in early is not just luck, and the bed is in its quiet half bar when So how do I find them that early? starts (372.32)."
+    },
+    {
+      "chapter": "CH4",
+      "bed": "C",
+      "track_id": "oh-mega",
+      "span": [
+        374.369,
+        387.342
+      ],
+      "register": "gear-2-explainer",
+      "source_file": "video-creation/assets/music/Oh, Mega!/Suiteniss_Oh_Mega_instrumental_verse_0_38-3.wav",
+      "source_in": 3.244,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -17.5,
+      "remotion_gain_db": -17.3,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "carve": "The carve change, not a bed change: the VERSE cut enters on its bar 27 line (cut time 3.244, master 90.44), two cells, bars 27 to 30. The cold chord on the first bar of the cut (bar 26) is skipped.",
+      "why": "CH4 turns to the verse region of the same track on the running grid, 2 s after the question: the same figure over a soft pad (-26 dBFS between figures, the intro has none), so the chapter sounds like a new part of the same piece. Figures at 375.99 (New tokens launch around the clock) and 382.48 (investing in crypto since 2013)."
+    },
+    {
+      "chapter": "CH4",
+      "bed": "C",
+      "track_id": "oh-mega",
+      "span": [
+        387.342,
+        413.288
+      ],
+      "register": "gear-2-explainer",
+      "source_file": "video-creation/assets/music/Oh, Mega!/Suiteniss_Oh_Mega_instrumental_intro_1_01-2.wav",
+      "source_in": 25.575,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -19.2,
+      "remotion_gain_db": -17.3,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "automation": [
+        {
+          "window": [
+            387.74,
+            411.54
+          ],
+          "gain_db": -2.0,
+          "relative": true,
+          "ramp_sec": 1.0,
+          "why": "lowest under the whiteboard (screenplay MUSIC-MOOD-PLAN, CH4)"
+        }
+      ],
+      "carve": "Back to the INTRO cut for the whiteboard: bars 7 to 14 (file 25.575 to 51.521), four cells in the cycle order the verse left off (bar 7 follows bar 30 in the 8-bar chord cycle), with a 2 dB dip written as one automation window over the whiteboard.",
+      "why": "WB1, the funnel (387.74 to 411.54), lies inside this one row, so the dip is one window: the bed is at its lowest of the video here (19.2 dB under the voice) and has no pad between figures, which leaves the pen sounds and the words alone. Figures at 388.96 (At the top), 395.45 (the bots flag), 401.94 (Who is backing it?) and 408.42, in the breath before What comes out at the bottom is a handful of plays."
+    },
+    {
+      "chapter": "CH4",
+      "bed": "C",
+      "track_id": "oh-mega",
+      "span": [
+        413.288,
+        432.747
+      ],
+      "register": "gear-2-explainer",
+      "source_file": "video-creation/assets/music/Oh, Mega!/Suiteniss_Oh_Mega_instrumental_verse_0_38-3.wav",
+      "source_in": 16.217,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -17.5,
+      "remotion_gain_db": -17.3,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "carve": "VERSE cut, bars 31 to 36 (cut time 16.217 to 35.677), three cells, up to the last bar line before the ring-out of the cut.",
+      "why": "The pad returns as the whiteboard leaves, under the easiest tell and the funded-projects lines (411.88 to 437.40). Figures at 414.91, 421.40 (in the breath before it probably has to have funding) and 427.88 (These are not random meme coins)."
+    },
+    {
+      "chapter": "CH4",
+      "bed": "C",
+      "track_id": "oh-mega",
+      "span": [
+        432.747,
+        458.693
+      ],
+      "register": "gear-2-explainer",
+      "source_file": "video-creation/assets/music/Oh, Mega!/Suiteniss_Oh_Mega_instrumental_verse_0_38-3.wav",
+      "source_in": 9.731,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -17.5,
+      "remotion_gain_db": -17.3,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "fade_out_sec": 0.08,
+      "carve": "REMIX jump back inside the verse, 8 bars (25.95 s = one chord cycle): bar 37 line out, bar 29 line in (cut time 9.731). Bars 29 to 36, four cells.",
+      "why": "The verse region heard a second time, 26 to 45 s after the first, under I usually do not chase it, the swing trading software (figure at 447.34 on It is a tool that my members use) and the loop diagram C22 (figure at 453.83 on When it pumps, we take profits)."
+    },
+    {
+      "chapter": "CH4",
+      "bed": "C",
+      "track_id": "oh-mega",
+      "span": [
+        458.693,
+        471.06
+      ],
+      "register": "gear-2-explainer",
+      "source_file": "video-creation/assets/music/Oh, Mega!/Suiteniss_Oh_Mega_instrumental_intro_1_01-2.wav",
+      "source_in": 45.035,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -17.5,
+      "remotion_gain_db": -17.3,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": false,
+      "carve": "INTRO cut, bars 13 to 16 (file 45.035 to 57.40): the last two cells of the intro, ending in the quiet half bar. The CH5 card arrives there and the bed fades 0.4 s from the card start.",
+      "why": "The close of Bed C: a figure on the public showcase count (460.32) and the last one inside FACE 6, That is my edge (466.80, on I cannot watch every launch). It is the fullest figure of the calm cut (-19 dBFS, still 17 dB under the voice) and it has decayed to -27 dBFS when the card lands, so the bed leaves by itself."
+    },
+    {
+      "chapter": "CH5",
+      "bed": "D",
+      "track_id": "sacral-i-feel-417-hz",
+      "span": [
+        471.06,
+        590.23
+      ],
+      "register": "gear-3, restrained",
+      "source_file": "video-creation/assets/music/Sacral - I Feel (417 Hz)/Moments_Sacral_-_I_Feel_417_Hz_instrumental_4_15.mp3",
+      "source_in": 119.62,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -20.0,
+      "remotion_gain_db": -27.8,
+      "breath_before_sec": 0.7,
+      "loop_point_sec": null,
+      "loop_in_sec": null,
+      "loop_out_sec": null,
+      "align_end": true,
+      "fade_in_sec": 1.2,
+      "fade_out_sec": 0.3,
+      "carve": "RIGHT-ALIGNED: the last 119 s of the sounding file, file 119.62 to 238.79. source_in 119.62 puts the LAST TONE of the file (struck at file 237.2) on the cut to the sign-off face (588.64). Enters under the card with a 1.2 s swell, mid-plateau.",
+      "why": "A drone, no drum, no pulse, no hit: the weight stays in the words. The plateau (-12.3 LUFS, 20 dB under the voice) carries the precedent charts and the loop. The lowest moment of the stretch (file 168 to 170) falls on And why 2028? (518.26), and the one swell of the file (+3 LU, file 171 to 178) rises under we are gonna start flying in 2027 and tops on two full years to run (525.4 to 527.9), settling as the 20 dollar walk-through starts. A small lift (file 218.0 to 218.5) lands on that is my plan in FACE 7 (569.44). The last tone sounds as the sign-off face cuts in (588.64) and only decays from there: 7 dB down on later (589.92), closed by a 0.3 s fade at the last frame. The video ends on the last word, no hold."
+    }
+  ],
+  "hard_hits": [
+    {
+      "t": 0.0,
+      "beat": "the locked hook, FACE 1",
+      "music_move": "Bed A cold from its first kick at the seat, no fade-in (the file is the hit)"
+    },
+    {
+      "t": 9.66,
+      "beat": "the headline montage (4 clip inserts, 12.9 s)",
+      "music_move": "no move written: the mixer ducks the hook row 14 dB; the row fades out under the closing clip"
+    },
+    {
+      "t": 9.94,
+      "beat": "FACE 2, Most people hear that and they start selling",
+      "music_move": "the groove re-enters on a bar line with a 0.2 s swell, full on Most"
+    },
+    {
+      "t": 16.27,
+      "beat": "the cut from I start buying to the size-of-the-dump chart",
+      "music_move": "the DROP: chorus 1 of the file, +2.5 LU, after its fill bar has risen under I hear that and I start buying"
+    },
+    {
+      "t": 31.54,
+      "beat": "this is where my low entries come from",
+      "music_move": "the second lift inside chorus 1, as the file plays it"
+    },
+    {
+      "t": 46.815,
+      "beat": "FACE 3, the locked thesis",
+      "music_move": "a step DOWN 2.4 LU to the verse groove for the face line; its fill bar rises under every single token that launches"
+    },
+    {
+      "t": 53.361,
+      "beat": "It finds them early / Buy the bottoms, sell the pumps, rotate",
+      "music_move": "the second DROP: chorus 2, held to the card"
+    },
+    {
+      "t": 79.48,
+      "beat": "CH2 card, WHY EVERYTHING DUMPED",
+      "music_move": "Bed A fades 0.4 s at the card (no music hit, the card impact owns it); Bed B rises from silence under the card, first swell on since October"
+    },
+    {
+      "t": 216.53,
+      "beat": "FACE 4, it was five things stacked on top of each other",
+      "music_move": "NO move: the piece is in one of its own dips (1 dB under its surroundings); the words carry the landing"
+    },
+    {
+      "t": 265.72,
+      "beat": "CH3 card, THE TRADES",
+      "music_move": "Bed B leaves in its own breath, stopped 1.3 s before its first boom; the first three-note figure of Bed C lands on Let us start with Pieverse"
+    },
+    {
+      "t": 343.56,
+      "beat": "Then on November 22nd, it dropped down by more than 60%",
+      "music_move": "a figure falls on the word Then by the grid alone; no added sound"
+    },
+    {
+      "t": 374.369,
+      "beat": "CH4, So how do I find them that early? (no card)",
+      "music_move": "the carve change: the verse cut of the same track enters on the grid, a soft pad appears under the figure"
+    },
+    {
+      "t": 387.74,
+      "beat": "WB1, the whiteboard funnel (to 411.54)",
+      "music_move": "2 dB dip on the intro-cut row, the lowest bed level of the video"
+    },
+    {
+      "t": 471.06,
+      "beat": "CH5 card, THE PLAN TO 2028",
+      "music_move": "Bed C has decayed by itself; the drone swells in under the card, 1.2 s"
+    },
+    {
+      "t": 527.4,
+      "beat": "That gives this loop two full years to run",
+      "music_move": "the one swell of the drone tops here (16.9 dB under the voice), as the file plays it"
+    },
+    {
+      "t": 569.44,
+      "beat": "FACE 7, that is my goal, that is my plan",
+      "music_move": "a small lift of the drone on that is my plan; no hit"
+    },
+    {
+      "t": 588.64,
+      "beat": "the sign-off face, And I am gonna catch you guys later",
+      "music_move": "the LAST TONE of the drone, then only its decay: 7 dB down on later, a 0.3 s fade closes it at 590.23. The video ends on the last word"
+    }
+  ],
+  "notes": "Placements the mixer resolves: Bed A = 3 (row 1; rows 2+3 merged; rows 4+5 merged), Bed B = 1, Bed C = 8, Bed D = 1. Breaths: each of the three cards is the breath (the outgoing bed fades at the card start, the incoming one is full on the first word of the chapter); CH3 to CH4 has no card and no breath by design, Bed C continues. Clip inserts: all four (CLIP-1, CLIP-4, CLIP-3, CLIP-8) sit at spine 9.66 inside Bed A row 1, ducked by the mixer from the paused-spine sidecar, no automation row written for them, and no bed change, hit or riser sits under a clip voice (the row-2 swell starts after the last clip ends). The only automation row in the plan is the 2 dB whiteboard dip. No IMPACT or RISER is asked for by this plan. No end_card_hold. QA, the music floor in a no-VO breath of EACH bed (never integrated LUFS alone): Bed A 22.90-23.46, 39.52-40.00, 59.26-59.74, 66.92-67.40; Bed B 110.14-110.70, 133.86-134.46, 159.36-160.00, 227.30-227.82, 258.76-259.30; Bed C on a figure, 267.02-267.52, 338.80-339.38, 369.46-369.94, 420.40-421.02 (between figures this bed is silent by nature: a breath that reads empty at 308.82-309.54 or 334.50-335.04 is the file, not a dropped bed); Bed D 480.58-481.24, 519.56-520.18, 537.58-538.58, 547.24-547.78. Whisper word times are used throughout; AS-RECORDED notes its end padding on bank, can and plan, which moves no landing by more than 0.07 s.",
+  "open_questions": [
+    "LISTEN 1, CH1 (0 to 20 s, then 44 to 56 s): the listening copy has NO montage in it, so there the hook groove fades under the last few weeks of headlines and comes back on Most people 0.2 s later; in the final those two moments are 12.9 s apart with the clips between them, the bed ducked under the clips. What to judge: the drop on the cut to the 700 billion chart (16.27), the step down for I did not find those by guessing (46.8) and the second drop on It finds them early (53.36).",
+    "LISTEN 2, Bed C (265 to 300 s and 365 to 392 s): the calm cuts of oh-mega are ONE three-note figure every 6.5 s with silence between. Check that it reads as music under the trades and not as a bed that keeps dropping out, and listen for the joins at 367.88 and 374.37 (the turn into CH4). If it is too sparse for 3.4 minutes, the swap that keeps the rule is soft-focus (fresh, but mastered hot and continuous) for CH4 only, or the sacral drone from CH3 on (screenplay open question 16).",
+    "Departure from the screenplay, CH1: it asked for the first lift ON I start buying. The lift is placed on the cut that follows the phrase (16.27, 0.05 s after buying ends) with the fill bar of the file under I hear that and I start buying. Reason: the groove re-enters on a bar line when the face returns, which pins every later landing to spine words instead of to the montage length (the clip times are re-measured at capture). One continuous pass through the montage is the alternative: source_in = 34.959 - (15.45 + montage seconds) on a single CH1 row; it puts the lift on the word I, moves with every clip trim, and the listening copy cannot show it.",
+    "Departure from the screenplay, CH2: one straight pass of what-we-must (file 0 to 187.4) and no remix loop. The take ran 186 s against the 129 s the screenplay planned, the piece has no bar pulse to loop on, and by measurement the file does not thicken at 2:10: it thickens at 3:09 (low booms), which never play. If Mike hears the stretch from 209 s on (FACE 4, the two ad-libs) as too full, the fix is a relative dip on the row (-2 dB, window 209.5-265.7, ramp_sec 3), not a loop.",
+    "MIXER CHECK before the first mix (not a plan change): the four montage clips share one splice point. mix_music.py computes each insert duck window from its own at, and inserts with the SAME at all start at the same paused time, so as written the duck would stack four times over the first 2.6 s and leave the last 9 s of the montage unducked. Run mix_music.py --dry-run once the paused sidecar exists and read the four clip-insert automation windows on the CH1 bed; they must tile 9.66 to 22.53 (2.60 + 3.20 + 3.47 + 3.60 s).",
+    "Seats: Bed A chorus 16 dB under the raised voice (groove 18.5), Bed B 19.5, Bed C 17.5 on its figures (19.2 under the whiteboard), Bed D 20 (16.9 at the top of its one swell, 525 to 528 s). If the drone swell reads as too much for a subtle chapter, one relative dip on the CH5 row tames it: -2 dB, window 522.5-530.5, ramp_sec 1.5.",
+    "Variety: nothing was BLOCKED and nothing on the shortlist was recent, so nothing was replaced; all four tracks were never used. The subtle pool is the one running low: after this video the fresh beds under aggression 45 are down to seven (price-to-pay, tissue-healing-285-hz, tidal-light, falls-glasgow, hunting-for-presents, battle-cry, soft-focus) and tissue-healing-285-hz is the LAST unused drone (solstice, constant-741-hz-meditation, emergence, theta-rest and now sacral are spent). Source two or three drones before the next calm video.",
+    "YouTube description codes (YouTube only), in play order: 5WH8X4RII7CDAU05 (Focuser), 3PNUTPGKFO9NSTVH (What We Must), 5S5Z7G59FWXCILBA (Oh, Mega!), ETEORPHXRJHTSO60 (Sacral - I Feel)."
+  ]
+}

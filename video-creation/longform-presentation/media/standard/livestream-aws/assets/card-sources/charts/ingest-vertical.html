@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>livestream-aws chart, 9:16: ingest (trigger, convert, face, words)</title>
+<!--
+  The 9:16 cut of ingest.html: the same pieces, words, states and lit parts, re-composed for a 1080x1920 phone frame.
+  TODAY stays beside ON AWS (a narrow column, a wide one); the trigger chain S3 -> EventBridge -> Lambda runs DOWN the
+  ON AWS column, 64px apart with each label centred beside its arrow. Each AWS box carries its output as its last
+  line, as the 16:9's separate output boxes: Lambda "starts the graph" (the 16:9's graph node), MediaConvert "makes
+  the low-bitrate master", Rekognition "finds my face in the video". Text 28px and up, nothing below y 1450, 72px side
+  margins, every box 11px+ inside padding.
+  Shoot (from this folder): python shoot.py ingest-vertical.html --out ../../vertical/diagrams --size 1080x1920
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chart.css">
+<link rel="stylesheet" href="group1.css">
+<style>
+.portrait .sn{font-size:30px;line-height:1.1}
+.portrait .svc{padding:6px 16px}
+.portrait .sd{font-size:28px;letter-spacing:.05em;line-height:1.15;margin-top:4px}
+.portrait .colh{font-size:30px}
+.portrait .colh .hs{font-size:28px}
+.td.side{display:flex;align-items:center;gap:12px;padding:0 16px}
+.td .tx{display:flex;flex-direction:column}
+.tn{font-family:'DM Sans';font-weight:700;font-size:30px;line-height:1.15}
+.ts{font-family:'DM Sans';font-weight:500;font-size:28px;line-height:1.2;color:var(--rest-sub);margin-top:4px;text-wrap:balance}
+.td.on .ts{color:var(--lit-sub)}
+.out{display:flex;align-items:center;gap:10px;margin-top:4px;font-family:'DM Sans';font-weight:500;font-size:28px;line-height:1.2;color:var(--rest-sub)}
+.on .out{color:var(--text-primary)}
+.out .ico{color:var(--text-secondary)}
+.on .out .ico{color:var(--accent-cyan)}
+/* Transcribe and its two features, stacked */
+.node.svc.tr{justify-content:flex-start;padding:10px 18px 20px}
+.tr .fa{margin-top:12px;padding-top:12px;border-top:2px solid var(--rest-edge);width:100%;display:flex;flex-direction:column;align-items:center;gap:7px}
+.tr.on .fa{border-top-color:rgba(0,194,255,.40)}
+.ft{font-family:'DM Sans';font-weight:600;font-size:28px;line-height:1.2;color:var(--rest-sub);white-space:nowrap}
+.tr.on .ft{color:var(--text-primary)}
+.strip{display:flex;align-items:flex-end;gap:7px;height:24px}
+.strip i{display:block;height:12px;border-radius:4px;background:rgba(136,146,164,.38);position:relative}
+.strip i::before{content:"";position:absolute;left:0;top:-11px;width:2px;height:9px;border-radius:1px;background:rgba(136,146,164,.7)}
+.tr.on .strip i{background:rgba(232,234,240,.42)}
+.tr.on .strip i::before{background:var(--accent-cyan)}
+.voc{display:flex;align-items:center;gap:14px}
+.tok{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:28px;line-height:1;padding:8px 16px;border-radius:10px;
+  border:1.5px solid var(--rest-edge);color:var(--rest-sub);background:rgba(10,12,16,.6)}
+.tr.on .tok{border-color:var(--accent-cyan);color:var(--accent-cyan);background:rgba(0,194,255,.10);box-shadow:0 0 22px rgba(0,194,255,.25)}
+</style>
+</head>
+<body>
+<template id="chart"></template>
+<script src="chart.js"></script>
+<script src="group1.js"></script>
+<script>
+(function () {
+  var TX = 88, TW = 366;          // TODAY pieces
+  var AX = 512, AW = 480;         // ON AWS pieces
+  var CX = AX + AW / 2;           // the trigger chain's spine
+  // explicit rows (top, height): the trigger chain with 64px gaps, so each label sits centred beside its arrow
+  var S3 = [328, 96], EB = [488, 96], LA = [648, 170];
+  var R2 = [844, 134], R3 = [1000, 134], R4 = [1156, 294];
+  var ZT = 256, ZB = R4[0] + R4[1] + 20;          // the frames: 20px under the last box
+  var h = [];
+  h.push('<div class="stage">');
+  h.push('<div class="orb" style="width:620px;height:620px;background:var(--accent-cyan);opacity:.12;left:-300px;top:-300px"></div>');
+  h.push('<div class="orb" style="width:620px;height:620px;background:var(--accent-green);opacity:.06;left:620px;top:1460px"></div>');
+  h.push('<div class="head"><h1>Ingest, today and on AWS</h1><div class="divider"></div></div>');
+
+  h.push('<div class="zone tz" style="left:72px;top:' + ZT + 'px;width:398px;height:' + (ZB - ZT) + 'px"></div>');
+  h.push('<div class="zone" style="left:496px;top:' + ZT + 'px;width:512px;height:' + (ZB - ZT) + 'px"></div>');
+  h.push('<div class="colh today" data-own style="left:' + TX + 'px;top:' + (ZT + 16) + 'px">' + ICO("pc", 32, "", 2.2) + 'TODAY<span class="hs">my PC</span></div>');
+  h.push('<div class="colh aws" data-own style="left:' + AX + 'px;top:' + (ZT + 16) + 'px">ON AWS</div>');
+
+  // wires: the swaps, then the chain
+  var w = [], mid = function (r) { return r[0] + r[1] / 2; };
+  [["trigger", mid(S3)], ["convert", mid(R2)], ["face", mid(R3)], ["words", mid(R4)]].forEach(function (s) {
+    w.push(WIRE(s[0], 'M' + (TX + TW + 3) + ',' + s[1] + ' L' + (AX - 5) + ',' + s[1], "swap"));
+  });
+  [[S3, EB], [EB, LA]].forEach(function (p) {
+    w.push(WIRE("trigger", 'M' + CX + ',' + (p[0][0] + p[0][1] + 3) + ' L' + CX + ',' + (p[1][0] - 5)));
+  });
+  h.push('<svg class="wires" width="1080" height="1920" viewBox="0 0 1080 1920">' + w.join('') + '</svg>');
+  [[S3, EB, "new file"], [EB, LA, "calls"]].forEach(function (p) {
+    h.push('<div class="wl" data-k="trigger" style="left:' + (CX + 18) + 'px;top:' + ((p[0][0] + p[0][1] + p[1][0]) / 2 - 17) + 'px">' + p[2] + '</div>');
+  });
+
+  // TODAY pieces (centred on their row's swap arrow)
+  var T = [
+    ["trigger", mid(S3), "folder", "a folder on my PC", "the recording sits here"],
+    ["convert", mid(R2), "terminal", "ffmpeg", "makes the <span style=\"white-space:nowrap\">low-bitrate</span> master"],
+    ["face", mid(R3), "face", "my face tracker", "makes the vertical crop"],
+    ["words", mid(R4), "wave", "Whisper", "writes the transcript"]
+  ];
+  T.forEach(function (t, i) {
+    var top = i === 0 ? S3[0] : t[1] - 64;
+    h.push('<div class="node td side" data-k="' + t[0] + '" style="left:' + TX + 'px;top:' + top + 'px;width:' + TW + 'px;height:128px">' +
+      ICO(t[2], 30, "", 2) + '<div class="tx"><div class="tn">' + t[3] + '</div><div class="ts">' + t[4] + '</div></div></div>');
+  });
+
+  // ON AWS
+  h.push(SVC({ k: "trigger", x: AX, y: S3[0], w: AW, h: S3[1], name: "S3", desc: "file storage" }));
+  h.push(SVC({ k: "trigger", x: AX, y: EB[0], w: AW, h: EB[1], name: "EventBridge", desc: "event router" }));
+  h.push(SVC({ k: "trigger", x: AX, y: LA[0], w: AW, h: LA[1], name: "Lambda", desc: "code that runs when called",
+    extra: '<div class="out">' + ICO("graph", 30, "", 2) + 'starts the graph</div>' }));
+  h.push(SVC({ k: "convert", x: AX, y: R2[0], w: AW, h: R2[1], name: "MediaConvert", desc: "video converter",
+    extra: '<div class="out">' + ICO("film", 30, "", 2) + 'makes the low-bitrate master</div>' }));
+  h.push(SVC({ k: "face", x: AX, y: R3[0], w: AW, h: R3[1], name: "Rekognition", desc: "image and video analysis",
+    extra: '<div class="out">' + ICO("face", 30, "", 2) + 'finds my face in the video</div>' }));
+  var strip = '<div class="strip"><i style="width:40px"></i><i style="width:64px"></i><i style="width:30px"></i><i style="width:54px"></i>' +
+    '<i style="width:24px"></i><i style="width:58px"></i><i style="width:36px"></i></div>';
+  h.push('<div class="node svc tr" data-k="words" style="left:' + AX + 'px;top:' + R4[0] + 'px;width:' + AW + 'px;height:' + R4[1] + 'px">' +
+    '<div class="sn">Transcribe</div><div class="sd">speech to text</div>' +
+    '<div class="fa">' + strip + '<div class="ft">a timestamp on every word</div>' +
+    '<div class="voc"><span class="ft">custom vocabulary</span><span class="tok">TAO</span></div>' +
+    '<div class="ft" style="font-weight:500">the words Whisper gets wrong</div></div></div>');
+  h.push('</div>');
+  document.getElementById("chart").innerHTML = h.join("");
+
+  buildChart({
+    "ingest-trigger": { on: ["trigger"] },
+    "ingest-convert": { on: ["convert"] },
+    "ingest-face":    { on: ["face"] },
+    "ingest-words":   { on: ["words"] }
+  }, { portrait: true });
+})();
+</script>
+</body>
+</html>

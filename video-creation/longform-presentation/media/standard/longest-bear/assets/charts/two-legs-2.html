@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>two-legs-2 (part 2): Two Bear Markets</title>
+<!--
+  ANIMATED CHART, longest-bear CH3 (scripted standard video, cover_runs.py kind "animated-chart" = card-overlays kind "clip").
+  1920 x 1080. TIME-DRIVEN: window.setT(t) draws the exact frame for t (seconds from the start of this card's window) as a
+  pure function of t: no CSS transitions or animations, no rAF, no clock. Past its last move it HOLDS the end state.
+  Rendered by video-creation/longform-presentation/skills/card-overlays/html_clip.py (setT(f / 30) + a screenshot per frame).
+  Open with #t=6 in the URL to see one moment; with no hash it shows the end state.
+
+  Part 2 of 2. t = 0 is EXACTLY part 1's last frame (TwoLegs.part1End(): the same drawing, two-legs-core.js, the same data,
+  btc-closes.js), so the cut from part 1 (or from the clip montage between them) back to the chart is seamless.
+  Then the line draws on from Nov 7 to the read date, into LEG 2, and holds.
+
+  WINDOW (RE-TIMED to the recording, 2026-11-25): cues.json run-03, card two-legs-2, spine 205.167 to 230.48 (759 frames;
+  script lines 76 and 77). Frame 0 is spine frame 6155, so t = 0 is spine 205.167, the hard cut out of the clip montage:
+  frame 0 is part 1's last frame, pixel for pixel. Each time in T below is the measured voice onset of its cue word
+  (spine/longest-bear EDIT+clips.medium-words.json, checked against the audio's 10 ms envelope and a large-v3 pass; the
+  envelope's silences win where they disagree) minus 205.167. Every T stays above 0.1 s, so frame 0 is never touched.
+  The crypto-winter definition (218.6 to 230.5: "at or below the 200 week moving average ... a year and a week") plays
+  over the held payoff: this chart has no 200-week line (its averages are the 50-week and the 200-day), so nothing on
+  it may be lit for that phrase.
+  This page reads chart-base.css, two-legs-core.js and btc-closes.js: after changing one of them, touch this file
+  (build_chart_data.py does) so cover_runs.py re-renders its clip.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chart-base.css">
+</head>
+<body>
+<script src="btc-closes.js"></script>
+<script src="two-legs-core.js"></script>
+<script>
+(function () {
+'use strict';
+/* the moves, in seconds from the window start (spine 205.167; "(209.04)" = the cue word's spine time; the cue word is in
+   capitals). "Then Bitcoin" (205.21 to 205.95) plays over part 1's held picture */
+var T = {
+  go:      0.79,   // "then Bitcoin LOST both averages again" (205.96): the line draws on from Nov 7 ...
+  lost:    3.92,   // "by November TWELFTH" (209.04): ... the ring where it closed under both averages (starts on the word) ...
+  end:     7.05,   // "the second bear market is around TWO weeks old" (212.26): ... and reaches the read date
+  leg2:    7.10,   // LEG 2 / 2 WEEKS OLD
+  leg2Pct: 9.46,   // "it's already down THIRTY-TWO percent from that high" (214.62): -32% FROM 86K
+  two:    12.17    // "TWO bear markets, two crypto winters" (217.33): both falls turn muted red, both legs glow once;
+                   //   then holds to the end (25.27)
+};
+
+var H = TwoLegs.h, DY = TwoLegs.DAYS, fade = H.fade, bump = H.bump;
+var cursor = H.pchip([[0, DY.aboveTo], [T.go, DY.aboveTo], [T.lost, DY.lost], [T.end, DY.end]]);
+
+function stateAt(t) {
+  var S = TwoLegs.part1End();                 /* part 1's last frame, exactly */
+  S.cur = cursor(t);
+  S.lost = fade(t, T.lost - 0.05, 0.3);
+  S.end = fade(t, T.end - 0.1, 0.3);
+  S.leg2 = fade(t, T.leg2, 0.45);
+  S.leg2Pct = fade(t, T.leg2Pct, 0.4);
+  S.payoff = fade(t, T.two, 0.6);
+  S.pulse2 = bump(t, T.two, 1.0);
+  return S;
+}
+
+window.T = T;
+window.stateAt = stateAt;
+window.setT = function (t) { TwoLegs.render(stateAt(+t || 0)); };
+var m = /t=([0-9.]+)/.exec(location.hash);
+window.setT(m ? parseFloat(m[1]) : 30);
+})();
+</script>
+</body>
+</html>

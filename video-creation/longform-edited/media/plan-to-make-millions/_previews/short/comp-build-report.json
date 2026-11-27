@@ -1,0 +1,69 @@
+{
+  "project": "plan-to-make-millions",
+  "comp_id": "PlanToMakeMillionsShort",
+  "comp_file": "video-creation/remotion/src/PlanToMakeMillionsShort.tsx",
+  "extra_files": [
+    "video-creation/remotion/src/Root.tsx (import + <Composition id=\"PlanToMakeMillionsShort\"> 1080x1920 @30, DUR 924)",
+    "video-creation/longform-edited/media/plan-to-make-millions/_previews/short/work/vertical-cards/ (C16-hook-start-v.png, C16-hook-mid-v.png, C16-hook-payoff-v.png, beat86-d-entries-v-s2.png, beat86-d-entries-v-s3.png, hold-7.02.png copied from assets/short/vertical-cards/)",
+    "video-creation/longform-edited/media/plan-to-make-millions/_previews/short/work/outro-hold.png (span-05 frame 148, the last span's final frame)"
+  ],
+  "mode": "SHORT, 16:9-sourced (assets/short/from-16x9.json): captions over every span, nothing burned",
+  "card_t": [],
+  "pause_s": null,
+  "spine_secs": null,
+  "spans": [
+    {"i": 1, "file": "span-01.mp4", "frames": "0-214", "sourced": "FACE", "role": "hook"},
+    {"i": 2, "file": "span-02.mp4", "frames": "214-406", "sourced": "FACE", "role": "body"},
+    {"i": 3, "file": "span-03.mp4", "frames": "406-577", "sourced": "COVER (C16 native vertical)", "role": "body"},
+    {"i": 4, "file": "span-04.mp4", "frames": "577-685", "sourced": "COVER (beat86 D-ENTRIES native vertical)", "role": "body"},
+    {"i": 5, "file": "span-05.mp4", "frames": "685-834", "sourced": "FACE", "role": "kicker"}
+  ],
+  "dur_frames": 924,
+  "outro_frames": "834-924 (3.000 s)",
+  "covers": 6,
+  "covers_detail": [
+    "hold-7.02 (face hold) frames 210-214 over the 3.4-frame HL1 headline sliver at the end of span 1",
+    "C16 hook-start 406-473 -> hook-mid 473-563 ('65 million', 15.755) -> hook-payoff 563-577 ('billion', 18.755): state swaps, 5-frame dissolve, no ingress",
+    "beat86 s2 577-584 -> s3 584-685 (beat86-d-entries-v.states.json)",
+    "card windows snapped to the seam frames: hard in/out on the window edges"
+  ],
+  "variants": "variants.json is an empty table: no variant overlays",
+  "transitions_wired": [
+    {"tc": 7.1333, "frame": 214, "id": "hand:film-burn (short seam hit: 9-frame warm radial burn peaking on the seam + 1.06->1 zoom settle)"},
+    {"tc": 13.5333, "frame": 406, "id": "hand:film-burn (short seam hit)"},
+    {"tc": 19.2333, "frame": 577, "id": "hand:film-burn (short seam hit)"},
+    {"tc": 22.8333, "frame": 685, "id": "hand:film-burn (short seam hit)"},
+    {"tc": 27.8, "frame": 834, "id": "outro title-slide ingress (dark bg 9-frame fade over the held frame, headline rise, divider, arrow drop + bob)"}
+  ],
+  "captions_groups": 32,
+  "captions_notes": "ZCAPTIONS + CAPTION_WINDOWS_F + CAPTION_FPS imported; every time compared in whole frames (Math.round(s*30)); a group hides at min(next group, max(start + 39 f, round(e*30)), its window end); Montserrat 900 lowercase, 12 px stroke, 0.7->1.12->1 pop, bottom 320 px, maxWidth 840, fontSize 76, topmost; none in the outro.",
+  "gates": {
+    "COMP-IMPORTS-LINT": "PASS files=2 fails=0",
+    "COVERS-LINT": "PASS covers=6 fails=0 warns=4 (GAP 7.13-13.53 = face span 2, justified; 3 STATE SWAP warns = C16 / beat86 state progression, the comp dissolves with no ingress transition)",
+    "DECK-CONTAINERS": "n/a (short mode: the brief names lint_comp_imports + lint_covers only)",
+    "SLIDE-BALANCE-LINT": "n/a (short mode)",
+    "ANIMATED-CHARTS-LINT": "n/a (short mode)",
+    "TRANSITION-ASSETS-LINT": "n/a (short mode, no library engine used)",
+    "SPINE-FPS": "n/a (short mode); every span intermediate probed 1080x1920 30/1 with frame counts 214/192/171/108/149 = spans.json"
+  },
+  "chunks_qa": [
+    {"frames": "100", "what": "span 1 face + caption 'and this is'", "verdict": "ok"},
+    {"frames": "211", "what": "HL1 sliver covered by the face hold", "verdict": "ok: no cropped headline frame"},
+    {"frames": "214", "what": "seam 1 burn peak", "verdict": "ok"},
+    {"frames": "310", "what": "span 2 face + caption", "verdict": "ok"},
+    {"frames": "405-406", "what": "seam 2: last span-2 frame is face (no card sliver), C16 hard-in under the burn", "verdict": "ok"},
+    {"frames": "440, 500, 570", "what": "C16 start / mid (AROUND 65M + call card) / payoff (OVER 1B) with captions in the reserved band", "verdict": "ok: captions clear of chart text and the source footnote"},
+    {"frames": "576-577", "what": "seam 3: 'billion.' ends on 576, 577 caption-free on beat86 s2", "verdict": "ok: no caption crosses the seam"},
+    {"frames": "640", "what": "beat86 s3 + caption under the card text", "verdict": "ok"},
+    {"frames": "684-685", "what": "seam 4: card to face, 'they are.' ends on 684", "verdict": "ok"},
+    {"frames": "700, 760", "what": "span 5 kicker face + captions", "verdict": "ok"},
+    {"frames": "834, 840, 900, 923", "what": "outro: held frame -> WATCH THE FULL VIDEO card", "verdict": "fixed: the arrow shaft did not render (an objectBoundingBox gradient on a zero-width line); switched to userSpaceOnUse, enlarged the headline (140 px) and arrow; re-rendered and checked"}
+  ],
+  "smoke_stills_dir": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\_previews\\short\\qa\\comp",
+  "draft": null,
+  "needs_review": [
+    "C16 steps through its three state stills (start -> mid -> payoff) on the longform cues with 5-frame dissolves, rather than drawing the line on per frame: the line appears in two jumps (at '65 million' and at 'billion'). The visual-qa'd vertical-cards contract is stills; a per-frame draw-on would need a real chart component.",
+    "The held outro frame (span-05's last frame) carries the longform's own sign-off film burn (orange). It shows for about 3 frames before the dark card covers it."
+  ],
+  "deviations": []
+}

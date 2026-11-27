@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>livestream-aws chart, 9:16: gate (wait, resume)</title>
+<!--
+  The 9:16 cut of gate.html: the same nodes, words, states and lit parts, re-composed for a 1080x1920 phone frame. The
+  16:9 U turns on its side: the wait path runs DOWN the left column (interrupt to the email), the resume path comes back
+  UP the right column (my approval to a new Runtime session); the email crosses to my approval at the bottom and
+  DynamoDB crosses to the resumed graph (the same thread). The label on top (9 HOURS ON RECORD, 8-HOUR SESSION) is the
+  same two bars to scale, full width. Text 28px and up, nothing below y 1450, 72px side margins.
+  Shoot (from this folder): python shoot.py gate-vertical.html --out ../../vertical/diagrams --size 1080x1920
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chart.css">
+<link rel="stylesheet" href="group1.css">
+<style>
+.portrait .sn{font-size:30px;line-height:1.1}
+.portrait .sd{font-size:28px;letter-spacing:.05em;line-height:1.15}
+.portrait .svc{padding:6px 16px}
+.tn{font-family:'DM Sans';font-weight:700;font-size:30px;line-height:1.15;text-wrap:balance}
+.tn.code{font-family:'JetBrains Mono',monospace;font-weight:600}
+.ts{font-family:'DM Sans';font-weight:500;font-size:28px;line-height:1.2;color:var(--rest-sub);margin-top:2px}
+.on .ts{color:var(--lit-sub)}
+.ev{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;padding:0 10px}
+.ev .ico{color:var(--text-secondary)}
+.ev.on .ico{color:var(--accent-cyan)}
+.node.gate .ico{color:rgba(255,215,0,.6)}
+.node.gate.on .ico{color:var(--accent-gold)}
+.node.gate .tn{color:rgba(255,215,0,.72)}
+.node.gate.on .tn{color:var(--accent-gold)}
+.node.gate .ts{color:rgba(255,215,0,.55)}
+.node.gate.on .ts{color:rgba(255,236,150,.92)}
+.rl{font-family:'DM Sans';font-weight:700;font-size:28px;letter-spacing:.10em;text-transform:uppercase;white-space:nowrap}
+.rl .mono{letter-spacing:0;font-size:30px}
+.rl.ss{color:var(--text-primary)}
+.rl.rec{color:var(--accent-gold)}
+.bar{border-radius:7px}
+.bar.ss{background:linear-gradient(90deg,rgba(232,234,240,.78),rgba(232,234,240,.5))}
+.bar.rec{background:linear-gradient(90deg,rgba(255,215,0,.85),rgba(255,215,0,.6))}
+.bar.over{background:repeating-linear-gradient(135deg,rgba(255,215,0,.95) 0 8px,rgba(255,215,0,.35) 8px 16px)}
+.tick{width:0;border-left:2px dashed rgba(232,234,240,.55)}
+</style>
+</head>
+<body>
+<template id="chart"></template>
+<script src="chart.js"></script>
+<script src="group1.js"></script>
+<script>
+(function () {
+  var L = [72, 440], R = [640, 1008], NH = 140;                 // the two columns [left, right]
+  var ROW = [520, 720, 920, 1120, 1320];             // 60px between rows: each label centred beside its arrow                         // row tops
+  var mid = function (r) { return ROW[r] + NH / 2; };
+  var lx = (L[0] + L[1]) / 2, rx = (R[0] + R[1]) / 2;
+  var h = [];
+  h.push('<div class="stage">');
+  h.push('<div class="orb" style="width:620px;height:620px;background:var(--accent-cyan);opacity:.12;left:-300px;top:-300px"></div>');
+  h.push('<div class="orb" style="width:620px;height:620px;background:var(--accent-gold);opacity:.05;left:620px;top:1460px"></div>');
+  h.push('<div class="head"><h1>A gate longer than a session</h1><div class="divider"></div></div>');
+
+  // the label on top, to scale, in the order Mike says it: 9 hours on record, then the 8-hour session
+  var X0 = 72, U = 936 / 9;
+  h.push('<div class="rl rec" data-own style="left:72px;top:346px"><span class="mono">9</span> hours on record</div>');
+  h.push('<div class="bar rec" style="left:' + X0 + 'px;top:392px;width:' + Math.round(8 * U) + 'px;height:16px;border-radius:7px 0 0 7px"></div>');
+  h.push('<div class="bar over" style="left:' + Math.round(X0 + 8 * U) + 'px;top:392px;width:' + Math.round(U) + 'px;height:16px;border-radius:0 7px 7px 0"></div>');
+  h.push('<div class="rl ss" data-own style="left:72px;top:424px"><span class="mono">8</span>-hour session</div>');
+  h.push('<div class="bar ss" style="left:' + X0 + 'px;top:470px;width:' + Math.round(8 * U) + 'px;height:16px"></div>');
+  h.push('<div class="tick" style="left:' + Math.round(X0 + 8 * U) + 'px;top:382px;height:114px"></div>');
+
+  // wires
+  var w = [];
+  function vw(k, x, r0, r1) {           // down (r0 < r1) or up (r0 > r1) within a column
+    var a = r0 < r1 ? ROW[r0] + NH + 3 : ROW[r0] - 3, b = r0 < r1 ? ROW[r1] - 5 : ROW[r1] + NH + 5;
+    w.push(WIRE(k, 'M' + x + ',' + a + ' L' + x + ',' + b));
+  }
+  vw("wait", lx, 0, 1); vw("wait", lx, 1, 2); vw("wait", lx, 2, 3); vw("wait", lx, 3, 4);
+  w.push(WIRE("resume", 'M' + (L[1] + 3) + ',' + mid(4) + ' L' + (R[0] - 5) + ',' + mid(4)));      // from the email to my approval
+  vw("resume", rx, 4, 3); vw("resume", rx, 3, 1); vw("resume", rx, 1, 0);
+  w.push(WIRE("resume", 'M' + (L[1] + 3) + ',' + mid(1) + ' L' + (R[0] - 5) + ',' + mid(1)));      // same thread
+  h.push('<svg class="wires" width="1080" height="1920" viewBox="0 0 1080 1920">' + w.join('') + '</svg>');
+  function side(k, x, r, t) { h.push('<div class="wl" data-k="' + k + '" style="left:' + (x + 18) + 'px;top:' + (ROW[r] + NH + 13) + 'px">' + t + '</div>'); }
+  side("wait", lx, 0, "saves state");
+  side("wait", lx, 3, "sends");
+  h.push('<div class="wl" data-k="resume" style="left:' + (rx + 18) + 'px;top:' + (mid(2) - 17) + 'px">resumes</div>');
+  h.push('<div class="wl" data-k="resume" style="left:' + L[1] + 'px;width:' + (R[0] - L[1]) + 'px;text-align:center;top:' + (mid(1) - 52) + 'px">same thread</div>');
+
+  function node(k, c, r, cls, inner) {
+    h.push('<div class="node ' + cls + '" data-k="' + k + '" style="left:' + c[0] + 'px;top:' + ROW[r] + 'px;width:' + (c[1] - c[0]) + 'px;height:' + NH + 'px">' + inner + '</div>');
+  }
+  function aws(k, c, r, name, desc) { h.push(SVC({ k: k, x: c[0], y: ROW[r], w: c[1] - c[0], h: NH, name: name, desc: desc })); }
+  // the wait path, down the left
+  node("wait", L, 0, "gate ev", ICO("person", 32, "", 2.1) + '<div class="tn code">interrupt</div><div class="ts">the human gate</div>');
+  aws("wait", L, 1, "DynamoDB", "managed database");
+  node("wait", L, 2, "ev", ICO("stop", 32, "", 2.1) + '<div class="tn">the session ends</div>');
+  aws("wait", L, 3, "SNS", "notifications");
+  node("wait", L, 4, "ev", ICO("mail", 34, "", 2) + '<div class="tn">an email to me</div>');
+  // the resume path, up the right
+  node("resume", R, 4, "gate ev", ICO("dash", 32, "", 2) + '<div class="tn">I approve</div><div class="ts">on the dashboard</div>');
+  aws("resume", R, 3, "Lambda", "code that runs when called");
+  node("resume", R, 1, "ev", ICO("graph", 32, "", 2) + '<div class="tn">the graph resumes</div>');
+  node("resume", R, 0, "ev", ICO("vm", 32, "", 2) + '<div class="tn">a new Runtime session</div>');
+  h.push('</div>');
+  document.getElementById("chart").innerHTML = h.join("");
+
+  buildChart({
+    "gate-wait":   { on: ["wait"] },
+    "gate-resume": { on: ["resume"] }
+  }, { portrait: true });
+})();
+</script>
+</body>
+</html>

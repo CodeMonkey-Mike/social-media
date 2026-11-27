@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>longest-clock (VERTICAL): Peak to Bottom, in Days</title>
+<!--
+  ANIMATED CHART, longest-bear CH2, the VERTICAL CUT (scripted standard video, cover_runs.py --vertical, kind
+  "animated-chart" = card-overlays kind "clip"). 1080 x 1920, NATIVE VERTICAL: the vertical twin of
+  ../../charts/longest-clock.html (the 16:9 page). TIME-DRIVEN: window.setT(t) draws the exact frame for t (seconds
+  from the start of this card's window) as a pure function of t: no CSS transitions or animations, no rAF, no clock.
+  Past its last move it HOLDS the end state. Rendered by video-creation/longform-presentation/skills/card-overlays/
+  html_clip.py (setT(f / 30) + a screenshot per frame, at --size 1080x1920). Open with #t=8 in the URL to see one
+  moment; with no hash it shows the end state.
+
+  Three bars grow side by side (peak to bottom: 2013-14, 2017-18, 2021-22), each landing as its number is said; then the
+  gold NOW bar grows past the tallest (a dashed line at its height) and stops at the days since the top, captioned as
+  that other clock, still counting. Figures: btc-closes.js "clock" in this folder (a byte copy of
+  ../../charts/btc-closes.js, build_chart_data.py from research/btc-stats.json, RESEARCH.md sections 2 and 3: 406, 364,
+  378; NOW = days from the 2025-10-06 top to the read date, 415 on 2026-11-25).
+
+  THE LAYOUT, drawn TALL (script.md "The vertical cut"): the headline wraps on two lines; the four columns are 156 px wide
+  and up to 650 px tall (the 16:9's are 240 x 520), on one baseline at y 1250, their numbers in one row above them, the
+  years and the NOW caption under it; everything sits on the 72 px margins and ends above y 1490, so the phone's
+  lower-third interface covers nothing but empty page. Same words, figures, colours, entrances and counters as the 16:9.
+
+  THE TIMELINE BELOW IS THE 16:9 PAGE'S, COPIED VERBATIM (T and DUR): the same moves at the same times, cued to the same
+  measured words. WINDOW (RE-TIMED to the recording, 2026-11-25): cues.json run-01, card longest-clock, spine 46.40 to
+  68.00 (21.6 s, 648 frames; script lines 59 and 60). t = 0 is spine 46.40. Each time in T below is the measured voice
+  onset of its cue word (spine/longest-bear EDIT+clips.medium-words.json, checked against the audio's 10 ms envelope and
+  a large-v3 pass; the envelope's silences win where they disagree) minus 46.40. A label never shows before its word is
+  said. A re-time changes BOTH pages (this one and ../../charts/longest-clock.html), the same numbers.
+  This page reads chart-base.css and btc-closes.js in this folder: after changing one of them, touch this file so
+  cover_runs.py re-renders its clip.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chart-base.css">
+</head>
+<body>
+<div class="frame">
+  <!-- the orb is the deck's gold #f5b942: every channel sits above the page's #0a0c10, so a faint tint can only
+       brighten (a colour with a channel under the page's lowers it at a tiny alpha and draws a dark ring) -->
+  <div class="orb" id="orbGold" style="width:560px;height:560px;background:#f5b942;left:700px;top:-400px"></div>
+  <div class="head">
+    <div class="ey" id="ey">Bitcoin bear markets</div>
+    <h1 id="h1">Peak to Bottom, <br>in Days</h1>
+    <div class="divider" id="divider"></div>
+  </div>
+  <svg id="plot" width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div class="src" id="src" style="top:1424px;white-space:pre-line"></div>
+</div>
+<script src="btc-closes.js"></script>
+<script>
+(function () {
+'use strict';
+/* the moves, in seconds from the window start (spine 46.40; "(54.11)" = the cue word's spine time; the cue word is in
+   capitals). Each year label rises on its own year, never before it; each bar lands 0.30 s into its number */
+var T = {
+  head:     0.00,   // eyebrow, headline, divider (0.0 to 0.6), as the chart fades in over since-the-top.days (11 frames)
+  base:     0.15,   // the baseline draws left to right (0.15 to 0.95); "Now look at the three big bear markets ... from
+                    //   top to bottom" (46.65 to 50.98) plays over the headline and the baseline
+  y1:       5.04,   // "2013 to 2014 took 406 days": "2013" (51.44): the label 2013-14
+  b1:       6.71,   // the first bar grows (1.30 s), lands at 8.01, 0.30 s into "406" (54.11 = 7.71)
+  y2:       9.17,   // "2018 took 364 days": "2018" (55.57): the label 2017-18
+  b2:      10.10,   // the second bar grows (1.10 s), lands at 11.20, 0.30 s into "364" (57.30 = 10.90)
+  y3:      12.70,   // "and 2022 took 378 days": "2022" (59.10): the label 2021-22
+  b3:      13.57,   // the third bar grows (1.10 s), lands at 14.67, 0.30 s into "378" (60.77 = 14.37)
+  now:     15.98,   // "THIS one has already passed" (62.38): NOW, DAYS SINCE THE TOP, the dashed line at the tallest bar
+  grow:    16.72,   // "HAS already passed every one of them" (63.10): the gold bar grows (2.40 s): passes 364 at 17.93,
+                    //   the end of "passed" (63.86 to 64.33), 406 at 18.45 on "every ONE" (64.85), lands at 19.12 just
+                    //   after "them" (65.13 to 65.38); each bar it passes dims
+  counting: 19.30   // "and THAT'S the case for the longest ever" (65.70): STILL COUNTING, then holds to the end (21.57)
+};
+var DUR = { b1: 1.30, b2: 1.10, b3: 1.10, grow: 2.40 };
+
+var C = window.BTC_CHART.clock, NOWV = C.now;
+var BARS = C.bars.map(function (b) { return { name: b.name, v: b.days }; });
+var NS = 'http://www.w3.org/2000/svg';
+var INK = '#e8eaf0', SEC = '#8892a4', GOLD = '#f5b942';          /* the deck's gold (longest-bear.html, the cards) */
+
+function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+function lerp(a, b, u) { return a + (b - a) * u; }
+function prog(t, t0, d) { return d > 0 ? clamp((t - t0) / d, 0, 1) : (t >= t0 ? 1 : 0); }
+function eOut(u) { return 1 - Math.pow(1 - u, 3); }
+function fade(t, t0, d) { return eOut(prog(t, t0, d === undefined ? 0.4 : d)); }
+function f2(v) { return (+v).toFixed(2); }
+function mix(c1, c2, u) {
+  var a = parseInt(c1.slice(1), 16), b = parseInt(c2.slice(1), 16);
+  return 'rgb(' + Math.round(lerp(a >> 16, b >> 16, u)) + ',' + Math.round(lerp((a >> 8) & 255, (b >> 8) & 255, u)) + ',' +
+         Math.round(lerp(a & 255, b & 255, u)) + ')';
+}
+
+/* ---------- geometry (1080 x 1920): bars from a zero baseline, one scale for all four, drawn TALL ---------- */
+var BASE = 1250, HMAX = 650, BW = 156;
+var CX = [174, 374, 574], CXN = 830;               /* three old columns 44 px apart, then a 100 px gap, then NOW */
+var BX0 = CX[0] - BW / 2 - 24, BX1 = CXN + BW / 2 + 24;   /* the baseline: 24 px past the outer columns (x 72 to 932) */
+var VMAX = Math.max(NOWV, Math.max.apply(null, BARS.map(function (b) { return b.v; })));
+function H(v) { return HMAX * v / VMAX; }
+var tallest = BARS.reduce(function (a, b) { return b.v > a.v ? b : a; });
+var YREF = BASE - H(tallest.v), XREF0 = CX[BARS.indexOf(tallest)] - BW / 2, XREF1 = CXN + BW / 2;
+var ROW = 562;                                      /* the numbers sit in one row above every bar */
+var YLBL = BASE + 54;                               /* the years and NOW, under the baseline */
+
+var svg = document.getElementById('plot');
+function E(tag, attrs, parent) {
+  var n = document.createElementNS(NS, tag);
+  for (var k in attrs) n.setAttribute(k, attrs[k]);
+  (parent || svg).appendChild(n);
+  return n;
+}
+function set(n, attrs) { for (var k in attrs) n.setAttribute(k, attrs[k]); }
+function op(n, v) { n.setAttribute('opacity', clamp(v, 0, 1).toFixed(4)); }
+function rise(g, a, px) { g.setAttribute('transform', 'translate(0,' + f2((px === undefined ? 10 : px) * (1 - a)) + ')'); op(g, a); }
+function barPath(cx, h) {                           /* a bar with rounded top corners */
+  var x0 = cx - BW / 2, x1 = cx + BW / 2, y = BASE - h, r = Math.min(8, h / 2);
+  if (h <= 0.01) return 'M0,0';
+  return 'M' + f2(x0) + ',' + BASE + ' V' + f2(y + r) + ' Q' + f2(x0) + ',' + f2(y) + ' ' + f2(x0 + r) + ',' + f2(y) +
+         ' H' + f2(x1 - r) + ' Q' + f2(x1) + ',' + f2(y) + ' ' + f2(x1) + ',' + f2(y + r) + ' V' + BASE + ' Z';
+}
+
+var defs = E('defs', {});
+defs.innerHTML =
+  '<linearGradient id="gOld" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8eaf0" stop-opacity=".40"/><stop offset="1" stop-color="#e8eaf0" stop-opacity=".10"/></linearGradient>' +
+  '<linearGradient id="gNow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f5b942" stop-opacity=".96"/><stop offset="1" stop-color="#f5b942" stop-opacity=".42"/></linearGradient>' +
+  '<filter id="glow" filterUnits="userSpaceOnUse" x="' + (CXN - BW / 2 - 60) + '" y="' + (BASE - HMAX - 60) + '" width="' + (BW + 120) +
+    '" height="' + (HMAX + 80) + '"><feGaussianBlur in="SourceGraphic" stdDeviation="10" result="b"/>' +
+    '<feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+
+var gRef = E('g', {}), gBars = E('g', {}), gText = E('g', {});
+
+/* the dashed line at the tallest old bar, and the faint divider before NOW (a different clock) */
+var refLine = E('path', {fill: 'none', stroke: INK, 'stroke-opacity': '.6', 'stroke-width': '2.5', 'stroke-dasharray': '12 9'}, gRef);
+var sep = E('path', {d: 'M' + f2((CX[2] + BW / 2 + CXN - BW / 2) / 2) + ',' + (BASE - HMAX + 10) + ' V' + BASE,
+                     fill: 'none', stroke: INK, 'stroke-opacity': '.14', 'stroke-width': '2', 'stroke-dasharray': '6 8'}, gRef);
+var base = E('path', {fill: 'none', stroke: '#2a3142', 'stroke-width': '2.5'}, gRef);
+/* the tallest old figure, repeated where the dashed line meets the gold bar: the target it passes, named there */
+var refTag = E('text', {'class': 't-mono', 'font-size': '28', fill: INK, 'fill-opacity': '.72', 'text-anchor': 'end',
+                        x: f2(CXN - BW / 2 - 16), y: f2(YREF - 16)}, gRef);
+refTag.textContent = String(tallest.v);
+
+/* the three old bars: bar, cap, number in the row, year under the baseline */
+BARS.forEach(function (b, i) {
+  b.cx = CX[i];
+  b.bar = E('path', {fill: 'url(#gOld)'}, gBars);
+  b.cap = E('path', {fill: 'none', stroke: INK, 'stroke-width': '4', 'stroke-linecap': 'round'}, gBars);
+  b.num = E('text', {'class': 't-mono', 'font-size': '72', fill: INK, 'text-anchor': 'middle', x: b.cx, y: ROW}, gText);
+  b.yearG = E('g', {}, gText);
+  b.year = E('text', {'class': 't-mono', 'font-size': '36', fill: INK, 'text-anchor': 'middle', x: b.cx, y: YLBL}, b.yearG);
+  b.year.textContent = b.name;
+});
+/* NOW */
+var nowBar = E('path', {fill: 'url(#gNow)', filter: 'url(#glow)'}, gBars);
+var nowCap = E('path', {fill: 'none', stroke: '#fad897', 'stroke-width': '4', 'stroke-linecap': 'round'}, gBars);
+var nowNum = E('text', {'class': 't-mono', 'font-size': '84', fill: GOLD, 'text-anchor': 'middle', x: CXN, y: ROW}, gText);
+var nowLblG = E('g', {}, gText);
+var nowLbl = E('text', {'class': 't-caps', 'font-size': '42', fill: GOLD, 'text-anchor': 'middle', x: CXN, y: YLBL}, nowLblG);
+nowLbl.textContent = 'NOW';
+var cap1G = E('g', {}, gText), cap2G = E('g', {}, gText);
+var cap1 = E('text', {'class': 't-caps', 'font-size': '28', fill: INK, 'text-anchor': 'middle', x: CXN, y: YLBL + 44, 'letter-spacing': '2'}, cap1G);
+cap1.textContent = 'DAYS SINCE THE TOP';
+var cap2 = E('text', {'class': 't-caps', 'font-size': '28', fill: GOLD, 'text-anchor': 'middle', x: CXN, y: YLBL + 82, 'letter-spacing': '2'}, cap2G);
+cap2.textContent = 'STILL COUNTING';
+
+var ey = document.getElementById('ey'), h1 = document.getElementById('h1'), divider = document.getElementById('divider'),
+    src = document.getElementById('src'), orb = document.getElementById('orbGold');
+var MON = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split(' ');
+(function () {
+  var e = window.BTC_CHART.end.split('-');
+  /* the 16:9's one line, in two: the break falls between its two sentences (pre-line) */
+  src.textContent = 'Peak to bottom: Bitcoin daily closes, Bitstamp and Yahoo Finance.\nNOW: days since the Oct 6, 2025 top, read ' +
+                    MON[+e[1] - 1] + ' ' + (+e[2]) + ', ' + e[0] + '.';
+  /* the orb, once: the stylesheet's blurred disc as a radial gradient (deterministic) */
+  var Dm = parseFloat(orb.style.width), R = Dm / 2, W = R + 260, cx = parseFloat(orb.style.left) + R, cy = parseFloat(orb.style.top) + R;
+  var stops = [[0, .956], [Math.max(0, R - 120) / W, .80], [R / W, .46], [(R + 120) / W, .15], [(R + 180) / W, .06], [(R + 240) / W, .015], [1, 0]];
+  orb.style.left = (cx - W) + 'px'; orb.style.top = (cy - W) + 'px'; orb.style.width = orb.style.height = (2 * W) + 'px';
+  orb.style.background = 'radial-gradient(closest-side, ' + stops.map(function (s) {
+    return 'rgba(245,185,66,' + s[1] + ') ' + (100 * Math.min(1, s[0])).toFixed(2) + '%';
+  }).join(', ') + ')';
+})();
+
+var lastBoxes = [];
+
+function setT(t) {
+  t = +t || 0;
+  /* head */
+  var a = fade(t, T.head, 0.6);
+  ey.style.opacity = a.toFixed(4);
+  h1.style.opacity = a.toFixed(4); h1.style.transform = 'translateY(' + f2(12 * (1 - a)) + 'px)';
+  divider.style.width = f2(66 * a) + 'px';
+  src.style.opacity = fade(t, T.base + 0.6, 0.6).toFixed(4);
+  orb.style.opacity = (0.06 * a + 0.06 * fade(t, T.grow, 1.2)).toFixed(4);   /* warms a little as the gold bar grows */
+
+  /* the baseline */
+  var bx = lerp(BX0, BX1, eOut(prog(t, T.base, 0.8)));
+  set(base, {d: 'M' + BX0 + ',' + BASE + ' H' + f2(bx), opacity: t > T.base ? 1 : 0});
+
+  /* the gold bar's value first: the old bars dim as it passes them */
+  var gu = eOut(prog(t, T.grow, DUR.grow)), nowV = NOWV * gu;
+  var starts = [T.b1, T.b2, T.b3], durs = [DUR.b1, DUR.b2, DUR.b3], years = [T.y1, T.y2, T.y3];
+  BARS.forEach(function (b, i) {
+    var u = eOut(prog(t, starts[i], durs[i])), v = b.v * u;
+    var passed = clamp((nowV - b.v) / 6, 0, 1);
+    var h = H(v);
+    set(b.bar, {d: barPath(b.cx, h), opacity: (1 - 0.28 * passed).toFixed(4)});
+    set(b.cap, {d: h > 0.5 ? 'M' + f2(b.cx - BW / 2 + 6) + ',' + f2(BASE - h) + ' H' + f2(b.cx + BW / 2 - 6) : 'M0,0',
+                stroke: mix(INK, SEC, 0.7 * passed), 'stroke-opacity': (1 - 0.2 * passed).toFixed(4)});
+    b.num.textContent = String(Math.round(v));
+    set(b.num, {fill: mix(INK, SEC, 0.7 * passed)});
+    op(b.num, fade(t, starts[i], 0.2));
+    rise(b.yearG, fade(t, years[i], 0.4));
+  });
+
+  /* NOW: the label and caption, the dashed line at the tallest, then the gold bar */
+  rise(nowLblG, fade(t, T.now, 0.4));
+  rise(cap1G, fade(t, T.now + 0.12, 0.4));
+  rise(cap2G, fade(t, T.counting, 0.45));
+  var rl = eOut(prog(t, T.now, 0.6));
+  set(refLine, {d: 'M' + f2(XREF0) + ',' + f2(YREF) + ' H' + f2(lerp(XREF0, XREF1, rl)), opacity: t > T.now ? 1 : 0});
+  op(sep, fade(t, T.now, 0.5));
+  op(refTag, fade(t, T.now + 0.4, 0.4));
+  var hn = H(nowV);
+  set(nowBar, {d: barPath(CXN, hn)});
+  set(nowCap, {d: hn > 0.5 ? 'M' + f2(CXN - BW / 2 + 6) + ',' + f2(BASE - hn) + ' H' + f2(CXN + BW / 2 - 6) : 'M0,0'});
+  nowNum.textContent = String(Math.round(nowV));
+  op(nowNum, fade(t, T.grow, 0.2));
+
+  /* QA boxes (at rest) */
+  lastBoxes = [];
+  BARS.forEach(function (b) { if (+b.num.getAttribute('opacity') > 0.01) lastBoxes.push(box(b.num, b.name + ' number')); });
+  BARS.forEach(function (b) { if (+b.yearG.getAttribute('opacity') > 0.01) lastBoxes.push(box(b.year, b.name)); });
+  if (+nowNum.getAttribute('opacity') > 0.01) lastBoxes.push(box(nowNum, 'NOW number'));
+  if (+refTag.getAttribute('opacity') > 0.01) lastBoxes.push(box(refTag, 'tallest tag'));
+  /* NOW and its two caption lines are ONE stacked block (their font boxes touch by design): one box */
+  var blk = [[nowLbl, nowLblG], [cap1, cap1G], [cap2, cap2G]].filter(function (q) { return +q[1].getAttribute('opacity') > 0.01; })
+                                                         .map(function (q) { return box(q[0], ''); });
+  if (blk.length) lastBoxes.push({ name: 'NOW caption', x0: Math.min.apply(null, blk.map(function (b) { return b.x0; })),
+    y0: Math.min.apply(null, blk.map(function (b) { return b.y0; })), x1: Math.max.apply(null, blk.map(function (b) { return b.x1; })),
+    y1: Math.max.apply(null, blk.map(function (b) { return b.y1; })) });
+}
+function box(n, name) { var bb = n.getBBox(); return { name: name, x0: bb.x, y0: bb.y, x1: bb.x + bb.width, y1: bb.y + bb.height }; }
+
+/* QA: label boxes plus the bar tops and the dashed line as "series", so the shared checker sees collisions */
+window.Clock = { qa: function () {
+  var series = [{ name: 'dashed line at the tallest', pts: [[XREF0, YREF], [XREF1, YREF]] }];
+  return { boxes: lastBoxes, series: series, marks: [],
+           geom: { BASE: BASE, HMAX: HMAX, BW: BW, CX: CX, CXN: CXN, ROW: ROW, YREF: YREF } };
+} };
+
+['900 100px "Playfair Display"', '600 28px "DM Sans"', '700 42px "DM Sans"', '500 24px "DM Sans"',
+ '600 72px "JetBrains Mono"'].forEach(function (f) { document.fonts.load(f, 'NOW 0123456789-'); });
+
+window.T = T;
+window.setT = setT;
+var m = /t=([0-9.]+)/.exec(location.hash);
+setT(m ? parseFloat(m[1]) : 30);
+})();
+</script>
+</body>
+</html>

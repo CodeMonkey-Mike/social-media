@@ -1,0 +1,31 @@
+{
+  "assets": [
+    {
+      "path": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/plan-to-make-millions/assets/short/vertical-cards/C16-hook-payoff-v.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": [
+        "1080x1920 RGB. No dark pixels in any 40 px edge band. Every glyph is complete, from 'NOV 14, 2025' (left edge at x~64) to 'NOV 2026' (right edge at x~997). The end dot's halo stops at x~1013.",
+        "Not blank. Light page #F4F2EB, near-black text and the gold accent (#8F6500 family) on 'called early', the line, the area fill, the dots and the badge rule. The eyebrow is muted grey, not colored, and the short gold divider is present. No dark-theme leak and no glow smear.",
+        "Fonts: Playfair Display headline, DM Sans eyebrow/labels/callout title, JetBrains Mono on the badge number, axis ticks, callout numbers and footnote.",
+        "Content matches assets/charts/C16.html HOOK word for word: 'PIEVERSE, DAILY PRICE' / 'Pieverse: called early' / 'MARKET CAP OVER 1B' / 'USD, LOG SCALE' / '0.338, NOV 30, 2025, THE PULLBACK' / 'MY CALL, AROUND A 65M CAP'. The line is drawn from NOV 14, 2025 to the read. The call dot sits at 0.338 on the log axis (y~1110, between the 0.50 and 0.25 gridlines). The badge reads the payoff state 'OVER 1B'. No em dashes.",
+        "The call card is dimmed (text #85878B on the light page, about 3.4:1). This is intended: the build notes say the call card dims at 18.755 for the payoff. It is still legible at this size.",
+        "The empty band at y~1400-1640 is the reserved caption band named in C16-hook-v.html, so it is not a composition gap. Watch item, not a defect: the 4-line source footnote at y~1660-1760 will sit under the YouTube Shorts title/channel overlay on phones. It is source fine print, so that is acceptable."
+      ],
+      "fix": ""
+    },
+    {
+      "path": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/plan-to-make-millions/assets/short/vertical-cards/beat86-d-entries-v.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": [
+        "1080x1920 RGB, byte-identical to beat86-d-entries-v-s3.png (main_state s3 per states.json). No dark pixels in any 40 px edge band. The card spans x 60-1020 and y 220-1700, and the text spans x 138-838, so every line keeps a margin of 180 px or more inside the card.",
+        "Light card slide: white card with a hairline border and soft shadow on the #F6F4EE page, a cyan (#006A9E) top-accent rule fading right, a muted grey eyebrow 'THE BOTTOM' and a short cyan divider. This matches the 16:9 card-slides/D-ENTRIES.png treatment exactly. No palette drift.",
+        "Font: Playfair Display heavy serif for all three sentences, with typographic apostrophes in 'don't'.",
+        "Content matches D-ENTRIES: 'I don't know if this is the bottom.' / 'I don't need the exact bottom.' / divider / 'I need low entries.', with ONLY 'low entries.' in cyan, the same accent word as the 16:9 card. One sentence per block. The two lead sentences wrap cleanly into 2 lines each, and the payoff is set larger on 2 lines. No em dashes.",
+        "Composition: the eyebrow, headline lines, divider and payoff are left-aligned in order and fill the card. Top gap ~280 px and bottom gap ~310 px are balanced. All text sits above y~1390, clear of the Shorts bottom UI."
+      ],
+      "fix": ""
+    }
+  ]
+}

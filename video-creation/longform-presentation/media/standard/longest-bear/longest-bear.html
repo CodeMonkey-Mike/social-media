@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Longest Crypto Bear Market Ever?</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#f5b942; --accent-red:#e0606e;
+  --accent-purple:#a855f7; --accent-teal:#49e0c8;
+  --text-primary:#f5f5f7; --text-secondary:#8892a4; --text-muted:#5d6679; --border:#1e2330;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-snap-type:y mandatory}
+body{background:var(--bg-deep);font-family:'DM Sans',sans-serif;color:var(--text-primary);overflow-x:hidden}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.slide{min-height:100vh;height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;
+  padding:60px 80px 60px 6vw;position:relative;overflow:hidden}
+@media(max-width:900px){ .slide{padding:40px 28px} }
+.orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:.4;pointer-events:none}
+.slide>*:not(.orb){position:relative;z-index:1}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(3rem,6vw,6.4rem);line-height:1.05;letter-spacing:-.02em}
+.ey{display:block;font-size:clamp(1rem,1.45vw,1.6rem);text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);font-weight:600;margin-bottom:22px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.divider{width:72px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent-gold),rgba(245,185,66,.18));margin:34px 0}
+.go{color:var(--accent-gold)} .re{color:var(--accent-red)}
+
+/* the screen-share recording: the webcam + the membership box own the right column, so content stays left */
+html{scrollbar-width:none} html::-webkit-scrollbar{display:none}
+.wrap{max-width:64vw}   /* 6vw padding + 64vw = 70vw: nothing passes x 1382 (the right 28% is the webcam column) */
+@media(max-width:900px){ .wrap{max-width:none} }
+.lines{list-style:none;display:flex;flex-direction:column;gap:22px}
+.lines li{font-size:clamp(1.4rem,2.25vw,2.5rem);line-height:1.3;color:var(--text-secondary);padding-left:26px;border-left:4px solid #2a3142}
+.lines li b{color:var(--text-primary);font-weight:700}
+.lines li b.go{color:var(--accent-gold)}
+.lines .mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.lines li.hot{border-left-color:var(--accent-gold)}
+.chips{display:flex;gap:22px;flex-wrap:wrap;margin-top:34px}
+.chip{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:clamp(1.5rem,2.4vw,2.6rem);padding:14px 30px;border-radius:100px;
+  border:2px solid #2a3142;color:var(--text-secondary);background:rgba(255,255,255,.02)}
+.chip.go{border-color:rgba(245,185,66,.6);color:var(--accent-gold);background:rgba(245,185,66,.08)}
+
+.fade-in{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+.delay-1{transition-delay:.15s}.delay-2{transition-delay:.3s}.delay-3{transition-delay:.45s}
+.nav-dots{display:none!important;position:fixed;right:28px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:100}
+.nav-dots button{width:8px;height:8px;border-radius:50%;border:none;background:var(--text-muted);cursor:pointer;padding:0;transition:transform .3s,background .3s}
+.nav-dots button.active{background:var(--accent-gold);transform:scale(1.4)}
+
+/* G = the webcam + membership column guide (crypto layout: the right column, full height), F = fullscreen */
+#pip-zone{position:fixed;right:0;top:0;width:28vw;height:100vh;border:3px dashed rgba(255,255,255,.35);border-radius:6px;
+  display:none;align-items:center;justify-content:center;color:rgba(255,255,255,.5);font-size:.9rem;letter-spacing:.15em;text-transform:uppercase;z-index:200}
+#pip-zone.show{display:flex}
+</style></head>
+<body>
+<section class="slide" id="the-question">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-gold);top:-240px;left:30vw;opacity:.18"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Bitcoin</span>
+    <h1 class="fade-in delay-1">The longest crypto bear market <span class="go">ever?</span></h1>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="lines fade-in delay-2">
+      <li>Top: <b>October 6, 2025</b>, <b class="mono">$124,753</b></li>
+      <li class="hot"><b class="mono go">415</b> days since, no new high</li>
+    </ul>
+  </div>
+</section>
+<section class="slide" id="two-bears">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-gold);bottom:-260px;left:10vw;opacity:.18"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Count it with one rule</span>
+    <h1 class="fade-in delay-1">Two bear <span class="go">markets?</span></h1>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="lines fade-in delay-2">
+      <li>Over when Bitcoin is above its <b>50-week</b> and <b>200-day</b> averages, and stays there for a month and a half</li>
+      <li>Bear <span class="mono">1</span>: <b class="mono">267</b> days, <span class="re">down <span class="mono">53%</span></span></li>
+      <li class="hot">Bear <span class="mono">2</span>: <b>2 weeks</b> old, <span class="re">down <span class="mono">32%</span></span></li>
+    </ul>
+  </div>
+</section>
+<section class="slide" id="the-hope">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-gold);top:-220px;left:40vw;opacity:.18"></div>
+  <div class="wrap">
+    <span class="ey fade-in">What's moving the right way</span>
+    <h1 class="fade-in delay-1">The <span class="go">hope</span></h1>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="lines fade-in delay-2">
+      <li>Inflation: the bond market expects <b class="mono">2.1%</b></li>
+      <li>Oil: <b>down <span class="mono">20%</span></b> in a month</li>
+      <li>The Fed: a quarter-point hike in December, about <b class="mono">90%</b> priced</li>
+    </ul>
+  </div>
+</section>
+<section class="slide" id="the-long-view">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-gold);bottom:-260px;left:28vw;opacity:.18"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Zoom out</span>
+    <h1 class="fade-in delay-1">The long <span class="go">view</span></h1>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="lines fade-in delay-2"><li>Every bear market before this one ended the same way</li></ul>
+    <div class="chips fade-in delay-3"><span class="chip">2013</span><span class="chip">2017</span><span class="chip">2021</span><span class="chip go">2025?</span></div>
+  </div>
+</section>
+<section class="slide" id="four-year-cycle">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-gold);bottom:-250px;left:14vw;opacity:.18"></div>
+  <div class="wrap">
+    <span class="ey fade-in">The four-year cycle</span>
+    <h1 class="fade-in delay-1">Moving the <span class="go">goalposts?</span></h1>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="lines fade-in delay-2">
+      <li>The usual call: the bottom comes <b>a year after the top</b></li>
+      <li>This time a bull market came first</li>
+      <li class="hot">Now the definition is changing</li>
+    </ul>
+  </div>
+</section>
+<section class="slide" id="three-weeks">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-gold);top:-230px;left:36vw;opacity:.18"></div>
+  <div class="wrap">
+    <span class="ey fade-in">About three weeks</span>
+    <h1 class="fade-in delay-1">Everything <span class="go">at once</span></h1>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="lines fade-in delay-2">
+      <li>A tech sell-off</li>
+      <li>Rate-hike fears</li>
+      <li>A giant IPO: Anthropic</li>
+      <li class="hot">The Binance hack</li>
+    </ul>
+  </div>
+</section>
+<section class="slide" id="own-assets">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-gold);top:-230px;left:12vw;opacity:.18"></div>
+  <div class="wrap">
+    <span class="ey fade-in">Now is the time</span>
+    <h1 class="fade-in delay-1">Own the <span class="go">assets</span></h1>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="lines fade-in delay-2">
+      <li>AI and robotics are going to take a lot of jobs</li>
+      <li>In <b>3 to 5 years</b>, a paycheck gets harder to get</li>
+      <li class="hot">Those who own things are the ones who pull through</li>
+    </ul>
+  </div>
+</section>
+<section class="slide" id="a-good-future">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-gold);bottom:-250px;left:34vw;opacity:.18"></div>
+  <div class="wrap">
+    <span class="ey fade-in">What I think</span>
+    <h1 class="fade-in delay-1">Two <span class="go">futures</span></h1>
+    <div class="divider fade-in delay-1"></div>
+    <ul class="lines fade-in delay-2">
+      <li><b>Accumulating now:</b> relatively easy ahead</li>
+      <li><b>Not accumulating:</b> increasingly harder</li>
+      <li class="hot">A good future for those who have the assets</li>
+    </ul>
+  </div>
+</section>
+<div class="nav-dots" id="navDots"></div>
+<div id="pip-zone">Webcam</div>
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+const fadeObserver = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.15});
+document.querySelectorAll('.fade-in').forEach(el=>fadeObserver.observe(el));
+const dotsWrap = document.getElementById('navDots');
+slides.forEach((s,i)=>{
+  const b=document.createElement('button');
+  b.setAttribute('aria-label','Go to slide '+(i+1));
+  b.addEventListener('click',()=>s.scrollIntoView({behavior:'smooth'}));
+  dotsWrap.appendChild(b);
+});
+const dots = Array.from(dotsWrap.children);
+const dotObserver = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ const i=slides.indexOf(e.target); dots.forEach((d,j)=>d.classList.toggle('active',j===i)); } });
+},{threshold:0.5});
+slides.forEach(s=>dotObserver.observe(s));
+function currentIndex(){
+  const mid=window.innerHeight/2; let idx=0,best=Infinity;
+  slides.forEach((s,i)=>{ const r=s.getBoundingClientRect(); const d=Math.abs((r.top+r.bottom)/2-mid); if(d<best){best=d;idx=i;} });
+  return idx;
+}
+document.addEventListener('keydown',e=>{
+  if(['ArrowRight','ArrowDown',' '].includes(e.key)){ e.preventDefault(); slides[Math.min(slides.length-1,currentIndex()+1)].scrollIntoView({behavior:'smooth'}); }
+  if(['ArrowLeft','ArrowUp'].includes(e.key)){ e.preventDefault(); slides[Math.max(0,currentIndex()-1)].scrollIntoView({behavior:'smooth'}); }
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='g'||e.key==='G') document.getElementById('pip-zone').classList.toggle('show');
+  if(e.key==='f'||e.key==='F'){ if(!document.fullscreenElement) document.documentElement.requestFullscreen(); else document.exitFullscreen(); }
+});
+</script>
+</body></html>

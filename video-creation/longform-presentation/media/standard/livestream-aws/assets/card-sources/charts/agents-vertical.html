@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>livestream-aws chart, 9:16: agents (models, tools, role)</title>
+<!--
+  The 9:16 cut of agents.html: the same pieces, words, states and lit parts, re-composed for a 1080x1920 phone frame.
+  TODAY stays beside ON AWS: Anthropic over Claude Code ("calls directly") in the TODAY column, Bedrock over the
+  builder's Runtime session ("calls") in the ON AWS column. AgentCore Gateway and AgentCore Identity need the full
+  width side by side (a 112px gap for "logins"), so the ON AWS frame is an L: it wraps under the TODAY column and
+  holds them in its bottom arm ("tools" comes down from the session into Gateway). The 16:9's role card folds into
+  the IAM role box (its line appears in `role`), the image model on Bedrock is crossed out there as at 16:9, and the
+  builder's TODAY line sits at the foot of the TODAY column. The other agents' sessions peek out on the right of the
+  builder's. Every box keeps 24px inside padding; text 28px and up, nothing below y 1450, 72px side margins.
+  Shoot (from this folder): python shoot.py agents-vertical.html --out ../../vertical/diagrams --size 1080x1920
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chart.css">
+<link rel="stylesheet" href="group1.css">
+<style>
+.portrait .sn{font-size:30px;line-height:1.1}
+.portrait .sd{font-size:28px;letter-spacing:.05em;line-height:1.15}
+.portrait .svc{padding:6px 12px}
+.portrait .colh{font-size:30px}
+.portrait .colh .hs{font-size:28px}
+.portrait .cd{font-size:28px;padding:10px 14px}
+.tn{font-family:'DM Sans';font-weight:700;font-size:30px;line-height:1.15;text-wrap:balance}
+.ts{font-family:'DM Sans';font-weight:500;font-size:28px;line-height:1.2;color:var(--rest-sub);margin-top:2px;text-wrap:balance}
+.on .ts{color:var(--lit-sub)}
+.stk{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;padding:0 10px}
+.hold{display:block;padding:0}
+.ghost{border-style:dashed;border-color:rgba(136,146,164,.30);background:rgba(18,21,28,.6)}
+.sesl{font-family:'DM Sans';font-weight:700;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap}
+.agn{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:30px;color:var(--rest-title);white-space:nowrap}
+.agn.lit{color:var(--text-primary)}
+.mch{font-family:'DM Sans';font-weight:700;font-size:28px;line-height:1;padding:10px 11px;border-radius:12px;border:1.5px solid var(--rest-edge);
+  background:rgba(10,12,16,.6);color:var(--rest-sub);white-space:nowrap;display:inline-flex;align-items:center;gap:8px;position:relative}
+.on .mch{color:var(--text-primary);border-color:rgba(0,194,255,.6);background:rgba(0,194,255,.08)}
+.mch.ok{border-color:rgba(0,230,138,.85);color:var(--text-primary);background:rgba(0,230,138,.10);box-shadow:0 0 22px rgba(0,230,138,.18)}
+.mch.no{border-color:rgba(255,64,96,.85);color:rgba(255,64,96,.95);background:rgba(255,64,96,.08)}
+.mch .ico{color:currentColor;opacity:1}
+.grl{font-family:'DM Sans';font-weight:700;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary);white-space:nowrap}
+.grl .mono{letter-spacing:0}
+.on .grl{color:var(--lit-sub)}
+.strike{height:3px;background:var(--accent-red);border-radius:2px;transform:rotate(-8deg);box-shadow:0 0 10px rgba(255,64,96,.6)}
+.mk{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;flex:0 0 auto}
+.mk.ok{background:var(--accent-green);color:var(--bg-deep)}
+.mk.no{background:var(--accent-red);color:var(--bg-deep)}
+.mk .ico{color:currentColor}
+.rline{display:flex;align-items:center;gap:12px;font-family:'DM Sans';font-weight:600;font-size:28px;color:var(--text-primary);white-space:nowrap}
+.flowa{color:var(--text-secondary)}
+.on .flowa{color:var(--accent-cyan)}
+.td .ico{color:var(--text-secondary)}
+/* the L-shaped ON AWS frame: the family's zone look (.zone in chart.css), drawn as one path */
+.lzone{fill:rgba(18,21,28,.55);stroke:rgba(136,146,164,.34);stroke-width:2}
+</style>
+</head>
+<body>
+<template id="chart"></template>
+<script src="chart.js"></script>
+<script src="group1.js"></script>
+<script>
+(function () {
+  // ---- geometry (explicit px) ----
+  var TZ = [72, 372];                       // the TODAY column (x); its contents 88-356
+  var TX = [88, 356];
+  var RC = [396, 1008];                     // the ON AWS right column (x); contents 410-994
+  var BR = [410, 994, 410, 640];            // Bedrock: left, right, top, bottom
+  var S = [410, 962, 704, 1141];            // the builder's Runtime session card (front)
+  var GW = [86, 496, 1205, 1472];           // AgentCore Gateway (in the bottom arm of the L)
+  var ID = [608, 994, 1205, 1472];          // AgentCore Identity
+  var LY = GW[2] - 24, TB = LY - 24, B = GW[3] + 24, R = 24;   // the L's inner edge, the TODAY bottom, the frame bottom
+  var AN = [430, 620], CC = [722, 858], BU = [916, 1116];      // TODAY: Anthropic, Claude Code, the builder (top, bottom)
+  var mid = function (r) { return (r[0] + r[1]) / 2; };
+
+  var h = [];
+  h.push('<div class="stage">');
+  h.push('<div class="orb" style="width:620px;height:620px;background:var(--accent-cyan);opacity:.12;left:-300px;top:-300px"></div>');
+  h.push('<div class="orb" style="width:620px;height:620px;background:var(--accent-green);opacity:.06;left:620px;top:1460px"></div>');
+  h.push('<div class="head"><h1>The agents: models, tools, roles</h1><div class="divider"></div></div>');
+
+  // the frames: TODAY (dashed), ON AWS (the L)
+  var L = 'M' + (RC[0] + R) + ',340 H' + (RC[1] - R) + ' A' + R + ',' + R + ' 0 0 1 ' + RC[1] + ',' + (340 + R) +
+    ' V' + (B - R) + ' A' + R + ',' + R + ' 0 0 1 ' + (RC[1] - R) + ',' + B +
+    ' H' + (TZ[0] + R) + ' A' + R + ',' + R + ' 0 0 1 ' + TZ[0] + ',' + (B - R) +
+    ' V' + (LY + R) + ' A' + R + ',' + R + ' 0 0 1 ' + (TZ[0] + R) + ',' + LY +
+    ' H' + TZ[1] + ' A' + R + ',' + R + ' 0 0 0 ' + RC[0] + ',' + (LY - R) +
+    ' V' + (340 + R) + ' A' + R + ',' + R + ' 0 0 1 ' + (RC[0] + R) + ',340 Z';
+  h.push('<svg class="wires" width="1080" height="1920" viewBox="0 0 1080 1920"><path class="lzone" d="' + L + '"/></svg>');
+  h.push('<div class="zone tz" style="left:' + TZ[0] + 'px;top:340px;width:' + (TZ[1] - TZ[0]) + 'px;height:' + (TB - 340) + 'px"></div>');
+  h.push('<div class="colh today" data-own style="left:' + TX[0] + 'px;top:356px">' + ICO("pc", 32, "", 2.2) + 'TODAY<span class="hs">my PC</span></div>');
+  h.push('<div class="colh aws" data-own style="left:' + BR[0] + 'px;top:356px">ON AWS</div>');
+
+  // ---- wires ----
+  var w = [];
+  w.push(WIRE("models", 'M' + (TX[1] + 3) + ',' + mid(AN) + ' L' + (BR[0] - 5) + ',' + mid(AN), "swap"));     // Anthropic -> Bedrock
+  w.push(WIRE("models", 'M' + (TX[1] + 3) + ',' + mid(CC) + ' L' + (S[0] - 5) + ',' + mid(CC), "swap"));      // Claude Code -> the session
+  w.push(WIRE("models", 'M112,' + (CC[0] - 3) + ' L112,' + (AN[1] + 5)));                                   // Claude Code calls Anthropic
+  w.push(WIRE("models", 'M440,' + (S[2] - 3) + ' L440,' + (BR[3] + 5)));                                    // the agent calls Bedrock
+  w.push(WIRE("tools", 'M440,' + (S[3] + 3) + ' L440,' + (GW[2] - 5)));                                     // the agent's tools -> Gateway
+  w.push(WIRE("tools", 'M' + (ID[0] - 3) + ',' + mid([GW[2], GW[3]]) + ' L' + (GW[1] + 5) + ',' + mid([GW[2], GW[3]])));   // Identity -> Gateway
+  h.push('<svg class="wires" width="1080" height="1920" viewBox="0 0 1080 1920">' + w.join('') + '</svg>');
+  h.push('<div class="wl" data-k="models" style="left:128px;top:' + (mid([AN[1], CC[0]]) - 17) + 'px">calls directly</div>');
+  h.push('<div class="wl" data-k="models" style="left:458px;top:' + (mid([BR[3], S[2]]) - 17) + 'px">calls</div>');
+  h.push('<div class="wl" data-k="tools" style="left:458px;top:' + (mid([S[3], GW[2]]) - 17) + 'px">tools</div>');
+  h.push('<div class="wl" data-k="tools" style="left:' + GW[1] + 'px;width:' + (ID[0] - GW[1]) + 'px;text-align:center;top:' +
+    (mid([GW[2], GW[3]]) - 50) + 'px">logins</div>');
+
+  // ---- TODAY ----
+  function today(k, y, ico, name, sub, cls) {
+    h.push('<div class="node td stk' + (cls || '') + '" data-k="' + k + '" style="left:' + TX[0] + 'px;top:' + y[0] + 'px;width:' + (TX[1] - TX[0]) +
+      'px;height:' + (y[1] - y[0]) + 'px">' + ico + '<div class="tn">' + name + '</div><div class="ts">' + sub + '</div></div>');
+  }
+  today("models", AN, ICO("bolt", 30, "", 2), "Anthropic", "the Claude models");
+  today("models", CC, ICO("terminal", 30, "", 2), "Claude Code", "runs each agent");
+  today("role troleshow", BU, ICO("shield", 30, "", 2), "the builder", "doesn\'t make images, but nothing stops it", " ap");
+
+  // ---- Bedrock (the role marks sit in its rows: laid out in every state, shown in `role`) ----
+  h.push('<div class="node svc hold" data-k="models" style="left:' + BR[0] + 'px;top:' + BR[2] + 'px;width:' + (BR[1] - BR[0]) + 'px;height:' + (BR[3] - BR[2]) + 'px">' +
+    '<div style="position:absolute;left:20px;top:14px;display:flex;align-items:baseline;gap:14px"><span class="sn">Bedrock</span><span class="sd" style="margin-top:0">AI models as a service</span></div>' +
+    '<div class="grl" style="position:absolute;left:20px;top:62px">Claude, <span class="mono">3</span> model families</div>' +
+    '<div style="position:absolute;left:20px;top:104px;display:flex;align-items:center;gap:10px">' +
+      '<span class="mch" data-k="claude">Fable</span><span class="mch" data-k="claude">Opus</span><span class="mch" data-k="claude">Sonnet</span>' +
+      '<span class="mk ok ap" data-k="okmark">' + ICO("check", 22, "", 3) + '</span></div>' +
+    '<div style="position:absolute;left:20px;top:164px;display:flex;align-items:center;gap:10px">' +
+      '<span class="mch" data-k="imgm">' + ICO("film", 26, "", 2) + 'an image model' +
+        '<span class="strike ap" data-k="strike" style="position:absolute;left:8px;right:8px;top:50%;margin-top:-1px"></span></span>' +
+      '<span class="mk no ap" data-k="nomark">' + ICO("cross", 20, "", 3) + '</span></div></div>');
+
+  // ---- the builder's Runtime session (the other agents' sessions peek out on the right) ----
+  var SW = S[1] - S[0], SH = S[3] - S[2];
+  h.push('<div class="node ghost" style="left:' + (S[0] + 32) + 'px;top:' + (S[2] + 30) + 'px;width:' + SW + 'px;height:' + (SH - 60) + 'px"></div>');
+  h.push('<div class="node ghost" style="left:' + (S[0] + 16) + 'px;top:' + (S[2] + 15) + 'px;width:' + SW + 'px;height:' + (SH - 30) + 'px"></div>');
+  h.push('<div class="node hold" style="left:' + S[0] + 'px;top:' + S[2] + 'px;width:' + SW + 'px;height:' + SH + 'px">' +
+    '<div class="sesl" style="position:absolute;left:20px;top:12px">its own Runtime session</div>' +
+    '<div class="agn" data-k="agname" style="position:absolute;left:20px;top:50px">remotion-builder</div></div>');
+  h.push(SVC({ k: "models", x: S[0] + 18, y: S[2] + 98, w: SW - 36, h: 84, name: "Claude Agent SDK", desc: "Claude Code as a library" }));
+  h.push('<div class="cd" data-k="models" style="left:' + (S[0] + 18) + 'px;top:' + (S[2] + 196) + 'px">CLAUDE_CODE_USE_BEDROCK</div>');
+  h.push('<div class="node svc hold" data-k="role" style="left:' + (S[0] + 18) + 'px;top:' + (S[2] + 261) + 'px;width:' + (SW - 36) + 'px;height:152px">' +
+    '<div style="position:absolute;left:16px;top:12px;display:flex;align-items:center;gap:14px">' + ICO("shieldok", 40, "", 2) +
+      '<div style="text-align:left"><div class="sn">IAM role</div><div class="sd" style="margin-top:2px">who can call what</div></div></div>' +
+    '<div class="rline ap" data-k="rolecard" style="position:absolute;left:16px;top:100px"><span class="mk ok">' + ICO("check", 20, "", 3) +
+      '</span>allows only the Claude models</div></div>');
+
+  // ---- AgentCore Gateway and AgentCore Identity (the bottom arm) ----
+  h.push('<div class="node svc hold" data-k="tools" style="left:' + GW[0] + 'px;top:' + GW[2] + 'px;width:' + (GW[1] - GW[0]) + 'px;height:' + (GW[3] - GW[2]) + 'px">' +
+    '<div class="sn" style="position:absolute;left:0;right:0;top:14px;text-align:center">AgentCore Gateway</div>' +
+    '<div class="sd" style="position:absolute;left:24px;right:24px;top:54px;text-align:center">my APIs as MCP tools</div>' +
+    '<div style="position:absolute;left:0;right:0;top:104px;display:flex;justify-content:center;gap:10px">' +
+      '<span class="mch">my APIs</span><span class="mch">functions</span></div>' +
+    '<div class="flowa" style="position:absolute;left:0;right:0;top:162px;display:flex;justify-content:center">' + ICO("down", 24, "", 2.4) + '</div>' +
+    '<div style="position:absolute;left:0;right:0;top:192px;display:flex;justify-content:center">' +
+      '<span class="mch">' + ICO("tool", 22, "", 2) + 'MCP tools</span></div></div>');
+  h.push('<div class="node svc hold" data-k="tools" style="left:' + ID[0] + 'px;top:' + ID[2] + 'px;width:' + (ID[1] - ID[0]) + 'px;height:' + (ID[3] - ID[2]) + 'px">' +
+    '<div class="sn" style="position:absolute;left:0;right:0;top:14px;text-align:center">AgentCore Identity</div>' +
+    '<div class="sd" style="position:absolute;left:24px;right:24px;top:54px;text-align:center">a vault for keys and tokens</div>' +
+    '<div class="flowa" style="position:absolute;left:0;right:0;top:152px;display:flex;justify-content:center;gap:16px">' +
+      ICO("vault", 58, "", 1.8) + ICO("key", 50, "", 1.9) + '</div></div>');
+  h.push('</div>');
+  document.getElementById("chart").innerHTML = h.join("");
+
+  buildChart({
+    "agents-models": { on: ["models"] },
+    "agents-tools":  { on: ["tools"] },
+    "agents-role":   { on: ["role"], show: ["troleshow", "okmark", "strike", "nomark", "rolecard"],
+                       cls: { claude: "ok", imgm: "no", agname: "lit" } }
+  }, { portrait: true });
+})();
+</script>
+</body>
+</html>

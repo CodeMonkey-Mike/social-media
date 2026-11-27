@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>livestream-aws chart, 9:16: today-pc (one state)</title>
+<!--
+  The 9:16 cut of today-pc.html: the same chart, text and lit parts, re-composed for a 1080x1920 phone frame (never a
+  scaled 16:9). The ONE PC box runs down the frame: the graph on top with its SQLite checkpoints under it (the
+  "saves state" wire turns vertical), then the 7 agents as one wide row, then the browser, Whisper, Remotion and the
+  posting scripts two by two, icon beside the words. Text 28px and up, 72px side margins, nothing below y 1450.
+  Shoot (from this folder): python shoot.py today-pc-vertical.html --out ../../vertical/diagrams --size 1080x1920
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chart.css">
+<link rel="stylesheet" href="group1.css">
+<style>
+.pc .node.td.on .ico{color:var(--accent-cyan)}
+.pt{font-family:'DM Sans';font-weight:700;font-size:34px;line-height:1.15}
+.ps{font-family:'DM Sans';font-weight:500;font-size:28px;line-height:1.3;color:var(--lit-sub);margin-top:8px}
+.side{display:flex;align-items:center;gap:26px;padding:0 30px}
+.side .tx{display:flex;flex-direction:column;align-items:flex-start;text-align:left}
+.zhead{display:flex;align-items:center;gap:16px}
+.zhead .zl{font-size:34px;letter-spacing:.12em}
+.zhead .st{font-size:28px}
+.zhead .ico{color:var(--accent-cyan)}
+.stars{display:flex;gap:10px}
+.mg circle{fill:var(--bg-deep);stroke:var(--text-primary);stroke-width:2.6}
+.mg circle.g{stroke:var(--accent-gold);fill:rgba(255,215,0,.16)}
+.mg path{stroke:rgba(232,234,240,.55);stroke-width:2.4;fill:none;stroke-linecap:round}
+</style>
+</head>
+<body>
+<template id="chart"></template>
+<script src="chart.js"></script>
+<script src="group1.js"></script>
+<script>
+(function () {
+  var h = [];
+  h.push('<div class="stage pc">');
+  h.push('<div class="orb" style="width:620px;height:620px;background:var(--accent-cyan);opacity:.12;left:-300px;top:-300px"></div>');
+  h.push('<div class="orb" style="width:620px;height:620px;background:var(--accent-green);opacity:.06;left:620px;top:1460px"></div>');
+  h.push('<div class="head"><h1>Today, it all runs on one PC</h1><div class="divider"></div></div>');
+
+  h.push('<div class="zone" data-k="box" style="left:72px;top:362px;width:936px;height:1012px"></div>');
+  h.push('<div class="zhead" data-own style="left:104px;top:388px">' + ICO("pc", 42, "", 2.2) +
+    '<span class="zl" data-k="box">ONE PC</span><span class="st" data-k="box">one Windows PC, every step local</span></div>');
+
+  // the mini graph: the real 14 steps (clip-evals snake), gates in gold
+  var X0 = 14, DX = 62, YT = 22, YB = 98, gates = { 6: 1, 9: 1 }, pts = {};
+  for (var n = 1; n <= 14; n++) pts[n] = n <= 7 ? [X0 + (n - 1) * DX, YT] : [X0 + (14 - n) * DX, YB];
+  var g = ['<svg class="mg" width="402" height="120" viewBox="0 0 402 120">'];
+  g.push('<path d="M' + pts[1][0] + ',' + YT + ' L' + pts[7][0] + ',' + YT + ' L' + pts[8][0] + ',' + YB + ' L' + pts[14][0] + ',' + YB + '"/>');
+  for (n = 1; n <= 14; n++) g.push('<circle class="' + (gates[n] ? 'g' : '') + '" cx="' + pts[n][0] + '" cy="' + pts[n][1] + '" r="11"/>');
+  g.push('</svg>');
+
+  // the graph, then its checkpoints under it
+  h.push('<svg class="wires" width="1080" height="1920" viewBox="0 0 1080 1920">' + WIRE("box", "M540,642 L540,698") + '</svg>');
+  h.push('<div class="wl" data-k="box" style="left:562px;top:652px">saves state</div>');
+  h.push('<div class="node td side" data-k="box" style="left:104px;top:462px;width:872px;height:180px">' +
+    '<div class="tx"><div class="pt">The LangGraph graph</div><div class="ps">runs every step</div></div>' +
+    '<div style="margin-left:auto">' + g.join('') + '</div></div>');
+  h.push('<div class="node td side" data-k="box" style="left:104px;top:700px;width:872px;height:122px">' + ICO("db", 60, "", 1.9) +
+    '<div class="tx"><div class="pt">SQLite checkpoints</div><div class="ps">the graph\'s saved state</div></div></div>');
+
+  // the 7 agents, one wide row
+  var st = ''; for (var i = 0; i < 7; i++) st += ICO("star", 38);
+  h.push('<div class="node td side" data-k="box" style="left:104px;top:846px;width:872px;height:150px;gap:40px">' +
+    '<div class="stars">' + st + '</div>' +
+    '<div class="tx"><div class="pt"><span class="mono">7</span> agents</div><div class="ps">in Claude Code</div></div></div>');
+
+  // two by two
+  var T = [
+    [ICO("browser", 62, "", 1.8), '<span class="mono">1</span> browser', 'makes the images'],
+    [ICO("wave", 62, "", 2.1), 'Whisper', 'on the GPU'],
+    [ICO("film", 62, "", 1.8), 'Remotion', 'the renders'],
+    [ICO("send", 58, "", 1.9), 'Posting scripts', 'post from the queues']
+  ];
+  T.forEach(function (t, j) {
+    var x = j % 2 ? 556 : 104, y = j < 2 ? 1018 : 1190;
+    h.push('<div class="node td side" data-k="box" style="left:' + x + 'px;top:' + y + 'px;width:420px;height:150px;gap:22px;padding:0 24px">' +
+      t[0] + '<div class="tx"><div class="pt">' + t[1] + '</div><div class="ps">' + t[2] + '</div></div></div>');
+  });
+  h.push('</div>');
+  document.getElementById("chart").innerHTML = h.join("");
+
+  buildChart({ "today-pc": { on: ["box"] } }, { portrait: true });
+})();
+</script>
+</body>
+</html>

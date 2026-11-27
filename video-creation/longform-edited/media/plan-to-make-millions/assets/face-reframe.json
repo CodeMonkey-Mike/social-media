@@ -1,0 +1,128 @@
+{
+  "spine": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\spine\\ALL.e.enhanced.mp4",
+  "scale": 1.266,
+  "x": -408,
+  "y": -229,
+  "centered": true,
+  "css": "transformOrigin: '0 0', transform: 'translate(-408px, -229px) scale(1.266)'",
+  "face_point_out": {
+    "x": 960,
+    "y": 432
+  },
+  "punch_in_note": "scale punch-ins about face_point_out (the face stays put and the frame stays covered)",
+  "targets": {
+    "eye_line": 0.4,
+    "max_headroom": 0.1,
+    "min_scale": 1.0,
+    "max_scale": 1.6
+  },
+  "measured": {
+    "face_cx": 1080.5,
+    "face_cx_pct": 56.3,
+    "eye_y": 522.0,
+    "box_h": 385.0,
+    "head_top_est": 238.4,
+    "headroom_before_pct": 22.1,
+    "headroom_after_pct": 6.8,
+    "active_area": [
+      88,
+      1839,
+      2,
+      1078
+    ],
+    "face_cx_spread": [
+      1049.0,
+      1185.0
+    ],
+    "scale_needed_by": {
+      "cover_left_right": 1.266,
+      "cover_top": 0.831,
+      "cover_bottom": 1.165,
+      "headroom": 1.143
+    }
+  },
+  "windows": [
+    {
+      "window": [
+        0.0,
+        7.022
+      ],
+      "detections": 5,
+      "face_cx": 1185.0,
+      "eye_y": 491.6,
+      "box_h": 385
+    },
+    {
+      "window": [
+        9.889,
+        16.289
+      ],
+      "detections": 5,
+      "face_cx": 1144.0,
+      "eye_y": 488.0,
+      "box_h": 370
+    },
+    {
+      "window": [
+        46.789,
+        53.555
+      ],
+      "detections": 5,
+      "face_cx": 1084.0,
+      "eye_y": 489.6,
+      "box_h": 384
+    },
+    {
+      "window": [
+        216.528,
+        223.961
+      ],
+      "detections": 5,
+      "face_cx": 1051.0,
+      "eye_y": 533.2,
+      "box_h": 373
+    },
+    {
+      "window": [
+        348.395,
+        359.395
+      ],
+      "detections": 5,
+      "face_cx": 1050.0,
+      "eye_y": 525.8,
+      "box_h": 372
+    },
+    {
+      "window": [
+        464.528,
+        470.628
+      ],
+      "detections": 5,
+      "face_cx": 1078.5,
+      "eye_y": 541.0,
+      "box_h": 403
+    },
+    {
+      "window": [
+        565.601,
+        570.567
+      ],
+      "detections": 5,
+      "face_cx": 1114.5,
+      "eye_y": 550.0,
+      "box_h": 387
+    },
+    {
+      "window": [
+        588.635,
+        590.213
+      ],
+      "detections": 5,
+      "face_cx": 1049.0,
+      "eye_y": 538.2,
+      "box_h": 385
+    }
+  ],
+  "previews": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\plan-to-make-millions\\_previews\\qa\\face-reframe",
+  "note": "ONE global transform for every FACE window; background-swap clips of a face window get the same framing. If face_cx_spread is wider than about 8% of the frame, he moved between takes: QA the previews, a per-window offset may be needed."
+}

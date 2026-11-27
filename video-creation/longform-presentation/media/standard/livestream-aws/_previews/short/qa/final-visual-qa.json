@@ -1,0 +1,29 @@
+{
+  "asset": "video-creation/longform-presentation/media/standard/livestream-aws/_previews/short/livestream-aws-SHORT-30s-v2.mp4",
+  "checked": "1080x1920, 30.57 s; all 61 contact-sheet frames (0.0-30.0 s @ 0.5 s) + full-size stills at 0.5, 4.0, 5.0, 10.5, 17.0, 19.0, 25.0, end; 10 fps transition strip 16.8-17.6 s; 8 fps strip 27.0-28.2 s; ffmpeg blackdetect (d=0.1, pix_th=0.05) = no black stretch",
+  "verdict": "PASS",
+  "defects": [],
+  "notes": [
+    {
+      "t": 17.1,
+      "what": "Card-to-card transition (image bottleneck -> takeaway) passes through 1-2 frames of a light-gray blurred wash, a short bright flash in an otherwise dark run. It reads as the blur-dissolve working as designed. Nothing is cut off and nothing is blank.",
+      "fix": "Optional: use a dark dissolve if Mike finds the flash jarring. Not blocking."
+    },
+    {
+      "t": 0.5,
+      "what": "Face crop sits right of center and low (head starts about y=500, so the top quarter is wall and lamp). Hair touches the right edge, but the face itself is whole and the caption sits on the shirt, not the mouth.",
+      "fix": "Optional: shift the crop about 80 px right and about 150 px down. Not blocking."
+    }
+  ],
+  "per_check": {
+    "edge_cutoff": "none. Every caption sits inside the margins (the widest, 'production work.' at 27.0 s, still clears both edges). Card headlines and boxes keep about 70 px margins.",
+    "16x9_cropped": "none. 'The image bottleneck' (4.0-17.0 s) and 'The graph barely changes' (17.0-21.3 s) are native vertical layouts, shown whole. The diagram states (AWS lane lights up at 10.5 s) are intact. Text checked: 3.9 H / 4 H 38 MIN, 41 x 4 cents = 1.64 dollars.",
+    "leftover_16x9_captions": "none seen in any frame",
+    "caption_on_card_text": "none. Captions sit at about y=1550, below every card's bottom edge (about y=1435 for the diagram, about y=1155 for the takeaway list).",
+    "captions_style": "Montserrat heavy, lowercase, black stroke, bottom-center, 2-3 word groups. The pop-in scale animation is visible in some frames (25.0, 27.0) and is intended.",
+    "face": "whole in every face frame (0-3.5 s, 21.5-27.4 s). A hand enters at bottom-left at 0.0, 2.5 and 21.5 s; that is natural motion.",
+    "black_blank_before_outro": "none. blackdetect found nothing. The face-to-outro crossfade runs from 27.4 to about 28.0 s.",
+    "outro": "WATCH THE / FULL VIDEO card intact from 28.0 s to the end: Playfair headline, cyan second line, green-to-cyan divider, down-arrow circle, nothing clipped, and it holds to the last frame."
+  },
+  "short": "livestream-aws-SHORT-30s-v2.mp4:15247258"
+}

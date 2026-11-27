@@ -1,0 +1,39 @@
+# longest-bear - YouTube metadata
+
+_Written by `scripts/yt_delivery.py` (at finalize, and whenever Mike asks for the metadata). The judgment half is `yt-delivery.json`; the spec is the script's docstring._
+
+## Title
+```
+The Longest Crypto Bear Market Ever - But What Happens Next Is Insane!
+```
+
+## Description (two sentences, the first an open loop) + hashtags
+```
+$BTC has gone more than 400 days without a new high, longer than any of the last three big bear markets took from top to bottom, but one simple rule says this may not be the longest bear market at all. I walk through both sides, from the 267 day, 53% first leg and the 51 days above the 50-week SMA and 200-day average, to the 200-week SMA near $68,000, the SpaceX and Anthropic IPOs, rate fears, and where I stand on what comes next.
+
+#Bitcoin #Crypto #BearMarket
+```
+
+## Chapters
+```
+0:00 Is This the Longest Ever?
+0:29 Side One: The Longest Ever
+1:07 Side Two: Two Bear Markets
+3:50 Why So Much Pain?
+4:17 The Hope
+5:37 The 200-Week SMA
+6:09 How Bear Markets End
+6:38 The Four-Year Cycle
+8:18 What I Think
+9:55 AI and Medical Breakthroughs
+```
+
+## Music codes (YouTube only)
+```
+EGB6MNM9I0G2ZWVM
+```
+
+## Keywords: the tags field (10 + 6 common misspellings, 349 of 500 characters)
+```
+bitcoin bear market, longest crypto bear market, crypto bear market 2026, is the bear market over, bitcoin 200 week moving average, bitcoin 50 week moving average, crypto winter, bitcoin four year cycle, bitcoin bull market, bitcoin price, crypto bare market, bit coin bear market, bitcon, cripto winter, longest bare market, bit coin
+```

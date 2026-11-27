@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>livestream-aws: text cover cards (SCRIPT.md CARDS: ec2-answer, bill, same-graph)</title>
+<!-- base.css = container-canonical.css pasted verbatim + the clip-evals components. The local helpers below use the
+     canonical tokens only. portrait-text.css + portrait-lg.css + the portrait <style> at the end reflow the SAME HTML
+     at 1080x1920.
+     python shoot.py cards-text.html --out ../../cards
+     python shoot.py cards-text.html --out ../../vertical/cards --size 1080x1920
+     Words: SCRIPT.md CARDS rows; numbers: RESEARCH.md (63 min, 38 cents, 41 images, 1.64 dollars). -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="base.css" rel="stylesheet">
+<style>
+body{display:flex;flex-direction:column;gap:40px;align-items:flex-start}
+.frame>*{flex-shrink:0}
+h1{font-variant-numeric:lining-nums}
+.nw{white-space:nowrap}
+.sub{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:28px;letter-spacing:.1em;color:var(--text-secondary);margin-top:18px}
+.sub b{color:var(--text-primary)}
+
+/* ---- ec2-answer: label | AWS name + its plain description ---- */
+.ar{display:flex;flex-direction:column;gap:16px;width:100%;max-width:1640px}
+.ar-row{display:grid;grid-template-columns:400px 1fr;column-gap:30px;align-items:center;padding:24px 38px;border-radius:18px;
+  background:rgba(255,255,255,.02);border:1px solid var(--border);position:relative}
+.ar-row::before{content:"";position:absolute;left:-1px;top:16px;bottom:16px;width:6px;border-radius:3px;background:transparent}
+.ar-k{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:32px;letter-spacing:.06em;color:var(--text-secondary)}
+.ar-n{font-family:'DM Sans';font-weight:700;font-size:42px;line-height:1.15;color:var(--text-primary)}
+.ar-n .thr{font-weight:400;color:var(--text-secondary)}
+.ar-d{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:23px;letter-spacing:.08em;color:var(--text-secondary);margin-top:8px}
+.ar-row.lit-g{background:rgba(0,230,138,.07);border-color:rgba(0,230,138,.42)}
+.ar-row.lit-g::before{background:var(--accent-green)}
+.ar-row.lit-g .ar-k{color:var(--accent-green)}
+.ar-row.lit-g .ar-d{color:var(--text-primary)}
+
+/* ---- bill: label | big mono value ---- */
+.bill{display:flex;flex-direction:column;width:100%;max-width:1640px}
+.bl{display:grid;grid-template-columns:560px 1fr;align-items:baseline;padding:30px 0;border-top:1px solid var(--border)}
+.bl:last-child{border-bottom:1px solid var(--border)}
+.bl-k{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:34px;letter-spacing:.08em;color:var(--text-secondary)}
+.bl-v{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:96px;line-height:1;letter-spacing:-.03em;color:var(--accent-cyan);white-space:nowrap}
+.bl-v small{font-size:36px;font-weight:600;letter-spacing:.08em;color:var(--text-primary);margin-left:22px}
+.bl-v.txt{font-size:56px;letter-spacing:.02em}
+.caveat{display:flex;align-items:center;gap:40px;margin-top:40px}
+.caveat .go-t{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:30px;letter-spacing:.1em;color:var(--accent-gold);
+  padding-left:22px;border-left:4px solid var(--accent-gold)}
+.caveat .mu-t{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:26px;letter-spacing:.1em;color:var(--text-secondary)}
+
+/* ---- same-graph ---- */
+#same-graph h1{font-size:112px}
+.wc-l{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:28px;letter-spacing:.14em;color:var(--text-secondary);margin-bottom:22px}
+.wc{display:flex;flex-direction:column;gap:16px;max-width:1640px;width:100%}
+.wc .nrow{padding:24px 38px;align-items:center}
+.wc .nrow-t{font-family:'DM Sans';font-weight:600;font-size:44px;letter-spacing:0;text-transform:none;color:var(--text-primary)}
+.wc .nrow-n{font-size:46px}
+</style>
+<link href="portrait-text.css" rel="stylesheet" media="(orientation: portrait)">
+<link href="portrait-lg.css" rel="stylesheet" media="(orientation: portrait)">
+<style media="(orientation: portrait)">
+/* livestream-aws vertical reflow: content in the band y 120..1450, the lower part kept light, nothing under 26 px */
+.frame{padding:120px 72px 470px}
+.sub{font-size:27px;line-height:1.4}
+.ar-row{grid-template-columns:1fr;row-gap:10px;padding:22px 28px}
+.ar-k{font-size:28px}
+.ar-n{font-size:40px}
+.ar-d{font-size:26px;letter-spacing:.05em;line-height:1.35}
+.bl{grid-template-columns:1fr;row-gap:16px;padding:34px 0}
+.bl-k{font-size:30px}
+.bl-v{font-size:110px}
+.bl-v.txt{font-size:60px}
+.caveat{flex-direction:column;align-items:flex-start;gap:20px;margin-top:40px}
+.caveat .go-t{font-size:30px}
+.caveat .mu-t{font-size:27px;padding-left:26px}
+#same-graph h1{font-size:104px}
+.wc-l{font-size:28px}
+.wc .nrow{grid-template-columns:56px 1fr;padding:26px 28px}
+.wc .nrow-t{font-size:42px}
+.wc .nrow-n{font-size:44px}
+</style>
+</head>
+<body>
+<div style="position:absolute;left:-9999px;top:0" aria-hidden="true"><span style="font-family:'Playfair Display'">Aa</span><span style="font-family:'DM Sans'">Aa</span><span style="font-family:'JetBrains Mono'">Aa</span></div>
+
+<!-- ec2-answer -->
+<section class="frame" id="ec2-answer">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">IF IT RAN ON AWS</div>
+  <h1>Does it run on <span class="c">EC2</span>?</h1>
+  <div class="sub"><b>EC2:</b> AMAZON'S VIRTUAL SERVERS</div>
+  <div class="divider"></div>
+  <div class="ar">
+    <div class="ar-row"><div class="ar-k">THE GRAPH</div><div><div class="ar-n">AgentCore Runtime</div><div class="ar-d">HOSTING FOR AGENTS</div></div></div>
+    <div class="ar-row"><div class="ar-k">THE MODELS</div><div><div class="ar-n">Bedrock</div><div class="ar-d">AI MODELS AS A SERVICE</div></div></div>
+    <div class="ar-row lit-g"><div class="ar-k">THE HEAVY MEDIA</div><div><div class="ar-n">EC2 Spot <span class="thr">through</span> AWS Batch</div><div class="ar-d">A JOB QUEUE THAT STARTS SERVERS WHEN WORK ARRIVES</div></div></div>
+    <div class="ar-row"><div class="ar-k">THE RENDERS</div><div><div class="ar-n">Remotion Lambda</div><div class="ar-d">ONE RENDER SPLIT ACROSS LAMBDA FUNCTIONS</div></div></div>
+  </div>
+</section>
+
+<!-- bill -->
+<section class="frame" id="bill">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">THE MEDIA BILL</div>
+  <h1>One <span class="nw">63-minute</span> livestream</h1>
+  <div class="divider"></div>
+  <div class="bill">
+    <div class="bl"><div class="bl-k">THE TRANSCRIPT</div><div class="bl-v">38<small>CENTS</small></div></div>
+    <div class="bl"><div class="bl-k">41 IMAGES</div><div class="bl-v">1.64<small>DOLLARS</small></div></div>
+    <div class="bl"><div class="bl-k">THE RENDERS</div><div class="bl-v txt">A FEW PENNIES</div></div>
+  </div>
+  <div class="caveat"><div class="go-t">BEFORE THE MODEL TOKENS</div><div class="mu-t">LIST PRICES, NOV 2026</div></div>
+</section>
+
+<!-- same-graph -->
+<section class="frame" id="same-graph">
+  <div class="orb" style="width:600px;height:600px;background:var(--accent-cyan);top:-220px;right:-160px"></div>
+  <div class="ey">THE TAKEAWAY</div>
+  <h1>The graph <span class="c">barely changes</span></h1>
+  <div class="divider"></div>
+  <div class="wc-l">WHAT CHANGES</div>
+  <div class="wc">
+    <div class="nrow"><div class="nrow-n">1</div><div class="nrow-b"><div class="nrow-t">Where the state lives</div></div></div>
+    <div class="nrow"><div class="nrow-n">2</div><div class="nrow-b"><div class="nrow-t">Who holds the keys</div></div></div>
+    <div class="nrow"><div class="nrow-n">3</div><div class="nrow-b"><div class="nrow-t">What runs in parallel</div></div></div>
+  </div>
+</section>
+</body>
+</html>

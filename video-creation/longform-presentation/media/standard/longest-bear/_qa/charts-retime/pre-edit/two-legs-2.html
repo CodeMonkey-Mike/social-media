@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>two-legs-2 (part 2): Two Bear Markets</title>
+<!--
+  ANIMATED CHART, longest-bear CH3 (scripted standard video, cover_runs.py kind "animated-chart" = card-overlays kind "clip").
+  1920 x 1080. TIME-DRIVEN: window.setT(t) draws the exact frame for t (seconds from the start of this card's window) as a
+  pure function of t: no CSS transitions or animations, no rAF, no clock. Past its last move it HOLDS the end state.
+  Rendered by video-creation/longform-presentation/skills/card-overlays/html_clip.py (setT(f / 30) + a screenshot per frame).
+  Open with #t=6 in the URL to see one moment; with no hash it shows the end state.
+
+  Part 2 of 2. t = 0 is EXACTLY part 1's last frame (TwoLegs.part1End(): the same drawing, two-legs-core.js, the same data,
+  btc-closes.js), so the cut from part 1 (or from the clip montage between them) back to the chart is seamless.
+  Then the line draws on from Nov 7 to the read date, into LEG 2, and holds.
+
+  WINDOW (estimate, before the recording): the two [COVER] lines above "two-legs-2" in SCRIPT.md, 39 words at 3 words a
+  second from 0.3 s before the first word = about 13.3 s. Each time in T below is the estimated moment of its cue word.
+  RE-TIME after the cue step (CUE-REPORT.md section 6): put each cue word's time, minus the window start, into T.
+  This page reads chart-base.css, two-legs-core.js and btc-closes.js: after changing one of them, touch this file
+  (build_chart_data.py does) so cover_runs.py re-renders its clip.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chart-base.css">
+</head>
+<body>
+<script src="btc-closes.js"></script>
+<script src="two-legs-core.js"></script>
+<script>
+(function () {
+'use strict';
+/* the moves, in seconds from the window start (estimated: 3 words a second; the cue word is in capitals) */
+var T = {
+  go:      0.45,   // "Then Bitcoin LOST both averages again" (0.30): the line draws on from Nov 7 ...
+  lost:    2.95,   // "by November TWELVE" (2.97): ... a ring where it closed under both averages ...
+  end:     5.25,   // "around 2 WEEKS old" (5.30): ... and reaches the read date
+  leg2:    5.30,   // LEG 2 / 2 WEEKS OLD
+  leg2Pct: 7.60,   // "down 32 percent" (7.63): -32%
+  two:     9.25    // "TWO bear markets" (9.30): both falls turn muted red, both legs glow once; then holds to the end
+};
+
+var H = TwoLegs.h, DY = TwoLegs.DAYS, fade = H.fade, bump = H.bump;
+var cursor = H.pchip([[0, DY.aboveTo], [T.go, DY.aboveTo], [T.lost, DY.lost], [T.end, DY.end]]);
+
+function stateAt(t) {
+  var S = TwoLegs.part1End();                 /* part 1's last frame, exactly */
+  S.cur = cursor(t);
+  S.lost = fade(t, T.lost - 0.05, 0.3);
+  S.end = fade(t, T.end - 0.1, 0.3);
+  S.leg2 = fade(t, T.leg2, 0.45);
+  S.leg2Pct = fade(t, T.leg2Pct, 0.4);
+  S.payoff = fade(t, T.two, 0.6);
+  S.pulse2 = bump(t, T.two, 1.0);
+  return S;
+}
+
+window.T = T;
+window.stateAt = stateAt;
+window.setT = function (t) { TwoLegs.render(stateAt(+t || 0)); };
+var m = /t=([0-9.]+)/.exec(location.hash);
+window.setT(m ? parseFloat(m[1]) : 30);
+})();
+</script>
+</body>
+</html>
