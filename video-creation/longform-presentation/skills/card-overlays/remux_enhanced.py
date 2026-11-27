@@ -43,9 +43,18 @@ def main():
     # audio offset at five points, on FULLY decoded audio. Never measure this with `-ss` into the mp4: input seeking
     # into AAC showed phantom +32 ms / +59 ms jumps at exactly 300 s and 600 s on binance (2026-10-31) that a full
     # decode proved were not there (0.1 ms everywhere).
+    # Both decodes HONOUR the timestamps (aresample async), the same way the WAV handed to Mike is cut
+    # (longform graph `enhance_handoff`, deck-lecture `audio.wav`): a spine rendered in parts (desilence.py batches,
+    # stream-copied joins) keeps ~23 to 45 ms of AAC priming per later part as extra samples in a PLAIN decode, so a
+    # plain decode of the EDIT sits late against its own picture and the correct enhanced track was refused as
+    # "-43 ms" from the second part on (plan-to-make-millions, 2026-11-23: 0 / 0 / -43.4 / -43.4 / -43.4 ms plain,
+    # 0.0 ms everywhere with timestamps; the WAV was checked against the raw masters and it is the true timeline).
+    # A spine with no part joins decodes the same either way.
     import numpy as np
     def full(p):
-        r = subprocess.run(['ffmpeg', '-v', 'error', '-i', p, '-vn', '-ac', '1', '-ar', '48000', '-f', 's16le', '-'], capture_output=True)
+        r = subprocess.run(['ffmpeg', '-v', 'error', '-i', p, '-vn', '-map', '0:a:0',
+                            '-af', 'aresample=async=1:min_hard_comp=0.010:first_pts=0',
+                            '-ac', '1', '-ar', '48000', '-f', 's16le', '-'], capture_output=True)
         return np.frombuffer(r.stdout, dtype=np.int16).astype(np.float64)
     x, y = full(a.edit), full(a.out)
     worst = 0.0

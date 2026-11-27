@@ -24,7 +24,7 @@ The same tags as a long-form edited screenplay. This track uses 5 of them.
 |---|---|
 | 🖥️ `[SCREENSHARE]` | spoken, on the screen share as filmed: the deck or the browser, with your webcam |
 | 🗣️ `[COVER]` | spoken, while a card fills the whole frame. Your webcam is hidden, so you can read the line |
-| 👤 `[FACE]` | spoken to the lens, on your full-camera OBS scene: switch to it before the line, back after it. The video centres your face. At most 2 face scenes |
+| 👤 `[FACE]` | spoken to the lens, on your full-camera OBS scene: switch to it before the line, back after it. The video centres your face. At most 3 face scenes |
 | 🎬 `[SHOW]` | what is on screen for the `[COVER]` lines above it. It starts with the card's name from the CARDS table; a dot and a second word, as in `supply.locked`, is the same card with a different part lit. Not spoken |
 | 💬 `[NOTE]` | a note to you. Not spoken |
 

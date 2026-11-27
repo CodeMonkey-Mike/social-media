@@ -123,6 +123,19 @@ def bed_chain(k, b, file_len):
             f"aformat=sample_rates=48000:channel_layouts=stereo," + tail)
 
 
+def insert_windows(pauses, beats=()):
+    """The paused-time window of every CLIP INSERT: [(start, end, source at, dur, row index)], in play order. `pauses` = the sidecar's
+    rows as (at, dur, is_card). An insert begins after every pause at an earlier source time AND after every pause listed
+    before it at its OWN source time (several clips spliced back to back at one point play in list order)."""
+    out = []
+    for i, (at, dur, is_card) in enumerate(pauses):
+        if is_card or round(at, 3) in beats:
+            continue
+        ps = at + sum(d for j, (a2, d, _) in enumerate(pauses) if a2 < at - 1e-6 or (abs(a2 - at) <= 1e-6 and j < i))
+        out.append((ps, ps + dur, at, dur, i))
+    return out
+
+
 # effects-library sound ids whose catalog file has another name (assets/effects/library.json -> assets/sfx)
 SFX_ALIAS = {"punch-1-2023": "punch-1"}
 
@@ -297,16 +310,24 @@ def main():
                               "automation": autom})
     # CLIP INSERTS duck the bed automatically (2026-10-08, every-job R17): a spliced clip's voice sits in the VO track over
     # a baked pause, so every bed that overlaps the insert's paused-time window dips INSERT_DUCK_DB with a short ramp.
+    # SEVERAL inserts at ONE splice point (a montage, plan-to-make-millions 2026-11-24: four news clips back to back at
+    # 9.815) play in the sidecar's order (the baker's sort is stable), so each begins where the one before it ends. The old
+    # `at + pauses before at` put all four on the first clip's start: four ducks stacked on 3.6 s, none under the other 9 s.
+    # Back-to-back windows are MERGED into one duck, so the bed never swells back up at a cut between two clips.
     INSERT_DUCK_DB, INSERT_RAMP = -14.0, 0.3
-    for at, dur, is_card in PAUSES:
-        if is_card or round(at, 3) in BEATS:
-            continue
-        ps = at + sum(d for a2, d, _ in PAUSES if a2 < at - 1e-6)       # paused time where the insert begins
-        pe = ps + dur
+    INSERT_WIN = insert_windows(PAUSES, BEATS)       # [(paused start, paused end, source at, dur, row index)] per insert
+    ducks = []
+    for ps, pe, at, dur, _ in INSERT_WIN:
+        if ducks and ps - ducks[-1][1] < 0.05:
+            ducks[-1] = (ducks[-1][0], pe, ducks[-1][2], ducks[-1][3] + dur, ducks[-1][4] + 1)
+        else:
+            ducks.append((ps, pe, at, dur, 1))
+    for ps, pe, at, dur, n_clips in ducks:
         for rb in resolved_beds:
             if rb["t_start"] < pe and rb["t_end"] > ps:
                 rb["automation"].append({"start": round(max(0.0, ps - rb["t_start"]), 3), "end": round(min(rb["t_end"], pe) - rb["t_start"], 3),
-                                         "rel_db": INSERT_DUCK_DB, "ramp": INSERT_RAMP, "why": f"clip insert at source {at} ({dur:.1f}s)"})
+                                         "rel_db": INSERT_DUCK_DB, "ramp": INSERT_RAMP,
+                                         "why": f"clip insert at source {at} ({dur:.1f}s" + (f", {n_clips} clips back to back)" if n_clips > 1 else ")")})
     # SFX rows from the event log (a --plan-preview lays the beds only: no event log, no transition SFX)
     ep_p = proj / "EDIT-PLAN.md"
     ep = ep_p.read_text(encoding="utf-8") if (ep_p.is_file() and not a.plan_preview) else ""
@@ -513,8 +534,9 @@ def main():
     if vo_pad:
         chains.append(f"[1:a]apad=whole_dur={total:.3f}[vop]")
         vo_in = "[vop]"
-    clip_win = [(round(sh(float(p["at"])) - float(p["dur"]), 3), round(sh(float(p["at"])), 3))
-                for p in (meta.get("pauses") or []) if p.get("clip")]
+    # one window per clip insert, tiled when several share a splice point (the same windows the bed duck is built from)
+    clip_win = [(round(ps, 3), round(pe, 3)) for ps, pe, _, _, i in (INSERT_WIN if not a.plan_preview else [])
+                if (meta.get("pauses") or [])[i].get("clip")]
     clip_match = []
     if clip_win and not a.plan_preview and not a.no_clip_match:
         voice_l = window_lufs(vo, exclude=clip_win)

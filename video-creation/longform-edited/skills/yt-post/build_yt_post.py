@@ -170,10 +170,30 @@ LOCAL = """
   box-shadow:0 0 0 3px color-mix(in srgb,var(--accent-text) 45%,transparent)}
 .sq h1.ct{position:absolute;left:64px;right:64px;bottom:262px;font-family:'Playfair Display',serif;font-weight:900;
   font-size:92px;line-height:1.02;color:var(--text-primary);margin:0;text-align:center;max-width:none;text-shadow:0 4px 30px rgba(0,0,0,.6)}
+/* Playfair Display draws old-style figures by default ('1' reads as a dotless i, the '2' in EC2 as a subscript): lining figures in every headline */
+.sq h1.t,.sq h1.hk,.sq h1.ct{font-variant-numeric:lining-nums;font-feature-settings:'lnum' 1}
 .sq .ct-sub{position:absolute;left:64px;right:64px;bottom:196px;text-align:center;font:600 34px 'DM Sans';color:var(--text-primary)}
 .sq .pill{position:absolute;left:50%;transform:translateX(-50%);bottom:112px;padding:14px 34px;border-radius:999px;
   background:var(--accent-text);color:var(--bg-deep);font:700 30px 'DM Sans';white-space:nowrap}
 .sq .ct-url{position:absolute;left:64px;right:64px;bottom:52px;justify-content:center}
+"""
+
+# LIGHT THEME only, appended after LOCAL (plan-to-make-millions, 2026-11-24: the first light video with a dark portrait).
+# The two PICTURE slides (hook, cta: class `onpic`) sit on a photo the ramps DARKEN in every theme, so their words take the
+# dark sheet's ink: under the light sheet 'Where I plan to' and the channel link were near black on black. An image
+# slide's letterbox takes the paper colour (it was black bars around a light diagram) and a soft paper shadow.
+LIGHT_LOCAL = """
+.frame.sq.onpic{--text-primary:#e8eaf0;--text-secondary:#8892a4;--text-muted:#505a6e;--bg-deep:#0a0c10;
+  --yt-track:rgba(232,234,240,.26);background:#0a0c10;color:#e8eaf0}
+.frame.sq.onpic::after{mix-blend-mode:normal;opacity:.03}
+.sq .shot{background:var(--bg-deep);box-shadow:0 1px 2px rgba(20,22,26,.05),0 14px 34px rgba(20,22,26,.10)}
+.sq .stat .n{text-shadow:none}
+.sq .bar span.on{box-shadow:none}
+"""
+# ... and, when the project has no accent sheet, the dark sheet's BRIGHT accent (the light sheet's accent is a deep print
+# colour, dim on a dark photo). A project with an accent sheet keeps that sheet's own --accent-text.
+LIGHT_ONPIC_ACCENT = """
+.frame.sq.onpic{--accent-green:#00e68a;--accent-cyan:#00c2ff;--accent-text:var(--accent-cyan)}
 """
 
 
@@ -337,19 +357,23 @@ def main():
     except (OSError, ValueError):
         pass
     sheets = ["container-canonical.css"]
-    if settings.get("container_theme") == "light" and (REF / "container-canonical-light.css").is_file():
+    light = settings.get("container_theme") == "light" and (REF / "container-canonical-light.css").is_file()
+    if light:
         sheets.append("container-canonical-light.css")
     sheets.append(None)   # the yt-post token defaults (DEFAULTS) sit here, under any accent sheet
     acc = settings.get("container_accent")
-    if acc and (REF / "accents" / f"{acc}.css").is_file():
+    has_acc = bool(acc and (REF / "accents" / f"{acc}.css").is_file())
+    if has_acc:
         sheets.append(f"accents/{acc}.css")
     css = "\n".join(DEFAULTS if f is None else (REF / f).read_text(encoding="utf-8") for f in sheets)
+    local = LOCAL + ((LIGHT_LOCAL + ("" if has_acc else LIGHT_ONPIC_ACCENT)) if light else "")
 
     n = len(spec["slides"])
-    frames = "\n".join(f'<div class="frame sq" id="s{i}">{slide_html(spec, s, i, n, imgs, proj)}</div>'
-                       for i, s in enumerate(spec["slides"], 1))
+    # `onpic` marks the two picture slides (hook, cta); only the light theme styles it (LIGHT_LOCAL)
+    frames = "\n".join(f'<div class="frame sq{" onpic" if s["kind"] in ("hook", "cta") else ""}" id="s{i}">'
+                       f'{slide_html(spec, s, i, n, imgs, proj)}</div>' for i, s in enumerate(spec["slides"], 1))
     page = (f'<!doctype html><html><head><meta charset="utf-8"><link href="{FONTS}" rel="stylesheet">'
-            f'<style>{css}</style><style>{LOCAL}</style></head><body>\n{frames}\n</body></html>\n')
+            f'<style>{css}</style><style>{local}</style></head><body>\n{frames}\n</body></html>\n')
     page_p = spec_p.parent / "yt-post.html"
     page_p.write_text(page, encoding="utf-8")
 

@@ -73,6 +73,12 @@ def ffprobe(path, entries):
     return r.stdout.split()
 
 
+def card_region(spec, c):
+    """OPT-IN per-card "region": {x, y, w, h} (written only by cover_runs.py for a share page, 2026-11-25): a card that
+    sits in the deck area of a screen-share scene while the covers fill the whole frame. Absent = the spec's region."""
+    return c.get('region') or spec['region']
+
+
 def still_path(spec, c):
     return c['src'] if c['kind'] == 'image' else spec['dir'] / f"{c['id']}.png"
 
@@ -98,17 +104,18 @@ def check(spec, strict=True):
                 sys.exit(f"card {c['id']}: src missing: {c['src']}")
             print(f"card {c['id']}: src not built yet: {c['src']}")
             continue
+        Rc = card_region(spec, c)
         if c['kind'] == 'image':
             from PIL import Image
             w, h = Image.open(c['src']).size
-            if (w, h) != (R['w'], R['h']):
-                sys.exit(f"card {c['id']}: image is {w}x{h}, the region is {R['w']}x{R['h']} (render it at the region size)")
+            if (w, h) != (Rc['w'], Rc['h']):
+                sys.exit(f"card {c['id']}: image is {w}x{h}, the region is {Rc['w']}x{Rc['h']} (render it at the region size)")
         if c['kind'] == 'clip':
             w, h = (int(v) for v in ffprobe(c['src'], 'stream=width,height')[:2])
             n = int(ffprobe(c['src'], 'stream=nb_frames')[0])
             want = round(c['out'] * fps) - round(c['in'] * fps)
-            if (w, h) != (R['w'], R['h']):
-                sys.exit(f"card {c['id']}: clip is {w}x{h}, the region is {R['w']}x{R['h']} (render it at the region size)")
+            if (w, h) != (Rc['w'], Rc['h']):
+                sys.exit(f"card {c['id']}: clip is {w}x{h}, the region is {Rc['w']}x{Rc['h']} (render it at the region size)")
             if abs(n - want) > 2:
                 print(f"card {c['id']}: clip has {n} frames, the window is {want}; "
                       f"{'the last frame is held' if n < want else 'it is trimmed'} to the window")
@@ -244,7 +251,8 @@ def render(spec, fps):
             graph.append(f'[{a}:v]format=rgba[i{k}];[{b}:v]format=rgba[h{k}];[i{k}][h{k}]concat=n=2:v=1:a=0,'
                          f'fade=t=out:st={dur - OUT_S:.6f}:d={OUT_S}:alpha=1,setpts=PTS-STARTPTS+{f_in}/({fps}*TB)[c{k}]')
             n_in += 2
-        graph.append(f"[{last}][c{k}]overlay=x={R['x']}:y={R['y']}:eof_action=pass:format=auto[v{k}]")
+        Rc = card_region(spec, c)
+        graph.append(f"[{last}][c{k}]overlay=x={Rc['x']}:y={Rc['y']}:eof_action=pass:format=auto[v{k}]")
         last = f'v{k}'
     graph.append(f'[{last}]format=yuv420p[vout]')
     # passthrough keeps the spine's own frame timestamps (desilence joins leave small gaps): a forced -r 30

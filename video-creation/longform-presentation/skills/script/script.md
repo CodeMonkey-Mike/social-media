@@ -8,7 +8,7 @@ ways, chosen when the video is started:
 - **SCRIPTED** (this skill, Mike 2026-11-14): Mike reads a light `SCRIPT.md`. Every spoken line is a
   **COVER** scene (a deck card, a system-design chart still or an animated chart fills the WHOLE frame and hides the
   recording, his webcam and the membership box included), a **SCREEN-SHARE** scene (the recording as filmed) or, at
-  most twice a video, a **FACE** scene (his full-camera OBS scene, his face centred; 2026-11-22, "Face scenes" below).
+  most three times a video, a **FACE** scene (his full-camera OBS scene, his face centred; 2026-11-22, "Face scenes" below).
   Most of the runtime is covered; a handful of screen-share scenes play as filmed. Still one ffmpeg final render, no
   Remotion comp, no draft.
 
@@ -37,6 +37,12 @@ There is NO question about where a cover goes (Mike, 2026-11-14: "If I say scrip
 going to have screen-share scenes and we're going to have cover scenes"): a cover always fills the whole frame. A card
 beside the webcam is free talk's layout, never a scripted cover. v1 was first built with a `covers: full | deck-area`
 header setting; he took it out the same day, so do not bring it back.
+
+There is NO question about animated charts either (Mike, 2026-11-25, livestream-aws: "I think it is ok, like this.
+especially for the AI Engineering channel. maybe if I want it on this track for a specific video, i can mention when i
+start the project"). Every chart is a `chart-still` with states (a cross-fade per state) by default. An
+`animated-chart` (or a `whiteboard` beat) goes in the CARDS table only when Mike names it when he starts the project;
+never proposed unasked, never swapped in after the cards are built.
 
 The answers go into the `SCRIPT.md` header table, so every later step reads them from the file. In scripted mode the
 script REPLACES format 4's notes doc (`<p>-notes.docx`): everything he says is in the script, so no notes doc is built.
@@ -75,7 +81,10 @@ The SAME `cues.json` rendered a second time at 1080x1920. Nothing of the 16:9 is
 - **`[SCREENSHARE]` scenes: re-stacked.** A 16:9 recording cannot ship as filmed in 9:16, so the slide area goes across
   the top at full width and the webcam sits centred under it (never enlarged past 1.5x: it is small in the recording
   and goes soft). The membership box is left out. The two rectangles default to the standard recording layout (slide
-  area x 0 to 1464, webcam x 1466+, y 400 to 1080); on any other OBS layout pass `--deck-rect` / `--cam-rect`. **Open
+  area x 0 to 1464, webcam x 1466+, y 400 to 1080); on any other OBS layout pass `--deck-rect` / `--cam-rect`. The AI
+  Engineering Simplified layout puts the webcam at x 1371 (clip-evals, langgraph-updates): pass `--deck-rect
+  0,0,1371,1012` (the default's aspect, clear of the webcam; the default showed a 90 px strip of the webcam beside the
+  slide on langgraph-updates, 2026-11-23). **Open
   the layout proof** (`_qa/<VERTICAL>-layout-proof.png`: both rectangles drawn on a real frame, beside the frame they
   make) before delivering: a wrong rectangle shows there as a sliver of the webcam in the slide or a cut-off face.
 - **The render:** `python skills/card-overlays/cover_runs.py "media/standard/<p>/overlays/cues.json" --vertical`
@@ -93,9 +102,11 @@ The SAME `cues.json` rendered a second time at 1080x1920. Nothing of the 16:9 is
 | 3 | The deck, the cover cards, the charts | the deck as format 4. Deck cards: one still per card and per state, by the shared `slide-builder` agent (`.claude/agents/longform-edited/`) briefed with the full 1920x1080 frame as its frame, the CARDS table as its worklist, `RESEARCH.md` as its only number source and `assets/cards/` as its output folder (not yet exercised on this track). `chart-builder` for a chart still and for an animated chart's time-driven page, briefed as in `card-overlays.md` but with the full frame as its frame. `visual-qa` clears every file | `<p>.html`, `assets/cards/`, `assets/diagrams/`, `assets/charts/` |
 | 4 | Mike records | the screen-share scene, reading the script; the full-camera scene for each `[FACE]` line (Recording notes) | `raw/<timestamp>.mkv` |
 | 5 | The spine | exactly format 4's: defumbler agent (a scripted read has retakes), the silence pass with the definition from the header, the Enhance Speech handoff + remux when on, transcribe. **No blackout** (he is on screen in every uncovered frame by design). With `[FACE]` lines the preset keeps every pause inside a face scene on its own ("Face scenes") | `spine/` + `<final spine>.medium-words.json` |
+| 5b | The clips (only when the script has `[INSERT]`) | the clips are captured earlier (`../clip-insert/clip-insert.md`); `clip_insert.py bake` splices them into the FINAL spine at the end of the set-up line and writes the `+clips` spine, its shifted words JSON and `overlays/inserts.json`. Steps 6 and 8 then use the `+clips` files | `spine/<stem>+clips.mp4`, `overlays/inserts.json` |
 | 6 | Cue | `cue_script.py`: every line's window, the ad-libs, **the number check**, the face scenes (`--spine` required when the script has `[FACE]` lines) | `overlays/cues.json`, `overlays/CUE-REPORT.md` |
 | 7 | Record-day numbers | any figure that drifted since the research is re-pulled into `RESEARCH.md` and its card rebuilt BEFORE the render (pieverse: the price, the circulating count and the perp volume had all moved by the recording day) | the cards |
 | 8 | Cover runs + the render | `../card-overlays/cover_runs.py`: check, one clip per run, `cards.json`, the unchanged `card_overlays.py` render, the QA sheet and the leak check | `overlays/runs/`, `overlays/cards.json`, `<p> FINAL-vN.mp4`, `_qa/` |
+| 8b | Music (only when the header names a bed) | `../music-bed/drone_bed.py` on the step-8 render (render it with `--out "../<p> NOMUSIC.mp4"`): the picture stream-copied, the bed 17 LU under the voice, ducked under the clips; the track's YouTube license code goes in the description | `<p> FINAL-vN.mp4` |
 | 9 | Deliver | as format 4 (the absolute path; Mike uploads) | |
 | + | The extras he named ("The extras", above) | `vertical`: its card set is built at step 3 beside the 16:9 one, then `cover_runs.py ... --vertical` after step 8. `yt post`: `run.py ytpost` once the video is live. `short`: `run.py short --project "<the project folder>"` after the vertical | `assets/vertical/`, `overlays/cards-v.json`, `overlays/runs-v/`, `<p> VERTICAL-vN.mp4`, `yt-post/` |
 
@@ -122,7 +133,11 @@ render are video work: start them only on an idle run queue (`video-creation/ski
   `<id>.png`, a state is `<id>-<state>.png`, an animated chart is the page `<id>.html` (the lint fails two names that
   would be the same file).
 - `kind`: `card` (a deck card), `chart-still` (a system-design chart: nodes, arrows, labeled flows, never a table),
-  `animated-chart` (a time-driven page, `../card-overlays/card-overlays.md` kind `clip`).
+  `animated-chart` (a time-driven page, `../card-overlays/card-overlays.md` kind `clip`), `whiteboard` (a hand-drawn beat,
+  15 to 25 s: the shared `whiteboard-builder` agent designs it and writes its Remotion scene, `chunked_render.py --comp <Comp>
+  --no-audio` renders it at 1920x1080 to `assets/whiteboard/<id>.mp4`, `visual-qa` clears it; `cover_runs.py` plays it as a
+  clip that starts at its window and holds its last frame, or is cut at the window. One clip, no states. Mike 2026-11-25:
+  the `neon-ink` pen on longest-bear; the pen is his pick per video).
 - `states`: a comma list when the card changes while he talks (the next row lit, the next node spotlit); empty
   otherwise. A state is named for what is lit (`total, circulating, locked`), never `s1, s2, s3`. An animated chart
   has no states: it is one clip.
@@ -141,9 +156,10 @@ the Markdown preview), under the same `## CH<n> - <TITLE>` headings. A script on
 |---|---|
 | 🖥️ `[SCREENSHARE]` | Spoken. He says the line over the recording as filmed. Nothing is overlaid. |
 | 🗣️ `[COVER]` | Spoken. He says the line while a card fills the whole frame. The tag carries NO card name. |
-| 👤 `[FACE]` | Spoken. He says the line to the camera on his full-camera OBS scene; the video centres his face ("Face scenes"). At most 2 face scenes a video (a scene = consecutive `[FACE]` lines), a sentence or two each. |
+| 👤 `[FACE]` | Spoken. He says the line to the camera on his full-camera OBS scene; the video centres his face ("Face scenes"). At most 3 face scenes a video (raised from 2 on 2026-11-25; a scene = consecutive `[FACE]` lines), a sentence or two each. |
 | 🎬 `[SHOW]` | Not spoken. What is on screen for the `[COVER]` lines ABOVE it, back to the previous `[SHOW]` line, `[SCREENSHARE]` line or heading. It starts with the card, then a colon: `<card-id>: what it shows`, or `<card-id>.<state>: what is lit` (a cross-fade from the state before). |
 | 💬 `[NOTE]` | Not spoken. A note or a direction to Mike. |
+| 🎞️ `[INSERT]` | Not spoken. `[INSERT]` CLIP-<NAME>: what plays. Third-party clips, each with its OWN voice, spliced in right after the spoken line ABOVE it ("Clip montage", below): that line is the set-up and must end its sentence; the recording pauses, the clips play full frame, the recording resumes. One per video for now. |
 | `(parentheses)` inside a spoken line | A direction inside the line. Never spoken, never cued. |
 
 - **Every `[COVER]` line has a `[SHOW]` line under it** before the scene changes: the `[SHOW]` line is where the tools
@@ -165,7 +181,7 @@ the Markdown preview), under the same `## CH<n> - <TITLE>` headings. A script on
 
 Consecutive `[COVER]` lines under one `[SHOW]` line are one card window; a new card or state starts where its first
 line starts. Prose under any other `## ` heading (`## NOTES`, open questions, the do-not-air list) is a note, never
-spoken. What the lint enforces: every spoken line tagged, only these five tags, at most 2 face scenes (a face scene of
+spoken. What the lint enforces: every spoken line tagged, only these five tags, at most 3 face scenes (a face scene of
 more than about 25 words is a warning), every tag written with its emoji and in code ticks, every `[COVER]` line covered by a `[SHOW]` line, every `[SHOW]`
 card and state listed in the table and every listed card and state used, no two names that would be the same still
 file, no em dash, and Mike's spoken-word rules. The word rules are NOT copied into this track: the lint runs every line
@@ -174,8 +190,8 @@ so the two tracks cannot drift apart (contractions, "just cannot", "around" befo
 digits, no "honest" lead-in, no dollar sign). The emoji are that gate's own table too.
 
 Not in a `SCRIPT.md`, because this track does not have them yet: a chapter map, budgets, beat signposts, music plans,
-clip inserts, title cards, and the tags `[SAY-EXACT]`, `[VERIFY]`, `[INSERT]`. If a script seems to need one
-of them, the video belongs in `longform-edited/`.
+a `## CLIP-INSERTS` table, title cards, and the tags `[SAY-EXACT]` and `[VERIFY]`. (`[INSERT]` is here since 2026-11-25,
+one montage, "Clip montage".) If a script seems to need more than that, the video belongs in `longform-edited/`.
 
 ## Recording notes
 
@@ -190,7 +206,7 @@ of them, the video belongs in `longform-edited/`.
   script is caught by the cue step but cannot be fixed without a re-record.
 - A spoken instruction ("cut that out", "go again") is followed and removed by the defumbler, as in every track.
 
-## Face scenes (Mike, 2026-11-22: "a few screenshare scenes, and up to 2 face scenes")
+## Face scenes (Mike, 2026-11-22: "a few screenshare scenes, and up to 2 face scenes"; cap raised to 3 on 2026-11-25, longest-bear: a free-flowing explanation to the camera)
 
 v1 left them out because nothing would centre one. Now a `[FACE]` line is Mike on his full-camera OBS scene, and the
 video zooms and centres his face there exactly as longform-edited does, inside the same single ffmpeg render.
@@ -219,8 +235,38 @@ video zooms and centres his face there exactly as longform-edited does, inside t
   it. **Open `_qa/<FINAL>-face-proof.png`** (the crop drawn on each window, beside the frame it makes).
 - **The vertical cut:** the same windows, cropped 9:16 to his full height and centred on his face (about 1.8x,
   `overlays/face-reframe-v.json`), never the re-stacked screen-share layout.
+- **A cover run that meets a face scene cuts, it does not fade** (`cover_runs.py`, 2026-11-25, livestream-aws): the
+  recording under a run's 0.3 s fade-out is still the screen share up to the OBS switch, so a fade ghosted the slide
+  and the webcam in before the face. A run ending within 0.5 s of a face window's start (or starting within 0.5 s of
+  its end) gets `fade_out` / `fade_in` false in `cards.json`, the way a clip insert does.
 - **Not done:** a punch-in or a transition into a face scene (it is a hard cut, the OBS switch itself), captions,
   a background swap.
+
+## Clip montage (`[INSERT]`; Mike, 2026-11-25, longest-bear)
+
+A few short clips of OTHER people, each with its own voice, spliced into the video: longest-bear's "everybody was calling for
+the bear market to be over" followed by 4 or 5 well-known people saying it. Tool: `../clip-insert/clip_insert.py`; the
+doc is `../clip-insert/clip-insert.md` (the rules, the capture, the splice). In short:
+
+- **Script:** the line above `[INSERT]` is the set-up, ends on a full stop, and says what the clips will show; he never reads
+  what the clips say. The line after it carries on. The `[SHOW]` card before the insert and the one after it are separate
+  cards (an animated chart that spans the montage is two cards, `<id>` and `<id>-2`, the second starting where the first
+  ended).
+- **Pipeline:** research the clips (a clips file for Mike's pick, nothing downloaded before he picks) -> capture each with
+  `capture_clip_insert.py --no-caption` into `assets/clip-inserts/<ID>-<n>-<slug>.mp4` -> AFTER the spine is final (and
+  Enhance Speech remuxed) `clip_insert.py bake` splices them into the spine and writes the shifted words JSON + `inserts.json`
+  -> `cue_script.py` on the `+clips` spine and words (`--inserts` is read from `overlays/inserts.json`) -> `cover_runs.py`.
+- **On screen:** the clips play full frame as the spine's own picture (no cover, no card over them); the covers on either side
+  meet them with a hard cut. A bed (`drone_bed.py`) ducks 14 dB under them.
+- **No names, no captions** (Mike, longest-bear: "no names and no captions"): the longform-edited rule that burns who / where
+  / when onto a clip is NOT used here. The video never names a speaker and never says anyone was wrong; the line before and
+  after are Mike's own. Names stay in the private clips file.
+- **Who:** anyone with a recognizable name or face who is newsworthy: crypto influencers, news anchors, exchange and company
+  executives, fund managers, politicians. Prefer 16:9 clips with the speaker's own shot (a vertical clip is pillarboxed).
+- **Honesty:** a clip is never trimmed to change what the speaker meant; the claim the video makes about them ("two months
+  ago, everybody was calling...") must be backed by the dated clips themselves.
+- **Not built for it:** the vertical cut, the short and the YT post (the montage is 16:9 only; a vertical would need its own
+  re-framed clips). Say so when Mike asks for either on a video that has one.
 
 ## After the cue: reading `CUE-REPORT.md`
 
@@ -241,8 +287,18 @@ video zooms and centres his face there exactly as longform-edited does, inside t
   video keeps both rules.
 - **The recording never shows inside a cover run.** A new card is composited over the previous card, never over the
   recording; the leak check in `cover_runs.py --step qa` proves it on the rendered file, and a FAIL is not delivered.
+- **Every product or service term is introduced the first time it is said (Mike, 2026-11-24, livestream-aws).** A
+  viewer who never heard of it must not have to search for it: the line says what is done today, then the service
+  that would do it, and one plain sentence on what that service is ("Today, ffmpeg makes the low-bitrate master. On
+  AWS, that's MediaConvert, Amazon's video converter."). The card prints the same plain description under the name.
+  His words, on the first draft's "MediaConvert makes the low-bitrate master. Rekognition finds my face...": "I had to
+  search for what those words were ... Everything AWS related needs at least a one sentence introduction." A term
+  said again later needs no second introduction. The introductions cost words, so budget for them when sizing a
+  script to a runtime.
 - **A card prints the sourced figure.** Never a number copied from the voice-over, never a number known to be wrong.
-- **The audio is the spine's, stream-copied**, exactly as format 4. The scripted option adds no audio step.
+- **The audio is the spine's, stream-copied**, exactly as format 4. Two optional steps change it, both Mike's per video:
+  the clip montage (clips with their own audio are spliced into the spine BEFORE the cue) and a drone music bed
+  (`../music-bed/drone_bed.py`, AFTER the render, the picture stream-copied; "The drone bed" in `music-bed.md`).
 - **Animated charts play from t = 0 at the start of their window, at their own speed, and hold their end state.** The
   page must hold still past its last moment. It is built before the recording to an estimated window (the line's
   word count at about 3 words a second: pieverse ran 1,104 words in 373 s); when its moves must land on words,
@@ -256,8 +312,9 @@ video zooms and centres his face there exactly as longform-edited does, inside t
 ## Not in v1 (each is a decision for a later version, not an oversight)
 
 - (Built 2026-11-22, "Face scenes": full-camera FACE scenes, at most 2, centred in the ffmpeg pass.)
+- (Built 2026-11-25, longest-bear: whiteboard beats as a card kind, one clip montage (`[INSERT]`), a drone music bed.)
 - The cover blackout, transitions between scenes beyond the fade in and out of a run, sound effects, captions,
-  Envato or AI b-roll, whiteboard beats, a music bed.
+  Envato or AI b-roll, an ELEVATOR bed or an intro sting (the coding format's `music_bed.py`).
 - A cover that leaves the webcam visible (a card inside the deck area): that is free talk's layout. A scripted cover
   always fills the whole frame.
 - A dedicated script-writing agent, a LangGraph, the run queue, a draft render.
@@ -276,6 +333,8 @@ video zooms and centres his face there exactly as longform-edited does, inside t
 | `face_scenes.py` | the ONE face-scene detector + the measured face crop ("Face scenes"): `python face_scenes.py "<spine>" [--measure] [--vertical] [--proof <png>]` -> `FACE-SCENES windows=N total=<s> [crop=w:h:x:y scale=<s> centered=true\|false]`; imported by `cue_script.py`, `cover_runs.py` and the desilence preset |
 | `lint_script.py` | the format gate: `python lint_script.py "<SCRIPT.md>" [--research "<RESEARCH.md>"]` -> `SCRIPT-LINT PASS\|FAIL lines=N covers=N screenshares=N faces=N cards=N fails=N warns=N` |
 | `cue_script.py` | the cue step: `python cue_script.py "<SCRIPT.md>" --words "<words.json>" [--spine "<spine.mp4>"] [--out-dir <overlays>] [--allow-missing] [--allow-face-mismatch] [--pin LINE=SECONDS]` -> `SCRIPT-CUE PASS\|FAIL lines=N kept=N changed=N missing=N adlibs=N number_mismatches=N runs=N faces=N` |
+| `../clip-insert/clip_insert.py` | the clip montage ("Clip montage"): `python clip_insert.py bake "<SCRIPT.md>" --spine "<final spine>" --words "<its words.json>"` -> `<spine>+clips.mp4`, `<stem>+clips.medium-words.json`, `overlays/inserts.json`; machine line `CLIP-INSERT PASS\|FAIL` |
+| `../music-bed/drone_bed.py` | the drone bed under the finished video: `python drone_bed.py "<video without music>" --out "<FINAL>" [--track tissue-healing-285-hz] [--under 17]` -> `DRONE-BED PASS\|FAIL` |
 | `../card-overlays/cover_runs.py` | the cover runs, the render and the QA (documented in `../card-overlays/card-overlays.md`, "Cover runs"); `--vertical` = the vertical cut from the same cues |
 
 ## Defaults chosen for v1 (2026-11-14; change them here and in the code together)
@@ -304,6 +363,15 @@ video zooms and centres his face there exactly as longform-edited does, inside t
   `assets/vertical/` under the same names; its run clips in `overlays/runs-v/`, its spec in `overlays/cards-v.json`.
 
 ## History
+
+- **2026-11-25, whiteboard cards, the clip montage and the drone bed (longest-bear; Mike: "show a montage of four or five
+  clips of people saying we're in a new bull market", "a Drone music track", "some whiteboarding", "no names and no
+  captions").** Tested on a 31 s fixture (a real spine, synthetic cards, a synthetic whiteboard beat, two synthetic clips,
+  one vertical): lint PASS, `clip_insert.py bake` PASS (929 spine frames + 165 clip frames = 1,094, video and audio 36.6 s,
+  splice in a -79 dB pause), cue PASS (the covers end at the splice and restart after the clips), `cover_runs.py` PASS
+  (whiteboard beat cut at its window, 1,094 frames out = in, leak check 35.8 dB, hard cuts at the clips),
+  `drone_bed.py` PASS (bed 17 LU under the voice, ducked 14 dB under the clips, picture frames equal). The lint's FACE
+  cap went from 2 to 3 the same day. No real recording has run through any of it yet.
 
 - **2026-11-14, built and tested on pieverse data (no real scripted recording yet).**
   - Cue: pieverse's screenplay as scripted (61 spoken lines, 22 cards) against the final spine's transcript (1,104

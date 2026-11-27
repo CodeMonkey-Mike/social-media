@@ -103,6 +103,25 @@ kit layout, the stream's `build.py` does the edit. Reuse `2026-11-09-my-100x-pla
   the scene's warm tint stays light (1.03 / 1.0 / .96) so the white glyph does not turn cream.
 - A headline line ending just over a scene object (the bull's horn tips): switch that area off in the plate mask.
 
+### Old text over DETAIL: take the real pixels from his other thumbnails (2026-11-22, `2026-11-22-awesome-buys/build.py`)
+
+- A fill (LaMa, Telea, low-res) is only good under text that sat on sky. "Get Ready For Pumps" (lBFMVBWR87o) had its second
+  line over the bulls, and the 2026-11-04 LaMa plate turned them into dust clouds: Mike saw it at once ("there should be a
+  couple of bulls"). Under old text that covered animals, faces or objects, never ship a fill.
+- Mike reuses a background across streams with the headline in a different place each time, so the hidden pixels exist in
+  another thumbnail. Find the DONORS: list the channel's streams (`yt-dlp --flat-playlist --print "%(id)s\t%(title)s"
+  <channel>/streams`), fetch each `mqdefault.jpg`, rank them by template match on a patch of the scene nothing covers,
+  look at the top ones, fetch `maxresdefault.jpg` of the ones that show the hidden part. The bull scene has 9 (3 used here).
+- `register`: SIFT on the shared background -> a similarity transform donor -> source (each donor is the same picture at
+  0.97 to 0.99x; 95 to 260 inliers). `donor_bad`: what each donor hides itself (its headline + halo, the object in its bowl).
+  `make_plate`: under the old text each pixel = the first donor that shows it, its tone pulled onto the source's by the
+  smooth difference where both are clean; the LaMa plate only where every donor is covered too (sky). Here 99.9% of the
+  bulls' rows came out real.
+- Measure the old headline's halo before masking it (darkening vs a donor, by distance from a white letter): 21 px here,
+  so the mask is the letters grown by 22.
+- The source's own feather stays: green pixels in the bowl, closed over its dark slit, a 2 px soft rim.
+- Two short words go on two lines like the source ("Awesome" / "Buys", size 270): on one line they only fit at 190.
+
 ## Steps
 
 1. New folder `thumbnail/<date>-<slug>/`; the photo of Mike to use goes in `assets/` (copy it in:

@@ -21,7 +21,10 @@ export const FONT   = "'Montserrat', 'Arial Black', sans-serif";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 export type Caption = { t: number; h: string };
-export type BrollEv = { src: string; tIn: number; tOut: number; mode: 'full' | 'content' };
+// `hard` (optional, added 2026-11-24, batch nvidia clip 1): HARD-CUT both edges of this beat (no 0.12 s fade), for a
+// beat that must land exactly on a cut of the base video (e.g. covering an off-message screen the frame it appears).
+// Omitted = the historical fade, so every existing caller renders byte-identically.
+export type BrollEv = { src: string; tIn: number; tOut: number; mode: 'full' | 'content'; hard?: boolean };
 export type Gfx     = { id: string; tIn: number; tOut: number };
 // vol/dur are optional per-event overrides (default 0.55 / 2s, the historical LivestreamShort values).
 // fade (optional, seconds): a linear fade-out over the LAST `fade` s of `dur`, so a cue truncated mid-ring by `dur`
@@ -90,8 +93,9 @@ export const BrollLayer: React.FC<{ broll: BrollEv[]; t: number; seam?: number; 
   const nextAdj = broll.some((o, i) => i !== idx && Math.abs(o.tIn - ev.tOut) <= EPS);
   const atStart = ev.tIn <= 0.001;
   let op = 1;
-  if (!prevAdj && !atStart) op = Math.min(op, interpolate(t, [ev.tIn, ev.tIn + F], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }));
-  if (!nextAdj) op = Math.min(op, interpolate(t, [ev.tOut - F, ev.tOut], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }));
+  // ev.hard: hard cut both edges, op stays 1 inside [tIn, tOut)
+  if (!ev.hard && !prevAdj && !atStart) op = Math.min(op, interpolate(t, [ev.tIn, ev.tIn + F], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }));
+  if (!ev.hard && !nextAdj) op = Math.min(op, interpolate(t, [ev.tOut - F, ev.tOut], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }));
   const age = t - ev.tIn;
   const kb = interpolate(age, [0, ev.tOut - ev.tIn], [1.0, 1.07], { extrapolateRight: 'clamp' });
 

@@ -746,8 +746,14 @@ media/<project>/
                       c.desilenced   (+ .map.json = the cut/keep map )                        <- desilencer (at the stated min-silence)
                       d.paused       (+ .paused.json )  card-pause spine (+1s per chapter card)
                     (burst-removal / a re-desilence insert their own next letter, e.g. d.cleaned -> e.desilenced -> f.final.)
-                  - MULTI-TAKE recordings: name each take by its range, process each through the chain, then JOIN to
-                    ALL (sync-safe `filter_complex`, NEVER the concat-demuxer) -> ALL.c.desilenced.mp4.
+                  - MULTI-TAKE recordings (the recorder stopped and started again, e.g. Chapter 1 as one file and the
+                    rest as another): leave the masters in raw/ under their own names. The graph's `compress` node
+                    JOINS every take in name order into ONE proxy `ALL.lowbps.mp4` (`scripts/to_low_bps.py <take>
+                    <take> --out ...`: the concat FILTER in the proxy's own single encode, sync-safe, NEVER the
+                    concat-demuxer; `ALL.lowbps.takes.json` records where each take starts), the defumbler is told
+                    the boundaries, and the chain runs ONCE on ALL (Mike 2026-11-23, plan-to-make-millions).
+                    By hand, for a repair only: each take through the chain under its range name, then a
+                    sync-safe `filter_complex` join to ALL.c.desilenced.mp4.
   assets/         comp INPUTS + their sources, MERGED (§10; Mike 2026-07-24, replaces the old render-assets/
                   split). The final paused spine is copied here as assets/spine.mp4.
   _previews/      draft / QA render outputs + logs (§11). NEVER in assets/ or the shared remotion/out/.

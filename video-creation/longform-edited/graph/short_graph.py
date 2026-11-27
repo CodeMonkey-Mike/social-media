@@ -101,6 +101,19 @@ def _pres_cues(proj: Path) -> dict:
     return json.loads(p.read_text(encoding="utf-8")) if p.is_file() else {}
 
 
+def _pres_clock(proj: Path) -> dict:
+    """overlays/vertical-clock.json, for a vertical that carries a lead-in the spine does not (longest-bear 2026-11-25: an AI
+    cold open): {"lead_s": 7.0, "vo": "../vertical-intro/vertical-clock-vo.wav", "note": "<what the cold open shows>"}.
+    vertical time = spine time + lead_s, and `vo` is the VO on the VERTICAL's clock. {} = the vertical runs on the spine's
+    clock."""
+    p = proj / "overlays" / "vertical-clock.json"
+    return json.loads(p.read_text(encoding="utf-8")) if p.is_file() else {}
+
+
+def _pres_lead(proj: Path) -> float:
+    return float(_pres_clock(proj).get("lead_s") or 0.0)
+
+
 def _pres_path(proj: Path, v) -> Optional[Path]:
     """A path a presentation spec names: absolute, or relative to overlays/ (cards-v.json writes `../spine/...`)."""
     if not v:
@@ -124,7 +137,7 @@ def _vo_spine(proj: Path, scope: str) -> Optional[Path]:
     """The VO source on the vertical's clock: the paused spine (longform-edited), or the spine cues.json names
     (presentation: the enhanced spine; a painted spine's audio is the same)."""
     if PRES(proj):
-        p = _pres_path(proj, _pres_cues(proj).get("spine"))
+        p = _pres_path(proj, _pres_clock(proj).get("vo") or _pres_cues(proj).get("spine"))
         return p if p and p.is_file() else None
     return C.paused_spine(proj, scope)
 
@@ -137,14 +150,15 @@ def _words(proj: Path, scope: str) -> Optional[Path]:
     p = _pres_path(proj, _pres_cues(proj).get("words"))
     if p and p.is_file():
         return p
-    sp = _vo_spine(proj, scope)
+    sp = _pres_path(proj, _pres_cues(proj).get("spine"))
     hits = sorted((proj / "spine").glob(f"{sp.stem}*.medium-words.json"), key=lambda x: x.stat().st_mtime) if sp else []
     return hits[-1] if hits else None
 
 
 def _pres_windows(proj: Path, tag: str):
-    """cues.json lines of one tag (COVER / SCREENSHARE) as merged (a, b) windows, spine seconds == final seconds."""
-    rows = sorted((float(l["tIn"]), float(l["tOut"])) for l in _pres_cues(proj).get("lines") or []
+    """cues.json lines of one tag (COVER / SCREENSHARE) as merged (a, b) windows on the VERTICAL's clock (spine + lead)."""
+    lead = _pres_lead(proj)
+    rows = sorted((float(l["tIn"]) + lead, float(l["tOut"]) + lead) for l in _pres_cues(proj).get("lines") or []
                   if str(l.get("tag", "")).upper() == tag and l.get("tIn") is not None and l.get("tOut") is not None)
     out = []
     for a, b in rows:
@@ -171,7 +185,8 @@ def _pres_whiteboard_windows(proj: Path):
             spec = {}
         rows += [(float(c["in"]), float(c["out"])) for c in spec.get("cards") or []
                  if c.get("in") is not None and (is_wb(c.get("id"), c.get("kind")) or "whiteboard" in str(c.get("src", "")).lower())]
-    return sorted((round(a, 2), round(b, 2)) for a, b in rows)
+    lead = _pres_lead(proj)
+    return sorted((round(a + lead, 2), round(b + lead, 2)) for a, b in rows)
 
 
 def _pres_caption_band(proj: Path):
@@ -194,9 +209,10 @@ def _sh_fn(proj: Path, scope: str):
     """source -> final seconds through EVERY pause's OWN `dur` (the comp's sh()). A clip insert's pause is the clip's length,
     not pause_s: retire-early 2026-10-11 mapped CLIP-2 / CLIP-3 as 1.5 s each and put every word after 94.7 s up to 17.8 s
     early (caught by the short-cut-strategist). card_t lists the chapter CARDS only (clip inserts are not card freezes).
-    A presentation project has no paused spine: the identity."""
+    A presentation project has no paused spine: the identity, plus the vertical's lead-in if it has one (_pres_clock)."""
     if PRES(proj):
-        return (lambda t: t), [], 0.0
+        lead = _pres_lead(proj)
+        return (lambda t: t + lead), [], 0.0
     meta, _ = G._paused_meta(proj, scope)
     pause = float(meta.get("pause_s") or 0)
     pauses = [(float(p["at"]), float(p.get("dur") or pause)) for p in meta.get("pauses") or []]
@@ -210,7 +226,8 @@ def _sh_end_fn(proj: Path, scope: str):
     "market." over the 5.6 s CLIP-7 insert on lets-get-rich (2026-11-01): its midpoint fell outside its span and the short lost
     the word's caption ("in a bear" with no "market.")."""
     if PRES(proj):
-        return lambda t: t
+        lead = _pres_lead(proj)
+        return lambda t: t + lead
     meta, _ = G._paused_meta(proj, scope)
     pause = float(meta.get("pause_s") or 0)
     pauses = [(float(p["at"]), float(p.get("dur") or pause)) for p in meta.get("pauses") or []]
@@ -427,10 +444,16 @@ def s_cut_plan(state: ShortState) -> ShortState:
     if not (plan_p.is_file() and not _redo(state, node)) and pres:
         brief = state.get("brief") or ""
         band = _pres_caption_band(proj)
+        clk = _pres_clock(proj)
+        clock_note = ("Sources on ONE clock (the final spine's seconds; there is no paused spine, no chapter card, no clip insert)"
+                      if not clk else
+                      f"Sources on ONE clock, the VERTICAL's seconds (vertical = spine + {_pres_lead(proj):g} s; every number you read "
+                      "in the FINAL-TIME files and return is in this clock; cues.json / CUE-REPORT.md are in SPINE seconds, add the "
+                      f"lead). The vertical opens with a cold open the cue table does not list: {clk.get('note', '')}")
         prompt = (f"Author the cut plan for a {target:.0f}-second short condensed from the DELIVERED vertical of the longform-PRESENTATION "
                   f"project `{proj.name}` (folder `{proj}`), per your agent definition and longform-to-short.md §2/§3 + its section "
                   "\"A presentation project\".\n"
-                  f"Sources on ONE clock (the final spine's seconds; there is no paused spine, no chapter card, no clip insert): video `{vert}`, "
+                  f"{clock_note}: video `{vert}`, "
                   f"audio `{paused}` ({total:.2f}s). Transcript: `{proj / 'spine' / 'FINAL-TIME-words.json'}` + "
                   f"`{proj / 'spine' / 'FINAL-TIME-transcript.txt'}`.\n"
                   f"What is on screen: `{proj / 'overlays' / 'cues.json'}` (`lines`: each script line's tIn/tOut, `tag` COVER = a full-frame "
@@ -438,7 +461,7 @@ def s_cut_plan(state: ShortState) -> ShortState:
                   f"stills in `{proj / 'assets' / 'vertical' / 'cards'}` and `{proj / 'assets' / 'vertical' / 'diagrams'}`, the vertical layout in "
                   f"`{proj / 'overlays' / 'cards-v.json'}`. Docs: `{proj / 'SCRIPT.md'}`, `{proj / 'overlays' / 'CUE-REPORT.md'}`.\n"
                   f"SCREENSHARE windows (Mike's webcam visible; the caption must stay off his mouth): {faces}. Mark every span `sourced`: "
-                  "COVER or SCREENSHARE"
+                  "COVER (any full-frame picture), SCREENSHARE or FACE (a [FACE] line: his camera fills the frame)"
                   + (f"; a SCREENSHARE span's caption sits in the band y {band[0]}-{band[1]} (between the slide and the webcam pane)" if band else "")
                   + ". Nothing is burned in the vertical, so the short is captioned end to end.\n"
                   f"Target: {target:.0f} s DELIVERED, with a {OUTRO_S:.0f} s outro INSIDE it, so {target - OUTRO_S:.0f} s of spans (+-1 s). "
@@ -475,7 +498,7 @@ def s_cut_plan(state: ShortState) -> ShortState:
         if not C.persist_agent_json(out, plan_p, want_key="spans"):
             return C._fail(state, node, f"short-cut-strategist returned no usable plan (rc {rc})", out)
     plan = json.loads(plan_p.read_text(encoding="utf-8"))
-    why = _plan_check(plan, target, total, faces, ("COVER", "SCREENSHARE") if pres else ("FACE", "COVER"))
+    why = _plan_check(plan, target, total, faces, ("COVER", "SCREENSHARE", "FACE") if pres else ("FACE", "COVER"))
     if why:
         return C._fail(state, node, f"SHORT-CUT-PLAN.json failed verification: {why} (fix the plan and re-drive; --redo s_cut_plan re-runs the strategist)")
     bad = _whiteboard_overlaps(plan, wb_windows)

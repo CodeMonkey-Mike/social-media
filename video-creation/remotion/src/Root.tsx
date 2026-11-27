@@ -39,6 +39,10 @@ import { LeftBehind, DUR as LB_DUR, FPS as LB_FPS } from './LeftBehind';
 import { LeftBehindShort, DUR as LBS_DUR, FPS as LBS_FPS } from './LeftBehindShort';
 // longform-edited quant (2026-11-05): What Is Quant?, 16:9, screen-share face mode (comp-builder).
 import { Quant, DUR as QNT_DUR, FPS as QNT_FPS } from './Quant';
+// longform-edited plan-to-make-millions (2026-11-24): The Crypto Strategy I'm Using to Make Millions by 2028, 16:9, LIGHT containers, comp-builder.
+import { PlanToMakeMillions, DUR as PTMM_DUR, FPS as PTMM_FPS } from './PlanToMakeMillions';
+// longform-edited plan-to-make-millions SHORT (comp-builder SHORT mode 2026-11-24): 1080x1920 @30, 5 span intermediates + 3 s outro; public dir _previews/short/work.
+import { PlanToMakeMillionsShort, DUR as PTMMS_DUR, FPS as PTMMS_FPS } from './PlanToMakeMillionsShort';
 // longform-edited canton (2026-11-10): What Is Canton?, 16:9, MIXED face mode (gated faces + screen shares), comp-builder.
 import { Canton, DUR as CANTON_DUR, FPS as CANTON_FPS } from './Canton';
 // longform-edited canton SHORT (16:9-sourced mode, comp-builder SHORT mode 2026-11-10): 1080x1920 @30, 3 span intermediates (26.6 s) + 3.4 s outro = 900; public dir _previews/short/work
@@ -90,34 +94,9 @@ import { FutureOfSoftwareEngineersVertical, DUR as FOSEV_DUR, FPS as FOSEV_FPS }
 import { FutureOfSoftwareEngineersShort, DUR as FOSES_DUR, FPS as FOSES_FPS } from './FutureOfSoftwareEngineersShort';
 // clip-evals SHORT (longform-presentation standard, comp-builder SHORT mode 2026-11-17): 1080x1920 @30, 3 span intermediates + 3.267 s outro; public dir _previews/short/work.
 import { ClipEvalsShort, DUR as CES_DUR, FPS as CES_FPS } from './ClipEvalsShort';
-// batch peach / clip #2 calls-still-up-after-the-dump FULL (livestream short, 2026-11-16). Flat-namespace check: no existing PeachCallsStillUp / PCH2_ / broll-pch2 / thumb-pch2 / ovl-pch2.
-import { PeachCallsStillUp, PCH2_FPS, PCH2_DURATION } from './PeachCallsStillUp';
-// batch ripping / clip #2 calls-ripping-on-a-red-day FULL (livestream short, 2026-11-18). Flat-namespace check: no existing RippingCallsRedDay / RIP2_ / broll-rip2.
-import { RippingCallsRedDay, RIP2_FPS, RIP2_DURATION } from './RippingCallsRedDay';
-// batch ripping / clip #3 ai-jobs-own-assets FULL (livestream short, 2026-11-18). Flat-namespace check: no existing RippingAiJobsOwnAssets / RIP3_ / constants-ripping-ai-jobs-own-assets.
-import { RippingAiJobsOwnAssets, RIP3_FPS, RIP3_DURATION } from './RippingAiJobsOwnAssets';
-// batch ripping / clip #1 pieverse-17x-at-a-billion FULL (livestream short, 2026-11-18). Flat-namespace check: no existing RippingPieverse17x / RIP1_ / constants-ripping-pieverse-17x-at-a-billion.
-import { RippingPieverse17x, RIP1_FPS, RIP1_DURATION } from './RippingPieverse17x';
-// batch ripping / clip #4 hate-eth-go-where-the-money-is FULL (livestream short, 2026-11-19). Flat-namespace check: no existing RippingHateEth / RIP4_ / constants-ripping-hate-eth-go-where-the-money-is.
-import { RippingHateEth, RIP4_FPS, RIP4_DURATION } from './RippingHateEth';
-// batch ripping / clip #5 anthropic-ipo-money-rotating-out FULL (livestream short, 2026-11-19). Flat-namespace check: no existing RippingAnthropicIpo / RIP5_ / constants-ripping-anthropic-ipo-money-rotating-out.
-import { RippingAnthropicIpo, RIP5_FPS, RIP5_DURATION } from './RippingAnthropicIpo';
-// batch ripping / clip #6 pieverse-17x-at-a-billion-impact IMPACT (livestream short, 2026-11-19). Flat-namespace check: no existing RippingPieverse170x / RIP6_ / constants-ripping-pieverse-17x-at-a-billion-impact.
-import { RippingPieverse170x, RIP6_FPS, RIP6_DURATION } from './RippingPieverse170x';
-// batch ripping / clip #7 ai-jobs-own-assets-impact IMPACT (livestream short, 2026-11-19). Flat-namespace check: no existing RippingAiJobsImpact / RIP7_ / constants-ripping-ai-jobs-own-assets-impact.
-import { RippingAiJobsImpact, RIP7_FPS, RIP7_DURATION } from './RippingAiJobsImpact';
-// batch peach / clip #3 kaspa-things-are-gonna-pop FULL (livestream short, 2026-11-16). Flat-namespace check: no existing PeachKaspaThingsPop / PCH3_.
-import { PeachKaspaThingsPop, PCH3_FPS, PCH3_DURATION } from './PeachKaspaThingsPop';
-// batch peach / clip #1 pengu-flips-pepe FULL (livestream short, 2026-11-16). Flat-namespace check: no existing PeachPenguFlipsPepe / PCH1_.
-import { PeachPenguFlipsPepe, PCH1_FPS, PCH1_DURATION } from './PeachPenguFlipsPepe';
-// batch peach / clip #4 jct-6x-back-at-its-low FULL (livestream short, 2026-11-16). Flat-namespace check: no existing PeachJct6xLow / PCH4_ / broll-pch4 / thumb-pch4 / ovl-pch4.
-import { PeachJct6xLow, PCH4_FPS, PCH4_DURATION } from './PeachJct6xLow';
-// batch peach / clip #5 dumping-and-im-buying FULL (livestream short, 2026-11-16). Flat-namespace check: no existing PeachDumpingImBuying / PCH5_ / broll-pch5 / thumb-pch5.
-import { PeachDumpingImBuying, PCH5_FPS, PCH5_DURATION } from './PeachDumpingImBuying';
-// batch peach / clip #7 kaspa-things-are-gonna-pop-impact IMPACT (livestream short, 2026-11-16). Flat-namespace check: no existing PeachKaspaPopImpact / PCH7_ / broll-pch7 / thumb-pch7 / ovl-broll-pch7.
-import { PeachKaspaPopImpact, PCH7_FPS, PCH7_DURATION } from './PeachKaspaPopImpact';
-// batch peach / clip #6 pengu-flips-pepe-impact IMPACT (livestream short, 2026-11-16). Flat-namespace check: no existing PeachPenguImpact / PCH6_ / broll-pch6 / thumb-pch6.
-import { PeachPenguImpact, PCH6_FPS, PCH6_DURATION } from './PeachPenguImpact';
+// langgraph-updates SHORT (longform-presentation standard, comp-builder SHORT mode 2026-11-23): 1080x1920 @30, 3 span intermediates (834 f) + 3.000 s outro; public dir _previews/short/work.
+import { LanggraphUpdatesShort, DUR as LGUS_DUR, FPS as LGUS_FPS } from './LanggraphUpdatesShort';
+import { LivestreamAwsShort, DUR as LAWSS_DUR, FPS as LAWSS_FPS } from './LivestreamAwsShort';
 import { GrowthScaleUpVertical, DUR as GSUV_DUR, FPS as GSUV_FPS } from './GrowthScaleUpVertical';
 import { GrowthScaleUpShort, DUR as GSUS_DUR, FPS as GSUS_FPS } from './GrowthScaleUpShort';
 // longform-edited growth-vs-product SHORT (comp-builder SHORT mode 2026-10-23): 1080x1920 @30, 5 span intermediates + 3 s outro; public dir _previews/short/work.
@@ -184,8 +163,16 @@ import { CantonWB2, DUR as CWB2_DUR, FPS as CWB2_FPS } from './whiteboard/beats/
 import { CantonWB3, DUR as CWB3_DUR, FPS as CWB3_FPS } from './whiteboard/beats/CantonWB3';
 // whiteboard BEAT (2026-11-10): canton WB4 (longform-edited, the full frame 1920x1080 @30, 657 f, neon-canton, no audio): the fee is burned, three roles mint, the open-ended minting timeline
 import { CantonWB4, DUR as CWB4_DUR, FPS as CWB4_FPS } from './whiteboard/beats/CantonWB4';
+// whiteboard BEAT (2026-11-23): plan-to-make-millions WB1 (longform-edited, the full frame 1920x1080 @30, 724 f, paper-pastel, no audio): the funnel, new coins to a handful of plays
+import { PlanToMakeMillionsWB1, DUR as PTMMWB1_DUR, FPS as PTMMWB1_FPS } from './whiteboard/beats/PlanToMakeMillionsWB1';
+// whiteboard BEAT (2026-11-25): longest-bear `the-squeeze` (longform-presentation SCRIPTED standard, a full-frame cover 1920x1080 @30, neon-ink, no audio;
+// DUR follows WINDOW_S in the scene file: 824 f, re-timed to the recording 2026-11-25): a room of coins, two doors SPACEX 75B / ANTHROPIC 81B, RATES ?
+import { LongestBearSqueeze, DUR as LBSQ_DUR, FPS as LBSQ_FPS } from './whiteboard/beats/LongestBearSqueeze';
+// whiteboard BEAT (2026-11-25): longest-bear `the-squeeze`, the VERTICAL drawing for the vertical cut (native 1080x1920 @30, neon-ink, no audio):
+// the same beat re-composed for a tall frame, on the 16:9 scene's own CUES and DUR (imported there: 824 f)
+import { LongestBearSqueezeV, DUR as LBSQV_DUR, FPS as LBSQV_FPS } from './whiteboard/beats/LongestBearSqueezeV';
+import { LongestBearShort, DUR as LBSHORT_DUR, FPS as LBSHORT_FPS } from './LongestBearShort';
 import { Reset, DUR as RESET_DUR, FPS as RESET_FPS } from './Reset';
-
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -385,9 +372,18 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="CantonWB2" component={CantonWB2} durationInFrames={CWB2_DUR} fps={CWB2_FPS} width={1920} height={1080} />
       <Composition id="CantonWB3" component={CantonWB3} durationInFrames={CWB3_DUR} fps={CWB3_FPS} width={1920} height={1080} />
       <Composition id="CantonWB4" component={CantonWB4} durationInFrames={CWB4_DUR} fps={CWB4_FPS} width={1920} height={1080} />
+      {/* whiteboard beat: plan-to-make-millions WB1 (2026-11-23), the full frame 1920x1080, 724 f, paper-pastel */}
+      <Composition id="PlanToMakeMillionsWB1" component={PlanToMakeMillionsWB1} durationInFrames={PTMMWB1_DUR} fps={PTMMWB1_FPS} width={1920} height={1080} />
+      {/* whiteboard beat: longest-bear the-squeeze (2026-11-25), the full frame 1920x1080, neon-ink, DUR = WINDOW_S x 30 (the scene file's timing block) */}
+      <Composition id="LongestBearSqueeze" component={LongestBearSqueeze} durationInFrames={LBSQ_DUR} fps={LBSQ_FPS} width={1920} height={1080} />
+      {/* whiteboard beat: longest-bear the-squeeze, the VERTICAL drawing (2026-11-25), native 1080x1920, neon-ink, the 16:9 scene's CUES and DUR */}
+      <Composition id="LongestBearSqueezeV" component={LongestBearSqueezeV} durationInFrames={LBSQV_DUR} fps={LBSQV_FPS} width={1080} height={1920} />
+      <Composition id="LongestBearShort" component={LongestBearShort} durationInFrames={LBSHORT_DUR} fps={LBSHORT_FPS} width={1080} height={1920} />
       {/* quant (longform-edited, 2026-11-05): the paused spine 581.7 s, 5 cards + CLIP-1, screen-share face mode, light + quant accent */}
       <Composition id="Quant" component={Quant} durationInFrames={QNT_DUR} fps={QNT_FPS} width={1920} height={1080} />
       {/* canton (longform-edited, 2026-11-10): the paused spine 305.6 s (9168 frames), 3 cards + CLIP-2 + CLIP-3, mixed face mode, dark + canton accent */}
+      <Composition id="PlanToMakeMillions" component={PlanToMakeMillions} durationInFrames={PTMM_DUR} fps={PTMM_FPS} width={1920} height={1080} />
+      <Composition id="PlanToMakeMillionsShort" component={PlanToMakeMillionsShort} durationInFrames={PTMMS_DUR} fps={PTMMS_FPS} width={1080} height={1920} />
       <Composition id="Canton" component={Canton} durationInFrames={CANTON_DUR} fps={CANTON_FPS} width={1920} height={1080} />
       {/* longform-edited canton SHORT (16:9-sourced mode): 1080x1920 @30, DUR = round((26.6 s spans + 3.4 s outro) x 30) = 900; public dir = _previews/short/work */}
       <Composition id="CantonShort" component={CantonShort} durationInFrames={CANTONS_DUR} fps={CANTONS_FPS} width={1080} height={1920} />
@@ -414,29 +410,11 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="FutureOfSoftwareEngineersShort" component={FutureOfSoftwareEngineersShort} durationInFrames={FOSES_DUR} fps={FOSES_FPS} width={1080} height={1920} />
       {/* clip-evals SHORT (longform-presentation standard, AI Engineering Simplified, 2026-11-17): 802 span frames + 98 outro = 900 f */}
       <Composition id="ClipEvalsShort" component={ClipEvalsShort} durationInFrames={CES_DUR} fps={CES_FPS} width={1080} height={1920} />
-      {/* batch peach / clip #2 calls-still-up-after-the-dump FULL: 1080x1920 @30, 1180 f = 39.333 s; public dir shorts/peach/render-assets */}
-      <Composition id="PeachCallsStillUp" component={PeachCallsStillUp} durationInFrames={PCH2_DURATION} fps={PCH2_FPS} width={1080} height={1920} />
-      <Composition id="RippingCallsRedDay" component={RippingCallsRedDay} durationInFrames={RIP2_DURATION} fps={RIP2_FPS} width={1080} height={1920} />
-      {/* batch ripping / clip #3 ai-jobs-own-assets FULL: 1080x1920 @30, 1208 f = 40.267 s; public dir shorts/ripping/render-assets */}
-      <Composition id="RippingAiJobsOwnAssets" component={RippingAiJobsOwnAssets} durationInFrames={RIP3_DURATION} fps={RIP3_FPS} width={1080} height={1920} />
-      {/* batch ripping / clip #1 pieverse-17x-at-a-billion FULL: 1080x1920 @30, 1327 f = 44.233 s; public dir shorts/ripping/render-assets */}
-      <Composition id="RippingPieverse17x" component={RippingPieverse17x} durationInFrames={RIP1_DURATION} fps={RIP1_FPS} width={1080} height={1920} />
-      <Composition id="RippingHateEth" component={RippingHateEth} durationInFrames={RIP4_DURATION} fps={RIP4_FPS} width={1080} height={1920} />
-      {/* batch ripping / clip #5 anthropic-ipo-money-rotating-out FULL: 1080x1920 @30, 988 f = 32.933 s; public dir shorts/ripping/render-assets */}
-      <Composition id="RippingAnthropicIpo" component={RippingAnthropicIpo} durationInFrames={RIP5_DURATION} fps={RIP5_FPS} width={1080} height={1920} />
-      {/* batch ripping / clip #6 pieverse-17x-at-a-billion-impact IMPACT: 1080x1920 @30, 857 f = 28.567 s; public dir shorts/ripping/render-assets */}
-      <Composition id="RippingPieverse170x" component={RippingPieverse170x} durationInFrames={RIP6_DURATION} fps={RIP6_FPS} width={1080} height={1920} />
-      {/* batch ripping / clip #7 ai-jobs-own-assets-impact IMPACT: 1080x1920 @30, 579 f = 19.300 s; public dir shorts/ripping/render-assets */}
-      <Composition id="RippingAiJobsImpact" component={RippingAiJobsImpact} durationInFrames={RIP7_DURATION} fps={RIP7_FPS} width={1080} height={1920} />
-      {/* batch peach / clip #1 pengu-flips-pepe FULL: 1080x1920 @30, 1059 f = 35.300 s; public dir shorts/peach/render-assets */}
-      <Composition id="PeachKaspaThingsPop" component={PeachKaspaThingsPop} durationInFrames={PCH3_DURATION} fps={PCH3_FPS} width={1080} height={1920} />
-      <Composition id="PeachKaspaPopImpact" component={PeachKaspaPopImpact} durationInFrames={PCH7_DURATION} fps={PCH7_FPS} width={1080} height={1920} />
-      <Composition id="PeachPenguFlipsPepe" component={PeachPenguFlipsPepe} durationInFrames={PCH1_DURATION} fps={PCH1_FPS} width={1080} height={1920} />
-      {/* batch peach / clip #4 jct-6x-back-at-its-low FULL: 1080x1920 @30, 817 f = 27.233 s; public dir shorts/peach/render-assets */}
-      <Composition id="PeachJct6xLow" component={PeachJct6xLow} durationInFrames={PCH4_DURATION} fps={PCH4_FPS} width={1080} height={1920} />
-      <Composition id="PeachDumpingImBuying" component={PeachDumpingImBuying} durationInFrames={PCH5_DURATION} fps={PCH5_FPS} width={1080} height={1920} />
-      {/* batch peach / clip #6 pengu-flips-pepe-impact IMPACT: 1080x1920 @30, 457 f = 15.233 s; public dir shorts/peach/render-assets */}
-      <Composition id="PeachPenguImpact" component={PeachPenguImpact} durationInFrames={PCH6_DURATION} fps={PCH6_FPS} width={1080} height={1920} />
+      {/* langgraph-updates SHORT (longform-presentation standard, AI Engineering Simplified, 2026-11-23): 834 span frames + 90 outro = 924 f */}
+      <Composition id="LanggraphUpdatesShort" component={LanggraphUpdatesShort} durationInFrames={LGUS_DUR} fps={LGUS_FPS} width={1080} height={1920} />
+      {/* livestream-aws SHORT (longform-presentation standard, AI Engineering Simplified, 2026-11-25): 827 span frames + 90 outro = 917 f;
+          public dir media/standard/livestream-aws/_previews/short/work */}
+      <Composition id="LivestreamAwsShort" component={LivestreamAwsShort} durationInFrames={LAWSS_DUR} fps={LAWSS_FPS} width={1080} height={1920} />
     </>
   );
 };

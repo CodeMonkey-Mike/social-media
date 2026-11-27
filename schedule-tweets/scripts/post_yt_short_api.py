@@ -370,24 +370,31 @@ def upload_video(access_token, video_path, title, description, tags):
                            f"{start.status_code} {start.text[:300]}")
     session_url = start.headers["Location"]
 
-    sent = 0
-    chunk = 8 * 1024 * 1024
+    # The body MUST be a sized file-like object, never a generator. With a generator,
+    # requests adds `Transfer-Encoding: chunked` next to our Content-Length but then
+    # sends the bytes UNframed (Content-Length wins inside the adapter), so Google
+    # parses garbage chunk headers and drops the connection after the first block:
+    # SSLEOFError at "uploaded 8.0 MB", nothing published (2026-11-22, first live run).
+    # A reader with __len__ gives requests a plain Content-Length upload.
+    class _ProgressReader:
+        def __init__(self, f, total):
+            self._f, self._total, self._sent, self._last = f, total, 0, 0
 
-    def gen():
-        nonlocal sent
-        with open(video_path, "rb") as f:
-            while True:
-                b = f.read(chunk)
-                if not b:
-                    break
-                sent += len(b)
-                sys.stdout.write(f"\r  uploaded {sent / 1024 / 1024:.1f} MB")
+        def __len__(self):
+            return self._total
+
+        def read(self, n=-1):
+            b = self._f.read(n)
+            self._sent += len(b)
+            if self._sent - self._last >= 8 * 1024 * 1024 or self._sent == self._total:
+                self._last = self._sent
+                sys.stdout.write(f"\r  uploaded {self._sent / 1024 / 1024:.1f} MB")
                 sys.stdout.flush()
-                yield b
+            return b
 
-    put = requests.put(session_url, data=gen(), timeout=None,
-                       headers={"Content-Length": str(size),
-                                "Content-Type": "video/mp4"})
+    with open(video_path, "rb") as f:
+        put = requests.put(session_url, data=_ProgressReader(f, size), timeout=None,
+                           headers={"Content-Type": "video/mp4"})
     sys.stdout.write("\n")
     if put.status_code not in (200, 201):
         raise RuntimeError(f"upload failed: HTTP {put.status_code} {put.text[:300]}")

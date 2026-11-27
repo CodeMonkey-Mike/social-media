@@ -146,7 +146,8 @@ class Job:
         self.region = {"x": 0, "y": 0, "w": VERT_W, "h": VERT_H} if self.vertical else dict(CO.FULL)
         self.W, self.H = self.region["w"], self.region["h"]
         root = self.proj / "assets" / "vertical" if self.vertical else self.proj / "assets"
-        self.dirs = [Path(d).resolve() for d in a.cards_dir] if a.cards_dir else [root / "cards", root / "diagrams", root / "charts"]
+        self.dirs = [Path(d).resolve() for d in a.cards_dir] if a.cards_dir else \
+            [root / "cards", root / "diagrams", root / "charts", root / "whiteboard"]
         self.out = a.out or self.old.get("out") or f"../{self.proj.name} {'VERTICAL' if self.vertical else 'FINAL'}-v1.mp4"
         self.deck = a.deck or self.old.get("deck") or self.wide.get("deck") or f"../{self.proj.name}.html"
         self.crf = a.crf
@@ -201,12 +202,21 @@ class Job:
         plan = []
         for run in self.cues.get("runs", []):
             t_out = min(run["tOut"], self.dur)
-            f_in, f_out = round(run["tIn"] * self.fps), round(t_out * self.fps)
+            t_in = run["tIn"]
+            # a run that meets a FACE scene meets it exactly: its edge snaps onto the face window's measured edge, so
+            # no frame of the screen share (before the OBS switch) is left between the card and the face (livestream-aws
+            # 2026-11-25: the run ended 0.02 s early and one screen-share frame flashed before the face). Hard cut there.
+            for a, b in self.cues.get("face_windows", []):
+                if 0 <= a - t_out < 0.5:
+                    t_out = a
+                if 0 <= t_in - b < 0.5:
+                    t_in = b
+            f_in, f_out = round(t_in * self.fps), round(t_out * self.fps)
             segs, edges = [], [round(s["tIn"] * self.fps) - f_in for s in run["segments"]] + [f_out - f_in]
             edges[0] = 0
             for s, a, b in zip(run["segments"], edges, edges[1:]):
                 segs.append({**s, "f0": a, "frames": b - a})
-            plan.append({"id": run["id"], "in": run["tIn"], "out": t_out, "f_in": f_in, "frames": f_out - f_in,
+            plan.append({"id": run["id"], "in": t_in, "out": t_out, "f_in": f_in, "frames": f_out - f_in,
                          "lines": run["lines"], "segments": segs})
         return plan
 
@@ -217,9 +227,12 @@ class Job:
         return None
 
     def source(self, seg):
-        """(path or None, 'still' | 'page') for a segment's card."""
+        """(path or None, 'still' | 'page' | 'video') for a segment's card. A `whiteboard` card is a beat already rendered
+        (Remotion, chunked_render.py --no-audio) to assets/whiteboard/<id>.mp4 at the full frame (2026-11-25)."""
         if seg.get("kind") == "animated-chart":
             return self.find(f"{seg['card']}.html"), "page"
+        if seg.get("kind") == "whiteboard":
+            return self.find(f"{seg['card']}.mp4"), "video"
         name = f"{seg['card']}-{seg['state']}.png" if seg.get("state") else f"{seg['card']}.png"
         return self.find(name), "still"
 
@@ -246,7 +259,8 @@ class Job:
             for s in run["segments"]:
                 src, kind = self.source(s)
                 if src is None:
-                    want = f"{s['card']}.html" if kind == "page" else (f"{s['card']}-{s['state']}.png" if s.get("state") else f"{s['card']}.png")
+                    want = f"{s['card']}.html" if kind == "page" else f"{s['card']}.mp4" if kind == "video" else \
+                        (f"{s['card']}-{s['state']}.png" if s.get("state") else f"{s['card']}.png")
                     fails.append(f"{run['id']}: no file `{want}` for card {label(s)} in {', '.join(str(d) for d in self.dirs)}"
                                  + (" (the VERTICAL card set: every card is rebuilt native 1080x1920 by its builder, "
                                     "never a scaled or cropped 16:9 card; script.md 'The extras')" if self.vertical else ""))
@@ -255,6 +269,17 @@ class Job:
                     w, h = Image.open(src).size
                     if (w, h) != (self.W, self.H):
                         fails.append(f"{run['id']}: {src.name} is {w}x{h}, a cover is the full frame {self.W}x{self.H} (build it at that size)")
+                elif kind == "video":
+                    vw, vh = (int(v) for v in probe(src, "stream=width,height")[:2])
+                    if (vw, vh) != (self.W, self.H):
+                        fails.append(f"{run['id']}: {src.name} is {vw}x{vh}, a cover is the full frame {self.W}x{self.H} (render the beat at that size)")
+                    n_beat = int((probe(src, "stream=nb_frames") or ["0"])[0])
+                    if n_beat < s["frames"]:
+                        flags.append(f"{run['id']}: whiteboard beat {s['card']} is {n_beat / self.fps:.1f} s, its window {s['frames'] / self.fps:.1f} s: "
+                                     "the last drawn frame is held (re-time the beat to the cue, CUE-REPORT.md section 6)")
+                    elif n_beat > s["frames"] + 2:
+                        flags.append(f"{run['id']}: whiteboard beat {s['card']} is {n_beat / self.fps:.1f} s, its window {s['frames'] / self.fps:.1f} s: "
+                                     "it is cut at the window (re-time the beat to the cue)")
                 elif "setT" not in src.read_text(encoding="utf-8", errors="replace"):
                     fails.append(f"{run['id']}: {src.name} has no window.setT(t): an animated chart is a TIME-DRIVEN page (card-overlays.md, kind clip)")
                 if s["frames"] < self.fps:
@@ -280,13 +305,20 @@ class Job:
         for s in run["segments"]:
             src, _ = self.source(s)
             st = src.stat()
-            srcs.append([label(s), s["frames"], str(src), st.st_size, int(st.st_mtime)])
+            srcs.append([label(s), s["frames"], str(src), st.st_size,
+                         int(self._page_mtime(src)) if src.suffix == ".html" else int(st.st_mtime)])
         return {"v": 2, "frames": run["frames"], "fps": self.fps, "size": [self.W, self.H], "crf": self.crf, "segments": srcs}
+
+    @staticmethod
+    def _page_mtime(page):
+        """The newest change to an animated chart page OR the files it loads from its own folder (a shared .js / .css / data
+        .json next to it): editing a shared file must re-render the clip too (longest-bear, 2026-11-25)."""
+        return max(f.stat().st_mtime for f in page.parent.iterdir() if f.is_file() and f.suffix in (".html", ".js", ".css", ".json"))
 
     def _chart_clip(self, run, k, seg, page):
         """An animated chart rendered for exactly its window (html_clip.py: Playwright frame by frame at setT(f / fps))."""
         clip = self.runs_dir / f"_{run['id']}-{k:02d}-{seg['card']}.mp4"
-        if clip.is_file() and clip.stat().st_mtime >= page.stat().st_mtime and \
+        if clip.is_file() and clip.stat().st_mtime >= self._page_mtime(page) and \
                 (probe(clip, "stream=nb_frames") or ["0"])[0] == str(seg["frames"]):
             return clip
         print(f"  {run['id']}: rendering animated chart {seg['card']} ({seg['frames']} frames) through html_clip.py", flush=True)
@@ -315,10 +347,10 @@ class Job:
         for k, seg in enumerate(run["segments"]):
             src, kind = self.source(seg)
             n = seg["frames"]
-            if kind == "page":
-                clip = self._chart_clip(run, k, seg, src)
+            if kind in ("page", "video"):
+                clip = self._chart_clip(run, k, seg, src) if kind == "page" else src      # a whiteboard beat is rendered already
                 dec = subprocess.Popen(["ffmpeg", "-v", "error", "-i", str(clip), "-f", "rawvideo", "-pix_fmt", "rgb24", "-"],
-                                       stdout=subprocess.PIPE)
+                                       stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)   # a longer clip is closed early: a broken pipe, not an error
                 size, fade, last = W * H * 3, (min(IN_FRAMES, n) if prev is not None else 0), None
                 for i in range(n):
                     buf = dec.stdout.read(size)
@@ -398,6 +430,20 @@ class Job:
                 entry["fade_in"] = False
             if run["f_in"] + run["frames"] >= round(self.dur * self.fps):
                 entry["fade_out"] = False
+            # a FACE scene (the OBS switch to the full-camera scene) right after or before a run: the recording under
+            # the run's fade is still the OTHER scene (the screen share), so a fade would ghost the slide and the webcam
+            # in for 0.3 s before the face cut (livestream-aws short QA, 2026-11-25). Meet it with a HARD CUT.
+            for a, b in self.cues.get("face_windows", []):
+                if 0 <= a - run["out"] < 0.5:
+                    entry["fade_out"] = False
+                if 0 <= run["in"] - b < 0.5:
+                    entry["fade_in"] = False
+            # clips spliced into the spine (clip_insert.py): a cover meets them with a HARD CUT, no fade to the recording
+            for ins in self.cues.get("inserts", []):
+                if abs(run["out"] - ins["at"]) < 0.05:
+                    entry["fade_out"] = False
+                if abs(run["in"] - (ins["at"] + ins["dur"])) < 0.05:
+                    entry["fade_in"] = False
             runs.append(entry)
         keep = [c for c in self.old.get("cards", []) if not str(c.get("id", "")).startswith("run-")]
         for c in keep:
@@ -479,6 +525,14 @@ class Job:
                     dst = qa_dir / (final.stem.replace(" ", "-") + "-layout-proof.png")
                     proof.save(dst)
                     print(f"layout proof -> {dst} (the rectangles on the recording at {t:.2f} s, and the vertical frame they make)")
+        for ins in self.cues.get("inserts", []):             # one tile per spliced clip: its middle frame, in the FINAL
+            for k, c in enumerate(ins["clips"], 1):
+                t = c["start"] + c["dur"] / 2
+                fr = self._frame(final, t, tw, th)
+                im = Image.fromarray(fr) if fr is not None else Image.new("RGB", (tw, th), "black")
+                ImageDraw.Draw(im).text((6, 4), f"{ins['id']} clip {k} {t:.2f}s", fill="orange")
+                tiles.append(im)
+                n_share += 1
         if self.face_windows:
             # the FACE PROOF: per face window, the recording with the measured crop drawn on it, beside the frame it makes
             fr = json.loads(self.face_json.read_text(encoding="utf-8")) if self.face_json.is_file() else {}
@@ -601,7 +655,8 @@ def main():
     ex = job.cues.get("extras") or {}
     if a.step in ("render", "qa", "all") and not job.vertical and any(ex.values()):
         owed = (["the VERTICAL cut (this command again with --vertical)"] if ex.get("vertical") else []) \
-            + ([f"the {ex['short']} s SHORT (this track cannot make it yet: script.md 'The extras')"] if ex.get("short") else []) \
+            + ([f"the {ex['short']} s SHORT, after the vertical (run.py short --project <this project folder> "
+                f"--seconds {ex['short']}: script.md 'The extras')"] if ex.get("short") else []) \
             + (["the YT post, once the video is live (run.py ytpost --project <this project folder> --url <link>)"] if ex.get("yt_post") else [])
         print("EXTRAS named in the script header, still to make: " + "; ".join(owed))
 

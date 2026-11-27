@@ -13,8 +13,8 @@ FAIL (exit 1):
   - no `## CARDS` table, a card with an unknown kind, an animated-chart with states
   - two cards / states that would be the same still file (`<id>.png`, `<id>-<state>.png`)
   - a spoken line with no tag, an unknown tag, a tagged line with no words
-  - more than FACE_SCENES_MAX (2) FACE scenes, a FACE scene of consecutive `[FACE]` lines (Mike 2026-11-22: "up to 2 face
-    scenes"), or a `[SHOW]` line under a `[FACE]` line (a face scene shows his face, never a card)
+  - more than FACE_SCENES_MAX (3) FACE scenes, a FACE scene of consecutive `[FACE]` lines (Mike 2026-11-22: "up to 2 face
+    scenes", raised to 3 on 2026-11-25), or a `[SHOW]` line under a `[FACE]` line (a face scene shows his face, never a card)
   - a tag not written the screenplay way (its emoji, then the tag in code ticks), or a `[COVER]` carrying a card name
   - a `[COVER]` line with no `[SHOW]` line under it, a `[SHOW]` line with no `[COVER]` line above it, or one that does
     not start with `<card>:` / `<card>.<state>:`
@@ -27,6 +27,7 @@ FAIL (exit 1):
     years as digits, no "honest" lead-in, no dollar sign).
 WARN:
   - a number on a spoken line or in the CARDS table that RESEARCH.md does not contain (when RESEARCH.md is found)
+  - the spoken line before an `[INSERT]` that does not end its sentence
   - a `[COVER]` line of 3 words or fewer (its card would flash by; merge it into its neighbour)
   - no `[SCREENSHARE]` line at all (allowed: the whole video is covered)
   - a FACE scene over about 25 words (a face scene is a sentence or two to the camera, the punctuation of the video)
@@ -123,8 +124,8 @@ def lint(text, research_text=None):
     for cid, c in cards.items():
         if c["kind"] not in SC.KINDS:
             fails.append(f"line {c['n']}: card {cid} has kind '{c['kind']}'; allowed: {' | '.join(SC.KINDS)}")
-        if c["kind"] == "animated-chart" and c["states"]:
-            fails.append(f"line {c['n']}: card {cid} is an animated-chart and lists states; an animated chart is ONE clip "
+        if c["kind"] in ("animated-chart", "whiteboard") and c["states"]:
+            fails.append(f"line {c['n']}: card {cid} is a {c['kind']} and lists states; a {c['kind']} is ONE clip "
                          "that plays over its lines (v1)")
     stills = {}                             # still file name -> the card / state that owns it (ids are plain words now,
     for cid, c in cards.items():            # so `record` + state `code` could collide with a card named `record-code`)
@@ -143,8 +144,8 @@ def lint(text, research_text=None):
                          f"{e['raw'].strip()[:70]}")
             continue
         if tag not in SC.SPOKEN_TAGS:
-            fails.append(f"line {n}: unknown tag `[{tag}]`; a SCRIPT.md has five: `[SCREENSHARE]`, `[COVER]` and `[FACE]` "
-                         "(spoken), `[SHOW]` and `[NOTE]` (not spoken)")
+            fails.append(f"line {n}: unknown tag `[{tag}]`; a SCRIPT.md has six: `[SCREENSHARE]`, `[COVER]` and `[FACE]` "
+                         "(spoken), `[SHOW]`, `[NOTE]` and `[INSERT]` (not spoken)")
             continue
         if not e["text"]:
             fails.append(f"line {n}: a `[{tag}]` line with no spoken words (a direction is a `[NOTE]` line)")
@@ -186,12 +187,29 @@ def lint(text, research_text=None):
                 if "em dash" in msg:
                     continue                    # already reported for the whole file
                 fails.append(f"line {n}: {msg}")
+    seen_ids = set()
+    for ins in p["inserts"]:                 # `[INSERT]` CLIP-<NAME>: clips with their own voice spliced in (../clip-insert/clip-insert.md)
+        if ins["id"] is None:
+            continue                         # reported by the parser
+        if ins["id"] in seen_ids:
+            fails.append(f"line {ins['n']}: `[INSERT]` {ins['id']} is used twice; one id per montage")
+        seen_ids.add(ins["id"])
+        if ins["after"] is None:
+            fails.append(f"line {ins['n']}: `[INSERT]` {ins['id']} has no spoken line above it: Mike sets the clips up, the line "
+                         "ends the sentence, the clips play")
+            continue
+        setup = next((e for e in spoken if e["n"] == ins["after"]), None)
+        if setup is not None and not re.search(r"[.?!]['\")\]]*$", setup["text"].strip()):
+            warns.append(f"line {ins['n']}: the line before `[INSERT]` {ins['id']} does not end its sentence; the clips start at the "
+                         "end of that line, so it must end on a full stop")
+        if setup is not None and not any(e["n"] > ins["n"] for e in spoken):
+            fails.append(f"line {ins['n']}: `[INSERT]` {ins['id']} is the last thing in the script: he resumes after the clips")
     covers = sum(1 for e in spoken if e["tag"] == "COVER")
     shares = sum(1 for e in spoken if e["tag"] == "SCREENSHARE")
     scenes = SC.face_scenes(spoken)
     if len(scenes) > SC.FACE_SCENES_MAX:
         fails.append(f"{len(scenes)} FACE scenes (script lines {', '.join(str(s[0]) for s in scenes)}); at most "
-                     f"{SC.FACE_SCENES_MAX} (Mike 2026-11-22). Make the others `[SCREENSHARE]` or `[COVER]` lines")
+                     f"{SC.FACE_SCENES_MAX} (Mike 2026-11-22, raised to 3 on 2026-11-25). Make the others `[SCREENSHARE]` or `[COVER]` lines")
     by_n = {e["n"]: e for e in spoken}
     for sc in scenes:
         words = sum(len(by_n[n]["text"].split()) for n in sc)

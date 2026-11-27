@@ -49,6 +49,9 @@ def pascal(slug: str) -> str:
     return "".join(p[:1].upper() + p[1:] for p in re.split(r"[^A-Za-z0-9]+", slug) if p)
 
 
+MIN_TAIL = 0.30   # seconds a caption group needs before its window's end to be worth showing
+
+
 def subtract(windows, offs):
     """windows minus every OFF span (a window split by a span keeps both sides; slivers under 50 ms dropped)."""
     out = []
@@ -156,6 +159,12 @@ def main():
     rows = [(float(t), re.sub(r"\\(.)", r"\1", h)) for t, h in ROW_RE.findall(tmp.read_text(encoding="utf-8"))]
     kept = []
     for t, h in rows:
+        # A TAIL FLASH is dropped (plan-to-make-millions 2026-11-24): a group that begins under MIN_TAIL before its window
+        # ends ("it finds", 0.115 s before FACE 3's cut) is on screen for 3 frames, a flicker over the cut nobody reads
+        flash = next((fz for fa, fz in windows if fa - 0.05 <= t <= fz and fz - t < MIN_TAIL), None)
+        if flash is not None:
+            print(f"CAPTION-TAIL dropped \"{h}\" at {t:.2f}: only {flash - t:.3f} s before its window ends at {flash:.3f}")
+            continue
         if any(fa - 0.05 <= t <= fz for fa, fz in windows):
             for w, rr in fixes:
                 # WORD-BOUNDED (growth-vs-product 2026-10-23): the bare pattern rewrote the "ab" inside "accountable"

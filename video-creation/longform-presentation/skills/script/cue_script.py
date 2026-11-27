@@ -176,8 +176,20 @@ def align(lines, words):
     return res, T
 
 
-def build(script_path, words_path, spine=None, allow_missing=False, pins=None, allow_face_mismatch=False):
+def build(script_path, words_path, spine=None, allow_missing=False, pins=None, allow_face_mismatch=False, inserts_path=None):
     parsed = SC.parse(Path(script_path).read_text(encoding="utf-8"))
+    ins_rec, ins_list = None, []
+    if parsed["inserts"]:                    # `[INSERT]` clips (../clip-insert/clip-insert.md): cue the AUGMENTED spine
+        if not inserts_path or not Path(inserts_path).is_file():
+            return None, [f"the script has an `[INSERT]` line: run ../clip-insert/clip_insert.py bake first, then cue the "
+                          f"<spine>+clips.mp4 and its words JSON it wrote (no {inserts_path})"]
+        ins_rec = json.loads(Path(inserts_path).read_text(encoding="utf-8"))
+        ins_list = ins_rec["inserts"]
+        if Path(words_path).resolve() != Path(ins_rec["words"]).resolve():
+            return None, [f"the script has an `[INSERT]` line: cue the words JSON clip_insert.py wrote ({ins_rec['words']}), "
+                          "not the original; the splice moved everything after it"]
+        if spine and Path(spine).resolve() != Path(ins_rec["spine"]).resolve():
+            return None, [f"the script has an `[INSERT]` line: cue the spine clip_insert.py wrote ({ins_rec['spine']})"]
     bad = [f"line {n}: {msg}" for n, msg in parsed["problems"]]
     bad += [f"line {e['n']}: not a `[SCREENSHARE]` line or a `[COVER]` line with words and a `[SHOW]` card" for e in parsed["lines"]
             if e["tag"] not in SC.SPOKEN_TAGS or not e["text"] or (e["tag"] == "COVER" and not e["card"])]
@@ -272,12 +284,22 @@ def build(script_path, words_path, spine=None, allow_missing=False, pins=None, a
     for n, t in (pins or {}).items():                        # a pinned window start always wins (cue-pins.json)
         if int(n) in by_n:
             t_in[by_n[int(n)]] = round(float(t), 3)
+    # `[INSERT]` clips: the line BEFORE the clips ends where they start, the line AFTER starts where they end; between
+    # them the spine's own picture is the clips (no cover, no scene of his)
+    cut_after = {}                           # script line n -> (at, dur): the set-up line's window ends at `at`
+    for ins in ins_list:
+        cut_after[ins["after_line"]] = (ins["at"], ins["dur"])
+        nxt = next((j for j, e in enumerate(lines) if e["n"] > ins["line"] and j in t_in), None)
+        if nxt is not None:
+            t_in[nxt] = round(ins["at"] + ins["dur"], 3)
     live_idx = sorted(t_in)
     for i, e in enumerate(lines):
         row = {"n": e["n"], "tag": e["tag"], "card": e["card"], "state": e["state"], "text": e["text"]}
         if i in t_in:
             pos = live_idx.index(i)
             t_out = t_in[live_idx[pos + 1]] if pos + 1 < len(live_idx) else round(dur, 3)
+            if e["n"] in cut_after:
+                t_out = round(cut_after[e["n"]][0], 3)
             if res[i]:
                 heard, s0, s1 = said(first_t[i], last_t[i])
                 status, score = ("KEPT" if res[i]["score"] >= KEPT else "CHANGED"), res[i]["score"]
@@ -302,7 +324,8 @@ def build(script_path, words_path, spine=None, allow_missing=False, pins=None, a
     problems = []
     live = [r for r in out_lines if r["status"] != "MISSING"]
     for a, b in zip(live, live[1:]):
-        if not (a["tIn"] < b["tIn"] and abs(a["tOut"] - b["tIn"]) < 1e-6):
+        gap = cut_after[a["n"]][1] if a["n"] in cut_after else 0.0       # the clips sit between these two lines
+        if not (a["tIn"] < b["tIn"] and abs(a["tOut"] + gap - b["tIn"]) < 1e-3):
             problems.append(f"windows not monotonic at script lines {a['n']} -> {b['n']} ({a['tIn']} -> {b['tIn']})")
     if live and not live[-1]["tIn"] < live[-1]["tOut"]:
         problems.append(f"the last line's window is empty ({live[-1]['tIn']} -> {live[-1]['tOut']})")
@@ -332,6 +355,8 @@ def build(script_path, words_path, spine=None, allow_missing=False, pins=None, a
         else:
             cur["segments"].append({"card": r["card"], "state": r["state"], "kind": parsed["cards"].get(r["card"], {}).get("kind", "card"),
                                     "tIn": r["tIn"], "tOut": r["tOut"], "lines": [r["n"]]})
+        if r["n"] in cut_after:
+            cur = None                                       # the clips end the run: the next cover starts a new one
     for run in runs:
         for seg in run["segments"]:
             if seg["tOut"] - seg["tIn"] < 1.0:
@@ -342,6 +367,18 @@ def build(script_path, words_path, spine=None, allow_missing=False, pins=None, a
     face_windows, face_check = [], []
     if has_face:
         face_windows = [list(w) for w in FS.detect(spine)]
+        for ins in ins_list:                 # a pillarboxed clip has black side bars too: never a face window, never zoomed
+            a0, a1 = ins["at"], ins["at"] + ins["dur"]
+            cut = []
+            for w, z in face_windows:
+                if z <= a0 or w >= a1:
+                    cut.append([w, z])
+                    continue
+                if w < a0:
+                    cut.append([w, a0])
+                if z > a1:
+                    cut.append([a1, z])
+            face_windows = cut
         for r in live:
             if r["tag"] != "FACE":
                 continue
@@ -375,6 +412,7 @@ def build(script_path, words_path, spine=None, allow_missing=False, pins=None, a
             "project": parsed["settings"].get("project"),
             "extras": SC.extras(parsed["settings"])[0],     # vertical / short / yt post, as named in the header (absent = off)
             "cards": {k: {"kind": v["kind"], "states": v["states"]} for k, v in parsed["cards"].items()},
+            "inserts": ins_list,                            # the clips spliced into the spine (clip_insert.py): where and how long
             "lines": out_lines, "adlibs": adlibs, "number_mismatches": mism, "runs": runs, "flags": flags,
             "face_windows": face_windows, "face_check": face_check, "allow_face_mismatch": bool(allow_face_mismatch),
             "problems": problems, "machine": machine}
@@ -455,6 +493,11 @@ def report(cues):
         for c in cues.get("face_check", []):
             L.append(f"- script line {c['n']} `[FACE]`, said {mmss(c['said_in'])} to {mmss(c['said_out'])}: "
                      + ("on the full-camera scene" if c["ok"] else f"**only {c['on_face_s']:.2f} s on the full-camera scene**"))
+    if cues.get("inserts"):
+        L += ["", "## 5c. Clips spliced in (their own voice; `clip_insert.py`)", ""]
+        for ins in cues["inserts"]:
+            L.append(f"- {ins['id']}: {len(ins['clips'])} clip(s), {mmss(ins['at'])} to {mmss(ins['at'] + ins['dur'])} ({ins['dur']:.2f} s), "
+                     f"after script line {ins['after_line']}; no cover plays over them")
     L += ["", "## 6. Cover runs (one clip each, built by `cover_runs.py`)", ""]
     if cues["runs"]:
         L += ["| run | from | to | length | cards in order |", "|---|---|---|---|---|"]
@@ -483,6 +526,9 @@ def main():
     ap.add_argument("--allow-missing", action="store_true", help="Mike dropped the missing [COVER] lines on purpose: do not fail on them")
     ap.add_argument("--allow-face-mismatch", action="store_true",
                     help="Mike accepts a [FACE] line that is not on the full-camera scene: a flag, not a failure")
+    ap.add_argument("--inserts", default=None,
+                    help="`[INSERT]` clips: <out-dir>/inserts.json from clip_insert.py bake (default); then --words / --spine are the "
+                         "<spine>+clips files it wrote")
     ap.add_argument("--pin", action="append", default=[], metavar="LINE=SECONDS",
                     help="pin a script line's window start by hand (repeatable; saved in <out-dir>/cue-pins.json, re-applied every run)")
     a = ap.parse_args()
@@ -495,7 +541,8 @@ def main():
     if a.pin:
         out_dir.mkdir(parents=True, exist_ok=True)
         pins_p.write_text(json.dumps(pins, indent=1) + "\n", encoding="utf-8", newline="\n")
-    cues, problems = build(a.script, a.words, a.spine, a.allow_missing, pins, a.allow_face_mismatch)
+    cues, problems = build(a.script, a.words, a.spine, a.allow_missing, pins, a.allow_face_mismatch,
+                           a.inserts or str(out_dir / "inserts.json"))
     if cues is None:
         for p in problems:
             print(f"  FAIL  {p}")

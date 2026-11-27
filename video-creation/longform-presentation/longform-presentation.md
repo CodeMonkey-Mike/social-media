@@ -172,7 +172,7 @@ with the silence definition and the Enhance Speech choice. Scripted =
 Mike reads a light `SCRIPT.md`, written like a longform-edited screenplay (the same tags, `[SHOW]` lines naming each card), whose lines are `[COVER]` (a deck card, a chart still or an animated chart fills
 the whole frame and hides the recording, webcam and CTA included) or `[SCREENSHARE]` (the
 recording as filmed); most of the runtime is covered, the cards are built BEFORE he records, the spine is this
-format's spine (no blackout; up to 2 full-camera face scenes, centred, `skills/script/script.md` "Face scenes"), and after the transcript three commands finish it: `lint_script.py`,
+format's spine (no blackout; up to 3 full-camera face scenes, centred, `skills/script/script.md` "Face scenes"), and after the transcript three commands finish it: `lint_script.py`,
 `cue_script.py` (windows + the number check), `cover_runs.py` (one clip per run of covers, the same single ffmpeg
 render, a leak check). Everything else about that option lives in the skill, not here.
 

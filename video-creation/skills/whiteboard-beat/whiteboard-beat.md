@@ -139,3 +139,13 @@ The vertical lane has no whiteboard path yet: `v_assets` halts on a video that c
   (`PlankTrack` in `bank.tsx`, `BankFacade rail={{ planks: true, ... }}`) cannot. A hexagon around a solid dot inside concentric rings
   reads as a hex nut / a target, never a coin: a token carries a "$" (`HexToken`, no amount, so the no-numbers rule holds). A builder
   round whose stills were never shot is invisible to visual-qa: the stills are the deliverable, shoot them before returning.
+- **plan-to-make-millions WB1, round 5 (2026-11-24), what visual-qa caught on the paper-pastel pen:** a thing GHOSTED with opacity
+  lets whatever it rests on show through it, and the eye reads that as the surface painted OVER the thing: faded coins at opacity
+  0.26 on a sieve showed its mesh and rim through them on 10 of 16 stills ("tangled in the net"), although the sieve was painted
+  under them. A ghost that rests on something drawn stays OPAQUE and only loses its colour (`SmallCoin ghost`: a paper disc under
+  the washed-out coin); `opacity` is for a thing leaving the scene. When visual-qa names a draw-order defect, check the paint order
+  AND the opacity before moving layers. A thing resting on a tilted disc (a sieve, a tier) stands with its foot on the BACK half,
+  inboard of the ellipse's tips (the disc has no depth there: a coin on the tip read as "stuck on the edge"), covers the back rim
+  decisively (a coin top running along the rim kisses it) and takes a contact shadow on the surface (`RestShadow`). So the row a
+  disc can hold is set by its width minus ~20 px each end, measured before the storyboard picks how many pass each stage. A thing
+  turned away keeps a tell of what it was (`CoinFlag down`: a limp grey flag), or it is lost among the things never picked.

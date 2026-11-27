@@ -9,6 +9,8 @@ same tags, each with its emoji and in code ticks, under the same `## CH<n> - <TI
            `[FACE]` Mike on his full-camera OBS scene, his face centred (at most FACE_SCENES_MAX scenes; 2026-11-22)
   silent:  `[SHOW]` <card>[.<state>]: what is on screen for the `[COVER]` lines ABOVE it (back to the previous `[SHOW]`
            line, `[SCREENSHARE]` line or heading)  |  `[NOTE]` a note to Mike
+           `[INSERT]` CLIP-<NAME>: third-party clips, each with its OWN voice, spliced in after the spoken line above it
+           (2026-11-25, longest-bear; ../clip-insert/clip-insert.md): the recording pauses, the clips play full frame
 So a `[COVER]` line carries no card name: its card and state come from the `[SHOW]` line under it.
 
 parse(text) -> {
@@ -24,7 +26,9 @@ parse(text) -> {
 """
 import re
 
-KINDS = ("card", "chart-still", "animated-chart")
+# `whiteboard` (2026-11-25, longest-bear): a hand-drawn beat rendered by the whiteboard-builder's Remotion comp to
+# assets/whiteboard/<id>.mp4 (1920x1080, no audio); like an animated chart it is ONE clip over its lines, with no states.
+KINDS = ("card", "chart-still", "animated-chart", "whiteboard")
 SETTINGS = ("project", "channel", "silence", "enhance speech")
 # The EXTRAS Mike may name when he starts the video (2026-11-15; script.md, "The extras"): optional header rows, a
 # missing row = off. `vertical` on | off (the full 9:16 cut), `short` off | on | <seconds> (on = 30), `yt post` on | off.
@@ -32,17 +36,19 @@ EXTRAS = ("vertical", "short", "yt post")
 SHORT_DEFAULT_S = 30
 SPOKEN_TAGS = ("COVER", "SCREENSHARE", "FACE")
 # a FACE SCENE = consecutive `[FACE]` lines (a `[NOTE]` between them does not split it). Mike 2026-11-22: "a few screenshare
-# scenes, and up to 2 face scenes" (script.md, "Face scenes").
-FACE_SCENES_MAX = 2
-SILENT_TAGS = ("SHOW", "NOTE")
+# scenes, and up to 2 face scenes" (script.md, "Face scenes"); raised to 3 on 2026-11-25 (longest-bear: "Raise the cap to 3").
+FACE_SCENES_MAX = 3
+SILENT_TAGS = ("SHOW", "NOTE", "INSERT")
 # How each tag is WRITTEN: its emoji, then the tag in code ticks, exactly as a longform-edited screenplay writes it, so a
 # script previews like a screenplay. The emoji are the screenplay lint's own table (lint_screenplay.EMOJI); this copy
 # keeps the parser import-free and lint_script.py fails if the two ever differ.
-EMOJI = {"SCREENSHARE": "\U0001F5A5️", "COVER": "\U0001F5E3️", "FACE": "\U0001F464", "SHOW": "\U0001F3AC", "NOTE": "\U0001F4AC"}
+EMOJI = {"SCREENSHARE": "\U0001F5A5️", "COVER": "\U0001F5E3️", "FACE": "\U0001F464", "SHOW": "\U0001F3AC", "NOTE": "\U0001F4AC",
+         "INSERT": "\U0001F39E️"}
 
 TAG_RE = re.compile(r"^\[([A-Za-z][A-Za-z-]*)(?:[ \t]+([^\]]*))?\][ \t]*(.*)$")
 LEAD = re.compile(r"^([^\x00-\x7f]+)[ \t]*")             # the tag's emoji
 TICKED_TAG = re.compile(r"^`(\[[^\]`]*\])`")             # the tag in code ticks (a gray chip in the Markdown preview)
+INSERT_REF = re.compile(r"^`?(CLIP-[A-Za-z0-9-]+)`?[ \t]*:[ \t]*(.*)$")        # `[INSERT]` CLIP-<NAME>: what plays
 SHOW_REF = re.compile(r"^`?([A-Za-z][A-Za-z0-9_-]*?)(?:\.([A-Za-z0-9_-]+))?`?[ \t]*:[ \t]*(.*)$")
 CHAPTER_RE = re.compile(r"^(?:CH[ \t]*\d|SLIDE\b)", re.I)  # `## CH3 - THE GRAPH` (the screenplay's heading); `## SLIDE 3 - ...` still reads
 PAREN = re.compile(r"\([^()]*\)")
@@ -64,6 +70,7 @@ def spoken_text(rest):
 
 def parse(text):
     settings, cards, lines, shows, tagged, problems = {}, {}, [], [], [], []
+    inserts = []
     section, kind = None, "head"            # head | cards | slide | other
     pending = []                            # the `[COVER]` lines still waiting for the `[SHOW]` line under them
 
@@ -118,6 +125,16 @@ def parse(text):
                 tagged.append((n, tag, ticked and emoji == EMOJI[tag]))
             if tag == "NOTE":
                 continue                     # a note to Mike: never spoken, never cued
+            if tag == "INSERT":
+                scene_ends()                 # the covers above it need their `[SHOW]` line first
+                r = None if arg else INSERT_REF.match(rest.strip())
+                prev = lines[-1] if lines else None
+                if not r:
+                    problems.append((n, "`[INSERT]` starts with the clip's id, then a colon: `[INSERT]` CLIP-<NAME>: what plays "
+                                        f"(clips with their own voice, spliced in after the line above): {s[:60]}"))
+                inserts.append({"n": n, "id": r.group(1) if r else None, "text": (r.group(2) if r else rest).strip(),
+                                "after": prev["n"] if prev else None, "after_tag": prev["tag"] if prev else None})
+                continue
             if tag == "SHOW":
                 r = None if arg else SHOW_REF.match(rest.strip())
                 sh = {"n": n, "card": r.group(1) if r else None, "state": r.group(2) if r else None,
@@ -154,7 +171,8 @@ def parse(text):
             continue                         # a bold signpost label on its own line
         lines.append({"n": n, "tag": None, "card": None, "state": None, "text": spoken_text(s), "raw": raw, "section": section})
     scene_ends()
-    return {"settings": settings, "cards": cards, "lines": lines, "shows": shows, "tagged": tagged, "problems": problems}
+    return {"settings": settings, "cards": cards, "lines": lines, "shows": shows, "tagged": tagged, "problems": problems,
+            "inserts": inserts}
 
 
 def extras(settings):

@@ -63,7 +63,17 @@ python <repo>/video-creation/skills/cover-blackout/scripts/blackout_spans.py "<s
     --out "<spine>.blackout.mp4"  --cover a-b --cover a-b ...
 ```
 (Or `--face a-b ...` to pass the KEEP spans instead and let the tool black the complement.) Audio is
-copied; the tool prints the % of runtime blacked and confirms zero drift.
+copied; the tool prints the % of runtime blacked and confirms zero drift. A span paints the frames with
+`start <= t < end` on the file's own timestamps.
+
+**Painting one RECTANGLE instead of the whole frame (2026-11-23):** `--rect x,y,w,h`. The case it was added for:
+a screen-share recording made with the wrong channel's CTA panel on (langgraph-updates: the crypto channel's Premium
+Membership panel on an AI Engineering Simplified take, `longform-presentation.md` "Recording notes"). The same
+"paint, never cut" rules hold. Find the span from the PICTURE, frame by frame (the panel's own colours), never from
+the transcript, and widen it through any OBS scene fade so no faint copy ghosts in; keep it off the full-camera
+scenes, where the rectangle is his picture. **`--crf 18`** whenever the painted file is a deliverable spine (a
+presentation spine is): the default NVENC 2 Mbps encode is only right for a longform-edited blackout base that the
+comp covers anyway.
 
 **5. QA — verify by FRAME, not by trusting the math.** Extract a still from the middle of each
 blackout span (must be **pure black**) and from the middle of each FACE beat (must show the **face**),
@@ -91,3 +101,6 @@ Sidecars carry the same stem (e.g. `<CH>.a.defumbled._chunkmap.txt`, `<CH>.b.bla
   top...") + FACE tail ("Somebody with serious size...") with the whole 28M-buy / custody / 42M-coins
   middle as COVER → one blackout span 13.259-63.879 on the defumbled spine (paint method, audio
   untouched, 0ms drift). Recurring ask across prior videos that had never been factored into a tool.
+- 2026-11-23: `--rect` and `--crf` added for the langgraph-updates presentation (the crypto CTA panel painted out
+  of its first screen-share minutes as stage b, `ALL.b.blackout.mp4`). Span edges moved from `between()` (both ends
+  inclusive) to `gte(t,a)*lt(t,b)`, the form the rest of the repo uses.

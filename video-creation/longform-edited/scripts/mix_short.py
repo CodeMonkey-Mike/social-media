@@ -19,6 +19,7 @@ import json
 import re
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -27,6 +28,8 @@ REPO = HERE.parents[2]
 CTA = REPO / "video-creation" / "assets" / "vo" / "cta-watch-full.mp3"
 WHOOSH = REPO / "video-creation" / "assets" / "sfx" / "transition_rapid_whoosh-tight.wav"
 XFADE = 0.012
+LIBRARY = REPO / "video-creation" / "assets" / "music" / "library.json"
+UNDER_LU = 17.0   # a bed with no measured seat sits this far under the voice (longform-presentation drone_bed.py's level)
 
 
 def duration(p):
@@ -42,6 +45,26 @@ def lufs_peak(p):
     m = re.findall(r"I:\s+(-?[\d.]+) LUFS", r.stderr)
     k = re.findall(r"Peak:\s+(-?[\d.]+) dBFS", r.stderr)
     return (float(m[-1]) if m else None), (float(k[-1]) if k else None)
+
+
+def library_file(track_id):
+    """The audio file of a music-library track id (a presentation drone plan names the track, not a repo path)."""
+    row = next((r for r in json.loads(LIBRARY.read_text(encoding="utf-8"))["tracks"] if r["id"] == track_id), None)
+    return REPO / "video-creation" / row["folder"] / row["primary_file"] if row else None
+
+
+def seat_db(bed_file, bed_in, total, wavs):
+    """Gain that puts the bed's cut UNDER_LU below the integrated loudness of the VO spans."""
+    with tempfile.TemporaryDirectory() as tmp:
+        vo, cut = Path(tmp) / "vo.wav", Path(tmp) / "bed.wav"
+        ins = [x for w in wavs for x in ("-i", str(w))]
+        subprocess.run(["ffmpeg", "-y", "-v", "error", *ins, "-filter_complex",
+                        "".join(f"[{i}:a]" for i in range(len(wavs))) + f"concat=n={len(wavs)}:v=0:a=1[a]", "-map", "[a]", str(vo)], check=True)
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", f"{bed_in:.3f}", "-t", f"{total:.3f}", "-i", str(bed_file), str(cut)], check=True)
+        v, b = lufs_peak(vo)[0], lufs_peak(cut)[0]
+    if v is None or b is None:
+        sys.exit("FATAL: could not measure the VO / bed loudness to seat the bed")
+    return round(v - UNDER_LU - b, 2)
 
 
 def main():
@@ -93,8 +116,16 @@ def main():
     bed_in = 0.0
     if bed:
         bed_file = REPO / bed["source_file"] if not Path(bed["source_file"]).is_absolute() else Path(bed["source_file"])
-        bed_db = a.bed_db if a.bed_db is not None else float(bed.get("remotion_gain_db"))
+        if not bed_file.is_file() and bed.get("track_id"):
+            bed_file = library_file(bed["track_id"])
+        if not bed_file or not bed_file.is_file():
+            print(f"FATAL: bed file not found: {bed.get('source_file')}", file=sys.stderr)
+            sys.exit(2)
         bed_in = float(bed.get("source_in") or 0.0)
+        bed_db = a.bed_db if a.bed_db is not None else bed.get("remotion_gain_db")
+        if bed_db is None:   # no measured seat in the plan (a presentation drone bed): seat it by measurement
+            bed_db = seat_db(bed_file, bed_in, total, [work / s["wav"] for s in spans])
+        bed_db = float(bed_db)
     # a bed CUT shorter than its seat + the short runs out early, and the audio ended before the picture (left-behind
     # 2026-11-03: a 37 s chorus cut seated at 6.6 s ended at 30.44 s under a 31.03 s short). Seat it earlier so the bed
     # covers the whole short; the apad on the mix below is the last-resort guard (silence, never a short stream).

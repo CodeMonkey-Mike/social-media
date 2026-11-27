@@ -73,6 +73,15 @@ that video or the carousel was produced), in the channel's authority register.
   pixels are byte-identical to the source. Worked example while the project exists:
   `longform-presentation/media/standard/clip-evals/thumbnail/yt_post_face.py`. **Never a narrow crop of just him:** the
   square forces it to scale up, and visual-qa failed slides 1 and 10 for it (a 35% oversize face, forehead off the top).
+- **A LIGHT-theme video (in code, `build_yt_post.py` `LIGHT_LOCAL`; plan-to-make-millions, 2026-11-24):** the middle slides
+  are light, but the two PICTURE slides (hook, cta) sit on a photo the ramps darken in every theme, so their words take
+  the dark sheet's ink and, with no accent sheet, its bright accent (under the light sheet the hook headline and the
+  channel link were near black on black). An `image` slide's box takes the paper colour, never black bars: give the
+  `crop` the box's shape (about 1.93 wide to 1 high with a one-line headline and a two-line caption).
+- **A video whose thumbnail was composed, not shot from a frame (no `thumbnail/stills/`):** pass `--face` the clean
+  portrait the thumbnail was built from (plan-to-make-millions: `thumbnail/refs/mike-portrait-plate.png`), full width.
+- **Four `rows` fit only when at most two of them wrap to a second line** (a value line holds about 28 characters); four
+  two-line rows run into the footer and `y_build` fails.
 - **Facts:** every number and claim on a slide was SAID in the video and is in DATA.md, and the video's guard notes hold
   (in code: `y_plan` fails an unsourced number). No targets, no ranks, no mid-roll plug.
 - Persona: no em dashes; money on a slide is written with the word ("7.5 trillion dollars"), the cashtag lives in the

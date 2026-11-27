@@ -129,6 +129,12 @@ a mode inside them (the detector is the YT post lane's, now in `common.py`). Wha
 - **Hand-run artifacts are reused:** a captions file newer than `spans.json` is kept (`--redo s_captions` regenerates it), and
   the first hand render `<p>-SHORT-video.mp4` counts as the render. Free talk (no `cues.json`) is not supported yet.
 - Worked example: clip-evals, 2026-11-17 (the lane's re-run gave back the hand-run short byte for byte).
+- **A vertical with a LEAD-IN the spine does not carry (longest-bear 2026-11-25: a 16 s AI cold open that starts 7 s before
+  the spine's 0:00; in code `short_graph._pres_clock`):** write `overlays/vertical-clock.json`
+  `{"lead_s": <vertical - spine>, "vo": "../<VO file on the vertical's clock>", "note": "<what the cold open shows, with times>"}`.
+  The VO file = the cold open's own audio, then the spine shifted by `lead_s`, the same length as the vertical (no music bed in
+  it). Words, SCREENSHARE and whiteboard windows are shifted by the lead. A span may be `sourced: FACE` on this track too.
+- **A drone-bed MUSIC-PLAN has no measured seat:** `mix_short.py` finds the file by `track_id` and seats it 17 LU under the VO.
 
 ### Caption windows are whole FRAMES (in code, `s_captions`, clip-evals 2026-11-17)
 A window end written as 4.367 s let a caption ride one frame past the seam at 131/30 = 4.36667 s onto the next span's card.

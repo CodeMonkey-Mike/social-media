@@ -391,8 +391,8 @@ def await_recording(state: LongformState) -> LongformState:
     return C.placeholder(
         state, "await_recording",
         how=f"Record the take(s) off SCREENPLAY.md into `{proj / 'raw'}` (the OBS master, "
-            f"named `{state.get('scope', 'ALL')}.mkv` for a single take, or by chapter range). "
-            "Never edit or delete a master.",
+            f"named `{state.get('scope', 'ALL')}.mkv` for a single take, or by chapter range; several takes are joined "
+            "in name order into one proxy by the compress node). Never edit or delete a master.",
         artifact=lambda: bool(C.raw_takes(proj)), artifact_desc="a master in raw/")
 
 
@@ -412,6 +412,35 @@ def _pick_raw(proj: Path, scope: str) -> Optional[Path]:
     if named:
         return named[0]
     return takes[0] if len(takes) == 1 else None
+
+
+def _natural(p: Path):
+    return [int(x) if x.isdigit() else x.lower() for x in re.split(r"(\d+)", p.name)]
+
+
+def _raw_for_proxy(proj: Path, scope: str) -> list:
+    """The raw take(s) the proxy is built from: the take named <scope>, or the only take, or, for scope ALL with
+    SEVERAL takes and none named ALL, EVERY take in natural name order (OBS names its files by start time, and
+    chapter-range names sort the same way): to_low_bps.py joins them into ONE proxy and the chain runs once
+    (Mike 2026-11-23, plan-to-make-millions: Chapter 1 recorded as one file, the rest as another)."""
+    one = _pick_raw(proj, scope)
+    if one:
+        return [one]
+    takes = C.raw_takes(proj)
+    return sorted(takes, key=_natural) if scope == "ALL" and len(takes) > 1 else []
+
+
+def _takes_json(lowbps: Path) -> Path:
+    return lowbps.with_name(lowbps.name[:-4] + ".takes.json")
+
+
+def _take_boundaries(lowbps: Path) -> list:
+    """[(file, start s)] of every take AFTER the first in a joined proxy; [] for a single-take proxy."""
+    try:
+        takes = json.loads(_takes_json(lowbps).read_text(encoding="utf-8")).get("takes") or []
+        return [(str(t["file"]), float(t["start"])) for t in takes[1:]]
+    except Exception:
+        return []
 
 
 def _av_end_drift(path: Path) -> Optional[float]:
@@ -455,10 +484,10 @@ def compress(state: LongformState) -> LongformState:
     sp = C.spine_paths(proj, scope)
     if not state.get("stub") and sp["lowbps"].is_file() and not _redo(state, node):
         return {"steps": C._step(state, node, "skipped", f"{sp['lowbps'].name} present")}
-    raw = None if state.get("stub") else _pick_raw(proj, scope)
-    if not state.get("stub") and raw is None:
+    takes = [] if state.get("stub") else _raw_for_proxy(proj, scope)
+    if not state.get("stub") and not takes:
         return C._fail(state, node, f"could not pick the raw take in raw/ (name it {scope}.mkv per comp-build.md 13a)")
-    args = [sys.executable, "-u", str(C.SCRIPTS / "to_low_bps.py"), str(raw), "--out", str(sp["lowbps"])]
+    args = [sys.executable, "-u", str(C.SCRIPTS / "to_low_bps.py"), *[str(t) for t in takes], "--out", str(sp["lowbps"])]
     cmd = C.stub_cmd(node, state["stub"], ["to_low_bps stub"]) if state.get("stub") else args
     rc, out = C.run_streaming(cmd, state, node)
     if rc != 0:
@@ -467,10 +496,15 @@ def compress(state: LongformState) -> LongformState:
         return {"steps": C._step(state, node, "stub")}
     if not sp["lowbps"].is_file():
         return C._fail(state, node, f"{sp['lowbps']} not written")
-    d_in, d_out = _duration(raw), _duration(sp["lowbps"])
-    if d_in and d_out and abs(d_in - d_out) > 1.0:
-        return C._fail(state, node, f"proxy duration {d_out:.2f}s != master {d_in:.2f}s")
-    return {"steps": C._step(state, node, "ran", f"{sp['lowbps'].name} ({d_out or 0:.1f}s)")}
+    durs = [_duration(t) for t in takes]
+    d_in, d_out = (sum(durs) if all(durs) else None), _duration(sp["lowbps"])
+    if d_in and d_out and abs(d_in - d_out) > 1.0 * len(takes):
+        return C._fail(state, node, f"proxy duration {d_out:.2f}s != master {d_in:.2f}s"
+                                    + (f" ({len(takes)} takes joined)" if len(takes) > 1 else ""))
+    if len(takes) > 1 and len(_take_boundaries(sp["lowbps"])) != len(takes) - 1:
+        return C._fail(state, node, f"{_takes_json(sp['lowbps']).name} does not list the {len(takes)} joined takes")
+    joined = (f" = {len(takes)} takes joined in name order: " + ", ".join(t.name for t in takes)) if len(takes) > 1 else ""
+    return {"steps": C._step(state, node, "ran", f"{sp['lowbps'].name} ({d_out or 0:.1f}s){joined}")}
 
 
 def _agent_step(state, node, agent, prompt, out_path: Path, check, skip_detail):
@@ -531,6 +565,15 @@ def defumble(state: LongformState) -> LongformState:
               "SPOKEN INSTRUCTIONS: Mike sometimes stops and tells the editor what to do (re-order a line, use a take, drop or "
               "keep something). Follow each one, cut the instruction itself from the spine, and list every one in your "
               "report with its timecode and what you did. A note you cannot carry out with a cut goes in the report as a flag.")
+    bounds = _take_boundaries(sp["lowbps"])
+    if bounds:
+        prompt += ("\nRECORDING BOUNDARIES: this proxy is " + str(len(bounds) + 1) + " separate recordings joined in order (Mike "
+                   "stopped the recorder and started it again): " + "; ".join(f"`{f}` starts at {t:.2f} s" for f, t in bounds)
+                   + f" (`{_takes_json(sp['lowbps'])}`). The join is a hard cut in picture and sound, not a pause Mike made: treat "
+                   "each boundary as a take boundary. The tail of the recording before it (after its last clean sentence) and the "
+                   "head of the recording after it (before its first clean sentence) are dead air to cut like any gap between takes, "
+                   "the same line said at the end of one recording and again at the start of the next is a retake (keep the last "
+                   "clean one), and no kept span may run across a boundary. List each boundary in your report with what you cut around it.")
     return _agent_step(state, node, "defumbler", prompt, sp["a"],
                        lambda: _spine_check(sp["a"], shorter_than=sp["lowbps"]),
                        f"{sp['a'].name} present")
@@ -780,7 +823,13 @@ def enhance_handoff(state: LongformState) -> LongformState:
         return {"steps": C._step(state, node, "skipped", f"{fs.name} already carries the enhanced track")}
     wav = _enhance_wav(proj)
     if not wav.is_file() or wav.stat().st_mtime < fs.stat().st_mtime or _redo(state, node):
-        rc, out = C.run_streaming(["ffmpeg", "-v", "error", "-y", "-i", str(fs), "-vn", "-c:a", "pcm_s16le", str(wav)], state, node)
+        # A decode that HONOURS the timestamps (aresample async): desilence.py renders a long spine in parts and joins them
+        # stream-copied, and a plain decode keeps ~23 ms of AAC priming per later part as audio, so the WAV (and the enhanced
+        # track remuxed from it) would run late against the picture toward the end (measured on clip-evals 2026-11-16:
+        # 236 ms over 8 parts). A spine with no part joins decodes the same either way.
+        rc, out = C.run_streaming(["ffmpeg", "-v", "error", "-y", "-i", str(fs), "-vn", "-map", "0:a:0",
+                                   "-af", "aresample=async=1:min_hard_comp=0.010:first_pts=0",
+                                   "-c:a", "pcm_s16le", str(wav)], state, node)
         if rc != 0 or not wav.is_file():
             return C._fail(state, node, f"ffmpeg could not write {wav.name}", out)
     d_fs, d_wav = _duration(fs) or 0.0, _duration(wav) or 0.0

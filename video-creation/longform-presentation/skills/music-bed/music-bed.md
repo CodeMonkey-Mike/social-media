@@ -51,3 +51,24 @@ python video-creation/longform-presentation/skills/music-bed/music_bed.py "media
 - Mike skips Adobe Enhance Speech on the coding format (it needs an mp4 round trip through Podcast Studio and the
   voice is fine as recorded), so the music is mixed in here and the FINAL is the upload.
 - `musical outtro.mp3` sits next to the intro and is NOT used (print-function had none). Add it only when asked.
+
+## The drone bed on a scripted video (Mike, 2026-11-25, longest-bear: "use a Drone music track for background music")
+
+`drone_bed.py` (this folder) is the SCRIPTED track's bed, a different tool from `music_bed.py` above: no intro sting, no spoken
+cue, no random elevator pick, no loop-point search. A drone is one continuous tone, so the library track
+(`tissue-healing-285-hz`, tagged `drone`, 187 s, never used before longest-bear) is looped end to end with a 4 s equal-power
+crossfade, minus its last 12 s (the file ends on a hit), fades in over 3 s and out over the last 4 s.
+
+```
+python video-creation/longform-presentation/skills/music-bed/drone_bed.py "<project> NOMUSIC.mp4" --out "<project> FINAL-v1.mp4"
+    [--track <library id>] [--under 17] [--inserts <project>/overlays/inserts.json] [--dry-run]
+```
+- Run it on the cover-run render (render it with `cover_runs.py --out "../<p> NOMUSIC.mp4"`). The picture is stream-copied; the
+  audio is decoded, the bed added, encoded once at 320 kbps AAC. Never on a video that already has the bed.
+- **Level by measurement**: the bed is placed `--under` LU below the voice's integrated loudness (default 17; Mike's range is
+  16 to 18, `feedback_music_bed_level`); the printed gain is the Premiere-style clip gain he thinks in (about -28 dB on
+  longest-bear's fixture, inside his -20 to -35 habit). `--dry-run` measures and prints without writing.
+- **Duck**: 14 dB under every spliced clip (`overlays/inserts.json`, 0.3 s ramps), the longform-edited rule.
+- The track's `yt_license_code` is printed; it goes in the YouTube description. Record the track in the usage ledger
+  (`video-creation/skills/usage-ledger/usage-ledger.md`) when the video is delivered.
+- A level round is a re-run to `-v<N+1>` with a different `--under`.

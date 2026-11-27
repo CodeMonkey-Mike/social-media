@@ -87,6 +87,11 @@ python scripts/to_low_bps.py "media/<project>/raw/<scope>.mkv" --out "media/<pro
 - Default target 2 Mbps video + AAC 128k (maxrate/bufsize auto-scale off `--bps`). Write it into `spine/`
   as `<scope>.lowbps.mp4` (pass `--out`; the default writes beside the source). Override bitrate with
   `--bps 2.5M`. (`<scope>` = `ALL` for a single continuous take, or `CH1-CH3` / `CH7` for segmented raws.)
+- **Several takes in `raw/` (Mike stopped the recorder and started again):** pass every take, in order, and they
+  are joined into the ONE proxy in the same encode (`to_low_bps.py "<take 1>" "<take 2>" --out
+  "spine/ALL.lowbps.mp4"`; the concat filter, sync-safe, nothing cut; `ALL.lowbps.takes.json` = where each take
+  starts). The graph's `compress` node does this on its own when `raw/` holds more than one take and none is named
+  `ALL` (name order = OBS start-time order), and tells the defumbler where the boundaries are.
 - **No hard floor here** (unlike presentation's 2 Mbps slide-text rule) — this track has no
   fine on-screen text to protect, so you can go lighter for a talking-head source if you want a
   smaller working file. Keep the master `.mkv` pristine; the edit's quality comes from re-grabbing

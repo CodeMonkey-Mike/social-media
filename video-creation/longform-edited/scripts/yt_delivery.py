@@ -44,6 +44,8 @@ headings instead, timed and named by the same rules, and prints no music line.
 A project with NO MUSIC-PLAN.json (a longform-presentation format) names its chapters in yt-delivery.json as
 `"chapter_stamps": [["0:00", "Intro"], ["1:25", "..."]]` (none = no chapter block) and its music as
 `"music_track_ids": ["..."]` (resolved through the same library; none = no music line).
+A project that HAS a MUSIC-PLAN but writes `chapter_stamps` (a presentation drone bed under the whole video) takes its
+chapters from the stamps and its music codes from the plan.
 Writes `YT-DELIVERY.md` at the project root and prints the block; hand it to Mike exactly as printed.
 Machine line: YT-DELIVERY ok|FAIL title=0|1 description=N hashtags=N chapters=N codes=N keywords=N misspellings=N tag_chars=N
 """
@@ -172,7 +174,9 @@ def main():
     # CHAPTERS
     over = judg.get("chapters") or {}
     chapters, done = [], set()
-    if plan is not None:
+    # explicit `chapter_stamps` win over the plan's beds: a presentation drone bed spans the whole video, so its one bed
+    # row names no chapters (livestream-aws 2026-11-25)
+    if plan is not None and not judg.get("chapter_stamps"):
         heads, starts = {}, {}
         side = sorted((P / "spine").glob(f"{a.scope}.?.paused.json"))
         pauses = json.loads(side[-1].read_text(encoding="utf-8")).get("pauses", []) if side else []
@@ -209,6 +213,12 @@ def main():
             chapters.append((0.0 if not chapters else t, name, ch))
     else:
         for st, name in judg.get("chapter_stamps") or []:
+            chapters.append((unstamp(st), str(name).strip(), ""))
+    if not chapters and judg.get("chapter_stamps"):
+        # a presentation project whose only MUSIC-PLAN.json is the short lane's no-music default (s_preflight writes it):
+        # no beds and no EDIT-PLAN headings, so the plan names no chapter; its yt-delivery.json stamps do
+        # (langgraph-updates 2026-11-23: the chapters came out empty once the short had run)
+        for st, name in judg["chapter_stamps"]:
             chapters.append((unstamp(st), str(name).strip(), ""))
     if chapters:
         if chapters[0][0] != 0.0:

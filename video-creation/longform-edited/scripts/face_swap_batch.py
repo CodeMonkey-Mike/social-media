@@ -89,12 +89,18 @@ def approx_src_for(P, scope, t_final):
     finals = sorted(p for p in S.glob(f"{scope}.?.desilenced.map.json") if p.name[len(scope) + 1] > "c")
     for _x, at, dur, _f in sorted(insert_stages(S, scope, finals[-1].name[len(scope) + 1] if finals else "c"), reverse=True):
         t = t - dur if t >= at + dur else (at if t >= at else t)        # the latest stage first
+    fl = finals[-1].name[len(scope) + 1] if finals else None
     if finals:
-        fl = finals[-1].name[len(scope) + 1]
         t = map_out_to_src(t, cut_list(finals[-1]))
-        bursts = sorted(p for p in S.glob(f"{scope}.?.cleaned.mp4.cuts.json") if "c" < p.name[len(scope) + 1] < fl)
-        for bp in reversed(bursts):
-            t = map_out_to_src(t, cut_list(bp))
+    # The burst cuts are mapped whether or not a final desilence map sits above them: when Mike's final silence definition
+    # IS the coarse one, no second pass runs and the chain is c.desilenced -> d.cleaned (-> e.enhanced). Skipping them there
+    # left every window after the first burst short by the time the bursts removed, which put the hint just BEFORE the
+    # desilencer join in front of the window, a whole cut (3 to 7 s) away from it: "the window could not be located"
+    # on all seven later windows (plan-to-make-millions, 2026-11-23).
+    bursts = sorted(p for p in S.glob(f"{scope}.?.cleaned.mp4.cuts.json")
+                    if "c" < p.name[len(scope) + 1] and (fl is None or p.name[len(scope) + 1] < fl))
+    for bp in reversed(bursts):
+        t = map_out_to_src(t, cut_list(bp))
     c = json.loads((S / f"{scope}.c.desilenced.map.json").read_text(encoding="utf-8"))
     t_b = map_out_to_src(t, c["cuts"])
     return round(t_b, 3)          # blackout does not move time: b == a

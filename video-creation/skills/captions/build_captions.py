@@ -3570,6 +3570,19 @@ FILLER = {"uh", "um", "uhh", "umm", "mm", "hmm", "m"}
 # everything else still collapses exactly as before, so no past output can change. Key the run tightly
 # (include the words AROUND the doubling) so an unrelated stutter is never spared.
 PROTECTED_DOUBLES = [
+    # evaa-pieverse/pieverse-listings-pippin-playbook (clip 2), 2026-11-23. "It could be VERY, VERY
+    # realistic that we're going to see like multiple billions of Pieverse." The clip's closing call
+    # (the clip plan quotes it as a peak beat): an intensifier doubling, not a stutter. medium.en renders
+    # "be very very realistic" on the whole file, two full tokens (31.82-32.10 / 32.10-32.34). The
+    # collapse shipped "very realistic that". Keyed with the words on both sides so a genuine "very very"
+    # stutter elsewhere still collapses.
+    ("be", "very", "very", "realistic"),
+    # evaa-reveal/twenty-dollar-plays-six-digits (clip 4), 2026-11-22. "you put $20 on a play, it does a
+    # 100X. [mumble] 100X for $20 is $2,000, right?" Not a stutter: two separate sentences (8.24-9.06 /
+    # 9.68-10.16, a 0.6 s unintelligible mumble between them that the verified words drop), the second
+    # restating the number to do the math. The collapse shipped "it does 100x. / for $20 is $2,000".
+    # Keyed with the words on both sides so a genuine "100x 100x" stutter elsewhere still collapses.
+    ("does", "100x", "100x", "for"),
     # 30x-tao/get-into-assets-now-last-chance-impact (clip 7), 2026-10-28. "It's going to be REALLY,
     # REALLY difficult in the future and it's going to happen VERY, VERY soon." Two intensifier
     # doublings, not stutters: medium.en renders "really, really difficult" (13.72-14.10 / 14.10-14.40)
