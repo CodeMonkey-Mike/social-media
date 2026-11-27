@@ -6,6 +6,20 @@ _Thin pointer for the **AI Engineering Simplified** YouTube channel
 canonical skills own them and win on conflict. Repo-root `CLAUDE.md` philosophy: "this file points, it does
 not duplicate."_
 
+## What this folder is for: the AI VOICE-OVER track (Mike, 2026-11-27)
+
+`video-creation/ai-engineering/` was set up to be the track where the voice is an **AI voice-over, not Mike's own
+recording**: his cloned voice (MIKE-CLONE) reads the script over full-frame deck containers, with no camera and
+nothing for him to record. That is the intention of this track, and the reason the build below is Remotion
+containers + generated VO.
+
+- **It has been used little so far:** two videos, both made in July 2026 ("need lang-graph" and "Save tokens by
+  using sub agents").
+- **A video Mike records himself is NOT this track**, even when it is for the AI Engineering Simplified channel: it
+  goes through `../longform-presentation/` or `../longform-edited/` and lives in that track's `media/` folder.
+- The channel-level files here (`ai_channel_plan.md`, `TITLE-BANK.md`, `python_series.md`, the LinkedIn rule below)
+  apply to every video on the channel, whichever track makes it.
+
 ## What this channel is (the brief owns the detail)
 
 - **Canonical brief:** `ai_channel_plan.md` (this folder) — identity, the four-arc backbone, topic clusters,
