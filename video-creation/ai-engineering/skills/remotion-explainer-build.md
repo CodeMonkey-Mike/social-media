@@ -68,8 +68,10 @@ A straight-through Remotion render **reliably dies partway** (headless-Chrome me
   1. **`deck/containers-vertical.html`** — copy the 16:9 `<style>`, set `.frame` to 1080×1920, and reflow each
      `#cNN` to a single tall column (TEXT byte-identical — no drift): horizontal fan-out `.gwrap` → vertical
      flow (arrows down); `.cmp` 2-ups → stacked; `.rtab`/`.ptab` tables → shrink to fit 1080 wide, nothing
-     clipped, PLANNED rows still dashed; bump type ~1.3-1.6x for phone.
-  2. **`scripts/render-containers-vertical.js`** (1080×1920 @2x) → `render-assets/vertical/container-NN.png`;
+     clipped, PLANNED rows still dashed; bump type ~1.3-1.6x for phone. Two worked vertical decks:
+     `skills/deck-and-containers/reference-decks/*.containers-vertical.html`.
+  2. **`python skills/deck-and-containers/render_containers.py "<project>" --vertical`** (1080×1920 @2x) →
+     `render-assets/vertical/container-NN.png`;
      visual-QA every PNG.
   3. **`remotion/src/<Name>Vertical.tsx`** (1080×1920) — reuse the SAME timeline + VO; only remap the visual
      path (`render-assets/` → `render-assets/vertical/`). Register in Root. Smoke-test one frame.

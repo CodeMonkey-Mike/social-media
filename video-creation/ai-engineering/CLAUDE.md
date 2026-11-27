@@ -13,8 +13,8 @@ recording**: his cloned voice (MIKE-CLONE) reads the script over full-frame deck
 nothing for him to record. That is the intention of this track, and the reason the build below is Remotion
 containers + generated VO.
 
-- **It has been used little so far:** two videos, both made in July 2026 ("need lang-graph" and "Save tokens by
-  using sub agents").
+- **It has been used little so far:** the channel's first three videos (python AI libraries, "need lang-graph" and
+  "Save tokens by using sub agents"; the last two in July 2026, and their voiced scripts are in `covered-topics/`).
 - **A video Mike records himself is NOT this track**, even when it is for the AI Engineering Simplified channel: it
   goes through `../longform-presentation/` or `../longform-edited/` and lives in that track's `media/` folder.
 - The channel-level files here (`ai_channel_plan.md`, `TITLE-BANK.md`, `python_series.md`, the LinkedIn rule below)
@@ -100,7 +100,9 @@ channel-local skill exists only to record the small deltas for this channel and 
 file. Today:
 - **`skills/deck-and-containers.md`** — inherits `longform-edited/skills/broll-and-containers/broll-and-containers.md` +
   `container-reference/` + `charts.md`; records the ai-engineering deltas (full-frame code-card containers,
-  no face spine, one `#cNN` container per script chunk, render via the project `scripts/render-containers.js`).
+  no face spine, one `#cNN` container per script chunk, render via the shared
+  `skills/deck-and-containers/render_containers.py`). The decks of the two earlier videos are kept in
+  `skills/deck-and-containers/reference-decks/` as the stylesheet + component library to start from.
 
 If a future need is genuinely channel-specific, add a thin `skills/<name>.md` that states the delta and points
 at its canonical parent. Never re-derive a rule that already lives in longform-edited.
@@ -112,11 +114,17 @@ Each video is `media/<Video Title>/` and carries:
 - **`deck/`** — `containers.html` (one full-frame `#cNN` container per chunk; the 16:9 deck) and later
   `containers-vertical.html` for a 9:16 repurpose.
 - **`render-assets/`** — the rendered `container-NN.png` PNGs (@2x = 3840×2160), plus `music/`, `vertical/`.
-- **`scripts/`** — `render-containers.js` (Playwright screenshotter, `#cNN` → `render-assets/container-NN.png`).
+- **`scripts/`** — the per-video copies of the build templates (`skills/remotion-explainer-build/`). The deck
+  screenshotter is NOT copied per video any more: run the shared
+  `python skills/deck-and-containers/render_containers.py "media/<Video Title>"` (`#cNN` →
+  `render-assets/container-NN.png`; `--vertical` for the 9:16 deck).
 - **`PROJECT-LOG.md`** — the resume/status log for the video.
 - The master / `LOW BPS` / draft / final mp4s + thumbnail as they're produced.
 
-`need lang-graph/` is the worked precedent for this exact layout; copy its shape.
+The two worked projects (`need lang-graph`, `Save tokens by using sub agents`) were deleted 2026-11-27, once
+finished. What a new video needs from them was kept: their decks in `skills/deck-and-containers/reference-decks/`,
+the screenshotter in `skills/deck-and-containers/`, their voiced scripts in `covered-topics/`. When the next video
+is finished, move its final `SCRIPT.md` into `covered-topics/` before its folder goes.
 
 ## Non-negotiables (canonical copies cited above — do not violate)
 

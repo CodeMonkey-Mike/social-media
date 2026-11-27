@@ -14,8 +14,9 @@ gates are human graders. It named the eval tools as well (LangSmith, Langfuse, P
 promptfoo).
 
 Possible overlap to check before scripting:
-- `video-creation/ai-engineering/media/need lang-graph/`
-- `video-creation/ai-engineering/media/Save tokens by using sub agents/` (context engineering)
+- `video-creation/ai-engineering/covered-topics/need-lang-graph.SCRIPT.md`
+- `video-creation/ai-engineering/covered-topics/save-tokens-by-using-sub-agents.SCRIPT.md` (context engineering)
+  (the voiced scripts; `covered-topics/README.md` lists the chapters; the project folders were deleted 2026-11-27)
 - The guardrails video: no script was found in the repo, so check whether it covered prompt injection.
 
 ## Said on camera: the eval score layer (BUILT 2026-11-13)

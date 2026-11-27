@@ -29,14 +29,20 @@ ai-engineering deltas. Canonical parents win on conflict._
 - **One `#cNN` container per SCRIPT chunk**, numbered to the chunk. The SHOW line under each chunk in
   `SCRIPT.md` is the spec for that container. Multi-visual chunks may add lettered sub-frames (`#c14b`) but
   keep the render id scheme (`section.frame` with an `id`).
-- **Reuse the prior video's stylesheet + component library verbatim.** `need lang-graph/deck/containers.html`
-  carries the full built-out `<style>` (code cards, 2-up compare `.cmp`, chips, graph-diagram helpers
-  `.gwrap/.gnode/.arrow`, steps, twin bars, matrix). Start from it, add only the new components a script
-  needs (e.g. a roster table, a pricing table, dials, before/after bars). Do not restyle from scratch.
-- **Render harness:** the project's `scripts/render-containers.js` (Playwright, reuses the
-  `schedule-tweets/node_modules` install) screenshots every `section.frame#cNN` from `deck/containers.html`
-  to `render-assets/container-NN.png` at 1920×1080 @2x (3840×2160). `node scripts/render-containers.js [NN]`
-  renders one; no arg renders all.
+- **Reuse the stylesheet + component library verbatim.** The decks of the two earlier videos are kept whole in
+  `deck-and-containers/reference-decks/` (16:9 and 9:16 of each; the project folders they came from were deleted
+  2026-11-27). `need-lang-graph.containers.html` carries the full built-out `<style>` (code cards, 2-up compare
+  `.cmp`, chips, graph-diagram helpers `.gwrap/.gnode/.arrow`, steps, twin bars, matrix);
+  `save-tokens.containers.html` adds the roster table, the pricing table, dials and before/after bars. Copy the
+  one closest to the script to the new video's `deck/containers.html`, keep its `<style>`, replace the frames,
+  and add only the new components the script needs. Do not restyle from scratch.
+- **Render harness:** `deck-and-containers/render_containers.py` (Python + Playwright; ONE shared copy, it replaced
+  the `render-containers.js` every project used to carry, 2026-11-27) screenshots every `section.frame#cNN` from
+  the video's `deck/containers.html` to `render-assets/container-NN.png` at 1920×1080 @2x (3840×2160):
+  `python video-creation/ai-engineering/skills/deck-and-containers/render_containers.py "<media/<video> folder>" [NN ...]`.
+  Numbers render just those containers, none renders all, `--vertical` renders `deck/containers-vertical.html` to
+  `render-assets/vertical/` (1080×1920 @2x). `--deck <html> --out <folder>` renders any deck anywhere, e.g. a
+  reference deck into a scratch folder to look at a component.
 - **QA gate:** every rendered PNG is opened by the **`visual-qa`** agent before it's trusted (clipped text at
   the frame edge, wrong font, off-palette drift, blank/failed capture, overflow). Nothing is "done" until it
   clears. (Matches `broll-and-containers.md` "QA every captured asset".)
@@ -44,9 +50,10 @@ ai-engineering deltas. Canonical parents win on conflict._
 ## Build loop (per video)
 
 1. Read the video's `SCRIPT.md` (the chunk list + each 🎬 SHOW line = the container spec).
-2. Build `deck/containers.html`: paste the canonical/reused stylesheet, then one `section.frame#cNN` per chunk.
-3. `node scripts/render-containers.js` → `render-assets/container-NN.png`.
-4. Run `visual-qa` on the PNGs; fix + re-render the failures (`node scripts/render-containers.js NN`).
+2. Build `deck/containers.html`: start from the closest deck in `deck-and-containers/reference-decks/` (its
+   stylesheet), then one `section.frame#cNN` per chunk.
+3. `python .../deck-and-containers/render_containers.py "<project>"` → `render-assets/container-NN.png`.
+4. Run `visual-qa` on the PNGs; fix + re-render the failures (`render_containers.py "<project>" NN`).
 5. Log status in the video's `PROJECT-LOG.md`.
 
 The 16:9→9:16 vertical repurpose (if wanted) follows `../../longform-edited/skills/vertical-repurpose/vertical-repurpose.md`
