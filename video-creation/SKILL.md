@@ -472,7 +472,7 @@ export const LOGO_KASPA = staticFile('logo-kaspa.png');      // shared singleton
 export const SFX_PUNCH  = staticFile('sfx/Punch 1.mp3');     // shared sfx — COPIED into render-assets/sfx/
 ```
 The render-assets folder is self-contained: the spine, the b-roll, AND copies of the few shared SFX/logos the
-comp references all live under it (the shared library is COPIED in by `scripts/setup-batch-render-assets.js`,
+comp references all live under it (the shared library is COPIED in by `video-creation/livestream-repurpose/scripts/setup_render_assets.py`,
 never junctioned — see "Asset folder organization"). The canonical shared library
 (`fonts/ music/ sfx/ transitions/`, `logo-*.png`) still lives in `video-creation/assets/`; render-assets just
 holds the per-batch subset. Never use absolute `C:/...` paths — they break in the headless browser.
@@ -677,8 +677,8 @@ NOT loose in the root — both retired 2026-06-25). It is self-contained, holdin
 ⛔ **Never junction the shared library into `render-assets/`** — cleanup recycles the WHOLE `shorts/<batch>/` folder
 via recursive `DeleteDirectory`, which would FOLLOW the junction and recycle the real `assets/` library. Copies
 are transient and recycled harmlessly with the batch. Run: `python video-creation/livestream-repurpose/scripts/setup_render_assets.py <batch> [--data <dataFile.ts>]`
-(canonical since 2026-08-07; `scripts/setup-batch-render-assets.js` is FROZEN as rollback — it predates 5B/5C
-and stages the wrong spine), then render with `--public-dir video-creation/shorts/<batch>/render-assets`.
+(canonical since 2026-08-07; the JS it replaced, `scripts/setup-batch-render-assets.js`, was deleted 2026-11-27: it predated 5B/5C
+and staged the wrong spine), then render with `--public-dir video-creation/shorts/<batch>/render-assets`.
 
 **LONGFORM / PERSONA / livestream / repurpose → the PROJECT'S OWN folder** (the bittensor pattern):
 ```

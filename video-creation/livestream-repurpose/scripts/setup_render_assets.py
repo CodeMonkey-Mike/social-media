@@ -2,7 +2,7 @@
 self-contained public dir: video-creation/shorts/<batch>/render-assets/.
 
 Python port of scripts/setup-batch-render-assets.js (Wave 4/5 of the livestream-repurpose
-LangGraph migration; the JS stays frozen as rollback). Two upgrades over the JS, both fixing
+LangGraph migration; the JS was kept as a frozen rollback until it was deleted 2026-11-27). Two upgrades over the JS, both fixing
 documented failure modes:
 
   1. SPINE SELECTION is current: the JS predates 5B/5C and staged `tightened.mp4` only.

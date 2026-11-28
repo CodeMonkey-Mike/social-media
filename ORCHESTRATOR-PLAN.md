@@ -308,7 +308,7 @@ Decisions locked with Mike 2026-08-02; do not re-litigate:_
      `-final.mp4`), canonical `cut_fillers.py` per clip (its own 8% ceiling), canonical
      `transcribe_clips.py --force` off the -final spine (its spine resolution now prefers
      `-final.mp4` — pre-fix it would caption a pre-5C spine), canonical NEW
-     `setup_render_assets.py` (ports `setup-batch-render-assets.js`, FROZEN as rollback: stages
+     `setup_render_assets.py` (ports `setup-batch-render-assets.js`, FROZEN as rollback until it was deleted 2026-11-27: stages
      the CURRENT final spine + bakes in the mandatory seek-friendly GOP re-encode, verified).
      Graph = 8 nodes in `shorts_graph.py`; `run.py finish --batch <batch>`; runs AFTER Mike's
      2nd review (the invocation IS his approval record); ends at the builder frontier.

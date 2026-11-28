@@ -72,7 +72,8 @@ Shorts comps now render against their OWN self-contained public dir:
 and would FOLLOW a junction into the real `assets/` library). Spine = each clip's `tightened.mp4` copied to
 `render-assets/<slug>.mp4`; b-roll generated straight into `render-assets/`. So NOTHING new lands in
 `assets/projects/` or loose in the root. Implemented by:
-- `scripts/setup-batch-render-assets.js <batch> [--data <dataFile.ts>]` — stages spine + copies the
+- `scripts/setup-batch-render-assets.js <batch> [--data <dataFile.ts>]` (replaced 2026-08-07 by
+  `video-creation/livestream-repurpose/scripts/setup_render_assets.py`; the JS was deleted 2026-11-27) — stages spine + copies the
   comp's shared `staticFile()` refs from `assets/` into `render-assets/`.
 - `gen-batch-freshchat.js --batch=<id>` and `generate-broll-batch.js --batch=<id>` now write to
   `shorts/<id>/render-assets/` and HARD-REFUSE any write under `video-creation/assets/`.
