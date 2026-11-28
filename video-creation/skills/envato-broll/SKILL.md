@@ -64,7 +64,7 @@ persists in the profile. Never use the main Chrome profile, never kill all Chrom
 > **⚠ ORIENTATION (fixed 2026-07-25, vertical-repurpose sourcing):** `scale=-2:1080` is the LANDSCAPE
 > form. On a PORTRAIT (9:16) source it caps a vertical 4K master to **608x1080** — only 608 px wide for a
 > 1080-wide vertical comp, a silent downscale. For portrait sources use **`scale=1080:-2`** (1080 on the
-> SHORT edge → 1080x1920). `download-envato.js` now probes the source and picks the right form automatically.
+> SHORT edge → 1080x1920). `download_envato.py` probes the source and picks the right form automatically.
 > (If a plain `-crf 23 -vf scale=-2:1080 -an` already lands under 100 MB, that's fine too.) This is
 > SEPARATE from the per-slot 1920x1080 render proxy (longform-edited house rule #4) — it just keeps
 > the saved SOURCE lean.
@@ -99,13 +99,13 @@ Validated 2026-06-11 on the new app:
   "Download 162MB") plus a Details block (Length / Resolution / Frame rate). Clicking
   Download licenses the item to the account and starts a real browser download — scripts use
   `acceptDownloads` + `waitForEvent('download')`. No project-name dialog in the current UI;
-  download-envato.js still handles one defensively if it appears.
+  download_envato.py still handles one defensively if it appears.
 - **⚠ DOWNLOAD-FLOW FIX (2026-07-10): the browser download is CANCELED (`download.saveAs: canceled`).** Envato's
   item page RE-RENDERS on the Download click, aborting the in-flight browser download. But the `download` EVENT
   still exposes the real **signed file URL** (`video-downloads.elements.envatousercontent.com/…`). Fix: capture
-  that URL from the event, then **FETCH it via the authenticated session and STREAM to disk** (Node `fetch` with
-  the context cookies + UA, fallback to `context.request.get`) — never `download.saveAs`. The button is
-  `button[data-cy="idp-download-button"]`. Default resolution is 4K (~1.3GB); download-envato.js then applies the
+  that URL from the event, then **FETCH it via the authenticated session and STREAM to disk** (`urllib.request` with
+  the context cookies + UA) — never `download.saveAs`. The button is
+  `button[data-cy="idp-download-button"]`. Default resolution is 4K (~1.3GB); download_envato.py then applies the
   disk rule (transcode >800MB → ~100MB 1080p, keep only the `.cap.mp4`). Validated end-to-end 2026-07-10.
 - **⚠ CHROME-153 CRASH RACE (fixed 2026-09-28, kaspa-vprogs):** since the Chrome 153 update (2026-09-21), the
   envato-profile **browser process CRASHES ~1-3s after the Download click on large items** (a Crashpad dump
@@ -113,7 +113,7 @@ Validated 2026-06-11 on the new app:
   post-click `page.waitForTimeout` with `Target page, context or browser has been closed` whenever the crash beat
   the wait (reproducible on some items; others won the race and streamed fine). Fix: cookies + UA are read
   BEFORE the click, post-click waits are Node-side sleeps, and `browser.close()` tolerates a dead browser — the
-  signed URL from the download event + the Node stream never needed Chrome alive. If you see that error again,
+  signed URL from the download event + the stream never needed Chrome alive. If you see that error again,
   check `Crashpad\reports` timestamps against the attempt before anything else; never relaunch blind.
 - **Downloads arrive as `.zip`**, often with multiple variants inside (`Main files/RGB_0N.mp4`
   + `Alpha_0N.mp4` mattes on 3D/motion items). Extract with `Expand-Archive`, keep the

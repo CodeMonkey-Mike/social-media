@@ -24,7 +24,7 @@ What this script does (idempotent; re-run any time):
        - `visible` = [first, last] plate frame with content (mean luma > BLACK_YAVG), for blend `opaque`.
   3. Merges the 15 rows into library.json BY ID (replaced in place, never touching another row), with a
      serializer that reproduces the JS-written file byte for byte (asserted before writing), and appends the
-     family once to `$doc`. Never run `_enrich-meta.js` after this: it rewrites every row's meta.
+     family once to `$doc`. (`_enrich-meta.js`, deleted 2026-11-27, rewrote every row's meta: never restore and run it.)
 
 Usage (from the repo root):
   python video-creation/assets/transitions/_build-scary-rows.py --ingest "D:/Dropbox/mikeneder.me/videos/assets/transitions/scary transitions"
@@ -128,7 +128,8 @@ def run(cmd):
 
 
 # ------------------------------------------------------------------ JS-compatible JSON (byte-identical to the
-# file the _build-*.js scripts write with JSON.stringify(d, null, 2): Python's own dump would rewrite 0.00002 as
+# file the _build-*.js scripts wrote with JSON.stringify(d, null, 2), before they were deleted 2026-11-27: Python's
+# own dump would rewrite 0.00002 as
 # 2e-05 all over other rows).
 def js_number(x):
     if isinstance(x, bool):

@@ -1,7 +1,7 @@
 # delete_chats.py — delete no-longer-needed ChatGPT image chats (registry:
 # ../chatgpt-image-chats.json) and RECONCILE the registry against the live account in
 # the SAME browser session. Python port of delete-chats.js (2026-09-17; the JS twin
-# stays as frozen rollback). Spawned by cleanup/cleanup.js after the video-creation
+# was deleted 2026-11-27). Spawned by cleanup/cleanup.py after the video-creation
 # file targets; also a CLI.
 #
 # Sources of the deletion plan:

@@ -220,8 +220,8 @@ cinematic), meme images, animated coin/logo graphics, abstract motion, real arti
    stage, after `visual-qa` has made the same step-5 inspection independently.)
    - **Primary generator = `python repurpose/gen_batch.py --list <list.json> --prefix broll --batch <id>`
      (ChatGPT, pool purpose `broll`; canonical Python port 2026-08-11, built on the blessed
-     `gen_images.py` capture stack — `generate-broll-reload.js` / `gen-batch-freshchat.js` are its
-     FROZEN JS rollback).** Takes a `[{file, prompt}]` list (a relative `file` joins onto
+     `gen_images.py` capture stack — the JS it replaced, `generate-broll-reload.js` /
+     `gen-batch-freshchat.js`, was deleted 2026-11-27).** Takes a `[{file, prompt}]` list (a relative `file` joins onto
      `video-creation/assets` exactly like the JS did, so a
      `..\shorts\<batch>\<clip>\render-assets\broll-<beat>.png` prefix lands it in the clip folder;
      absolute paths and the `image_id`/`slug`/`prompt`/`ref` schema are also accepted — refs upload
@@ -257,10 +257,9 @@ cinematic), meme images, animated coin/logo graphics, abstract motion, real arti
      this generator, not the build agent** (Mike, 2026-11-17, replacing "a single agent builds each
      clip end to end"; see "One clip = FOUR steps" above). The batch graph holds the `chatgpt` lock
      around it. The reload/`file_id`/URL/modal handling above makes it reliable enough to run
-     unattended. It gets stuck ONLY if you use the old JS DOM-poll scripts; use `gen_batch.py`.
-   - The old JS (`generate-broll-reload.js`, `gen-batch-freshchat.js`, `gen-images.js`,
-     `generate-broll-batch.js`) is frozen rollback only — do not reach for it unless the Python
-     stack is broken and the rollback is deliberate.
+     unattended.
+   - The old JS generators are gone (deleted 2026-11-27): `gen_batch.py` is the only
+     way, there is no JS rollback to reach for.
    - **Sanctioned fallback (Mike, 2026-07-08):** when ChatGPT is fully down, use Higgsfield
      `gpt_image_2` (`--image <ref>` for references, `--wait --json`, download the `hf_`-prefixed OUTPUT
      url, not the reference url).

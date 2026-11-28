@@ -12,16 +12,18 @@ hard-deleted in the ChatGPT UI — they're disposable by design (every image is 
 generation time), and the sidebar clutter was the problem being solved.
 
 ```
-node cleanup/cleanup.js --target <schedule-tweets|video-creation|all> [--dry-run] [--age-days N]
+python cleanup/cleanup.py --target <schedule-tweets|video-creation|all> [--dry-run] [--age-days N] [--only <text>]
 ```
 
 - `--target` (required): which folder's policy to run, or `all`.
 - `--dry-run`: print what would be recycled, move nothing. **Always run this first.**
 - `--age-days N`: age threshold for the video-creation target (default 30).
 - `--only <path-substring>`: restrict the run to paths matching a substring (forward-slash, case-insensitive), e.g. `--only video-creation/remotion/out` to clean just that folder. Great for going folder-by-folder.
+- A flag the tool does not know is an **error and nothing runs** (exit 2), so a mistyped `--dry-run` can never turn into a live run.
+- Exit code: 0 = done, 1 = a step failed (the Recycle Bin move, or the comp cleanup), 2 = bad arguments.
 
-**Batch status is synced automatically.** Whenever the run includes the `video-creation` target,
-cleanup first invokes `scripts/reconcile-batch-status.js` (in `--dry-run` mode when cleanup is a
+**Batch status is synced automatically.** On EVERY run, whatever the target (since 2026-07-28),
+cleanup first invokes `scripts/reconcile_batch_status.py` (in `--dry-run` mode when cleanup is a
 dry run) so eligibility is computed from current batch lifecycle status — a batch that finished
 publishing but was never reconciled can't stay wrongly protected. You never have to remember to
 reconcile before cleaning.
@@ -46,7 +48,7 @@ goes quiet for 6 hours the normal rules take over, so nothing is pinned `active`
 Scans `schedule-tweets/images/` (excluding `images/reference/`). An image referenced by a
 queue is recycled only if some post queue references it with `status=posted` AND no non-posted
 item also references it. An **orphan** image (referenced by no queue) is recycled once it is
-**≥ 14 days old** (`ORPHAN_AGE_DAYS` in `targets/schedule-tweets.js`); a newer orphan is kept,
+**≥ 14 days old** (`ORPHAN_AGE_DAYS` in `targets/schedule_tweets.py`); a newer orphan is kept,
 since it may be freshly generated and not yet queued. Because active batches are always recent,
 this age threshold protects their art without any batch-id check. Queues scanned:
 `x-tweets`, `x-threads`, `x-polls`, `ig-single-image`, `ig-carousel`, `yt-posts`, `ai-yt-posts` (the AI Engineering
@@ -105,9 +107,9 @@ The only exceptions inside `assets/` are `_bad-*/` reject folders and the dorman
 The registry-driven tier reads `../batches.json`:
 - **`assets/projects/<batch>/`** — LEGACY per-batch asset home for shorts batches created before 2026-06-25 (new shorts use `shorts/<batch>/render-assets/`, recycled via the `shorts/<batch>/` tier below). The folder name is the batch id: an **active** batch's folder is kept, an **archived** batch's folder is recycled, and a folder matching no batch is kept. Everything else under `assets/` is protected outright.
 - **`remotion/out/`** — keep the render `directories` of `status: "active"` batches; recycle every other batch folder and all loose files. (Disposable scratch: posted shorts live in the `schedule-tweets/` queue. The comps follow the same active-batch rule, see "Remotion shorts comps" below.)
-- **`livestream-repurpose/`** — `media/` files (flat) and `transcripts/<livestream>/` folders (one per livestream) are matched to a batch by `livestream_title`; active batch → keep, archived → recycle, no match → left alone. (Source recordings are on YouTube; transcripts are regenerable.)
+- **`livestream-repurpose/`** — each `media/` entry (one subfolder per livestream, plus loose files) is matched to the batch whose `source_media` points at it or inside it; each `transcripts/<livestream>/` folder is matched by the batch's `transcripts_dir`, then (legacy entries) by a `livestream_title` prefix. Active batch → keep, any other status → recycle. No match: a `media/` entry falls to the age rule (`--age-days`), a transcript is left alone. (Source recordings are on YouTube; transcripts are regenerable.)
 - **`shorts/<batch>/`** — each immediate subfolder is matched to a batch by its `directories`. The **whole project folder** is recycled for a completed/archived batch and kept for an active one. A folder tied to no batch (e.g. `_tooling`, or a not-yet-registered project) is left in place — only its **gitignored** per-clip artifacts (`preview.mp4`, `whisper-words.json`, `captions.ts.draft`) are swept; tracked source (`index.html`, `preview.json`, `gen_captions.py`, `whisper.json`, …) is never touched.
-- **`longform-presentation/media/<format>/<project>/`, `longform-edited/media/<project>/`, and `vertical-ai-persona/media/<project>/`** — each project subfolder (master `.mkv`, EDIT/FINAL renders, intermediates, deck, transcript, thumbnail) is matched to a batch by `source_media`. The **whole folder** is recycled for a completed/archived batch, kept for an active one, and left alone if it matches no batch. Only `media/<project>/` subfolders (`media/<format>/<project>/` on longform-presentation; the format folders themselves are prune roots, never recycled) are eligible — the track's skill doc and scripts are never touched. (These all share one `classifyMediaProjects` helper in `targets/video-creation.js`.)
+- **`longform-presentation/media/<format>/<project>/`, `longform-edited/media/<project>/`, and `vertical-ai-persona/media/<project>/`** — each project subfolder (master `.mkv`, EDIT/FINAL renders, intermediates, deck, transcript, thumbnail) is matched to a batch by `source_media`. The **whole folder** is recycled for a completed/archived batch, kept for an active one, and left alone if it matches no batch. Only `media/<project>/` subfolders (`media/<format>/<project>/` on longform-presentation; the format folders themselves are prune roots, never recycled) are eligible — the track's skill doc and scripts are never touched. (These all share one `classify_media_projects` helper in `targets/video_creation.py`.)
 - **`yuli-y-ana/media/<project>/`** — the Yuli y Ana persona is a **separate channel NOT tracked in `batches.json`**, so every folder here matches no batch and is **always left alone**. These concept folders are a reusable library; the cleaner never auto-recycles them. Remove one only on an explicit, per-folder instruction (and consider registering it as a batch if it should be lifecycle-managed).
 
 ### Remotion shorts comps (runs with the `video-creation` target)
@@ -141,7 +143,7 @@ so the cleanup job knows that it should check for those"). After the file target
 ### ChatGPT image chats (runs with the `video-creation` target)
 
 After the file targets, cleanup spawns **`repurpose/delete_chats.py`** (Python since 2026-09-17;
-`delete-chats.js` is the frozen rollback; skipped under `--only`, which scopes a run to file
+the JS twin was deleted 2026-11-27; skipped under `--only`, which scopes a run to file
 paths). It deletes no-longer-needed ChatGPT image chats from the registry
 `chatgpt-image-chats.json`:
 
@@ -192,13 +194,13 @@ root folders themselves are kept — only their empty contents are removed.
 
 ```
 # Preview everything (safe):
-node cleanup/cleanup.js --target all --dry-run
+python cleanup/cleanup.py --target all --dry-run
 
 # Just the video-creation side, see candidates older than 14 days:
-node cleanup/cleanup.js --target video-creation --age-days 14 --dry-run
+python cleanup/cleanup.py --target video-creation --age-days 14 --dry-run
 
 # Live run for one target (moves to Recycle Bin):
-node cleanup/cleanup.js --target schedule-tweets
+python cleanup/cleanup.py --target schedule-tweets
 ```
 
 ## When to invoke
@@ -207,8 +209,33 @@ After a posting/render session, to reclaim disk. Always `--dry-run` first; the
 video-creation target can recycle whole rendered batches and source livestreams, so the
 preview matters more here than for the image cleaner.
 
+## The files
+
+| File | What it holds |
+|---|---|
+| `cleanup.py` | the engine: the command line, the report, the protected-folder guard, the steps it starts |
+| `lib.py` | the mechanism: folder walking, sizes, the empty-folder search, the Recycle Bin move |
+| `targets/schedule_tweets.py` | the `schedule-tweets` policy |
+| `targets/video_creation.py` | the `video-creation` policy |
+| `remotion_comps.py` | the shorts-comp tier (its own section above) |
+
+## Python since 2026-11-27 (what changed from the JS)
+
+`cleanup.js`, `lib.js`, the two `targets/*.js` and the reconciler it runs first (`scripts/reconcile-batch-status.js`,
+now `scripts/reconcile_batch_status.py`) were ported to Python and deleted, so a cleanup run needs no Node. The policies are the same:
+the JS and the Python were run side by side on a test tree (nine argument sets) and on the real repo, and the
+dry-run reports matched line for line. Three things are deliberately different, all in the direction of safety:
+
+1. **An unknown flag stops the run.** The JS ignored anything it did not recognise, so `--dryrun` ran LIVE.
+2. **A name with an accent, a curly quote or an emoji is recycled.** The JS wrote each path into a PowerShell
+   script file that Windows PowerShell read in the wrong code page: such a path was not found, was skipped,
+   and the run still said "Done. Recycled N". The Python passes the paths in a UTF-8 list file instead.
+3. **The move is checked on disk.** Anything planned that is still there afterwards (a file held open by a
+   player, for example) is listed, the target reports `Recycle Bin operation FAILED`, and the exit code is 1.
+   The JS trusted PowerShell's exit code, which is 0 even when a single move throws.
+
 ## Note on the old entrypoint
 
-`schedule-tweets/scripts/cleanup-images.js` was a thin shim that delegated to
-`node cleanup/cleanup.js --target schedule-tweets`. It was deleted 2026-11-22 (no JS is kept in
-`schedule-tweets/scripts/`), so run that command directly. The policy lives here.
+`schedule-tweets/scripts/cleanup-images.js` was a thin shim that delegated to the engine with
+`--target schedule-tweets`. It was deleted 2026-11-22 (no JS is kept in `schedule-tweets/scripts/`), so run
+`python cleanup/cleanup.py --target schedule-tweets` directly. The policy lives here.

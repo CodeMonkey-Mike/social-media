@@ -2,7 +2,7 @@
 """
 capture.py — receipt-capture: the canonical headless-Chrome screenshotter for "receipts" (article /
 chart / aggregator screenshots) used as edit-time cutaway assets.
-Python port of capture.js (2026-09-28, Mike's Python-first rule; the JS twin is frozen rollback).
+Python port of capture.js (2026-09-28, Mike's Python-first rule; the JS twin was deleted 2026-11-27).
 
 Usage:
   python capture.py <jobs.json>                       # batch (recommended)

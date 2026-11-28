@@ -30,7 +30,7 @@ do NOT render-then-explain-it-as-an-open-item.
 6. **EDIT-PLAN (time-ordered event log) + CUE-SHEET exist and the comp is reconciled to them** + house rules
    #1/#5/#10, with ZERO orphans, BEFORE the render.
 6b. **MECHANICAL GATE — run `python skills/comp-build/lint_covers.py <comp.tsx>` and it MUST pass (exit 0) before any render**
-   (Python since 2026-09-28; `lint-covers.js` is the frozen rollback twin, identical rules).
+   (Python since 2026-09-28; the JS twin `lint-covers.js` was deleted 2026-11-27).
    It enforces the cover-layer rules in CODE (no memory): #12 no reused b-roll, #2 no clip >4s (>5s if `lead:true`),
    captions never over a cover. A non-compliant comp does not get rendered. (Added 2026-06-30 because these rules
    kept being violated when they lived only as prose — the linter is the prevention, not "remember to check".)

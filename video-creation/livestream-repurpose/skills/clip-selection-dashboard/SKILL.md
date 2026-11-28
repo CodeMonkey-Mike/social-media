@@ -63,7 +63,7 @@ Premiere). No cropping needed — just timestamp cuts.
    `livestream_title`, `source_media`, `transcript_plain`, `transcripts_dir`, `dashboard`,
    `directories: ["video-creation/remotion/out/<batch>", "video-creation/shorts/<batch>"]`,
    `pipelines: {shorts, repurpose}`; paths relative to repo root). **Why this is not optional:**
-   `cleanup/targets/video-creation.js` reads `batches.json` and protects ONLY active batches'
+   `cleanup/targets/video_creation.py` reads `batches.json` and protects ONLY active batches'
    `directories` — every unregistered `remotion/out/<batch>/`, `shorts/`, and source artifact is
    treated as recyclable scratch and can be deleted. An unregistered batch is unprotected.
    Use the shared helper **`scripts/register_batch.py`** (`register_batch(batch=…, date=…,

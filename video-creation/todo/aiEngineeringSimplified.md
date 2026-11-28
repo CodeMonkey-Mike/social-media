@@ -14,8 +14,9 @@ gates are human graders. It named the eval tools as well (LangSmith, Langfuse, P
 promptfoo).
 
 Possible overlap to check before scripting:
-- `video-creation/ai-engineering/media/need lang-graph/`
-- `video-creation/ai-engineering/media/Save tokens by using sub agents/` (context engineering)
+- `video-creation/ai-engineering/covered-topics/need-lang-graph.SCRIPT.md`
+- `video-creation/ai-engineering/covered-topics/save-tokens-by-using-sub-agents.SCRIPT.md` (context engineering)
+  (the voiced scripts; `covered-topics/README.md` lists the chapters; the project folders were deleted 2026-11-27)
 - The guardrails video: no script was found in the repo, so check whether it covered prompt injection.
 
 ## Said on camera: the eval score layer (BUILT 2026-11-13)
@@ -41,7 +42,7 @@ Mike chose not to film the build, and is fine with the record being in the publi
 | Step | State on 2026-11-13 |
 |---|---|
 | Record verdicts at the gate | **Yes.** `_record_gate` in `batch_graph.py` appends one line per clip per gate to `video-creation/livestream-repurpose/evals/clip-verdicts.jsonl`, with the prompt version |
-| Keep the records | **Yes.** The file is append-only, committed, and `cleanup/cleanup.js` refuses to recycle the `evals/` folder |
+| Keep the records | **Yes.** The file is append-only, committed, and `cleanup/cleanup.py` refuses to recycle the `evals/` folder |
 | Keep what was rejected | **Yes.** A killed clip keeps its whole proposal, in `clip-plan.json` and in the record |
 | Replay old transcripts through `clip-strategist` | **Yes.** `clip_evals.py replay --batch <b>`. Transcripts are now copied to `evals/transcripts/` when a plan validates. Only 4 old batches can be replayed (`30x-tao`, `best-time`, `kaspa-cocktails`, `stock-market`) |
 | Score proposals against verdicts (precision per prompt change) | **Yes.** `clip_evals.py score`, per prompt version and model |

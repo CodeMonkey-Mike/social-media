@@ -1,7 +1,7 @@
 """
 register_batch.py — upsert a video-creation batch into the repo-root batches.json registry.
 
-WHY THIS EXISTS: cleanup/targets/video-creation.js protects ONLY the `directories` of
+WHY THIS EXISTS: cleanup/targets/video_creation.py protects ONLY the `directories` of
 `status:"active"` batches in batches.json and recycles everything else. A batch that is
 created (shorts/<batch>/ + progress.json) but never registered here is UNPROTECTED and can
 be deleted. So every cut_topics_<batch>.py should call register_batch() right after it writes

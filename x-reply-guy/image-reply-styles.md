@@ -17,8 +17,8 @@ new exemplars get generated one per style (file named after the style slug).
 
 ## Hard rules
 
-- **Generator:** ChatGPT via the browser pipeline (`repurpose/gen-batch-freshchat.js`,
-  fresh chat per image, `--reference-image <exemplar>`). NEVER `gpt_image_2` via Higgsfield CLI.
+- **Generator:** ChatGPT via the browser pipeline (`python repurpose/gen_batch.py --fresh`,
+  one fresh chat per run, each item's `ref` = its exemplar). NEVER `gpt_image_2` via Higgsfield CLI.
 - **No numbers from the image model.** No prices, market caps, dates-with-figures, or labeled
   chart values rendered by AI (it fabricates and garbles them). Symbolic candles/arrows are fine.
   If a real number matters, it goes in the reply text, not the image.
@@ -117,7 +117,7 @@ palette, engraved-caption typography. Distinctive, calm, premium — the opposit
 3. **Generate** — `node generate_reply_images.js` builds the batch (ref = style exemplar; for
    `needs_logo_ref` styles it appends the words-based logo spec: the Kaspa K is a BACKWARDS
    (mirrored) K in teal — never attach the standalone logo file to a scene generation), runs
-   `repurpose/gen-batch-freshchat.js`, saves to `data/reply-images/`, and fills `image_path`
+   `repurpose/gen_batch.py --fresh`, saves to `data/reply-images/`, and fills `image_path`
    in the queue. **QA every word in every image before posting.**
 4. **Post** — `python post_replies.py` (one queue, all four types). Ungenerated image entries
    are skipped and stay queued. `--dry-run` attaches + screenshots to `tmp-image-debug/`.

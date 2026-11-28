@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 lint_transition_assets.py — MECHANICAL pre-render gate for the TRANSITION layer (Python port of
-lint-transition-assets.js, 2026-09-28; the JS twin is frozen rollback).
+lint-transition-assets.js, 2026-09-28; the JS twin was deleted 2026-11-27).
 
 Origin (2026-08-01, ethereum-rwa v7): a transition PLANNED in TRANSITIONS.md was verified, corrected
 twice, and never wired into the comp; and a referenced transition's assets were never copied into

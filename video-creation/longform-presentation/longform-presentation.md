@@ -256,7 +256,7 @@ transcript corpus, never inferred.
   he skips Enhance Speech on it (2026-10-16: it needs an mp4 round trip through Adobe Podcast Studio and the voice
   is fine as recorded), so that FINAL is the upload.
 - Not queued and not committed unless asked. Once he has uploaded, the project folder is recycled the usual
-  way (`node cleanup/cleanup.js --target video-creation --dry-run` first); the per-project Remotion comp comes
+  way (`python cleanup/cleanup.py --target video-creation --dry-run` first); the per-project Remotion comp comes
   out by hand (spotlight skill, step 3).
 
 ## Hard rules

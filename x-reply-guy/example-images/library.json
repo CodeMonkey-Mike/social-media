@@ -2,8 +2,8 @@
   "_readme": "Machine-readable index of image-reply styles for x-reply-guy. This file is CANONICAL for style-selection metadata; image-reply-styles.md is the human overview (hard rules + workflow rationale). The drafting step loads this file, matches the tweet against each style's category + when_to_use signals, fills the prompt_skeleton slots with tweet-specific content, and queues generation with the style's exemplar file as reference image.",
   "generator": {
     "driver": "node x-reply-guy/generate_reply_images.js — builds the items list from queued image replies (replies_to_post.json), runs the engine below, and records image_path back into the queue. Use this, not the engine directly.",
-    "script": "repurpose/gen-batch-freshchat.js",
-    "usage": "node repurpose/gen-batch-freshchat.js --list=<items.json> --prefix=reply --outdir=<abs path to x-reply-guy/data/reply-images> --purpose=reply-images",
+    "script": "repurpose/gen_batch.py",
+    "usage": "python repurpose/gen_batch.py --list <items.json> --prefix reply --outdir <abs path to x-reply-guy/data/reply-images> --purpose reply-images --fresh",
     "items_format": "[{ image_id, slug, prompt, ref }] where ref = absolute path to this style's exemplar in x-reply-guy/example-images/",
     "never": [
       "gpt_image_2 via Higgsfield CLI (ChatGPT images go through the browser pipeline only)",

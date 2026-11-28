@@ -1,6 +1,6 @@
 # receipt-capture
 
-_`capture.py` is the canonical tool (Python port of `capture.js`, 2026-09-28, verified live; the JS twin is frozen rollback)._ — canonical screenshot tool for edit-time "receipts"
+_`capture.py` is the canonical tool (Python port of `capture.js`, 2026-09-28, verified live; the JS twin was deleted 2026-11-27)._ — canonical screenshot tool for edit-time "receipts"
 
 Reusable, track-agnostic tool to capture clean **receipt** screenshots (news articles, charts, coin
 aggregators like CoinMarketCap / TradingView / CryptoRank, project blogs, wiki/founder pages) that get
@@ -14,8 +14,8 @@ re-derives it (and re-hits the same consent/bot-wall gotchas). The engine lives 
 only its **jobs list** (URLs + what to capture).
 
 ## Tool
-`video-creation/skills/receipt-capture/capture.js` (Node + Playwright; Playwright is pulled from the
-repo-level `repurpose/node_modules`, so it survives project deletion).
+`video-creation/skills/receipt-capture/capture.py` (Python + Playwright; it lives in the skill folder, so it
+survives project deletion).
 
 ```
 # batch (recommended) — jobs.json lives in the project's assets/receipts/ folder

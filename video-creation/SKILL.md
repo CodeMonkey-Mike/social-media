@@ -238,7 +238,7 @@ The style rules for all of the above live in `style-guide/` — read them direct
 **6. Reference-image gate for named projects — MANDATORY, do this BEFORE generating any b-roll (recurring miss).** A short about a named crypto project must visibly carry THAT project's branding; it must never ship with only generic charts/coins. Before writing the b-roll prompt list for a clip:
 1. Scan the clip's transcript/topic/captions for **named projects or tickers** (ElizaOS, $LAB, Pippin, Housecoin, Pengu, $TAO, $TON, Kaspa, etc.).
 2. For each one, **`ls schedule-tweets/images/reference/`** (the live folder is the only source of truth — never trust a remembered list). Match by project name (`ElizaOS-ai16z.webp`, `LAB.png`, `kaspa-logo.png`, ...).
-3. If a reference exists, that project's b-roll beat **MUST be generated with the reference** via `repurpose/generate-image.js --reference-image=<path>` (it supports uploads), then copied into `video-creation/assets/` with a `broll-<batch>-...png` name. The text-only batch b-roll generators (`repurpose/generate-broll-wlw.js` / `_gen-353x-redo.js`) **CANNOT attach a reference** — so any project that HAS a reference must NOT be left to them. They are only for generic/abstract scenes (candles, charts, zombies, rockets).
+3. If a reference exists, that project's b-roll beat **MUST be generated with the reference** by giving that item a `ref` in the `repurpose/gen_batch.py` list (one path or an array; for a single image, `repurpose/generate_asset.py --reference-image <path>`). The old text-only JS b-roll generators that could not attach a reference were deleted 2026-11-27, so a project that HAS a reference is never left without one.
 4. If no reference exists for a named project, either skip its logo (generic scene) or ask Mike for one and drop it in the folder — never let the model invent a fake logo, and never silently default a project short to generic b-roll.
 This is the same reference rule the repurpose skill enforces for tweet/post images; it applies identically to video b-roll. (Added 2026-06-04 after an ElizaOS short shipped with a generic AI-robot instead of the `ai16z` mascot that was sitting in the reference folder.)
 
@@ -472,7 +472,7 @@ export const LOGO_KASPA = staticFile('logo-kaspa.png');      // shared singleton
 export const SFX_PUNCH  = staticFile('sfx/Punch 1.mp3');     // shared sfx — COPIED into render-assets/sfx/
 ```
 The render-assets folder is self-contained: the spine, the b-roll, AND copies of the few shared SFX/logos the
-comp references all live under it (the shared library is COPIED in by `scripts/setup-batch-render-assets.js`,
+comp references all live under it (the shared library is COPIED in by `video-creation/livestream-repurpose/scripts/setup_render_assets.py`,
 never junctioned — see "Asset folder organization"). The canonical shared library
 (`fonts/ music/ sfx/ transitions/`, `logo-*.png`) still lives in `video-creation/assets/`; render-assets just
 holds the per-batch subset. Never use absolute `C:/...` paths — they break in the headless browser.
@@ -631,7 +631,7 @@ Each panel component calculates its own opacity and returns `null` when opacity 
 
 ### Asset sourcing
 - If the carousel images already exist (from the repurpose pipeline), use them as asset layers
-- If they need generating, use `generate-asset.js` with a clean prompt (no baked-in text)
+- If they need generating, use `repurpose/generate_asset.py` with a clean prompt (no baked-in text)
 - Always generate a clean version WITHOUT text for images you need to composite over
 
 ### Layout
@@ -671,14 +671,14 @@ NOT loose in the root — both retired 2026-06-25). It is self-contained, holdin
   Never re-encode the clip folder's spine itself; reference `staticFile('<slug>.mp4')`. (The GOP re-encode is
   mandatory: desilenced spines ship a 250-frame GOP with B-frames and Remotion's concurrent OffthreadVideo
   seeks then die with "No frame found at position N", 2026-08-05.)
-- **b-roll** — generate STRAIGHT into it: `python repurpose/gen_batch.py --list <items> --prefix broll --batch <id>` (canonical Python, 2026-08-11; the JS `gen-batch-freshchat.js`/`generate-broll-batch.js` are frozen rollback); reference `staticFile('foo.png')`.
+- **b-roll** — generate STRAIGHT into it: `python repurpose/gen_batch.py --list <items> --prefix broll --batch <id>` (canonical Python, 2026-08-11; the JS generators in `repurpose/` were deleted 2026-11-27); reference `staticFile('foo.png')`.
 - **shared sfx/logos** — COPIED in (NOT junctioned) by `python video-creation/livestream-repurpose/scripts/setup_render_assets.py <batch> --data <dataFile>`, which copies every `staticFile('X')` the comp references from `assets/X` → `render-assets/X`. Reference unchanged (`staticFile('sfx/Foo.wav')`, `staticFile('logo-kaspa.png')`).
 
 ⛔ **Never junction the shared library into `render-assets/`** — cleanup recycles the WHOLE `shorts/<batch>/` folder
 via recursive `DeleteDirectory`, which would FOLLOW the junction and recycle the real `assets/` library. Copies
 are transient and recycled harmlessly with the batch. Run: `python video-creation/livestream-repurpose/scripts/setup_render_assets.py <batch> [--data <dataFile.ts>]`
-(canonical since 2026-08-07; `scripts/setup-batch-render-assets.js` is FROZEN as rollback — it predates 5B/5C
-and stages the wrong spine), then render with `--public-dir video-creation/shorts/<batch>/render-assets`.
+(canonical since 2026-08-07; the JS it replaced, `scripts/setup-batch-render-assets.js`, was deleted 2026-11-27: it predated 5B/5C
+and staged the wrong spine), then render with `--public-dir video-creation/shorts/<batch>/render-assets`.
 
 **LONGFORM / PERSONA / livestream / repurpose → the PROJECT'S OWN folder** (the bittensor pattern):
 ```
@@ -868,7 +868,7 @@ In CSS: `bottom` values must be `≥ 240px`.
 ## Tools & Scripts
 
 ### Image generation — paths, profile, gotchas (corrected 2026-05-25)
-- **Scripts live in `C:\Users\mnede\Documents\Claude\social-media\repurpose\`** (NOT `Claude\repurpose\` — that path is stale): `generate-asset.js`, `generate-broll-batch.js`, `generate-image.js`, etc.
+- **Scripts live in `C:\Users\mnede\Documents\Claude\social-media\repurpose\`** (NOT `Claude\repurpose\` — that path is stale): `gen_batch.py`, `gen_images.py`, `generate_asset.py`, `generate_image.py` (Python only since 2026-11-27; the JS there was deleted).
 - **Playwright is installed only in `social-media\repurpose\node_modules`.** To run a generator that lives elsewhere (e.g. the in-project `video-creation\generate-broll-batch.js`), set `$env:NODE_PATH = "C:\Users\mnede\Documents\Claude\social-media\repurpose\node_modules"` before `node`.
 - **Use the `chatgpt-profile` Chrome profile, NOT `xbot-profile`.** `xbot-profile` is used for X posting and is usually already open → `launchPersistentContext` fails with "Target page/context/browser has been closed" (profile lock). The in-project `video-creation\generate-broll-batch.js` had `xbot-profile` hardcoded — fixed to `chatgpt-profile`.
 - **B-roll chat URL** (route prompts here): `https://chatgpt.com/c/6a0deddf-1bac-83ea-8107-0e419a2c44ac`. ~25–30s per image.
@@ -879,7 +879,7 @@ In CSS: `bottom` values must be `≥ 240px`.
 $env:NODE_PATH = "C:\Users\mnede\Documents\Claude\social-media\repurpose\node_modules"
 node "C:\Users\mnede\Documents\Claude\social-media\video-creation\generate-broll-batch.js"
 ```
-`generate-asset.js` does a single image: `node generate-asset.js --output="..." --prompt="..." [--chat-url="..."]`.
+`repurpose/generate_asset.py` does a single image: `python repurpose/generate_asset.py --output "..." --prompt "..." [--reference-image "..."] [--chat-url "..."]`.
 
 ### cut-silences.py
 Location: `C:\Users\mnede\Documents\Claude\social-media\video-creation\cut-silences.py`
@@ -1128,8 +1128,8 @@ document.getElementById('vid').addEventListener('seeked', () => {
 CoinMarketCap charts add credibility. To generate one via ChatGPT when no real screenshot exists:
 
 ```powershell
-cd "C:\Users\mnede\Documents\Claude\repurpose"
-node generate-asset.js --output="C:\...\assets\kas-chart.png" --prompt="Professional dark-mode cryptocurrency price chart for [COIN]. Pure black background. [COLOR] price line graph. 90 days of price data. Current price label in white. Clean CoinGecko/CoinMarketCap dark UI style. No logos. Landscape 16:9."
+cd "C:\Users\mnede\Documents\Claude\social-media\repurpose"
+python generate_asset.py --output="C:\...\assets\kas-chart.png" --prompt="Professional dark-mode cryptocurrency price chart for [COIN]. Pure black background. [COLOR] price line graph. 90 days of price data. Current price label in white. Clean CoinGecko/CoinMarketCap dark UI style. No logos. Landscape 16:9."
 ```
 
 HTML panel structure:

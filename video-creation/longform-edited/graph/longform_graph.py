@@ -2826,8 +2826,8 @@ def reconcile_docs(state: LongformState) -> LongformState:
 
 
 def lint_docset(state: LongformState) -> LongformState:
-    """The PRE-BUILD gate in code: skills/doc-reference/lint_docset.py (ported from lint-docset.js 2026-09-28; JS
-    frozen as rollback). The full §13 set + §13a naming + the transcript-first order, every video."""
+    """The PRE-BUILD gate in code: skills/doc-reference/lint_docset.py (ported from lint-docset.js 2026-09-28; the JS
+    was deleted 2026-11-27). The full §13 set + §13a naming + the transcript-first order, every video."""
     node = "lint_docset"
     if state.get("stub"):
         return {"steps": C._step(state, node, "stub")}

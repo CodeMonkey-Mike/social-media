@@ -3,6 +3,18 @@
 This folder re-creates the **Swiftly Studio 850** Premiere transition pack as a Remotion library.
 Overview + status: `PROJECT-LOG.md`. The pack itself: `./Swiftly Studio 850 .../`.
 
+## The pack extraction is FINISHED and its scripts are gone (2026-11-27)
+All 853 pack rows were built and approved by 2026-07-14. The 86 one-time Node scripts that did it (`_extract-*`,
+`_build-*`, `_qa-*-sweep` and the one-off probes) were deleted on 2026-11-27 (Mike: they were for one use, that
+use happened months ago, and the repo is Python only). **`PACK-EXTRACTION-RECORD.md` is the record of every one
+of them**: what each read and wrote, its own header notes, how to get it back from git, what a redo needs.
+- The data they extracted (`_*-clips.json`) is still here.
+- Where the rules below name one of those scripts (`_recipe-seq.js`, `_extract-monitor.js`,
+  `_extract-blocks-clips.js`), they name a deleted file: read the rule as the METHOD and see the record for the file.
+- New rows come from a Python builder (the two in the next sections are the model), never from a restored JS one.
+- The gallery pages are rebuilt with `python _gen_galleries.py` (the Python port of `_gen-galleries.js`; same
+  pages byte for byte). Run it where the rendered clips are, since `browse/**/<id>.mp4` is not in git.
+
 ## SCARY / Stinger: the one NON-Swiftly family (2026-10-25)
 `scary-1..15` are third-party horror stinger plates from Mike's own assets folder (`Scary Transitions 01..15.mp4`;
 no readme, licence or .prproj, so origin and licence are undocumented: Mike confirms before a public upload). Each
@@ -252,10 +264,10 @@ transition for a cut WITHOUT opening the engines:
 
 When helping Mike edit: read `meta` across rows, filter by the comp's aspect ratio + the mood/energy
 he wants, propose 2–3 by `id`, then drop them in via `TransitionClip`. Keep `meta` updated when you
-add transitions: each family's `_build-*` script writes its own rows' meta. Do NOT run `_enrich-meta.js`: it
-OVERWRITES every row's meta with the 2026-06 Glitch template (verified 2026-10-25). NOTE: `_build-lib.js`
-REGENERATES the Blocks rows only and would clobber hand-added rows (Strips/BadSignal) + meta — do
-NOT run it blindly; `library.json` is now the maintained source of truth.
+add transitions: each builder writes its own rows' meta, and `library.json` is the maintained source of truth.
+Two of the deleted scripts must never be restored and run: `_enrich-meta.js` OVERWRITES every row's meta with
+the 2026-06 Glitch template (verified 2026-10-25), and `_build-lib.js` REGENERATES the Blocks rows only and
+would clobber the hand-added rows (Strips/BadSignal) + meta. (`PACK-EXTRACTION-RECORD.md`)
 
 ---
 

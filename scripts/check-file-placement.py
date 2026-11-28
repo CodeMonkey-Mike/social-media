@@ -3,7 +3,7 @@
 The rule (root CLAUDE.md, global hard rules, "Where files go"):
   1. A file that belongs to ONE video goes in that video's project folder.
   2. Only what several projects share, or a tool's own throwaway diagnostics, goes in video-creation/cache/<tool>/
-     (git ignores it; video-creation/skills/cache-path.js and cache_path.py build the path).
+     (git ignores it; video-creation/skills/cache_path.py builds the path).
   3. Never the repo root, never inside a skills/ folder (code and docs only), never D:.
 
 What it flags:
@@ -59,7 +59,7 @@ PRUNE = {".git", "node_modules", "__pycache__", "media", "out", "cache", "linked
 
 MESSAGE_FOOTER = (
     "Move each into its video's project folder, or into video-creation/cache/<tool>/ if it's shared tool cache\n"
-    "(video-creation/skills/cache-path.js / cache_path.py build the path). A 'Users...AppData...' folder is a\n"
+    "(video-creation/skills/cache_path.py builds the path). A 'Users...AppData...' folder is a\n"
     "Windows path that lost its backslashes: fix the command that made it, then delete the copy. If an item isn't\n"
     "yours (another session is mid-run), tell Mike instead of moving it. Something that truly belongs where it is\n"
     "goes on the allowlist in scripts/check-file-placement.py, with Mike's OK."

@@ -16,7 +16,6 @@ on C:) and be cleaned up by that command.
 
 ## How tools find it
 
-- JavaScript: `const { cachePath, cacheDir } = require('<...>/video-creation/skills/cache-path');`
 - Python: `from cache_path import cache_path, cache_dir` (in `video-creation/skills/`)
 
 `python scripts/check-file-placement.py` enforces the rule: it flags anything new in the repo root, files left inside a

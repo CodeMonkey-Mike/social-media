@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 lint_slide_balance.py — MECHANICAL pre-render gate for "THE BALANCE" (broll-and-containers.md).
-Python port of lint-slide-balance.js (2026-09-28; the JS twin is frozen rollback).
+Python port of lint-slide-balance.js (2026-09-28; the JS twin was deleted 2026-11-27).
 
 The chronic longform-edited struggle is swinging to an extreme: either repeating one info-dense
 full diagram slide over and over, or over-correcting and deleting the slides for all-containers.

@@ -708,7 +708,7 @@ the root of the project directory?"*) — so run it unprompted, as the last acti
    block into the finalize report exactly as printed (title, description + hashtags, chapters, the `|` line, then the
    tags field comma-separated). A project with no MUSIC-PLAN (a longform-presentation format) gives `chapter_stamps`
    and `music_track_ids` in the same file and runs the same script.
-Note the repo-wide `cleanup/cleanup.js` (still JavaScript, not part of this track's graph) will NOT do this for you: its
+Note the repo-wide `cleanup/cleanup.py` (not part of this track's graph) will NOT do this for you: its
 `video-creation` policy is whole-project-folder and keyed to `batches.json`, so a project with no batch (a longform-edited
 build is not a shorts batch) is "left alone" forever. The completion sweep is the graph's `stage_longform` node.
 

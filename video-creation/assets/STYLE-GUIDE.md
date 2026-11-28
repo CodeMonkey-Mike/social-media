@@ -49,7 +49,7 @@ Append this style line to every longform b-roll image prompt:
 
 - Setup/payoff pairs (a "before" and a "broken after") must be generated with the first as a
   `--reference` so composition matches.
-- Pool-managed via `repurpose/gen-batch-freshchat.js --prefix=broll --batch=<id> --purpose=longform-broll`
+- Pool-managed via `python repurpose/gen_batch.py --prefix broll --batch <id> --purpose longform-broll`
   (chat pool tracked in root `chatgpt-image-chats.json`). Keep `longform-broll` separate from the shorts
   `broll` style chat. This is the LONGFORM case → **pass `--outdir` pointed at the PROJECT'S OWN folder**
   (`media/<project>/assets/`, per §5 + `video-creation/SKILL.md` "Asset folder organization"); NEVER the shared

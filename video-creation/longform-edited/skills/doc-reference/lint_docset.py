@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 lint_docset.py — PRE-BUILD GATE for a longform-edited video's document set (Python port of
-lint-docset.js, 2026-09-28; the JS twin is frozen rollback). Run by the longform graph's
+lint-docset.js, 2026-09-28; the JS twin was deleted 2026-11-27). Run by the longform graph's
 `lint_docset` node and usable by hand.
 
 Enforces, in CODE (not memory), the things that keep getting bypassed before the comp build:

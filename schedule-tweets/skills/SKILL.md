@@ -101,7 +101,7 @@ banned, a one-off tied to one past post, or already replaced. They are in git hi
 | `_delete-and-repost-poll.js` · `_verify-yt-post.js` · `_reorder.js` | hardcoded to one past post / one past queue reorder | none |
 | `_check-ig-reels.js` | same job as two existing Python tools | `_diag_ig_recent_reels.py` · `_diag_ig_reel_caption.py` |
 | `retry-bitchute-url.js` | looked for the `/content` placeholder URL the posters no longer write | `reconcile_short_urls.py --platform bitchute` |
-| `cleanup-images.js` | deprecated shim around the cleanup engine | `node cleanup/cleanup.js --target schedule-tweets` (`cleanup-images.md`) |
+| `cleanup-images.js` | deprecated shim around the cleanup engine | `python cleanup/cleanup.py --target schedule-tweets` (`cleanup-images.md`) |
 
 **Read-only check tools ported 2026-11-22** (same name, dashes to underscores; none has been run
 since the port, so treat a first run as its test): `check_fb_longform.py` · `check_rumble_longform.py` ·
@@ -189,7 +189,7 @@ relaunch** (a "failed" post may already be live), YT Shorts via API only.
 | `fbbot-profile` | post_fb_short.py, upload_longform_facebook.py |
 | `rumblebot-profile` | post_rumble_short.py, upload_longform_rumble.py |
 | `bitchutebot-profile` | post_bitchute_short.py, upload_longform_bitchute.py |
-| `chatgpt-profile` | generate-image.js, generate-image-batch.js |
+| `chatgpt-profile` | repurpose/gen_images.py, gen_batch.py, generate_image.py, generate_asset.py |
 | `tiktokbot-profile` (real Chrome over CDP 9224) | post_tiktok_short.py |
 
 ---
@@ -412,7 +412,7 @@ Background-launch each posting script, wait for the completion notification, rea
 ## Operational notes — 2026-06-09 session
 
 ### ✅ Parallel "lane": image generation CAN run concurrently with the posting run — use PER-PROFILE Chrome kills, never kill-all
-`gen-images.js` (carousel/image regen) runs on its own **`chatgpt-profile`** Chrome, which is distinct from every posting profile (xbot/ytbot/igbot/fbbot/rumblebot/bitchutebot/main-Default). So a regen lane and the posting lane can run **at the same time** — Chrome supports multiple concurrent `--user-data-dir`s. The ONE thing that breaks it: the default `Stop-Process -Name chrome -Force` (kill-all) nukes the gen lane mid-generation. **While a background gen lane is running, switch the posting steps to per-profile kills** (the `Get-CimInstance Win32_Process … CommandLine -like "*<profile>-profile*"` form from the 2026-05-25 note), so you only kill the step's own profile. For the TikTok step (needs main-Default + CDP 9224, normally wants kill-all), kill all chrome **except** chatgpt-profile: `Get-CimInstance … | Where-Object { $_.CommandLine -notlike "*chatgpt-profile*" } | Stop-Process`. Validated this run: 15-slide `gen-images.js` regen ran start-to-finish in the background across ~8 posting steps (X tweet → thread → 7-platform short fan-out incl. TikTok CDP spawn) with zero collisions. `gen-images.js` closes its own Chrome on completion, lifting the constraint for the rest of the run.
+`gen_images.py` (carousel/image regen) runs on its own **`chatgpt-profile`** Chrome, which is distinct from every posting profile (xbot/ytbot/igbot/fbbot/rumblebot/bitchutebot/main-Default). So a regen lane and the posting lane can run **at the same time** — Chrome supports multiple concurrent `--user-data-dir`s. The ONE thing that breaks it: the default `Stop-Process -Name chrome -Force` (kill-all) nukes the gen lane mid-generation. **While a background gen lane is running, switch the posting steps to per-profile kills** (the `Get-CimInstance Win32_Process … CommandLine -like "*<profile>-profile*"` form from the 2026-05-25 note), so you only kill the step's own profile. For the TikTok step (needs main-Default + CDP 9224, normally wants kill-all), kill all chrome **except** chatgpt-profile: `Get-CimInstance … | Where-Object { $_.CommandLine -notlike "*chatgpt-profile*" } | Stop-Process`. Validated this run: 15-slide `gen-images.js` regen ran start-to-finish in the background across ~8 posting steps (X tweet → thread → 7-platform short fan-out incl. TikTok CDP spawn) with zero collisions. `gen-images.js` closes its own Chrome on completion, lifting the constraint for the rest of the run.
 
 ### YT shorts fell one behind after posting a previously-missed short out of order
 A YT short that was supposed to post the night before had never run (no error/stuck-status — the step simply wasn't reached). Posting it first this session put YouTube's per-platform pointer **one behind** the other 6 platforms (each platform independently posts the array-first short still `pending` for THAT platform — see 2026-06-07 note). Fix is trivial and safe: the next-pending YT short IS the catch-up video, so just run `post-yt-short-api.js` one extra time to resync. No special targeting needed; confirm by checking which video is array-first-`yt_shorts:pending` in `shorts.json` before running.

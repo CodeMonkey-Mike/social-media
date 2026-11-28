@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 lint_covers.py — MECHANICAL pre-render gate for the longform-edited cover layer (Python port of
-lint-covers.js, 2026-09-28; the JS twin is frozen rollback).
+lint-covers.js, 2026-09-28; the JS twin was deleted 2026-11-27).
 
 Rules that kept getting violated because they lived only as prose (Mike, 2026-06-30: "I constantly
 come across violations of rules"). Enforced in CODE so a non-compliant comp CANNOT be rendered.

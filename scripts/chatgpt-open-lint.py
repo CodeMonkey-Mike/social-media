@@ -21,16 +21,15 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-# The pool + the scripts built on it (Python canonical) and the FROZEN JS rollback twins.
+# The pool, the scripts built on it, and the three tools that open the profile WITHOUT sending a
+# prompt (the login setup and two read-only backend-API readers), so they start no conversation.
+# All Python: the JS half of the pool was deleted 2026-11-27.
 ALLOW = {
     "repurpose/chat_pool.py", "repurpose/chat_delete.py", "repurpose/gen_images.py",
     "repurpose/gen_batch.py", "repurpose/reconcile_chats.py", "repurpose/delete_chats.py",
     "repurpose/test_chat_lifecycle.py",
-    "repurpose/chat-pool.js", "repurpose/chat-delete.js", "repurpose/delete-chats.js",
-    "repurpose/gen-images.js", "repurpose/gen-batch-freshchat.js",
-    "repurpose/generate-broll-reload.js", "repurpose/generate-broll-wlw.js",
-    "repurpose/list-chats-api.js", "repurpose/test-chat-lifecycle.js",
-    "repurpose/setup-chatgpt.js", "repurpose/diag-chatgpt.js",
+    "repurpose/setup_chatgpt.py", "repurpose/list_chats_api.py",
+    "repurpose/probe_first_prompts.py",
 }
 SKIP_DIRS = {"node_modules", ".git", "archive", "_superseded", "out", "dist", "build"}
 EXTS = {".py", ".js", ".mjs", ".ts"}

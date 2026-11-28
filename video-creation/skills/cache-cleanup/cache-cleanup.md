@@ -15,7 +15,7 @@ python video-creation/skills/cache-cleanup/cache_cleanup.py run
 
 A livestream batch counts as finished when `batches.json` says `completed`, or when Mike declares it complete:
 `cache_cleanup.py complete-batch <batch> --note "<date + his words>"` records that in `completed-batches.json` beside this skill.
-Never flip `batches.json` for this: `completed` opens the batch's folder to `cleanup/cleanup.js`, a separate decision.
+Never flip `batches.json` for this: `completed` opens the batch's folder to `cleanup/cleanup.py`, a separate decision.
 `check` shows the blockers and the cache sizes and deletes nothing. Exit 0 = clear (`run`: deleted), 3 = blocked.
 
 ## The one rule
