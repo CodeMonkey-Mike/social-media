@@ -3,6 +3,9 @@
 _Re-creating the **Swiftly Studio 850 Seamless Transitions** Premiere pack as a browsable
 Remotion transition library. Last updated: 2026-10-25 (+ SCARY/Stinger, the first non-Swiftly family; + the 5 BEAR MARKETS rows)._
 
+**2026-11-27: the 86 one-time extraction / build / QA scripts were DELETED (the pack was finished in July; the repo is
+Python only). Every one is recorded in `PACK-EXTRACTION-RECORD.md` and is still in git history. The gallery builder was
+ported: `python _gen_galleries.py`. Script names in the diary below are history, not instructions.**
 **2026-10-25: + SCARY / Stinger 15 (third-party horror plates, NOT Swiftly; section below) = 868 rows, 15 categories.**
 **2026-10-25: + BEAR MARKETS 5 (the moves of Mike's 2022 "044 Bear Markets"; section below) = 873 rows, 15 categories.**
 
@@ -20,7 +23,7 @@ SpinTwirl fixed (port on next touch); vertical (9:16) variants would be NEW rows
 pack's Vertical project.
 Infra reminders: minimal render pubdir (rebuild in the scratchpad: 2 demo stills + all
 `lib/sfx-*.mp3`), `_render-offsetgeo.js <filter>` with `OFFSET_PUBDIR` env, `%TEMP%/sw.xml`
-is the decompressed FullHD project (re-gunzip if evicted), galleries via `_gen-galleries.js`.
+is the decompressed FullHD project (re-gunzip if evicted), galleries via `python _gen_galleries.py`.
 Long render batches get RECLAIMED when the session idles — run them foreground (or keep a
 Monitor alive) and rely on the `.ok` marker-resume; a killed batch is a resume, not a restart.
 QA-frame gotcha: demo mp4s carry an 18-frame (0.6 s) hold before the transition — offset
@@ -1307,6 +1310,7 @@ Displacement is the real per-clip Offset "Shift Center To" vectors (Max 6 / Medi
    each clip's own chain) + use the **real mask file**. That's what the 9 are built on.
 
 ## Pipeline (how to rebuild / extend)
+_The `.js` files named in this section and the next were deleted 2026-11-27: `PACK-EXTRACTION-RECORD.md`._
 ```
 node _extract-blocks-clips.js     # per-clip real offsets/masks/scaleH for all variants -> _blocks-clips.json
 # convert a real mask video -> alpha PNG sequence (white->opaque):
@@ -1315,7 +1319,7 @@ ffmpeg -i "(Footage)/.../Gth - Disp Blocks Max.mp4" -filter_complex \
   -map "[o]" -frames:v 30 lib/masks/blocks-max/m_%03d.png
 node _build-lib.js                # _blocks-clips.json -> library.json (9 rows)
 cd ../../remotion && npx remotion render src/index.ts TransitionDemo <out>.mp4 --props='{"id":"blocks-max-1"}'
-node _gen-galleries.js            # rebuild gallery.html
+python _gen_galleries.py          # rebuild gallery.html
 ```
 _(extractors read the decompressed project XML from `%TEMP%/sw.xml` if present, else gunzip the .prproj.)_
 

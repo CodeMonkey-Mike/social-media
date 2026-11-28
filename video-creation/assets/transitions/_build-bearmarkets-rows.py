@@ -29,8 +29,8 @@ What this script does (idempotent; re-run any time):
                          into library.json BY ID (replaced in place, never touching another row; the same JS-compatible
                          serializer as _build-scary-rows.py, round trip asserted byte-identical before writing).
   --report               prints the measurements, writes nothing.
-Re-run AFTER _build-scary-rows.py if that one changes scary-6 (scary-6-normal75 copies its cut). Never run
-_enrich-meta.js after this: it rewrites every row's meta.
+Re-run AFTER _build-scary-rows.py if that one changes scary-6 (scary-6-normal75 copies its cut). (`_enrich-meta.js`,
+deleted 2026-11-27, rewrote every row's meta: never restore and run it.)
 
 Usage (from the repo root):
   python video-creation/assets/transitions/_build-bearmarkets-rows.py --ingest-shake <study>/data --ingest-pumpkin "<...>/evil-pumpkin-with-fire-2022-08-04-16-48-37-utc.mov"
@@ -129,7 +129,7 @@ def js_round(x: float) -> int:
 
 
 # ------------------------------------------------------------------ JS-compatible JSON (byte-identical to the file
-# the _build-*.js scripts write with JSON.stringify(d, null, 2); same serializer as _build-scary-rows.py)
+# the _build-*.js scripts wrote with JSON.stringify(d, null, 2); same serializer as _build-scary-rows.py)
 def js_number(x):
     if isinstance(x, bool):
         return "true" if x else "false"

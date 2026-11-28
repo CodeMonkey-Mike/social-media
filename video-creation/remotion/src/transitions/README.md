@@ -34,5 +34,5 @@ remain for folding into the registry as those categories land.
 
 1. Add/edit rows in `assets/transitions/library.json`.
 2. Render each: `npx remotion render src/index.ts TransitionDemo <out>/<id>.mp4 --props='{"id":"<id>"}'`.
-3. Build the browser: `node assets/transitions/_gen-galleries.js` (writes a `gallery.html` per folder + posters).
+3. Build the browser: `python assets/transitions/_gen_galleries.py` (writes a `gallery.html` per folder + posters).
 4. Tune params live in Remotion Studio: `npm run studio` → `TransitionDemo` (set the `id` prop).
