@@ -8,7 +8,7 @@ Every short the pipeline builds leaves a family of files in the flat remotion/sr
 shared `data*.ts`), plus an import and a <Composition> block in Root.tsx. Nothing ever removed them, so
 they piled up (461 files / 227 registrations by 2026-10-03) and old comps stayed around to be copied from.
 
-  python cleanup/remotion_comps.py [--dry-run]          (cleanup.js spawns it with the video-creation target)
+  python cleanup/remotion_comps.py [--dry-run]          (cleanup.py starts it with the video-creation target)
 
 WHAT COUNTS AS A SHORTS FAMILY: a composition registered in Root.tsx that renders through the shorts kit
 (`component={LivestreamShort}`, or a component that imports `_kit.tsx` / `LivestreamShort.tsx`), plus the
@@ -28,7 +28,7 @@ captions*.ts, data*.ts, _index-*.tsx scratch roots, _gen_*.py generators, unregi
 
 SAFETY (live run): Root.tsx is rewritten FIRST and type-checked (`npx tsc --noEmit`, zero errors under
 src/) BEFORE any file moves; a failed check restores Root.tsx and recycles nothing. The run is skipped
-while a shorts render holds the stage lock. Files go to the Recycle Bin (cleanup/lib.js), never deleted.
+while a shorts render holds the stage lock. Files go to the Recycle Bin (cleanup/lib.py), never deleted.
 Exit 0 = done / nothing to do / skipped · 1 = failed.
 """
 import argparse
@@ -37,9 +37,11 @@ import os
 import re
 import subprocess
 import sys
-import tempfile
 import time
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))      # cleanup/, for lib
+import lib  # noqa: E402
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 REPO = Path(__file__).resolve().parents[1]
@@ -367,14 +369,9 @@ def tsc_src_errors():
 
 
 def recycle_paths(paths):
-    with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8") as f:
-        json.dump([str(p) for p in paths], f)
-    js = "const l=require('./cleanup/lib.js');process.exit(l.recyclePaths(JSON.parse(require('fs').readFileSync(process.argv[1],'utf8')))?0:1)"
-    try:
-        ok = subprocess.run(["node", "-e", js, f.name], cwd=REPO).returncode == 0
-    finally:
-        os.unlink(f.name)
-    return ok and not any(Path(p).exists() for p in paths)
+    """Move the files to the Recycle Bin (the cleanup tool's own mover). True only when every one is gone."""
+    ok, _left = lib.recycle_paths([str(p) for p in paths])
+    return ok
 
 
 def kb(files):

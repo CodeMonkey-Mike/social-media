@@ -2,7 +2,7 @@
   "$doc": {
     "what": "Durable registry of livestream-repurpose batches for the whole social-media repo. One object per batch; persists for finished (archived) batches too. Paths are relative to this file's directory (the repo root).",
     "consumers": [
-      "cleanup/cleanup.js (video-creation target) — protects ACTIVE batches' directories; treats everything else as recyclable.",
+      "cleanup/cleanup.py (video-creation target) — protects ACTIVE batches' directories; treats everything else as recyclable.",
       "scripts/reconcile-batch-status.js — recomputes each batch's `status` (active|completed) from the queues' batch field; the authority on status, run before cleanup.",
       "repurpose/SKILL.md — reads transcript_plain of the next batch whose pipelines.repurpose is 'pending'.",
       "scripts/publish-shorts.py — (future) batch -> render folder + shorts.json source."

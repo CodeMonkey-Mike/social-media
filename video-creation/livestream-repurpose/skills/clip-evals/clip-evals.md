@@ -27,7 +27,7 @@ the dashboard at `/evals/data.json`. To see the same object in a terminal: `clip
 | `evals/replays/<batch>--<prompt version>--rN.json` | What the strategist picked when an old transcript was re-run. `rN` counts repeats under the same prompt. |
 | `evals/scores.jsonl` | One line per distinct score, so prompt versions can be compared over time. |
 
-`cleanup/cleanup.js` refuses to recycle anything in `evals/` (the `PROTECTED` guard), and nothing in this skill ever
+`cleanup/cleanup.py` refuses to recycle anything in `evals/` (the `protected_roots` guard), and nothing in this skill ever
 rewrites or trims a `.jsonl` file.
 
 **Not safe until pushed.** A new line exists only on this machine until it is committed and pushed. Commit `evals/`

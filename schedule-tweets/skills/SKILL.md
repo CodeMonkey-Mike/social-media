@@ -101,7 +101,7 @@ banned, a one-off tied to one past post, or already replaced. They are in git hi
 | `_delete-and-repost-poll.js` · `_verify-yt-post.js` · `_reorder.js` | hardcoded to one past post / one past queue reorder | none |
 | `_check-ig-reels.js` | same job as two existing Python tools | `_diag_ig_recent_reels.py` · `_diag_ig_reel_caption.py` |
 | `retry-bitchute-url.js` | looked for the `/content` placeholder URL the posters no longer write | `reconcile_short_urls.py --platform bitchute` |
-| `cleanup-images.js` | deprecated shim around the cleanup engine | `node cleanup/cleanup.js --target schedule-tweets` (`cleanup-images.md`) |
+| `cleanup-images.js` | deprecated shim around the cleanup engine | `python cleanup/cleanup.py --target schedule-tweets` (`cleanup-images.md`) |
 
 **Read-only check tools ported 2026-11-22** (same name, dashes to underscores; none has been run
 since the port, so treat a first run as its test): `check_fb_longform.py` · `check_rumble_longform.py` ·

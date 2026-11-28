@@ -42,7 +42,7 @@ Mike chose not to film the build, and is fine with the record being in the publi
 | Step | State on 2026-11-13 |
 |---|---|
 | Record verdicts at the gate | **Yes.** `_record_gate` in `batch_graph.py` appends one line per clip per gate to `video-creation/livestream-repurpose/evals/clip-verdicts.jsonl`, with the prompt version |
-| Keep the records | **Yes.** The file is append-only, committed, and `cleanup/cleanup.js` refuses to recycle the `evals/` folder |
+| Keep the records | **Yes.** The file is append-only, committed, and `cleanup/cleanup.py` refuses to recycle the `evals/` folder |
 | Keep what was rejected | **Yes.** A killed clip keeps its whole proposal, in `clip-plan.json` and in the record |
 | Replay old transcripts through `clip-strategist` | **Yes.** `clip_evals.py replay --batch <b>`. Transcripts are now copied to `evals/transcripts/` when a plan validates. Only 4 old batches can be replayed (`30x-tao`, `best-time`, `kaspa-cocktails`, `stock-market`) |
 | Score proposals against verdicts (precision per prompt change) | **Yes.** `clip_evals.py score`, per prompt version and model |

@@ -104,7 +104,7 @@ Decision to make: pick a non-confusing folder name (`playbooks/` reads better th
 | `schedule-tweets/` | Publishing layer: queue files (`data/*.json`) + per-platform post scripts + a 23-file `skills/` library + the dashboard. |
 | `persona/` | `persona.json` — single source of truth for voice/terminology. |
 | `x-reply-guy/` | X auto-reply automation. Has its own `CLAUDE.md`. |
-| `cleanup/` | Unified multi-target asset cleaner (`cleanup.js` + `targets/`). |
+| `cleanup/` | Unified multi-target asset cleaner (`cleanup.py` + `targets/`; Python since 2026-11-27). |
 | `scripts/` | Cross-cutting tooling: `publish-shorts.py`, `persona-lint.py`. |
 | `batches.json` | Registry of livestream-repurpose batches (read by cleaner + repurpose). |
 

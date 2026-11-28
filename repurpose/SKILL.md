@@ -147,7 +147,7 @@ The map needs to be filled in over time — most handles are currently `null`. W
 > `python repurpose/delete_chats.py --approved-file <json>` deletes exactly that list (renames each
 > to a gated title first, verifies the 404, logs it under the registry's `manual_deletes`). The
 > reconcile rides inside every live cleanup (`delete_chats.py`, same browser session as the sweep)
-> and writes `last_reconcile` to the registry so `cleanup.js --dry-run` shows the counts + review
+> and writes `last_reconcile` to the registry so `cleanup.py --dry-run` shows the counts + review
 > list without a browser. **Tests that call `run_reconcile(fix=True)` against the live account MUST
 > pass `fix_ids=` (their own chats)**: with a scratch registry every production chat looks like an
 > orphan — an unscoped test run deleted all 7 registered production chats on 2026-09-17.
@@ -168,7 +168,7 @@ The map needs to be filled in over time — most handles are currently `null`. W
 > 2. **Batch completion:** a chat registered with a `batch` (batches.json id — pass `--chat-batch`,
 >    or `--batch`, to `gen_batch.py --fresh` for one-off project chats) is retired + deleted by
 >    `repurpose/delete_chats.py` (Python since 2026-09-17) once that batch is completed/archived. Cleanup runs it automatically
->    (`cleanup/cleanup.js --target video-creation|all`); dry-run prints the plan, live run opens the
+>    (`cleanup/cleanup.py --target video-creation|all`); dry-run prints the plan, live run opens the
 >    chatgpt-profile browser. No `batch` = evergreen purpose (rotation-only); a `batch` matching no
 >    batches.json entry is kept. Manual one-off: `python repurpose/delete_chats.py --retire <purpose>`.
 
