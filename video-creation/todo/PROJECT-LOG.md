@@ -189,6 +189,41 @@ code) stay in `demos/`, which is gitignored. Here they are only summarized.
 - The deck-lecture folder `Crypto vs. The Traditional Financial System/` is now `traditional/` (commit `1cefee26`, Mike's
   rename): it held the repo's deepest path, which capped a worktree's folder name at 2 or 3 letters. The cap is 35 now.
 
+**2026-11-27: most of the JavaScript left outside Remotion went** (branch `js-to-python`, 13 commits, merged into
+`master` and pushed the same day).
+- Mike drove it one step at a time: one commit per step, and a check that a file was not needed before it was deleted.
+  Tracked `.js` files outside `remotion/`: 224 that morning, **15 on `master` after the merge**. 9 of the 15 run in a
+  browser page and stay JS, so 6 are left to act on (the list is under "Repo housekeeping" in the Open section). The
+  work was done in the worktree `.claude/worktrees/js-to-python`.
+- **Already replaced, so only deleted (15):** the 5 frozen twins of the longform lints, `cache-path.js`, the 3
+  `envato-broll` scripts, `receipt-capture/capture.js`, 4 in `repurpose/`, and `scripts/setup-batch-render-assets.js`
+  (replaced in August by `livestream-repurpose/scripts/setup_render_assets.py`).
+- **`repurpose/`:** 6 tools ported (`generate_image.py`, `generate_asset.py`, `setup_chatgpt.py`, `diag_chatgpt.py`,
+  `list_chats_api.py`, `probe_first_prompts.py`), 6 more deleted because the Python image stack already did their job,
+  7 one-time scripts deleted with no port. Then all 50 dead JS in `repurpose/archive/` went (its 149 lists and prompt
+  files stay). `x-reply-guy/generate_reply_images.js` starts `gen_batch.py --fresh` now.
+- **`ai-engineering/`:** what the folder is FOR is written down, in its `CLAUDE.md` and the root one: the AI VOICE-OVER
+  track (Mike's cloned voice over deck containers, nothing for him to record), used for the channel's first three videos.
+  Its two finished projects were deleted, after what the next video needs was kept: the decks
+  (`skills/deck-and-containers/reference-decks/`), the voiced scripts (`covered-topics/`) and ONE shared Python
+  screenshotter (`skills/deck-and-containers/render_containers.py`) in place of the copy each project carried.
+- **Transition pack:** the 86 one-time extract / build / QA scripts were deleted with no port (their one use was in
+  July). Each is recorded in `video-creation/assets/transitions/PACK-EXTRACTION-RECORD.md`: what it read and wrote, its
+  own header notes, how to get it back from git, what a redo needs. The gallery builder was ported (`_gen_galleries.py`).
+- **Cleanup tool:** `cleanup/` (4 files) and the batch reconciler it runs first are Python:
+  `python cleanup/cleanup.py --target all --dry-run`, `scripts/reconcile_batch_status.py`. Three bugs of the JS were
+  found and not carried over: a mistyped flag ran LIVE (it stops the run now); a file name with an accent, a curly
+  quote or an emoji was skipped while the run still said "Done. Recycled N"; and a file that could not be moved (open
+  in a player) was reported as recycled. Detail: `cleanup/cleanup.md`, "Python since 2026-11-27".
+- **How the ports were checked:** each ran next to its JS on the same input before the JS was deleted. Gallery pages:
+  all 149 byte for byte. Screenshotter: within 0.02% of the pixels of the July PNGs. Cleanup: the dry-run reports
+  identical on a test tree (nine sets of options) and on the real repo (198 lines), and a live run in a test tree moved
+  exactly the 69 planned paths. Reconciler: the same table, and the rewritten `batches.json` byte for byte.
+- **Still to prove live:** `generate_image.py`, `generate_asset.py`, the reply-guy image step and the three read-only
+  ChatGPT tools have run in the generator's `--fake` sandbox only, never against the live `chatgpt-profile`. A LIVE
+  cleanup has not run on the real repo (dry-run only there). `_gen_galleries.py` has not run on the real clip tree
+  (the worktree had no clips): run it in the main folder the next time the galleries are needed.
+
 ## Open (where we left off)
 
 **AI Engineering Simplified**
@@ -274,26 +309,57 @@ code) stay in `demos/`, which is gitignored. Here they are only summarized.
 - **Change the JavaScript files over to Python** (Mike, 2026-11-17: "this is a python repo. we should not be using
   javascript unless it is a remotion file"). 315 tracked `.js` files outside `remotion/` on 2026-11-17, 265 on
   2026-11-22 after `schedule-tweets/scripts/` was done (first row), **224 on 2026-11-23** after `higgsfield-voice`,
-  `music-sourcing`, `elevenlabs-lipsync` and `topic-radar`, **47 on 2026-11-27** on branch `js-to-python` after
-  `repurpose/`, its `archive/`, the frozen lint twins, five skill tools, the two finished `ai-engineering` projects,
-  the transition-pack scripts and the cleanup tool (15 once that branch meets `master`, which dropped the finished pieverse project and
-  gained seven per-video chart scripts). The rows marked DONE say what
-  happened. Where a Python twin exists (same name, `_` for
-  `-`) the work is switching callers and docs to the Python one and retiring the JS:
+  `music-sourcing`, `elevenlabs-lipsync` and `topic-radar`, **15 on 2026-11-27** on `master`, after the
+  `js-to-python` branch was merged (`repurpose/`, its `archive/`, the frozen lint twins, five skill tools, the two
+  finished `ai-engineering` projects, the transition-pack scripts and the cleanup tool: the timeline entry of that day
+  tells it).
+
+  **What is left (as of 2026-11-27):**
+  - **Port (3):**
+    - `x-reply-guy/generate_reply_images.js`: the reply-guy image step. It already starts the Python generator
+      (`repurpose/gen_batch.py --fresh`), so what remains is its own queue handling.
+    - `build-timeline.js` and `stitch-narration.js` in `video-creation/ai-engineering/skills/remotion-explainer-build/`:
+      the two build templates each AI voice-over video copies. (`Comp.template.tsx` next to them is Remotion and stays.)
+  - **Delete, Mike's call (3), all in the `video-creation/` root:**
+    - `gen-pvt-assets.js` and `gen-v34-assets.js`: one-time image generators for three early shorts, with the chat link
+      and the image list written into the file. Nothing names them.
+    - `generate-broll-batch.js`: the old b-roll generator they were copied from. `repurpose/gen_batch.py` does this job
+      now, but `video-creation/SKILL.md` (its "B-roll generation" step and the run notes below it) still tells the
+      reader to run the JS: rewrite those lines to `gen_batch.py` in the same step.
+  - **LinkedIn (22 files, gitignored, in the main folder only):** 13 have no Python version, 9 have one. Frozen until
+    that lane is moved (root `CLAUDE.md`, the Python-first rule).
+  - **Stays JS / TS (15 tracked files, nothing to do):** `schedule-tweets/vendor/mermaid.min.js` and 8 per-video chart
+    scripts (they run in a browser page), `Comp.template.tsx` (Remotion), 4 per-video `captions.raw.ts` (they go with
+    each project folder), and one After Effects script (`effects-library/scripts/render_text_wall.jsx`).
+  - **Small decisions for Mike:**
+    - The Remotion files of the two deleted ai-engineering videos are still in `video-creation/remotion/src/`
+      (`NeedLangGraph.tsx`, `NeedLangGraphVertical.tsx`, `SaveTokens.tsx`, `SaveTokensVertical.tsx`, their two timeline
+      files) and registered in `Root.tsx`. Their media is gone, so they cannot render. Remove them?
+    - `repurpose/archive/` still holds 149 old image lists and prompt files (no code). Keep or delete?
+    - `lensMap.ts` and `sphereMap.ts` in the Remotion transition engines still say "AUTO-GENERATED by" two deleted
+      scripts. The maps are frozen with the library; port the two generators (about 160 lines) only if a map ever has
+      to be rebuilt.
+    - The rule lines under "First steps" below (the LinkedIn / reply-guy exception, "edit data/*.json with Node", the
+      `node -e` snippets, `schedule-tweets/package.json` + `node_modules`).
+  - **Still to prove live:** the list at the end of the 2026-11-27 timeline entry (the ChatGPT image tools, a live
+    cleanup on the real repo, the gallery builder on the real clips), plus the older ones in the rows below.
+
+  Per folder (the rows marked DONE say what happened; where a Python twin exists, same name with `_` for `-`, the work
+  was switching callers and docs to the Python one and retiring the JS):
 
   | Folder | JS files | Python twin exists | Note |
   |---|---|---|---|
   | `schedule-tweets/scripts/` | **0** | all | **DONE 2026-11-22** (branch `chore/schedule-tweets-js-to-python`): all 49 JS files deleted. 19 already had a twin, 14 were ported that day (the read-only check and diagnostic tools + `yt_reauth.py`), 16 were deleted with no port (banned, a one-off, or already replaced: the table in `schedule-tweets/skills/SKILL.md`). Ten posters have not posted live in Python yet (that doc's live-proof ledger); the new check tools have not been run yet either. |
   | `video-creation/assets/transitions/` | **0** | 1 | **DONE 2026-11-27** (Mike: no reason to port one-time tools whose one use happened in July). 1 ported: `_gen_galleries.py` (the gallery pages; run next to the JS on one tree, all 149 pages identical byte for byte). 86 deleted with no port: the extract / build / QA scripts and one-off probes that turned the Swiftly pack into `library.json` (pack complete 2026-07-14). Every one is recorded in `assets/transitions/PACK-EXTRACTION-RECORD.md` (what it read and wrote, its own header notes, how to restore it, what a redo needs); the extracted `_*-clips.json` data stays. `lensMap.ts` / `sphereMap.ts` in the Remotion engines still say "AUTO-GENERATED by" two of the deleted scripts: the maps are frozen, the record holds the model. |
   | `repurpose/archive/` | **0** | none | **DONE 2026-11-27** (commit `b566782e`): all 50 deleted with no port (the 43, plus 7 one-time scripts moved in from `repurpose/` the same day). Nothing ran, loaded or pointed at any of them. The 149 gen lists and prompt files in the folder stay. |
-  | `video-creation/longform-edited/media/` | 39 | 0 | per-video files, go with each project folder after publish |
+  | per-video files (`longform-edited/media/`, `longform-presentation/media/`) | 8 | n/a | 8 chart scripts of two presentation videos (`livestream-aws` 2, `longest-bear` 6). They run in a browser page, so they stay JS, and they go with each project folder after publish. The 39 files of the pieverse research bundle went with that project (commit `f63e1fe0`). |
   | `repurpose/` | **0** | all | **DONE 2026-11-27** (commits `6fddeb4c`, `2fe6b67d`): 6 ported (`generate_image.py`, `generate_asset.py`, `setup_chatgpt.py`, `diag_chatgpt.py`, `list_chats_api.py`, `probe_first_prompts.py`), 10 deleted because the Python stack already did the job (`gen_images.py`, `gen_batch.py`, `chat_pool.py`, `chat_delete.py`, `delete_chats.py`, `test_chat_lifecycle.py`), 7 one-time scripts deleted with no port. `x-reply-guy/generate_reply_images.js` now runs `gen_batch.py --fresh`. Tested in the generator's `--fake` sandbox only: the two single-image tools and the reply-guy image step have not run against the live ChatGPT profile in Python yet. |
   | `video-creation/skills/higgsfield-voice/` | **0** | all | **DONE 2026-11-23** (commit `43717ee5`): 16 ported, 3 deleted with no port (tied to the page layout before 2026-10-17), plus the shell script that drove one of them. The Generate step has not run live in Python yet: it spends credits and the profile is logged out. |
   | `video-creation/skills/music-sourcing/` | **0** | all | **DONE 2026-11-23**: 9 ported, 5 one-off probes deleted with no port. A real download has not run in Python yet (Soundstripe was signed out); its mechanics passed against a local stand-in for the site. |
   | `video-creation/ai-engineering/media/` | **0** | n/a | **DONE 2026-11-27**: both finished projects deleted (Mike). Kept first: their decks (`ai-engineering/skills/deck-and-containers/reference-decks/`), their voiced scripts (`ai-engineering/covered-topics/`), and the container screenshotter as ONE shared Python tool, `ai-engineering/skills/deck-and-containers/render_containers.py` (commit `fa89f3ee`; its output matches the July PNGs to within 0.02% of pixels). The other 6 JS were per-video copies of the two build templates still in `ai-engineering/skills/remotion-explainer-build/`. |
   | `video-creation/skills/elevenlabs-lipsync/` | **0** | all | **DONE 2026-11-23**: all 7 ported. `--generate` has not run live in Python yet (it spends the video allowance). |
   | `video-creation/longform-edited/skills/` | **0** | all | **DONE 2026-11-27** (commit `6fddeb4c`): the 5 frozen twins of the Python lints deleted; the graphs already ran only the Python ones. |
-  | everything else (`x-reply-guy/`, `video-creation/` root, a few skills) | 8 | 0 | 2026-11-27 (commit `6fddeb4c`): the 5 with twins deleted (`cache-path.js`, the 3 `envato-broll` scripts, `receipt-capture/capture.js`). **`cleanup/` and `scripts/` DONE 2026-11-27** (commits `7dff47cf`, `7b0ab35f`, `0f3b5210`): the cleanup tool is `cleanup/cleanup.py` + `lib.py` + `targets/schedule_tweets.py` + `targets/video_creation.py`, the batch reconciler it runs first is `scripts/reconcile_batch_status.py`, and `scripts/setup-batch-render-assets.js` is deleted (replaced in August by `livestream-repurpose/scripts/setup_render_assets.py`). Run side by side with the JS: the dry-run reports matched line for line on a test tree and on the real repo, and the rewritten `batches.json` matched byte for byte. Three safety changes (`cleanup/cleanup.md`, "Python since 2026-11-27"): an unknown flag stops the run, a file name with an accent or emoji is recycled (the JS skipped it and still said done), and a move is checked on disk. A LIVE cleanup has run in a test tree only, not on the real repo yet. Left: `x-reply-guy/` 1 (`generate_reply_images.js`), `video-creation/` root 3 (one-time generators, probably delete), `ai-engineering/skills/remotion-explainer-build/` 2, and 2 that run in a browser page and stay JS (`schedule-tweets/vendor/mermaid.min.js`, one chart page script). `topic-radar/` left this row on 2026-11-23: its builder is `build_dashboard.py` now, checked byte for byte against the JS one |
+  | everything else (`x-reply-guy/`, `video-creation/` root, a few skills) | 7 | 0 | 2026-11-27 (commit `6fddeb4c`): the 5 with twins deleted (`cache-path.js`, the 3 `envato-broll` scripts, `receipt-capture/capture.js`). **`cleanup/` and `scripts/` DONE 2026-11-27** (commits `7dff47cf`, `7b0ab35f`, `0f3b5210`): the cleanup tool is `cleanup/cleanup.py` + `lib.py` + `targets/schedule_tweets.py` + `targets/video_creation.py`, the batch reconciler it runs first is `scripts/reconcile_batch_status.py`, and `scripts/setup-batch-render-assets.js` is deleted (replaced in August by `livestream-repurpose/scripts/setup_render_assets.py`). Run side by side with the JS: the dry-run reports matched line for line on a test tree and on the real repo, and the rewritten `batches.json` matched byte for byte. Three safety changes (`cleanup/cleanup.md`, "Python since 2026-11-27"): an unknown flag stops the run, a file name with an accent or emoji is recycled (the JS skipped it and still said done), and a move is checked on disk. A LIVE cleanup has run in a test tree only, not on the real repo yet. Left: `x-reply-guy/` 1 (`generate_reply_images.js`), `video-creation/` root 3 (one-time generators, probably delete), `ai-engineering/skills/remotion-explainer-build/` 2, and `schedule-tweets/vendor/mermaid.min.js`, which runs in a browser page and stays JS. `topic-radar/` left this row on 2026-11-23: its builder is `build_dashboard.py` now, checked byte for byte against the JS one |
 
   First steps: (1) DONE 2026-11-22: the crypto channel's YT posts go through `post_yt_community.py` (the JS poster is
   deleted; the first live crypto post through it is still to come); (2) HALF DONE 2026-11-22: `CLAUDE.md`'s
