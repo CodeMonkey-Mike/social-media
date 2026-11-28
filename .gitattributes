@@ -3,3 +3,12 @@
 
 # The eval record is append-only: keep it LF on every checkout, so a line-ending rewrite never touches old lines.
 video-creation/livestream-repurpose/evals/** text eol=lf
+
+# Language stats (GitHub's bar): this is a Python repo. Generated and captured HTML pages (rendered carousels,
+# dashboards, saved web pages) are not authored code, so they are left out of the stats.
+*.html linguist-generated=true
+
+# TypeScript is the Remotion exception to Python. It is left out of the stats so the bar shows the Python repo;
+# it is still code in this repo.
+*.ts linguist-detectable=false
+*.tsx linguist-detectable=false
