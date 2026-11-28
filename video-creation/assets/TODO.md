@@ -63,7 +63,7 @@ no shared sfx/logos). Clean pilot for the per-project `--public-dir` pattern:
 ### 3. Active batches in assets/projects/ (no action yet)
 `best-coin-to-buy` and `market-meltdown` are ACTIVE. Leave them. When their batches flip to
 completed, the registry-driven cleanup tier reclaims them automatically
-(`node scripts/reconcile-batch-status.js` then `python cleanup/cleanup.py --target video-creation`; the cleanup run starts the reconcile itself).
+(`python scripts/reconcile_batch_status.py` then `python cleanup/cleanup.py --target video-creation`; the cleanup run starts the reconcile itself).
 
 ### 4. THE BIG DECISION — RESOLVED 2026-06-25 (variant of A: COPY, not symlink)
 Shorts comps now render against their OWN self-contained public dir:

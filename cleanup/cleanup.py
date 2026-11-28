@@ -22,7 +22,6 @@ Exit 0 = done Â· 1 = a step failed (the Recycle Bin move, or the comp cleanup) Â
 """
 import argparse
 import os
-import shutil
 import subprocess
 import sys
 
@@ -78,11 +77,11 @@ def sync_batch_status(dry_run):
     batches and RECYCLES completed ones, so a finished batch still flagged `active` would wrongly shield its
     source artifacts (and a batch that is never reconciled is never reclaimed). The reconciler runs first, so
     cleanup always acts on current status; in --dry-run it runs dry too (it reports drift, writes nothing)."""
-    script = os.path.join(REPO_ROOT, "scripts", "reconcile-batch-status.js")
+    script = os.path.join(REPO_ROOT, "scripts", "reconcile_batch_status.py")
     if not os.path.exists(script):
         return
-    print(f"\n--- syncing batch status (reconcile-batch-status.js{' --dry-run' if dry_run else ''}) ---")
-    status = spawn([shutil.which("node") or "node", script] + (["--dry-run"] if dry_run else []))
+    print(f"\n--- syncing batch status (reconcile_batch_status.py{' --dry-run' if dry_run else ''}) ---")
+    status = spawn([sys.executable, script] + (["--dry-run"] if dry_run else []))
     if status != 0:
         warn("  WARNING: reconcile failed; proceeding with existing batches.json status.")
 

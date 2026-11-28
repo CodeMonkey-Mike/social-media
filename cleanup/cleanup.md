@@ -23,7 +23,7 @@ python cleanup/cleanup.py --target <schedule-tweets|video-creation|all> [--dry-r
 - Exit code: 0 = done, 1 = a step failed (the Recycle Bin move, or the comp cleanup), 2 = bad arguments.
 
 **Batch status is synced automatically.** On EVERY run, whatever the target (since 2026-07-28),
-cleanup first invokes `scripts/reconcile-batch-status.js` (in `--dry-run` mode when cleanup is a
+cleanup first invokes `scripts/reconcile_batch_status.py` (in `--dry-run` mode when cleanup is a
 dry run) so eligibility is computed from current batch lifecycle status — a batch that finished
 publishing but was never reconciled can't stay wrongly protected. You never have to remember to
 reconcile before cleaning.
@@ -221,7 +221,8 @@ preview matters more here than for the image cleaner.
 
 ## Python since 2026-11-27 (what changed from the JS)
 
-`cleanup.js`, `lib.js` and the two `targets/*.js` were ported to Python and deleted. The policies are the same:
+`cleanup.js`, `lib.js`, the two `targets/*.js` and the reconciler it runs first (`scripts/reconcile-batch-status.js`,
+now `scripts/reconcile_batch_status.py`) were ported to Python and deleted, so a cleanup run needs no Node. The policies are the same:
 the JS and the Python were run side by side on a test tree (nine argument sets) and on the real repo, and the
 dry-run reports matched line for line. Three things are deliberately different, all in the direction of safety:
 
